@@ -1,6 +1,6 @@
 {
-  "name": "Quiet Journal Journey",
-  "short_name": "Quiet Journal",
+  "name": "Lofi Memory",
+  "short_name": "Lofi Memory",
   "description": "A calm private online diary with prompts, moods, notes, and reminders.",
   "start_url": "/",
   "display": "standalone",
