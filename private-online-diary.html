@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Private Online Diary and Private Diary Guide | Lofi Memory</title>
+    <meta name="description" content="Use Lofi Memory as a private online diary or private diary space for daily journaling, mood check-ins, personal reflection, and a calmer writing habit." />
+    <meta name="keywords" content="private online diary, private diary, private diary website, digital diary, online diary, daily journaling, calm journaling app" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://quietjournaljourney.vercel.app/private-online-diary.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Private Online Diary and Private Diary Guide | Lofi Memory" />
+    <meta property="og:description" content="A private online diary and private diary page for daily journaling, mood check-ins, and calm personal reflection." />
+    <meta property="og:url" content="https://quietjournaljourney.vercel.app/private-online-diary.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Private Online Diary and Private Diary Guide | Lofi Memory" />
+    <meta name="twitter:description" content="Use Lofi Memory as a private online diary or private diary for calm writing, mood tracking, and gentle daily reflection." />
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap');
+
+:root {
+  --bg: #f7f4ec;
+  --card: rgba(255, 255, 255, 0.82);
+  --card-strong: #ffffff;
+  --ink: #21312b;
+  --muted: #567065;
+  --accent: #45643b;
+  --accent-soft: #e3efdb;
+  --line: rgba(69, 100, 59, 0.14);
+  --shadow: 0 18px 50px rgba(47, 70, 58, 0.09);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, rgba(222, 239, 214, 0.85), transparent 34%),
+    radial-gradient(circle at top right, rgba(255, 245, 224, 0.9), transparent 30%),
+    linear-gradient(180deg, #f7f5ef 0%, #f2efe6 100%);
+  line-height: 1.65;
+}
+
+a { color: inherit; }
+.container {
+  width: min(1160px, calc(100% - 40px));
+  margin: 0 auto;
+}
+.topbar {
+  padding: 18px 0 0;
+}
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.brand {
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+}
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.chip {
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.72);
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-size: 14px;
+  text-decoration: none;
+}
+.hero {
+  padding: 52px 0 28px;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(320px, 0.82fr);
+  gap: 28px;
+  align-items: stretch;
+}
+.card {
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+}
+.hero-copy {
+  padding: 38px;
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.hero h1 {
+  margin: 18px 0 14px;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2.6rem, 5vw, 4.6rem);
+  line-height: 0.96;
+}
+.hero p {
+  margin: 0;
+  font-size: 1.04rem;
+  color: var(--muted);
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 14px 20px;
+  font-weight: 700;
+}
+.button-primary {
+  background: var(--accent);
+  color: white;
+}
+.button-secondary {
+  background: rgba(255,255,255,0.78);
+  border: 1px solid var(--line);
+}
+.hero-side {
+  padding: 28px;
+}
+.hero-side h2,
+.section h2 {
+  margin: 0 0 10px;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  line-height: 1.1;
+}
+.hero-side p,
+.section-intro,
+.muted {
+  color: var(--muted);
+}
+.metric-grid,
+.grid-3,
+.grid-2,
+.link-grid,
+.faq-grid {
+  display: grid;
+  gap: 16px;
+}
+.metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 18px; }
+.grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.link-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.faq-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.mini-card,
+.feature,
+.faq,
+.prompt,
+.step,
+.link-card {
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.76);
+  border-radius: 22px;
+}
+.mini-card,
+.feature,
+.faq,
+.prompt,
+.step,
+.link-card { padding: 18px; }
+.mini-card strong,
+.feature h3,
+.faq h3,
+.prompt h3,
+.step h3,
+.link-card h3 {
+  display: block;
+  margin-bottom: 8px;
+}
+.section {
+  padding: 18px 0 24px;
+}
+.section-shell {
+  padding: 28px;
+}
+.section-shell + .section-shell {
+  margin-top: 18px;
+}
+.list {
+  padding-left: 20px;
+  margin: 14px 0 0;
+}
+.list li + li { margin-top: 10px; }
+.related {
+  padding: 14px 0 56px;
+}
+.footer {
+  padding: 0 0 56px;
+}
+.footer p {
+  margin: 0;
+  color: var(--muted);
+  text-align: center;
+}
+.quiet-slot-shell {
+  padding: 28px;
+  display: grid;
+  gap: 18px;
+  grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+  align-items: stretch;
+}
+.quiet-slot-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+}
+.quiet-slot-note {
+  border: 1px dashed var(--line);
+  background: rgba(255,255,255,0.6);
+  border-radius: 22px;
+  padding: 20px;
+}
+.quiet-slot-note strong {
+  display: block;
+  margin-bottom: 8px;
+}
+@media (max-width: 1180px) {
+  .link-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .quiet-slot-shell { grid-template-columns: 1fr; }
+}
+@media (max-width: 980px) {
+  .hero-grid,
+  .grid-3,
+  .grid-2,
+  .link-grid,
+  .faq-grid,
+  .metric-grid {
+    grid-template-columns: 1fr;
+  }
+  .hero-copy,
+  .hero-side,
+  .section-shell,
+  .quiet-slot-shell {
+    padding: 24px;
+  }
+}
+@media (max-width: 760px) {
+  .container { width: calc(100% - 24px); }
+  .topbar { padding-top: 14px; }
+  .chip-row { gap: 8px; }
+  .chip { padding: 9px 12px; font-size: 13px; }
+  .hero { padding: 28px 0 18px; }
+  .hero h1 { line-height: 1.02; }
+  .hero-copy,
+  .hero-side,
+  .section-shell,
+  .quiet-slot-shell { padding: 20px; }
+}
+    </style>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Private Online Diary",
+        "url": "https://quietjournaljourney.vercel.app/private-online-diary.html",
+        "description": "A landing page for people searching for a private online diary, private diary website, or digital diary with gentle journaling and mood reflection.",
+        "isPartOf": {
+          "@type": "WebSite",
+          "name": "Lofi Memory",
+          "url": "https://quietjournaljourney.vercel.app/"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Lofi Memory",
+            "item": "https://quietjournaljourney.vercel.app/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Private online diary",
+            "item": "https://quietjournaljourney.vercel.app/private-online-diary.html"
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Can I use this as a personal diary website?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Lofi Memory works well as a private diary website for daily writing, soft reflection, and emotional check-ins."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is it only for long entries?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Short notes, one-line reflections, and quick mood updates all fit naturally inside the journal flow."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I add images to my diary?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. You can upload images into journal entries and adjust them directly in the editor."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What if I also want stronger privacy controls?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You can also explore the dedicated online diary with lock page for privacy-focused details."
+            }
+          }
+        ]
+      }
+    </script>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6094559377350805" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="topbar">
+      <div class="container topbar-inner">
+        <a class="brand" href="/">Lofi Memory</a>
+        <div class="chip-row">
+          <a class="chip" href="/mood-journal.html">Mood journal</a>
+          <a class="chip" href="/online-diary-with-lock.html">Diary with lock</a>
+          <a class="chip" href="/journal-prompts.html">Journal prompts</a>
+          <a class="chip" href="/daily-reflection-journal.html">Daily reflection</a>
+        </div>
+      </div>
+    </div>
+
+    <header class="hero">
+      <div class="container hero-grid">
+        <section class="card hero-copy">
+          <div class="eyebrow">Private writing guide</div>
+          <h1>Private online diary for daily journaling, mood check-ins, and gentle reflection.</h1>
+          <p>
+            Lofi Memory is for people who want a private online diary that feels calm, simple, and easy to return to. Write daily thoughts, track moods, and keep personal reflections in one soft digital journaling space.
+          </p>
+          <div class="actions">
+            <a class="button button-primary" href="/">Open Lofi Memory</a>
+            <a class="button button-secondary" href="/mood-journal.html">See the mood journal page</a>
+          </div>
+        </section>
+        <aside class="card hero-side">
+          <h2>Why people look for a private online diary</h2>
+          <p>
+            Most people are not searching for a diary because they want complexity. They want a quiet place to think, notice what they feel, and keep their reflections personal.
+          </p>
+          <div class="metric-grid">
+            <div class="mini-card"><strong>Private by default</strong>Use the app in your own browser or sign in to keep entries tied to your account.</div>
+            <div class="mini-card"><strong>Gentle structure</strong>Prompts, moods, and light design make journaling feel easier to begin.</div>
+            <div class="mini-card"><strong>Visual comfort</strong>Soft colors and calm spacing help the writing area stay central.</div>
+            <div class="mini-card"><strong>Easy return</strong>One sentence still counts. The diary is designed for real routines, not perfection.</div>
+          </div>
+        </aside>
+      </div>
+    </header>
+
+    <main>
+      <section class="section">
+        <div class="container card section-shell">
+          <h2>What makes this private online diary different</h2>
+          <p class="section-intro">
+            If you are searching for a private diary website, digital diary, or calm online journal, the need is usually the same: a soft place to write without noise. Lofi Memory blends private daily journaling, mood check-ins, gentle prompts, and personal reflection in one quieter space.
+          </p>
+          <div class="grid-3">
+            <article class="feature">
+              <h3>Private daily journaling</h3>
+              <p>Use the writing area like a digital diary for thoughts, memories, small stories, or honest end-of-day check-ins.</p>
+            </article>
+            <article class="feature">
+              <h3>Mood-aware reflection</h3>
+              <p>Pair entries with moods so your private online diary also helps you notice emotional patterns over time.</p>
+            </article>
+            <article class="feature">
+              <h3>Personal and calming</h3>
+              <p>Custom visuals, prompts, and media options make the online journal feel more like your own safe writing corner.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container card section-shell">
+          <h2>How to use a private online diary well</h2>
+          <ul class="list">
+            <li>Keep the first step small. One line, one feeling, or one win from the day is enough.</li>
+            <li>Write for clarity rather than perfection. The goal is to notice your inner world, not produce polished entries.</li>
+            <li>Use the <a href="/journal-prompts.html">journal prompts page</a> on harder days so the diary feels like support instead of pressure.</li>
+            <li>Review older entries occasionally to notice emotional patterns and shifts in energy, especially if you also use the <a href="/mood-journal.html">mood journal flow</a>.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container card section-shell">
+          <h2>Frequently asked questions</h2>
+          <div class="faq-grid">
+            <article class="faq">
+              <h3>Can I use this as a personal diary website?</h3>
+              <p>Yes. Lofi Memory works well as a private diary website for daily writing, soft reflection, and emotional check-ins.</p>
+            </article>
+            <article class="faq">
+              <h3>Is it only for long entries?</h3>
+              <p>No. Short notes, one-line reflections, and quick mood updates all fit naturally inside the journal flow.</p>
+            </article>
+            <article class="faq">
+              <h3>Can I add images to my diary?</h3>
+              <p>Yes. You can upload images into journal entries and adjust them directly in the editor.</p>
+            </article>
+            <article class="faq">
+              <h3>What if I also want stronger privacy controls?</h3>
+              <p>You can also explore the dedicated <a href="/online-diary-with-lock.html">online diary with lock</a> page for privacy-focused details.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="related">
+        <div class="container card section-shell">
+          <h2>Related journal pages</h2>
+          <div class="link-grid">
+            <article class="link-card"><h3>Mood journal</h3><p class="muted">See how gentle mood tracking supports daily journaling.</p><a href="/mood-journal.html">Open page</a></article>
+            <article class="link-card"><h3>Diary with lock</h3><p class="muted">Learn how optional PIN protection fits into the journaling experience.</p><a href="/online-diary-with-lock.html">Open page</a></article>
+            <article class="link-card"><h3>Journal prompts</h3><p class="muted">Browse prompt ideas for self-reflection and softer writing starts.</p><a href="/journal-prompts.html">Open page</a></article>
+            <article class="link-card"><h3>Daily reflection</h3><p class="muted">Build a calmer check-in routine for the end of the day.</p><a href="/daily-reflection-journal.html">Open page</a></article>
+            <article class="link-card"><h3>Main app</h3><p class="muted">Go back to the main website and start writing right away.</p><a href="/">Open app</a></article>
+          </div>
+        </div>
+      </section>
+      <section class="related">
+        <div class="container card quiet-slot-shell">
+          <div class="quiet-slot-copy">
+            <div>
+              <p class="eyebrow">Quiet corner</p>
+              <h2>There is room here for future recommendations without disturbing the journal.</h2>
+              <p class="muted">This block stays outside the main writing and reading flow, so future recommendations can appear here without covering content, interrupting the page, or causing awkward layout shifts on mobile or desktop.</p>
+            </div>
+            <div class="actions">
+              <a class="button button-primary" href="/">Open the journal</a>
+              <a class="button button-secondary" href="/journal-prompts.html">Keep reading</a>
+            </div>
+          </div>
+          <div class="quiet-slot-note">
+            <strong>Reader-friendly placement</strong>
+            <p>For now, this area holds a calm pause before the footer. Later it can support additional recommendations while keeping the core journal experience stable and easy to use.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <p>Lofi Memory — a calmer place for private writing, mood reflection, and daily journaling.</p>
+      </div>
+    </footer>
+  </body>
+</html>
