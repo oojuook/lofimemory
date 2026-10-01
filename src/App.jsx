@@ -2158,6 +2158,7 @@ function App() {
   const [draggedPlannerTodoId, setDraggedPlannerTodoId] = useState(null);
   const [saveReward, setSaveReward] = useState('');
   const [isRadioPlaying, setIsRadioPlaying] = useState(false);
+  const [activeLofiStation, setActiveLofiStation] = useState(0);
   const [customQuotes, setCustomQuotes] = useState(getInitialCustomQuotes);
   const [customQuoteDraft, setCustomQuoteDraft] = useState('');
   const [quoteStyle, setQuoteStyle] = useState(getInitialQuoteStyle);
@@ -4209,6 +4210,24 @@ function App() {
     return `${m}:${s < 10 ? '0' : ''}${s}`;
   };
 
+  const lofiStations = [
+    {
+      title: 'Lofi Girl Radio',
+      subtitle: 'Classic study beats',
+      src: 'https://www.youtube-nocookie.com/embed/jfKfPfyJRdk?autoplay=1&playsinline=1&rel=0'
+    },
+    {
+      title: 'Chillhop Radio',
+      subtitle: 'Warm jazzy lofi',
+      src: 'https://www.youtube-nocookie.com/embed/5yx6BWlEVcY?autoplay=1&playsinline=1&rel=0'
+    },
+    {
+      title: 'Relaxing Lofi Mix',
+      subtitle: 'Soft writing ambience',
+      src: 'https://www.youtube-nocookie.com/embed/rUxyKA_-grg?autoplay=1&playsinline=1&rel=0'
+    }
+  ];
+
   if (locked) {
     return <PrivacyGate hasPin={hasPin} onCreatePin={createPin} onUnlock={() => setLocked(false)} />;
   }
@@ -6195,35 +6214,61 @@ function App() {
 
       
       {/* Floating Lofi Radio Player */}
-      <div className="fixed bottom-24 left-4 z-50 lg:bottom-10 lg:left-10 flex flex-col items-start gap-3">
+      <div className="fixed bottom-24 left-4 z-50 lg:bottom-10 lg:left-10 flex max-w-[92vw] flex-col items-start gap-3">
         {isRadioPlaying && (
-          <div className="rounded-2xl border border-white/60 bg-white/70 px-4 py-2 text-xs font-extrabold tracking-widest text-sage-800 shadow-soft backdrop-blur-xl animate-fade-in flex items-center gap-2">
-            <Music size={14} className="animate-pulse" /> LOFI RADIO ON
+          <div className="w-[20rem] max-w-[calc(100vw-2rem)] overflow-hidden rounded-[1.75rem] border border-white/70 bg-white/90 p-3 shadow-2xl backdrop-blur-xl">
+            <div className="mb-3 flex items-center justify-between gap-3 px-1">
+              <div>
+                <p className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.22em] text-sage-700"><Music size={14} className="animate-pulse" /> Lofi Radio</p>
+                <p className="mt-1 text-sm font-bold text-sage-950">{lofiStations[activeLofiStation].title}</p>
+                <p className="text-xs font-semibold text-sage-600">Tap play inside the player if your browser blocks sound.</p>
+              </div>
+              <button
+                onClick={() => setIsRadioPlaying(false)}
+                className="rounded-full bg-sage-50 px-3 py-1.5 text-xs font-extrabold text-sage-800 transition hover:bg-sage-100"
+                type="button"
+              >
+                Close
+              </button>
+            </div>
+            <div className="overflow-hidden rounded-2xl border border-sage-100 bg-sage-50">
+              <iframe
+                key={lofiStations[activeLofiStation].src}
+                width="100%"
+                height="180"
+                src={lofiStations[activeLofiStation].src}
+                title={`${lofiStations[activeLofiStation].title} player`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                frameBorder="0"
+              />
+            </div>
+            <div className="mt-3 grid gap-2">
+              {lofiStations.map((station, index) => (
+                <button
+                  key={station.title}
+                  onClick={() => setActiveLofiStation(index)}
+                  className={`rounded-2xl px-3 py-2 text-left text-xs font-extrabold transition ${activeLofiStation === index ? 'bg-sage-800 text-white shadow-sm' : 'bg-sage-50 text-sage-800 hover:bg-sage-100'}`}
+                  type="button"
+                >
+                  <span className="block">{station.title}</span>
+                  <span className={`block text-[11px] ${activeLofiStation === index ? 'text-sage-100' : 'text-sage-500'}`}>{station.subtitle}</span>
+                </button>
+              ))}
+            </div>
           </div>
         )}
-        <button 
+        <button
           onClick={() => setIsRadioPlaying(prev => !prev)}
           className={`flex h-14 w-14 items-center justify-center rounded-full shadow-lift transition duration-300 hover:-translate-y-1 ${
             isRadioPlaying ? 'bg-sage-300 text-white hover:bg-sage-400' : 'bg-sage-800 text-white hover:bg-sage-700'
           }`}
           title="Toggle Lofi Radio"
+          type="button"
         >
           {isRadioPlaying ? <Music size={24} className="animate-pulse" /> : <Headphones size={24} />}
         </button>
       </div>
-      
-      {/* Hidden YouTube Iframe for the Lofi Stream */}
-      {isRadioPlaying && (
-        <div style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden', zIndex: -1 }}>
-          <iframe 
-            width="10" 
-            height="10" 
-            src="https://www.youtube-nocookie.com/embed/jfKfPfyJRdk?autoplay=1&mute=0&controls=0&disablekb=1&fs=0&loop=1&playsinline=1" 
-            allow="autoplay; encrypted-media"
-            frameBorder="0"
-          />
-        </div>
-      )}
 
       {!cookieConsentAccepted && (
         <div className="fixed bottom-24 left-0 right-0 z-50 p-4 sm:bottom-0 sm:p-6 flex justify-center pointer-events-none">
