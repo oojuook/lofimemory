@@ -2894,7 +2894,7 @@ function App() {
 
   const seoStudioContext = useMemo(() => ([
     'Brand: Lofi Memory',
-    'Canonical: https://quietjournaljourney.vercel.app/',
+    'Canonical: https://lofimemory.vercel.app/',
     'Core positioning: private online diary, private diary, online diary, diary app, best diary app, journal app, online journal app, digital diary, online journal, mood journal, daily reflection, beginner-friendly diary writing.',
     'Hero title: Your quiet corner for honest pages.',
     'Hero summary: Lofi Memory helps you keep an online diary, private diary, diary app, journal app, and mood journal space that feels softer to return to.',
@@ -4236,7 +4236,7 @@ function App() {
             </a>
             <div className="site-nav-links hidden flex-1 items-center justify-center gap-7 xl:gap-9">
               {[
-                { id: 'home', label: 'Home', icon: Waves },
+                { id: 'home', label: 'Home', icon: Headphones },
                 { id: 'write', label: 'Write', icon: PenLine },
                 { id: 'notes', label: 'Notes', icon: FileText },
                 { id: 'breathe', label: 'Breathe', icon: Wind },
@@ -6202,7 +6202,7 @@ function App() {
           </div>
         )}
         <button 
-          onClick={() => setIsRadioPlaying(!isRadioPlaying)}
+          onClick={() => setIsRadioPlaying(prev => !prev)}
           className={`flex h-14 w-14 items-center justify-center rounded-full shadow-lift transition duration-300 hover:-translate-y-1 ${
             isRadioPlaying ? 'bg-sage-300 text-white hover:bg-sage-400' : 'bg-sage-800 text-white hover:bg-sage-700'
           }`}
@@ -6214,12 +6214,13 @@ function App() {
       
       {/* Hidden YouTube Iframe for the Lofi Stream */}
       {isRadioPlaying && (
-        <div className="hidden">
+        <div style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden', zIndex: -1 }}>
           <iframe 
-            width="1" 
-            height="1" 
-            src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=0" 
-            allow="autoplay"
+            width="10" 
+            height="10" 
+            src="https://www.youtube-nocookie.com/embed/jfKfPfyJRdk?autoplay=1&mute=0&controls=0&disablekb=1&fs=0&loop=1&playsinline=1" 
+            allow="autoplay; encrypted-media"
+            frameBorder="0"
           />
         </div>
       )}
@@ -6246,7 +6247,7 @@ function App() {
       <div className="fixed inset-x-3 bottom-3 z-30 mx-auto max-w-lg rounded-[1.7rem] border border-white/90 bg-white/90 p-1.5 shadow-soft backdrop-blur-xl lg:hidden">
         <div className="grid grid-cols-6 gap-1">
         {[
-          { id: 'home', label: 'Home', icon: Waves },
+          { id: 'home', label: 'Home', icon: Headphones },
           { id: 'write', label: 'Write', icon: PenLine },
           { id: 'notes', label: 'Notes', icon: FileText },
           { id: 'breathe', label: 'Breathe', icon: Wind },
