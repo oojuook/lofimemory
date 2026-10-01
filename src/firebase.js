@@ -4,12 +4,12 @@ import { getFirestore } from 'firebase/firestore';
 import { getMessaging, isSupported } from 'firebase/messaging';
 
 export const firebaseConfig = {
-  apiKey: 'AIzaSyBnP_TuWAq0eE3hpCOdSgMv1FmzAdZhExA',
-  authDomain: 'quiet-journal-journey-f3905.firebaseapp.com',
-  projectId: 'quiet-journal-journey-f3905',
-  storageBucket: 'quiet-journal-journey-f3905.firebasestorage.app',
-  messagingSenderId: '810907134717',
-  appId: '1:810907134717:web:f250e38ed9d17640cf2c94'
+  apiKey: 'AIzaSyCypzduBVumGSOqbvbX1cTe_zec9MLRZf0',
+  authDomain: 'lofimemory.firebaseapp.com',
+  projectId: 'lofimemory',
+  storageBucket: 'lofimemory.firebasestorage.app',
+  messagingSenderId: '701827206746',
+  appId: '1:701827206746:web:41f91edfa367462c735263'
 };
 
 const app = initializeApp(firebaseConfig);
