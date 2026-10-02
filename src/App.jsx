@@ -2158,6 +2158,8 @@ function App() {
   const [draggedPlannerTodoId, setDraggedPlannerTodoId] = useState(null);
   const [saveReward, setSaveReward] = useState('');
   const [isRadioPlaying, setIsRadioPlaying] = useState(false);
+  const [radioVolume, setRadioVolume] = useState(35);
+  const [plannerNoteSearch, setPlannerNoteSearch] = useState('');
   const [customQuotes, setCustomQuotes] = useState(getInitialCustomQuotes);
   const [customQuoteDraft, setCustomQuoteDraft] = useState('');
   const [quoteStyle, setQuoteStyle] = useState(getInitialQuoteStyle);
@@ -2230,6 +2232,8 @@ function App() {
   const companionMediaRef = useRef(null);
   const plannerBoardRef = useRef(plannerBoard);
   const importantDatesRef = useRef(importantDates);
+  const radioPlayerContainerRef = useRef(null);
+  const radioPlayerRef = useRef(null);
 
   const isMasterAdmin = user?.email?.toLowerCase() === MASTER_ADMIN_EMAIL;
   const showAdminTools = isMasterAdmin && adminViewMode === 'master';
@@ -2961,6 +2965,102 @@ function App() {
     if (plannerTodoFilter === 'high') return todo.priority === 'high';
     return true;
   }), [plannerBoard.todos, plannerTodoFilter]);
+  const plannerNoteWordCount = useMemo(() => {
+    const trimmed = plannerBoard.text.trim();
+    return trimmed ? trimmed.split(/\s+/).length : 0;
+  }, [plannerBoard.text]);
+  const plannerNoteLineCount = useMemo(() => plannerBoard.text.split('\n').filter((line) => line.trim()).length, [plannerBoard.text]);
+  const plannerNoteSearchCount = useMemo(() => {
+    const query = plannerNoteSearch.trim().toLowerCase();
+    if (!query) return 0;
+    return plannerBoard.text.toLowerCase().split(query).length - 1;
+  }, [plannerBoard.text, plannerNoteSearch]);
+  const plannerQuickTemplates = [
+    '## Today\n- ',
+    '## Ideas dump\n- ',
+    '## Shopping / errands\n- ',
+    '## Study / work\n- ',
+    `## ${new Date().toLocaleDateString()}\n- `
+  ];
+
+  useEffect(() => {
+    if (!isRadioPlaying) {
+      if (radioPlayerRef.current?.pauseVideo) {
+        try {
+          radioPlayerRef.current.pauseVideo();
+        } catch {}
+      }
+      return;
+    }
+
+    let cancelled = false;
+
+    const loadYouTubeApi = () => new Promise((resolve) => {
+      if (window.YT?.Player) {
+        resolve(window.YT);
+        return;
+      }
+
+      const existingScript = document.querySelector('script[data-lofi-youtube-api="true"]');
+      const previousReady = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = () => {
+        previousReady?.();
+        resolve(window.YT);
+      };
+
+      if (!existingScript) {
+        const script = document.createElement('script');
+        script.src = 'https://www.youtube.com/iframe_api';
+        script.async = true;
+        script.dataset.lofiYoutubeApi = 'true';
+        document.body.appendChild(script);
+      }
+    });
+
+    loadYouTubeApi().then((YT) => {
+      if (cancelled || !radioPlayerContainerRef.current) return;
+
+      if (!radioPlayerRef.current) {
+        radioPlayerRef.current = new YT.Player(radioPlayerContainerRef.current, {
+          height: '1',
+          width: '1',
+          videoId: 'rFZHOHl-L8A',
+          playerVars: {
+            autoplay: 1,
+            controls: 0,
+            rel: 0,
+            playsinline: 1,
+            loop: 1,
+            playlist: 'rFZHOHl-L8A'
+          },
+          events: {
+            onReady: (event) => {
+              event.target.setVolume(radioVolume);
+              event.target.playVideo();
+            }
+          }
+        });
+        return;
+      }
+
+      try {
+        radioPlayerRef.current.setVolume?.(radioVolume);
+        radioPlayerRef.current.playVideo?.();
+      } catch {}
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isRadioPlaying]);
+
+  useEffect(() => {
+    if (radioPlayerRef.current?.setVolume) {
+      try {
+        radioPlayerRef.current.setVolume(radioVolume);
+      } catch {}
+    }
+  }, [radioVolume]);
   const weeklyGoal = 5;
   const weeklyCheckIns = useMemo(() => {
     const sevenDaysAgo = new Date();
@@ -5132,12 +5232,41 @@ function App() {
             </div>
 
             <div className="mt-6 rounded-[1.8rem] border border-sage-100/80 bg-sage-50/45 p-5 shadow-sm">
-              <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+              <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
                 <div>
                   <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-500">Important notes</p>
                   <p className="mt-1 text-sm font-semibold text-sage-600">Keep deadlines, reminders, shopping needs, travel details, or anything else you want in one calmer place.</p>
                 </div>
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-sage-400">{plannerStorageLabel}</p>
+                <div className="flex flex-wrap items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-700">
+                  <span className="rounded-full border border-sage-100 bg-white px-3 py-1">{plannerNoteWordCount} words</span>
+                  <span className="rounded-full border border-sage-100 bg-white px-3 py-1">{plannerNoteLineCount} lines</span>
+                  <span className="rounded-full border border-sage-100 bg-white px-3 py-1">{plannerStorageLabel}</span>
+                </div>
+              </div>
+              <div className="mt-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+                <div className="flex flex-wrap gap-2">
+                  {plannerQuickTemplates.map((template) => (
+                    <button
+                      key={template}
+                      className="rounded-full border border-sage-100 bg-white px-3 py-2 text-xs font-extrabold text-sage-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-100"
+                      onClick={() => setPlannerBoard((current) => ({ ...current, text: current.text.trim() ? `${current.text.trim()}\n\n${template}` : template }))}
+                      type="button"
+                    >
+                      {template.split('\n')[0].replace('## ', '')}
+                    </button>
+                  ))}
+                </div>
+                <div className="flex items-center gap-2 rounded-full border border-sage-100 bg-white px-3 py-2 shadow-sm">
+                  <input
+                    className="w-40 bg-transparent text-sm font-semibold text-sage-800 outline-none placeholder:text-sage-400"
+                    onChange={(event) => setPlannerNoteSearch(event.target.value)}
+                    placeholder="Find in notes"
+                    value={plannerNoteSearch}
+                  />
+                  {plannerNoteSearch.trim() && (
+                    <span className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-sage-500">{plannerNoteSearchCount} hits</span>
+                  )}
+                </div>
               </div>
               <textarea
                 className="mt-4 min-h-[22rem] w-full rounded-[1.5rem] border border-sage-100 bg-white px-5 py-4 text-sm leading-7 text-sage-900 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
@@ -5145,6 +5274,7 @@ function App() {
                 placeholder="Keep important things here: dates, calls, shopping needs, ideas, and practical details you want nearby."
                 value={plannerBoard.text}
               />
+              <p className="mt-3 text-xs font-semibold text-sage-500">Tip: use the quick chips above to drop in neat little sections instead of staring at a blank notes page.</p>
             </div>
           </div>
 
@@ -6195,9 +6325,10 @@ function App() {
 
       
       {/* Floating Lofi Radio Player */}
-      <div className="fixed bottom-24 left-4 z-50 lg:bottom-10 lg:left-10 flex flex-col items-start gap-3">
+      <div className="fixed bottom-24 left-4 z-50 flex flex-col items-start gap-3 lg:bottom-10 lg:left-10">
+        <div ref={radioPlayerContainerRef} className="pointer-events-none absolute h-1 w-1 opacity-0" aria-hidden="true" />
         {isRadioPlaying && (
-          <div className="rounded-2xl border border-white/60 bg-white/80 px-4 py-2 text-xs font-extrabold tracking-[0.18em] text-sage-800 shadow-soft backdrop-blur-xl animate-fade-in flex items-center gap-2">
+          <div className="animate-fade-in rounded-2xl border border-white/60 bg-white/80 px-4 py-2 text-xs font-extrabold tracking-[0.18em] text-sage-800 shadow-soft backdrop-blur-xl flex items-center gap-2">
             <Music size={14} className="animate-pulse" /> LOFI PLAYING
           </div>
         )}
@@ -6211,15 +6342,22 @@ function App() {
         >
           {isRadioPlaying ? <Music size={24} className="animate-pulse" /> : <Headphones size={24} />}
         </button>
-        {isRadioPlaying && (
-          <iframe
-            className="pointer-events-none absolute h-1 w-1 opacity-0"
-            src="https://www.youtube-nocookie.com/embed/rFZHOHl-L8A?autoplay=1&playsinline=1&rel=0&controls=0"
-            title="Lofi Memory background radio"
-            allow="autoplay; encrypted-media"
-            frameBorder="0"
+        <div className={`w-[15.5rem] rounded-[1.5rem] border border-white/70 bg-white/90 px-4 py-3 shadow-soft backdrop-blur-xl transition duration-300 ${isRadioPlaying ? 'animate-fade-in' : 'opacity-95'}`}>
+          <div className="flex items-center justify-between gap-3 text-[11px] font-extrabold uppercase tracking-[0.2em] text-sage-600">
+            <span>{isRadioPlaying ? 'Volume' : 'Ready to play'}</span>
+            <span>{isRadioPlaying ? `${radioVolume}%` : 'Off'}</span>
+          </div>
+          <input
+            aria-label="Adjust lofi radio volume"
+            className="mt-3 h-2 w-full cursor-pointer appearance-none rounded-full bg-sage-100 accent-sage-700"
+            max="100"
+            min="0"
+            onChange={(event) => setRadioVolume(Number(event.target.value))}
+            type="range"
+            value={radioVolume}
           />
-        )}
+          <p className="mt-3 text-xs font-semibold leading-5 text-sage-500">Tap the headphones to start the background track, then use the slider to land on a softer or fuller volume.</p>
+        </div>
       </div>
 
       {!cookieConsentAccepted && (
