@@ -6435,6 +6435,11 @@ function App() {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
+
+        @keyframes lofiGlowPulse {
+          0%, 100% { opacity: 0.45; transform: scale(0.98); }
+          50% { opacity: 0.9; transform: scale(1.04); }
+        }
       `}</style>
 
       {/* Floating Lofi Radio Player */}
@@ -6483,22 +6488,33 @@ function App() {
           <button
             aria-label={isRadioPlaying ? 'Pause lofi radio' : 'Play lofi radio'}
             onClick={() => setIsRadioPlaying(prev => !prev)}
-            className={`absolute inset-[0.72rem] z-20 flex items-center justify-center overflow-hidden rounded-full shadow-lift transition duration-300 hover:-translate-y-1 ${
-              isRadioPlaying ? 'bg-sage-200/95 hover:bg-sage-200' : 'bg-sage-100/95 hover:bg-sage-100'
+            className={`absolute inset-[0.72rem] z-20 flex items-center justify-center overflow-hidden rounded-full transition duration-300 hover:-translate-y-1 ${
+              isRadioPlaying
+                ? 'bg-sage-200/95 ring-1 ring-white/60 shadow-[0_12px_34px_rgba(72,111,66,0.32)] hover:bg-sage-200'
+                : 'bg-sage-100/95 shadow-lift hover:bg-sage-100'
             }`}
             title="Toggle Lofi Radio"
             type="button"
           >
+            {isRadioPlaying && (
+              <span
+                className="pointer-events-none absolute inset-0 rounded-full"
+                style={{ animation: 'lofiGlowPulse 2.4s ease-in-out infinite', background: 'radial-gradient(circle, rgba(139, 181, 124, 0.34) 0%, rgba(139, 181, 124, 0.16) 42%, rgba(139, 181, 124, 0) 72%)' }}
+              />
+            )}
             <span
               className="relative flex h-full w-full items-center justify-center rounded-full"
-              style={{ animation: isRadioPlaying ? 'lofiVinylSpin 3.6s linear infinite' : 'none' }}
+              style={{ animation: isRadioPlaying ? 'lofiVinylSpin 6.8s linear infinite' : 'none' }}
             >
               <img
                 alt="Lofi radio vinyl icon"
                 className={`h-full w-full rounded-full object-cover transition duration-300 ${isRadioPlaying ? 'opacity-100 saturate-110' : 'opacity-90 saturate-75'}`}
                 src={radioVinylIcon}
               />
-              <span className="pointer-events-none absolute h-3.5 w-3.5 rounded-full border border-white/70 bg-sage-950/80 shadow-[0_0_0_3px_rgba(255,255,255,0.35)]" />
+              <span className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle_at_32%_24%,rgba(255,255,255,0.42),transparent_28%),radial-gradient(circle_at_70%_72%,rgba(0,0,0,0.18),transparent_34%)]" />
+              <span className="pointer-events-none absolute flex h-4 w-4 items-center justify-center rounded-full border border-white/70 bg-sage-950/85 shadow-[0_0_0_3px_rgba(255,255,255,0.35)]">
+                <span className="h-2 w-2 rounded-full bg-[radial-gradient(circle_at_35%_35%,#fff7d6,#d5b67f_58%,#6f4f2a)] shadow-[0_0_8px_rgba(255,244,212,0.45)]" />
+              </span>
             </span>
           </button>
           <div className={`pointer-events-none absolute -bottom-2 left-1/2 -translate-x-1/2 rounded-full border border-white/75 bg-white/88 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-sage-600 shadow-sm backdrop-blur-xl transition duration-300 ${isRadioDialFeedbackVisible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'}`}>
