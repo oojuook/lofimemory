@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { RotateCcw, Sparkles } from 'lucide-react';
+import { Edit3, RotateCcw, Sparkles } from 'lucide-react';
 
 const BOARD_SIZE = 9;
 const BOX_SIZE = 3;
@@ -153,6 +153,33 @@ function boardsMatch(board, solution) {
   ));
 }
 
+function removeCellNotes(notesByCell, cellId) {
+  if (!notesByCell[cellId]) {
+    return notesByCell;
+  }
+
+  const nextNotes = { ...notesByCell };
+  delete nextNotes[cellId];
+  return nextNotes;
+}
+
+function toggleCellNote(notesByCell, cellId, value) {
+  const currentNotes = notesByCell[cellId] || [];
+  const alreadyPresent = currentNotes.includes(value);
+  const nextValues = alreadyPresent
+    ? currentNotes.filter((item) => item !== value)
+    : [...currentNotes, value].sort((left, right) => left - right);
+
+  if (nextValues.length === 0) {
+    return removeCellNotes(notesByCell, cellId);
+  }
+
+  return {
+    ...notesByCell,
+    [cellId]: nextValues,
+  };
+}
+
 function getSudokuCellClass({
   checkedWrong,
   conflict,
@@ -186,7 +213,7 @@ function getSudokuCellClass({
   return 'bg-[#fbf8f2] text-slate-900';
 }
 
-function SudokuCellButton({ cellClass, cellId, colIndex, onSelect, rowIndex, selected, value }) {
+function SudokuCellButton({ cellClass, cellId, colIndex, notes, onSelect, rowIndex, selected, value }) {
   return (
     <button
       key={cellId}
@@ -200,17 +227,140 @@ function SudokuCellButton({ cellClass, cellId, colIndex, onSelect, rowIndex, sel
       }}
       type="button"
     >
-      {value || ''}
+      {value ? (
+        value
+      ) : (
+        <div className="grid w-full grid-cols-3 gap-[1px] px-[2px] text-[0.55rem] font-bold leading-none text-slate-500 sm:text-[0.65rem]">
+          {DIGITS.map((digit) => (
+            <span key={`${cellId}-${digit}`} className={notes.includes(digit) ? 'opacity-100' : 'opacity-0'}>
+              {digit}
+            </span>
+          ))}
+        </div>
+      )}
     </button>
   );
 }
 
-function SudokuSidebar({ activeValue, checkBoard, message, placeValue, revealSelectedCell, startFreshPuzzle }) {
+function SudokuBoard({
+  activeValue,
+  board,
+  checkedCells,
+  conflictSet,
+  isEditableCell,
+  notesByCell,
+  selectedBoxCol,
+  selectedBoxRow,
+  selectedCell,
+  setSelectedCell,
+}) {
+  return (
+    <div className="rounded-[1.75rem] border border-white/80 bg-white/92 p-4 shadow-sm">
+      <div className="grid grid-cols-9 gap-[3px] rounded-[1.5rem] bg-[#dfe7df] p-[6px] sm:gap-1 sm:p-3">
+        {board.map((row, rowIndex) => row.map((value, colIndex) => {
+          const cellId = getCellId(rowIndex, colIndex);
+          const editable = isEditableCell(rowIndex, colIndex);
+          const selected = selectedCell?.row === rowIndex && selectedCell?.col === colIndex;
+          const sameValue = activeValue !== 0 && activeValue === value;
+          const checkedWrong = checkedCells.includes(cellId);
+          const conflict = conflictSet.has(cellId);
+          const inSameRow = selectedCell?.row === rowIndex;
+          const inSameCol = selectedCell?.col === colIndex;
+          const inSameBox = selectedCell
+            && selectedBoxRow === Math.floor(rowIndex / BOX_SIZE)
+            && selectedBoxCol === Math.floor(colIndex / BOX_SIZE);
+          const cellClass = getSudokuCellClass({
+            checkedWrong,
+            conflict,
+            editable,
+            inSameBox,
+            inSameCol,
+            inSameRow,
+            sameValue,
+            selected,
+          });
+
+          return (
+            <SudokuCellButton
+              cellClass={cellClass}
+              cellId={cellId}
+              colIndex={colIndex}
+              key={cellId}
+              notes={editable && value === 0 ? (notesByCell[cellId] || []) : []}
+              onSelect={() => setSelectedCell({ row: rowIndex, col: colIndex })}
+              rowIndex={rowIndex}
+              selected={selected}
+              value={value}
+            />
+          );
+        }))}
+      </div>
+    </div>
+  );
+}
+
+function SudokuHeader({ completedRounds, config, conflictCount, notesMode, openCells }) {
+  return (
+    <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+      <div>
+        <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/88 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-slate-700 shadow-sm">
+          <Sparkles size={14} /> {config.label} sudoku flow
+        </div>
+        <h3 className="mt-4 text-3xl font-bold tracking-tight text-slate-950">Quiet Sudoku</h3>
+        <p className="mt-2 max-w-2xl text-sm leading-7 text-slate-700">
+          A cozy Sudoku board for when you want a familiar logic puzzle that still feels slow, tidy,
+          and easy to settle into.
+        </p>
+        <p className="mt-2 text-sm font-semibold text-slate-600">{config.note}</p>
+      </div>
+      <div className="grid gap-2 rounded-[1.5rem] border border-white/85 bg-white/80 p-3 shadow-sm sm:grid-cols-4 lg:min-w-[28rem]">
+        <div className="rounded-[1.15rem] bg-slate-50 px-4 py-3 text-center">
+          <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-500">Solved</p>
+          <p className="mt-2 text-xl font-extrabold text-slate-950">{completedRounds}</p>
+        </div>
+        <div className="rounded-[1.15rem] bg-slate-50 px-4 py-3 text-center">
+          <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-500">Open cells</p>
+          <p className="mt-2 text-xl font-extrabold text-slate-950">{openCells}</p>
+        </div>
+        <div className="rounded-[1.15rem] bg-slate-50 px-4 py-3 text-center">
+          <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-500">Conflicts</p>
+          <p className="mt-2 text-xl font-extrabold text-slate-950">{conflictCount}</p>
+        </div>
+        <div className="rounded-[1.15rem] bg-slate-50 px-4 py-3 text-center">
+          <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-500">Mode</p>
+          <p className="mt-2 text-sm font-extrabold text-slate-950">{notesMode ? 'Pencil marks' : 'Fill numbers'}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SudokuSidebar({
+  activeValue,
+  checkBoard,
+  clearSelectedCell,
+  handleDigitInput,
+  message,
+  notesMode,
+  revealSelectedCell,
+  setNotesMode,
+  startFreshPuzzle,
+}) {
   return (
     <div className="space-y-4">
       <div className="rounded-[1.5rem] border border-white/80 bg-white/92 p-4 shadow-sm">
-        <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-slate-600">Soft guidance</p>
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-slate-600">Soft guidance</p>
+          <button
+            className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.16em] transition ${notesMode ? 'bg-sky-100 text-sky-950' : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}`}
+            onClick={() => setNotesMode((previous) => !previous)}
+            type="button"
+          >
+            <Edit3 size={12} /> {notesMode ? 'Pencil on' : 'Pencil off'}
+          </button>
+        </div>
         <p className="mt-3 text-sm leading-7 text-slate-700">{message}</p>
+        <p className="mt-2 text-xs font-semibold text-slate-500">Press <span className="font-extrabold text-slate-700">N</span> to toggle pencil marks, then tap 1–9 to add tiny notes.</p>
         <div className="mt-4 grid gap-2 sm:grid-cols-2 xl:grid-cols-1">
           <button
             className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-4 py-3 text-sm font-extrabold text-white transition hover:bg-slate-800"
@@ -228,7 +378,7 @@ function SudokuSidebar({ activeValue, checkBoard, message, placeValue, revealSel
           </button>
           <button
             className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-extrabold text-slate-800 transition hover:bg-slate-50"
-            onClick={() => placeValue(0)}
+            onClick={clearSelectedCell}
             type="button"
           >
             Clear square
@@ -244,13 +394,18 @@ function SudokuSidebar({ activeValue, checkBoard, message, placeValue, revealSel
       </div>
 
       <div className="rounded-[1.5rem] border border-white/80 bg-white/92 p-4 shadow-sm">
-        <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-slate-600">Number pad</p>
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-slate-600">Number pad</p>
+          <span className={`rounded-full px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.16em] ${notesMode ? 'bg-sky-100 text-sky-900' : 'bg-slate-100 text-slate-600'}`}>
+            {notesMode ? 'Pencil marks' : 'Fill mode'}
+          </span>
+        </div>
         <div className="mt-4 grid grid-cols-5 gap-2">
           {DIGITS.map((number) => (
             <button
               key={number}
-              className={`rounded-2xl border px-0 py-3 text-sm font-extrabold transition ${activeValue === number ? 'border-sky-300 bg-sky-100 text-sky-950' : 'border-slate-200 bg-slate-50 text-slate-900 hover:bg-white'}`}
-              onClick={() => placeValue(number)}
+              className={`rounded-2xl border px-0 py-3 text-sm font-extrabold transition ${activeValue === number && !notesMode ? 'border-sky-300 bg-sky-100 text-sky-950' : 'border-slate-200 bg-slate-50 text-slate-900 hover:bg-white'}`}
+              onClick={() => handleDigitInput(number)}
               type="button"
             >
               {number}
@@ -258,10 +413,10 @@ function SudokuSidebar({ activeValue, checkBoard, message, placeValue, revealSel
           ))}
           <button
             className="col-span-5 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-extrabold text-slate-800 transition hover:bg-slate-50"
-            onClick={() => placeValue(0)}
+            onClick={clearSelectedCell}
             type="button"
           >
-            Tap 1–9 or use your keyboard. Backspace clears.
+            {notesMode ? 'Digit taps add or remove pencil marks. Backspace clears the square.' : 'Tap 1–9 or use your keyboard. Backspace clears.'}
           </button>
         </div>
       </div>
@@ -281,28 +436,13 @@ export default function QuietSudoku({ difficulty = 'medium' }) {
   const [checkedCells, setCheckedCells] = useState([]);
   const [completedRounds, setCompletedRounds] = useState(() => parseInt(localStorage.getItem(roundsKey) || '0', 10));
   const [roundStatus, setRoundStatus] = useState('playing');
+  const [notesMode, setNotesMode] = useState(false);
+  const [notesByCell, setNotesByCell] = useState({});
 
   const puzzleBoard = useMemo(() => parseBoardString(activePuzzle.puzzle), [activePuzzle.puzzle]);
   const solutionBoard = useMemo(() => parseBoardString(activePuzzle.solution), [activePuzzle.solution]);
   const conflictSet = useMemo(() => collectConflicts(board), [board]);
-
-  useEffect(() => {
-    const nextPuzzle = pickPuzzle(pool);
-    const nextBoard = parseBoardString(nextPuzzle.puzzle);
-
-    setActivePuzzle(nextPuzzle);
-    setBoard(nextBoard);
-    setSelectedCell(getFirstEditableCell(nextBoard));
-    setMessage('Tap a square and place one number at a time — no rush.');
-    setCheckedCells([]);
-    setCompletedRounds(parseInt(localStorage.getItem(roundsKey) || '0', 10));
-    setRoundStatus('playing');
-  }, [pool, roundsKey]);
-
-  const openCells = useMemo(
-    () => board.flat().filter((value) => value === 0).length,
-    [board],
-  );
+  const openCells = useMemo(() => board.flat().filter((value) => value === 0).length, [board]);
 
   const activeValue = selectedCell ? board[selectedCell.row][selectedCell.col] : 0;
   const selectedBoxRow = selectedCell ? Math.floor(selectedCell.row / BOX_SIZE) : -1;
@@ -310,17 +450,26 @@ export default function QuietSudoku({ difficulty = 'medium' }) {
 
   const isEditableCell = useCallback((row, col) => puzzleBoard[row][col] === 0, [puzzleBoard]);
 
-  const startFreshPuzzle = useCallback(() => {
-    const nextPuzzle = pickPuzzle(pool, activePuzzle.id);
+  const resetPuzzleState = useCallback((nextPuzzle, nextMessage) => {
     const nextBoard = parseBoardString(nextPuzzle.puzzle);
-
     setActivePuzzle(nextPuzzle);
     setBoard(nextBoard);
     setSelectedCell(getFirstEditableCell(nextBoard));
+    setMessage(nextMessage);
     setCheckedCells([]);
     setRoundStatus('playing');
-    setMessage('Fresh board, same soft logic mood.');
-  }, [activePuzzle.id, pool]);
+    setNotesMode(false);
+    setNotesByCell({});
+    setCompletedRounds(parseInt(localStorage.getItem(roundsKey) || '0', 10));
+  }, [roundsKey]);
+
+  useEffect(() => {
+    resetPuzzleState(pickPuzzle(pool), 'Tap a square and place one number at a time — no rush.');
+  }, [pool, resetPuzzleState]);
+
+  const clearCellNotes = useCallback((cellId) => {
+    setNotesByCell((previous) => removeCellNotes(previous, cellId));
+  }, []);
 
   const placeValue = useCallback((value) => {
     if (!selectedCell || roundStatus === 'solved') {
@@ -333,12 +482,14 @@ export default function QuietSudoku({ difficulty = 'medium' }) {
       return;
     }
 
+    const cellId = getCellId(row, col);
     setBoard((previousBoard) => {
       const nextBoard = cloneBoard(previousBoard);
       nextBoard[row][col] = value;
       return nextBoard;
     });
-    setCheckedCells((previous) => previous.filter((cellId) => cellId !== getCellId(row, col)));
+    clearCellNotes(cellId);
+    setCheckedCells((previous) => previous.filter((currentCellId) => currentCellId !== cellId));
 
     if (value === 0) {
       setMessage('Square cleared — take another look whenever you want.');
@@ -347,10 +498,51 @@ export default function QuietSudoku({ difficulty = 'medium' }) {
 
     if (value === solutionBoard[row][col]) {
       setMessage('Nice — that number fits cleanly.');
-    } else {
-      setMessage('Keep going. You can always use check board for a gentle nudge.');
+      return;
     }
-  }, [isEditableCell, roundStatus, selectedCell, solutionBoard]);
+
+    setMessage('Keep going. You can always use check board for a gentle nudge.');
+  }, [clearCellNotes, isEditableCell, roundStatus, selectedCell, solutionBoard]);
+
+  const toggleSelectedNote = useCallback((value) => {
+    if (!selectedCell || roundStatus === 'solved') {
+      return;
+    }
+
+    const { row, col } = selectedCell;
+    if (!isEditableCell(row, col)) {
+      setMessage('Starter squares do not need pencil marks.');
+      return;
+    }
+
+    if (board[row][col] !== 0) {
+      setMessage('Clear the square first if you want to leave pencil marks there.');
+      return;
+    }
+
+    const cellId = getCellId(row, col);
+    const alreadyPresent = (notesByCell[cellId] || []).includes(value);
+    setNotesByCell((previous) => toggleCellNote(previous, cellId, value));
+    setCheckedCells((previous) => previous.filter((currentCellId) => currentCellId !== cellId));
+    setMessage(alreadyPresent ? `Pencil mark ${value} removed.` : `Pencil mark ${value} added.`);
+  }, [board, isEditableCell, notesByCell, roundStatus, selectedCell]);
+
+  const handleDigitInput = useCallback((value) => {
+    if (notesMode) {
+      toggleSelectedNote(value);
+      return;
+    }
+
+    placeValue(value);
+  }, [notesMode, placeValue, toggleSelectedNote]);
+
+  const clearSelectedCell = useCallback(() => {
+    placeValue(0);
+  }, [placeValue]);
+
+  const startFreshPuzzle = useCallback(() => {
+    resetPuzzleState(pickPuzzle(pool, activePuzzle.id), 'Fresh board, same soft logic mood.');
+  }, [activePuzzle.id, pool, resetPuzzleState]);
 
   const checkBoard = useCallback(() => {
     if (roundStatus === 'solved') {
@@ -395,14 +587,16 @@ export default function QuietSudoku({ difficulty = 'medium' }) {
       return;
     }
 
+    const cellId = getCellId(row, col);
     setBoard((previousBoard) => {
       const nextBoard = cloneBoard(previousBoard);
       nextBoard[row][col] = solutionBoard[row][col];
       return nextBoard;
     });
-    setCheckedCells((previous) => previous.filter((cellId) => cellId !== getCellId(row, col)));
+    clearCellNotes(cellId);
+    setCheckedCells((previous) => previous.filter((currentCellId) => currentCellId !== cellId));
     setMessage('One square revealed — let the rest unfold from there.');
-  }, [isEditableCell, selectedCell, solutionBoard]);
+  }, [clearCellNotes, isEditableCell, selectedCell, solutionBoard]);
 
   useEffect(() => {
     if (roundStatus === 'solved' || conflictSet.size > 0) {
@@ -426,15 +620,25 @@ export default function QuietSudoku({ difficulty = 'medium' }) {
         return;
       }
 
+      if (event.key.toLowerCase() === 'n') {
+        event.preventDefault();
+        setNotesMode((previous) => {
+          const next = !previous;
+          setMessage(next ? 'Pencil marks on — tap digits to leave tiny notes.' : 'Pencil marks off — digits will fill the square again.');
+          return next;
+        });
+        return;
+      }
+
       if (event.key >= '1' && event.key <= '9') {
         event.preventDefault();
-        placeValue(Number(event.key));
+        handleDigitInput(Number(event.key));
         return;
       }
 
       if (event.key === 'Backspace' || event.key === 'Delete' || event.key === '0') {
         event.preventDefault();
-        placeValue(0);
+        clearSelectedCell();
         return;
       }
 
@@ -459,87 +663,41 @@ export default function QuietSudoku({ difficulty = 'medium' }) {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [placeValue, selectedCell]);
+  }, [clearSelectedCell, handleDigitInput, selectedCell]);
 
   return (
     <div className="mx-auto mt-12 w-full max-w-[1040px] pb-12">
       <div className="rounded-[2rem] border border-sage-100 bg-gradient-to-br from-white via-slate-50/80 to-sand-50/80 p-5 shadow-soft lg:p-6">
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-          <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/88 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-slate-700 shadow-sm">
-              <Sparkles size={14} /> {config.label} sudoku flow
-            </div>
-            <h3 className="mt-4 text-3xl font-bold tracking-tight text-slate-950">Quiet Sudoku</h3>
-            <p className="mt-2 max-w-2xl text-sm leading-7 text-slate-700">
-              A cozy Sudoku board for when you want a familiar logic puzzle that still feels slow, tidy,
-              and easy to settle into.
-            </p>
-            <p className="mt-2 text-sm font-semibold text-slate-600">{config.note}</p>
-          </div>
-          <div className="grid gap-2 rounded-[1.5rem] border border-white/85 bg-white/80 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[23rem]">
-            <div className="rounded-[1.15rem] bg-slate-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-500">Solved</p>
-              <p className="mt-2 text-xl font-extrabold text-slate-950">{completedRounds}</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-slate-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-500">Open cells</p>
-              <p className="mt-2 text-xl font-extrabold text-slate-950">{openCells}</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-slate-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-500">Conflicts</p>
-              <p className="mt-2 text-xl font-extrabold text-slate-950">{conflictSet.size}</p>
-            </div>
-          </div>
-        </div>
+        <SudokuHeader
+          completedRounds={completedRounds}
+          config={config}
+          conflictCount={conflictSet.size}
+          notesMode={notesMode}
+          openCells={openCells}
+        />
 
         <div className="mt-6 grid gap-5 xl:grid-cols-[minmax(0,1fr)_280px]">
-          <div className="rounded-[1.75rem] border border-white/80 bg-white/92 p-4 shadow-sm">
-            <div className="grid grid-cols-9 gap-[3px] rounded-[1.5rem] bg-[#dfe7df] p-[6px] sm:gap-1 sm:p-3">
-              {board.map((row, rowIndex) => row.map((value, colIndex) => {
-                const cellId = getCellId(rowIndex, colIndex);
-                const editable = isEditableCell(rowIndex, colIndex);
-                const selected = selectedCell?.row === rowIndex && selectedCell?.col === colIndex;
-                const sameValue = activeValue !== 0 && activeValue === value;
-                const checkedWrong = checkedCells.includes(cellId);
-                const conflict = conflictSet.has(cellId);
-                const inSameRow = selectedCell?.row === rowIndex;
-                const inSameCol = selectedCell?.col === colIndex;
-                const inSameBox = selectedCell
-                  && selectedBoxRow === Math.floor(rowIndex / BOX_SIZE)
-                  && selectedBoxCol === Math.floor(colIndex / BOX_SIZE);
-                const cellClass = getSudokuCellClass({
-                  checkedWrong,
-                  conflict,
-                  editable,
-                  inSameBox,
-                  inSameCol,
-                  inSameRow,
-                  sameValue,
-                  selected,
-                });
-
-                return (
-                  <SudokuCellButton
-                    cellClass={cellClass}
-                    cellId={cellId}
-                    colIndex={colIndex}
-                    key={cellId}
-                    onSelect={() => setSelectedCell({ row: rowIndex, col: colIndex })}
-                    rowIndex={rowIndex}
-                    selected={selected}
-                    value={value}
-                  />
-                );
-              }))}
-            </div>
-          </div>
-
+          <SudokuBoard
+            activeValue={activeValue}
+            board={board}
+            checkedCells={checkedCells}
+            conflictSet={conflictSet}
+            isEditableCell={isEditableCell}
+            notesByCell={notesByCell}
+            selectedBoxCol={selectedBoxCol}
+            selectedBoxRow={selectedBoxRow}
+            selectedCell={selectedCell}
+            setSelectedCell={setSelectedCell}
+          />
           <SudokuSidebar
             activeValue={activeValue}
             checkBoard={checkBoard}
+            clearSelectedCell={clearSelectedCell}
+            handleDigitInput={handleDigitInput}
             message={message}
-            placeValue={placeValue}
+            notesMode={notesMode}
             revealSelectedCell={revealSelectedCell}
+            setNotesMode={setNotesMode}
             startFreshPuzzle={startFreshPuzzle}
           />
         </div>
