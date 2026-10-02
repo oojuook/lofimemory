@@ -31,8 +31,9 @@ import {
   Sparkles,
   Sunrise,
   Trash2,
+  Type,
   Waves,
-  Wind
+  Wind,
 } from 'lucide-react';
 import ZenGame from './ZenGame';
 import StreamSurfer from './StreamSurfer';
@@ -44,6 +45,7 @@ import QuietSlide from './QuietSlide';
 import QuietWords from './QuietWords';
 import QuietKeys from './QuietKeys';
 import QuietClues from './QuietClues';
+import QuietWordle from './QuietWordle';
 import { auth, db, getMessagingIfSupported, googleProvider } from './firebase';
 
 const STORAGE_KEY = 'quiet-harbor-journal-v1';
@@ -366,6 +368,11 @@ const wellnessArticles = [
 ];
 
 const seoLandingBlocks = [
+  {
+    title: 'Wordle online',
+    text: 'Play a calm Wordle-style game online when you want a familiar word-guessing loop that still feels cozy, gentle, and easy to revisit.',
+    href: '/wordle-online.html'
+  },
   {
     title: 'Crossword game online',
     text: 'Play a calm crossword-style game online when you want clue-by-clue progress without the pressure of a full newspaper puzzle.',
@@ -725,6 +732,7 @@ const seoFaqs = [
 ];
 
 const seoGuidePages = [
+  { label: 'Popular guide', title: 'Wordle online', text: 'Play a calm Wordle-style puzzle online when you want a familiar word-guessing game that still feels gentle and beginner-friendly.', href: '/wordle-online.html' },
   { label: 'Popular guide', title: 'Crossword game online', text: 'Play a calm crossword-style game online when you want an easy clue loop that feels more welcoming than a full crossword grid.', href: '/crossword-game-online.html' },
   { label: 'Popular guide', title: 'Typing game online', text: 'Play a calm typing game online when you want the easiest game to pick up and enjoy in short, soft rounds.', href: '/typing-game-online.html' },
   { label: 'Popular guide', title: 'Chill place online', text: 'Find a cozy online place to chill, relax, play soft games, and keep private notes in one calm space.', href: '/chill-place-online.html' },
@@ -1177,6 +1185,7 @@ const seoGuideGroups = [
 ];
 
 const seoPopularSearches = [
+  { label: 'Wordle online', href: '/wordle-online.html' },
   { label: 'Crossword game online', href: '/crossword-game-online.html' },
   { label: 'Typing game online', href: '/typing-game-online.html' },
   { label: 'Chill place online', href: '/chill-place-online.html' },
@@ -2409,6 +2418,15 @@ function App() {
       icon: Compass,
       tone: 'from-amber-100 to-stone-50 text-amber-700',
       component: <QuietSlide difficulty={selectedGameDifficulty} />
+    },
+    {
+      id: 'quiet-wordle',
+      title: 'Quiet Wordle',
+      detail: 'Soft Wordle-style puzzle',
+      description: 'Guess a cozy word in a gentle Wordle-style round when you want something familiar, tidy, and easy to replay.',
+      icon: Type,
+      tone: 'from-teal-100 to-sky-50 text-teal-700',
+      component: <QuietWordle difficulty={selectedGameDifficulty} />
     },
     {
       id: 'quiet-words',
@@ -5529,7 +5547,7 @@ function App() {
             <div className="mb-10 text-center">
               <p className="mb-2 text-sm font-bold uppercase tracking-widest text-sage-600">Relax & Play</p>
               <h1 className="mb-3 font-display text-4xl font-bold tracking-tight text-sage-950">Pick a chill game</h1>
-              <p className="mx-auto max-w-2xl text-lg text-sage-700">Choose the kind of calm you want right now — drift, dodge, merge, match, slide, type, solve clues, sweep, or jump through a soft offline desert run. The easiest beginner picks are marked by how simple they feel to start.</p>
+              <p className="mx-auto max-w-2xl text-lg text-sage-700">Choose the kind of calm you want right now — drift, dodge, merge, match, slide, guess cozy words, type, solve clues, sweep, or jump through a soft offline desert run. The easiest beginner picks are marked by how simple they feel to start.</p>
             </div>
             <div className="mb-6 flex flex-col gap-3 rounded-[1.75rem] border border-white/80 bg-white/78 p-4 shadow-sm backdrop-blur sm:flex-row sm:items-center sm:justify-between">
               <div>
@@ -5589,6 +5607,7 @@ function App() {
                 {[
                   { id: 'quiet-keys', label: 'Quiet Keys • easiest' },
                   { id: 'quiet-words', label: 'Quiet Words • simple' },
+                  { id: 'quiet-wordle', label: 'Quiet Wordle • guess the word' },
                   { id: 'quiet-clues', label: 'Quiet Clues • clue-by-clue' },
                   { id: 'quiet-tiles', label: 'Quiet Tiles • tap and merge' }
                 ].map((item) => (
@@ -5607,7 +5626,7 @@ function App() {
               <article className="rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
                 <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Game-first comfort</p>
                 <h2 className="mt-3 text-2xl font-extrabold text-sage-950">The games are meant to be the easiest place to begin.</h2>
-                <p className="mt-3 text-sm leading-7 text-sage-700">If you just want something light, start with <span className="font-extrabold text-sage-900">Quiet Keys</span>, <span className="font-extrabold text-sage-900">Quiet Words</span>, or <span className="font-extrabold text-sage-900">Quiet Tiles</span> on Easy. Prefer no-rush logic? <span className="font-extrabold text-sage-900">Quiet Clues</span>, <span className="font-extrabold text-sage-900">Quiet Slide</span>, <span className="font-extrabold text-sage-900">Mind Sweeper</span>, and <span className="font-extrabold text-sage-900">Lotus Match</span> are the gentlest puzzle picks.</p>
+                <p className="mt-3 text-sm leading-7 text-sage-700">If you just want something light, start with <span className="font-extrabold text-sage-900">Quiet Keys</span>, <span className="font-extrabold text-sage-900">Quiet Words</span>, <span className="font-extrabold text-sage-900">Quiet Wordle</span>, or <span className="font-extrabold text-sage-900">Quiet Tiles</span> on Easy. Prefer no-rush logic? <span className="font-extrabold text-sage-900">Quiet Clues</span>, <span className="font-extrabold text-sage-900">Quiet Slide</span>, <span className="font-extrabold text-sage-900">Mind Sweeper</span>, and <span className="font-extrabold text-sage-900">Lotus Match</span> are the gentlest puzzle picks.</p>
               </article>
               <article className="rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
                 <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Right now</p>
