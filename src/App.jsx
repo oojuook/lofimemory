@@ -39,6 +39,8 @@ import StreamSurfer from './StreamSurfer';
 import LotusMatch from './LotusMatch';
 import MeadowArcher from './MeadowArcher';
 import PocketSquad from './PocketSquad';
+import BubbleBloom from './BubbleBloom';
+import CloudHop from './CloudHop';
 import { auth, db, getMessagingIfSupported, googleProvider } from './firebase';
 
 const STORAGE_KEY = 'quiet-harbor-journal-v1';
@@ -2317,6 +2319,24 @@ function App() {
       icon: Compass,
       tone: 'from-cyan-100 to-sky-50 text-cyan-700',
       component: <PocketSquad />
+    },
+    {
+      id: 'bubble-bloom',
+      title: 'Bubble Bloom',
+      detail: 'Trap & pop calm',
+      description: 'A Bubble Bobble-inspired room where you trap little bloom creatures in bubbles and pop them.',
+      icon: Moon,
+      tone: 'from-fuchsia-100 to-sky-50 text-fuchsia-700',
+      component: <BubbleBloom />
+    },
+    {
+      id: 'cloud-hop',
+      title: 'Cloud Hop',
+      detail: 'Side-scroll comfort',
+      description: 'A gentler Super Mario-style hop with coins, clouds, and easy rhythm.',
+      icon: Sunrise,
+      tone: 'from-amber-100 to-yellow-50 text-amber-700',
+      component: <CloudHop />
     }
   ];
   const selectedUnwindGameConfig = unwindGames.find((game) => game.id === selectedUnwindGame) || unwindGames[0];
@@ -5312,9 +5332,9 @@ function App() {
             <div className="mb-10 text-center">
               <p className="mb-2 text-sm font-bold uppercase tracking-widest text-sage-600">Relax & Play</p>
               <h1 className="mb-3 font-display text-4xl font-bold tracking-tight text-sage-950">Pick a chill game</h1>
-              <p className="mx-auto max-w-2xl text-lg text-sage-700">Choose the kind of calm you want right now — float for a bit, dodge gently, or reset your mind with a quiet match game.</p>
+              <p className="mx-auto max-w-2xl text-lg text-sage-700">Choose the kind of calm you want right now — drift, dodge, bubble, hop, or settle into a softer strategy run.</p>
             </div>
-            <div className="mb-8 grid gap-4 lg:grid-cols-3">
+            <div className="mb-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {unwindGames.map((game) => (
                 <button
                   key={game.id}
@@ -6529,7 +6549,8 @@ function App() {
       `}</style>
 
       {/* Floating Lofi Radio Player */}
-      <div className="fixed bottom-24 left-6 z-50 lg:bottom-10 lg:left-12">
+      <div className={`fixed z-50 ${cookieConsentAccepted ? 'bottom-24 right-4 sm:right-6' : 'bottom-40 right-4 sm:bottom-36 sm:right-6'}`}>
+
         <div ref={radioPlayerContainerRef} className="pointer-events-none absolute h-1 w-1 opacity-0" aria-hidden="true" />
         <div className="group relative h-[5.25rem] w-[5.25rem]">
           <div
@@ -6610,20 +6631,22 @@ function App() {
       </div>
 
       {!cookieConsentAccepted && (
-        <div className="fixed bottom-24 left-0 right-0 z-50 p-4 sm:bottom-0 sm:p-6 flex justify-center pointer-events-none">
-          <div className="pointer-events-auto flex w-full max-w-2xl flex-col gap-4 rounded-[1.75rem] border border-sage-200 bg-white/95 p-5 shadow-2xl backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between">
+        <div className="pointer-events-none fixed bottom-24 right-3 z-40 flex justify-end sm:bottom-6 sm:right-6">
+          <div className="pointer-events-auto w-[min(22rem,calc(100vw-1.5rem))] rounded-[1.4rem] border border-sage-200/90 bg-white/94 p-4 shadow-soft backdrop-blur-xl">
             <p className="text-sm font-medium leading-relaxed text-sage-800">
-              We use cookies to improve your experience and serve personalized ads. By using this site, you agree to our <a href="/privacy.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Privacy Policy</a> and <a href="/terms.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Terms</a>.
+              We use cookies to keep Lofi Memory smooth and support ads. By staying here, you agree to our <a href="/privacy.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Privacy Policy</a> and <a href="/terms.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Terms</a>.
             </p>
-            <button
-              onClick={() => {
-                localStorage.setItem('quiet-journal-cookie-consent', 'true');
-                setCookieConsentAccepted(true);
-              }}
-              className="shrink-0 rounded-full bg-sage-900 px-6 py-2.5 text-sm font-extrabold text-white shadow-lift transition hover:-translate-y-0.5 hover:bg-sage-800"
-            >
-              I understand
-            </button>
+            <div className="mt-3 flex justify-end">
+              <button
+                onClick={() => {
+                  localStorage.setItem('quiet-journal-cookie-consent', 'true');
+                  setCookieConsentAccepted(true);
+                }}
+                className="shrink-0 rounded-full bg-sage-900 px-5 py-2.5 text-sm font-extrabold text-white shadow-lift transition hover:-translate-y-0.5 hover:bg-sage-800"
+              >
+                Got it
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -6756,7 +6779,7 @@ function App() {
       )}
 
       <button
-        className="fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-sage-900 text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800"
+        className={`fixed z-40 flex h-12 w-12 items-center justify-center rounded-full bg-sage-900 text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800 ${cookieConsentAccepted ? 'bottom-6 right-6' : 'bottom-28 right-4 sm:bottom-24 sm:right-6'}`}
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         type="button"
         aria-label="Back to top"
