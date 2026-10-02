@@ -41,6 +41,7 @@ import DinosaurDash from './DinosaurDash';
 import MindSweeper from './MindSweeper';
 import QuietTiles from './QuietTiles';
 import QuietSlide from './QuietSlide';
+import QuietWords from './QuietWords';
 import { auth, db, getMessagingIfSupported, googleProvider } from './firebase';
 
 const STORAGE_KEY = 'quiet-harbor-journal-v1';
@@ -363,6 +364,16 @@ const wellnessArticles = [
 ];
 
 const seoLandingBlocks = [
+  {
+    title: 'Chill place online',
+    text: 'Find a chill place online where you can relax, play a calm game, breathe, write, and stay for a while without the page feeling noisy.',
+    href: '/chill-place-online.html'
+  },
+  {
+    title: 'Word game online',
+    text: 'Play a calm word game online when you want a soft vocabulary puzzle that feels familiar, light, and easy to revisit.',
+    href: '/word-game-online.html'
+  },
   {
     title: 'Sliding puzzle online',
     text: 'Play a cozy sliding puzzle online when you want a familiar tile-moving challenge that feels tidy, calm, and easy to revisit.',
@@ -702,6 +713,8 @@ const seoFaqs = [
 ];
 
 const seoGuidePages = [
+  { label: 'Popular guide', title: 'Chill place online', text: 'Find a cozy online place to chill, relax, play soft games, and keep private notes in one calm space.', href: '/chill-place-online.html' },
+  { label: 'Popular guide', title: 'Word game online', text: 'Play a calm word game online when you want a familiar puzzle that feels light and relaxing.', href: '/word-game-online.html' },
   { label: 'Popular guide', title: 'Sliding puzzle online', text: 'Play a cozy sliding puzzle online when you want a simple tile game that feels calm and satisfying.', href: '/sliding-puzzle-online.html' },
   { label: 'Popular guide', title: '2048 online', text: 'Play a calm 2048-style number merge game when you want an easy puzzle that still feels satisfying.', href: '/2048-online.html' },
   { label: 'Popular guide', title: 'Cozy browser games', text: 'Find soft browser games people like to play when they want to relax, reset, and stay for a while.', href: '/cozy-browser-games.html' },
@@ -1150,6 +1163,8 @@ const seoGuideGroups = [
 ];
 
 const seoPopularSearches = [
+  { label: 'Chill place online', href: '/chill-place-online.html' },
+  { label: 'Word game online', href: '/word-game-online.html' },
   { label: 'Sliding puzzle online', href: '/sliding-puzzle-online.html' },
   { label: '2048 online', href: '/2048-online.html' },
   { label: 'Cozy browser games', href: '/cozy-browser-games.html' },
@@ -2376,6 +2391,15 @@ function App() {
       icon: Compass,
       tone: 'from-amber-100 to-stone-50 text-amber-700',
       component: <QuietSlide difficulty={selectedGameDifficulty} />
+    },
+    {
+      id: 'quiet-words',
+      title: 'Quiet Words',
+      detail: 'Calm word scramble',
+      description: 'Unscramble soft words for a familiar word-game loop that keeps the focus light and relaxing.',
+      icon: Feather,
+      tone: 'from-fuchsia-100 to-rose-50 text-fuchsia-700',
+      component: <QuietWords difficulty={selectedGameDifficulty} />
     },
     {
       id: 'mind-sweeper',
@@ -4874,9 +4898,9 @@ function App() {
           </div>
 
           <div className="rounded-[1.9rem] border border-white/80 bg-gradient-to-br from-white/84 to-sand-50/70 p-6 shadow-soft backdrop-blur-xl">
-            <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-800">Why it feels good to write here</p>
-            <h3 className="mt-3 text-2xl font-extrabold leading-tight text-ink">The page stays quiet enough for real thoughts to arrive.</h3>
-            <p className="mt-3 max-w-sm text-sm leading-7 text-sage-800">There is a clear place to begin, soft privacy cues, and just enough support to help a first sentence feel easy instead of exposed.</p>
+            <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-800">Why it feels good to stay here</p>
+            <h3 className="mt-3 text-2xl font-extrabold leading-tight text-ink">The page feels like a chill place first, so writing can arrive naturally.</h3>
+            <p className="mt-3 max-w-sm text-sm leading-7 text-sage-800">There is a clear place to begin, soft privacy cues, cozy game breaks, and just enough support to help a first sentence feel easy instead of exposed.</p>
             <div className="mt-6 grid gap-3.5 text-sm font-semibold text-sage-900">
               <div className="flex items-center gap-3 rounded-2xl border border-sage-200 bg-white/96 px-4 py-3.5 shadow-sm">
                 <Sparkles size={15} className="text-sage-700" />
@@ -4925,7 +4949,7 @@ function App() {
               <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
                 <div>
                   <h2 className="font-display text-4xl font-bold leading-tight text-ink lg:text-5xl">{homeSections.find((s) => s.id === activeHomeSection)?.label || 'Overview'}</h2>
-                  <p className="mt-4 max-w-2xl text-lg leading-relaxed text-sage-800">{activeHomeSection === 'overview' ? (latestEntry ? `Your last page is still here. ${rewardLevel.next}` : 'Come here to relax, write a little, breathe deeper, or play a calm game when you need a softer reset.') : 'Browse gently. The layout stays simple so each section feels easier to read.'}</p>
+                  <p className="mt-4 max-w-2xl text-lg leading-relaxed text-sage-800">{activeHomeSection === 'overview' ? (latestEntry ? `Your last page is still here. ${rewardLevel.next}` : 'Come here to relax, hang out in a chill corner, write a little, breathe deeper, or play a calm game when you need a softer reset.') : 'Browse gently. The layout stays simple so each section feels easier to read.'}</p>
                 </div>
                 <a className="inline-flex shrink-0 items-center gap-2 rounded-full bg-sage-900 px-6 py-4 text-sm font-extrabold text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800" href="#journal" onClick={() => navigateToTab('write')}>
                   <PenLine size={18} /> Open today’s page
@@ -5088,7 +5112,7 @@ function App() {
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-2xl">
               <p className="text-xs font-bold uppercase tracking-[0.22em] text-sage-600">Choose your chill space</p>
-              <h2 className="mt-2 text-2xl font-extrabold text-ink">Everything you need for a softer online reset is waiting here.</h2>
+              <h2 className="mt-2 text-2xl font-extrabold text-ink">Everything you need for a softer online reset and a little place to chill is waiting here.</h2>
               <p className="mt-2 text-sm font-semibold leading-6 text-sage-700">Jump into games, notes, breathing, saved moments, or thoughts whenever they fit your mood — not because the page tells you to write first.</p>
             </div>
             <div className="grid gap-2 rounded-[1.5rem] bg-white/70 p-2 shadow-inner sm:grid-cols-3 lg:grid-cols-6">
@@ -5437,7 +5461,7 @@ function App() {
             <div className="mb-10 text-center">
               <p className="mb-2 text-sm font-bold uppercase tracking-widest text-sage-600">Relax & Play</p>
               <h1 className="mb-3 font-display text-4xl font-bold tracking-tight text-sage-950">Pick a chill game</h1>
-              <p className="mx-auto max-w-2xl text-lg text-sage-700">Choose the kind of calm you want right now — drift, dodge, merge, match, slide, sweep, or jump through a soft offline desert run.</p>
+              <p className="mx-auto max-w-2xl text-lg text-sage-700">Choose the kind of calm you want right now — drift, dodge, merge, match, slide, spell, sweep, or jump through a soft offline desert run.</p>
             </div>
             <div className="mb-6 flex flex-col gap-3 rounded-[1.75rem] border border-white/80 bg-white/78 p-4 shadow-sm backdrop-blur sm:flex-row sm:items-center sm:justify-between">
               <div>
