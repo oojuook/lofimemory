@@ -4473,7 +4473,7 @@ function App() {
 
 
       <nav className="sticky top-0 z-20 px-5 pt-5 sm:px-7 xl:px-10">
-        <div className="site-nav-shell mx-auto max-w-[1220px] rounded-[2.2rem] border border-white/80 bg-white/78 p-4 shadow-soft backdrop-blur-xl lg:p-5">
+        <div className="site-nav-shell mx-auto max-w-[1160px] rounded-[2.2rem] border border-white/80 bg-white/78 p-4 shadow-soft backdrop-blur-xl lg:p-5">
           <div className="flex flex-col gap-2.5 lg:gap-3 xl:flex-row xl:items-center xl:justify-between">
             <a className="flex items-center gap-3" href="#home" onClick={() => openHomeSection('home')}>
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-3xl bg-white shadow-lift ring-1 ring-sage-100 overflow-hidden">
@@ -4576,7 +4576,7 @@ function App() {
       </nav>
 
       {activeTab === 'home' && activeHomeSection === 'overview' && (
-      <section id="home" className="mx-auto grid max-w-[1220px] gap-8 px-5 pb-28 pt-10 sm:px-7 lg:grid-cols-12 lg:pb-12 xl:gap-12 xl:px-10">
+      <section id="home" className="mx-auto grid max-w-[1160px] gap-8 px-5 pb-28 pt-10 sm:px-7 lg:grid-cols-12 lg:pb-12 xl:gap-12 xl:px-10">
         <div className="lg:col-span-8">
           <div className="relative overflow-hidden rounded-[2rem] border border-sage-100/80 bg-white/92 p-8 shadow-soft backdrop-blur-xl lg:p-10 xl:p-11">
             <div className="pointer-events-none absolute -left-10 top-12 h-28 w-28 rounded-full bg-sage-100/45 blur-3xl"></div>
@@ -4783,7 +4783,7 @@ function App() {
       )}
 
       {activeTab === 'home' && (
-      <section className="mx-auto max-w-[1220px] px-5 sm:px-7 xl:px-10 py-4">
+      <section className="mx-auto max-w-[1160px] px-5 sm:px-7 xl:px-10 py-4">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="flex-1">
             <div className="rounded-[2.5rem] border border-sage-100/90 bg-white/96 p-7 shadow-soft backdrop-blur lg:p-10">
@@ -4948,7 +4948,7 @@ function App() {
         onRemovePin={removePin}
       />
 
-      <section id="journal" className="relative z-10 mx-auto -mt-1 max-w-[1220px] px-5 py-9 pb-28 sm:px-7 lg:-mt-4 lg:pb-10 xl:px-10">
+      <section id="journal" className="relative z-10 mx-auto -mt-1 max-w-[1160px] px-5 py-9 pb-28 sm:px-7 lg:-mt-4 lg:pb-10 xl:px-10">
         <div className="mb-6 overflow-hidden rounded-[2rem] border border-white/85 bg-gradient-to-r from-white/88 via-sage-50/78 to-sand-50/75 p-3 shadow-soft backdrop-blur xl:p-4">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-2xl">
@@ -6013,7 +6013,7 @@ function App() {
       {activeTab === 'home' && (
       <>
       {activeHomeSection === 'overview' && (
-      <section className="mx-auto max-w-[1220px] px-5 sm:px-7 xl:px-10 py-4">
+      <section className="mx-auto max-w-[1160px] px-5 sm:px-7 xl:px-10 py-4">
         <div className="quote-card quote-card-premium rounded-3xl border border-white/70 p-8 shadow-soft">
           <Quote className="mb-8 opacity-80" size={34} />
           <p className="quote-main-text font-bold leading-tight" style={{ fontFamily: activeQuoteFont, fontSize: activeQuoteSize, color: quoteStyle.textColor, lineHeight: 1.45 }}>“{quoteLibrary[quoteIndex % quoteLibrary.length]}”</p>
@@ -6025,7 +6025,7 @@ function App() {
       )}
 
       {activeHomeSection === 'about' && (
-      <section id="about" className="mx-auto max-w-[1220px] px-5 sm:px-7 xl:px-10 py-14">
+      <section id="about" className="mx-auto max-w-[1160px] px-5 sm:px-7 xl:px-10 py-14">
         <SectionHeader
           eyebrow="About Lofi Memory"
           title="A private online diary designed to feel calm, personal, and easy to return to."
@@ -6055,7 +6055,7 @@ function App() {
       )}
 
       {activeHomeSection === 'guides' && (
-      <section id="seo-landing" className="mx-auto max-w-[1220px] px-5 sm:px-7 xl:px-10 py-10">
+      <section id="seo-landing" className="mx-auto max-w-[1160px] px-5 sm:px-7 xl:px-10 py-10">
         <SectionHeader
           eyebrow="Gentle journaling guides"
           title="Find the kind of journaling support that fits what you need today."
@@ -6140,7 +6140,7 @@ function App() {
       )}
 
       {activeHomeSection === 'resources' && (
-      <section id="resources" className="mx-auto max-w-[1220px] px-5 sm:px-7 xl:px-10 py-14">
+      <section id="resources" className="mx-auto max-w-[1160px] px-5 sm:px-7 xl:px-10 py-14">
         <SectionHeader
           eyebrow="Positive reflection tools"
           title="Small practices that make journaling easier."
@@ -6165,7 +6165,7 @@ function App() {
       )}
 
       {activeHomeSection === 'articles' && (
-      <section id="articles" className="mx-auto max-w-[1220px] px-5 sm:px-7 xl:px-10 py-14">
+      <section id="articles" className="mx-auto max-w-[1160px] px-5 sm:px-7 xl:px-10 py-14">
         <SectionHeader
           eyebrow="Wellness Library"
           title="Articles and reflections for a gentler journaling practice."
@@ -6206,7 +6206,7 @@ function App() {
       )}
 
       {activeHomeSection === 'faq' && (
-      <section id="faq" className="mx-auto max-w-[1220px] px-5 sm:px-7 xl:px-10 py-14">
+      <section id="faq" className="mx-auto max-w-[1160px] px-5 sm:px-7 xl:px-10 py-14">
         <SectionHeader
           eyebrow="Journal FAQ"
           title="Common questions about using a private online diary and mood journal."
@@ -6224,7 +6224,7 @@ function App() {
       )}
 
       {activeHomeSection === 'tips' && (
-      <section id="tips" className="mx-auto grid max-w-[1220px] gap-8 px-5 py-14 sm:px-7 xl:px-10 lg:grid-cols-12">
+      <section id="tips" className="mx-auto grid max-w-[1160px] gap-8 px-5 py-14 sm:px-7 xl:px-10 lg:grid-cols-12">
         <div className="rounded-3xl border border-white/70 bg-gradient-to-br from-sand-100 to-sage-100 p-8 shadow-soft lg:col-span-5 lg:p-10">
           <Newspaper className="mb-7 text-sage-700" size={36} />
           <p className="text-sm font-bold uppercase tracking-widest text-sage-700">Journaling tips</p>
@@ -6243,7 +6243,7 @@ function App() {
       )}
 
       {activeHomeSection === 'privacy' && (
-      <section id="privacy" className="mx-auto max-w-[1220px] px-5 sm:px-7 xl:px-10 py-14">
+      <section id="privacy" className="mx-auto max-w-[1160px] px-5 sm:px-7 xl:px-10 py-14">
         <SectionHeader
           eyebrow="Privacy Policy"
           title="Your reflections belong to you."
@@ -6269,7 +6269,7 @@ function App() {
       )}
 
       {activeHomeSection === 'terms' && (
-      <section id="terms" className="mx-auto grid max-w-[1220px] gap-8 px-5 py-14 sm:px-7 xl:px-10 lg:grid-cols-12">
+      <section id="terms" className="mx-auto grid max-w-[1160px] gap-8 px-5 py-14 sm:px-7 xl:px-10 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <div className="sticky top-28 rounded-3xl border border-white/70 bg-white/75 p-8 shadow-soft backdrop-blur">
             <Scale className="mb-7 text-sage-700" size={36} />
@@ -6302,7 +6302,7 @@ function App() {
 
       {activeHomeSection === 'contact' && (
       <>
-      <section id="contact" className="mx-auto max-w-[1220px] px-5 sm:px-7 xl:px-10 py-14">
+      <section id="contact" className="mx-auto max-w-[1160px] px-5 sm:px-7 xl:px-10 py-14">
         <div className="overflow-hidden rounded-3xl border border-white/70 bg-sage-900 text-white shadow-soft">
           <div className="grid lg:grid-cols-2">
             <div className="p-8 lg:p-10">
@@ -6335,7 +6335,7 @@ function App() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1220px] px-5 sm:px-7 xl:px-10 py-8">
+      <section className="mx-auto max-w-[1160px] px-5 sm:px-7 xl:px-10 py-8">
         <div className="rounded-3xl border border-dashed border-sage-300 bg-white/60 p-8 text-center shadow-lift backdrop-blur">
           <p className="text-sm font-bold uppercase tracking-widest text-sage-600">Support this project</p>
           <h2 className="mt-3 text-2xl font-extrabold text-ink">Help keep Lofi Memory free and peaceful</h2>
@@ -6346,7 +6346,7 @@ function App() {
       )}
 
       {activeHomeSection === 'seo-studio' && showAdminTools && (
-      <section id="seo-studio" className="mx-auto max-w-[1220px] px-5 sm:px-7 xl:px-10 py-14">
+      <section id="seo-studio" className="mx-auto max-w-[1160px] px-5 sm:px-7 xl:px-10 py-14">
         <SectionHeader
           eyebrow="Admin-only AI SEO Studio"
           title="Review and draft SEO improvements without changing the public experience."
@@ -6485,7 +6485,7 @@ function App() {
       </section>
       )}
 
-      <footer className="mx-auto max-w-[1220px] px-5 sm:px-7 xl:px-10 pb-10 pt-6">
+      <footer className="mx-auto max-w-[1160px] px-5 sm:px-7 xl:px-10 pb-10 pt-6">
         <div className="rounded-3xl border border-white/70 bg-white/60 p-6 text-center text-sm leading-7 text-sage-700 shadow-lift backdrop-blur">
           <div className="mb-3 flex flex-wrap justify-center gap-4 font-bold text-sage-800">
             <a href="#home" onClick={() => openHomeSection('home')}>Home</a>
@@ -6519,7 +6519,7 @@ function App() {
       `}</style>
 
       {/* Floating Lofi Radio Player */}
-      <div className={`fixed z-50 ${cookieConsentAccepted ? 'bottom-24 right-4 sm:right-6' : 'bottom-40 right-4 sm:bottom-36 sm:right-6'}`}>
+      <div className="fixed bottom-28 left-2 z-50 sm:left-3 lg:bottom-7 lg:left-4 xl:bottom-8 xl:left-[calc((100vw-1160px)/2-2.75rem)] xl:top-auto xl:translate-y-0">
 
         <div ref={radioPlayerContainerRef} className="pointer-events-none absolute h-1 w-1 opacity-0" aria-hidden="true" />
         <div className="group relative h-[5.25rem] w-[5.25rem]">
@@ -6661,7 +6661,7 @@ function App() {
         </div>
       </div>
 
-      {selectedEntry && (
+      {Boolean(selectedEntry) && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/45 p-4 backdrop-blur-sm" onClick={() => { if (!isEditingEntry) setSelectedEntry(null); }}>
           <div className="max-h-[88vh] w-full max-w-2xl overflow-y-auto rounded-3xl bg-white p-7 shadow-soft lg:p-9" onClick={(event) => event.stopPropagation()}>
             <div className="mb-4 flex items-center justify-between gap-4">
@@ -6704,7 +6704,7 @@ function App() {
                 <button className="rounded-full bg-sage-100 px-4 py-2 text-sm font-extrabold text-sage-900 transition hover:bg-sage-200" onClick={() => { setSelectedEntry(null); setIsEditingEntry(false); }} type="button">Close</button>
               </div>
             </div>
-            {selectedEntry.prompt && !isEditingEntry && (
+            {Boolean(selectedEntry?.prompt) && !isEditingEntry && (
               <div className="mb-5 rounded-2xl bg-sage-50 p-4 text-sm font-bold leading-7 text-sage-900">
                 Reflection prompt: {selectedEntry.prompt}
               </div>
