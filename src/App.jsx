@@ -621,7 +621,7 @@ const seoLandingBlocks = [
 const seoFaqs = [
   {
     question: 'What is Lofi Memory?',
-    answer: 'Lofi Memory is an online diary, private online diary, diary app, and journal app for daily reflection, guided prompts, customizable journaling, and optional lock protection.'
+    answer: 'Lofi Memory is a calm online space for journaling, breathing, private reflection, and chill browser games when you want to relax for a while.'
   },
   {
     question: 'Can I use Lofi Memory as a private online diary?',
@@ -641,7 +641,7 @@ const seoFaqs = [
   },
   {
     question: 'Where can I write a diary online?',
-    answer: 'Lofi Memory gives you a calm place to write a diary online, save private entries, track moods, and return to your thoughts gently from any browser.'
+    answer: 'Lofi Memory gives you a calm browser space to write, unwind, track moods, and jump into a chill game before coming back to your thoughts.'
   },
   {
     question: 'How do I start writing a diary?',
@@ -2157,6 +2157,7 @@ function App() {
   const [editingPlannerTodoRecurrence, setEditingPlannerTodoRecurrence] = useState('none');
   const [draggedPlannerTodoId, setDraggedPlannerTodoId] = useState(null);
   const [saveReward, setSaveReward] = useState('');
+  const [selectedUnwindGame, setSelectedUnwindGame] = useState('drifting-leaf');
   const [isRadioPlaying, setIsRadioPlaying] = useState(false);
   const [radioVolume, setRadioVolume] = useState(35);
   const [isRadioDialDragging, setIsRadioDialDragging] = useState(false);
@@ -2266,6 +2267,36 @@ function App() {
     () => homeSections.filter((section) => ['overview', 'about', 'guides', 'resources', 'faq', 'contact', 'seo-studio'].includes(section.id)),
     [homeSections]
   );
+  const unwindGames = [
+    {
+      id: 'drifting-leaf',
+      title: 'Drifting Leaf',
+      detail: 'Soft endless glide',
+      description: 'A slow, floaty game for clearing your head before you write.',
+      icon: Leaf,
+      tone: 'from-emerald-100 to-sage-50 text-emerald-700',
+      component: <ZenGame />
+    },
+    {
+      id: 'stream-surfer',
+      title: 'Stream Surfer',
+      detail: 'Gentle lane dodging',
+      description: 'Slide through a calm river run when you want a little movement without the noise.',
+      icon: Waves,
+      tone: 'from-sky-100 to-cyan-50 text-sky-700',
+      component: <StreamSurfer />
+    },
+    {
+      id: 'lotus-match',
+      title: 'Lotus Match',
+      detail: 'Quiet memory reset',
+      description: 'Flip calm cards and settle in before journaling or just hanging out for a bit.',
+      icon: Sparkles,
+      tone: 'from-rose-100 to-orange-50 text-rose-700',
+      component: <LotusMatch />
+    }
+  ];
+  const selectedUnwindGameConfig = unwindGames.find((game) => game.id === selectedUnwindGame) || unwindGames[0];
   const homeSectionMap = {
     home: 'overview',
     overview: 'overview',
@@ -4437,7 +4468,7 @@ function App() {
               </div>
               <div>
                 <p className="font-display text-2xl font-bold text-sage-900">Lofi Memory</p>
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-sage-700">Chill beats & private thoughts</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-sage-700">Relax, write & play</p>
               </div>
             </a>
             <div className="site-nav-links hidden flex-1 items-center justify-center gap-7 xl:gap-9">
@@ -4669,7 +4700,7 @@ function App() {
                 { id: 'write', label: 'Write', detail: 'Begin with one honest line', icon: PenLine, tone: 'bg-sage-100 text-sage-800' },
                 { id: 'notes', label: 'Notes', detail: 'Keep important things nearby', icon: FileText, tone: 'bg-teal-100 text-teal-700' },
                 { id: 'breathe', label: 'Breathe', detail: 'Focus & breathe', icon: Wind, tone: 'bg-blue-100 text-blue-700' },
-                { id: 'unwind', label: 'Unwind', detail: 'Fidget & relax', icon: Leaf, tone: 'bg-emerald-100 text-emerald-700' },
+                { id: 'unwind', label: 'Unwind', detail: 'Chill games', icon: Leaf, tone: 'bg-emerald-100 text-emerald-700' },
                 { id: 'memories', label: 'Memories', detail: 'Return to saved pages', icon: BookOpen, tone: 'bg-sand-100 text-sand-600' },
                 { id: 'insights', label: 'Insights', detail: 'See moods over time', icon: Sparkles, tone: 'bg-rose-100 text-rose-700' }
               ].map((tab) => (
@@ -4738,7 +4769,7 @@ function App() {
               <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
                 <div>
                   <h2 className="font-display text-4xl font-bold leading-tight text-ink lg:text-5xl">{homeSections.find((s) => s.id === activeHomeSection)?.label || 'Overview'}</h2>
-                  <p className="mt-4 max-w-2xl text-lg leading-relaxed text-sage-800">{activeHomeSection === 'overview' ? (latestEntry ? `Your last page is still here. ${rewardLevel.next}` : 'Start with the smallest true thing. This space is built to make writing feel safe, simple, and worth returning to.') : 'Browse gently. The layout stays simple so each section feels easier to read.'}</p>
+                  <p className="mt-4 max-w-2xl text-lg leading-relaxed text-sage-800">{activeHomeSection === 'overview' ? (latestEntry ? `Your last page is still here. ${rewardLevel.next}` : 'Come here to relax, write a little, breathe deeper, or play a calm game when you need a softer reset.') : 'Browse gently. The layout stays simple so each section feels easier to read.'}</p>
                 </div>
                 <a className="inline-flex shrink-0 items-center gap-2 rounded-full bg-sage-900 px-6 py-4 text-sm font-extrabold text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800" href="#journal" onClick={() => navigateToTab('write')}>
                   <PenLine size={18} /> Open today’s page
@@ -4909,7 +4940,7 @@ function App() {
                 { id: 'write', label: 'Write', detail: draftWordCount ? `${draftWordCount} words in progress` : 'Start here', icon: PenLine },
                 { id: 'notes', label: 'Notes', detail: plannerTodoCount ? `${openPlannerTodoCount} still open` : 'Keep important things', icon: FileText },
                 { id: 'breathe', label: 'Breathe', detail: 'Focus & calm', icon: Wind },
-                { id: 'unwind', label: 'Unwind', detail: 'Fidget & relax', icon: Leaf },
+                { id: 'unwind', label: 'Unwind', detail: 'Chill games', icon: Leaf },
                 { id: 'memories', label: 'Memories', detail: `${entries.length} saved`, icon: BookOpen },
                 { id: 'insights', label: 'Insights', detail: `${weeklyCheckIns}/${weeklyGoal} this week`, icon: Sparkles }
               ].map((tab) => (
@@ -5246,15 +5277,39 @@ function App() {
         )}
 
                         {activeTab === 'unwind' && (
-          <div className="mx-auto max-w-4xl px-4 py-8 lg:px-6 lg:py-14 fade-in">
-            <div className="text-center mb-10">
-              <p className="mb-2 text-sm font-bold uppercase tracking-widest text-sage-600">Fidget & Relax</p>
-              <h1 className="mb-3 font-display text-4xl font-bold tracking-tight text-sage-950">A Moment of Play</h1>
-              <p className="text-lg text-sage-700 max-w-xl mx-auto">Sometimes the best way to clear your head before writing is to do something entirely mindless.</p>
+          <div className="mx-auto max-w-6xl px-4 py-8 lg:px-6 lg:py-14 fade-in">
+            <div className="mb-10 text-center">
+              <p className="mb-2 text-sm font-bold uppercase tracking-widest text-sage-600">Relax & Play</p>
+              <h1 className="mb-3 font-display text-4xl font-bold tracking-tight text-sage-950">Pick a chill game</h1>
+              <p className="mx-auto max-w-2xl text-lg text-sage-700">Choose the kind of calm you want right now — float for a bit, dodge gently, or reset your mind with a quiet match game.</p>
             </div>
-            <ZenGame />
-            <StreamSurfer />
-            <LotusMatch />
+            <div className="mb-8 grid gap-4 lg:grid-cols-3">
+              {unwindGames.map((game) => (
+                <button
+                  key={game.id}
+                  className={`rounded-[2rem] border px-5 py-5 text-left transition duration-300 hover:-translate-y-1 ${selectedUnwindGame === game.id ? 'border-sage-300 bg-white shadow-soft' : 'border-white/70 bg-white/78 hover:border-sage-200 hover:bg-white/92'}`}
+                  onClick={() => setSelectedUnwindGame(game.id)}
+                  type="button"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <p className="text-xs font-bold uppercase tracking-[0.24em] text-sage-600">{game.detail}</p>
+                      <h2 className="mt-2 font-display text-2xl font-bold text-sage-950">{game.title}</h2>
+                    </div>
+                    <span className={`inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br ${game.tone}`}>
+                      <game.icon size={18} />
+                    </span>
+                  </div>
+                  <p className="mt-4 text-sm leading-relaxed text-sage-700">{game.description}</p>
+                  <div className="mt-5 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.2em] text-sage-600">
+                    {selectedUnwindGame === game.id ? 'Now playing' : 'Open game'}
+                  </div>
+                </button>
+              ))}
+            </div>
+            <div className="rounded-[2rem] border border-white/80 bg-white/86 p-3 shadow-soft backdrop-blur lg:p-4">
+              {selectedUnwindGameConfig.component}
+            </div>
           </div>
         )}
 
@@ -6423,7 +6478,7 @@ function App() {
             <a href="/terms.html">Terms</a>
             <a href="/contact.html">Contact</a>
           </div>
-          Lofi Memory is an online diary, private diary, diary app, journal app, and mood journal for noticing your thoughts, collecting small good moments, and understanding what you want next.
+          Lofi Memory is a soft browser space to relax, journal, breathe, and play chill games whenever you want a calmer moment online.
         </div>
       </footer>
       </>
