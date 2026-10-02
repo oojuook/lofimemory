@@ -4651,7 +4651,7 @@ function App() {
                 <StatCard icon={HeartHandshake} label="Average mood" value={averageMood} tone="bg-teal-100 text-teal-700" />
               </div>
 
-              <div className="mt-8 grid gap-4 lg:grid-cols-[minmax(0,1.28fr)_minmax(280px,0.72fr)]">
+              <div className="mt-8 space-y-5">
                 <div className="flex min-h-[290px] flex-col justify-between rounded-[1.8rem] border border-white/80 bg-gradient-to-br from-white/90 to-sage-50/70 p-5 shadow-lift backdrop-blur">
                   <div>
                     <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">All-in-one soft corner</p>
