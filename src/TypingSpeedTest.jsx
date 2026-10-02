@@ -37,6 +37,8 @@ const difficultySettings = {
   },
 };
 
+const timerPresets = [15, 30, 60];
+
 function pickPassage(pool, previousPassage = '') {
   const options = pool.filter((entry) => entry !== previousPassage);
   return options[Math.floor(Math.random() * options.length)] || pool[0];
@@ -69,6 +71,7 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
 
   const [passage, setPassage] = useState(() => pickPassage(pool));
   const [typedText, setTypedText] = useState('');
+  const [selectedDuration, setSelectedDuration] = useState(config.duration);
   const [timeLeft, setTimeLeft] = useState(config.duration);
   const [isRunning, setIsRunning] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
@@ -80,6 +83,7 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
   useEffect(() => {
     setPassage(pickPassage(pool));
     setTypedText('');
+    setSelectedDuration(config.duration);
     setTimeLeft(config.duration);
     setIsRunning(false);
     setIsFinished(false);
@@ -109,7 +113,7 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
     return () => window.clearInterval(timerId);
   }, [isRunning]);
 
-  const elapsedSeconds = config.duration - timeLeft;
+  const elapsedSeconds = selectedDuration - timeLeft;
   const currentStats = useMemo(() => calculateStats(typedText, passage, elapsedSeconds), [elapsedSeconds, passage, typedText]);
 
   useEffect(() => {
@@ -132,7 +136,7 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
 
   const startRound = () => {
     setTypedText('');
-    setTimeLeft(config.duration);
+    setTimeLeft(selectedDuration);
     setIsFinished(false);
     setHasRecordedResult(false);
     setIsRunning(true);
@@ -142,7 +146,7 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
   const resetRound = () => {
     setPassage((current) => pickPassage(pool, current));
     setTypedText('');
-    setTimeLeft(config.duration);
+    setTimeLeft(selectedDuration);
     setIsRunning(false);
     setIsFinished(false);
     setHasRecordedResult(false);
@@ -150,6 +154,7 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
   };
 
   const showResults = isFinished || typedText.length > 0;
+  const progressPercent = selectedDuration > 0 ? Math.min(((selectedDuration - timeLeft) / selectedDuration) * 100, 100) : 0;
 
   const passageMarkup = useMemo(() => passage.split('').map((character, index) => {
     let className = 'text-stone-400';
@@ -178,10 +183,35 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
             <h3 className="mt-4 text-3xl font-bold tracking-tight text-slate-950">Typing Speed Test</h3>
             <p className="mt-2 max-w-2xl text-sm leading-7 text-slate-700">A calm typing speed test that shows your WPM, accuracy, CPM, and errors without making the whole page feel intense. Start a timer, type the passage, and get a clean little snapshot of your rhythm.</p>
             <p className="mt-2 text-sm font-semibold text-slate-600">{config.note}</p>
+            <div className="mt-4 flex flex-wrap items-center gap-2.5">
+              <span className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sky-600">Timer presets</span>
+              {timerPresets.map((preset) => (
+                <button
+                  key={preset}
+                  className={`rounded-full px-3.5 py-2 text-xs font-extrabold uppercase tracking-[0.18em] transition ${selectedDuration === preset ? 'bg-slate-950 text-white shadow-sm' : 'border border-sky-200 bg-white/88 text-slate-800 hover:bg-sky-50'}`}
+                  onClick={() => {
+                    setSelectedDuration(preset);
+                    setTimeLeft(preset);
+                    setTypedText('');
+                    setIsRunning(false);
+                    setIsFinished(false);
+                    setHasRecordedResult(false);
+                    setMessage(`Timer set to ${preset} seconds — start when you feel ready.`);
+                  }}
+                  type="button"
+                >
+                  {preset}s
+                </button>
+              ))}
+            </div>
           </div>
           <div className="grid gap-2 rounded-[1.5rem] border border-white/85 bg-white/80 p-3 shadow-sm sm:grid-cols-4 lg:min-w-[28rem]">
             <div className="rounded-[1.15rem] bg-sky-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sky-600">Time</p>
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sky-600">Timer</p>
+              <p className="mt-2 text-xl font-extrabold text-slate-950">{selectedDuration}s</p>
+            </div>
+            <div className="rounded-[1.15rem] bg-sky-50 px-4 py-3 text-center">
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sky-600">Time left</p>
               <p className="mt-2 text-xl font-extrabold text-slate-950">{timeLeft}s</p>
             </div>
             <div className="rounded-[1.15rem] bg-sky-50 px-4 py-3 text-center">
@@ -191,6 +221,16 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
             <div className="rounded-[1.15rem] bg-sky-50 px-4 py-3 text-center">
               <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sky-600">Best</p>
               <p className="mt-2 text-xl font-extrabold text-slate-950">{bestWpm}</p>
+            </div>
+            <div className="rounded-[1.15rem] bg-sky-50 px-4 py-3 text-center sm:col-span-2">
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sky-600">Session progress</p>
+              <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-white/85">
+                <div className="h-full rounded-full bg-gradient-to-r from-sky-500 to-indigo-500 transition-all duration-500" style={{ width: `${progressPercent}%` }} />
+              </div>
+            </div>
+            <div className="rounded-[1.15rem] bg-sky-50 px-4 py-3 text-center">
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sky-600">Status</p>
+              <p className="mt-2 text-sm font-extrabold uppercase tracking-[0.18em] text-slate-950">{isFinished ? 'Finished' : isRunning ? 'Running' : 'Ready'}</p>
             </div>
             <div className="rounded-[1.15rem] bg-sky-50 px-4 py-3 text-center">
               <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sky-600">Rounds</p>

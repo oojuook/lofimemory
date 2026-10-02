@@ -398,6 +398,11 @@ const seoLandingBlocks = [
     href: '/crossword-game-online.html'
   },
   {
+    title: 'WPM test',
+    text: 'Check your WPM in a calm browser space when you want a quick typing-speed snapshot with cleaner pacing and softer visuals.',
+    href: '/wpm-test.html'
+  },
+  {
     title: 'Typing speed test',
     text: 'Take a calm typing speed test when you want a soft WPM check with accuracy stats, readable passages, and a gentler browser-game feel.',
     href: '/typing-game-online.html'
@@ -756,7 +761,9 @@ const seoGuidePages = [
   { label: 'Popular guide', title: 'Daily word game', text: 'Find a daily word game you can open for a quick relaxing round before moving into music, notes, or journaling.', href: '/daily-word-game.html' },
   { label: 'Popular guide', title: 'Wordle online', text: 'Play a calm Wordle-style puzzle online when you want a familiar word-guessing game that still feels gentle and beginner-friendly.', href: '/wordle-online.html' },
   { label: 'Popular guide', title: 'Crossword game online', text: 'Play a calm crossword-style game online when you want an easy clue loop that feels more welcoming than a full crossword grid.', href: '/crossword-game-online.html' },
+  { label: 'Popular guide', title: 'WPM test', text: 'Check your WPM in a calm browser space when you want a quick typing-speed snapshot without the usual pressure.', href: '/wpm-test.html' },
   { label: 'Popular guide', title: 'Typing speed test', text: 'Take a calm typing speed test when you want a soft WPM check, clean stats, and an easy browser challenge.', href: '/typing-game-online.html' },
+  { label: 'Popular guide', title: 'Typing test online', text: 'Open a relaxed typing test online when you want clear stats, readable passages, and a calmer browser experience.', href: '/typing-test-online.html' },
   { label: 'Popular guide', title: 'Chill place online', text: 'Find a cozy online place to chill, relax, play soft games, and keep private notes in one calm space.', href: '/chill-place-online.html' },
   { label: 'Popular guide', title: 'Word game online', text: 'Play a calm word game online when you want a familiar puzzle that feels light and relaxing.', href: '/word-game-online.html' },
   { label: 'Popular guide', title: 'Sliding puzzle online', text: 'Play a cozy sliding puzzle online when you want a simple tile game that feels calm and satisfying.', href: '/sliding-puzzle-online.html' },
@@ -1187,7 +1194,7 @@ const seoGuideGroups = [
   {
     title: 'Play calm word puzzles',
     description: 'Best for visitors looking for familiar Wordle-style, daily word, and guess-the-word pages they can open quickly and enjoy without pressure.',
-    links: seoGuidePages.filter((page) => ['Daily word puzzle', 'Guess the word game', 'Daily word game', 'Wordle online', 'Word game online', 'Crossword game online', 'Typing speed test'].includes(page.title))
+    links: seoGuidePages.filter((page) => ['Daily word puzzle', 'Guess the word game', 'Daily word game', 'Wordle online', 'Word game online', 'Crossword game online', 'WPM test', 'Typing speed test', 'Typing test online'].includes(page.title))
   },
   {
     title: 'Start a private diary',
@@ -1217,7 +1224,9 @@ const seoPopularSearches = [
   { label: 'Daily word game', href: '/daily-word-game.html' },
   { label: 'Wordle online', href: '/wordle-online.html' },
   { label: 'Crossword game online', href: '/crossword-game-online.html' },
+  { label: 'WPM test', href: '/wpm-test.html' },
   { label: 'Typing speed test', href: '/typing-game-online.html' },
+  { label: 'Typing test online', href: '/typing-test-online.html' },
   { label: 'Chill place online', href: '/chill-place-online.html' },
   { label: 'Word game online', href: '/word-game-online.html' },
   { label: 'Sliding puzzle online', href: '/sliding-puzzle-online.html' },
