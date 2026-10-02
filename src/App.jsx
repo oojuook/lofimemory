@@ -4578,21 +4578,51 @@ function App() {
       {activeTab === 'home' && activeHomeSection === 'overview' && (
       <section id="home" className="mx-auto grid max-w-[1160px] gap-8 px-5 pb-28 pt-10 sm:px-7 lg:grid-cols-12 lg:pb-12 xl:gap-12 xl:px-10">
         <div className="lg:col-span-8">
-          <div className="relative overflow-hidden rounded-[2rem] border border-sage-100/80 bg-white/92 p-8 shadow-soft backdrop-blur-xl lg:p-10 xl:p-11">
+          <div className="relative overflow-hidden rounded-[2.35rem] border border-white/90 bg-gradient-to-br from-white/96 via-white/92 to-sage-50/82 p-8 shadow-[0_24px_75px_rgba(101,121,104,0.16)] backdrop-blur-xl lg:p-10 xl:p-11">
             <div className="pointer-events-none absolute -left-10 top-12 h-28 w-28 rounded-full bg-sage-100/45 blur-3xl"></div>
             <div className="pointer-events-none absolute right-4 top-4 h-32 w-32 rounded-full bg-sand-100/40 blur-3xl"></div>
             <div className="relative">
-              <div className="mb-8 flex flex-wrap items-center gap-3">
-                <div className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-bold text-sage-950 shadow-sm">
-                  <Sparkles size={16} /> Your chill corner online
+              <div className="mb-8 flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+                <div className="flex flex-wrap items-center gap-3">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-sage-200/90 bg-white/95 px-4 py-2 text-sm font-bold text-sage-950 shadow-sm">
+                    <Sparkles size={16} /> Your chill corner online
+                  </div>
+                  <div className="inline-flex items-center gap-2 rounded-full border border-sage-200/80 bg-sage-50/82 px-4 py-2 text-sm font-bold text-sage-800 shadow-sm">
+                    <Quote size={14} /> Cozy · calm · all-in-one
+                  </div>
                 </div>
-                <div className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-sage-50/75 px-4 py-2 text-sm font-bold text-sage-800 shadow-sm">
-                  <Quote size={14} /> Chill · cozy · all-in-one
+                <div className="max-w-sm rounded-[1.45rem] border border-white/85 bg-white/74 px-4 py-3 shadow-sm backdrop-blur">
+                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Stay awhile</p>
+                  <p className="mt-1 text-sm font-semibold leading-6 text-sage-700">Play something gentle, drop a note, or just slow down here for a few quiet minutes.</p>
                 </div>
               </div>
               <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.96] tracking-tight text-sage-950 md:text-6xl">A soft place to hang out and reset.</h1>
               <p className="mt-5 max-w-3xl text-[1.28rem] font-semibold leading-9 text-sage-900">Lofi Memory is an all-in-one browser space for chill games, quick notes, private thoughts, breathing room, and small daily plans whenever you want a calmer corner online.</p>
               <p className="mt-4 max-w-[42rem] text-lg leading-8 text-sage-700">Play for a bit, relax, keep a to-do list nearby, or write something down without bouncing between different apps.</p>
+
+              <div className="mt-7 grid gap-3 md:grid-cols-3">
+                <div className="rounded-[1.5rem] border border-white/85 bg-white/78 p-4 shadow-sm backdrop-blur">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-sage-100 text-sage-800 shadow-sm">
+                    <Moon size={17} />
+                  </div>
+                  <p className="mt-3 text-sm font-extrabold text-sage-950">Stay unhurried</p>
+                  <p className="mt-1 text-sm leading-6 text-sage-700">Open one small thing at a time and let the rest of the page stay soft and quiet.</p>
+                </div>
+                <div className="rounded-[1.5rem] border border-white/85 bg-white/78 p-4 shadow-sm backdrop-blur">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-teal-100 text-teal-700 shadow-sm">
+                    <Wind size={17} />
+                  </div>
+                  <p className="mt-3 text-sm font-extrabold text-sage-950">Reset fast</p>
+                  <p className="mt-1 text-sm leading-6 text-sage-700">Breathe, play, plan, and come back to yourself without the site feeling noisy or demanding.</p>
+                </div>
+                <div className="rounded-[1.5rem] border border-white/85 bg-white/78 p-4 shadow-sm backdrop-blur">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-sand-100 text-sand-600 shadow-sm">
+                    <ShieldCheck size={17} />
+                  </div>
+                  <p className="mt-3 text-sm font-extrabold text-sage-950">Keep it yours</p>
+                  <p className="mt-1 text-sm leading-6 text-sage-700">Private thoughts, little plans, and saved moments can stay close without feeling exposed.</p>
+                </div>
+              </div>
 
               <div className="mt-9 flex flex-wrap gap-3">
                 <a className="inline-flex items-center gap-2 rounded-full bg-sage-900 px-5 py-3 text-sm font-extrabold text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800" href="#unwind" onClick={() => navigateToTab('unwind')}>
@@ -6767,7 +6797,7 @@ function App() {
       )}
 
       <button
-        className={`fixed z-40 flex h-12 w-12 items-center justify-center rounded-full bg-sage-900 text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800 ${cookieConsentAccepted ? 'bottom-6 right-6' : 'bottom-28 right-4 sm:bottom-24 sm:right-6'}`}
+        className={`fixed z-40 flex h-12 w-12 items-center justify-center rounded-full bg-sage-900 text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800 ${cookieConsentAccepted ? 'bottom-6 right-6' : 'bottom-40 right-4 sm:bottom-32 sm:right-6'}`}
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         type="button"
         aria-label="Back to top"
