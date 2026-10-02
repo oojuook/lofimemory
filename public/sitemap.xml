@@ -471,6 +471,21 @@
     <priority>0.82</priority>
   </url>
   <url>
+    <loc>https://lofimemory.vercel.app/daily-word-puzzle.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.81</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/guess-the-word-game.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/daily-word-game.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lofimemory.vercel.app/chill-place-online.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.82</priority>

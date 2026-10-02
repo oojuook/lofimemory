@@ -369,6 +369,21 @@ const wellnessArticles = [
 
 const seoLandingBlocks = [
   {
+    title: 'Daily word puzzle',
+    text: 'Play a calm daily word puzzle when you want a familiar little brain reset that feels cozy, tidy, and easy to revisit.',
+    href: '/daily-word-puzzle.html'
+  },
+  {
+    title: 'Guess the word game',
+    text: 'Play a gentle guess-the-word game online when you want a simple word challenge with soft feedback and no noisy pressure.',
+    href: '/guess-the-word-game.html'
+  },
+  {
+    title: 'Daily word game',
+    text: 'Find a daily word game you can open for a quick relaxing round before moving into notes, music, or journaling.',
+    href: '/daily-word-game.html'
+  },
+  {
     title: 'Wordle online',
     text: 'Play a calm Wordle-style game online when you want a familiar word-guessing loop that still feels cozy, gentle, and easy to revisit.',
     href: '/wordle-online.html'
@@ -732,6 +747,9 @@ const seoFaqs = [
 ];
 
 const seoGuidePages = [
+  { label: 'Popular guide', title: 'Daily word puzzle', text: 'Play a calm daily word puzzle when you want a familiar word challenge that feels cozy, tidy, and easy to return to.', href: '/daily-word-puzzle.html' },
+  { label: 'Popular guide', title: 'Guess the word game', text: 'Play a gentle guess-the-word game online when you want soft feedback, quick rounds, and a friendlier browser puzzle.', href: '/guess-the-word-game.html' },
+  { label: 'Popular guide', title: 'Daily word game', text: 'Find a daily word game you can open for a quick relaxing round before moving into music, notes, or journaling.', href: '/daily-word-game.html' },
   { label: 'Popular guide', title: 'Wordle online', text: 'Play a calm Wordle-style puzzle online when you want a familiar word-guessing game that still feels gentle and beginner-friendly.', href: '/wordle-online.html' },
   { label: 'Popular guide', title: 'Crossword game online', text: 'Play a calm crossword-style game online when you want an easy clue loop that feels more welcoming than a full crossword grid.', href: '/crossword-game-online.html' },
   { label: 'Popular guide', title: 'Typing game online', text: 'Play a calm typing game online when you want the easiest game to pick up and enjoy in short, soft rounds.', href: '/typing-game-online.html' },
@@ -1163,6 +1181,11 @@ const seoGuidePages = [
 
 const seoGuideGroups = [
   {
+    title: 'Play calm word puzzles',
+    description: 'Best for visitors looking for familiar Wordle-style, daily word, and guess-the-word pages they can open quickly and enjoy without pressure.',
+    links: seoGuidePages.filter((page) => ['Daily word puzzle', 'Guess the word game', 'Daily word game', 'Wordle online', 'Word game online', 'Crossword game online', 'Typing game online'].includes(page.title))
+  },
+  {
     title: 'Start a private diary',
     description: 'Best for visitors comparing private diary, online diary, and secure journal options.',
     links: seoGuidePages.filter((page) => ['Private online diary guide', 'Online diary guide', 'Best online diary', 'Online diary app', 'Diary website', 'Write diary online', 'My online diary', 'Online diary for students', 'Online diary with lock guide', 'Online diary with password', 'Free online journal with lock', 'Online journal with lock', 'Private journal app guide', 'Private diary app for adults', 'Private diary online free', 'Personal diary app', 'Secure diary app', 'Diary with password', 'Secure online journal guide', 'Personal diary online guide', 'Online diary for adults guide', 'Diary app for teens', 'Secure online journal', 'Cozy journal app', 'Therapy journal online'].includes(page.title))
@@ -1185,6 +1208,9 @@ const seoGuideGroups = [
 ];
 
 const seoPopularSearches = [
+  { label: 'Daily word puzzle', href: '/daily-word-puzzle.html' },
+  { label: 'Guess the word game', href: '/guess-the-word-game.html' },
+  { label: 'Daily word game', href: '/daily-word-game.html' },
   { label: 'Wordle online', href: '/wordle-online.html' },
   { label: 'Crossword game online', href: '/crossword-game-online.html' },
   { label: 'Typing game online', href: '/typing-game-online.html' },
@@ -6406,10 +6432,10 @@ function App() {
           <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <p className="text-sm font-extrabold uppercase tracking-[0.3em] text-sage-700">Keep exploring</p>
-              <h3 className="mt-3 text-3xl font-extrabold text-ink">Read the guide that matches the way you want to journal.</h3>
-              <p className="mt-3 max-w-3xl leading-8 text-sage-800">Whether you want privacy, mood check-ins, prompts, or a calmer evening reflection, these pages give visitors something useful to read before they begin.</p>
+              <h3 className="mt-3 text-3xl font-extrabold text-ink">Read the guide that matches the way you want to play, chill, or journal.</h3>
+              <p className="mt-3 max-w-3xl leading-8 text-sage-800">Whether you want a calm word puzzle, a quick browser game, privacy, mood check-ins, prompts, or a softer evening reflection, these pages give visitors something useful to read before they begin.</p>
             </div>
-            <a className="inline-flex items-center justify-center rounded-full bg-sage-900 px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-sage-800" href="/online-diary.html">
+            <a className="inline-flex items-center justify-center rounded-full bg-sage-900 px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-sage-800" href="/wordle-online.html">
               Browse guides
             </a>
           </div>
