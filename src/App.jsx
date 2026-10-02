@@ -46,6 +46,7 @@ import QuietWords from './QuietWords';
 import TypingSpeedTest from './TypingSpeedTest';
 import QuietClues from './QuietClues';
 import QuietWordle from './QuietWordle';
+import QuietSudoku from './QuietSudoku';
 import { auth, db, getMessagingIfSupported, googleProvider } from './firebase';
 
 const STORAGE_KEY = 'quiet-harbor-journal-v1';
@@ -2478,6 +2479,15 @@ function App() {
       icon: Compass,
       tone: 'from-amber-100 to-stone-50 text-amber-700',
       component: <QuietSlide difficulty={selectedGameDifficulty} />
+    },
+    {
+      id: 'quiet-sudoku',
+      title: 'Quiet Sudoku',
+      detail: 'Soft sudoku logic',
+      description: 'Settle into a cozy Sudoku board with gentle checking, reveal help, and a familiar number puzzle rhythm.',
+      icon: CalendarDays,
+      tone: 'from-cyan-100 to-blue-50 text-cyan-700',
+      component: <QuietSudoku difficulty={selectedGameDifficulty} />
     },
     {
       id: 'quiet-wordle',
@@ -5608,7 +5618,7 @@ function App() {
             <div className="mb-10 text-center">
               <p className="mb-2 text-sm font-bold uppercase tracking-widest text-sage-600">Relax & Play</p>
               <h1 className="mb-3 font-display text-4xl font-bold tracking-tight text-sage-950">Pick a chill game</h1>
-              <p className="mx-auto max-w-2xl text-lg text-sage-700">Choose the kind of calm you want right now — drift, dodge, merge, match, slide, guess cozy words, type, solve clues, sweep, or jump through a soft offline desert run. The easiest beginner picks are marked by how simple they feel to start.</p>
+              <p className="mx-auto max-w-2xl text-lg text-sage-700">Choose the kind of calm you want right now — drift, dodge, merge, match, slide, settle into sudoku, guess cozy words, type, solve clues, sweep, or jump through a soft offline desert run. The easiest beginner picks are marked by how simple they feel to start.</p>
             </div>
             <div className="mb-6 flex flex-col gap-3 rounded-[1.75rem] border border-white/80 bg-white/78 p-4 shadow-sm backdrop-blur sm:flex-row sm:items-center sm:justify-between">
               <div>
@@ -5710,7 +5720,7 @@ function App() {
               <article className="rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
                 <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Game-first comfort</p>
                 <h2 className="mt-3 text-2xl font-extrabold text-sage-950">The games are meant to be the easiest place to begin.</h2>
-                <p className="mt-3 text-sm leading-7 text-sage-700">If you just want something light, start with <span className="font-extrabold text-sage-900">Typing Speed Test</span>, <span className="font-extrabold text-sage-900">Quiet Words</span>, <span className="font-extrabold text-sage-900">Quiet Wordle</span>, or <span className="font-extrabold text-sage-900">Quiet Tiles</span> on Easy. Prefer no-rush logic? <span className="font-extrabold text-sage-900">Quiet Clues</span>, <span className="font-extrabold text-sage-900">Quiet Slide</span>, <span className="font-extrabold text-sage-900">Mind Sweeper</span>, and <span className="font-extrabold text-sage-900">Lotus Match</span> are the gentlest puzzle picks.</p>
+                <p className="mt-3 text-sm leading-7 text-sage-700">If you just want something light, start with <span className="font-extrabold text-sage-900">Typing Speed Test</span>, <span className="font-extrabold text-sage-900">Quiet Words</span>, <span className="font-extrabold text-sage-900">Quiet Wordle</span>, or <span className="font-extrabold text-sage-900">Quiet Tiles</span> on Easy. Prefer no-rush logic? <span className="font-extrabold text-sage-900">Quiet Sudoku</span>, <span className="font-extrabold text-sage-900">Quiet Clues</span>, <span className="font-extrabold text-sage-900">Quiet Slide</span>, <span className="font-extrabold text-sage-900">Mind Sweeper</span>, and <span className="font-extrabold text-sage-900">Lotus Match</span> are the gentlest puzzle picks.</p>
               </article>
               <article className="rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
                 <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Right now</p>
