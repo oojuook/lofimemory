@@ -1,23 +1,48 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Play, RotateCcw } from 'lucide-react';
+import { Play, RotateCcw, Sparkles } from 'lucide-react';
 
-const STORAGE_KEY = 'quiet-journal-dinosaur-dash-best';
 const CANVAS_WIDTH = 720;
 const CANVAS_HEIGHT = 400;
 const GROUND_Y = 320;
-const GRAVITY = 0.68;
-const JUMP_VELOCITY = -11.8;
 
-export default function DinosaurDash() {
-  const canvasRef = useRef(null);
-  const [score, setScore] = useState(0);
-  const [bestScore, setBestScore] = useState(() => parseInt(localStorage.getItem(STORAGE_KEY) || '0', 10));
-  const [gameState, setGameState] = useState('start');
+const difficultySettings = {
+  easy: {
+    gravity: 0.62,
+    jumpVelocity: -11.6,
+    startSpeed: 6.4,
+    maxSpeed: 11.1,
+    spawnFloor: 56,
+    spawnBase: 104,
+    label: 'Easy',
+    note: 'A softer desert run with more breathing room between cacti.'
+  },
+  medium: {
+    gravity: 0.68,
+    jumpVelocity: -11.8,
+    startSpeed: 7,
+    maxSpeed: 12.5,
+    spawnFloor: 48,
+    spawnBase: 92,
+    label: 'Medium',
+    note: 'A balanced offline dash for steady focus.'
+  },
+  hard: {
+    gravity: 0.74,
+    jumpVelocity: -12.2,
+    startSpeed: 7.8,
+    maxSpeed: 13.8,
+    spawnFloor: 40,
+    spawnBase: 84,
+    label: 'Hard',
+    note: 'Quicker steps and tighter timing when you want a sharper challenge.'
+  }
+};
 
-  const stateRef = useRef({
+function buildInitialState(startSpeed) {
+  return {
     dinoY: GROUND_Y,
     velocityY: 0,
-    speed: 7,
+    speed: startSpeed,
     score: 0,
     frames: 0,
     obstacles: [],
@@ -27,38 +52,44 @@ export default function DinosaurDash() {
       { x: 360, y: 62, size: 24 },
       { x: 560, y: 104, size: 34 }
     ]
-  });
+  };
+}
+
+export default function DinosaurDash({ difficulty = 'medium' }) {
+  const config = difficultySettings[difficulty] || difficultySettings.medium;
+  const bestScoreKey = `quiet-journal-dinosaur-dash-best-${difficulty}`;
+
+  const canvasRef = useRef(null);
+  const [score, setScore] = useState(0);
+  const [bestScore, setBestScore] = useState(() => parseInt(localStorage.getItem(bestScoreKey) || '0', 10));
+  const [gameState, setGameState] = useState('start');
+
+  const stateRef = useRef(buildInitialState(config.startSpeed));
+
+  useEffect(() => {
+    stateRef.current = buildInitialState(config.startSpeed);
+    setScore(0);
+    setGameState('start');
+    setBestScore(parseInt(localStorage.getItem(bestScoreKey) || '0', 10));
+  }, [bestScoreKey, config.startSpeed]);
 
   const startGame = useCallback(() => {
-    stateRef.current = {
-      dinoY: GROUND_Y,
-      velocityY: 0,
-      speed: 7,
-      score: 0,
-      frames: 0,
-      obstacles: [],
-      dustOffset: 0,
-      clouds: [
-        { x: 120, y: 88, size: 30 },
-        { x: 360, y: 62, size: 24 },
-        { x: 560, y: 104, size: 34 }
-      ]
-    };
+    stateRef.current = buildInitialState(config.startSpeed);
     setScore(0);
     setGameState('playing');
-  }, []);
+  }, [config.startSpeed]);
 
   const jump = useCallback(() => {
     const state = stateRef.current;
     if (gameState === 'start' || gameState === 'over') {
       startGame();
-      stateRef.current.velocityY = JUMP_VELOCITY;
+      stateRef.current.velocityY = config.jumpVelocity;
       return;
     }
     if (gameState === 'playing' && state.dinoY >= GROUND_Y - 1) {
-      state.velocityY = JUMP_VELOCITY;
+      state.velocityY = config.jumpVelocity;
     }
-  }, [gameState, startGame]);
+  }, [config.jumpVelocity, gameState, startGame]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -109,7 +140,6 @@ export default function DinosaurDash() {
       const bob = gameState === 'playing' ? Math.sin(frame / 7) * 1.5 : Math.sin(Date.now() / 280) * 1.5;
       ctx.save();
       ctx.translate(x, y + bob);
-      ctx.fillStyle = '#31453a';
       drawRoundedRect(-18, -44, 42, 30, 10, '#31453a');
       drawRoundedRect(8, -62, 26, 22, 9, '#31453a');
       drawRoundedRect(24, -54, 12, 10, 4, '#31453a');
@@ -193,15 +223,15 @@ export default function DinosaurDash() {
 
       if (gameState === 'playing') {
         state.frames += 1;
-        state.speed = Math.min(12.5, 7 + state.frames / 520);
-        state.velocityY += GRAVITY;
+        state.speed = Math.min(config.maxSpeed, config.startSpeed + state.frames / 520);
+        state.velocityY += config.gravity;
         state.dinoY = Math.min(GROUND_Y, state.dinoY + state.velocityY);
         if (state.dinoY >= GROUND_Y) {
           state.dinoY = GROUND_Y;
           state.velocityY = 0;
         }
 
-        if (state.frames % Math.max(48, 92 - Math.floor(state.speed * 3)) === 0) {
+        if (state.frames % Math.max(config.spawnFloor, config.spawnBase - Math.floor(state.speed * 3)) === 0) {
           const variant = Math.random() > 0.65 ? 1 : 0;
           const height = variant === 1 ? 72 : 62;
           const width = variant === 1 ? 32 : 24;
@@ -233,9 +263,7 @@ export default function DinosaurDash() {
             state.score += 1;
             setScore(state.score);
           }
-          if (obstacle.x > -80) {
-            activeObstacles.push(obstacle);
-          }
+          if (obstacle.x > -80) activeObstacles.push(obstacle);
         });
         state.obstacles = activeObstacles;
       }
@@ -251,21 +279,25 @@ export default function DinosaurDash() {
 
     animationId = window.requestAnimationFrame(draw);
     return () => window.cancelAnimationFrame(animationId);
-  }, [gameState]);
+  }, [config.gravity, config.maxSpeed, config.spawnBase, config.spawnFloor, config.startSpeed, gameState]);
 
   useEffect(() => {
     if (gameState === 'over' && score > bestScore) {
       setBestScore(score);
-      localStorage.setItem(STORAGE_KEY, String(score));
+      localStorage.setItem(bestScoreKey, String(score));
     }
-  }, [bestScore, gameState, score]);
+  }, [bestScore, bestScoreKey, gameState, score]);
 
   return (
     <div className="mx-auto mt-12 w-full max-w-2xl pb-12">
       <div className="mb-4 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
         <div>
-          <h3 className="text-2xl font-bold text-stone-900">Dinosaur Dash</h3>
+          <div className="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white/88 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-stone-700 shadow-sm">
+            <Sparkles size={14} /> {config.label} desert pace
+          </div>
+          <h3 className="mt-3 text-2xl font-bold text-stone-900">Dinosaur Dash</h3>
           <p className="text-sm font-semibold text-stone-700">A soft offline-runner spin on the classic no-internet dino game.</p>
+          <p className="mt-1 text-sm text-stone-600">{config.note}</p>
         </div>
         <div className="flex gap-4 text-sm font-extrabold uppercase tracking-widest text-stone-700">
           <span className="rounded-full bg-stone-200/70 px-4 py-2 shadow-sm">Score: {score}</span>
@@ -284,7 +316,7 @@ export default function DinosaurDash() {
 
         {gameState === 'start' && (
           <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center bg-white/28 backdrop-blur-[3px]">
-            <button className="pointer-events-auto mb-4 flex items-center gap-3 rounded-full bg-stone-800 px-8 py-4 text-sm font-bold text-white shadow-lift transition hover:-translate-y-1 hover:bg-stone-700">
+            <button className="pointer-events-auto mb-4 flex items-center gap-3 rounded-full bg-stone-800 px-8 py-4 text-sm font-bold text-white shadow-lift transition hover:-translate-y-1 hover:bg-stone-700" onClick={jump} type="button">
               <Play size={18} /> Tap to run
             </button>
             <p className="rounded-full bg-white/80 px-4 py-2 text-sm font-semibold text-stone-900">Press Space, ↑, W, or tap to jump.</p>
@@ -294,7 +326,8 @@ export default function DinosaurDash() {
         {gameState === 'over' && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/45 backdrop-blur-[4px]">
             <p className="mb-2 font-display text-4xl font-extrabold text-stone-950">Connection restored.</p>
-            <p className="mb-8 text-lg font-bold text-stone-800">Final score: {score}</p>
+            <p className="mb-3 text-lg font-bold text-stone-800">Final score: {score}</p>
+            <p className="mb-8 rounded-full bg-white/75 px-4 py-2 text-sm font-semibold text-stone-700">{config.note}</p>
             <button
               onClick={startGame}
               className="flex items-center gap-3 rounded-full bg-stone-800 px-8 py-4 text-sm font-bold text-white shadow-lift transition hover:-translate-y-1 hover:bg-stone-700"

@@ -362,6 +362,21 @@ const wellnessArticles = [
 
 const seoLandingBlocks = [
   {
+    title: 'Cozy browser games',
+    text: 'Find cozy browser games that feel easy to open, easy to understand, and satisfying when you just want to relax for a few minutes.',
+    href: '/cozy-browser-games.html'
+  },
+  {
+    title: 'Games to relax',
+    text: 'Explore gentle game styles like memory, logic, puzzle, and soft endless play when you want a calm reset instead of a loud challenge.',
+    href: '/games-to-relax.html'
+  },
+  {
+    title: 'Things to do to relax',
+    text: 'Read simple ideas people lean on most often when they want to chill, rest, and settle their mind after a busy day.',
+    href: '/things-to-do-to-relax.html'
+  },
+  {
     title: 'Private online diary',
     text: 'Use Lofi Memory as a private online diary when you want a calm place to write daily thoughts, check in with yourself, and keep reflections personal.',
     href: '/private-online-diary.html'
@@ -675,6 +690,9 @@ const seoFaqs = [
 ];
 
 const seoGuidePages = [
+  { label: 'Popular guide', title: 'Cozy browser games', text: 'Find soft browser games people like to play when they want to relax, reset, and stay for a while.', href: '/cozy-browser-games.html' },
+  { label: 'Helpful read', title: 'Games to relax', text: 'Explore calm game styles like memory, logic, and endless runners that feel easy to enjoy.', href: '/games-to-relax.html' },
+  { label: 'Helpful read', title: 'Things to do to relax', text: 'See the simple habits people lean on most often when they want to rest, chill, and reset.', href: '/things-to-do-to-relax.html' },
   { label: 'Popular guide', title: 'Memory games for anxiety', text: 'Play calm memory games for anxiety to clear your mind before writing.', href: '/memory-games-for-anxiety.html' },
   { label: 'Helpful read', title: 'Mindful gaming app', text: 'Play mindful games like Drifting Leaf and Lotus Match to relax your mind.', href: '/mindful-gaming-app.html' },
 
@@ -1118,6 +1136,9 @@ const seoGuideGroups = [
 ];
 
 const seoPopularSearches = [
+  { label: 'Cozy browser games', href: '/cozy-browser-games.html' },
+  { label: 'Games to relax', href: '/games-to-relax.html' },
+  { label: 'Things to do to relax', href: '/things-to-do-to-relax.html' },
   { label: 'Memory games for anxiety', href: '/memory-games-for-anxiety.html' },
   { label: 'Mindful gaming app', href: '/mindful-gaming-app.html' },
 
@@ -2165,6 +2186,7 @@ function App() {
   const [draggedPlannerTodoId, setDraggedPlannerTodoId] = useState(null);
   const [saveReward, setSaveReward] = useState('');
   const [selectedUnwindGame, setSelectedUnwindGame] = useState('drifting-leaf');
+  const [selectedGameDifficulty, setSelectedGameDifficulty] = useState('medium');
   const [isRadioPlaying, setIsRadioPlaying] = useState(false);
   const [radioVolume, setRadioVolume] = useState(35);
   const [isRadioDialDragging, setIsRadioDialDragging] = useState(false);
@@ -2274,6 +2296,25 @@ function App() {
     () => homeSections.filter((section) => ['overview', 'about', 'guides', 'resources', 'faq', 'contact', 'seo-studio'].includes(section.id)),
     [homeSections]
   );
+  const difficultyOptions = [
+    { id: 'easy', label: 'Easy', detail: 'Slow and forgiving' },
+    { id: 'medium', label: 'Medium', detail: 'Balanced chill' },
+    { id: 'hard', label: 'Hard', detail: 'Sharper focus' }
+  ];
+  const chillResearchHighlights = [
+    {
+      title: 'What people like to play to unwind',
+      text: 'Puzzle, memory, and low-pressure endless games are some of the most common comfort picks when people want to relax without a huge learning curve.'
+    },
+    {
+      title: 'What helps people slow down',
+      text: 'Music, deep breathing, short walks, journaling, and simple repeatable games all show up again and again as go-to stress relievers.'
+    },
+    {
+      title: 'What Lofi Memory is leaning into',
+      text: 'Cozy logic, soft movement, quick resets, and calm transitions between playing, breathing, planning, and writing.'
+    }
+  ];
   const unwindGames = [
     {
       id: 'drifting-leaf',
@@ -2282,7 +2323,7 @@ function App() {
       description: 'A slow, floaty game for clearing your head before you write.',
       icon: Leaf,
       tone: 'from-emerald-100 to-sage-50 text-emerald-700',
-      component: <ZenGame />
+      component: <ZenGame difficulty={selectedGameDifficulty} />
     },
     {
       id: 'stream-surfer',
@@ -2291,7 +2332,7 @@ function App() {
       description: 'Slide through a calm river run when you want a little movement without the noise.',
       icon: Waves,
       tone: 'from-sky-100 to-cyan-50 text-sky-700',
-      component: <StreamSurfer />
+      component: <StreamSurfer difficulty={selectedGameDifficulty} />
     },
     {
       id: 'lotus-match',
@@ -2300,7 +2341,7 @@ function App() {
       description: 'Flip calm cards and settle in before journaling or just hanging out for a bit.',
       icon: Sparkles,
       tone: 'from-rose-100 to-orange-50 text-rose-700',
-      component: <LotusMatch />
+      component: <LotusMatch difficulty={selectedGameDifficulty} />
     },
     {
       id: 'mind-sweeper',
@@ -2309,7 +2350,7 @@ function App() {
       description: 'A cozy Minesweeper-style board for clearing your head one calm tile at a time.',
       icon: Shield,
       tone: 'from-lime-100 to-emerald-50 text-lime-700',
-      component: <MindSweeper />
+      component: <MindSweeper difficulty={selectedGameDifficulty} />
     },
     {
       id: 'dinosaur-dash',
@@ -2318,7 +2359,7 @@ function App() {
       description: 'A soft no-internet-style dino run with easy jumps, warm desert tones, and a quick reset rhythm.',
       icon: ArrowUp,
       tone: 'from-stone-200 to-amber-50 text-stone-700',
-      component: <DinosaurDash />
+      component: <DinosaurDash difficulty={selectedGameDifficulty} />
     }
   ];
   const selectedUnwindGameConfig = unwindGames.find((game) => game.id === selectedUnwindGame) || unwindGames[0];
@@ -4912,8 +4953,8 @@ function App() {
                 <div className="rounded-[1.8rem] border border-sage-100/80 bg-white/85 p-5 shadow-sm">
                   <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
                     <div>
-                      <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-600">Popular diary searches</p>
-                      <h3 className="mt-2 text-xl font-extrabold text-ink">Quick links for the most common journaling questions.</h3>
+                      <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-600">Popular calm searches</p>
+                      <h3 className="mt-2 text-xl font-extrabold text-ink">Quick links for chill games, gentle routines, and the most common journaling questions.</h3>
                     </div>
                     <button className="text-sm font-extrabold text-sage-800 underline decoration-sage-300 underline-offset-4" onClick={() => openHomeSection('guides')} type="button">View all guide collections</button>
                   </div>
@@ -5363,6 +5404,34 @@ function App() {
               <p className="mb-2 text-sm font-bold uppercase tracking-widest text-sage-600">Relax & Play</p>
               <h1 className="mb-3 font-display text-4xl font-bold tracking-tight text-sage-950">Pick a chill game</h1>
               <p className="mx-auto max-w-2xl text-lg text-sage-700">Choose the kind of calm you want right now — drift, dodge, match, sweep, or jump through a soft offline desert run.</p>
+            </div>
+            <div className="mb-6 flex flex-col gap-3 rounded-[1.75rem] border border-white/80 bg-white/78 p-4 shadow-sm backdrop-blur sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Choose your pace</p>
+                <p className="mt-1 text-sm font-semibold text-sage-700">Switch the games between easy, medium, and hard depending on how much focus you want today.</p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {difficultyOptions.map((difficulty) => (
+                  <button
+                    key={difficulty.id}
+                    className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${selectedGameDifficulty === difficulty.id ? 'bg-sage-900 text-white shadow-sm' : 'border border-sage-200 bg-white text-sage-800 hover:bg-sage-50'}`}
+                    onClick={() => setSelectedGameDifficulty(difficulty.id)}
+                    type="button"
+                  >
+                    {difficulty.label}
+                    <span className={`ml-2 text-[10px] uppercase tracking-[0.18em] ${selectedGameDifficulty === difficulty.id ? 'text-white/75' : 'text-sage-500'}`}>{difficulty.detail}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="mb-8 grid gap-4 xl:grid-cols-3">
+              {chillResearchHighlights.map((item) => (
+                <article key={item.title} className="rounded-[1.8rem] border border-white/80 bg-white/82 p-5 shadow-sm backdrop-blur">
+                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Chill research</p>
+                  <h2 className="mt-3 text-lg font-extrabold text-sage-950">{item.title}</h2>
+                  <p className="mt-3 text-sm leading-7 text-sage-700">{item.text}</p>
+                </article>
+              ))}
             </div>
             <div className="mb-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {unwindGames.map((game) => (
@@ -6117,9 +6186,9 @@ function App() {
       {activeHomeSection === 'guides' && (
       <section id="seo-landing" className="mx-auto max-w-[1160px] px-5 sm:px-7 xl:px-10 py-10">
         <SectionHeader
-          eyebrow="Gentle journaling guides"
-          title="Find the kind of journaling support that fits what you need today."
-          text="Some people want a private diary, some want an online diary, some want a diary app or journal app, some want an online journal, and some want help with how to write a diary. These pages help readers find the calmest place to begin."
+          eyebrow="Chill guides & calm routines"
+          title="Find the kind of game, reset, or journaling support that fits what you need today."
+          text="Some people want a private diary, some want an online journal, and some are simply looking for cozy browser games or easy ways to relax after a long day. These pages help readers find the calmest place to begin."
         />
         <div className="mb-6 rounded-[1.8rem] border border-white/80 bg-white/82 p-5 shadow-lift backdrop-blur">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">

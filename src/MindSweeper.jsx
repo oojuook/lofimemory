@@ -1,10 +1,26 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { RotateCcw, Sparkles } from 'lucide-react';
 
-const BOARD_SIZE = 8;
-const MINE_COUNT = 10;
-const SAFE_TILES = BOARD_SIZE * BOARD_SIZE - MINE_COUNT;
-const WINS_STORAGE_KEY = 'quiet-journal-mind-sweeper-wins';
+const difficultySettings = {
+  easy: {
+    boardSize: 8,
+    mineCount: 10,
+    label: 'Easy',
+    note: 'A gentler board with more breathing room.'
+  },
+  medium: {
+    boardSize: 9,
+    mineCount: 14,
+    label: 'Medium',
+    note: 'Balanced and steady for a cozy focus reset.'
+  },
+  hard: {
+    boardSize: 10,
+    mineCount: 22,
+    label: 'Hard',
+    note: 'Denser hazards when you want sharper attention.'
+  }
+};
 
 const numberTone = {
   1: 'text-sky-700',
@@ -17,9 +33,9 @@ const numberTone = {
   8: 'text-stone-700'
 };
 
-function buildBoard() {
-  const board = Array.from({ length: BOARD_SIZE }, (_, row) =>
-    Array.from({ length: BOARD_SIZE }, (_, col) => ({
+function buildBoard(boardSize, mineCount) {
+  const board = Array.from({ length: boardSize }, (_, row) =>
+    Array.from({ length: boardSize }, (_, col) => ({
       row,
       col,
       mine: false,
@@ -30,18 +46,18 @@ function buildBoard() {
   );
 
   const mineSlots = new Set();
-  while (mineSlots.size < MINE_COUNT) {
-    mineSlots.add(Math.floor(Math.random() * BOARD_SIZE * BOARD_SIZE));
+  while (mineSlots.size < mineCount) {
+    mineSlots.add(Math.floor(Math.random() * boardSize * boardSize));
   }
 
   mineSlots.forEach((slot) => {
-    const row = Math.floor(slot / BOARD_SIZE);
-    const col = slot % BOARD_SIZE;
+    const row = Math.floor(slot / boardSize);
+    const col = slot % boardSize;
     board[row][col].mine = true;
   });
 
-  for (let row = 0; row < BOARD_SIZE; row += 1) {
-    for (let col = 0; col < BOARD_SIZE; col += 1) {
+  for (let row = 0; row < boardSize; row += 1) {
+    for (let col = 0; col < boardSize; col += 1) {
       if (board[row][col].mine) continue;
       let adjacent = 0;
       for (let rowOffset = -1; rowOffset <= 1; rowOffset += 1) {
@@ -49,7 +65,7 @@ function buildBoard() {
           if (rowOffset === 0 && colOffset === 0) continue;
           const nextRow = row + rowOffset;
           const nextCol = col + colOffset;
-          if (nextRow < 0 || nextRow >= BOARD_SIZE || nextCol < 0 || nextCol >= BOARD_SIZE) continue;
+          if (nextRow < 0 || nextRow >= boardSize || nextCol < 0 || nextCol >= boardSize) continue;
           if (board[nextRow][nextCol].mine) adjacent += 1;
         }
       }
@@ -80,7 +96,7 @@ function revealAllMines(board) {
   });
 }
 
-function floodReveal(board, startRow, startCol) {
+function floodReveal(board, startRow, startCol, boardSize) {
   const stack = [[startRow, startCol]];
 
   while (stack.length) {
@@ -89,7 +105,6 @@ function floodReveal(board, startRow, startCol) {
     if (!cell || cell.revealed || cell.flagged) continue;
 
     cell.revealed = true;
-
     if (cell.adjacent > 0) continue;
 
     for (let rowOffset = -1; rowOffset <= 1; rowOffset += 1) {
@@ -97,28 +112,38 @@ function floodReveal(board, startRow, startCol) {
         if (rowOffset === 0 && colOffset === 0) continue;
         const nextRow = row + rowOffset;
         const nextCol = col + colOffset;
-        if (nextRow < 0 || nextRow >= BOARD_SIZE || nextCol < 0 || nextCol >= BOARD_SIZE) continue;
+        if (nextRow < 0 || nextRow >= boardSize || nextCol < 0 || nextCol >= boardSize) continue;
         const nextCell = board[nextRow][nextCol];
-        if (!nextCell.revealed && !nextCell.mine) {
-          stack.push([nextRow, nextCol]);
-        }
+        if (!nextCell.revealed && !nextCell.mine) stack.push([nextRow, nextCol]);
       }
     }
   }
 }
 
-export default function MindSweeper() {
-  const [board, setBoard] = useState(buildBoard);
+export default function MindSweeper({ difficulty = 'medium' }) {
+  const config = difficultySettings[difficulty] || difficultySettings.medium;
+  const { boardSize, mineCount, label, note } = config;
+  const safeTiles = boardSize * boardSize - mineCount;
+  const winsStorageKey = `quiet-journal-mind-sweeper-wins-${difficulty}`;
+
+  const [board, setBoard] = useState(() => buildBoard(boardSize, mineCount));
   const [gameState, setGameState] = useState('playing');
   const [actionMode, setActionMode] = useState('reveal');
-  const [wins, setWins] = useState(() => parseInt(localStorage.getItem(WINS_STORAGE_KEY) || '0', 10));
+  const [wins, setWins] = useState(() => parseInt(localStorage.getItem(winsStorageKey) || '0', 10));
+
+  useEffect(() => {
+    setBoard(buildBoard(boardSize, mineCount));
+    setGameState('playing');
+    setActionMode('reveal');
+    setWins(parseInt(localStorage.getItem(winsStorageKey) || '0', 10));
+  }, [boardSize, mineCount, winsStorageKey]);
 
   const flags = useMemo(() => countFlags(board), [board]);
   const cleared = useMemo(() => countSafeRevealed(board), [board]);
-  const minesLeft = Math.max(0, MINE_COUNT - flags);
+  const minesLeft = Math.max(0, mineCount - flags);
 
   const resetGame = () => {
-    setBoard(buildBoard());
+    setBoard(buildBoard(boardSize, mineCount));
     setGameState('playing');
     setActionMode('reveal');
   };
@@ -133,7 +158,7 @@ export default function MindSweeper() {
     setGameState('won');
     setWins((current) => {
       const next = current + 1;
-      localStorage.setItem(WINS_STORAGE_KEY, String(next));
+      localStorage.setItem(winsStorageKey, String(next));
       return next;
     });
   };
@@ -145,7 +170,7 @@ export default function MindSweeper() {
       cell.flagged = false;
       return true;
     }
-    if (countFlags(nextBoard) >= MINE_COUNT) return false;
+    if (countFlags(nextBoard) >= mineCount) return false;
     cell.flagged = true;
     return true;
   };
@@ -159,9 +184,7 @@ export default function MindSweeper() {
     if (!cell) return;
 
     if (mode === 'flag') {
-      if (toggleFlag(nextBoard, row, col)) {
-        setBoard(nextBoard);
-      }
+      if (toggleFlag(nextBoard, row, col)) setBoard(nextBoard);
       return;
     }
 
@@ -174,8 +197,8 @@ export default function MindSweeper() {
       return;
     }
 
-    floodReveal(nextBoard, row, col);
-    if (countSafeRevealed(nextBoard) === SAFE_TILES) {
+    floodReveal(nextBoard, row, col, boardSize);
+    if (countSafeRevealed(nextBoard) === safeTiles) {
       finishWin(nextBoard);
       return;
     }
@@ -189,12 +212,11 @@ export default function MindSweeper() {
         <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white/88 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-700 shadow-sm">
-              <Sparkles size={14} /> Soft logic reset
+              <Sparkles size={14} /> {label} logic reset
             </div>
             <h3 className="mt-4 text-3xl font-bold tracking-tight text-sage-950">Mind Sweeper</h3>
-            <p className="mt-2 max-w-2xl text-sm leading-7 text-sage-700">
-              A cozy Minesweeper-style board for slower focus. Clear the quiet tiles, mark the sleepy hazards, and let your brain settle into one gentle task.
-            </p>
+            <p className="mt-2 max-w-2xl text-sm leading-7 text-sage-700">A cozy Minesweeper-style board for slower focus. Clear the quiet tiles, mark the sleepy hazards, and let your brain settle into one gentle task.</p>
+            <p className="mt-2 text-sm font-semibold text-sage-600">{note}</p>
           </div>
           <div className="grid gap-2 rounded-[1.5rem] border border-white/85 bg-white/80 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[23rem]">
             <div className="rounded-[1.15rem] bg-sage-50 px-4 py-3 text-center">
@@ -203,7 +225,7 @@ export default function MindSweeper() {
             </div>
             <div className="rounded-[1.15rem] bg-sage-50 px-4 py-3 text-center">
               <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sage-500">Cleared</p>
-              <p className="mt-2 text-xl font-extrabold text-sage-950">{cleared}/{SAFE_TILES}</p>
+              <p className="mt-2 text-xl font-extrabold text-sage-950">{cleared}/{safeTiles}</p>
             </div>
             <div className="rounded-[1.15rem] bg-sage-50 px-4 py-3 text-center">
               <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sage-500">Soft wins</p>
@@ -242,7 +264,7 @@ export default function MindSweeper() {
         </div>
 
         <div className="mt-5 rounded-[1.8rem] border border-sage-100 bg-[#f7f1e7] p-4 shadow-inner lg:p-5">
-          <div className="grid grid-cols-8 gap-2">
+          <div className="grid gap-2" style={{ gridTemplateColumns: `repeat(${boardSize}, minmax(0, 1fr))` }}>
             {board.flat().map((cell) => {
               const showNumber = cell.revealed && !cell.mine && cell.adjacent > 0;
               return (

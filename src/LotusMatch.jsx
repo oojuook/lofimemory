@@ -1,111 +1,214 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { RotateCcw, Sparkles } from 'lucide-react';
 
-const ICONS = ['🌿', '🪴', '💧', '🍵', '☁️', '🕊️', '🦦', '🌸'];
+const lotusIcons = ['🌸', '🪷', '🌙', '☁️', '✨', '🍃', '🫧', '🕯️', '🪻', '🐚', '🌊', '🫖'];
 
-export default function LotusMatch() {
-  const [cards, setCards] = useState([]);
-  const [flipped, setFlipped] = useState([]);
-  const [matched, setMatched] = useState([]);
+const difficultySettings = {
+  easy: {
+    pairCount: 6,
+    previewMs: 1600,
+    mismatchMs: 700,
+    label: 'Easy',
+    note: 'Fewer pairs and a longer peek to keep things gentle.'
+  },
+  medium: {
+    pairCount: 8,
+    previewMs: 1100,
+    mismatchMs: 560,
+    label: 'Medium',
+    note: 'A balanced memory flow with a cozy pace.'
+  },
+  hard: {
+    pairCount: 10,
+    previewMs: 800,
+    mismatchMs: 420,
+    label: 'Hard',
+    note: 'More tiles and a faster fade for sharper focus.'
+  }
+};
+
+function shuffle(cards) {
+  const next = [...cards];
+  for (let index = next.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [next[index], next[swapIndex]] = [next[swapIndex], next[index]];
+  }
+  return next;
+}
+
+function buildDeck(pairCount) {
+  return shuffle(
+    lotusIcons.slice(0, pairCount).flatMap((icon, index) => [
+      {
+        id: `${icon}-${index}-a`,
+        icon,
+        pairId: index,
+        matched: false,
+        revealed: true
+      },
+      {
+        id: `${icon}-${index}-b`,
+        icon,
+        pairId: index,
+        matched: false,
+        revealed: true
+      }
+    ])
+  );
+}
+
+export default function LotusMatch({ difficulty = 'medium' }) {
+  const config = difficultySettings[difficulty] || difficultySettings.medium;
+  const { pairCount, previewMs, mismatchMs, label, note } = config;
+  const bestScoreKey = `quiet-journal-lotus-best-${difficulty}`;
+
+  const [cards, setCards] = useState(() => buildDeck(pairCount));
+  const [selectedIds, setSelectedIds] = useState([]);
   const [moves, setMoves] = useState(0);
-  const [bestScore, setBestScore] = useState(() => parseInt(localStorage.getItem('quiet-journal-match-best') || '0'));
+  const [isLocked, setIsLocked] = useState(true);
+  const [bestScore, setBestScore] = useState(() => parseInt(localStorage.getItem(bestScoreKey) || '0', 10));
+  const [hasWon, setHasWon] = useState(false);
 
-  const initializeGame = () => {
-    const shuffled = [...ICONS, ...ICONS]
-      .sort(() => Math.random() - 0.5)
-      .map((icon, id) => ({ id, icon }));
-    setCards(shuffled);
-    setFlipped([]);
-    setMatched([]);
+  useEffect(() => {
+    const freshDeck = buildDeck(pairCount);
+    setCards(freshDeck);
+    setSelectedIds([]);
     setMoves(0);
+    setIsLocked(true);
+    setHasWon(false);
+    setBestScore(parseInt(localStorage.getItem(bestScoreKey) || '0', 10));
+
+    const timer = window.setTimeout(() => {
+      setCards((current) => current.map((card) => ({ ...card, revealed: false })));
+      setIsLocked(false);
+    }, previewMs);
+
+    return () => window.clearTimeout(timer);
+  }, [pairCount, previewMs, bestScoreKey]);
+
+  const matchedPairs = useMemo(() => cards.filter((card) => card.matched).length / 2, [cards]);
+
+  const resetGame = () => {
+    const freshDeck = buildDeck(pairCount);
+    setCards(freshDeck);
+    setSelectedIds([]);
+    setMoves(0);
+    setIsLocked(true);
+    setHasWon(false);
+
+    window.setTimeout(() => {
+      setCards((current) => current.map((card) => ({ ...card, revealed: false })));
+      setIsLocked(false);
+    }, previewMs);
   };
 
-  useEffect(() => {
-    initializeGame();
-  }, []);
+  const revealCard = (cardId) => {
+    if (isLocked || hasWon) return;
 
-  useEffect(() => {
-    if (matched.length === ICONS.length * 2) {
-      if (bestScore === 0 || moves < bestScore) {
-        setBestScore(moves);
-        localStorage.setItem('quiet-journal-match-best', moves.toString());
-      }
-    }
-  }, [matched, moves, bestScore]);
+    const card = cards.find((entry) => entry.id === cardId);
+    if (!card || card.revealed || card.matched || selectedIds.length >= 2) return;
 
-  const handleCardClick = (index) => {
-    if (flipped.length === 2 || flipped.includes(index) || matched.includes(index)) return;
-    
-    const newFlipped = [...flipped, index];
-    setFlipped(newFlipped);
-    
-    if (newFlipped.length === 2) {
-      setMoves(m => m + 1);
-      if (cards[newFlipped[0]].icon === cards[newFlipped[1]].icon) {
-        setMatched([...matched, newFlipped[0], newFlipped[1]]);
-        setFlipped([]);
-      } else {
-        setTimeout(() => setFlipped([]), 800);
-      }
+    const nextSelected = [...selectedIds, cardId];
+    setCards((current) => current.map((entry) => (entry.id === cardId ? { ...entry, revealed: true } : entry)));
+    setSelectedIds(nextSelected);
+
+    if (nextSelected.length !== 2) return;
+
+    setIsLocked(true);
+    setMoves((currentMoves) => currentMoves + 1);
+
+    const [firstId, secondId] = nextSelected;
+    const firstCard = cards.find((entry) => entry.id === firstId);
+    const secondCard = cards.find((entry) => entry.id === secondId) || card;
+
+    if (firstCard?.pairId === secondCard?.pairId) {
+      window.setTimeout(() => {
+        setCards((current) => {
+          const next = current.map((entry) => (nextSelected.includes(entry.id) ? { ...entry, matched: true } : entry));
+          const won = next.every((entry) => entry.matched);
+          if (won) {
+            const finalMoves = moves + 1;
+            setHasWon(true);
+            setBestScore((currentBest) => {
+              if (currentBest === 0 || finalMoves < currentBest) {
+                localStorage.setItem(bestScoreKey, String(finalMoves));
+                return finalMoves;
+              }
+              return currentBest;
+            });
+          }
+          return next;
+        });
+        setSelectedIds([]);
+        setIsLocked(false);
+      }, 220);
+      return;
     }
+
+    window.setTimeout(() => {
+      setCards((current) => current.map((entry) => (nextSelected.includes(entry.id) ? { ...entry, revealed: false } : entry)));
+      setSelectedIds([]);
+      setIsLocked(false);
+    }, mismatchMs);
   };
 
-  const isWon = cards.length > 0 && matched.length === cards.length;
+  const gridCols = pairCount >= 10 ? 'grid-cols-4 md:grid-cols-5' : 'grid-cols-4';
 
   return (
-    <div className="mx-auto max-w-2xl w-full mt-12 pb-12">
-      <div className="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div>
-          <h3 className="text-2xl font-bold text-rose-900">Lotus Match</h3>
-          <p className="text-sm font-semibold text-rose-700">A gentle memory game to center your thoughts.</p>
-        </div>
-        <div className="flex gap-4 text-sm font-extrabold uppercase tracking-widest text-rose-700">
-          <span className="rounded-full bg-rose-100 px-4 py-2 shadow-sm">Moves: {moves}</span>
-          <span className="rounded-full bg-white px-4 py-2 border border-rose-200 shadow-sm">Best: {bestScore > 0 ? bestScore : '-'}</span>
-        </div>
-      </div>
-      
-      <div className="relative rounded-[2rem] border border-rose-200 bg-rose-50/50 p-6 shadow-sm transition hover:shadow-soft">
-        <div className="grid grid-cols-4 gap-3 sm:gap-4">
-          {cards.map((card, index) => {
-            const isFlipped = flipped.includes(index) || matched.includes(index);
-            return (
-              <button
-                key={card.id}
-                onClick={() => handleCardClick(index)}
-                className={`group relative flex aspect-square items-center justify-center rounded-2xl text-4xl transition-all duration-300 transform-gpu perspective-1000 shadow-sm ${
-                  isFlipped 
-                    ? 'bg-white border border-rose-200 rotate-y-180' 
-                    : 'bg-rose-200 border border-rose-300 hover:-translate-y-1 hover:bg-rose-300'
-                }`}
-                style={{ transformStyle: 'preserve-3d' }}
-              >
-                {/* Back of card (visible when not flipped) */}
-                <div className={`absolute inset-0 flex items-center justify-center rounded-2xl transition-opacity duration-300 ${isFlipped ? 'opacity-0' : 'opacity-100'}`}>
-                  <Sparkles className="text-rose-400 opacity-50" size={24} />
-                </div>
-                
-                {/* Front of card (visible when flipped) */}
-                <div className={`absolute inset-0 flex items-center justify-center rounded-2xl transition-opacity duration-300 rotate-y-180 ${isFlipped ? 'opacity-100' : 'opacity-0'}`}>
-                  {card.icon}
-                </div>
-              </button>
-            );
-          })}
+    <div className="mx-auto mt-12 w-full max-w-[900px] pb-12">
+      <div className="rounded-[2rem] border border-sage-100 bg-gradient-to-br from-white via-sage-50/82 to-sand-50/82 p-5 shadow-soft lg:p-6">
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+          <div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white/88 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-700 shadow-sm">
+              <Sparkles size={14} /> {label} memory flow
+            </div>
+            <h3 className="mt-4 text-3xl font-bold tracking-tight text-sage-950">Lotus Match</h3>
+            <p className="mt-2 max-w-2xl text-sm leading-7 text-sage-700">A soft memory game for quiet focus. Watch the symbols bloom, remember where they rest, and match the pairs at your own pace.</p>
+            <p className="mt-2 text-sm font-semibold text-sage-600">{note}</p>
+          </div>
+          <div className="grid gap-2 rounded-[1.5rem] border border-white/85 bg-white/80 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[23rem]">
+            <div className="rounded-[1.15rem] bg-sage-50 px-4 py-3 text-center">
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sage-500">Pairs</p>
+              <p className="mt-2 text-xl font-extrabold text-sage-950">{matchedPairs}/{pairCount}</p>
+            </div>
+            <div className="rounded-[1.15rem] bg-sage-50 px-4 py-3 text-center">
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sage-500">Moves</p>
+              <p className="mt-2 text-xl font-extrabold text-sage-950">{moves}</p>
+            </div>
+            <div className="rounded-[1.15rem] bg-sage-50 px-4 py-3 text-center">
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sage-500">Best</p>
+              <p className="mt-2 text-xl font-extrabold text-sage-950">{bestScore || '—'}</p>
+            </div>
+          </div>
         </div>
 
-        {isWon && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/70 backdrop-blur-[4px] rounded-[2rem]">
-            <p className="mb-2 font-display text-4xl font-extrabold text-rose-950">Mind cleared.</p>
-            <p className="mb-8 text-lg font-bold text-rose-800">Completed in {moves} moves</p>
-            <button 
-              onClick={initializeGame}
-              className="flex items-center gap-3 rounded-full bg-rose-800 px-8 py-4 text-sm font-bold text-white shadow-lift transition hover:-translate-y-1 hover:bg-rose-700"
+        <div className="mt-5 flex flex-col gap-3 rounded-[1.6rem] border border-white/80 bg-white/72 p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between">
+          <p className="text-sm font-semibold text-sage-700">{isLocked ? 'Take a first look while the cards glow.' : hasWon ? 'You matched every pair — lovely work.' : 'Tap two cards at a time and follow the pattern.'}</p>
+          <button
+            className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5"
+            onClick={resetGame}
+            type="button"
+          >
+            <RotateCcw size={16} /> Restart round
+          </button>
+        </div>
+
+        <div className={`mt-5 grid gap-3 ${gridCols}`}>
+          {cards.map((card) => (
+            <button
+              key={card.id}
+              className={`aspect-square rounded-[1.6rem] border p-3 text-3xl shadow-sm transition ${card.revealed || card.matched ? 'border-white/80 bg-white text-sage-950' : 'border-sage-100 bg-gradient-to-br from-[#efe5d9] to-[#e7dfd6] text-transparent hover:-translate-y-0.5 hover:from-[#f3ebdf] hover:to-[#ece3d7]'} ${card.matched ? 'ring-2 ring-emerald-200' : ''}`}
+              onClick={() => revealCard(card.id)}
+              type="button"
             >
-              <RotateCcw size={18} /> Reshuffle
+              <span className={card.revealed || card.matched ? 'opacity-100' : 'opacity-0'}>{card.icon}</span>
             </button>
-          </div>
-        )}
+          ))}
+        </div>
+
+        <div className="mt-5 rounded-[1.4rem] border border-white/75 bg-white/76 px-4 py-4 text-sm font-semibold text-sage-700 shadow-sm">
+          A lot of people reach for light puzzle and memory games when they want to relax without feeling pressured. This round keeps the interaction simple, calm, and satisfying.
+        </div>
       </div>
     </div>
   );
