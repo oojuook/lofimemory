@@ -43,7 +43,7 @@ import MindSweeper from './MindSweeper';
 import QuietTiles from './QuietTiles';
 import QuietSlide from './QuietSlide';
 import QuietWords from './QuietWords';
-import QuietKeys from './QuietKeys';
+import TypingSpeedTest from './TypingSpeedTest';
 import QuietClues from './QuietClues';
 import QuietWordle from './QuietWordle';
 import { auth, db, getMessagingIfSupported, googleProvider } from './firebase';
@@ -262,6 +262,10 @@ const tips = [
 ];
 
 const wellnessArticles = [
+  { title: 'Why daily word puzzles make relaxing breaks easier', read: 'Article • 4 min read', body: 'See why daily word puzzles feel so satisfying during short breaks and how a calm Wordle-style game can fit naturally into a relaxing online routine.', href: '/article-daily-word-puzzles-relax.html' },
+
+  { title: 'Why word guessing games feel good when your mind is busy', read: 'Article • 4 min read', body: 'Understand why guess-the-word games feel grounding when your mind is overloaded and how a calm Wordle-style round can become a simple reset.', href: '/article-word-guessing-games-busy-mind.html' },
+
   { title: 'How gentle memory games provide cognitive relief before writing', read: 'Article • 5 min read', body: 'Understand why playing a simple memory match game can help organize your thoughts and reduce brain fog before journaling.', href: '/article-memory-games-cognitive-relief.html' },
 
   { title: 'Why mindless gaming helps relieve stress before journaling', read: 'Article • 4 min read', body: 'Discover how simple, repetitive browser games act as a palate cleanser for your brain, reducing anxiety before you start writing.', href: '/article-why-gaming-helps-anxiety.html' },
@@ -394,8 +398,8 @@ const seoLandingBlocks = [
     href: '/crossword-game-online.html'
   },
   {
-    title: 'Typing game online',
-    text: 'Play a calm typing game online when you want the most approachable browser game on the page — quick to start, simple to understand, and easy to retry.',
+    title: 'Typing speed test',
+    text: 'Take a calm typing speed test when you want a soft WPM check with accuracy stats, readable passages, and a gentler browser-game feel.',
     href: '/typing-game-online.html'
   },
   {
@@ -752,7 +756,7 @@ const seoGuidePages = [
   { label: 'Popular guide', title: 'Daily word game', text: 'Find a daily word game you can open for a quick relaxing round before moving into music, notes, or journaling.', href: '/daily-word-game.html' },
   { label: 'Popular guide', title: 'Wordle online', text: 'Play a calm Wordle-style puzzle online when you want a familiar word-guessing game that still feels gentle and beginner-friendly.', href: '/wordle-online.html' },
   { label: 'Popular guide', title: 'Crossword game online', text: 'Play a calm crossword-style game online when you want an easy clue loop that feels more welcoming than a full crossword grid.', href: '/crossword-game-online.html' },
-  { label: 'Popular guide', title: 'Typing game online', text: 'Play a calm typing game online when you want the easiest game to pick up and enjoy in short, soft rounds.', href: '/typing-game-online.html' },
+  { label: 'Popular guide', title: 'Typing speed test', text: 'Take a calm typing speed test when you want a soft WPM check, clean stats, and an easy browser challenge.', href: '/typing-game-online.html' },
   { label: 'Popular guide', title: 'Chill place online', text: 'Find a cozy online place to chill, relax, play soft games, and keep private notes in one calm space.', href: '/chill-place-online.html' },
   { label: 'Popular guide', title: 'Word game online', text: 'Play a calm word game online when you want a familiar puzzle that feels light and relaxing.', href: '/word-game-online.html' },
   { label: 'Popular guide', title: 'Sliding puzzle online', text: 'Play a cozy sliding puzzle online when you want a simple tile game that feels calm and satisfying.', href: '/sliding-puzzle-online.html' },
@@ -1183,7 +1187,7 @@ const seoGuideGroups = [
   {
     title: 'Play calm word puzzles',
     description: 'Best for visitors looking for familiar Wordle-style, daily word, and guess-the-word pages they can open quickly and enjoy without pressure.',
-    links: seoGuidePages.filter((page) => ['Daily word puzzle', 'Guess the word game', 'Daily word game', 'Wordle online', 'Word game online', 'Crossword game online', 'Typing game online'].includes(page.title))
+    links: seoGuidePages.filter((page) => ['Daily word puzzle', 'Guess the word game', 'Daily word game', 'Wordle online', 'Word game online', 'Crossword game online', 'Typing speed test'].includes(page.title))
   },
   {
     title: 'Start a private diary',
@@ -1213,7 +1217,7 @@ const seoPopularSearches = [
   { label: 'Daily word game', href: '/daily-word-game.html' },
   { label: 'Wordle online', href: '/wordle-online.html' },
   { label: 'Crossword game online', href: '/crossword-game-online.html' },
-  { label: 'Typing game online', href: '/typing-game-online.html' },
+  { label: 'Typing speed test', href: '/typing-game-online.html' },
   { label: 'Chill place online', href: '/chill-place-online.html' },
   { label: 'Word game online', href: '/word-game-online.html' },
   { label: 'Sliding puzzle online', href: '/sliding-puzzle-online.html' },
@@ -2464,13 +2468,13 @@ function App() {
       component: <QuietWords difficulty={selectedGameDifficulty} />
     },
     {
-      id: 'quiet-keys',
-      title: 'Quiet Keys',
-      detail: 'Friendly typing game',
-      description: 'Type cozy words in short, low-pressure rounds when you want the most approachable game option on the page.',
+      id: 'typing-speed-test',
+      title: 'Typing Speed Test',
+      detail: 'Calm WPM check',
+      description: 'Type a soft passage, watch your WPM and accuracy, and get a clean little typing-speed snapshot without the usual pressure.',
       icon: PenLine,
       tone: 'from-sky-100 to-indigo-50 text-sky-700',
-      component: <QuietKeys difficulty={selectedGameDifficulty} />
+      component: <TypingSpeedTest difficulty={selectedGameDifficulty} />
     },
     {
       id: 'quiet-clues',
@@ -5631,7 +5635,7 @@ function App() {
               </div>
               <div className="mt-4 flex flex-wrap gap-2.5">
                 {[
-                  { id: 'quiet-keys', label: 'Quiet Keys • easiest' },
+                  { id: 'typing-speed-test', label: 'Typing Speed Test • WPM' },
                   { id: 'quiet-words', label: 'Quiet Words • simple' },
                   { id: 'quiet-wordle', label: 'Quiet Wordle • guess the word' },
                   { id: 'quiet-clues', label: 'Quiet Clues • clue-by-clue' },
@@ -5652,7 +5656,7 @@ function App() {
               <article className="rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
                 <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Game-first comfort</p>
                 <h2 className="mt-3 text-2xl font-extrabold text-sage-950">The games are meant to be the easiest place to begin.</h2>
-                <p className="mt-3 text-sm leading-7 text-sage-700">If you just want something light, start with <span className="font-extrabold text-sage-900">Quiet Keys</span>, <span className="font-extrabold text-sage-900">Quiet Words</span>, <span className="font-extrabold text-sage-900">Quiet Wordle</span>, or <span className="font-extrabold text-sage-900">Quiet Tiles</span> on Easy. Prefer no-rush logic? <span className="font-extrabold text-sage-900">Quiet Clues</span>, <span className="font-extrabold text-sage-900">Quiet Slide</span>, <span className="font-extrabold text-sage-900">Mind Sweeper</span>, and <span className="font-extrabold text-sage-900">Lotus Match</span> are the gentlest puzzle picks.</p>
+                <p className="mt-3 text-sm leading-7 text-sage-700">If you just want something light, start with <span className="font-extrabold text-sage-900">Typing Speed Test</span>, <span className="font-extrabold text-sage-900">Quiet Words</span>, <span className="font-extrabold text-sage-900">Quiet Wordle</span>, or <span className="font-extrabold text-sage-900">Quiet Tiles</span> on Easy. Prefer no-rush logic? <span className="font-extrabold text-sage-900">Quiet Clues</span>, <span className="font-extrabold text-sage-900">Quiet Slide</span>, <span className="font-extrabold text-sage-900">Mind Sweeper</span>, and <span className="font-extrabold text-sage-900">Lotus Match</span> are the gentlest puzzle picks.</p>
               </article>
               <article className="rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
                 <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Right now</p>

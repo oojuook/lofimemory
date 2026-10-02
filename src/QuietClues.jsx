@@ -16,7 +16,7 @@ const cluePools = {
     { answer: 'MELLOW', clue: 'Relaxed, easy, and unhurried' },
     { answer: 'JOURNAL', clue: 'A place to write your thoughts' },
     { answer: 'WILLOW', clue: 'A tree with soft hanging branches' },
-    { answer: 'SETTLE', clue: 'What your mind starts to do when it gets quiet' }
+    { answer: 'SETTLE', clue: 'To become calm again after a busy feeling' }
   ],
   hard: [
     { answer: 'MOONLIGHT', clue: 'Night glow from above' },
@@ -193,6 +193,16 @@ export default function QuietClues({ difficulty = 'medium' }) {
                   value={guess}
                 />
                 <button className="rounded-full bg-stone-900 px-6 py-3 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-stone-800" type="submit">Check clue</button>
+                <button
+                  className="rounded-full border border-stone-200 bg-white px-6 py-3 text-sm font-extrabold text-stone-900 shadow-sm transition hover:-translate-y-0.5"
+                  onClick={() => {
+                    setGuess(activeClue.answer);
+                    setMessage(`Answer shown — ${activeClue.answer}. Tap check clue if you want to move on.`);
+                  }}
+                  type="button"
+                >
+                  Show answer
+                </button>
               </div>
             </form>
           </div>
