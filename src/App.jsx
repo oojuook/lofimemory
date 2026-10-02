@@ -39,6 +39,7 @@ import StreamSurfer from './StreamSurfer';
 import LotusMatch from './LotusMatch';
 import DinosaurDash from './DinosaurDash';
 import MindSweeper from './MindSweeper';
+import QuietTiles from './QuietTiles';
 import { auth, db, getMessagingIfSupported, googleProvider } from './firebase';
 
 const STORAGE_KEY = 'quiet-harbor-journal-v1';
@@ -361,6 +362,11 @@ const wellnessArticles = [
 ];
 
 const seoLandingBlocks = [
+  {
+    title: '2048 online',
+    text: 'Play a calm 2048-style number merge game when you want a familiar puzzle loop that feels satisfying and easy to revisit.',
+    href: '/2048-online.html'
+  },
   {
     title: 'Cozy browser games',
     text: 'Find cozy browser games that feel easy to open, easy to understand, and satisfying when you just want to relax for a few minutes.',
@@ -690,6 +696,7 @@ const seoFaqs = [
 ];
 
 const seoGuidePages = [
+  { label: 'Popular guide', title: '2048 online', text: 'Play a calm 2048-style number merge game when you want an easy puzzle that still feels satisfying.', href: '/2048-online.html' },
   { label: 'Popular guide', title: 'Cozy browser games', text: 'Find soft browser games people like to play when they want to relax, reset, and stay for a while.', href: '/cozy-browser-games.html' },
   { label: 'Helpful read', title: 'Games to relax', text: 'Explore calm game styles like memory, logic, and endless runners that feel easy to enjoy.', href: '/games-to-relax.html' },
   { label: 'Helpful read', title: 'Things to do to relax', text: 'See the simple habits people lean on most often when they want to rest, chill, and reset.', href: '/things-to-do-to-relax.html' },
@@ -1136,6 +1143,7 @@ const seoGuideGroups = [
 ];
 
 const seoPopularSearches = [
+  { label: '2048 online', href: '/2048-online.html' },
   { label: 'Cozy browser games', href: '/cozy-browser-games.html' },
   { label: 'Games to relax', href: '/games-to-relax.html' },
   { label: 'Things to do to relax', href: '/things-to-do-to-relax.html' },
@@ -2342,6 +2350,15 @@ function App() {
       icon: Sparkles,
       tone: 'from-rose-100 to-orange-50 text-rose-700',
       component: <LotusMatch difficulty={selectedGameDifficulty} />
+    },
+    {
+      id: 'quiet-tiles',
+      title: 'Quiet Tiles',
+      detail: 'Cozy 2048-style merge',
+      description: 'Slide matching numbers together for the kind of calm puzzle loop people love in relaxing tile games.',
+      icon: Plus,
+      tone: 'from-violet-100 to-slate-50 text-violet-700',
+      component: <QuietTiles difficulty={selectedGameDifficulty} />
     },
     {
       id: 'mind-sweeper',
@@ -5403,7 +5420,7 @@ function App() {
             <div className="mb-10 text-center">
               <p className="mb-2 text-sm font-bold uppercase tracking-widest text-sage-600">Relax & Play</p>
               <h1 className="mb-3 font-display text-4xl font-bold tracking-tight text-sage-950">Pick a chill game</h1>
-              <p className="mx-auto max-w-2xl text-lg text-sage-700">Choose the kind of calm you want right now — drift, dodge, match, sweep, or jump through a soft offline desert run.</p>
+              <p className="mx-auto max-w-2xl text-lg text-sage-700">Choose the kind of calm you want right now — drift, dodge, merge, match, sweep, or jump through a soft offline desert run.</p>
             </div>
             <div className="mb-6 flex flex-col gap-3 rounded-[1.75rem] border border-white/80 bg-white/78 p-4 shadow-sm backdrop-blur sm:flex-row sm:items-center sm:justify-between">
               <div>
