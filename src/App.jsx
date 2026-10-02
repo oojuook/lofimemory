@@ -4658,18 +4658,36 @@ function App() {
                     <h3 className="mt-3 text-2xl font-extrabold leading-tight text-ink">Relax, play, plan, and write without jumping between tabs.</h3>
                     <p className="mt-3 max-w-2xl text-sm leading-7 text-sage-800">Lofi Memory is meant to feel like a calm browser hangout. You can open a chill game, keep your to-do list nearby, breathe for a minute, or write something down whenever you feel like it.</p>
                   </div>
-                  <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-                    <button className="rounded-[1.35rem] border border-sage-200 bg-white/95 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50" onClick={() => navigateToTab('unwind')} type="button">
-                      <span className="block text-sm font-extrabold text-sage-900">Chill games</span>
-                      <span className="mt-2 block text-[13px] leading-5 text-sage-700">Pick the game that fits your mood and take a quick mental reset.</span>
+                  <div className="mt-6 space-y-3.5">
+                    <button className="group flex w-full items-start gap-4 rounded-[1.5rem] border border-sage-200 bg-white/96 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50 hover:shadow-lift" onClick={() => navigateToTab('unwind')} type="button">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700 shadow-sm transition group-hover:scale-105">
+                        <Leaf size={18} />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <span className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-emerald-700">Play</span>
+                        <span className="mt-1 block text-base font-extrabold text-sage-950">Chill games</span>
+                        <span className="mt-2 block text-sm leading-6 text-sage-700">Pick the game that fits your mood and take a quick mental reset without leaving your soft corner.</span>
+                      </div>
                     </button>
-                    <button className="rounded-[1.35rem] border border-sage-200 bg-white/95 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50" onClick={() => navigateToTab('notes')} type="button">
-                      <span className="block text-sm font-extrabold text-sage-900">Notes & to-dos</span>
-                      <span className="mt-2 block text-[13px] leading-5 text-sage-700">Keep errands, reminders, and important bits close without clutter.</span>
+                    <button className="group flex w-full items-start gap-4 rounded-[1.5rem] border border-sage-200 bg-white/96 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50 hover:shadow-lift" onClick={() => navigateToTab('notes')} type="button">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-teal-100 text-teal-700 shadow-sm transition group-hover:scale-105">
+                        <FileText size={18} />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <span className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-teal-700">Plan</span>
+                        <span className="mt-1 block text-base font-extrabold text-sage-950">Notes & to-dos</span>
+                        <span className="mt-2 block text-sm leading-6 text-sage-700">Keep errands, reminders, and important bits close in a calmer, easier-to-scan space.</span>
+                      </div>
                     </button>
-                    <button className="rounded-[1.35rem] border border-sage-200 bg-white/95 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50" onClick={() => navigateToTab('write')} type="button">
-                      <span className="block text-sm font-extrabold text-sage-900">Thought drop</span>
-                      <span className="mt-2 block text-[13px] leading-5 text-sage-700">Write down whatever is on your mind only when you want to keep it.</span>
+                    <button className="group flex w-full items-start gap-4 rounded-[1.5rem] border border-sage-200 bg-white/96 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50 hover:shadow-lift" onClick={() => navigateToTab('write')} type="button">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-sage-100 text-sage-800 shadow-sm transition group-hover:scale-105">
+                        <PenLine size={18} />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <span className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-700">Write</span>
+                        <span className="mt-1 block text-base font-extrabold text-sage-950">Thought drop</span>
+                        <span className="mt-2 block text-sm leading-6 text-sage-700">Write down whatever is on your mind only when you want to keep it, with more room to breathe.</span>
+                      </div>
                     </button>
                   </div>
                   <p className="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-sage-700">One place to relax, play chill games, plan your day, and save your thoughts.</p>
