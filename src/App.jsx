@@ -2234,6 +2234,8 @@ function App() {
   const [saveReward, setSaveReward] = useState('');
   const [selectedUnwindGame, setSelectedUnwindGame] = useState('drifting-leaf');
   const [selectedGameDifficulty, setSelectedGameDifficulty] = useState('medium');
+  const selectedGameInterfaceRef = useRef(null);
+  const shouldAutoScrollToGameRef = useRef(false);
   const [isRadioPlaying, setIsRadioPlaying] = useState(false);
   const [radioVolume, setRadioVolume] = useState(35);
   const [isRadioDialDragging, setIsRadioDialDragging] = useState(false);
@@ -2455,6 +2457,38 @@ function App() {
     }
   ];
   const selectedUnwindGameConfig = unwindGames.find((game) => game.id === selectedUnwindGame) || unwindGames[0];
+
+  const selectUnwindGame = (gameId) => {
+    if (gameId === selectedUnwindGame) {
+      window.setTimeout(() => {
+        selectedGameInterfaceRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }, 80);
+      return;
+    }
+
+    shouldAutoScrollToGameRef.current = true;
+    setSelectedUnwindGame(gameId);
+  };
+
+  useEffect(() => {
+    if (!shouldAutoScrollToGameRef.current || activeTab !== 'unwind') {
+      return undefined;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      selectedGameInterfaceRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+      shouldAutoScrollToGameRef.current = false;
+    }, 80);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [activeTab, selectedUnwindGame]);
+
   const homeSectionMap = {
     home: 'overview',
     overview: 'overview',
@@ -5516,64 +5550,12 @@ function App() {
                 ))}
               </div>
             </div>
-            <div className="mb-8 grid gap-4 xl:grid-cols-3">
-              {chillResearchHighlights.map((item) => (
-                <article key={item.title} className="rounded-[1.8rem] border border-white/80 bg-white/82 p-5 shadow-sm backdrop-blur">
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Chill research</p>
-                  <h2 className="mt-3 text-lg font-extrabold text-sage-950">{item.title}</h2>
-                  <p className="mt-3 text-sm leading-7 text-sage-700">{item.text}</p>
-                </article>
-              ))}
-            </div>
-            <div className="mb-8 grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)]">
-              <article className="rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
-                <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Game-first comfort</p>
-                <h2 className="mt-3 text-2xl font-extrabold text-sage-950">The games are meant to be the easiest place to begin.</h2>
-                <p className="mt-3 text-sm leading-7 text-sage-700">If you just want something light, start with <span className="font-extrabold text-sage-900">Quiet Keys</span>, <span className="font-extrabold text-sage-900">Quiet Words</span>, or <span className="font-extrabold text-sage-900">Quiet Tiles</span> on Easy. Prefer no-rush logic? <span className="font-extrabold text-sage-900">Quiet Clues</span>, <span className="font-extrabold text-sage-900">Quiet Slide</span>, <span className="font-extrabold text-sage-900">Mind Sweeper</span>, and <span className="font-extrabold text-sage-900">Lotus Match</span> are the gentlest puzzle picks.</p>
-              </article>
-              <article className="rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
-                <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Right now</p>
-                <h2 className="mt-3 text-2xl font-extrabold text-sage-950">{selectedUnwindGameConfig.title} • {selectedGameDifficulty}</h2>
-                <p className="mt-3 text-sm leading-7 text-sage-700">{selectedUnwindGameConfig.description}</p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <span className="rounded-full border border-sage-200 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Switch anytime</span>
-                  <span className="rounded-full border border-sage-200 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Best in short sessions</span>
-                  <span className="rounded-full border border-sage-200 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Made for quick resets</span>
-                </div>
-              </article>
-            </div>
-            <div className="mb-6 rounded-[1.8rem] border border-white/80 bg-white/82 p-5 shadow-sm backdrop-blur">
-              <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-                <div>
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Quick start picks</p>
-                  <h2 className="mt-2 text-2xl font-extrabold text-sage-950">Start with the easiest game for your mood.</h2>
-                </div>
-                <p className="max-w-xl text-sm leading-7 text-sage-700">These are the friendliest entry points if you want something that feels simple right away.</p>
-              </div>
-              <div className="mt-4 flex flex-wrap gap-2.5">
-                {[
-                  { id: 'quiet-keys', label: 'Quiet Keys • easiest' },
-                  { id: 'quiet-words', label: 'Quiet Words • simple' },
-                  { id: 'quiet-clues', label: 'Quiet Clues • clue-by-clue' },
-                  { id: 'quiet-tiles', label: 'Quiet Tiles • tap and merge' }
-                ].map((item) => (
-                  <button
-                    key={item.id}
-                    className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${selectedUnwindGame === item.id ? 'bg-sage-900 text-white shadow-sm' : 'border border-sage-200 bg-sage-50/80 text-sage-800 hover:bg-white'}`}
-                    onClick={() => setSelectedUnwindGame(item.id)}
-                    type="button"
-                  >
-                    {item.label}
-                  </button>
-                ))}
-              </div>
-            </div>
             <div className="mb-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {unwindGames.map((game) => (
                 <button
                   key={game.id}
                   className={`rounded-[2rem] border px-5 py-5 text-left transition duration-300 hover:-translate-y-1 ${selectedUnwindGame === game.id ? 'border-sage-300 bg-white shadow-soft' : 'border-white/70 bg-white/78 hover:border-sage-200 hover:bg-white/92'}`}
-                  onClick={() => setSelectedUnwindGame(game.id)}
+                  onClick={() => selectUnwindGame(game.id)}
                   type="button"
                 >
                   <div className="flex items-start justify-between gap-4">
@@ -5592,8 +5574,60 @@ function App() {
                 </button>
               ))}
             </div>
-            <div className="rounded-[2rem] border border-white/80 bg-white/86 p-3 shadow-soft backdrop-blur lg:p-4">
+            <div ref={selectedGameInterfaceRef} className="scroll-mt-24 rounded-[2rem] border border-white/80 bg-white/86 p-3 shadow-soft backdrop-blur lg:p-4">
               {selectedUnwindGameConfig.component}
+            </div>
+            <div className="mt-6 rounded-[1.8rem] border border-white/80 bg-white/82 p-5 shadow-sm backdrop-blur">
+              <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+                <div>
+                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Quick start picks</p>
+                  <h2 className="mt-2 text-2xl font-extrabold text-sage-950">Start with the easiest game for your mood.</h2>
+                </div>
+                <p className="max-w-xl text-sm leading-7 text-sage-700">These are the friendliest entry points if you want something that feels simple right away.</p>
+              </div>
+              <div className="mt-4 flex flex-wrap gap-2.5">
+                {[
+                  { id: 'quiet-keys', label: 'Quiet Keys • easiest' },
+                  { id: 'quiet-words', label: 'Quiet Words • simple' },
+                  { id: 'quiet-clues', label: 'Quiet Clues • clue-by-clue' },
+                  { id: 'quiet-tiles', label: 'Quiet Tiles • tap and merge' }
+                ].map((item) => (
+                  <button
+                    key={item.id}
+                    className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${selectedUnwindGame === item.id ? 'bg-sage-900 text-white shadow-sm' : 'border border-sage-200 bg-sage-50/80 text-sage-800 hover:bg-white'}`}
+                    onClick={() => selectUnwindGame(item.id)}
+                    type="button"
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)]">
+              <article className="rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
+                <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Game-first comfort</p>
+                <h2 className="mt-3 text-2xl font-extrabold text-sage-950">The games are meant to be the easiest place to begin.</h2>
+                <p className="mt-3 text-sm leading-7 text-sage-700">If you just want something light, start with <span className="font-extrabold text-sage-900">Quiet Keys</span>, <span className="font-extrabold text-sage-900">Quiet Words</span>, or <span className="font-extrabold text-sage-900">Quiet Tiles</span> on Easy. Prefer no-rush logic? <span className="font-extrabold text-sage-900">Quiet Clues</span>, <span className="font-extrabold text-sage-900">Quiet Slide</span>, <span className="font-extrabold text-sage-900">Mind Sweeper</span>, and <span className="font-extrabold text-sage-900">Lotus Match</span> are the gentlest puzzle picks.</p>
+              </article>
+              <article className="rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
+                <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Right now</p>
+                <h2 className="mt-3 text-2xl font-extrabold text-sage-950">{selectedUnwindGameConfig.title} • {selectedGameDifficulty}</h2>
+                <p className="mt-3 text-sm leading-7 text-sage-700">{selectedUnwindGameConfig.description}</p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <span className="rounded-full border border-sage-200 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Switch anytime</span>
+                  <span className="rounded-full border border-sage-200 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Best in short sessions</span>
+                  <span className="rounded-full border border-sage-200 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Made for quick resets</span>
+                </div>
+              </article>
+            </div>
+            <div className="mt-6 grid gap-4 xl:grid-cols-3">
+              {chillResearchHighlights.map((item) => (
+                <article key={item.title} className="rounded-[1.8rem] border border-white/80 bg-white/82 p-5 shadow-sm backdrop-blur">
+                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Chill research</p>
+                  <h2 className="mt-3 text-lg font-extrabold text-sage-950">{item.title}</h2>
+                  <p className="mt-3 text-sm leading-7 text-sage-700">{item.text}</p>
+                </article>
+              ))}
             </div>
           </div>
         )}
