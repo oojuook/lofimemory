@@ -42,6 +42,7 @@ import MindSweeper from './MindSweeper';
 import QuietTiles from './QuietTiles';
 import QuietSlide from './QuietSlide';
 import QuietWords from './QuietWords';
+import QuietKeys from './QuietKeys';
 import { auth, db, getMessagingIfSupported, googleProvider } from './firebase';
 
 const STORAGE_KEY = 'quiet-harbor-journal-v1';
@@ -364,6 +365,11 @@ const wellnessArticles = [
 ];
 
 const seoLandingBlocks = [
+  {
+    title: 'Typing game online',
+    text: 'Play a calm typing game online when you want the most approachable browser game on the page — quick to start, simple to understand, and easy to retry.',
+    href: '/typing-game-online.html'
+  },
   {
     title: 'Chill place online',
     text: 'Find a chill place online where you can relax, play a calm game, breathe, write, and stay for a while without the page feeling noisy.',
@@ -713,6 +719,7 @@ const seoFaqs = [
 ];
 
 const seoGuidePages = [
+  { label: 'Popular guide', title: 'Typing game online', text: 'Play a calm typing game online when you want the easiest game to pick up and enjoy in short, soft rounds.', href: '/typing-game-online.html' },
   { label: 'Popular guide', title: 'Chill place online', text: 'Find a cozy online place to chill, relax, play soft games, and keep private notes in one calm space.', href: '/chill-place-online.html' },
   { label: 'Popular guide', title: 'Word game online', text: 'Play a calm word game online when you want a familiar puzzle that feels light and relaxing.', href: '/word-game-online.html' },
   { label: 'Popular guide', title: 'Sliding puzzle online', text: 'Play a cozy sliding puzzle online when you want a simple tile game that feels calm and satisfying.', href: '/sliding-puzzle-online.html' },
@@ -1163,6 +1170,7 @@ const seoGuideGroups = [
 ];
 
 const seoPopularSearches = [
+  { label: 'Typing game online', href: '/typing-game-online.html' },
   { label: 'Chill place online', href: '/chill-place-online.html' },
   { label: 'Word game online', href: '/word-game-online.html' },
   { label: 'Sliding puzzle online', href: '/sliding-puzzle-online.html' },
@@ -2400,6 +2408,15 @@ function App() {
       icon: Feather,
       tone: 'from-fuchsia-100 to-rose-50 text-fuchsia-700',
       component: <QuietWords difficulty={selectedGameDifficulty} />
+    },
+    {
+      id: 'quiet-keys',
+      title: 'Quiet Keys',
+      detail: 'Friendly typing game',
+      description: 'Type cozy words in short, low-pressure rounds when you want the most approachable game option on the page.',
+      icon: PenLine,
+      tone: 'from-sky-100 to-indigo-50 text-sky-700',
+      component: <QuietKeys difficulty={selectedGameDifficulty} />
     },
     {
       id: 'mind-sweeper',
@@ -4951,8 +4968,8 @@ function App() {
                   <h2 className="font-display text-4xl font-bold leading-tight text-ink lg:text-5xl">{homeSections.find((s) => s.id === activeHomeSection)?.label || 'Overview'}</h2>
                   <p className="mt-4 max-w-2xl text-lg leading-relaxed text-sage-800">{activeHomeSection === 'overview' ? (latestEntry ? `Your last page is still here. ${rewardLevel.next}` : 'Come here to relax, hang out in a chill corner, write a little, breathe deeper, or play a calm game when you need a softer reset.') : 'Browse gently. The layout stays simple so each section feels easier to read.'}</p>
                 </div>
-                <a className="inline-flex shrink-0 items-center gap-2 rounded-full bg-sage-900 px-6 py-4 text-sm font-extrabold text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800" href="#journal" onClick={() => navigateToTab('write')}>
-                  <PenLine size={18} /> Open today’s page
+                <a className="inline-flex shrink-0 items-center gap-2 rounded-full bg-sage-900 px-6 py-4 text-sm font-extrabold text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800" href="#unwind" onClick={() => navigateToTab('unwind')}>
+                  <Leaf size={18} /> Play a chill game
                 </a>
               </div>
 
@@ -5490,6 +5507,23 @@ function App() {
                   <p className="mt-3 text-sm leading-7 text-sage-700">{item.text}</p>
                 </article>
               ))}
+            </div>
+            <div className="mb-8 grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)]">
+              <article className="rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
+                <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Game-first comfort</p>
+                <h2 className="mt-3 text-2xl font-extrabold text-sage-950">The games are meant to be the easiest place to begin.</h2>
+                <p className="mt-3 text-sm leading-7 text-sage-700">If you just want something light, start with <span className="font-extrabold text-sage-900">Quiet Keys</span>, <span className="font-extrabold text-sage-900">Quiet Words</span>, or <span className="font-extrabold text-sage-900">Quiet Tiles</span> on Easy. Prefer no-rush logic? <span className="font-extrabold text-sage-900">Quiet Slide</span>, <span className="font-extrabold text-sage-900">Mind Sweeper</span>, and <span className="font-extrabold text-sage-900">Lotus Match</span> are the gentlest puzzle picks.</p>
+              </article>
+              <article className="rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
+                <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Right now</p>
+                <h2 className="mt-3 text-2xl font-extrabold text-sage-950">{selectedUnwindGameConfig.title} • {selectedGameDifficulty}</h2>
+                <p className="mt-3 text-sm leading-7 text-sage-700">{selectedUnwindGameConfig.description}</p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <span className="rounded-full border border-sage-200 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Switch anytime</span>
+                  <span className="rounded-full border border-sage-200 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Best in short sessions</span>
+                  <span className="rounded-full border border-sage-200 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Made for quick resets</span>
+                </div>
+              </article>
             </div>
             <div className="mb-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {unwindGames.map((game) => (
