@@ -37,6 +37,8 @@ import {
 import ZenGame from './ZenGame';
 import StreamSurfer from './StreamSurfer';
 import LotusMatch from './LotusMatch';
+import MeadowArcher from './MeadowArcher';
+import PocketSquad from './PocketSquad';
 import { auth, db, getMessagingIfSupported, googleProvider } from './firebase';
 
 const STORAGE_KEY = 'quiet-harbor-journal-v1';
@@ -2297,6 +2299,24 @@ function App() {
       icon: Sparkles,
       tone: 'from-rose-100 to-orange-50 text-rose-700',
       component: <LotusMatch />
+    },
+    {
+      id: 'meadow-archer',
+      title: 'Meadow Archer',
+      detail: 'Auto-shooter calm',
+      description: 'A softer Archero-style run where you glide around and let the petals auto-fire.',
+      icon: Feather,
+      tone: 'from-lime-100 to-emerald-50 text-lime-700',
+      component: <MeadowArcher />
+    },
+    {
+      id: 'pocket-squad',
+      title: 'Pocket Squad',
+      detail: 'Lane-run strategy',
+      description: 'A gentle Last War-inspired lane run where you choose gates and grow a tiny squad.',
+      icon: Compass,
+      tone: 'from-cyan-100 to-sky-50 text-cyan-700',
+      component: <PocketSquad />
     }
   ];
   const selectedUnwindGameConfig = unwindGames.find((game) => game.id === selectedUnwindGame) || unwindGames[0];
@@ -4471,18 +4491,18 @@ function App() {
               </div>
               <div>
                 <p className="font-display text-2xl font-bold text-sage-900">Lofi Memory</p>
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-sage-700">Relax, write & play</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-sage-700">Hang out, relax & play</p>
               </div>
             </a>
             <div className="site-nav-links hidden flex-1 items-center justify-center gap-7 xl:gap-9">
               {[
-                { id: 'home', label: 'Home', icon: Headphones },
-                { id: 'write', label: 'Write', icon: PenLine },
+                { id: 'home', label: 'Chill', icon: Headphones },
+                { id: 'write', label: 'Thoughts', icon: PenLine },
                 { id: 'notes', label: 'Notes', icon: FileText },
                 { id: 'breathe', label: 'Breathe', icon: Wind },
-                { id: 'unwind', label: 'Unwind', icon: Leaf },
+                { id: 'unwind', label: 'Games', icon: Leaf },
                 { id: 'memories', label: 'Memories', icon: BookOpen },
-                { id: 'insights', label: 'Insights', icon: Sparkles }
+                { id: 'insights', label: 'Vibes', icon: Sparkles }
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -4555,11 +4575,11 @@ function App() {
             </div>
           </div>
           <div className="site-nav-links mt-2 hidden flex-wrap items-center justify-center gap-2 rounded-[1.5rem] border border-sage-100 bg-white/88 p-1.5 lg:flex">
-            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#journal" onClick={() => navigateToTab('write')}>Journal</a>
-            <button className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
-            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#guides" onClick={() => openHomeSection('guides')}>Guides</a>
-            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#resources" onClick={() => openHomeSection('resources')}>Resources</a>
-            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#faq" onClick={() => openHomeSection('faq')}>FAQ</a>
+            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#home" onClick={() => navigateToTab('home')}>Chill</a>
+            <button className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" onClick={() => setCustomizerOpen(true)} type="button">Vibes</button>
+            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#unwind" onClick={() => navigateToTab('unwind')}>Games</a>
+            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#resources" onClick={() => openHomeSection('resources')}>Relax</a>
+            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#faq" onClick={() => openHomeSection('faq')}>Help</a>
             <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#contact" onClick={() => openHomeSection('contact')}>Contact</a>
           </div>
         </div>
@@ -4708,12 +4728,12 @@ function App() {
             </div>
             <div className="mt-4 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:gap-4">
               {[
-                { id: 'write', label: 'Write', detail: 'Begin with one honest line', icon: PenLine, tone: 'bg-sage-100 text-sage-800' },
+                { id: 'write', label: 'Thoughts', detail: 'Write only when it helps', icon: PenLine, tone: 'bg-sage-100 text-sage-800' },
                 { id: 'notes', label: 'Notes', detail: 'Keep important things nearby', icon: FileText, tone: 'bg-teal-100 text-teal-700' },
                 { id: 'breathe', label: 'Breathe', detail: 'Focus & breathe', icon: Wind, tone: 'bg-blue-100 text-blue-700' },
-                { id: 'unwind', label: 'Unwind', detail: 'Chill games', icon: Leaf, tone: 'bg-emerald-100 text-emerald-700' },
-                { id: 'memories', label: 'Memories', detail: 'Return to saved pages', icon: BookOpen, tone: 'bg-sand-100 text-sand-600' },
-                { id: 'insights', label: 'Insights', detail: 'See moods over time', icon: Sparkles, tone: 'bg-rose-100 text-rose-700' }
+                { id: 'unwind', label: 'Games', detail: 'Chill games', icon: Leaf, tone: 'bg-emerald-100 text-emerald-700' },
+                { id: 'memories', label: 'Memories', detail: 'Return to saved moments', icon: BookOpen, tone: 'bg-sand-100 text-sand-600' },
+                { id: 'insights', label: 'Vibes', detail: 'See your mood flow', icon: Sparkles, tone: 'bg-rose-100 text-rose-700' }
               ].map((tab) => (
                 <button key={tab.id} className="group flex items-center gap-3 rounded-2xl border border-sage-100 bg-white/92 px-4 py-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-200 hover:bg-white hover:shadow-lift" onClick={() => navigateToTab(tab.id)} type="button">
                   <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl shadow-sm transition group-hover:scale-105 ${tab.tone}`}>
@@ -4942,18 +4962,18 @@ function App() {
         <div className="mb-6 overflow-hidden rounded-[2rem] border border-white/85 bg-gradient-to-r from-white/88 via-sage-50/78 to-sand-50/75 p-3 shadow-soft backdrop-blur xl:p-4">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-2xl">
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-sage-600">Choose your diary space</p>
-              <h2 className="mt-2 text-2xl font-extrabold text-ink">Writing stays central, with notes, memories, and insights waiting nearby.</h2>
-              <p className="mt-2 text-sm font-semibold leading-6 text-sage-700">The journal is easy to enter, easy to return to, and now has a separate place for important things and to-dos too.</p>
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-sage-600">Choose your chill space</p>
+              <h2 className="mt-2 text-2xl font-extrabold text-ink">Everything you need for a softer online reset is waiting here.</h2>
+              <p className="mt-2 text-sm font-semibold leading-6 text-sage-700">Jump into games, notes, breathing, saved moments, or thoughts whenever they fit your mood — not because the page tells you to write first.</p>
             </div>
             <div className="grid gap-2 rounded-[1.5rem] bg-white/70 p-2 shadow-inner sm:grid-cols-3 lg:grid-cols-6">
               {[
-                { id: 'write', label: 'Write', detail: draftWordCount ? `${draftWordCount} words in progress` : 'Start here', icon: PenLine },
+                { id: 'write', label: 'Thoughts', detail: draftWordCount ? `${draftWordCount} words in progress` : 'Write when it helps', icon: PenLine },
                 { id: 'notes', label: 'Notes', detail: plannerTodoCount ? `${openPlannerTodoCount} still open` : 'Keep important things', icon: FileText },
                 { id: 'breathe', label: 'Breathe', detail: 'Focus & calm', icon: Wind },
-                { id: 'unwind', label: 'Unwind', detail: 'Chill games', icon: Leaf },
+                { id: 'unwind', label: 'Games', detail: 'Chill games', icon: Leaf },
                 { id: 'memories', label: 'Memories', detail: `${entries.length} saved`, icon: BookOpen },
-                { id: 'insights', label: 'Insights', detail: `${weeklyCheckIns}/${weeklyGoal} this week`, icon: Sparkles }
+                { id: 'insights', label: 'Vibes', detail: `${weeklyCheckIns}/${weeklyGoal} this week`, icon: Sparkles }
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -6611,14 +6631,14 @@ function App() {
       <div className="fixed inset-x-3 bottom-3 z-30 mx-auto max-w-lg rounded-[1.7rem] border border-white/90 bg-white/90 p-1.5 shadow-soft backdrop-blur-xl lg:hidden">
         <div className="grid grid-cols-6 gap-1">
         {[
-          { id: 'home', label: 'Home', icon: Headphones },
-          { id: 'write', label: 'Write', icon: PenLine },
+          { id: 'home', label: 'Chill', icon: Headphones },
+          { id: 'write', label: 'Thoughts', icon: PenLine },
           { id: 'notes', label: 'Notes', icon: FileText },
           { id: 'breathe', label: 'Breathe', icon: Wind },
-          { id: 'unwind', label: 'Unwind', icon: Leaf },
+          { id: 'unwind', label: 'Games', icon: Leaf },
           { id: 'memories', label: 'Memory', icon: BookOpen },
-          { id: 'insights', label: 'Insight', icon: Sparkles },
-          { id: 'design', label: 'Design', icon: Palette }
+          { id: 'insights', label: 'Vibes', icon: Sparkles },
+          { id: 'design', label: 'Vibes', icon: Palette }
         ].map((tab) => {
           const isActive = activeTab === tab.id;
           const isWrite = tab.id === 'write';
