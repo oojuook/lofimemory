@@ -408,6 +408,21 @@ const seoLandingBlocks = [
     href: '/typing-game-online.html'
   },
   {
+    title: 'Typing practice online',
+    text: 'Practice typing online in a calmer browser space when you want short readable passages, timer presets, and a cozy rhythm to return to.',
+    href: '/typing-practice-online.html'
+  },
+  {
+    title: 'Typing accuracy test',
+    text: 'Take a typing accuracy test when you want to focus on cleaner keystrokes, fewer errors, and a softer pace instead of pure speed.',
+    href: '/typing-accuracy-test.html'
+  },
+  {
+    title: 'Beginner typing test',
+    text: 'Open a beginner typing test when you want a friendlier place to warm up, build confidence, and practice typing without pressure.',
+    href: '/beginner-typing-test.html'
+  },
+  {
     title: 'Chill place online',
     text: 'Find a chill place online where you can relax, play a calm game, breathe, write, and stay for a while without the page feeling noisy.',
     href: '/chill-place-online.html'
@@ -763,6 +778,9 @@ const seoGuidePages = [
   { label: 'Popular guide', title: 'Crossword game online', text: 'Play a calm crossword-style game online when you want an easy clue loop that feels more welcoming than a full crossword grid.', href: '/crossword-game-online.html' },
   { label: 'Popular guide', title: 'WPM test', text: 'Check your WPM in a calm browser space when you want a quick typing-speed snapshot without the usual pressure.', href: '/wpm-test.html' },
   { label: 'Popular guide', title: 'Typing speed test', text: 'Take a calm typing speed test when you want a soft WPM check, clean stats, and an easy browser challenge.', href: '/typing-game-online.html' },
+  { label: 'Popular guide', title: 'Typing practice online', text: 'Practice typing online with readable passages, timer presets, and a calmer browser rhythm you can revisit often.', href: '/typing-practice-online.html' },
+  { label: 'Helpful read', title: 'Typing accuracy test', text: 'Take a typing accuracy test when you want cleaner keystrokes, fewer errors, and a softer pace than a pure speed sprint.', href: '/typing-accuracy-test.html' },
+  { label: 'Helpful read', title: 'Beginner typing test', text: 'Open a beginner typing test when you want a welcoming warm-up with clear stats and no noisy pressure.', href: '/beginner-typing-test.html' },
   { label: 'Popular guide', title: 'Typing test online', text: 'Open a relaxed typing test online when you want clear stats, readable passages, and a calmer browser experience.', href: '/typing-test-online.html' },
   { label: 'Popular guide', title: 'Chill place online', text: 'Find a cozy online place to chill, relax, play soft games, and keep private notes in one calm space.', href: '/chill-place-online.html' },
   { label: 'Popular guide', title: 'Word game online', text: 'Play a calm word game online when you want a familiar puzzle that feels light and relaxing.', href: '/word-game-online.html' },
@@ -1192,9 +1210,9 @@ const seoGuidePages = [
 
 const seoGuideGroups = [
   {
-    title: 'Play calm word puzzles',
-    description: 'Best for visitors looking for familiar Wordle-style, daily word, and guess-the-word pages they can open quickly and enjoy without pressure.',
-    links: seoGuidePages.filter((page) => ['Daily word puzzle', 'Guess the word game', 'Daily word game', 'Wordle online', 'Word game online', 'Crossword game online', 'WPM test', 'Typing speed test', 'Typing test online'].includes(page.title))
+    title: 'Play calm word and typing games',
+    description: 'Best for visitors looking for familiar Wordle-style pages, soft typing tests, and easy browser puzzles they can open quickly and enjoy without pressure.',
+    links: seoGuidePages.filter((page) => ['Daily word puzzle', 'Guess the word game', 'Daily word game', 'Wordle online', 'Word game online', 'Crossword game online', 'WPM test', 'Typing speed test', 'Typing practice online', 'Typing accuracy test', 'Beginner typing test', 'Typing test online'].includes(page.title))
   },
   {
     title: 'Start a private diary',
@@ -1226,6 +1244,9 @@ const seoPopularSearches = [
   { label: 'Crossword game online', href: '/crossword-game-online.html' },
   { label: 'WPM test', href: '/wpm-test.html' },
   { label: 'Typing speed test', href: '/typing-game-online.html' },
+  { label: 'Typing practice online', href: '/typing-practice-online.html' },
+  { label: 'Typing accuracy test', href: '/typing-accuracy-test.html' },
+  { label: 'Beginner typing test', href: '/beginner-typing-test.html' },
   { label: 'Typing test online', href: '/typing-test-online.html' },
   { label: 'Chill place online', href: '/chill-place-online.html' },
   { label: 'Word game online', href: '/word-game-online.html' },
@@ -5113,17 +5134,18 @@ function App() {
                 <div className="rounded-[2rem] border border-sage-100 bg-gradient-to-r from-sage-50/85 via-white to-sand-50/80 p-5 shadow-inner">
                   <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                     <div>
-                      <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-600">Most useful paths</p>
-                      <h3 className="mt-2 text-2xl font-extrabold leading-tight text-ink">Pick what you came here to do.</h3>
+                      <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-600">Stay here a while</p>
+                      <h3 className="mt-2 text-2xl font-extrabold leading-tight text-ink">Move between games, notes, breathing, and writing without leaving the calm.</h3>
                     </div>
-                    <p className="max-w-md text-sm font-semibold leading-6 text-sage-700">The homepage now gives first-time visitors a clearer route into writing, notes, memories, or practical guide pages.</p>
+                    <p className="max-w-lg text-sm font-semibold leading-6 text-sage-700">The homepage now gives first-time visitors a clearer route into play, focus, notes, reflection, and helpful reading so the site feels more like a place to hang out than a one-click tool.</p>
                   </div>
-                  <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+                  <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-5">
                     {[
-                      { label: 'Write one line', detail: 'Open a calm page with prompts and a visible save action.', action: () => navigateToTab('write'), icon: PenLine },
+                      { label: 'Play a chill game', detail: 'Jump straight into the unwind room when you want something cozy and immediate.', action: () => navigateToTab('unwind'), icon: Sparkles },
+                      { label: 'Breathe for a minute', detail: 'Open a soft breathing reset when you need a quick calmer pause.', action: () => navigateToTab('breathe'), icon: Wind },
+                      { label: 'Write one line', detail: 'Catch one thought with prompts and a visible save action.', action: () => navigateToTab('write'), icon: PenLine },
                       { label: 'Plan important things', detail: 'Keep tasks, recurring habits, and notes away from diary entries.', action: () => navigateToTab('notes'), icon: FileText },
-                      { label: 'Revisit memories', detail: 'Browse saved diary pages when you want to reflect.', action: () => navigateToTab('memories'), icon: BookOpen },
-                      { label: 'Read guides', detail: 'Find diary, prompt, privacy, and habit guides grouped by need.', action: () => openHomeSection('guides'), icon: Compass }
+                      { label: 'Read guides', detail: 'Find calm game, prompt, privacy, and habit guides grouped by need.', action: () => openHomeSection('guides'), icon: Compass }
                     ].map((item) => (
                       <button key={item.label} className="group rounded-[1.5rem] border border-white/85 bg-white/90 p-4 text-left shadow-sm transition hover:-translate-y-1 hover:border-sage-200 hover:bg-white hover:shadow-lift" onClick={item.action} type="button">
                         <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-sage-100 text-sage-800 transition group-hover:bg-sage-900 group-hover:text-white"><item.icon size={17} /></div>
@@ -5657,6 +5679,29 @@ function App() {
                     type="button"
                   >
                     {item.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="mt-6 rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
+              <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+                <div>
+                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Stay in the vibe</p>
+                  <h2 className="mt-2 text-2xl font-extrabold text-sage-950">Finish a round, then keep hanging out here.</h2>
+                </div>
+                <p className="max-w-2xl text-sm leading-7 text-sage-700">Lofi Memory works best when you can bounce from one calm thing to another — a game, a breath, a quick note, or one sentence of journaling — without needing to leave the same soft space.</p>
+              </div>
+              <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+                {[
+                  { label: 'Play Quiet Wordle', detail: 'Switch to a familiar word-guessing round when you want one more easy win.', action: () => selectUnwindGame('quiet-wordle'), icon: Type },
+                  { label: 'Breathe for a minute', detail: 'Open the breathing screen for a softer reset between rounds.', action: () => navigateToTab('breathe'), icon: Wind },
+                  { label: 'Write one line', detail: 'Catch a thought before it disappears, then come back to the games later.', action: () => navigateToTab('write'), icon: PenLine },
+                  { label: 'Open notes', detail: 'Drop a quick to-do or reminder without breaking the calm mood.', action: () => navigateToTab('notes'), icon: FileText }
+                ].map((item) => (
+                  <button key={item.label} className="group rounded-[1.45rem] border border-white/85 bg-sage-50/55 p-4 text-left transition hover:-translate-y-1 hover:border-sage-200 hover:bg-white hover:shadow-lift" onClick={item.action} type="button">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-sage-800 shadow-sm transition group-hover:bg-sage-900 group-hover:text-white"><item.icon size={17} /></div>
+                    <h3 className="mt-3 text-base font-extrabold text-sage-950">{item.label}</h3>
+                    <p className="mt-2 text-sm leading-6 text-sage-700">{item.detail}</p>
                   </button>
                 ))}
               </div>

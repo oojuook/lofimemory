@@ -506,6 +506,21 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://lofimemory.vercel.app/typing-practice-online.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.79</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/typing-accuracy-test.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.79</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/beginner-typing-test.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.78</priority>
+  </url>
+  <url>
     <loc>https://lofimemory.vercel.app/wpm-test.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.79</priority>
