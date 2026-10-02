@@ -127,24 +127,27 @@ const prompts = [
   'If anger is here, what is it trying to protect?'
 ];
 
-const writingInvitations = [
+const hangoutInvitations = [
   {
-    title: 'What stayed with me today',
-    mood: 'Calm',
-    opener: 'Today stayed with me because',
-    detail: 'Begin with the moment you keep replaying, even if it seems small.'
+    title: 'Play something gentle',
+    eyebrow: 'Unwind',
+    detail: 'Open a chill game when you want to reset your head without leaving the page.',
+    tab: 'unwind',
+    icon: Leaf
   },
   {
-    title: 'The honest version',
-    mood: 'Neutral',
-    opener: 'The honest version is',
-    detail: 'No polished story needed — just what happened, what it meant, or what it changed.'
+    title: 'Keep today together',
+    eyebrow: 'Notes',
+    detail: 'Drop reminders, errands, and small to-dos into one calm spot.',
+    tab: 'notes',
+    icon: FileText
   },
   {
-    title: 'Something I want to remember',
-    mood: 'Happy',
-    opener: 'I want to remember',
-    detail: 'Save a tiny scene, a sentence someone said, or one ordinary detail future you may love.'
+    title: 'Write only if you want to',
+    eyebrow: 'Write',
+    detail: 'Save a thought, a feeling, or a tiny memory when the moment feels right.',
+    tab: 'write',
+    icon: PenLine
   }
 ];
 
@@ -4571,19 +4574,22 @@ function App() {
             <div className="relative">
               <div className="mb-8 flex flex-wrap items-center gap-3">
                 <div className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-bold text-sage-950 shadow-sm">
-                  <Sparkles size={16} /> Quiet online diary
+                  <Sparkles size={16} /> Your chill corner online
                 </div>
                 <div className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-sage-50/75 px-4 py-2 text-sm font-bold text-sage-800 shadow-sm">
-                  <Quote size={14} /> Private · minimal · gentle
+                  <Quote size={14} /> Chill · cozy · all-in-one
                 </div>
               </div>
-              <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.96] tracking-tight text-sage-950 md:text-6xl">A quiet place for honest writing.</h1>
-              <p className="mt-5 max-w-3xl text-[1.28rem] font-semibold leading-9 text-sage-900">Lofi Memory keeps the page light — enough guidance to begin, enough privacy to be real, and enough calm to return tomorrow.</p>
-              <p className="mt-4 max-w-[42rem] text-lg leading-8 text-sage-700">Write one sentence, keep a feeling, or leave a small note for yourself. Nothing here needs to be polished before it matters.</p>
+              <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.96] tracking-tight text-sage-950 md:text-6xl">A soft place to hang out and reset.</h1>
+              <p className="mt-5 max-w-3xl text-[1.28rem] font-semibold leading-9 text-sage-900">Lofi Memory is an all-in-one browser space for chill games, quick notes, private thoughts, breathing room, and small daily plans whenever you want a calmer corner online.</p>
+              <p className="mt-4 max-w-[42rem] text-lg leading-8 text-sage-700">Play for a bit, relax, keep a to-do list nearby, or write something down without bouncing between different apps.</p>
 
               <div className="mt-9 flex flex-wrap gap-3">
-                <a className="inline-flex items-center gap-2 rounded-full bg-sage-900 px-5 py-3 text-sm font-extrabold text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800" href="#journal" onClick={() => navigateToTab('write')}>
-                  <PenLine size={17} /> Write today’s entry
+                <a className="inline-flex items-center gap-2 rounded-full bg-sage-900 px-5 py-3 text-sm font-extrabold text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800" href="#unwind" onClick={() => navigateToTab('unwind')}>
+                  <Leaf size={17} /> Play a chill game
+                </a>
+                <a className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white px-5 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-1 hover:border-sage-300 hover:bg-sage-50" href="#notes" onClick={() => navigateToTab('notes')}>
+                  <FileText size={17} /> Open notes & to-dos
                 </a>
                 <button className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white px-5 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-1 hover:border-sage-300 hover:bg-sage-50" onClick={() => setCustomizerOpen(true)} type="button">
                   <Palette size={17} /> Choose your theme
@@ -4596,10 +4602,15 @@ function App() {
               </div>
 
               <div className="mt-7 grid gap-3 lg:grid-cols-3">
-                {writingInvitations.map((invitation) => (
-                  <button key={invitation.title} className="group rounded-[1.55rem] border border-sage-100 bg-white/88 p-4 text-left shadow-sm transition hover:-translate-y-1 hover:border-sage-200 hover:bg-white hover:shadow-lift" onClick={() => startWritingFromInvitation(invitation)} type="button">
-                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-500">Start with</p>
-                    <h3 className="mt-2 text-lg font-extrabold leading-tight text-sage-950 group-hover:text-sage-800">{invitation.opener}...</h3>
+                {hangoutInvitations.map((invitation) => (
+                  <button key={invitation.title} className="group rounded-[1.55rem] border border-sage-100 bg-white/88 p-4 text-left shadow-sm transition hover:-translate-y-1 hover:border-sage-200 hover:bg-white hover:shadow-lift" onClick={() => navigateToTab(invitation.tab)} type="button">
+                    <div className="flex items-start justify-between gap-3">
+                      <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-500">{invitation.eyebrow}</p>
+                      <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-sage-100 text-sage-700">
+                        <invitation.icon size={16} />
+                      </span>
+                    </div>
+                    <h3 className="mt-3 text-lg font-extrabold leading-tight text-sage-950 group-hover:text-sage-800">{invitation.title}</h3>
                     <p className="mt-2 text-sm leading-6 text-sage-700">{invitation.detail}</p>
                   </button>
                 ))}
@@ -4607,10 +4618,10 @@ function App() {
 
               <div className="mt-7 flex flex-wrap gap-3 text-sm font-semibold text-sage-900">
                 <div className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white/92 px-4 py-2.5 shadow-sm">
-                  <ShieldCheck size={16} /> {hasPin ? 'Protected with a private PIN' : 'Add a soft lock any time'}
+                  <ShieldCheck size={16} /> {hasPin ? 'Private when you want it' : 'Add privacy any time'}
                 </div>
                 <div className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white/92 px-4 py-2.5 shadow-sm">
-                  <Sparkles size={16} /> {user ? `${entries.length} entries saved · ${cloudStatus}` : `${entries.length} entries saved · Local-first journaling`}
+                  <Sparkles size={16} /> {user ? `${entries.length} saved moments · ${cloudStatus}` : `${entries.length} saved moments · Local-first chill space`}
                 </div>
               </div>
 
@@ -4633,25 +4644,25 @@ function App() {
               <div className="mt-8 grid gap-4 lg:grid-cols-[minmax(0,1.28fr)_minmax(280px,0.72fr)]">
                 <div className="flex min-h-[290px] flex-col justify-between rounded-[1.8rem] border border-white/80 bg-gradient-to-br from-white/90 to-sage-50/70 p-5 shadow-lift backdrop-blur">
                   <div>
-                    <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">How people use it</p>
-                    <h3 className="mt-3 text-2xl font-extrabold leading-tight text-ink">Start with the page that matches what you were actually searching for.</h3>
-                    <p className="mt-3 max-w-2xl text-sm leading-7 text-sage-800">Some visitors want a private online diary, some want an online journal, and some are simply looking for the easiest place to begin. These guide pages help them land in the right mood without making the homepage feel crowded.</p>
+                    <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">All-in-one soft corner</p>
+                    <h3 className="mt-3 text-2xl font-extrabold leading-tight text-ink">Relax, play, plan, and write without jumping between tabs.</h3>
+                    <p className="mt-3 max-w-2xl text-sm leading-7 text-sage-800">Lofi Memory is meant to feel like a calm browser hangout. You can open a chill game, keep your to-do list nearby, breathe for a minute, or write something down whenever you feel like it.</p>
                   </div>
                   <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-                    <a className="rounded-[1.35rem] border border-sage-200 bg-white/95 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50" href="/private-online-diary.html">
-                      <span className="block text-sm font-extrabold text-sage-900">Private online diary</span>
-                      <span className="mt-2 block text-[13px] leading-5 text-sage-700">Private entries, mood tracking, and a diary that stays personal.</span>
-                    </a>
-                    <a className="rounded-[1.35rem] border border-sage-200 bg-white/95 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50" href="/where-to-write-a-diary-online.html">
-                      <span className="block text-sm font-extrabold text-sage-900">Where to write online diary</span>
-                      <span className="mt-2 block text-[13px] leading-5 text-sage-700">A beginner-friendly path if you are still deciding where to start.</span>
-                    </a>
-                    <a className="rounded-[1.35rem] border border-sage-200 bg-white/95 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50" href="/online-journal.html">
-                      <span className="block text-sm font-extrabold text-sage-900">Online journal</span>
-                      <span className="mt-2 block text-[13px] leading-5 text-sage-700">Reflection writing with gentle structure and a softer rhythm.</span>
-                    </a>
+                    <button className="rounded-[1.35rem] border border-sage-200 bg-white/95 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50" onClick={() => navigateToTab('unwind')} type="button">
+                      <span className="block text-sm font-extrabold text-sage-900">Chill games</span>
+                      <span className="mt-2 block text-[13px] leading-5 text-sage-700">Pick the game that fits your mood and take a quick mental reset.</span>
+                    </button>
+                    <button className="rounded-[1.35rem] border border-sage-200 bg-white/95 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50" onClick={() => navigateToTab('notes')} type="button">
+                      <span className="block text-sm font-extrabold text-sage-900">Notes & to-dos</span>
+                      <span className="mt-2 block text-[13px] leading-5 text-sage-700">Keep errands, reminders, and important bits close without clutter.</span>
+                    </button>
+                    <button className="rounded-[1.35rem] border border-sage-200 bg-white/95 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50" onClick={() => navigateToTab('write')} type="button">
+                      <span className="block text-sm font-extrabold text-sage-900">Thought drop</span>
+                      <span className="mt-2 block text-[13px] leading-5 text-sage-700">Write down whatever is on your mind only when you want to keep it.</span>
+                    </button>
                   </div>
-                  <p className="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-sage-700">Useful starting points for diary, journal, and reflection searches.</p>
+                  <p className="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-sage-700">One place to relax, play chill games, plan your day, and save your thoughts.</p>
                 </div>
                 <div className={`flex min-h-[290px] flex-col justify-between rounded-[1.8rem] border p-5 shadow-sm backdrop-blur ${selectedMoodGuide.shellClass}`}>
                   <div>
