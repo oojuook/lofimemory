@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import radioVinylIcon from './assets/lofi-radio-vinyl.png';
 import { onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
 import { collection, deleteDoc, doc, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore';
 import { getToken, onMessage } from 'firebase/messaging';
 import {
   Headphones,
-  Music,
   ArrowUp,
   BookOpen,
   CalendarDays,
@@ -2159,6 +2159,8 @@ function App() {
   const [saveReward, setSaveReward] = useState('');
   const [isRadioPlaying, setIsRadioPlaying] = useState(false);
   const [radioVolume, setRadioVolume] = useState(35);
+  const [isRadioDialDragging, setIsRadioDialDragging] = useState(false);
+  const [showRadioDialFeedback, setShowRadioDialFeedback] = useState(false);
   const [plannerNoteSearch, setPlannerNoteSearch] = useState('');
   const [customQuotes, setCustomQuotes] = useState(getInitialCustomQuotes);
   const [customQuoteDraft, setCustomQuoteDraft] = useState('');
@@ -2232,6 +2234,9 @@ function App() {
   const companionMediaRef = useRef(null);
   const plannerBoardRef = useRef(plannerBoard);
   const importantDatesRef = useRef(importantDates);
+  const radioDialRef = useRef(null);
+  const radioDialPointerIdRef = useRef(null);
+  const radioDialFeedbackTimeoutRef = useRef(null);
   const radioPlayerContainerRef = useRef(null);
   const radioPlayerRef = useRef(null);
 
@@ -2982,6 +2987,107 @@ function App() {
     '## Study / work\n- ',
     `## ${new Date().toLocaleDateString()}\n- `
   ];
+  const RADIO_DIAL_START = 225;
+  const RADIO_DIAL_SWEEP = 270;
+  const RADIO_DIAL_END = (RADIO_DIAL_START + RADIO_DIAL_SWEEP) % 360;
+  const isRadioDialFeedbackVisible = isRadioDialDragging || showRadioDialFeedback;
+  const radioDialSweepDegrees = (radioVolume / 100) * RADIO_DIAL_SWEEP;
+  const radioDialDegrees = RADIO_DIAL_START + radioDialSweepDegrees;
+
+  const scheduleRadioDialFeedbackHide = (delay = 850) => {
+    if (radioDialFeedbackTimeoutRef.current) {
+      clearTimeout(radioDialFeedbackTimeoutRef.current);
+    }
+
+    if (delay <= 0) {
+      setShowRadioDialFeedback(false);
+      radioDialFeedbackTimeoutRef.current = null;
+      return;
+    }
+
+    radioDialFeedbackTimeoutRef.current = window.setTimeout(() => {
+      setShowRadioDialFeedback(false);
+      radioDialFeedbackTimeoutRef.current = null;
+    }, delay);
+  };
+
+  const revealRadioDialFeedback = (delay = 850) => {
+    setShowRadioDialFeedback(true);
+    scheduleRadioDialFeedbackHide(delay);
+  };
+
+  const getShortestAngleDistance = (from, to) => {
+    const diff = Math.abs(from - to) % 360;
+    return diff > 180 ? 360 - diff : diff;
+  };
+
+  const updateRadioVolumeFromPointer = (event) => {
+    const dial = radioDialRef.current;
+    if (!dial) return;
+
+    const rect = dial.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const dx = event.clientX - centerX;
+    const dy = event.clientY - centerY;
+    const angle = Math.atan2(dy, dx) + Math.PI / 2;
+    const normalizedAngle = ((angle < 0 ? angle + Math.PI * 2 : angle) * 180) / Math.PI;
+    const shiftedAngle = (normalizedAngle - RADIO_DIAL_START + 360) % 360;
+
+    if (shiftedAngle <= RADIO_DIAL_SWEEP) {
+      setRadioVolume(Math.round((shiftedAngle / RADIO_DIAL_SWEEP) * 100));
+      return;
+    }
+
+    const distanceToStart = getShortestAngleDistance(normalizedAngle, RADIO_DIAL_START);
+    const distanceToEnd = getShortestAngleDistance(normalizedAngle, RADIO_DIAL_END);
+    setRadioVolume(distanceToStart <= distanceToEnd ? 0 : 100);
+  };
+
+  const handleRadioDialThumbPointerDown = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    radioDialPointerIdRef.current = event.pointerId;
+    if (radioDialFeedbackTimeoutRef.current) {
+      clearTimeout(radioDialFeedbackTimeoutRef.current);
+      radioDialFeedbackTimeoutRef.current = null;
+    }
+    setShowRadioDialFeedback(true);
+    setIsRadioDialDragging(true);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (radioDialFeedbackTimeoutRef.current) {
+        clearTimeout(radioDialFeedbackTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isRadioDialDragging) return undefined;
+
+    const handlePointerMove = (event) => {
+      if (radioDialPointerIdRef.current !== null && event.pointerId !== radioDialPointerIdRef.current) return;
+      updateRadioVolumeFromPointer(event);
+    };
+
+    const stopDragging = (event) => {
+      if (radioDialPointerIdRef.current !== null && event.pointerId !== radioDialPointerIdRef.current) return;
+      radioDialPointerIdRef.current = null;
+      setIsRadioDialDragging(false);
+      revealRadioDialFeedback();
+    };
+
+    window.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener('pointerup', stopDragging);
+    window.addEventListener('pointercancel', stopDragging);
+    return () => {
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerup', stopDragging);
+      window.removeEventListener('pointercancel', stopDragging);
+    };
+  }, [isRadioDialDragging]);
 
   useEffect(() => {
     if (!isRadioPlaying) {
@@ -3052,7 +3158,7 @@ function App() {
     return () => {
       cancelled = true;
     };
-  }, [isRadioPlaying]);
+  }, [isRadioPlaying, radioVolume]);
 
   useEffect(() => {
     if (radioPlayerRef.current?.setVolume) {
@@ -6324,39 +6430,80 @@ function App() {
       )}
 
       
+      <style>{`
+        @keyframes lofiVinylSpin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
+
       {/* Floating Lofi Radio Player */}
-      <div className="fixed bottom-24 left-4 z-50 flex flex-col items-start gap-3 lg:bottom-10 lg:left-10">
+      <div className="fixed bottom-24 left-6 z-50 lg:bottom-10 lg:left-12">
         <div ref={radioPlayerContainerRef} className="pointer-events-none absolute h-1 w-1 opacity-0" aria-hidden="true" />
-        {isRadioPlaying && (
-          <div className="animate-fade-in rounded-2xl border border-white/60 bg-white/80 px-4 py-2 text-xs font-extrabold tracking-[0.18em] text-sage-800 shadow-soft backdrop-blur-xl flex items-center gap-2">
-            <Music size={14} className="animate-pulse" /> LOFI PLAYING
-          </div>
-        )}
-        <button
-          onClick={() => setIsRadioPlaying(prev => !prev)}
-          className={`flex h-14 w-14 items-center justify-center rounded-full shadow-lift transition duration-300 hover:-translate-y-1 ${
-            isRadioPlaying ? 'bg-sage-300 text-white hover:bg-sage-400' : 'bg-sage-800 text-white hover:bg-sage-700'
-          }`}
-          title="Toggle Lofi Radio"
-          type="button"
-        >
-          {isRadioPlaying ? <Music size={24} className="animate-pulse" /> : <Headphones size={24} />}
-        </button>
-        <div className={`w-[15.5rem] rounded-[1.5rem] border border-white/70 bg-white/90 px-4 py-3 shadow-soft backdrop-blur-xl transition duration-300 ${isRadioPlaying ? 'animate-fade-in' : 'opacity-95'}`}>
-          <div className="flex items-center justify-between gap-3 text-[11px] font-extrabold uppercase tracking-[0.2em] text-sage-600">
-            <span>{isRadioPlaying ? 'Volume' : 'Ready to play'}</span>
-            <span>{isRadioPlaying ? `${radioVolume}%` : 'Off'}</span>
-          </div>
-          <input
+        <div className="group relative h-[5.25rem] w-[5.25rem]">
+          <div
+            ref={radioDialRef}
             aria-label="Adjust lofi radio volume"
-            className="mt-3 h-2 w-full cursor-pointer appearance-none rounded-full bg-sage-100 accent-sage-700"
-            max="100"
-            min="0"
-            onChange={(event) => setRadioVolume(Number(event.target.value))}
-            type="range"
-            value={radioVolume}
-          />
-          <p className="mt-3 text-xs font-semibold leading-5 text-sage-500">Tap the headphones to start the background track, then use the slider to land on a softer or fuller volume.</p>
+            aria-valuemax={100}
+            aria-valuemin={0}
+            aria-valuenow={radioVolume}
+            className={`absolute inset-0 rounded-full p-[3px] transition duration-300 ${isRadioDialDragging ? 'scale-[1.03]' : ''} ${isRadioDialFeedbackVisible ? 'pointer-events-auto opacity-100 scale-100 shadow-soft' : 'pointer-events-none opacity-0 scale-90'} group-hover:pointer-events-auto group-hover:opacity-100 group-hover:scale-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-focus-within:scale-100`}
+            onKeyDown={(event) => {
+              if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
+                event.preventDefault();
+                setRadioVolume((current) => Math.min(current + 5, 100));
+                revealRadioDialFeedback();
+              }
+              if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
+                event.preventDefault();
+                setRadioVolume((current) => Math.max(current - 5, 0));
+                revealRadioDialFeedback();
+              }
+            }}
+            role="slider"
+            style={{
+              background: `conic-gradient(from ${RADIO_DIAL_START - 90}deg, ${isRadioDialFeedbackVisible ? 'rgba(92, 131, 78, 0.95)' : 'rgba(194, 206, 189, 0.9)'} 0deg, ${isRadioDialFeedbackVisible ? 'rgba(92, 131, 78, 0.95)' : 'rgba(194, 206, 189, 0.9)'} ${radioDialSweepDegrees}deg, rgba(194, 206, 189, 0.95) ${radioDialSweepDegrees}deg, rgba(194, 206, 189, 0.95) ${RADIO_DIAL_SWEEP}deg, rgba(255, 255, 255, 0.18) ${RADIO_DIAL_SWEEP}deg, rgba(255, 255, 255, 0.18) 360deg)`
+            }}
+            tabIndex={0}
+            title="Drag the knob to adjust the lofi radio volume"
+          >
+            <div className={`relative h-full w-full rounded-full border backdrop-blur-xl transition duration-300 ${isRadioPlaying ? 'border-white/80 bg-white/76' : 'border-white/70 bg-white/62'}`}>
+              <div className="pointer-events-none absolute inset-[4px] rounded-full border border-sage-100/70" />
+              <div className="absolute inset-[3px] rounded-full" style={{ transform: `rotate(${radioDialDegrees}deg)` }}>
+                <div
+                  className={`absolute left-1/2 top-0 flex h-7 w-7 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full ${isRadioDialDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+                  onPointerDown={handleRadioDialThumbPointerDown}
+                  style={{ touchAction: 'none' }}
+                >
+                  <span className={`h-3.5 w-3.5 rounded-full border-2 border-white shadow-sm transition ${isRadioPlaying ? 'bg-sage-700' : 'bg-sage-400'} ${isRadioDialFeedbackVisible ? 'opacity-100' : 'opacity-70'}`} />
+                </div>
+              </div>
+            </div>
+          </div>
+          <button
+            aria-label={isRadioPlaying ? 'Pause lofi radio' : 'Play lofi radio'}
+            onClick={() => setIsRadioPlaying(prev => !prev)}
+            className={`absolute inset-[0.72rem] z-20 flex items-center justify-center overflow-hidden rounded-full shadow-lift transition duration-300 hover:-translate-y-1 ${
+              isRadioPlaying ? 'bg-sage-200/95 hover:bg-sage-200' : 'bg-sage-100/95 hover:bg-sage-100'
+            }`}
+            title="Toggle Lofi Radio"
+            type="button"
+          >
+            <span
+              className="relative flex h-full w-full items-center justify-center rounded-full"
+              style={{ animation: isRadioPlaying ? 'lofiVinylSpin 3.6s linear infinite' : 'none' }}
+            >
+              <img
+                alt="Lofi radio vinyl icon"
+                className={`h-full w-full rounded-full object-cover transition duration-300 ${isRadioPlaying ? 'opacity-100 saturate-110' : 'opacity-90 saturate-75'}`}
+                src={radioVinylIcon}
+              />
+              <span className="pointer-events-none absolute h-3.5 w-3.5 rounded-full border border-white/70 bg-sage-950/80 shadow-[0_0_0_3px_rgba(255,255,255,0.35)]" />
+            </span>
+          </button>
+          <div className={`pointer-events-none absolute -bottom-2 left-1/2 -translate-x-1/2 rounded-full border border-white/75 bg-white/88 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-sage-600 shadow-sm backdrop-blur-xl transition duration-300 ${isRadioDialFeedbackVisible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'}`}>
+            {radioVolume}%
+          </div>
         </div>
       </div>
 
