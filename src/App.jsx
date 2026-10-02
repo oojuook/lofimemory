@@ -40,6 +40,7 @@ import LotusMatch from './LotusMatch';
 import DinosaurDash from './DinosaurDash';
 import MindSweeper from './MindSweeper';
 import QuietTiles from './QuietTiles';
+import QuietSlide from './QuietSlide';
 import { auth, db, getMessagingIfSupported, googleProvider } from './firebase';
 
 const STORAGE_KEY = 'quiet-harbor-journal-v1';
@@ -362,6 +363,11 @@ const wellnessArticles = [
 ];
 
 const seoLandingBlocks = [
+  {
+    title: 'Sliding puzzle online',
+    text: 'Play a cozy sliding puzzle online when you want a familiar tile-moving challenge that feels tidy, calm, and easy to revisit.',
+    href: '/sliding-puzzle-online.html'
+  },
   {
     title: '2048 online',
     text: 'Play a calm 2048-style number merge game when you want a familiar puzzle loop that feels satisfying and easy to revisit.',
@@ -696,6 +702,7 @@ const seoFaqs = [
 ];
 
 const seoGuidePages = [
+  { label: 'Popular guide', title: 'Sliding puzzle online', text: 'Play a cozy sliding puzzle online when you want a simple tile game that feels calm and satisfying.', href: '/sliding-puzzle-online.html' },
   { label: 'Popular guide', title: '2048 online', text: 'Play a calm 2048-style number merge game when you want an easy puzzle that still feels satisfying.', href: '/2048-online.html' },
   { label: 'Popular guide', title: 'Cozy browser games', text: 'Find soft browser games people like to play when they want to relax, reset, and stay for a while.', href: '/cozy-browser-games.html' },
   { label: 'Helpful read', title: 'Games to relax', text: 'Explore calm game styles like memory, logic, and endless runners that feel easy to enjoy.', href: '/games-to-relax.html' },
@@ -1143,6 +1150,7 @@ const seoGuideGroups = [
 ];
 
 const seoPopularSearches = [
+  { label: 'Sliding puzzle online', href: '/sliding-puzzle-online.html' },
   { label: '2048 online', href: '/2048-online.html' },
   { label: 'Cozy browser games', href: '/cozy-browser-games.html' },
   { label: 'Games to relax', href: '/games-to-relax.html' },
@@ -2359,6 +2367,15 @@ function App() {
       icon: Plus,
       tone: 'from-violet-100 to-slate-50 text-violet-700',
       component: <QuietTiles difficulty={selectedGameDifficulty} />
+    },
+    {
+      id: 'quiet-slide',
+      title: 'Quiet Slide',
+      detail: 'Cozy sliding puzzle',
+      description: 'Move tiles into place for the kind of familiar low-pressure sliding puzzle people love as a quick reset.',
+      icon: Compass,
+      tone: 'from-amber-100 to-stone-50 text-amber-700',
+      component: <QuietSlide difficulty={selectedGameDifficulty} />
     },
     {
       id: 'mind-sweeper',
@@ -5420,7 +5437,7 @@ function App() {
             <div className="mb-10 text-center">
               <p className="mb-2 text-sm font-bold uppercase tracking-widest text-sage-600">Relax & Play</p>
               <h1 className="mb-3 font-display text-4xl font-bold tracking-tight text-sage-950">Pick a chill game</h1>
-              <p className="mx-auto max-w-2xl text-lg text-sage-700">Choose the kind of calm you want right now — drift, dodge, merge, match, sweep, or jump through a soft offline desert run.</p>
+              <p className="mx-auto max-w-2xl text-lg text-sage-700">Choose the kind of calm you want right now — drift, dodge, merge, match, slide, sweep, or jump through a soft offline desert run.</p>
             </div>
             <div className="mb-6 flex flex-col gap-3 rounded-[1.75rem] border border-white/80 bg-white/78 p-4 shadow-sm backdrop-blur sm:flex-row sm:items-center sm:justify-between">
               <div>
