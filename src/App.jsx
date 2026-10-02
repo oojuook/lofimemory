@@ -38,6 +38,7 @@ import ZenGame from './ZenGame';
 import StreamSurfer from './StreamSurfer';
 import LotusMatch from './LotusMatch';
 import DinosaurDash from './DinosaurDash';
+import MindSweeper from './MindSweeper';
 import { auth, db, getMessagingIfSupported, googleProvider } from './firebase';
 
 const STORAGE_KEY = 'quiet-harbor-journal-v1';
@@ -678,6 +679,7 @@ const seoGuidePages = [
   { label: 'Helpful read', title: 'Mindful gaming app', text: 'Play mindful games like Drifting Leaf and Lotus Match to relax your mind.', href: '/mindful-gaming-app.html' },
 
   { label: 'Popular guide', title: 'Relaxing fidget games', text: 'Play relaxing fidget games online to clear your mind before writing.', href: '/relaxing-fidget-games.html' },
+  { label: 'Helpful read', title: 'Online Minesweeper', text: 'Clear a cozy online Minesweeper board when you want a calmer kind of focus.', href: '/minesweeper-online.html' },
   { label: 'Helpful read', title: 'Calming games for anxiety', text: 'Quiet your racing thoughts with simple, repetitive games designed to soothe your mind.', href: '/calming-games-for-anxiety.html' },
 
   {
@@ -1120,6 +1122,7 @@ const seoPopularSearches = [
   { label: 'Mindful gaming app', href: '/mindful-gaming-app.html' },
 
   { label: 'Relaxing fidget games', href: '/relaxing-fidget-games.html' },
+  { label: 'Online Minesweeper', href: '/minesweeper-online.html' },
   { label: 'Calming games for anxiety', href: '/calming-games-for-anxiety.html' },
 
   { label: 'Web based diary', href: '/web-based-diary.html' },
@@ -2298,6 +2301,15 @@ function App() {
       icon: Sparkles,
       tone: 'from-rose-100 to-orange-50 text-rose-700',
       component: <LotusMatch />
+    },
+    {
+      id: 'mind-sweeper',
+      title: 'Mind Sweeper',
+      detail: 'Soft logic reset',
+      description: 'A cozy Minesweeper-style board for clearing your head one calm tile at a time.',
+      icon: Shield,
+      tone: 'from-lime-100 to-emerald-50 text-lime-700',
+      component: <MindSweeper />
     },
     {
       id: 'dinosaur-dash',
@@ -5350,7 +5362,7 @@ function App() {
             <div className="mb-10 text-center">
               <p className="mb-2 text-sm font-bold uppercase tracking-widest text-sage-600">Relax & Play</p>
               <h1 className="mb-3 font-display text-4xl font-bold tracking-tight text-sage-950">Pick a chill game</h1>
-              <p className="mx-auto max-w-2xl text-lg text-sage-700">Choose the kind of calm you want right now — drift, dodge, match, or jump through a soft offline desert run.</p>
+              <p className="mx-auto max-w-2xl text-lg text-sage-700">Choose the kind of calm you want right now — drift, dodge, match, sweep, or jump through a soft offline desert run.</p>
             </div>
             <div className="mb-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {unwindGames.map((game) => (
