@@ -7171,10 +7171,10 @@ function App() {
       `}</style>
 
       {/* Floating Lofi Radio Player */}
-      <div className="fixed bottom-28 left-3 z-50 sm:left-5 lg:bottom-7 lg:left-6 xl:bottom-8 xl:left-[calc((100vw-1280px)/2+0.5rem)] xl:top-auto xl:translate-y-0">
+      <div className="fixed bottom-4 left-1 z-50 sm:left-2 lg:bottom-4 lg:left-3 xl:bottom-5 xl:left-[calc((100vw-1280px)/2+0.25rem)]">
 
         <div ref={radioPlayerContainerRef} className="pointer-events-none absolute h-1 w-1 opacity-0" aria-hidden="true" />
-        <div className="group relative h-[4.9rem] w-[4.9rem] sm:h-[5.25rem] sm:w-[5.25rem]">
+        <div className="group relative h-[3.95rem] w-[3.95rem] sm:h-[4.45rem] sm:w-[4.45rem]">
           <div
             ref={radioDialRef}
             aria-label="Adjust lofi radio volume"
@@ -7263,7 +7263,7 @@ function App() {
               </span>
             </span>
           </button>
-          <div className={`pointer-events-none absolute -top-12 left-1/2 w-max max-w-[12rem] -translate-x-1/2 rounded-2xl border border-white/80 bg-white/92 px-3 py-1.5 text-center text-[10px] font-extrabold uppercase tracking-[0.14em] text-sage-700 shadow-sm backdrop-blur-xl transition duration-300 ${radioNeedsInteraction || isRadioPlaying ? 'translate-y-0 opacity-100' : '-translate-y-1 opacity-0'}`}>
+          <div className={`pointer-events-none absolute -top-10 left-[60%] w-max max-w-[10rem] -translate-x-1/2 rounded-2xl border border-white/80 bg-white/92 px-3 py-1.5 text-center text-[10px] font-extrabold uppercase tracking-[0.14em] text-sage-700 shadow-sm backdrop-blur-xl transition duration-300 ${radioNeedsInteraction ? 'translate-y-0 opacity-100' : '-translate-y-1 opacity-0'}`}>
             {radioNeedsInteraction ? 'Tap once for sound' : radioStatusMessage}
           </div>
           <div className={`pointer-events-none absolute -bottom-2 left-1/2 -translate-x-1/2 rounded-full border border-white/75 bg-white/88 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-sage-600 shadow-sm backdrop-blur-xl transition duration-300 ${isRadioDialFeedbackVisible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'}`}>
