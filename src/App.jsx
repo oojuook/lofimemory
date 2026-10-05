@@ -4999,11 +4999,12 @@ function App() {
   }
 
   return (
-    <main className={`personalized-site design-${selectedDesign} ${comfortMode ? 'comfort-mode' : ''} min-h-screen overflow-hidden bg-sand-50 pb-24 text-ink lg:pb-0`} style={themeStyle}>
+    <main className={`personalized-site design-${selectedDesign} ${comfortMode ? 'comfort-mode' : ''} min-h-screen overflow-hidden bg-[#f6efff] pb-24 text-ink lg:pb-0`} style={themeStyle}>
       <div className="pointer-events-none fixed inset-0 -z-10">
-        <div className="absolute left-0 top-0 h-96 w-96 rounded-full bg-sage-200/70 blur-3xl" />
-        <div className="absolute right-0 top-56 h-96 w-96 rounded-full bg-sand-200/80 blur-3xl" />
-        <div className="absolute bottom-0 left-1/3 h-80 w-80 rounded-full bg-teal-100/70 blur-3xl" />
+        <div className="absolute left-[-4rem] top-[-4rem] h-[26rem] w-[26rem] rounded-full bg-[#ff92e1]/35 blur-3xl" />
+        <div className="absolute right-[-3rem] top-20 h-[28rem] w-[28rem] rounded-full bg-[#8f7dff]/28 blur-3xl" />
+        <div className="absolute bottom-[-5rem] left-[18%] h-[22rem] w-[22rem] rounded-full bg-[#6ce9ff]/24 blur-3xl" />
+        <div className="absolute left-1/2 top-24 h-52 w-52 -translate-x-1/2 rounded-full bg-[#ffd1f2]/18 blur-3xl" />
       </div>
 
 
@@ -5087,7 +5088,7 @@ function App() {
       )}
 
       <nav className="sticky top-0 z-20 px-5 pt-5 sm:px-7 xl:px-10">
-        <div className="site-nav-shell mx-auto max-w-[1280px] rounded-[2.2rem] border border-white/80 bg-white/78 p-4 shadow-soft backdrop-blur-xl lg:p-5">
+        <div className="site-nav-shell mx-auto max-w-[1280px] rounded-[2.2rem] border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.86),rgba(246,240,255,0.84),rgba(236,247,255,0.8))] p-4 shadow-[0_18px_55px_rgba(67,40,129,0.15)] backdrop-blur-xl lg:p-5">
           <div className="flex flex-col gap-2.5 lg:gap-3 xl:flex-row xl:items-center xl:justify-between">
             <a className="flex items-center gap-3.5" href="#home" onClick={() => openHomeSection('home')}>
               <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[1.35rem] border border-white/80 bg-white/88 p-1.5 shadow-[0_12px_34px_rgba(117,127,119,0.14)] ring-1 ring-sage-100 overflow-hidden">
@@ -5178,7 +5179,7 @@ function App() {
               </div>
             </div>
           </div>
-          <div className="site-nav-links mt-2 hidden flex-wrap items-center justify-center gap-2 rounded-[1.5rem] border border-sage-100 bg-white/88 p-1.5 lg:flex">
+          <div className="site-nav-links mt-2 hidden flex-wrap items-center justify-center gap-2 rounded-[1.5rem] border border-white/65 bg-[linear-gradient(135deg,rgba(255,255,255,0.78),rgba(245,239,255,0.72))] p-1.5 shadow-[0_14px_36px_rgba(67,40,129,0.08)] lg:flex">
             <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#home" onClick={() => navigateToTab('home')}>Chill</a>
             <button className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" onClick={() => setCustomizerOpen(true)} type="button">Vibes</button>
             <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#unwind" onClick={() => navigateToTab('unwind')}>Games</a>
@@ -5190,28 +5191,38 @@ function App() {
       </nav>
 
       {showMinimalHomeOverview && (
-      <section id="home" className="mx-auto max-w-[1040px] px-5 pb-20 pt-10 sm:px-7 xl:px-10">
-        <div className="mb-6 text-center">
-          <p className="text-[11px] font-extrabold uppercase tracking-[0.34em] text-sage-600">Choose your chill space</p>
-          <p className="mt-3 text-sm font-semibold leading-7 text-sage-700">Pick the corner that fits your mood right now.</p>
-        </div>
-        <div className="rounded-[2rem] border border-white/80 bg-white/58 p-3 shadow-[0_20px_70px_rgba(117,127,119,0.12)] backdrop-blur-xl sm:p-4">
-          <div className="grid gap-3 md:grid-cols-2">
+      <section id="home" className="mx-auto max-w-[1080px] px-5 pb-20 pt-10 sm:px-7 xl:px-10">
+        <div className="relative overflow-hidden rounded-[2.7rem] border border-white/14 bg-[radial-gradient(circle_at_top,rgba(255,138,225,0.32),transparent_20%),radial-gradient(circle_at_82%_18%,rgba(126,135,255,0.22),transparent_20%),linear-gradient(180deg,rgba(23,10,62,0.98)_0%,rgba(46,20,111,0.96)_46%,rgba(34,88,161,0.9)_82%,rgba(51,204,219,0.62)_100%)] px-4 py-8 shadow-[0_32px_95px_rgba(28,13,75,0.34)] backdrop-blur-xl sm:px-5 sm:py-9">
+          <div className="pointer-events-none absolute inset-0 overflow-hidden">
+            <div className="absolute left-1/2 top-8 h-24 w-24 -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_35%_35%,rgba(255,224,247,0.98),rgba(255,137,223,0.92)_42%,rgba(255,92,194,0.22)_100%)] shadow-[0_0_45px_rgba(255,128,223,0.42)] sm:h-32 sm:w-32" />
+            <div className="absolute left-[10%] top-[18%] h-2.5 w-2.5 rounded-full bg-white/90 shadow-[0_0_14px_rgba(255,255,255,0.95)]" />
+            <div className="absolute right-[14%] top-[22%] h-3 w-3 rounded-full bg-[#ffe680] shadow-[0_0_16px_rgba(255,230,128,0.9)]" />
+            <div className="absolute bottom-0 left-[-6%] h-28 w-[38%] rounded-tr-[4.5rem] bg-[linear-gradient(180deg,rgba(27,227,160,0.84),rgba(9,105,109,0.92))] blur-[2px] sm:h-36" />
+            <div className="absolute bottom-0 right-[-8%] h-24 w-[32%] rounded-tl-[4.5rem] bg-[linear-gradient(180deg,rgba(255,166,232,0.76),rgba(119,91,255,0.78))] blur-[2px] sm:h-32" />
+          </div>
+          <div className="relative mb-7 text-center text-white sm:mb-8">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/18 bg-white/10 px-4 py-2 text-[11px] font-extrabold uppercase tracking-[0.34em] text-white/84 backdrop-blur-md">
+              <Moon size={14} /> lofi night mode
+            </div>
+            <h1 className="mt-5 text-3xl font-extrabold tracking-tight text-white sm:text-[2.55rem]">Choose your chill space</h1>
+            <p className="mx-auto mt-3 max-w-2xl text-sm font-semibold leading-7 text-white/74 sm:text-[15px]">The home page now leans into the same dreamy late-night mood as the intro — a little more glowing, a little more gamey, and still soft enough to hang out in.</p>
+          </div>
+          <div className="relative grid gap-3 md:grid-cols-2">
             {homeEntryCards.map((card) => {
               const Icon = card.icon;
               return (
                 <button
                   key={card.id}
-                  className="group flex w-full items-center gap-4 rounded-[1.75rem] border border-[#e2d9cf] bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(248,244,239,0.9))] px-5 py-5 text-left shadow-[0_12px_34px_rgba(120,127,119,0.08)] transition duration-300 hover:-translate-y-1 hover:border-sage-300 hover:shadow-[0_18px_42px_rgba(120,127,119,0.12)]"
+                  className="group flex w-full items-center gap-4 rounded-[1.8rem] border border-white/14 bg-[linear-gradient(135deg,rgba(255,255,255,0.16),rgba(255,255,255,0.08))] px-5 py-5 text-left shadow-[0_16px_34px_rgba(12,8,42,0.2)] backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:border-white/26 hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.22),rgba(255,255,255,0.12))] hover:shadow-[0_20px_46px_rgba(12,8,42,0.26)]"
                   onClick={card.onClick}
                   type="button"
                 >
-                  <div className={`flex h-[3.25rem] w-[3.25rem] items-center justify-center rounded-full shadow-inner transition group-hover:scale-105 ${card.iconTone}`}>
+                  <div className={`flex h-[3.25rem] w-[3.25rem] items-center justify-center rounded-full shadow-[inset_0_1px_4px_rgba(255,255,255,0.35)] transition group-hover:scale-105 ${card.iconTone}`}>
                     <Icon size={22} />
                   </div>
                   <div>
-                    <p className="text-lg font-extrabold text-sage-950">{card.title}</p>
-                    <p className="text-sm font-semibold text-sage-700">{card.description}</p>
+                    <p className="text-lg font-extrabold text-white">{card.title}</p>
+                    <p className="text-sm font-semibold text-white/72">{card.description}</p>
                   </div>
                 </button>
               );
