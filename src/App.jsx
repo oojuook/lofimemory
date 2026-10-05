@@ -5011,7 +5011,9 @@ function App() {
       {showEntryTransition && (
         <div className={`fixed inset-0 z-40 flex items-center justify-center bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.42),transparent_30%),linear-gradient(180deg,rgba(248,243,235,0.98)_0%,rgba(242,234,224,0.97)_100%)] backdrop-blur-[10px] transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${entryTransitionClosing ? 'opacity-0' : 'opacity-100'}`}>
           <div className={`px-6 text-center transition-all duration-[1050ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${entryTransitionClosing ? 'translate-y-3 scale-[1.02] opacity-0' : 'translate-y-0 scale-100 opacity-100'}`}>
-            <div className="mx-auto h-24 w-24 rounded-full border border-white/90 bg-white/88 shadow-[0_18px_50px_rgba(158,136,114,0.12)] ring-8 ring-white/30" />
+            <div className="mx-auto flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border border-white/90 bg-white/88 p-2 shadow-[0_18px_50px_rgba(158,136,114,0.12)] ring-8 ring-white/30">
+              <img src={headerLogoIcon} alt="Lofi Memory logo" className="h-full w-full rounded-full object-cover" />
+            </div>
             <p className="mt-6 text-[11px] font-extrabold uppercase tracking-[0.42em] text-[#8d7763]">Lofi Memory</p>
             <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-[#3d3025] sm:text-5xl">Arrive softly.</h1>
             <p className="mt-3 text-sm font-semibold tracking-[0.08em] text-[#8c7967]">A calm little pause before your space opens.</p>
