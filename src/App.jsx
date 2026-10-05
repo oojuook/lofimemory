@@ -1862,42 +1862,6 @@ function InfoCard({ icon: Icon, title, children }) {
   );
 }
 
-function PageAtmosphere({ sceneId }) {
-  const surfaceClass = sceneId === 'playful'
-    ? 'bg-[linear-gradient(180deg,#25155d_0%,#3f2a85_26%,#725ab0_48%,#cdbfe6_76%,#f4eff8_100%)]'
-    : sceneId === 'editorial'
-      ? 'bg-[linear-gradient(180deg,#1c2238_0%,#2f3e59_26%,#60788e_48%,#c7ced7_74%,#f4f0ee_100%)]'
-      : 'bg-[linear-gradient(180deg,#2b2454_0%,#4f4a86_26%,#8c86b5_48%,#d9d4e7_74%,#f5f1f6_100%)]';
-  const sideGlowClass = sceneId === 'playful'
-    ? 'from-[rgba(46,20,99,0.96)] via-[rgba(92,68,181,0.34)] to-[rgba(92,68,181,0)]'
-    : sceneId === 'editorial'
-      ? 'from-[rgba(28,33,48,0.98)] via-[rgba(79,101,125,0.32)] to-[rgba(79,101,125,0)]'
-      : 'from-[rgba(46,37,95,0.96)] via-[rgba(98,91,158,0.34)] to-[rgba(98,91,158,0)]';
-  const orbClass = sceneId === 'playful'
-    ? 'bg-[radial-gradient(circle_at_40%_38%,rgba(255,232,247,0.98),rgba(255,151,226,0.78)_42%,rgba(255,151,226,0.16)_74%,rgba(255,151,226,0)_100%)] shadow-[0_0_110px_rgba(255,151,226,0.28)]'
-    : sceneId === 'editorial'
-      ? 'bg-[radial-gradient(circle_at_40%_38%,rgba(255,237,216,0.94),rgba(168,203,226,0.42)_42%,rgba(168,203,226,0.12)_74%,rgba(168,203,226,0)_100%)] shadow-[0_0_110px_rgba(168,203,226,0.24)]'
-      : 'bg-[radial-gradient(circle_at_40%_38%,rgba(255,236,247,0.97),rgba(214,183,255,0.52)_42%,rgba(214,183,255,0.14)_74%,rgba(214,183,255,0)_100%)] shadow-[0_0_110px_rgba(214,183,255,0.26)]';
-
-  return (
-    <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-      <div className={`absolute inset-0 ${surfaceClass}`} />
-      <div className={`absolute inset-y-0 left-0 w-[22vw] min-w-[5rem] bg-[linear-gradient(90deg,var(--tw-gradient-stops))] ${sideGlowClass}`} />
-      <div className={`absolute inset-y-0 right-0 w-[22vw] min-w-[5rem] bg-[linear-gradient(270deg,var(--tw-gradient-stops))] ${sideGlowClass}`} />
-      <div className="absolute inset-x-[9%] top-0 h-28 bg-[linear-gradient(180deg,rgba(34,28,60,0.72),rgba(34,28,60,0.14),rgba(34,28,60,0))]" />
-      <div className={`absolute left-1/2 top-16 h-44 w-44 -translate-x-1/2 rounded-full ${orbClass}`} />
-      <div className="absolute left-[7%] top-[14%] h-[68vh] w-20 rounded-b-[1.9rem] border-x border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.11),rgba(255,255,255,0.02)_58%,rgba(255,255,255,0)_100%)]" />
-      <div className="absolute right-[7%] top-[12%] h-[70vh] w-20 rounded-b-[1.9rem] border-x border-white/10 bg-[linear-gradient(180deg,rgba(214,232,255,0.12),rgba(214,232,255,0.02)_58%,rgba(214,232,255,0)_100%)]" />
-      <div className="absolute left-[16%] top-[30%] h-3 w-3 rounded-full bg-white/80 shadow-[0_0_16px_rgba(255,255,255,0.85)]" />
-      <div className="absolute right-[18%] top-[28%] h-3 w-3 rounded-full bg-[#ffe7a8] shadow-[0_0_18px_rgba(255,231,168,0.85)]" />
-      <div className="absolute left-[24%] top-[42%] h-2.5 w-2.5 rounded-full bg-white/72 shadow-[0_0_14px_rgba(255,255,255,0.8)]" />
-      <div className="absolute inset-x-[10%] bottom-[18%] h-[18rem] rounded-[3rem] bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.08),rgba(255,255,255,0)_68%)]" />
-      <div className="absolute inset-x-0 bottom-0 h-[30vh] bg-[linear-gradient(180deg,rgba(25,20,43,0)_0%,rgba(38,35,62,0.18)_32%,rgba(102,97,143,0.24)_56%,rgba(243,239,246,0.92)_100%)]" />
-      <div className="absolute bottom-[-3rem] left-[10%] h-48 w-[30rem] rounded-[4rem] bg-[radial-gradient(circle_at_40%_30%,rgba(255,190,220,0.12),rgba(138,118,209,0.08)_48%,rgba(138,118,209,0)_72%)]" />
-      <div className="absolute bottom-[-2rem] right-[10%] h-44 w-[24rem] rounded-[4rem] bg-[radial-gradient(circle_at_58%_28%,rgba(173,214,255,0.12),rgba(112,124,209,0.08)_48%,rgba(112,124,209,0)_74%)]" />
-    </div>
-  );
-}
 
 function ThemeStudio({
   selectedTheme,
@@ -2822,7 +2786,6 @@ function App() {
     '--accent-glow': selectedTheme === 'custom' ? customColor : activeTheme.glow,
     '--shape-radius': activeDesign.radius,
     '--theme-texture': activeDesign.texture,
-    '--page-surface': 'transparent',
     '--quote-bg': quoteBg
   };
 
@@ -5037,8 +5000,12 @@ function App() {
   }
 
   return (
-    <main className={`personalized-site design-${selectedDesign} ${comfortMode ? 'comfort-mode' : ''} min-h-screen overflow-hidden bg-transparent pb-24 text-ink lg:pb-0`} style={themeStyle}>
-      <PageAtmosphere sceneId={selectedDesign} />
+    <main className={`personalized-site design-${selectedDesign} ${comfortMode ? 'comfort-mode' : ''} min-h-screen overflow-hidden bg-sand-50 pb-24 text-ink lg:pb-0`} style={themeStyle}>
+      <div className="pointer-events-none fixed inset-0 -z-10">
+        <div className="absolute left-0 top-0 h-96 w-96 rounded-full bg-sage-200/70 blur-3xl" />
+        <div className="absolute right-0 top-56 h-96 w-96 rounded-full bg-sand-200/80 blur-3xl" />
+        <div className="absolute bottom-0 left-1/3 h-80 w-80 rounded-full bg-teal-100/70 blur-3xl" />
+      </div>
 
 
       {showEntryTransition && (
@@ -5074,8 +5041,8 @@ function App() {
                       <img src={headerLogoIcon} alt="Lofi Memory logo" className="h-full w-full rounded-[1.3rem] object-cover" />
                     </div>
                     <div>
-                      <p className="text-[11px] font-extrabold uppercase tracking-[0.42em] text-white/84">Lofi Memory</p>
-                      <p className="mt-2 text-sm font-semibold text-white/82">games, music, notes & quiet resets</p>
+                      <p className="text-[11px] font-extrabold uppercase tracking-[0.42em] text-white/72">Lofi Memory</p>
+                      <p className="mt-2 text-sm font-semibold text-white/72">games, music, notes & quiet resets</p>
                     </div>
                   </div>
                   <h1 className="mt-8 max-w-xl font-display text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-[3.45rem]">A softer little world to slip into.</h1>
@@ -5122,10 +5089,10 @@ function App() {
       )}
 
       <nav className="sticky top-0 z-20 px-5 pt-5 sm:px-7 xl:px-10">
-        <div className="site-nav-shell mx-auto max-w-[1280px] rounded-[2.2rem] border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.88),rgba(244,240,255,0.86),rgba(239,247,255,0.82))] p-4 shadow-[0_18px_55px_rgba(67,40,129,0.14)] backdrop-blur-xl lg:p-5">
+        <div className="site-nav-shell mx-auto max-w-[1280px] rounded-[2.2rem] border border-white/80 bg-white/78 p-4 shadow-soft backdrop-blur-xl lg:p-5">
           <div className="flex flex-col gap-2.5 lg:gap-3 xl:flex-row xl:items-center xl:justify-between">
             <a className="flex items-center gap-3.5" href="#home" onClick={() => openHomeSection('home')}>
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[1.35rem] border border-white/85 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(247,241,255,0.88))] p-1.5 shadow-[0_12px_34px_rgba(117,127,119,0.12)] ring-1 ring-white/70 overflow-hidden">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[1.35rem] border border-white/80 bg-white/88 p-1.5 shadow-[0_12px_34px_rgba(117,127,119,0.14)] ring-1 ring-sage-100 overflow-hidden">
                 <img src={headerLogoIcon} alt="Lofi Memory Logo" className="h-full w-full rounded-[1rem] object-cover" />
               </div>
               <div>
@@ -5155,7 +5122,7 @@ function App() {
 
             <div className="site-nav-actions flex w-full flex-wrap items-center gap-2 lg:justify-end xl:w-auto xl:max-w-[34rem] xl:flex-none xl:flex-nowrap">
               {user ? (
-                <div className="flex min-w-[210px] flex-1 items-center justify-between gap-3 rounded-full border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.88),rgba(246,241,255,0.8))] px-4 py-2.5 shadow-[0_10px_26px_rgba(76,63,140,0.08)] xl:flex-none">
+                <div className="flex min-w-[210px] flex-1 items-center justify-between gap-3 rounded-full border border-sage-200 bg-white/92 px-4 py-2.5 shadow-lift xl:flex-none">
                   <div className="min-w-0">
                     <p className="truncate text-sm font-extrabold text-sage-950">{user.displayName || user.email}</p>
                     <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-sage-600">{cloudStatus}</p>
@@ -5165,7 +5132,7 @@ function App() {
                   </div>
                 </div>
               ) : (
-                <button className="flex min-w-[208px] flex-1 items-center justify-between gap-3 rounded-full border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.9),rgba(246,241,255,0.82))] px-4 py-2.5 text-left shadow-[0_10px_26px_rgba(76,63,140,0.08)] transition hover:-translate-y-0.5 hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(248,243,255,0.9))] xl:flex-none" onClick={signInWithGoogle} disabled={authLoading} type="button">
+                <button className="flex min-w-[208px] flex-1 items-center justify-between gap-3 rounded-full border border-sage-200 bg-white/92 px-4 py-2.5 text-left shadow-lift transition hover:-translate-y-0.5 hover:bg-white xl:flex-none" onClick={signInWithGoogle} disabled={authLoading} type="button">
                   <div>
                     <p className="text-sm font-extrabold text-sage-950">{authLoading ? 'Checking login...' : 'Sign in with Google'}</p>
                     <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-sage-600">Sync across devices</p>
@@ -5175,9 +5142,9 @@ function App() {
                   </div>
                 </button>
               )}
-              <div className="flex flex-wrap items-center gap-2 rounded-full border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.82),rgba(246,241,255,0.74))] p-1.5 shadow-[0_10px_24px_rgba(76,63,140,0.06)] xl:flex-nowrap">
+              <div className="flex flex-wrap items-center gap-2 rounded-full border border-sage-100 bg-white/82 p-1.5 shadow-sm xl:flex-nowrap">
                 {user && (
-                  <button className="rounded-full border border-white/75 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(247,242,255,0.88))] px-3.5 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.98),rgba(250,246,255,0.94))]" onClick={handleSignOut} type="button">
+                  <button className="rounded-full border border-sage-200 bg-white/90 px-3.5 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:bg-white" onClick={handleSignOut} type="button">
                     Sign out
                   </button>
                 )}
@@ -5204,59 +5171,49 @@ function App() {
                     SEO studio
                   </button>
                 )}
-                <button className={`rounded-full border px-3.5 py-2 text-sm font-bold transition hover:-translate-y-0.5 ${comfortMode ? 'border-violet-700/80 bg-violet-700 text-white shadow-[0_8px_20px_rgba(89,73,179,0.22)]' : 'border-white/75 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(247,242,255,0.88))] text-sage-800 hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.98),rgba(250,246,255,0.94))]'}`} onClick={() => setComfortMode(!comfortMode)} type="button">
+                <button className={`rounded-full border px-3.5 py-2 text-sm font-bold transition hover:-translate-y-0.5 ${comfortMode ? 'border-sage-800 bg-sage-900 text-white' : 'border-sage-200 bg-white/90 text-sage-800 hover:bg-white'}`} onClick={() => setComfortMode(!comfortMode)} type="button">
                   Comfort
                 </button>
-                <button className="rounded-full border border-white/75 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(247,242,255,0.88))] px-3.5 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.98),rgba(250,246,255,0.94))]" onClick={() => (hasPin ? setPinSettingsOpen(true) : setLocked(true))} type="button">
+                <button className="rounded-full border border-sage-200 bg-white/90 px-3.5 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:bg-white" onClick={() => (hasPin ? setPinSettingsOpen(true) : setLocked(true))} type="button">
                   {hasPin ? 'Privacy' : 'Set lock'}
                 </button>
               </div>
             </div>
           </div>
-          <div className="site-nav-links mt-2 hidden flex-wrap items-center justify-center gap-2 rounded-[1.5rem] border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.8),rgba(244,239,255,0.76),rgba(239,246,255,0.72))] p-1.5 shadow-[0_14px_36px_rgba(67,40,129,0.08)] lg:flex">
-            <a className="rounded-full border border-white/75 bg-[linear-gradient(135deg,rgba(255,255,255,0.94),rgba(247,242,255,0.9))] px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-white hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.99),rgba(250,246,255,0.94))]" href="#home" onClick={() => navigateToTab('home')}>Chill</a>
-            <button className="rounded-full border border-white/75 bg-[linear-gradient(135deg,rgba(255,255,255,0.94),rgba(247,242,255,0.9))] px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-white hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.99),rgba(250,246,255,0.94))]" onClick={() => setCustomizerOpen(true)} type="button">Vibes</button>
-            <a className="rounded-full border border-white/75 bg-[linear-gradient(135deg,rgba(255,255,255,0.94),rgba(247,242,255,0.9))] px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-white hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.99),rgba(250,246,255,0.94))]" href="#unwind" onClick={() => navigateToTab('unwind')}>Games</a>
-            <a className="rounded-full border border-white/75 bg-[linear-gradient(135deg,rgba(255,255,255,0.94),rgba(247,242,255,0.9))] px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-white hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.99),rgba(250,246,255,0.94))]" href="#resources" onClick={() => openHomeSection('resources')}>Relax</a>
-            <a className="rounded-full border border-white/75 bg-[linear-gradient(135deg,rgba(255,255,255,0.94),rgba(247,242,255,0.9))] px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-white hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.99),rgba(250,246,255,0.94))]" href="#faq" onClick={() => openHomeSection('faq')}>Help</a>
-            <a className="rounded-full border border-white/75 bg-[linear-gradient(135deg,rgba(255,255,255,0.94),rgba(247,242,255,0.9))] px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-white hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.99),rgba(250,246,255,0.94))]" href="#contact" onClick={() => openHomeSection('contact')}>Contact</a>
+          <div className="site-nav-links mt-2 hidden flex-wrap items-center justify-center gap-2 rounded-[1.5rem] border border-sage-100 bg-white/88 p-1.5 lg:flex">
+            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#home" onClick={() => navigateToTab('home')}>Chill</a>
+            <button className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" onClick={() => setCustomizerOpen(true)} type="button">Vibes</button>
+            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#unwind" onClick={() => navigateToTab('unwind')}>Games</a>
+            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#resources" onClick={() => openHomeSection('resources')}>Relax</a>
+            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#faq" onClick={() => openHomeSection('faq')}>Help</a>
+            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#contact" onClick={() => openHomeSection('contact')}>Contact</a>
           </div>
         </div>
       </nav>
 
       {showMinimalHomeOverview && (
-      <section id="home" className="mx-auto max-w-[1080px] px-5 pb-20 pt-10 sm:px-7 xl:px-10">
-        <div className="relative overflow-hidden rounded-[2.7rem] border border-white/16 bg-[linear-gradient(180deg,rgba(34,27,74,0.94)_0%,rgba(62,55,112,0.9)_48%,rgba(161,168,206,0.72)_100%)] px-4 py-8 shadow-[0_28px_80px_rgba(28,13,75,0.24)] backdrop-blur-xl sm:px-5 sm:py-9">
-          <div className="pointer-events-none absolute inset-0 overflow-hidden">
-            <div className="absolute left-1/2 top-8 h-24 w-24 -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_35%_35%,rgba(255,231,247,0.96),rgba(234,200,255,0.72)_42%,rgba(255,92,194,0.12)_100%)] shadow-[0_0_40px_rgba(225,196,255,0.28)] sm:h-32 sm:w-32" />
-            <div className="absolute left-[10%] top-[18%] h-2.5 w-2.5 rounded-full bg-white/82 shadow-[0_0_12px_rgba(255,255,255,0.82)]" />
-            <div className="absolute right-[14%] top-[22%] h-3 w-3 rounded-full bg-[#ffe8b0] shadow-[0_0_14px_rgba(255,232,176,0.82)]" />
-            <div className="absolute bottom-0 left-[-6%] h-28 w-[38%] rounded-tr-[4.5rem] bg-[linear-gradient(180deg,rgba(133,170,188,0.36),rgba(133,170,188,0.06))] blur-[2px] sm:h-36" />
-            <div className="absolute bottom-0 right-[-8%] h-24 w-[32%] rounded-tl-[4.5rem] bg-[linear-gradient(180deg,rgba(214,191,237,0.34),rgba(214,191,237,0.06))] blur-[2px] sm:h-32" />
-          </div>
-          <div className="relative mb-7 text-center text-white sm:mb-8">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[11px] font-extrabold uppercase tracking-[0.34em] text-white/90 backdrop-blur-md">
-              <Moon size={14} /> soft evening mood
-            </div>
-            <h1 className="mt-5 text-3xl font-extrabold tracking-tight text-white sm:text-[2.55rem]">Choose your chill space</h1>
-            <p className="mx-auto mt-3 max-w-2xl text-sm font-semibold leading-7 text-white/88 sm:text-[15px]">A calm late-night landing for games, notes, breathing, and quiet resets — simpler, softer, and easier to read.</p>
-          </div>
-          <div className="relative grid gap-3 md:grid-cols-2">
+      <section id="home" className="mx-auto max-w-[1040px] px-5 pb-20 pt-10 sm:px-7 xl:px-10">
+        <div className="mb-6 text-center">
+          <p className="text-[11px] font-extrabold uppercase tracking-[0.34em] text-sage-600">Choose your chill space</p>
+          <p className="mt-3 text-sm font-semibold leading-7 text-sage-700">Pick the corner that fits your mood right now.</p>
+        </div>
+        <div className="rounded-[2rem] border border-white/80 bg-white/58 p-3 shadow-[0_20px_70px_rgba(117,127,119,0.12)] backdrop-blur-xl sm:p-4">
+          <div className="grid gap-3 md:grid-cols-2">
             {homeEntryCards.map((card) => {
               const Icon = card.icon;
               return (
                 <button
                   key={card.id}
-                  className="group flex w-full items-center gap-4 rounded-[1.8rem] border border-white/18 bg-[linear-gradient(135deg,rgba(255,255,255,0.24),rgba(255,255,255,0.14))] px-5 py-5 text-left shadow-[0_14px_30px_rgba(12,8,42,0.16)] backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:border-white/26 hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.3),rgba(255,255,255,0.18))] hover:shadow-[0_18px_40px_rgba(12,8,42,0.2)]"
+                  className="group flex w-full items-center gap-4 rounded-[1.75rem] border border-[#e2d9cf] bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(248,244,239,0.9))] px-5 py-5 text-left shadow-[0_12px_34px_rgba(120,127,119,0.08)] transition duration-300 hover:-translate-y-1 hover:border-sage-300 hover:shadow-[0_18px_42px_rgba(120,127,119,0.12)]"
                   onClick={card.onClick}
                   type="button"
                 >
-                  <div className={`flex h-[3.25rem] w-[3.25rem] items-center justify-center rounded-full shadow-[inset_0_1px_4px_rgba(255,255,255,0.35)] transition group-hover:scale-105 ${card.iconTone}`}>
+                  <div className={`flex h-[3.25rem] w-[3.25rem] items-center justify-center rounded-full shadow-inner transition group-hover:scale-105 ${card.iconTone}`}>
                     <Icon size={22} />
                   </div>
                   <div>
-                    <p className="text-lg font-extrabold text-white">{card.title}</p>
-                    <p className="text-sm font-semibold text-white/88">{card.description}</p>
+                    <p className="text-lg font-extrabold text-sage-950">{card.title}</p>
+                    <p className="text-sm font-semibold text-sage-700">{card.description}</p>
                   </div>
                 </button>
               );
@@ -5451,10 +5408,10 @@ function App() {
         </div>
 
         <aside className="flex flex-col gap-5 lg:col-span-4">
-          <div className="rounded-[1.9rem] border border-white/70 bg-[linear-gradient(160deg,rgba(255,255,255,0.82),rgba(244,239,255,0.72),rgba(235,246,255,0.68))] p-5 shadow-[0_18px_50px_rgba(64,48,128,0.09)] backdrop-blur-xl">
+          <div className="rounded-[1.9rem] border border-white/80 bg-white/72 p-5 shadow-soft backdrop-blur-xl">
             <div className="flex items-center justify-between gap-3">
               <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">Start where it helps most</p>
-              <span className="rounded-full border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.88),rgba(247,241,255,0.82))] px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-800">Core spaces</span>
+              <span className="rounded-full border border-sage-100 bg-sage-50 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-800">Core spaces</span>
             </div>
             <div className="mt-4 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:gap-4">
               {[
@@ -5465,7 +5422,7 @@ function App() {
                 { id: 'memories', label: 'Memories', detail: 'Return to saved moments', icon: BookOpen, tone: 'bg-sand-100 text-sand-600' },
                 { id: 'insights', label: 'Vibes', detail: 'See your mood flow', icon: Sparkles, tone: 'bg-rose-100 text-rose-700' }
               ].map((tab) => (
-                <button key={tab.id} className="group flex items-center gap-3 rounded-2xl border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.9),rgba(247,242,255,0.8))] px-4 py-3 text-left shadow-[0_10px_24px_rgba(67,40,129,0.06)] transition hover:-translate-y-0.5 hover:border-white hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(249,245,255,0.9))] hover:shadow-[0_14px_28px_rgba(67,40,129,0.09)]" onClick={() => navigateToTab(tab.id)} type="button">
+                <button key={tab.id} className="group flex items-center gap-3 rounded-2xl border border-sage-100 bg-white/92 px-4 py-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-200 hover:bg-white hover:shadow-lift" onClick={() => navigateToTab(tab.id)} type="button">
                   <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl shadow-sm transition group-hover:scale-105 ${tab.tone}`}>
                     <tab.icon size={18} />
                   </div>
@@ -5478,20 +5435,20 @@ function App() {
             </div>
           </div>
 
-          <div className="rounded-[1.9rem] border border-white/70 bg-[linear-gradient(165deg,rgba(255,255,255,0.84),rgba(247,241,255,0.74),rgba(238,246,255,0.68))] p-6 shadow-[0_18px_50px_rgba(64,48,128,0.09)] backdrop-blur-xl">
+          <div className="rounded-[1.9rem] border border-white/80 bg-gradient-to-br from-white/84 to-sand-50/70 p-6 shadow-soft backdrop-blur-xl">
             <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-800">Why it feels good to stay here</p>
             <h3 className="mt-3 text-2xl font-extrabold leading-tight text-ink">The page feels like a chill place first, so writing can arrive naturally.</h3>
             <p className="mt-3 max-w-sm text-sm leading-7 text-sage-800">There is a clear place to begin, soft privacy cues, cozy game breaks, and just enough support to help a first sentence feel easy instead of exposed.</p>
             <div className="mt-6 grid gap-3.5 text-sm font-semibold text-sage-900">
-              <div className="flex items-center gap-3 rounded-2xl border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(247,242,255,0.84))] px-4 py-3.5 shadow-[0_10px_22px_rgba(67,40,129,0.05)]">
+              <div className="flex items-center gap-3 rounded-2xl border border-sage-200 bg-white/96 px-4 py-3.5 shadow-sm">
                 <Sparkles size={15} className="text-sage-700" />
                 <span>Starter lines help you begin without filling the page with noise</span>
               </div>
-              <div className="flex items-center gap-3 rounded-2xl border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(247,242,255,0.84))] px-4 py-3.5 shadow-[0_10px_22px_rgba(67,40,129,0.05)]">
+              <div className="flex items-center gap-3 rounded-2xl border border-sage-200 bg-white/96 px-4 py-3.5 shadow-sm">
                 <ShieldCheck size={15} className="text-sage-700" />
                 <span>Privacy cues keep the space personal before you write a word</span>
               </div>
-              <div className="flex items-center gap-3 rounded-2xl border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(247,242,255,0.84))] px-4 py-3.5 shadow-[0_10px_22px_rgba(67,40,129,0.05)]">
+              <div className="flex items-center gap-3 rounded-2xl border border-sage-200 bg-white/96 px-4 py-3.5 shadow-sm">
                 <BookOpen size={15} className="text-sage-700" />
                 <span>Saved pages stay easy to revisit when you want perspective later</span>
               </div>
