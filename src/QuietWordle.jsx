@@ -86,8 +86,8 @@ const difficultySettings = {
   hard: {
     label: 'Hard',
     wordLength: 6,
-    maxGuesses: 6,
-    note: 'Longer words when you want a deeper little focus loop.',
+    maxGuesses: 5,
+    note: 'Longer words with one fewer guess so the pressure change is easier to feel.',
   },
 };
 

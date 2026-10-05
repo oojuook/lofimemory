@@ -123,76 +123,63 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
     const drawFrog = (x, y) => {
       ctx.save();
       ctx.translate(x, y);
-      ctx.shadowColor = 'rgba(0, 0, 0, 0.12)';
-      ctx.shadowBlur = 10;
+      ctx.shadowColor = 'rgba(21, 57, 31, 0.16)';
+      ctx.shadowBlur = 12;
+      ctx.shadowOffsetY = 4;
 
-      const headGradient = ctx.createLinearGradient(0, -30, 0, 12);
-      headGradient.addColorStop(0, '#1ab54d');
-      headGradient.addColorStop(0.62, '#36c96d');
-      headGradient.addColorStop(1, '#63d8c3');
-
-      const bellyGradient = ctx.createLinearGradient(0, -2, 0, 26);
-      bellyGradient.addColorStop(0, '#f5df59');
-      bellyGradient.addColorStop(0.55, '#ffbf52');
-      bellyGradient.addColorStop(1, '#f28aa4');
-
-      ctx.fillStyle = headGradient;
+      ctx.fillStyle = '#2f7b37';
       ctx.beginPath();
-      ctx.roundRect(-25, -15, 50, 34, 17);
+      ctx.arc(-18, -18, 12, 0, Math.PI * 2);
+      ctx.arc(18, -18, 12, 0, Math.PI * 2);
+      ctx.roundRect(-33, -18, 66, 48, 24);
       ctx.fill();
 
+      ctx.fillStyle = '#73df58';
       ctx.beginPath();
-      ctx.arc(-14, -17, 9.8, 0, Math.PI * 2);
-      ctx.arc(14, -17, 9.8, 0, Math.PI * 2);
+      ctx.arc(-18, -18, 9.5, 0, Math.PI * 2);
+      ctx.arc(18, -18, 9.5, 0, Math.PI * 2);
+      ctx.roundRect(-29, -16, 58, 42, 22);
       ctx.fill();
 
-      ctx.fillStyle = bellyGradient;
+      ctx.fillStyle = '#d2f3be';
       ctx.beginPath();
-      ctx.moveTo(-20, 1);
-      ctx.quadraticCurveTo(-17, 18, 0, 20);
-      ctx.quadraticCurveTo(17, 18, 20, 1);
-      ctx.quadraticCurveTo(15, -4, 0, -2);
-      ctx.quadraticCurveTo(-15, -4, -20, 1);
+      ctx.moveTo(-21, 4);
+      ctx.quadraticCurveTo(-17, 22, 0, 24);
+      ctx.quadraticCurveTo(17, 22, 21, 4);
+      ctx.quadraticCurveTo(12, -2, 0, 0);
+      ctx.quadraticCurveTo(-12, -2, -21, 4);
       ctx.closePath();
       ctx.fill();
 
-      ctx.fillStyle = '#2f97f3';
+      ctx.fillStyle = '#ef99a8';
       ctx.beginPath();
-      ctx.arc(-14, -17, 6.2, 0, Math.PI * 2);
-      ctx.arc(14, -17, 6.2, 0, Math.PI * 2);
+      ctx.ellipse(-22, 6, 5.5, 3.8, 0, 0, Math.PI * 2);
+      ctx.ellipse(22, 6, 5.5, 3.8, 0, 0, Math.PI * 2);
       ctx.fill();
 
-      ctx.fillStyle = '#f6d04b';
+      ctx.fillStyle = '#ffffff';
       ctx.beginPath();
-      ctx.arc(-14, -17, 4.8, 0, Math.PI * 2);
-      ctx.arc(14, -17, 4.8, 0, Math.PI * 2);
+      ctx.arc(-18, -18, 7.2, 0, Math.PI * 2);
+      ctx.arc(18, -18, 7.2, 0, Math.PI * 2);
       ctx.fill();
 
-      ctx.fillStyle = '#2d2b37';
+      ctx.fillStyle = '#171717';
       ctx.beginPath();
-      ctx.arc(-14, -17, 2.2, 0, Math.PI * 2);
-      ctx.arc(14, -17, 2.2, 0, Math.PI * 2);
+      ctx.arc(-18, -18, 5.4, 0, Math.PI * 2);
+      ctx.arc(18, -18, 5.4, 0, Math.PI * 2);
       ctx.fill();
 
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.68)';
+      ctx.fillStyle = '#ffffff';
       ctx.beginPath();
-      ctx.arc(-15.5, -18.8, 1.3, 0, Math.PI * 2);
-      ctx.arc(12.5, -18.8, 1.3, 0, Math.PI * 2);
+      ctx.arc(-20.4, -20.2, 1.4, 0, Math.PI * 2);
+      ctx.arc(20.4, -20.2, 1.4, 0, Math.PI * 2);
       ctx.fill();
 
-      ctx.fillStyle = '#20331e';
+      ctx.fillStyle = '#2f7b37';
       ctx.beginPath();
-      ctx.arc(-3.6, -6.2, 1.3, 0, Math.PI * 2);
-      ctx.arc(3.6, -6.2, 1.3, 0, Math.PI * 2);
+      ctx.arc(-4.6, -4.2, 1.4, 0, Math.PI * 2);
+      ctx.arc(4.6, -4.2, 1.4, 0, Math.PI * 2);
       ctx.fill();
-
-      ctx.strokeStyle = '#53623f';
-      ctx.lineWidth = 2.3;
-      ctx.lineCap = 'round';
-      ctx.beginPath();
-      ctx.moveTo(-8, 2.2);
-      ctx.quadraticCurveTo(0, 6.8, 8, 2.2);
-      ctx.stroke();
 
       ctx.restore();
     };
@@ -200,15 +187,19 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
     const drawLilyPad = (x, y) => {
       ctx.save();
       ctx.translate(x, y);
-      ctx.fillStyle = '#739f62';
+      ctx.fillStyle = '#5da05b';
       ctx.beginPath();
-      ctx.arc(0, 0, 22, 0, Math.PI * 2);
+      ctx.ellipse(0, 0, 24, 20, -0.16, 0, Math.PI * 2);
       ctx.fill();
-      ctx.fillStyle = '#e8f0eb';
+      ctx.fillStyle = '#7dd06f';
       ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.lineTo(25, -12);
-      ctx.lineTo(25, 12);
+      ctx.ellipse(-2, -2, 17, 13, -0.16, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#dff4e4';
+      ctx.beginPath();
+      ctx.moveTo(2, 0);
+      ctx.lineTo(26, -11);
+      ctx.lineTo(26, 11);
       ctx.closePath();
       ctx.fill();
       ctx.restore();
@@ -217,10 +208,24 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
     const draw = () => {
       const state = stateRef.current;
 
-      ctx.fillStyle = '#e8f0eb';
+      const pondGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      pondGradient.addColorStop(0, '#eef8f1');
+      pondGradient.addColorStop(0.5, '#dff3e5');
+      pondGradient.addColorStop(1, '#d2ead8');
+      ctx.fillStyle = pondGradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.strokeStyle = '#d4e3dc';
+      for (let rippleIndex = 0; rippleIndex < 5; rippleIndex += 1) {
+        const rippleY = (rippleIndex * 88 + state.waterOffset * 0.35) % (canvas.height + 90) - 45;
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(24, rippleY);
+        ctx.quadraticCurveTo(canvas.width / 2, rippleY + 18, canvas.width - 24, rippleY);
+        ctx.stroke();
+      }
+
+      ctx.strokeStyle = 'rgba(153, 205, 177, 0.9)';
       ctx.lineWidth = 4;
       ctx.setLineDash([20, 20]);
       ctx.lineDashOffset = -state.waterOffset;

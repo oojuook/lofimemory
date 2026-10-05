@@ -46,6 +46,7 @@ import LotusMatch from './LotusMatch';
 import DinosaurDash from './DinosaurDash';
 import MindSweeper from './MindSweeper';
 import QuietTiles from './QuietTiles';
+import QuietTetris from './QuietTetris';
 import QuietSlide from './QuietSlide';
 import QuietWords from './QuietWords';
 import TypingSpeedTest from './TypingSpeedTest';
@@ -2575,6 +2576,15 @@ function App() {
       icon: Plus,
       tone: 'from-violet-100 to-slate-50 text-violet-700',
       component: <QuietTiles difficulty={selectedGameDifficulty} />
+    },
+    {
+      id: 'quiet-tetris',
+      title: 'Quiet Tetris',
+      detail: 'Calm block stacking',
+      description: 'Stack colorful blocks, clear tidy rows, and enjoy a softer take on a classic arcade puzzle.',
+      icon: Palette,
+      tone: 'from-violet-100 to-sky-50 text-violet-700',
+      component: <QuietTetris difficulty={selectedGameDifficulty} />
     },
     {
       id: 'quiet-slide',

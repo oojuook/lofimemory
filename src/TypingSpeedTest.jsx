@@ -2,98 +2,74 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { RotateCcw, Sparkles } from 'lucide-react';
 
 const timerPresets = [15, 30, 60];
+const WORD_BATCH_SIZE = 24;
+const WORD_INITIAL_COUNT = 42;
+const WORD_BUFFER_SIZE = 18;
 
 const typingModeSettings = {
   words: {
     label: 'Words',
-    initialCount: 42,
-    bufferSize: 18,
-    batchSize: 24,
+    panelDescription: 'A calmer typing test where the words keep coming and the active line moves along with you, closer to a monkeytype flow but still cozy on mobile.',
+    modeNote: 'Choose words for the classic continuous typing rhythm.',
     idleMessage: 'Tap the word flow or the input box, then start typing. Press space to roll into the next word.',
     runningMessage: 'Space commits each word and the next one glides into view.',
-    finishedMessage: 'Round complete — start another and the words will keep flowing.',
+    finishedMessage: 'Round complete — restart whenever you want another flowing word run.',
     inputLabel: 'Live input',
     placeholder: 'Start typing here…',
-    currentLabel: 'Current word',
-    panelDescription: 'A calmer typing test where the words keep coming and the active line moves along with you, closer to a monkeytype flow but still cozy on mobile.',
-    modeNote: 'Choose words when you want a classic typing flow.',
     tips: [
-      'Words keep extending, so you can stay in the rhythm for the whole timer.',
+      'Words keep extending, so you can stay in rhythm for the whole timer.',
       'Space commits a word and scrolls the active one into view.',
       'On mobile, tap the word panel anytime to refocus the keyboard.'
     ]
   },
   sentences: {
     label: 'Sentences',
-    initialCount: 18,
-    bufferSize: 8,
-    batchSize: 10,
-    idleMessage: 'Tap into the sentence flow, type the full line, and press Enter to move on.',
-    runningMessage: 'Finish each sentence and press Enter to roll into the next calm line.',
-    finishedMessage: 'Round complete — restart when you want another sentence flow.',
-    inputLabel: 'Live sentence input',
-    placeholder: 'Type the full sentence, then press Enter…',
-    currentLabel: 'Current sentence',
-    panelDescription: 'Switch to sentence mode when you want a fuller typing rhythm with longer lines and a gentler pace.',
-    modeNote: 'Choose sentences when you want to type complete calm phrases instead of single words.',
+    panelDescription: 'Sentence mode now behaves more like Human Benchmark: one clean passage at a time, live character feedback, and no heavy stacked rendering that can lag or crash.',
+    modeNote: 'Choose sentences for a single-passage speed test with live feedback.',
+    idleMessage: 'Start typing to begin. The timer starts on your first character.',
+    runningMessage: 'Keep moving through the passage — every correct character counts live.',
+    finishedMessage: 'Passage complete. Restart for a fresh sentence challenge.',
+    inputLabel: 'Typing field',
+    placeholder: 'Start typing the passage here…',
     tips: [
-      'Each line stays active until you finish it and press Enter.',
-      'Sentence mode is great for practicing flow, spacing, and longer phrasing.',
-      'On mobile, the larger field makes it easier to type full lines comfortably.'
+      'Sentence mode shows one passage instead of many stacked lines, so it stays much lighter.',
+      'You do not need to press Enter — just type straight through like Human Benchmark.',
+      'Accuracy updates live as you move through the sentence.'
     ]
   }
 };
 
-const contentPools = {
-  words: {
-    easy: [
-      'soft', 'rain', 'moss', 'glow', 'rest', 'slow', 'calm', 'cozy', 'bloom', 'drift', 'pond', 'leaf', 'hush', 'breeze', 'warm', 'still', 'lilypad', 'lantern', 'cloud', 'river', 'ember', 'settle', 'quiet', 'golden', 'tea', 'window', 'blanket', 'gentle', 'ripple', 'meadow'
-    ],
-    medium: [
-      'typing', 'rhythm', 'coastline', 'journal', 'focus', 'steady', 'unwind', 'layout', 'puzzle', 'forecast', 'breathe', 'comfort', 'friendlier', 'signal', 'sunlight', 'evening', 'restart', 'clarity', 'wander', 'drizzle', 'morning', 'kindness', 'landing', 'texture', 'counter', 'gliding', 'lanes', 'mobile', 'frogs', 'lilies'
-    ],
-    hard: [
-      'atmosphere', 'comfortable', 'meditative', 'background', 'continuous', 'monkeytype', 'interface', 'forecasting', 'adjustments', 'reflection', 'responsive', 'location', 'beautifully', 'character', 'wordsmith', 'snowfall', 'waterfront', 'curiosity', 'adventure', 'sunshower', 'hummingbird', 'harmonize', 'understory', 'lighthouse', 'momentum', 'storybook', 'tenderness', 'serenity', 'afterglow', 'wildflower'
-    ]
-  },
-  sentences: {
-    easy: [
-      'soft rain taps the window tonight',
-      'the pond stays calm under moonlight',
-      'warm tea rests beside the keyboard',
-      'small lanterns glow across the room',
-      'the evening breeze feels kind and light',
-      'moss gathers near the garden path',
-      'cozy music drifts through the hall',
-      'clouds move slowly over the lake',
-      'the blanket feels warm after dusk',
-      'quiet leaves settle on the water',
-      'a gentle glow fills the corner',
-      'rest comes easier in a calm room'
-    ],
-    medium: [
-      'the lilypad garden feels brighter when the rhythm stays steady',
-      'cozy lights and softer music can make a typing session feel lighter',
-      'a quiet desk and a clear mind help each sentence land smoothly',
-      'the shoreline breeze keeps the evening calm while thoughts keep moving',
-      'gentle focus grows when the page feels simple and easy to read',
-      'small rituals like tea and music make longer practice feel more welcoming',
-      'the room stays peaceful when the typing flow glides without pressure',
-      'warm light on the wall can turn a quick test into a calmer habit',
-      'settling into a steady rhythm makes each line feel easier to finish',
-      'soft clouds and slow rain give the whole session a gentler pace'
-    ],
-    hard: [
-      'the atmosphere feels meditative when the waterfront air and steady rhythm begin to harmonize',
-      'comfortable practice comes from repeating longer lines until the movement feels beautifully consistent',
-      'a responsive layout and a calmer background can turn focused typing into a restorative ritual',
-      'curiosity tends to grow when a longer sentence asks for patience timing and cleaner spacing',
-      'storybook evenings and a mellow soundtrack make sustained concentration feel surprisingly natural',
-      'tenderness in the visual design can soften the challenge of typing a more demanding prompt',
-      'momentum builds when each sentence carries enough texture to reward careful attention',
-      'the lighthouse glow across the harbor makes the whole practice loop feel reflective and serene'
-    ]
-  }
+const wordPools = {
+  easy: [
+    'soft', 'rain', 'moss', 'glow', 'rest', 'slow', 'calm', 'cozy', 'bloom', 'drift', 'pond', 'leaf', 'hush', 'breeze', 'warm', 'still', 'lilypad', 'lantern', 'cloud', 'river', 'ember', 'settle', 'quiet', 'golden', 'tea', 'window', 'blanket', 'gentle', 'ripple', 'meadow'
+  ],
+  medium: [
+    'typing', 'rhythm', 'coastline', 'journal', 'focus', 'steady', 'unwind', 'layout', 'puzzle', 'forecast', 'breathe', 'comfort', 'friendlier', 'signal', 'sunlight', 'evening', 'restart', 'clarity', 'wander', 'drizzle', 'morning', 'kindness', 'landing', 'texture', 'gliding', 'mobile', 'frogs', 'lilies', 'pockets', 'harbor'
+  ],
+  hard: [
+    'atmosphere', 'comfortable', 'meditative', 'background', 'continuous', 'monkeytype', 'interface', 'forecasting', 'adjustments', 'reflection', 'responsive', 'beautifully', 'character', 'wordsmith', 'snowfall', 'waterfront', 'curiosity', 'adventure', 'sunshower', 'hummingbird', 'harmonize', 'understory', 'lighthouse', 'momentum', 'storybook', 'tenderness', 'serenity', 'afterglow', 'wildflower', 'moonlight'
+  ]
+};
+
+const sentencePassages = {
+  easy: [
+    'Soft rain taps the window while the room stays warm and quiet.',
+    'A calm pond reflects the clouds as the evening slowly settles in.',
+    'Warm tea and a gentle breeze can make a tired day feel lighter.',
+    'Cozy lights and soft music turn a short typing break into a calm ritual.'
+  ],
+  medium: [
+    'The lilypad garden feels brighter when the rhythm stays steady and the page remains easy to read.',
+    'A quiet desk and a clear mind can make each sentence feel smoother, lighter, and easier to finish.',
+    'Gentle music, softer colors, and a calmer layout help typing practice feel more enjoyable over time.',
+    'When the interface feels simple and welcoming, longer passages become much easier to focus on.'
+  ],
+  hard: [
+    'The atmosphere becomes more meditative when a longer passage asks for patience, cleaner spacing, and steady concentration from beginning to end.',
+    'A responsive layout and a calmer background can transform sentence practice into a more restorative ritual, even when the words become more demanding.',
+    'Comfortable typing often comes from repeating longer prompts until momentum, accuracy, and rhythm begin to harmonize naturally.',
+    'Storybook evenings and a mellow soundtrack can make sustained concentration feel beautifully consistent instead of tense or rushed.'
+  ]
 };
 
 const difficultySettings = {
@@ -107,25 +83,33 @@ const difficultySettings = {
   },
   hard: {
     label: 'Hard',
-    note: 'Longer prompts and denser language for sharper focus.'
+    note: 'Longer prompts with denser language for sharper focus.'
   }
 };
 
-function getPool(mode, difficulty) {
-  return contentPools[mode]?.[difficulty] || contentPools.words.medium;
+function pickRandom(items, previousItem = '') {
+  const choices = items.filter((item) => item !== previousItem);
+  return choices[Math.floor(Math.random() * choices.length)] || items[0];
 }
 
-function generatePromptBatch(pool, count) {
+function generateWordBatch(pool, count) {
   return Array.from({ length: count }, () => pool[Math.floor(Math.random() * pool.length)]);
 }
 
-function comparePrompt(targetPrompt, typedPrompt) {
-  const maxLength = Math.max(targetPrompt.length, typedPrompt.length);
+function compareText(targetText, typedText) {
+  const maxLength = Math.max(targetText.length, typedText.length);
   let correctChars = 0;
   let incorrectChars = 0;
 
   for (let index = 0; index < maxLength; index += 1) {
-    if (targetPrompt[index] === typedPrompt[index]) {
+    const targetChar = targetText[index] || '';
+    const typedChar = typedText[index] || '';
+
+    if (!typedChar) {
+      continue;
+    }
+
+    if (typedChar === targetChar) {
       correctChars += 1;
     } else {
       incorrectChars += 1;
@@ -135,46 +119,50 @@ function comparePrompt(targetPrompt, typedPrompt) {
   return {
     correctChars,
     incorrectChars,
-    isPerfect: targetPrompt === typedPrompt
+    isPerfect: typedText === targetText
   };
 }
 
-function getDisplayCharacters(targetPrompt, typedPrompt) {
-  const maxLength = Math.max(targetPrompt.length, typedPrompt.length);
-  return Array.from({ length: maxLength }, (_, index) => ({
-    key: `${targetPrompt}-${typedPrompt}-${index}`,
-    targetCharacter: targetPrompt[index] || '',
-    typedCharacter: typedPrompt[index] || ''
+function buildSentenceCharacters(targetText, typedText) {
+  return targetText.split('').map((char, index) => ({
+    id: `${targetText}-${index}`,
+    targetChar: char,
+    typedChar: typedText[index] || ''
   }));
 }
 
-function TypingPrompt({ activeInput = '', isActive, isPast, isSentenceMode, prompt, typedPrompt = '', promptRef }) {
-  const characters = getDisplayCharacters(prompt, typedPrompt || activeInput);
+function WordPrompt({ activeInput = '', isActive, isPast, prompt, promptRef, typedPrompt = '' }) {
+  const maxLength = Math.max(prompt.length, (isActive ? activeInput : typedPrompt).length);
+  const characters = Array.from({ length: maxLength }, (_, index) => ({
+    id: `${prompt}-${index}`,
+    targetChar: prompt[index] || '',
+    typedChar: (isActive ? activeInput : typedPrompt)[index] || ''
+  }));
 
   return (
     <span
-      className={`${isSentenceMode ? 'block w-full rounded-[1.35rem] px-3 py-3 text-base leading-7 sm:px-4 sm:text-lg sm:leading-8' : 'inline-flex min-h-[2.75rem] items-center rounded-2xl px-2.5 py-2 text-lg sm:text-xl'} font-bold transition whitespace-pre-wrap ${isActive ? 'bg-white text-stone-950 shadow-sm ring-2 ring-sky-200' : isPast ? 'bg-transparent' : 'text-stone-300'}`}
+      className={`inline-flex min-h-[2.75rem] items-center rounded-2xl px-2.5 py-2 text-lg font-bold transition sm:text-xl ${isActive ? 'bg-white text-stone-950 shadow-sm ring-2 ring-sky-200' : isPast ? 'bg-transparent' : 'text-stone-300'}`}
       ref={promptRef}
     >
-      {characters.map(({ key, targetCharacter, typedCharacter }) => {
+      {characters.map(({ id, targetChar, typedChar }) => {
         let className = 'text-stone-300';
-        let content = targetCharacter;
+        let content = targetChar;
 
         if (isPast) {
-          content = typedCharacter || targetCharacter;
-          className = typedCharacter === targetCharacter ? 'text-emerald-700' : 'text-rose-600';
+          content = typedChar || targetChar;
+          className = typedChar === targetChar ? 'text-emerald-700' : 'text-rose-600';
         } else if (isActive) {
-          if (!typedCharacter) {
+          if (!typedChar) {
             className = 'text-stone-400';
-            content = targetCharacter;
+            content = targetChar;
           } else {
-            content = typedCharacter;
-            className = typedCharacter === targetCharacter ? 'text-stone-950 bg-emerald-100/80' : 'text-rose-700 bg-rose-100/80';
+            content = typedChar;
+            className = typedChar === targetChar ? 'text-stone-950 bg-emerald-100/80' : 'text-rose-700 bg-rose-100/80';
           }
         }
 
         return (
-          <span className={`rounded px-[1px] ${className}`} key={key}>
+          <span className={`rounded px-[1px] ${className}`} key={id}>
             {content === ' ' ? '\u00A0' : content}
           </span>
         );
@@ -187,50 +175,65 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const [typingMode, setTypingMode] = useState('words');
   const modeConfig = typingModeSettings[typingMode] || typingModeSettings.words;
-  const pool = getPool(typingMode, difficulty);
   const bestKey = `quiet-journal-typing-speed-best-${difficulty}-${typingMode}`;
   const roundsKey = `quiet-journal-typing-speed-rounds-${difficulty}-${typingMode}`;
 
   const inputRef = useRef(null);
-  const promptRefs = useRef({});
+  const wordRefs = useRef({});
+
   const [timerPreset, setTimerPreset] = useState(30);
-  const [promptSequence, setPromptSequence] = useState(() => generatePromptBatch(pool, modeConfig.initialCount));
-  const [typedPrompts, setTypedPrompts] = useState([]);
+  const [wordSequence, setWordSequence] = useState(() => generateWordBatch(wordPools[difficulty] || wordPools.medium, WORD_INITIAL_COUNT));
+  const [typedWords, setTypedWords] = useState([]);
+  const [sentenceTarget, setSentenceTarget] = useState(() => pickRandom(sentencePassages[difficulty] || sentencePassages.medium));
   const [currentInput, setCurrentInput] = useState('');
   const [timeLeft, setTimeLeft] = useState(30);
   const [isRunning, setIsRunning] = useState(false);
   const [roundStatus, setRoundStatus] = useState('idle');
-  const [correctChars, setCorrectChars] = useState(0);
-  const [incorrectChars, setIncorrectChars] = useState(0);
+  const [recordedCorrectChars, setRecordedCorrectChars] = useState(0);
+  const [recordedIncorrectChars, setRecordedIncorrectChars] = useState(0);
   const [errors, setErrors] = useState(0);
   const [bestWpm, setBestWpm] = useState(() => parseInt(localStorage.getItem(bestKey) || '0', 10));
   const [rounds, setRounds] = useState(() => parseInt(localStorage.getItem(roundsKey) || '0', 10));
   const [hasRecordedResult, setHasRecordedResult] = useState(false);
 
-  const activePromptIndex = typedPrompts.length;
-  const activePrompt = promptSequence[activePromptIndex] || '';
+  const wordPool = wordPools[difficulty] || wordPools.medium;
+  const sentencePool = sentencePassages[difficulty] || sentencePassages.medium;
+  const activeWordIndex = typedWords.length;
+  const activeWord = wordSequence[activeWordIndex] || '';
   const elapsedSeconds = timerPreset - timeLeft;
+  const sentenceComparison = useMemo(() => compareText(sentenceTarget, currentInput), [currentInput, sentenceTarget]);
+  const liveWordComparison = useMemo(() => compareText(activeWord, currentInput.trim()), [activeWord, currentInput]);
+
+  const correctChars = typingMode === 'sentences'
+    ? sentenceComparison.correctChars
+    : recordedCorrectChars + liveWordComparison.correctChars;
+  const incorrectChars = typingMode === 'sentences'
+    ? sentenceComparison.incorrectChars
+    : recordedIncorrectChars + liveWordComparison.incorrectChars;
   const totalTypedChars = correctChars + incorrectChars;
   const wpm = elapsedSeconds > 0 ? Math.round((correctChars / 5) / (elapsedSeconds / 60)) : 0;
   const accuracy = totalTypedChars > 0 ? Math.round((correctChars / totalTypedChars) * 100) : 100;
   const cpm = elapsedSeconds > 0 ? Math.round(correctChars / (elapsedSeconds / 60)) : 0;
-  const isSentenceMode = typingMode === 'sentences';
+  const sentenceCharacters = useMemo(() => buildSentenceCharacters(sentenceTarget, currentInput), [currentInput, sentenceTarget]);
 
   const resetRound = (nextPreset = timerPreset, nextMode = typingMode) => {
-    const nextModeConfig = typingModeSettings[nextMode] || typingModeSettings.words;
-    const nextPool = getPool(nextMode, difficulty);
+    if (nextMode === 'words') {
+      setWordSequence(generateWordBatch(wordPool, WORD_INITIAL_COUNT));
+      setTypedWords([]);
+    } else {
+      setSentenceTarget((previous) => pickRandom(sentencePool, previous));
+      setTypedWords([]);
+    }
 
-    setPromptSequence(generatePromptBatch(nextPool, nextModeConfig.initialCount));
-    setTypedPrompts([]);
     setCurrentInput('');
     setTimeLeft(nextPreset);
     setIsRunning(false);
     setRoundStatus('idle');
-    setCorrectChars(0);
-    setIncorrectChars(0);
+    setRecordedCorrectChars(0);
+    setRecordedIncorrectChars(0);
     setErrors(0);
     setHasRecordedResult(false);
-    promptRefs.current = {};
+    wordRefs.current = {};
   };
 
   useEffect(() => {
@@ -240,20 +243,25 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
   }, [bestKey, roundsKey, difficulty, typingMode]);
 
   useEffect(() => {
-    if (timeLeft !== 0 || roundStatus !== 'finished' || hasRecordedResult) {
+    if (typingMode !== 'words') {
       return;
     }
 
-    const nextRounds = rounds + 1;
-    setRounds(nextRounds);
-    setHasRecordedResult(true);
-    localStorage.setItem(roundsKey, String(nextRounds));
-
-    if (wpm > bestWpm) {
-      setBestWpm(wpm);
-      localStorage.setItem(bestKey, String(wpm));
+    if (wordSequence.length - activeWordIndex > WORD_BUFFER_SIZE) {
+      return;
     }
-  }, [bestKey, bestWpm, hasRecordedResult, rounds, roundsKey, roundStatus, timeLeft, wpm]);
+
+    setWordSequence((previous) => [...previous, ...generateWordBatch(wordPool, WORD_BATCH_SIZE)]);
+  }, [activeWordIndex, typingMode, wordPool, wordSequence.length]);
+
+  useEffect(() => {
+    if (typingMode !== 'words') {
+      return;
+    }
+
+    const activeNode = wordRefs.current[activeWordIndex];
+    activeNode?.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+  }, [activeWordIndex, typingMode]);
 
   useEffect(() => {
     if (!isRunning) {
@@ -276,109 +284,60 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
   }, [isRunning]);
 
   useEffect(() => {
-    if (promptSequence.length - activePromptIndex > modeConfig.bufferSize) {
+    if (roundStatus !== 'finished' || hasRecordedResult) {
       return;
     }
 
-    setPromptSequence((previous) => [...previous, ...generatePromptBatch(pool, modeConfig.batchSize)]);
-  }, [activePromptIndex, modeConfig.batchSize, modeConfig.bufferSize, pool, promptSequence.length]);
+    const nextRounds = rounds + 1;
+    setRounds(nextRounds);
+    setHasRecordedResult(true);
+    localStorage.setItem(roundsKey, String(nextRounds));
 
-  useEffect(() => {
-    const activeNode = promptRefs.current[activePromptIndex];
-    activeNode?.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
-  }, [activePromptIndex]);
+    if (wpm > bestWpm) {
+      setBestWpm(wpm);
+      localStorage.setItem(bestKey, String(wpm));
+    }
+  }, [bestKey, bestWpm, hasRecordedResult, rounds, roundsKey, roundStatus, wpm]);
 
-  const handleWordCommits = (rawValue) => {
+  const commitWord = (rawValue) => {
     if (roundStatus === 'finished') {
       return;
     }
 
     const normalizedValue = rawValue.toLowerCase().replace(/[^a-z\-\s]/g, '');
     let remainingValue = normalizedValue;
-    const nextTypedPrompts = [...typedPrompts];
-    let nextCorrectChars = 0;
-    let nextIncorrectChars = 0;
+    const nextTypedWords = [...typedWords];
+    let nextCorrect = 0;
+    let nextIncorrect = 0;
     let nextErrors = 0;
 
     while (remainingValue.includes(' ')) {
       const boundaryIndex = remainingValue.indexOf(' ');
-      const typedPrompt = remainingValue.slice(0, boundaryIndex).trim();
-      const targetPrompt = promptSequence[nextTypedPrompts.length];
+      const typedWord = remainingValue.slice(0, boundaryIndex).trim();
+      const targetWord = wordSequence[nextTypedWords.length];
 
-      if (!targetPrompt) {
+      if (!targetWord) {
         break;
       }
 
-      if (!typedPrompt) {
-        remainingValue = remainingValue.slice(boundaryIndex + 1).replace(/^\s+/, '');
-        continue;
-      }
-
-      const comparison = comparePrompt(targetPrompt, typedPrompt);
-      nextCorrectChars += comparison.correctChars;
-      nextIncorrectChars += comparison.incorrectChars;
-      if (!comparison.isPerfect) {
-        nextErrors += 1;
-      }
-
-      nextTypedPrompts.push(typedPrompt);
       remainingValue = remainingValue.slice(boundaryIndex + 1).replace(/^\s+/, '');
-    }
-
-    if (nextTypedPrompts.length !== typedPrompts.length) {
-      setTypedPrompts(nextTypedPrompts);
-      setCorrectChars((previous) => previous + nextCorrectChars);
-      setIncorrectChars((previous) => previous + nextIncorrectChars);
-      setErrors((previous) => previous + nextErrors);
-    }
-
-    setCurrentInput(remainingValue);
-  };
-
-  const handleSentenceCommits = (rawValue) => {
-    if (roundStatus === 'finished') {
-      return;
-    }
-
-    const normalizedValue = rawValue
-      .toLowerCase()
-      .replace(/\r/g, '')
-      .replace(/[^a-z\-\s\n]/g, '')
-      .replace(/[ \t]+/g, ' ')
-      .replace(/ *\n */g, '\n')
-      .replace(/^\n+/, '');
-
-    let remainingValue = normalizedValue;
-    const nextTypedPrompts = [...typedPrompts];
-    let nextCorrectChars = 0;
-    let nextIncorrectChars = 0;
-    let nextErrors = 0;
-
-    while (remainingValue.includes('\n')) {
-      const boundaryIndex = remainingValue.indexOf('\n');
-      const typedPrompt = remainingValue.slice(0, boundaryIndex).trim();
-      const targetPrompt = promptSequence[nextTypedPrompts.length];
-
-      remainingValue = remainingValue.slice(boundaryIndex + 1).replace(/^\n+/, '');
-
-      if (!targetPrompt || !typedPrompt) {
+      if (!typedWord) {
         continue;
       }
 
-      const comparison = comparePrompt(targetPrompt, typedPrompt);
-      nextCorrectChars += comparison.correctChars;
-      nextIncorrectChars += comparison.incorrectChars;
+      const comparison = compareText(targetWord, typedWord);
+      nextCorrect += comparison.correctChars;
+      nextIncorrect += comparison.incorrectChars;
       if (!comparison.isPerfect) {
         nextErrors += 1;
       }
-
-      nextTypedPrompts.push(typedPrompt);
+      nextTypedWords.push(typedWord);
     }
 
-    if (nextTypedPrompts.length !== typedPrompts.length) {
-      setTypedPrompts(nextTypedPrompts);
-      setCorrectChars((previous) => previous + nextCorrectChars);
-      setIncorrectChars((previous) => previous + nextIncorrectChars);
+    if (nextTypedWords.length !== typedWords.length) {
+      setTypedWords(nextTypedWords);
+      setRecordedCorrectChars((previous) => previous + nextCorrect);
+      setRecordedIncorrectChars((previous) => previous + nextIncorrect);
       setErrors((previous) => previous + nextErrors);
     }
 
@@ -387,17 +346,29 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
 
   const handleChange = (event) => {
     const nextValue = event.target.value;
-    if (!isRunning && nextValue.trim().length > 0 && timeLeft > 0) {
+
+    if (!isRunning && nextValue.length > 0 && timeLeft > 0) {
       setIsRunning(true);
       setRoundStatus('running');
     }
 
-    if (isSentenceMode) {
-      handleSentenceCommits(nextValue);
+    if (typingMode === 'sentences') {
+      if (roundStatus === 'finished') {
+        return;
+      }
+
+      setCurrentInput(nextValue.slice(0, sentenceTarget.length));
+      const nextComparison = compareText(sentenceTarget, nextValue.slice(0, sentenceTarget.length));
+      setErrors(nextComparison.incorrectChars);
+
+      if (nextValue.slice(0, sentenceTarget.length).length >= sentenceTarget.length) {
+        setIsRunning(false);
+        setRoundStatus('finished');
+      }
       return;
     }
 
-    handleWordCommits(nextValue);
+    commitWord(nextValue);
   };
 
   const helperMessage = useMemo(() => {
@@ -476,29 +447,46 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
               onClick={() => inputRef.current?.focus()}
               type="button"
             >
-              <div className={`${isSentenceMode ? 'flex flex-col gap-3 text-base leading-7 sm:text-lg sm:leading-8' : 'flex flex-wrap items-center gap-x-2 gap-y-3 text-lg leading-8 sm:text-xl sm:leading-9'}`}>
-                {promptSequence.map((prompt, index) => (
-                  <TypingPrompt
-                    activeInput={currentInput}
-                    isActive={index === activePromptIndex}
-                    isPast={index < activePromptIndex}
-                    isSentenceMode={isSentenceMode}
-                    key={`${prompt}-${index}`}
-                    prompt={prompt}
-                    typedPrompt={typedPrompts[index] || ''}
-                    promptRef={(node) => {
-                      if (node) {
-                        promptRefs.current[index] = node;
-                      }
-                    }}
-                  />
-                ))}
-              </div>
+              {typingMode === 'sentences' ? (
+                <div className="text-lg font-semibold leading-8 text-stone-500 sm:text-xl sm:leading-9">
+                  {sentenceCharacters.map(({ id, targetChar, typedChar }) => {
+                    let className = 'text-stone-400';
+                    let content = targetChar;
+                    if (typedChar) {
+                      className = typedChar === targetChar ? 'text-stone-950 bg-emerald-100/80' : 'text-rose-700 bg-rose-100/80';
+                      content = typedChar;
+                    }
+                    return (
+                      <span className={`rounded px-[1px] ${className}`} key={id}>
+                        {content === ' ' ? '\u00A0' : content}
+                      </span>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-3 text-lg leading-8 sm:text-xl sm:leading-9">
+                  {wordSequence.map((prompt, index) => (
+                    <WordPrompt
+                      activeInput={currentInput}
+                      isActive={index === activeWordIndex}
+                      isPast={index < activeWordIndex}
+                      key={`${prompt}-${index}`}
+                      prompt={prompt}
+                      promptRef={(node) => {
+                        if (node) {
+                          wordRefs.current[index] = node;
+                        }
+                      }}
+                      typedPrompt={typedWords[index] || ''}
+                    />
+                  ))}
+                </div>
+              )}
             </button>
 
             <div className="mt-4 rounded-[1.35rem] border border-sky-100 bg-sky-50/75 p-3 sm:p-4">
               <p className="text-[11px] font-extrabold uppercase tracking-[0.2em] text-sky-700">{modeConfig.inputLabel}</p>
-              {isSentenceMode ? (
+              {typingMode === 'sentences' ? (
                 <textarea
                   autoCapitalize="off"
                   autoComplete="off"
@@ -506,12 +494,7 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
                   className="mt-3 min-h-[7.5rem] w-full rounded-2xl border border-white bg-white px-4 py-3 text-base font-semibold text-slate-900 outline-none transition focus:border-sky-300 focus:ring-2 focus:ring-sky-200"
                   disabled={roundStatus === 'finished'}
                   onChange={handleChange}
-                  onFocus={() => {
-                    if (!isRunning && roundStatus !== 'finished') {
-                      setRoundStatus('idle');
-                    }
-                  }}
-                  placeholder={roundStatus === 'finished' ? 'Round complete — restart for a fresh sentence flow' : modeConfig.placeholder}
+                  placeholder={roundStatus === 'finished' ? 'Passage complete — restart for another one' : modeConfig.placeholder}
                   ref={inputRef}
                   rows={3}
                   spellCheck={false}
@@ -525,11 +508,6 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
                   className="mt-3 w-full rounded-2xl border border-white bg-white px-4 py-3 text-base font-semibold text-slate-900 outline-none transition focus:border-sky-300 focus:ring-2 focus:ring-sky-200"
                   disabled={roundStatus === 'finished'}
                   onChange={handleChange}
-                  onFocus={() => {
-                    if (!isRunning && roundStatus !== 'finished') {
-                      setRoundStatus('idle');
-                    }
-                  }}
                   placeholder={roundStatus === 'finished' ? 'Round complete — restart for a fresh flow' : modeConfig.placeholder}
                   ref={inputRef}
                   spellCheck={false}
@@ -540,14 +518,14 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
               <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div className="space-y-2">
                   <p className="text-sm font-semibold leading-6 text-slate-600">{helperMessage}</p>
-                  {isSentenceMode ? (
+                  {typingMode === 'sentences' ? (
                     <div className="max-w-xl rounded-[1rem] bg-white px-3 py-2 text-sm font-semibold leading-6 text-sky-800 shadow-sm">
-                      <span className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-sky-600">{modeConfig.currentLabel}</span>
-                      <p className="mt-1">{activePrompt || 'done'}</p>
+                      <span className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-sky-600">Passage</span>
+                      <p className="mt-1">{sentenceTarget}</p>
                     </div>
                   ) : (
                     <span className="inline-flex rounded-full bg-white px-3 py-1 text-xs font-extrabold uppercase tracking-[0.16em] text-sky-700 shadow-sm">
-                      {modeConfig.currentLabel}: {activePrompt || 'done'}
+                      Current word: {activeWord || 'done'}
                     </span>
                   )}
                 </div>

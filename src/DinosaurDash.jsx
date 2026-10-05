@@ -386,10 +386,13 @@ export default function DinosaurDash({ difficulty = 'medium' }) {
     };
 
     const drawScoreboard = (currentScore, highScore) => {
-      ctx.fillStyle = '#535353';
+      ctx.fillStyle = '#4f4f4f';
+      ctx.font = '700 20px monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('DINO DASH', CANVAS_WIDTH / 2, 34);
       ctx.font = '700 18px monospace';
       ctx.textAlign = 'right';
-      ctx.fillText(`HI ${getScoreDisplay(highScore)} ${getScoreDisplay(currentScore)}`, CANVAS_WIDTH - 28, 28);
+      ctx.fillText(`HI ${getScoreDisplay(highScore)} ${getScoreDisplay(currentScore)}`, CANVAS_WIDTH - 28, 30);
       ctx.textAlign = 'left';
     };
 
@@ -397,7 +400,7 @@ export default function DinosaurDash({ difficulty = 'medium' }) {
       const state = stateRef.current;
 
       ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-      ctx.fillStyle = '#f7f7f7';
+      ctx.fillStyle = '#efefef';
       ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
       state.clouds.forEach((cloud) => {

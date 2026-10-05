@@ -8,7 +8,9 @@ const cluePools = {
     { answer: 'REST', clue: 'What you take when you slow down' },
     { answer: 'GLOW', clue: 'A soft kind of light' },
     { answer: 'BREEZE', clue: 'A gentle little wind' },
-    { answer: 'CLOUD', clue: 'A soft shape in the sky' }
+    { answer: 'CLOUD', clue: 'A soft shape in the sky' },
+    { answer: 'MOSS', clue: 'Soft green growth near stones and trees' },
+    { answer: 'POND', clue: 'A still little body of water' }
   ],
   medium: [
     { answer: 'MEADOW', clue: 'An open grassy field' },
@@ -16,7 +18,9 @@ const cluePools = {
     { answer: 'MELLOW', clue: 'Relaxed, easy, and unhurried' },
     { answer: 'JOURNAL', clue: 'A place to write your thoughts' },
     { answer: 'WILLOW', clue: 'A tree with soft hanging branches' },
-    { answer: 'SETTLE', clue: 'To become calm again after a busy feeling' }
+    { answer: 'SETTLE', clue: 'To become calm again after a busy feeling' },
+    { answer: 'RIPPLE', clue: 'A tiny wave pattern on water' },
+    { answer: 'BLOSSOM', clue: 'A flower opening into view' }
   ],
   hard: [
     { answer: 'MOONLIGHT', clue: 'Night glow from above' },
@@ -24,7 +28,9 @@ const cluePools = {
     { answer: 'AFTERGLOW', clue: 'The warm feeling that stays after a good moment' },
     { answer: 'STILLNESS', clue: 'Deep calm without movement' },
     { answer: 'UNWINDING', clue: 'The process of slowly relaxing' },
-    { answer: 'DAYDREAM', clue: 'A wandering thought in a restful moment' }
+    { answer: 'DAYDREAM', clue: 'A wandering thought in a restful moment' },
+    { answer: 'UNDERSTORY', clue: 'The lower layer of a quiet forest' },
+    { answer: 'HARMONIZE', clue: 'To bring different parts into a calm fit' }
   ]
 };
 
@@ -32,17 +38,20 @@ const difficultySettings = {
   easy: {
     label: 'Easy',
     targetClues: 4,
-    note: 'Short, friendly answers and simple clue loops.'
+    note: 'Short, friendly answers and a quick round that is easy to finish.',
+    sessionLabel: 'Quick round'
   },
   medium: {
     label: 'Medium',
-    targetClues: 5,
-    note: 'Balanced clue solving when you want a cozy word reset.'
+    targetClues: 7,
+    note: 'Longer clue chains with a more noticeable crossword-session feel.',
+    sessionLabel: 'Cozy session'
   },
   hard: {
     label: 'Hard',
-    targetClues: 6,
-    note: 'Longer answers when you want a deeper focus rhythm.'
+    targetClues: 10,
+    note: 'Longer answers and a much longer run, so the round feels meaningfully deeper.',
+    sessionLabel: 'Deep session'
   }
 };
 
@@ -64,7 +73,7 @@ export default function QuietClues({ difficulty = 'medium' }) {
   const bestRoundKey = `quiet-journal-quiet-clues-best-${difficulty}`;
   const clearsKey = `quiet-journal-quiet-clues-clears-${difficulty}`;
 
-  const [clueQueue, setClueQueue] = useState(() => getClueQueue(pool, config.targetClues + 2));
+  const [clueQueue, setClueQueue] = useState(() => getClueQueue(pool, config.targetClues + 3));
   const [guess, setGuess] = useState('');
   const [solvedCount, setSolvedCount] = useState(0);
   const [bestRound, setBestRound] = useState(() => parseInt(localStorage.getItem(bestRoundKey) || '0', 10));
@@ -72,7 +81,7 @@ export default function QuietClues({ difficulty = 'medium' }) {
   const [message, setMessage] = useState('Read the clue, fill the answer, and keep the puzzle mood soft.');
 
   useEffect(() => {
-    setClueQueue(getClueQueue(pool, config.targetClues + 2));
+    setClueQueue(getClueQueue(pool, config.targetClues + 3));
     setGuess('');
     setSolvedCount(0);
     setMessage('Read the clue, fill the answer, and keep the puzzle mood soft.');
@@ -81,8 +90,9 @@ export default function QuietClues({ difficulty = 'medium' }) {
   }, [bestRoundKey, clearsKey, config.targetClues, pool]);
 
   const activeClue = clueQueue[0] || { answer: '', clue: '' };
-  const upcomingClues = useMemo(() => clueQueue.slice(1, 3), [clueQueue]);
+  const upcomingClues = useMemo(() => clueQueue.slice(1, 4), [clueQueue]);
   const normalizedGuess = guess.trim().toUpperCase();
+  const progressSegments = useMemo(() => Array.from({ length: config.targetClues }, (_, index) => index < solvedCount), [config.targetClues, solvedCount]);
 
   const revealSlots = useMemo(() => activeClue.answer.split('').map((letter, index) => ({
     id: `${activeClue.answer}-${index + 1}`,
@@ -91,7 +101,7 @@ export default function QuietClues({ difficulty = 'medium' }) {
   })), [activeClue.answer, normalizedGuess]);
 
   const resetRound = () => {
-    setClueQueue(getClueQueue(pool, config.targetClues + 2));
+    setClueQueue(getClueQueue(pool, config.targetClues + 3));
     setGuess('');
     setSolvedCount(0);
     setMessage('Fresh clue board, same easy pace.');
@@ -127,7 +137,7 @@ export default function QuietClues({ difficulty = 'medium' }) {
         setClears(nextClears);
         localStorage.setItem(clearsKey, String(nextClears));
         setMessage('Round complete — a tidy little crossword-style reset.');
-        setClueQueue(getClueQueue(pool, config.targetClues + 2));
+        setClueQueue(getClueQueue(pool, config.targetClues + 3));
         setSolvedCount(0);
         return;
       }
@@ -140,7 +150,7 @@ export default function QuietClues({ difficulty = 'medium' }) {
   };
 
   return (
-    <div className="mx-auto mt-12 w-full max-w-[920px] pb-12">
+    <div className="mx-auto mt-12 w-full max-w-[940px] pb-12">
       <div className="rounded-[2rem] border border-stone-100 bg-gradient-to-br from-white via-stone-50/76 to-sand-50/78 p-5 shadow-soft lg:p-6">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
@@ -150,6 +160,7 @@ export default function QuietClues({ difficulty = 'medium' }) {
             <h3 className="mt-4 text-3xl font-bold tracking-tight text-stone-950">Quiet Clues</h3>
             <p className="mt-2 max-w-2xl text-sm leading-7 text-stone-700">A beginner-friendly crossword-style game built around short clues and soft words. It keeps the crossword mood without the intimidation of a full puzzle grid, so it is easy to pick up even when your brain feels tired.</p>
             <p className="mt-2 text-sm font-semibold text-stone-600">{config.note}</p>
+            <div className="mt-3 inline-flex rounded-full bg-white px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] text-stone-700 shadow-sm">{config.sessionLabel}</div>
           </div>
           <div className="grid gap-2 rounded-[1.5rem] border border-white/85 bg-white/80 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[23rem]">
             <div className="rounded-[1.15rem] bg-stone-50 px-4 py-3 text-center">
@@ -167,7 +178,19 @@ export default function QuietClues({ difficulty = 'medium' }) {
           </div>
         </div>
 
-        <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_250px]">
+        <div className="mt-5 rounded-[1.4rem] border border-white/80 bg-white/74 p-4 shadow-sm">
+          <div className="flex items-center justify-between gap-3 text-xs font-extrabold uppercase tracking-[0.18em] text-stone-500">
+            <span>Round progress</span>
+            <span>{solvedCount}/{config.targetClues}</span>
+          </div>
+          <div className="mt-3 grid gap-2" style={{ gridTemplateColumns: `repeat(${config.targetClues}, minmax(0, 1fr))` }}>
+            {progressSegments.map((isDone, index) => (
+              <div key={`clue-segment-${index + 1}`} className={`h-3 rounded-full transition ${isDone ? 'bg-gradient-to-r from-stone-700 to-teal-600' : 'bg-stone-200'}`} />
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_260px]">
           <div className="rounded-[1.8rem] border border-stone-100 bg-[#f5ede1] p-5 shadow-inner lg:p-6">
             <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-stone-500">Current clue</p>
             <h2 className="mt-3 text-2xl font-extrabold text-stone-950">{activeClue.clue}</h2>
@@ -208,11 +231,11 @@ export default function QuietClues({ difficulty = 'medium' }) {
           </div>
 
           <div className="rounded-[1.8rem] border border-white/80 bg-white/78 p-4 shadow-sm">
-            <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-stone-500">Why it is easy to start</p>
+            <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-stone-500">Why the difficulty changes</p>
             <div className="mt-3 space-y-2.5 text-sm leading-7 text-stone-700">
-              <p>One clue at a time.</p>
-              <p>No full crossword grid to manage.</p>
-              <p>Short rounds that are easy to retry.</p>
+              <p>Easy keeps the session short with simple words.</p>
+              <p>Medium asks you to stay with the clue flow longer.</p>
+              <p>Hard turns it into a much longer clue run with bigger answers.</p>
             </div>
             <div className="mt-5 rounded-[1.25rem] bg-stone-50 px-4 py-4 text-sm leading-7 text-stone-700">
               Up next:
