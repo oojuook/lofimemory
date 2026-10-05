@@ -449,6 +449,16 @@ const seoLandingBlocks = [
     href: '/relaxing-browser-games.html'
   },
   {
+    title: 'Lofi music website',
+    text: 'Find a lofi music website with chill games, quiet writing tools, and a softer place to hang out online.',
+    href: '/lofi-music-website.html'
+  },
+  {
+    title: 'Website to relax',
+    text: 'Open a website to relax when you want gentle games, lofi listening, breathing room, and less noisy browsing.',
+    href: '/website-to-relax.html'
+  },
+  {
     title: 'Word game online',
     text: 'Play a calm word game online when you want a soft vocabulary puzzle that feels familiar, light, and easy to revisit.',
     href: '/word-game-online.html'
@@ -813,6 +823,8 @@ const seoGuidePages = [
   { label: 'Popular guide', title: 'Chill games', text: 'Open chill games that feel easy to start, soft on the eyes, and welcoming when you just want to relax.', href: '/chill-games.html' },
   { label: 'Popular guide', title: 'Lofi games', text: 'Find lofi games that pair naturally with music, soft focus, and low-pressure browser play.', href: '/lofi-games.html' },
   { label: 'Helpful read', title: 'Relaxing browser games', text: 'Explore relaxing browser games for calm puzzle loops, gentle runners, and cozy short breaks.', href: '/relaxing-browser-games.html' },
+  { label: 'Helpful read', title: 'Lofi music website', text: 'Find a lofi music website that also gives you chill games, notes, and a calmer space to stay in.', href: '/lofi-music-website.html' },
+  { label: 'Popular guide', title: 'Website to relax', text: 'Open a website to relax when you want soft games, lofi listening, and a cleaner online corner.', href: '/website-to-relax.html' },
   { label: 'Popular guide', title: 'Word game online', text: 'Play a calm word game online when you want a familiar puzzle that feels light and relaxing.', href: '/word-game-online.html' },
   { label: 'Popular guide', title: 'Sliding puzzle online', text: 'Play a cozy sliding puzzle online when you want a simple tile game that feels calm and satisfying.', href: '/sliding-puzzle-online.html' },
   { label: 'Popular guide', title: '2048 online', text: 'Play a calm 2048-style number merge game when you want an easy puzzle that still feels satisfying.', href: '/2048-online.html' },
@@ -1242,7 +1254,7 @@ const seoGuideGroups = [
   {
     title: 'Find chill, lofi, word, typing, and logic games',
     description: 'Best for visitors looking for chill games, lofi browser play, familiar Wordle-style pages, soft typing tests, Sudoku, and easy browser puzzles they can open quickly and enjoy without pressure.',
-    links: seoGuidePages.filter((page) => ['Chill place online', 'Chill games', 'Lofi games', 'Relaxing browser games', 'Daily word puzzle', 'Guess the word game', 'Daily word game', 'Wordle online', 'Word game online', 'Crossword game online', 'Sudoku online', 'WPM test', 'Typing speed test', 'Typing practice online', 'Typing accuracy test', 'Beginner typing test', 'Typing test online', 'Cozy browser games', 'Games to relax', 'Relaxing fidget games', 'Online Minesweeper', 'Calming games for anxiety', 'Memory games for anxiety', 'Mindful gaming app'].includes(page.title))
+    links: seoGuidePages.filter((page) => ['Chill place online', 'Chill games', 'Lofi games', 'Relaxing browser games', 'Lofi music website', 'Website to relax', 'Daily word puzzle', 'Guess the word game', 'Daily word game', 'Wordle online', 'Word game online', 'Crossword game online', 'Sudoku online', 'WPM test', 'Typing speed test', 'Typing practice online', 'Typing accuracy test', 'Beginner typing test', 'Typing test online', 'Cozy browser games', 'Games to relax', 'Relaxing fidget games', 'Online Minesweeper', 'Calming games for anxiety', 'Memory games for anxiety', 'Mindful gaming app'].includes(page.title))
   },
   {
     title: 'Start a private diary',
@@ -1283,6 +1295,8 @@ const seoPopularSearches = [
   { label: 'Chill games', href: '/chill-games.html' },
   { label: 'Lofi games', href: '/lofi-games.html' },
   { label: 'Relaxing browser games', href: '/relaxing-browser-games.html' },
+  { label: 'Lofi music website', href: '/lofi-music-website.html' },
+  { label: 'Website to relax', href: '/website-to-relax.html' },
   { label: 'Word game online', href: '/word-game-online.html' },
   { label: 'Sliding puzzle online', href: '/sliding-puzzle-online.html' },
   { label: '2048 online', href: '/2048-online.html' },
@@ -7171,10 +7185,10 @@ function App() {
       `}</style>
 
       {/* Floating Lofi Radio Player */}
-      <div className="fixed bottom-20 left-3 z-50 sm:left-4 lg:bottom-24 lg:left-5 xl:left-[calc((100vw-1280px)/2+1.25rem)]">
+      <div className={`fixed z-50 ${cookieConsentAccepted ? 'bottom-6 right-20 sm:right-24' : 'bottom-44 right-4 sm:bottom-36 sm:right-6 lg:right-8'}`}>
 
         <div ref={radioPlayerContainerRef} className="pointer-events-none absolute h-1 w-1 opacity-0" aria-hidden="true" />
-        <div className="group relative h-[3.7rem] w-[3.7rem] sm:h-[4.15rem] sm:w-[4.15rem] lg:h-[4.35rem] lg:w-[4.35rem]">
+        <div className="group relative h-[3.45rem] w-[3.45rem] sm:h-[3.9rem] sm:w-[3.9rem] lg:h-[4.05rem] lg:w-[4.05rem]">
           <div
             ref={radioDialRef}
             aria-label="Adjust lofi radio volume"
@@ -7234,10 +7248,10 @@ function App() {
                 } catch {}
               }
             }}
-            className={`absolute inset-[0.72rem] z-20 flex items-center justify-center overflow-hidden rounded-full transition duration-300 hover:-translate-y-1 ${
+            className={`absolute inset-[0.76rem] z-20 flex items-center justify-center overflow-hidden rounded-full transition duration-300 hover:-translate-y-1 ${
               isRadioPlaying
-                ? 'bg-sage-200/95 ring-1 ring-white/60 shadow-[0_12px_34px_rgba(72,111,66,0.32)] hover:bg-sage-200'
-                : 'bg-sage-100/95 shadow-lift hover:bg-sage-100'
+                ? 'bg-sage-200/92 ring-1 ring-white/60 shadow-[0_10px_28px_rgba(72,111,66,0.22)] hover:bg-sage-200'
+                : 'bg-sage-100/92 shadow-[0_10px_24px_rgba(72,111,66,0.14)] hover:bg-sage-100'
             }`}
             title="Toggle Lofi Radio"
             type="button"
@@ -7263,7 +7277,7 @@ function App() {
               </span>
             </span>
           </button>
-          <div className={`pointer-events-none absolute -top-10 left-[62%] w-max max-w-[10rem] -translate-x-1/2 rounded-2xl border border-white/80 bg-white/92 px-3 py-1.5 text-center text-[10px] font-extrabold uppercase tracking-[0.14em] text-sage-700 shadow-sm backdrop-blur-xl transition duration-300 ${radioNeedsInteraction ? 'translate-y-0 opacity-100' : '-translate-y-1 opacity-0'}`}>
+          <div className={`pointer-events-none absolute -top-10 right-0 w-max max-w-[10rem] rounded-2xl border border-white/80 bg-white/92 px-3 py-1.5 text-center text-[10px] font-extrabold uppercase tracking-[0.14em] text-sage-700 shadow-sm backdrop-blur-xl transition duration-300 ${radioNeedsInteraction ? 'translate-y-0 opacity-100' : '-translate-y-1 opacity-0'}`}>
             {radioNeedsInteraction ? 'Tap once for sound' : radioStatusMessage}
           </div>
           <div className={`pointer-events-none absolute -bottom-2 left-1/2 -translate-x-1/2 rounded-full border border-white/75 bg-white/88 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-sage-600 shadow-sm backdrop-blur-xl transition duration-300 ${isRadioDialFeedbackVisible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'}`}>

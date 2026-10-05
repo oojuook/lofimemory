@@ -516,6 +516,16 @@
     <priority>0.81</priority>
   </url>
   <url>
+    <loc>https://lofimemory.vercel.app/lofi-music-website.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/website-to-relax.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lofimemory.vercel.app/typing-game-online.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
