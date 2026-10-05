@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { RotateCcw, Sparkles } from 'lucide-react';
 
 const timerPresets = [15, 30, 60];
@@ -180,6 +180,8 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
 
   const inputRef = useRef(null);
   const wordRefs = useRef({});
+  const sentenceFlowRef = useRef(null);
+  const sentenceCharRefs = useRef({});
 
   const [timerPreset, setTimerPreset] = useState(30);
   const [wordSequence, setWordSequence] = useState(() => generateWordBatch(wordPools[difficulty] || wordPools.medium, WORD_INITIAL_COUNT));
@@ -215,8 +217,9 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
   const accuracy = totalTypedChars > 0 ? Math.round((correctChars / totalTypedChars) * 100) : 100;
   const cpm = elapsedSeconds > 0 ? Math.round(correctChars / (elapsedSeconds / 60)) : 0;
   const sentenceCharacters = useMemo(() => buildSentenceCharacters(sentenceTarget, currentInput), [currentInput, sentenceTarget]);
+  const activeSentenceIndex = Math.min(currentInput.length, Math.max(sentenceCharacters.length - 1, 0));
 
-  const resetRound = (nextPreset = timerPreset, nextMode = typingMode) => {
+  const resetRound = useCallback((nextPreset = timerPreset, nextMode = typingMode) => {
     if (nextMode === 'words') {
       setWordSequence(generateWordBatch(wordPool, WORD_INITIAL_COUNT));
       setTypedWords([]);
@@ -234,13 +237,17 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
     setErrors(0);
     setHasRecordedResult(false);
     wordRefs.current = {};
-  };
+    sentenceCharRefs.current = {};
+    if (sentenceFlowRef.current) {
+      sentenceFlowRef.current.scrollLeft = 0;
+    }
+  }, [sentencePool, timerPreset, typingMode, wordPool]);
 
   useEffect(() => {
     setBestWpm(parseInt(localStorage.getItem(bestKey) || '0', 10));
     setRounds(parseInt(localStorage.getItem(roundsKey) || '0', 10));
     resetRound(30, typingMode);
-  }, [bestKey, roundsKey, difficulty, typingMode]);
+  }, [bestKey, roundsKey, difficulty, resetRound, typingMode]);
 
   useEffect(() => {
     if (typingMode !== 'words') {
@@ -262,6 +269,21 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
     const activeNode = wordRefs.current[activeWordIndex];
     activeNode?.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
   }, [activeWordIndex, typingMode]);
+
+  useEffect(() => {
+    if (typingMode !== 'sentences') {
+      return;
+    }
+
+    const container = sentenceFlowRef.current;
+    const activeNode = sentenceCharRefs.current[sentenceCharacters[activeSentenceIndex]?.id];
+    if (!container || !activeNode) {
+      return;
+    }
+
+    const targetLeft = Math.max(0, activeNode.offsetLeft - container.clientWidth * 0.35);
+    container.scrollTo({ left: targetLeft, behavior: isRunning ? 'smooth' : 'auto' });
+  }, [activeSentenceIndex, isRunning, sentenceCharacters, typingMode]);
 
   useEffect(() => {
     if (!isRunning) {
@@ -448,20 +470,45 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
               type="button"
             >
               {typingMode === 'sentences' ? (
-                <div className="text-lg font-semibold leading-8 text-stone-500 sm:text-xl sm:leading-9">
-                  {sentenceCharacters.map(({ id, targetChar, typedChar }) => {
-                    let className = 'text-stone-400';
-                    let content = targetChar;
-                    if (typedChar) {
-                      className = typedChar === targetChar ? 'text-stone-950 bg-emerald-100/80' : 'text-rose-700 bg-rose-100/80';
-                      content = typedChar;
-                    }
-                    return (
-                      <span className={`rounded px-[1px] ${className}`} key={id}>
-                        {content === ' ' ? '\u00A0' : content}
-                      </span>
-                    );
-                  })}
+                <div className="flex h-full flex-col">
+                  <div className="mb-3 flex items-center justify-between gap-3 rounded-[1rem] bg-white/82 px-3 py-2 shadow-sm">
+                    <div>
+                      <p className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-sky-700">Sentence flow</p>
+                      <p className="mt-1 text-xs font-semibold text-slate-600">{currentInput.length}/{sentenceTarget.length} characters typed</p>
+                    </div>
+                    <span className={`inline-flex rounded-full px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] ${timeLeft > 10 ? 'bg-emerald-100 text-emerald-800' : timeLeft > 0 ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-700'}`}>
+                      {timeLeft}s left
+                    </span>
+                  </div>
+                  <div ref={sentenceFlowRef} className="flex-1 overflow-x-auto overflow-y-hidden rounded-[1.25rem] bg-white/55 px-2 py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                    <div className="inline-flex min-w-full items-center gap-[0.02em] whitespace-nowrap text-lg font-semibold leading-8 text-stone-500 sm:text-xl sm:leading-9">
+                      {sentenceCharacters.map(({ id, targetChar, typedChar }, index) => {
+                        let className = 'text-stone-400';
+                        let content = targetChar;
+
+                        if (typedChar) {
+                          className = typedChar === targetChar ? 'text-stone-950 bg-emerald-100/80' : 'text-rose-700 bg-rose-100/80';
+                          content = typedChar;
+                        } else if (index === activeSentenceIndex) {
+                          className = 'text-stone-950 underline decoration-sky-300 decoration-2 underline-offset-[0.32em]';
+                        }
+
+                        return (
+                          <span
+                            className={`rounded px-[1px] ${className}`}
+                            key={id}
+                            ref={(node) => {
+                              if (node) {
+                                sentenceCharRefs.current[id] = node;
+                              }
+                            }}
+                          >
+                            {content === ' ' ? '\u00A0' : content}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  </div>
                 </div>
               ) : (
                 <div className="flex flex-wrap items-center gap-x-2 gap-y-3 text-lg leading-8 sm:text-xl sm:leading-9">
@@ -529,9 +576,11 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
                     </span>
                   )}
                 </div>
-                <span className={`inline-flex rounded-full px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] ${timeLeft > 10 ? 'bg-emerald-100 text-emerald-800' : timeLeft > 0 ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-700'}`}>
-                  {timeLeft}s left
-                </span>
+                {typingMode === 'words' && (
+                  <span className={`inline-flex rounded-full px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] ${timeLeft > 10 ? 'bg-emerald-100 text-emerald-800' : timeLeft > 0 ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-700'}`}>
+                    {timeLeft}s left
+                  </span>
+                )}
               </div>
             </div>
           </div>
