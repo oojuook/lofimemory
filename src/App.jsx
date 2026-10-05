@@ -434,6 +434,21 @@ const seoLandingBlocks = [
     href: '/chill-place-online.html'
   },
   {
+    title: 'Chill games',
+    text: 'Open chill games that feel soft, beginner-friendly, and easy to stay with when you want a calmer browser break.',
+    href: '/chill-games.html'
+  },
+  {
+    title: 'Lofi games',
+    text: 'Find lofi games and soft browser loops that pair naturally with music, quiet focus, and low-pressure play.',
+    href: '/lofi-games.html'
+  },
+  {
+    title: 'Relaxing browser games',
+    text: 'Explore relaxing browser games for light puzzle play, calm movement, and easy unwind sessions that do not feel loud.',
+    href: '/relaxing-browser-games.html'
+  },
+  {
     title: 'Word game online',
     text: 'Play a calm word game online when you want a soft vocabulary puzzle that feels familiar, light, and easy to revisit.',
     href: '/word-game-online.html'
@@ -795,6 +810,9 @@ const seoGuidePages = [
   { label: 'Helpful read', title: 'Beginner typing test', text: 'Open a beginner typing test when you want a welcoming warm-up with clear stats and no noisy pressure.', href: '/beginner-typing-test.html' },
   { label: 'Popular guide', title: 'Typing test online', text: 'Open a relaxed typing test online when you want clear stats, readable passages, and a calmer browser experience.', href: '/typing-test-online.html' },
   { label: 'Popular guide', title: 'Chill place online', text: 'Find a cozy online place to chill, relax, play soft games, and keep private notes in one calm space.', href: '/chill-place-online.html' },
+  { label: 'Popular guide', title: 'Chill games', text: 'Open chill games that feel easy to start, soft on the eyes, and welcoming when you just want to relax.', href: '/chill-games.html' },
+  { label: 'Popular guide', title: 'Lofi games', text: 'Find lofi games that pair naturally with music, soft focus, and low-pressure browser play.', href: '/lofi-games.html' },
+  { label: 'Helpful read', title: 'Relaxing browser games', text: 'Explore relaxing browser games for calm puzzle loops, gentle runners, and cozy short breaks.', href: '/relaxing-browser-games.html' },
   { label: 'Popular guide', title: 'Word game online', text: 'Play a calm word game online when you want a familiar puzzle that feels light and relaxing.', href: '/word-game-online.html' },
   { label: 'Popular guide', title: 'Sliding puzzle online', text: 'Play a cozy sliding puzzle online when you want a simple tile game that feels calm and satisfying.', href: '/sliding-puzzle-online.html' },
   { label: 'Popular guide', title: '2048 online', text: 'Play a calm 2048-style number merge game when you want an easy puzzle that still feels satisfying.', href: '/2048-online.html' },
@@ -1222,9 +1240,9 @@ const seoGuidePages = [
 
 const seoGuideGroups = [
   {
-    title: 'Play calm word, typing, and logic games',
-    description: 'Best for visitors looking for familiar Wordle-style pages, soft typing tests, Sudoku, and easy browser puzzles they can open quickly and enjoy without pressure.',
-    links: seoGuidePages.filter((page) => ['Daily word puzzle', 'Guess the word game', 'Daily word game', 'Wordle online', 'Word game online', 'Crossword game online', 'Sudoku online', 'WPM test', 'Typing speed test', 'Typing practice online', 'Typing accuracy test', 'Beginner typing test', 'Typing test online'].includes(page.title))
+    title: 'Find chill, lofi, word, typing, and logic games',
+    description: 'Best for visitors looking for chill games, lofi browser play, familiar Wordle-style pages, soft typing tests, Sudoku, and easy browser puzzles they can open quickly and enjoy without pressure.',
+    links: seoGuidePages.filter((page) => ['Chill place online', 'Chill games', 'Lofi games', 'Relaxing browser games', 'Daily word puzzle', 'Guess the word game', 'Daily word game', 'Wordle online', 'Word game online', 'Crossword game online', 'Sudoku online', 'WPM test', 'Typing speed test', 'Typing practice online', 'Typing accuracy test', 'Beginner typing test', 'Typing test online', 'Cozy browser games', 'Games to relax', 'Relaxing fidget games', 'Online Minesweeper', 'Calming games for anxiety', 'Memory games for anxiety', 'Mindful gaming app'].includes(page.title))
   },
   {
     title: 'Start a private diary',
@@ -1262,6 +1280,9 @@ const seoPopularSearches = [
   { label: 'Beginner typing test', href: '/beginner-typing-test.html' },
   { label: 'Typing test online', href: '/typing-test-online.html' },
   { label: 'Chill place online', href: '/chill-place-online.html' },
+  { label: 'Chill games', href: '/chill-games.html' },
+  { label: 'Lofi games', href: '/lofi-games.html' },
+  { label: 'Relaxing browser games', href: '/relaxing-browser-games.html' },
   { label: 'Word game online', href: '/word-game-online.html' },
   { label: 'Sliding puzzle online', href: '/sliding-puzzle-online.html' },
   { label: '2048 online', href: '/2048-online.html' },
@@ -2369,10 +2390,12 @@ function App() {
   const [selectedGameDifficulty, setSelectedGameDifficulty] = useState('medium');
   const selectedGameInterfaceRef = useRef(null);
   const shouldAutoScrollToGameRef = useRef(false);
-  const [isRadioPlaying, setIsRadioPlaying] = useState(false);
+  const [isRadioPlaying, setIsRadioPlaying] = useState(true);
   const [radioVolume, setRadioVolume] = useState(35);
   const [isRadioDialDragging, setIsRadioDialDragging] = useState(false);
   const [showRadioDialFeedback, setShowRadioDialFeedback] = useState(false);
+  const [radioNeedsInteraction, setRadioNeedsInteraction] = useState(false);
+  const [radioStatusMessage, setRadioStatusMessage] = useState('Auto-starting lofi radio');
   const [plannerNoteSearch, setPlannerNoteSearch] = useState('');
   const [customQuotes, setCustomQuotes] = useState(getInitialCustomQuotes);
   const [customQuoteDraft, setCustomQuoteDraft] = useState('');
@@ -2455,6 +2478,7 @@ function App() {
   const radioDialFeedbackTimeoutRef = useRef(null);
   const radioPlayerContainerRef = useRef(null);
   const radioPlayerRef = useRef(null);
+  const radioUnlockedRef = useRef(false);
 
   const isMasterAdmin = user?.email?.toLowerCase() === MASTER_ADMIN_EMAIL;
   const showAdminTools = isMasterAdmin && adminViewMode === 'master';
@@ -3535,6 +3559,7 @@ function App() {
 
   useEffect(() => {
     if (!isRadioPlaying) {
+      setRadioStatusMessage('Lofi radio paused');
       if (radioPlayerRef.current?.pauseVideo) {
         try {
           radioPlayerRef.current.pauseVideo();
@@ -3585,8 +3610,24 @@ function App() {
           },
           events: {
             onReady: (event) => {
-              event.target.setVolume(radioVolume);
-              event.target.playVideo();
+              setRadioStatusMessage('Auto-starting lofi radio');
+              try {
+                event.target.setVolume(radioVolume);
+                event.target.playVideo();
+              } catch {
+                setRadioNeedsInteraction(true);
+                setRadioStatusMessage('Tap once for sound');
+              }
+            },
+            onStateChange: (event) => {
+              if (event.data === YT.PlayerState.PLAYING) {
+                setRadioNeedsInteraction(false);
+                setRadioStatusMessage(radioUnlockedRef.current ? 'Lofi radio playing' : 'Lofi radio live');
+              }
+            },
+            onAutoplayBlocked: () => {
+              setRadioNeedsInteraction(true);
+              setRadioStatusMessage('Autoplay blocked');
             }
           }
         });
@@ -3596,11 +3637,44 @@ function App() {
       try {
         radioPlayerRef.current.setVolume?.(radioVolume);
         radioPlayerRef.current.playVideo?.();
-      } catch {}
+        setRadioStatusMessage(radioUnlockedRef.current ? 'Lofi radio playing' : 'Starting lofi radio');
+      } catch {
+        setRadioNeedsInteraction(true);
+        setRadioStatusMessage('Tap once for sound');
+      }
     });
 
     return () => {
       cancelled = true;
+    };
+  }, [isRadioPlaying, radioVolume]);
+
+  useEffect(() => {
+    if (!isRadioPlaying) {
+      return undefined;
+    }
+
+    const unlockRadio = () => {
+      if (!radioPlayerRef.current) {
+        return;
+      }
+
+      try {
+        radioPlayerRef.current.unMute?.();
+        radioPlayerRef.current.setVolume?.(radioVolume);
+        radioPlayerRef.current.playVideo?.();
+        radioUnlockedRef.current = true;
+        setRadioNeedsInteraction(false);
+        setRadioStatusMessage('Lofi radio playing');
+      } catch {}
+    };
+
+    window.addEventListener('pointerdown', unlockRadio, { once: true });
+    window.addEventListener('keydown', unlockRadio, { once: true });
+
+    return () => {
+      window.removeEventListener('pointerdown', unlockRadio);
+      window.removeEventListener('keydown', unlockRadio);
     };
   }, [isRadioPlaying, radioVolume]);
 
@@ -4873,7 +4947,7 @@ function App() {
 
 
       <nav className="sticky top-0 z-20 px-5 pt-5 sm:px-7 xl:px-10">
-        <div className="site-nav-shell mx-auto max-w-[1160px] rounded-[2.2rem] border border-white/80 bg-white/78 p-4 shadow-soft backdrop-blur-xl lg:p-5">
+        <div className="site-nav-shell mx-auto max-w-[1280px] rounded-[2.2rem] border border-white/80 bg-white/78 p-4 shadow-soft backdrop-blur-xl lg:p-5">
           <div className="flex flex-col gap-2.5 lg:gap-3 xl:flex-row xl:items-center xl:justify-between">
             <a className="flex items-center gap-3" href="#home" onClick={() => openHomeSection('home')}>
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-3xl bg-white shadow-lift ring-1 ring-sage-100 overflow-hidden">
@@ -4976,7 +5050,7 @@ function App() {
       </nav>
 
       {activeTab === 'home' && activeHomeSection === 'overview' && (
-      <section id="home" className="mx-auto grid max-w-[1160px] gap-8 px-5 pb-28 pt-10 sm:px-7 lg:grid-cols-12 lg:pb-12 xl:gap-12 xl:px-10">
+      <section id="home" className="mx-auto grid max-w-[1280px] gap-8 px-5 pb-28 pt-10 sm:px-7 lg:grid-cols-12 lg:pb-12 xl:gap-12 xl:px-10">
         <div className="lg:col-span-8">
           <div className="relative overflow-hidden rounded-[2.35rem] border border-white/90 bg-gradient-to-br from-white/96 via-white/92 to-sage-50/82 p-8 shadow-[0_24px_75px_rgba(101,121,104,0.16)] backdrop-blur-xl lg:p-10 xl:p-11">
             <div className="pointer-events-none absolute -left-10 top-12 h-28 w-28 rounded-full bg-sage-100/45 blur-3xl"></div>
@@ -4997,8 +5071,8 @@ function App() {
                 </div>
               </div>
               <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.96] tracking-tight text-sage-950 md:text-6xl">A soft place to hang out and reset.</h1>
-              <p className="mt-5 max-w-3xl text-[1.28rem] font-semibold leading-9 text-sage-900">Lofi Memory is an all-in-one browser space for chill games, quick notes, private thoughts, breathing room, and small daily plans whenever you want a calmer corner online.</p>
-              <p className="mt-4 max-w-[42rem] text-lg leading-8 text-sage-700">Play for a bit, relax, keep a to-do list nearby, or write something down without bouncing between different apps.</p>
+              <p className="mt-5 max-w-3xl text-[1.28rem] font-semibold leading-9 text-sage-900">Lofi Memory is an all-in-one browser space for chill games, lofi music, quick notes, private thoughts, breathing room, and small daily plans whenever you want a calmer corner online.</p>
+              <p className="mt-4 max-w-[42rem] text-lg leading-8 text-sage-700">Play for a bit, let the lofi radio start in the background, keep a to-do list nearby, or write something down without bouncing between different apps.</p>
 
               <div className="mt-7 grid gap-3 md:grid-cols-3">
                 <div className="rounded-[1.5rem] border border-white/85 bg-white/78 p-4 shadow-sm backdrop-blur">
@@ -5067,12 +5141,12 @@ function App() {
 
               <div className="mt-8 flex flex-wrap items-center gap-3 text-sm">
                 <span className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Popular guides</span>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/private-online-diary.html">Private online diary</a>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/online-diary.html">Online diary</a>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/diary-app.html">Diary app</a>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/journal-app.html">Journal app</a>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/best-diary-app.html">Best diary app</a>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/how-to-write-a-diary.html">How to write a diary</a>
+                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-games.html">Chill games</a>
+                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-games.html">Lofi games</a>
+                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/relaxing-browser-games.html">Relaxing browser games</a>
+                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/cozy-browser-games.html">Cozy browser games</a>
+                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-place-online.html">Chill place online</a>
+                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/games-to-relax.html">Games to relax</a>
               </div>
 
               <div className="mt-8 grid gap-4 sm:grid-cols-3 xl:grid-cols-3">
@@ -5086,7 +5160,7 @@ function App() {
                   <div>
                     <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">All-in-one soft corner</p>
                     <h3 className="mt-3 text-2xl font-extrabold leading-tight text-ink">Relax, play, plan, and write without jumping between tabs.</h3>
-                    <p className="mt-3 max-w-2xl text-sm leading-7 text-sage-800">Lofi Memory is meant to feel like a calm browser hangout. You can open a chill game, keep your to-do list nearby, breathe for a minute, or write something down whenever you feel like it.</p>
+                    <p className="mt-3 max-w-2xl text-sm leading-7 text-sage-800">Lofi Memory is meant to feel like a calm browser hangout. You can open a chill game, let the lofi stream roll, keep your to-do list nearby, breathe for a minute, or write something down whenever you feel like it.</p>
                   </div>
                   <div className="mt-6 space-y-3.5">
                     <button className="group flex w-full items-start gap-4 rounded-[1.5rem] border border-sage-200 bg-white/96 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50 hover:shadow-lift" onClick={() => navigateToTab('unwind')} type="button">
@@ -5231,7 +5305,7 @@ function App() {
       )}
 
       {activeTab === 'home' && (
-      <section className="mx-auto max-w-[1160px] px-5 sm:px-7 xl:px-10 py-4">
+      <section className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-4">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="flex-1">
             <div className="rounded-[2.5rem] border border-sage-100/90 bg-white/96 p-7 shadow-soft backdrop-blur lg:p-10">
@@ -5397,7 +5471,7 @@ function App() {
         onRemovePin={removePin}
       />
 
-      <section id="journal" className="relative z-10 mx-auto -mt-1 max-w-[1160px] px-5 py-9 pb-28 sm:px-7 lg:-mt-4 lg:pb-10 xl:px-10">
+      <section id="journal" className="relative z-10 mx-auto -mt-1 max-w-[1280px] px-5 py-9 pb-28 sm:px-7 lg:-mt-4 lg:pb-10 xl:px-10">
         <div className="mb-6 overflow-hidden rounded-[2rem] border border-white/85 bg-gradient-to-r from-white/88 via-sage-50/78 to-sand-50/75 p-3 shadow-soft backdrop-blur xl:p-4">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-2xl">
@@ -5747,11 +5821,11 @@ function App() {
         )}
 
                         {activeTab === 'unwind' && (
-          <div className="mx-auto max-w-6xl px-4 py-8 lg:px-6 lg:py-14 fade-in">
+          <div className="mx-auto max-w-[1280px] px-4 py-8 lg:px-6 lg:py-14 fade-in">
             <div className="mb-10 text-center">
               <p className="mb-2 text-sm font-bold uppercase tracking-widest text-sage-600">Relax & Play</p>
               <h1 className="mb-3 font-display text-4xl font-bold tracking-tight text-sage-950">Pick a chill game</h1>
-              <p className="mx-auto max-w-2xl text-lg text-sage-700">Choose the kind of calm you want right now — drift, dodge, merge, match, slide, settle into sudoku, guess cozy words, type, solve clues, sweep, or jump through a soft offline desert run. The easiest beginner picks are marked by how simple they feel to start.</p>
+              <p className="mx-auto max-w-2xl text-lg text-sage-700">Choose the kind of calm you want right now — drift, dodge, merge, match, slide, settle into sudoku, guess cozy words, type, solve clues, sweep, or jump through a soft offline desert run. The whole room stays cozy on mobile, wider on desktop, and easy to settle into with lofi music in the background.</p>
             </div>
             <div className="mb-6 flex flex-col gap-3 rounded-[1.75rem] border border-white/80 bg-white/78 p-4 shadow-sm backdrop-blur sm:flex-row sm:items-center sm:justify-between">
               <div>
@@ -5772,7 +5846,7 @@ function App() {
                 ))}
               </div>
             </div>
-            <div className="mb-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
               {unwindGames.map((game) => (
                 <button
                   key={game.id}
@@ -6591,7 +6665,7 @@ function App() {
       {activeTab === 'home' && (
       <>
       {activeHomeSection === 'overview' && (
-      <section className="mx-auto max-w-[1160px] px-5 sm:px-7 xl:px-10 py-4">
+      <section className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-4">
         <div className="quote-card quote-card-premium rounded-3xl border border-white/70 p-8 shadow-soft">
           <Quote className="mb-8 opacity-80" size={34} />
           <p className="quote-main-text font-bold leading-tight" style={{ fontFamily: activeQuoteFont, fontSize: activeQuoteSize, color: quoteStyle.textColor, lineHeight: 1.45 }}>“{quoteLibrary[quoteIndex % quoteLibrary.length]}”</p>
@@ -6603,7 +6677,7 @@ function App() {
       )}
 
       {activeHomeSection === 'about' && (
-      <section id="about" className="mx-auto max-w-[1160px] px-5 sm:px-7 xl:px-10 py-14">
+      <section id="about" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
         <SectionHeader
           eyebrow="About Lofi Memory"
           title="A private online diary designed to feel calm, personal, and easy to return to."
@@ -6633,7 +6707,7 @@ function App() {
       )}
 
       {activeHomeSection === 'guides' && (
-      <section id="seo-landing" className="mx-auto max-w-[1160px] px-5 sm:px-7 xl:px-10 py-10">
+      <section id="seo-landing" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-10">
         <SectionHeader
           eyebrow="Chill guides & calm routines"
           title="Find the kind of game, reset, or journaling support that fits what you need today."
@@ -6718,7 +6792,7 @@ function App() {
       )}
 
       {activeHomeSection === 'resources' && (
-      <section id="resources" className="mx-auto max-w-[1160px] px-5 sm:px-7 xl:px-10 py-14">
+      <section id="resources" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
         <SectionHeader
           eyebrow="Positive reflection tools"
           title="Small practices that make journaling easier."
@@ -6743,7 +6817,7 @@ function App() {
       )}
 
       {activeHomeSection === 'articles' && (
-      <section id="articles" className="mx-auto max-w-[1160px] px-5 sm:px-7 xl:px-10 py-14">
+      <section id="articles" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
         <SectionHeader
           eyebrow="Wellness Library"
           title="Articles and reflections for a gentler journaling practice."
@@ -6784,7 +6858,7 @@ function App() {
       )}
 
       {activeHomeSection === 'faq' && (
-      <section id="faq" className="mx-auto max-w-[1160px] px-5 sm:px-7 xl:px-10 py-14">
+      <section id="faq" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
         <SectionHeader
           eyebrow="Journal FAQ"
           title="Common questions about using a private online diary and mood journal."
@@ -6802,7 +6876,7 @@ function App() {
       )}
 
       {activeHomeSection === 'tips' && (
-      <section id="tips" className="mx-auto grid max-w-[1160px] gap-8 px-5 py-14 sm:px-7 xl:px-10 lg:grid-cols-12">
+      <section id="tips" className="mx-auto grid max-w-[1280px] gap-8 px-5 py-14 sm:px-7 xl:px-10 lg:grid-cols-12">
         <div className="rounded-3xl border border-white/70 bg-gradient-to-br from-sand-100 to-sage-100 p-8 shadow-soft lg:col-span-5 lg:p-10">
           <Newspaper className="mb-7 text-sage-700" size={36} />
           <p className="text-sm font-bold uppercase tracking-widest text-sage-700">Journaling tips</p>
@@ -6821,7 +6895,7 @@ function App() {
       )}
 
       {activeHomeSection === 'privacy' && (
-      <section id="privacy" className="mx-auto max-w-[1160px] px-5 sm:px-7 xl:px-10 py-14">
+      <section id="privacy" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
         <SectionHeader
           eyebrow="Privacy Policy"
           title="Your reflections belong to you."
@@ -6847,7 +6921,7 @@ function App() {
       )}
 
       {activeHomeSection === 'terms' && (
-      <section id="terms" className="mx-auto grid max-w-[1160px] gap-8 px-5 py-14 sm:px-7 xl:px-10 lg:grid-cols-12">
+      <section id="terms" className="mx-auto grid max-w-[1280px] gap-8 px-5 py-14 sm:px-7 xl:px-10 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <div className="sticky top-28 rounded-3xl border border-white/70 bg-white/75 p-8 shadow-soft backdrop-blur">
             <Scale className="mb-7 text-sage-700" size={36} />
@@ -6880,7 +6954,7 @@ function App() {
 
       {activeHomeSection === 'contact' && (
       <>
-      <section id="contact" className="mx-auto max-w-[1160px] px-5 sm:px-7 xl:px-10 py-14">
+      <section id="contact" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
         <div className="overflow-hidden rounded-3xl border border-white/70 bg-sage-900 text-white shadow-soft">
           <div className="grid lg:grid-cols-2">
             <div className="p-8 lg:p-10">
@@ -6913,7 +6987,7 @@ function App() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1160px] px-5 sm:px-7 xl:px-10 py-8">
+      <section className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-8">
         <div className="rounded-3xl border border-dashed border-sage-300 bg-white/60 p-8 text-center shadow-lift backdrop-blur">
           <p className="text-sm font-bold uppercase tracking-widest text-sage-600">Support this project</p>
           <h2 className="mt-3 text-2xl font-extrabold text-ink">Help keep Lofi Memory free and peaceful</h2>
@@ -6924,7 +6998,7 @@ function App() {
       )}
 
       {activeHomeSection === 'seo-studio' && showAdminTools && (
-      <section id="seo-studio" className="mx-auto max-w-[1160px] px-5 sm:px-7 xl:px-10 py-14">
+      <section id="seo-studio" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
         <SectionHeader
           eyebrow="Admin-only AI SEO Studio"
           title="Review and draft SEO improvements without changing the public experience."
@@ -7063,7 +7137,7 @@ function App() {
       </section>
       )}
 
-      <footer className="mx-auto max-w-[1160px] px-5 sm:px-7 xl:px-10 pb-10 pt-6">
+      <footer className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 pb-10 pt-6">
         <div className="rounded-3xl border border-white/70 bg-white/60 p-6 text-center text-sm leading-7 text-sage-700 shadow-lift backdrop-blur">
           <div className="mb-3 flex flex-wrap justify-center gap-4 font-bold text-sage-800">
             <a href="#home" onClick={() => openHomeSection('home')}>Home</a>
@@ -7097,10 +7171,10 @@ function App() {
       `}</style>
 
       {/* Floating Lofi Radio Player */}
-      <div className="fixed bottom-28 left-2 z-50 sm:left-3 lg:bottom-7 lg:left-4 xl:bottom-8 xl:left-[calc((100vw-1160px)/2-2.75rem)] xl:top-auto xl:translate-y-0">
+      <div className="fixed bottom-28 left-3 z-50 sm:left-5 lg:bottom-7 lg:left-6 xl:bottom-8 xl:left-[calc((100vw-1280px)/2+0.5rem)] xl:top-auto xl:translate-y-0">
 
         <div ref={radioPlayerContainerRef} className="pointer-events-none absolute h-1 w-1 opacity-0" aria-hidden="true" />
-        <div className="group relative h-[5.25rem] w-[5.25rem]">
+        <div className="group relative h-[4.9rem] w-[4.9rem] sm:h-[5.25rem] sm:w-[5.25rem]">
           <div
             ref={radioDialRef}
             aria-label="Adjust lofi radio volume"
@@ -7142,7 +7216,24 @@ function App() {
           </div>
           <button
             aria-label={isRadioPlaying ? 'Pause lofi radio' : 'Play lofi radio'}
-            onClick={() => setIsRadioPlaying(prev => !prev)}
+            onClick={() => {
+              if (isRadioPlaying) {
+                setIsRadioPlaying(false);
+                return;
+              }
+
+              setIsRadioPlaying(true);
+              if (radioPlayerRef.current) {
+                try {
+                  radioPlayerRef.current.unMute?.();
+                  radioPlayerRef.current.setVolume?.(radioVolume);
+                  radioPlayerRef.current.playVideo?.();
+                  radioUnlockedRef.current = true;
+                  setRadioNeedsInteraction(false);
+                  setRadioStatusMessage('Lofi radio playing');
+                } catch {}
+              }
+            }}
             className={`absolute inset-[0.72rem] z-20 flex items-center justify-center overflow-hidden rounded-full transition duration-300 hover:-translate-y-1 ${
               isRadioPlaying
                 ? 'bg-sage-200/95 ring-1 ring-white/60 shadow-[0_12px_34px_rgba(72,111,66,0.32)] hover:bg-sage-200'
@@ -7172,6 +7263,9 @@ function App() {
               </span>
             </span>
           </button>
+          <div className={`pointer-events-none absolute -top-12 left-1/2 w-max max-w-[12rem] -translate-x-1/2 rounded-2xl border border-white/80 bg-white/92 px-3 py-1.5 text-center text-[10px] font-extrabold uppercase tracking-[0.14em] text-sage-700 shadow-sm backdrop-blur-xl transition duration-300 ${radioNeedsInteraction || isRadioPlaying ? 'translate-y-0 opacity-100' : '-translate-y-1 opacity-0'}`}>
+            {radioNeedsInteraction ? 'Tap once for sound' : radioStatusMessage}
+          </div>
           <div className={`pointer-events-none absolute -bottom-2 left-1/2 -translate-x-1/2 rounded-full border border-white/75 bg-white/88 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-sage-600 shadow-sm backdrop-blur-xl transition duration-300 ${isRadioDialFeedbackVisible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'}`}>
             {radioVolume}%
           </div>
