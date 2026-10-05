@@ -1863,51 +1863,38 @@ function InfoCard({ icon: Icon, title, children }) {
 }
 
 function PageAtmosphere({ sceneId }) {
-  const scene = sceneId === 'playful'
-    ? {
-        surface: 'bg-[linear-gradient(180deg,#21184a_0%,#3a2e76_28%,#665c98_52%,#bdb5d8_76%,#f3eff7_100%)]',
-        sides: 'from-[rgba(35,24,82,0.97)] via-[rgba(88,73,156,0.28)] to-[rgba(88,73,156,0)]',
-        topMist: 'bg-[linear-gradient(180deg,rgba(255,182,224,0.16),rgba(255,182,224,0.04)_56%,rgba(255,182,224,0)_100%)]',
-        orb: 'bg-[radial-gradient(circle_at_40%_36%,rgba(255,239,246,0.96),rgba(238,190,255,0.48)_42%,rgba(238,190,255,0.1)_74%,rgba(238,190,255,0)_100%)] shadow-[0_0_90px_rgba(226,188,255,0.22)]',
-        horizon: 'bg-[linear-gradient(180deg,rgba(27,21,58,0)_0%,rgba(50,44,83,0.16)_34%,rgba(115,108,153,0.22)_58%,rgba(243,239,246,0.92)_100%)]',
-        glowA: 'bg-[radial-gradient(circle_at_40%_30%,rgba(255,188,220,0.12),rgba(151,124,219,0.06)_48%,rgba(151,124,219,0)_72%)]',
-        glowB: 'bg-[radial-gradient(circle_at_58%_28%,rgba(175,215,255,0.12),rgba(122,132,214,0.06)_48%,rgba(122,132,214,0)_74%)]'
-      }
+  const surfaceClass = sceneId === 'playful'
+    ? 'bg-[linear-gradient(180deg,#25155d_0%,#3f2a85_26%,#725ab0_48%,#cdbfe6_76%,#f4eff8_100%)]'
     : sceneId === 'editorial'
-      ? {
-          surface: 'bg-[linear-gradient(180deg,#17202f_0%,#24384a_28%,#4f6a78_52%,#aab1b6_76%,#f1ece7_100%)]',
-          sides: 'from-[rgba(24,28,39,0.98)] via-[rgba(70,90,102,0.26)] to-[rgba(70,90,102,0)]',
-          topMist: 'bg-[linear-gradient(180deg,rgba(255,198,146,0.14),rgba(255,198,146,0.03)_56%,rgba(255,198,146,0)_100%)]',
-          orb: 'bg-[radial-gradient(circle_at_40%_36%,rgba(255,229,190,0.95),rgba(168,198,212,0.36)_44%,rgba(168,198,212,0.08)_74%,rgba(168,198,212,0)_100%)] shadow-[0_0_90px_rgba(190,208,218,0.2)]',
-          horizon: 'bg-[linear-gradient(180deg,rgba(22,25,32,0)_0%,rgba(39,45,58,0.16)_34%,rgba(110,104,99,0.22)_58%,rgba(241,236,231,0.94)_100%)]',
-          glowA: 'bg-[radial-gradient(circle_at_40%_30%,rgba(255,196,140,0.11),rgba(117,130,142,0.05)_48%,rgba(117,130,142,0)_72%)]',
-          glowB: 'bg-[radial-gradient(circle_at_58%_28%,rgba(172,213,229,0.12),rgba(117,130,142,0.05)_48%,rgba(117,130,142,0)_74%)]'
-        }
-      : {
-          surface: 'bg-[linear-gradient(180deg,#27224d_0%,#4a4d7c_28%,#7a80ac_52%,#d4d2e4_76%,#f5f2f6_100%)]',
-          sides: 'from-[rgba(42,38,82,0.97)] via-[rgba(100,104,150,0.26)] to-[rgba(100,104,150,0)]',
-          topMist: 'bg-[linear-gradient(180deg,rgba(237,202,255,0.14),rgba(237,202,255,0.03)_56%,rgba(237,202,255,0)_100%)]',
-          orb: 'bg-[radial-gradient(circle_at_40%_36%,rgba(255,241,247,0.95),rgba(223,210,255,0.38)_42%,rgba(223,210,255,0.08)_74%,rgba(223,210,255,0)_100%)] shadow-[0_0_90px_rgba(223,210,255,0.2)]',
-          horizon: 'bg-[linear-gradient(180deg,rgba(32,28,56,0)_0%,rgba(52,51,82,0.14)_34%,rgba(123,123,155,0.2)_58%,rgba(245,242,246,0.94)_100%)]',
-          glowA: 'bg-[radial-gradient(circle_at_40%_30%,rgba(255,208,228,0.1),rgba(146,140,188,0.05)_48%,rgba(146,140,188,0)_72%)]',
-          glowB: 'bg-[radial-gradient(circle_at_58%_28%,rgba(205,220,255,0.11),rgba(146,140,188,0.05)_48%,rgba(146,140,188,0)_74%)]'
-        };
+      ? 'bg-[linear-gradient(180deg,#1c2238_0%,#2f3e59_26%,#60788e_48%,#c7ced7_74%,#f4f0ee_100%)]'
+      : 'bg-[linear-gradient(180deg,#2b2454_0%,#4f4a86_26%,#8c86b5_48%,#d9d4e7_74%,#f5f1f6_100%)]';
+  const sideGlowClass = sceneId === 'playful'
+    ? 'from-[rgba(46,20,99,0.96)] via-[rgba(92,68,181,0.34)] to-[rgba(92,68,181,0)]'
+    : sceneId === 'editorial'
+      ? 'from-[rgba(28,33,48,0.98)] via-[rgba(79,101,125,0.32)] to-[rgba(79,101,125,0)]'
+      : 'from-[rgba(46,37,95,0.96)] via-[rgba(98,91,158,0.34)] to-[rgba(98,91,158,0)]';
+  const orbClass = sceneId === 'playful'
+    ? 'bg-[radial-gradient(circle_at_40%_38%,rgba(255,232,247,0.98),rgba(255,151,226,0.78)_42%,rgba(255,151,226,0.16)_74%,rgba(255,151,226,0)_100%)] shadow-[0_0_110px_rgba(255,151,226,0.28)]'
+    : sceneId === 'editorial'
+      ? 'bg-[radial-gradient(circle_at_40%_38%,rgba(255,237,216,0.94),rgba(168,203,226,0.42)_42%,rgba(168,203,226,0.12)_74%,rgba(168,203,226,0)_100%)] shadow-[0_0_110px_rgba(168,203,226,0.24)]'
+      : 'bg-[radial-gradient(circle_at_40%_38%,rgba(255,236,247,0.97),rgba(214,183,255,0.52)_42%,rgba(214,183,255,0.14)_74%,rgba(214,183,255,0)_100%)] shadow-[0_0_110px_rgba(214,183,255,0.26)]';
 
   return (
     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-      <div className={`absolute inset-0 ${scene.surface}`} />
-      <div className={`absolute inset-y-0 left-0 w-[22vw] min-w-[5rem] bg-[linear-gradient(90deg,var(--tw-gradient-stops))] ${scene.sides}`} />
-      <div className={`absolute inset-y-0 right-0 w-[22vw] min-w-[5rem] bg-[linear-gradient(270deg,var(--tw-gradient-stops))] ${scene.sides}`} />
-      <div className={`absolute inset-x-[10%] top-0 h-32 ${scene.topMist}`} />
-      <div className={`absolute left-1/2 top-16 h-40 w-40 -translate-x-1/2 rounded-full ${scene.orb}`} />
-      <div className="absolute left-[8%] top-[14%] h-[66vh] w-16 rounded-b-[1.8rem] border-x border-white/9 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.015)_58%,rgba(255,255,255,0)_100%)]" />
-      <div className="absolute right-[8%] top-[12%] h-[68vh] w-16 rounded-b-[1.8rem] border-x border-white/9 bg-[linear-gradient(180deg,rgba(220,232,255,0.09),rgba(220,232,255,0.015)_58%,rgba(220,232,255,0)_100%)]" />
-      <div className="absolute left-[16%] top-[28%] h-2.5 w-2.5 rounded-full bg-white/74 shadow-[0_0_14px_rgba(255,255,255,0.76)]" />
-      <div className="absolute right-[18%] top-[27%] h-2.5 w-2.5 rounded-full bg-[#ffe4ab] shadow-[0_0_16px_rgba(255,228,171,0.76)]" />
-      <div className="absolute inset-x-[12%] bottom-[18%] h-[15rem] rounded-[3rem] bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.06),rgba(255,255,255,0)_68%)]" />
-      <div className={`absolute inset-x-0 bottom-0 h-[30vh] ${scene.horizon}`} />
-      <div className={`absolute bottom-[-2rem] left-[10%] h-40 w-[26rem] rounded-[4rem] ${scene.glowA}`} />
-      <div className={`absolute bottom-[-1rem] right-[10%] h-36 w-[22rem] rounded-[4rem] ${scene.glowB}`} />
+      <div className={`absolute inset-0 ${surfaceClass}`} />
+      <div className={`absolute inset-y-0 left-0 w-[22vw] min-w-[5rem] bg-[linear-gradient(90deg,var(--tw-gradient-stops))] ${sideGlowClass}`} />
+      <div className={`absolute inset-y-0 right-0 w-[22vw] min-w-[5rem] bg-[linear-gradient(270deg,var(--tw-gradient-stops))] ${sideGlowClass}`} />
+      <div className="absolute inset-x-[9%] top-0 h-28 bg-[linear-gradient(180deg,rgba(34,28,60,0.72),rgba(34,28,60,0.14),rgba(34,28,60,0))]" />
+      <div className={`absolute left-1/2 top-16 h-44 w-44 -translate-x-1/2 rounded-full ${orbClass}`} />
+      <div className="absolute left-[7%] top-[14%] h-[68vh] w-20 rounded-b-[1.9rem] border-x border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.11),rgba(255,255,255,0.02)_58%,rgba(255,255,255,0)_100%)]" />
+      <div className="absolute right-[7%] top-[12%] h-[70vh] w-20 rounded-b-[1.9rem] border-x border-white/10 bg-[linear-gradient(180deg,rgba(214,232,255,0.12),rgba(214,232,255,0.02)_58%,rgba(214,232,255,0)_100%)]" />
+      <div className="absolute left-[16%] top-[30%] h-3 w-3 rounded-full bg-white/80 shadow-[0_0_16px_rgba(255,255,255,0.85)]" />
+      <div className="absolute right-[18%] top-[28%] h-3 w-3 rounded-full bg-[#ffe7a8] shadow-[0_0_18px_rgba(255,231,168,0.85)]" />
+      <div className="absolute left-[24%] top-[42%] h-2.5 w-2.5 rounded-full bg-white/72 shadow-[0_0_14px_rgba(255,255,255,0.8)]" />
+      <div className="absolute inset-x-[10%] bottom-[18%] h-[18rem] rounded-[3rem] bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.08),rgba(255,255,255,0)_68%)]" />
+      <div className="absolute inset-x-0 bottom-0 h-[30vh] bg-[linear-gradient(180deg,rgba(25,20,43,0)_0%,rgba(38,35,62,0.18)_32%,rgba(102,97,143,0.24)_56%,rgba(243,239,246,0.92)_100%)]" />
+      <div className="absolute bottom-[-3rem] left-[10%] h-48 w-[30rem] rounded-[4rem] bg-[radial-gradient(circle_at_40%_30%,rgba(255,190,220,0.12),rgba(138,118,209,0.08)_48%,rgba(138,118,209,0)_72%)]" />
+      <div className="absolute bottom-[-2rem] right-[10%] h-44 w-[24rem] rounded-[4rem] bg-[radial-gradient(circle_at_58%_28%,rgba(173,214,255,0.12),rgba(112,124,209,0.08)_48%,rgba(112,124,209,0)_74%)]" />
     </div>
   );
 }
@@ -2857,11 +2844,11 @@ function App() {
 
     const closeTimer = window.setTimeout(() => {
       setEntryTransitionClosing(true);
-    }, 2350);
+    }, 2100);
     const hideTimer = window.setTimeout(() => {
       setShowEntryTransition(false);
       setEntryTransitionClosing(false);
-    }, 3450);
+    }, 2720);
 
     return () => {
       window.clearTimeout(closeTimer);
@@ -5055,7 +5042,7 @@ function App() {
 
 
       {showEntryTransition && (
-        <div className={`fixed inset-0 z-40 overflow-hidden bg-[radial-gradient(circle_at_top,rgba(255,130,214,0.34),transparent_24%),radial-gradient(circle_at_50%_18%,rgba(255,88,188,0.38),transparent_18%),linear-gradient(180deg,#1d0d52_0%,#34117c_42%,#5925a3_68%,#f7b5ef_100%)] px-6 transition-all duration-[1150ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${entryTransitionClosing ? 'opacity-0 scale-[1.03]' : 'opacity-100 scale-100'}`}>
+        <div className={`fixed inset-0 z-40 overflow-hidden bg-[radial-gradient(circle_at_top,rgba(255,130,214,0.34),transparent_24%),radial-gradient(circle_at_50%_18%,rgba(255,88,188,0.38),transparent_18%),linear-gradient(180deg,#1d0d52_0%,#34117c_42%,#5925a3_68%,#f7b5ef_100%)] px-6 transition-all duration-700 ${entryTransitionClosing ? 'opacity-0 scale-[1.03]' : 'opacity-100 scale-100'}`}>
 
           <div className="pointer-events-none absolute inset-0 overflow-hidden">
             <div className="absolute left-1/2 top-[11%] h-36 w-36 -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_35%_35%,rgba(255,202,247,0.98),rgba(255,110,214,0.9)_38%,rgba(255,66,180,0.8)_72%,rgba(255,66,180,0.18)_100%)] shadow-[0_0_90px_rgba(255,108,218,0.38)] sm:h-52 sm:w-52" />
@@ -5074,7 +5061,7 @@ function App() {
             <div className="absolute bottom-[25%] left-[25.4%] h-10 w-3 rounded-full bg-[#18092f]" />
           </div>
 
-          <div className={`relative mx-auto flex min-h-screen w-full max-w-6xl items-center justify-center transition-all duration-[1050ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${entryTransitionClosing ? 'translate-y-6 scale-[0.985] opacity-0' : 'translate-y-0 scale-100 opacity-100'}`}>
+          <div className={`relative mx-auto flex min-h-screen w-full max-w-6xl items-center justify-center transition-all duration-700 ${entryTransitionClosing ? 'translate-y-6 scale-[0.985] opacity-0' : 'translate-y-0 scale-100 opacity-100'}`}>
             <div className="grid w-full items-end gap-10 lg:grid-cols-[1.06fr_0.94fr] lg:gap-14">
               <div className="relative overflow-hidden rounded-[2.8rem] border border-white/18 bg-white/10 p-7 text-white shadow-[0_35px_90px_rgba(15,5,50,0.35)] backdrop-blur-md sm:p-8 lg:p-10">
                 <div className="absolute inset-0 bg-[linear-gradient(140deg,rgba(255,255,255,0.16),rgba(255,255,255,0.05)_46%,rgba(110,76,255,0.16))]" />
