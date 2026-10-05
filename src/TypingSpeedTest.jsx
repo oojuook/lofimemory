@@ -1,97 +1,171 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { RotateCcw, Sparkles } from 'lucide-react';
 
-const passagePools = {
+const timerPresets = [15, 30, 60];
+const INITIAL_WORD_COUNT = 42;
+const WORD_BUFFER_SIZE = 18;
+const WORD_BATCH_SIZE = 24;
+
+const wordPools = {
   easy: [
-    'soft rain taps the window while the room stays warm and quiet',
-    'take a slow breath and let the next line arrive without hurry',
-    'a calm little typing break can help your thoughts settle gently',
+    'soft', 'rain', 'moss', 'glow', 'rest', 'slow', 'calm', 'cozy', 'bloom', 'drift', 'pond', 'leaf', 'hush', 'breeze', 'warm', 'still', 'lilypad', 'lantern', 'cloud', 'river', 'ember', 'settle', 'quiet', 'golden', 'tea', 'window', 'blanket', 'gentle', 'ripple', 'meadow',
   ],
   medium: [
-    'lofi memory turns a simple speed test into a softer reset with music, puzzles, and room to breathe after each round',
-    'typing for one quiet minute can sharpen your focus without making the page feel loud or competitive',
-    'steady hands and a relaxed rhythm usually matter more than rushing when you want both speed and accuracy',
+    'typing', 'rhythm', 'coastline', 'journal', 'focus', 'steady', 'unwind', 'layout', 'puzzle', 'forecast', 'breathe', 'comfort', 'friendlier', 'signal', 'sunlight', 'evening', 'restart', 'clarity', 'wander', 'drizzle', 'morning', 'kindness', 'landing', 'texture', 'counter', 'gliding', 'lanes', 'mobile', 'frogs', 'lilies',
   ],
   hard: [
-    'when your attention feels scattered, a longer typing passage can give your mind one clear thread to follow before you jump back into journaling or planning',
-    'the best speed tests reward calm consistency, because smooth keystrokes and accurate phrasing often outperform frantic bursts that create extra corrections',
-    'practice works better when the passage feels readable, the timer feels fair, and your stats help you notice progress instead of pressure',
+    'atmosphere', 'comfortable', 'meditative', 'background', 'continuous', 'monkeytype', 'interface', 'forecasting', 'adjustments', 'reflection', 'responsive', 'location', 'beautifully', 'character', 'wordsmith', 'snowfall', 'waterfront', 'curiosity', 'adventure', 'sunshower', 'hummingbird', 'harmonize', 'understory', 'lighthouse', 'momentum', 'storybook', 'tenderness', 'serenity', 'afterglow', 'wildflower',
   ],
 };
 
 const difficultySettings = {
   easy: {
     label: 'Easy',
-    duration: 30,
-    note: 'Shorter timer and lighter lines for a relaxed warm-up.',
+    note: 'Shorter, softer words for a more welcoming flow.',
   },
   medium: {
     label: 'Medium',
-    duration: 45,
-    note: 'A balanced pace for measuring calm speed and focus.',
+    note: 'Balanced words that feel closer to a classic monkeytype rhythm.',
   },
   hard: {
     label: 'Hard',
-    duration: 60,
-    note: 'Longer passages and more time for a fuller typing run.',
+    note: 'Longer words and a denser pace for sharper focus.',
   },
 };
 
-const timerPresets = [15, 30, 60];
-
-function pickPassage(pool, previousPassage = '') {
-  const options = pool.filter((entry) => entry !== previousPassage);
-  return options[Math.floor(Math.random() * options.length)] || pool[0];
+function generateWordBatch(pool, count = WORD_BATCH_SIZE) {
+  return Array.from({ length: count }, () => pool[Math.floor(Math.random() * pool.length)]);
 }
 
-function calculateStats(text, target, elapsedSeconds) {
-  const typedChars = text.length;
-  const correctChars = text.split('').reduce((count, character, index) => count + (character === target[index] ? 1 : 0), 0);
-  const errors = Math.max(typedChars - correctChars, 0);
-  const accuracy = typedChars > 0 ? Math.round((correctChars / typedChars) * 100) : 100;
-  const minutes = Math.max(elapsedSeconds, 1) / 60;
-  const wpm = Math.round((correctChars / 5) / minutes);
-  const cpm = Math.round(correctChars / minutes);
+function compareWords(targetWord, typedWord) {
+  const maxLength = Math.max(targetWord.length, typedWord.length);
+  let correctChars = 0;
+  let incorrectChars = 0;
+
+  for (let index = 0; index < maxLength; index += 1) {
+    if (targetWord[index] === typedWord[index]) {
+      correctChars += 1;
+    } else {
+      incorrectChars += 1;
+    }
+  }
 
   return {
-    typedChars,
     correctChars,
-    errors,
-    accuracy,
-    wpm,
-    cpm,
+    incorrectChars,
+    isPerfect: targetWord === typedWord,
   };
+}
+
+function getDisplayCharacters(targetWord, typedWord) {
+  const maxLength = Math.max(targetWord.length, typedWord.length);
+  return Array.from({ length: maxLength }, (_, index) => ({
+    key: `${targetWord}-${typedWord}-${index}`,
+    targetCharacter: targetWord[index] || '',
+    typedCharacter: typedWord[index] || '',
+  }));
+}
+
+function TypingWord({ activeInput = '', isActive, isPast, targetWord, typedWord = '', wordRef }) {
+  const characters = getDisplayCharacters(targetWord, typedWord || activeInput);
+
+  return (
+    <span
+      className={`inline-flex min-h-[2.75rem] items-center rounded-2xl px-2.5 py-2 text-lg font-bold transition sm:text-xl ${isActive ? 'bg-white text-stone-950 shadow-sm ring-2 ring-sky-200' : isPast ? 'bg-transparent' : 'text-stone-300'}`}
+      ref={wordRef}
+    >
+      {characters.map(({ key, targetCharacter, typedCharacter }) => {
+        let className = 'text-stone-300';
+        let content = targetCharacter;
+
+        if (isPast) {
+          content = typedCharacter || targetCharacter;
+          className = typedCharacter === targetCharacter ? 'text-emerald-700' : 'text-rose-600';
+        } else if (isActive) {
+          if (!typedCharacter) {
+            className = 'text-stone-400';
+            content = targetCharacter;
+          } else {
+            content = typedCharacter;
+            className = typedCharacter === targetCharacter ? 'text-stone-950 bg-emerald-100/80' : 'text-rose-700 bg-rose-100/80';
+          }
+        }
+
+        return (
+          <span className={`rounded px-[1px] ${className}`} key={key}>
+            {content}
+          </span>
+        );
+      })}
+    </span>
+  );
 }
 
 export default function TypingSpeedTest({ difficulty = 'medium' }) {
   const config = difficultySettings[difficulty] || difficultySettings.medium;
-  const pool = passagePools[difficulty] || passagePools.medium;
-  const bestWpmKey = `quiet-journal-typing-speed-best-${difficulty}`;
+  const pool = wordPools[difficulty] || wordPools.medium;
+  const bestKey = `quiet-journal-typing-speed-best-${difficulty}`;
   const roundsKey = `quiet-journal-typing-speed-rounds-${difficulty}`;
 
-  const [passage, setPassage] = useState(() => pickPassage(pool));
-  const [typedText, setTypedText] = useState('');
-  const [selectedDuration, setSelectedDuration] = useState(config.duration);
-  const [timeLeft, setTimeLeft] = useState(config.duration);
+  const inputRef = useRef(null);
+  const wordRefs = useRef({});
+  const [timerPreset, setTimerPreset] = useState(30);
+  const [wordSequence, setWordSequence] = useState(() => generateWordBatch(pool, INITIAL_WORD_COUNT));
+  const [typedWords, setTypedWords] = useState([]);
+  const [currentInput, setCurrentInput] = useState('');
+  const [timeLeft, setTimeLeft] = useState(30);
   const [isRunning, setIsRunning] = useState(false);
-  const [isFinished, setIsFinished] = useState(false);
-  const [hasRecordedResult, setHasRecordedResult] = useState(false);
-  const [bestWpm, setBestWpm] = useState(() => parseInt(localStorage.getItem(bestWpmKey) || '0', 10));
+  const [roundStatus, setRoundStatus] = useState('idle');
+  const [correctChars, setCorrectChars] = useState(0);
+  const [incorrectChars, setIncorrectChars] = useState(0);
+  const [errors, setErrors] = useState(0);
+  const [bestWpm, setBestWpm] = useState(() => parseInt(localStorage.getItem(bestKey) || '0', 10));
   const [rounds, setRounds] = useState(() => parseInt(localStorage.getItem(roundsKey) || '0', 10));
-  const [message, setMessage] = useState('Press start, type the passage, and watch your WPM settle into view.');
+  const [hasRecordedResult, setHasRecordedResult] = useState(false);
+
+  const activeWordIndex = typedWords.length;
+  const activeWord = wordSequence[activeWordIndex] || '';
+  const elapsedSeconds = timerPreset - timeLeft;
+  const totalTypedChars = correctChars + incorrectChars;
+  const wpm = elapsedSeconds > 0 ? Math.round((correctChars / 5) / (elapsedSeconds / 60)) : 0;
+  const accuracy = totalTypedChars > 0 ? Math.round((correctChars / totalTypedChars) * 100) : 100;
+  const cpm = elapsedSeconds > 0 ? Math.round(correctChars / (elapsedSeconds / 60)) : 0;
+
+  const resetRound = (nextPreset = timerPreset) => {
+    setWordSequence(generateWordBatch(pool, INITIAL_WORD_COUNT));
+    setTypedWords([]);
+    setCurrentInput('');
+    setTimeLeft(nextPreset);
+    setIsRunning(false);
+    setRoundStatus('idle');
+    setCorrectChars(0);
+    setIncorrectChars(0);
+    setErrors(0);
+    setHasRecordedResult(false);
+    wordRefs.current = {};
+  };
 
   useEffect(() => {
-    setPassage(pickPassage(pool));
-    setTypedText('');
-    setSelectedDuration(config.duration);
-    setTimeLeft(config.duration);
-    setIsRunning(false);
-    setIsFinished(false);
-    setHasRecordedResult(false);
-    setBestWpm(parseInt(localStorage.getItem(bestWpmKey) || '0', 10));
+    setBestWpm(parseInt(localStorage.getItem(bestKey) || '0', 10));
     setRounds(parseInt(localStorage.getItem(roundsKey) || '0', 10));
-    setMessage('Press start, type the passage, and watch your WPM settle into view.');
-  }, [bestWpmKey, config.duration, pool, roundsKey]);
+    resetRound(30);
+  }, [bestKey, roundsKey, difficulty]);
+
+  useEffect(() => {
+    if (timeLeft !== 0 || roundStatus !== 'finished' || hasRecordedResult) {
+      return;
+    }
+
+    const nextRounds = rounds + 1;
+    setRounds(nextRounds);
+    setHasRecordedResult(true);
+    localStorage.setItem(roundsKey, String(nextRounds));
+
+    if (wpm > bestWpm) {
+      setBestWpm(wpm);
+      localStorage.setItem(bestKey, String(wpm));
+    }
+  }, [bestKey, bestWpm, hasRecordedResult, rounds, roundsKey, roundStatus, timeLeft, wpm]);
 
   useEffect(() => {
     if (!isRunning) {
@@ -99,104 +173,115 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
     }
 
     const timerId = window.setInterval(() => {
-      setTimeLeft((current) => {
-        if (current <= 1) {
+      setTimeLeft((previous) => {
+        if (previous <= 1) {
           window.clearInterval(timerId);
           setIsRunning(false);
-          setIsFinished(true);
+          setRoundStatus('finished');
           return 0;
         }
-        return current - 1;
+        return previous - 1;
       });
     }, 1000);
 
     return () => window.clearInterval(timerId);
   }, [isRunning]);
 
-  const elapsedSeconds = selectedDuration - timeLeft;
-  const currentStats = useMemo(() => calculateStats(typedText, passage, elapsedSeconds), [elapsedSeconds, passage, typedText]);
-
   useEffect(() => {
-    if (!isFinished || hasRecordedResult) {
+    if (wordSequence.length - activeWordIndex > WORD_BUFFER_SIZE) {
       return;
     }
 
-    const nextRounds = rounds + 1;
-    setRounds(nextRounds);
-    localStorage.setItem(roundsKey, String(nextRounds));
+    setWordSequence((previous) => [...previous, ...generateWordBatch(pool)]);
+  }, [activeWordIndex, pool, wordSequence.length]);
 
-    if (currentStats.wpm > bestWpm) {
-      setBestWpm(currentStats.wpm);
-      localStorage.setItem(bestWpmKey, String(currentStats.wpm));
+  useEffect(() => {
+    const activeNode = wordRefs.current[activeWordIndex];
+    activeNode?.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+  }, [activeWordIndex]);
+
+  const handleWordCommits = (rawValue) => {
+    if (roundStatus === 'finished') {
+      return;
     }
 
-    setHasRecordedResult(true);
-    setMessage(`Round finished — ${currentStats.wpm} WPM at ${currentStats.accuracy}% accuracy.`);
-  }, [bestWpm, bestWpmKey, currentStats.accuracy, currentStats.wpm, hasRecordedResult, isFinished, rounds, roundsKey]);
+    const normalizedValue = rawValue.toLowerCase().replace(/[^a-z\-\s]/g, '');
+    let remainingValue = normalizedValue;
+    const nextTypedWords = [...typedWords];
+    let nextCorrectChars = 0;
+    let nextIncorrectChars = 0;
+    let nextErrors = 0;
 
-  const startRound = () => {
-    setTypedText('');
-    setTimeLeft(selectedDuration);
-    setIsFinished(false);
-    setHasRecordedResult(false);
-    setIsRunning(true);
-    setMessage('Timer started — keep it smooth, not rushed.');
-  };
+    while (remainingValue.includes(' ')) {
+      const boundaryIndex = remainingValue.indexOf(' ');
+      const typedWord = remainingValue.slice(0, boundaryIndex).trim();
+      const targetWord = wordSequence[nextTypedWords.length];
 
-  const resetRound = () => {
-    setPassage((current) => pickPassage(pool, current));
-    setTypedText('');
-    setTimeLeft(selectedDuration);
-    setIsRunning(false);
-    setIsFinished(false);
-    setHasRecordedResult(false);
-    setMessage('Fresh passage ready when you are.');
-  };
+      if (!targetWord) {
+        break;
+      }
 
-  const showResults = isFinished || typedText.length > 0;
-  const progressPercent = selectedDuration > 0 ? Math.min(((selectedDuration - timeLeft) / selectedDuration) * 100, 100) : 0;
+      const comparison = compareWords(targetWord, typedWord);
+      nextCorrectChars += comparison.correctChars;
+      nextIncorrectChars += comparison.incorrectChars;
+      if (!comparison.isPerfect) {
+        nextErrors += 1;
+      }
 
-  const passageMarkup = useMemo(() => passage.split('').map((character, index) => {
-    let className = 'text-stone-400';
-
-    if (index < typedText.length) {
-      className = typedText[index] === character ? 'text-stone-950 bg-emerald-100/80' : 'text-rose-700 bg-rose-100/80';
-    } else if (index === typedText.length) {
-      className = 'text-stone-700 bg-amber-100/80';
+      nextTypedWords.push(typedWord);
+      remainingValue = remainingValue.slice(boundaryIndex + 1).replace(/^\s+/, '');
     }
 
-    return {
-      id: `passage-${index}-${character === ' ' ? 'space' : character}`,
-      character,
-      className,
-    };
-  }), [passage, typedText]);
+    if (nextTypedWords.length !== typedWords.length) {
+      setTypedWords(nextTypedWords);
+      setCorrectChars((previous) => previous + nextCorrectChars);
+      setIncorrectChars((previous) => previous + nextIncorrectChars);
+      setErrors((previous) => previous + nextErrors);
+    }
+
+    setCurrentInput(remainingValue);
+  };
+
+  const handleChange = (event) => {
+    const nextValue = event.target.value;
+    if (!isRunning && nextValue.trim().length > 0 && timeLeft > 0) {
+      setIsRunning(true);
+      setRoundStatus('running');
+    }
+    handleWordCommits(nextValue);
+  };
+
+  const helperMessage = useMemo(() => {
+    if (roundStatus === 'finished') {
+      return 'Round complete — start another and the words will keep flowing.';
+    }
+
+    if (!isRunning) {
+      return 'Tap the word flow or the input box, then start typing. Press space to roll into the next word.';
+    }
+
+    return 'The active word will keep moving forward like a calmer monkeytype flow.';
+  }, [isRunning, roundStatus]);
 
   return (
-    <div className="mx-auto mt-12 w-full max-w-[980px] pb-12">
-      <div className="rounded-[2rem] border border-sky-100 bg-gradient-to-br from-white via-sky-50/70 to-slate-50/86 p-5 shadow-soft lg:p-6">
+    <div className="mx-auto mt-12 w-full max-w-[1040px] pb-12">
+      <div className="rounded-[2rem] border border-sky-100 bg-gradient-to-br from-white via-sky-50/70 to-slate-50/86 p-4 shadow-soft sm:p-5 lg:p-6">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-white/88 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-sky-700 shadow-sm">
               <Sparkles size={14} /> {config.label} typing pace
             </div>
             <h3 className="mt-4 text-3xl font-bold tracking-tight text-slate-950">Typing Speed Test</h3>
-            <p className="mt-2 max-w-2xl text-sm leading-7 text-slate-700">A calm typing speed test that shows your WPM, accuracy, CPM, and errors without making the whole page feel intense. Start a timer, type the passage, and get a clean little snapshot of your rhythm.</p>
+            <p className="mt-2 max-w-2xl text-sm leading-7 text-slate-700">A calmer typing test where the words keep coming and the active line moves along with you, closer to a monkeytype flow but still cozy on mobile.</p>
             <p className="mt-2 text-sm font-semibold text-slate-600">{config.note}</p>
             <div className="mt-4 flex flex-wrap items-center gap-2.5">
-              <span className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sky-600">Timer presets</span>
               {timerPresets.map((preset) => (
                 <button
                   key={preset}
-                  className={`rounded-full px-3.5 py-2 text-xs font-extrabold uppercase tracking-[0.18em] transition ${selectedDuration === preset ? 'bg-slate-950 text-white shadow-sm' : 'border border-sky-200 bg-white/88 text-slate-800 hover:bg-sky-50'}`}
+                  className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${timerPreset === preset ? 'bg-slate-900 text-white shadow-sm' : 'border border-sky-200 bg-white text-sky-800 hover:bg-sky-50'}`}
                   onClick={() => {
-                    setSelectedDuration(preset);
-                    setTimeLeft(preset);
-                    setTypedText('');
-                    setIsRunning(false);
-                    setIsFinished(false);
-                    setHasRecordedResult(false);
-                    setMessage(`Timer set to ${preset} seconds — start when you feel ready.`);
+                    setTimerPreset(preset);
+                    resetRound(preset);
                   }}
                   type="button"
                 >
@@ -205,105 +290,99 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
               ))}
             </div>
           </div>
-          <div className="grid gap-2 rounded-[1.5rem] border border-white/85 bg-white/80 p-3 shadow-sm sm:grid-cols-4 lg:min-w-[28rem]">
-            <div className="rounded-[1.15rem] bg-sky-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sky-600">Timer</p>
-              <p className="mt-2 text-xl font-extrabold text-slate-950">{selectedDuration}s</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-sky-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sky-600">Time left</p>
-              <p className="mt-2 text-xl font-extrabold text-slate-950">{timeLeft}s</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-sky-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sky-600">WPM</p>
-              <p className="mt-2 text-xl font-extrabold text-slate-950">{showResults ? currentStats.wpm : 0}</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-sky-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sky-600">Best</p>
-              <p className="mt-2 text-xl font-extrabold text-slate-950">{bestWpm}</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-sky-50 px-4 py-3 text-center sm:col-span-2">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sky-600">Session progress</p>
-              <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-white/85">
-                <div className="h-full rounded-full bg-gradient-to-r from-sky-500 to-indigo-500 transition-all duration-500" style={{ width: `${progressPercent}%` }} />
+          <div className="grid w-full gap-2 rounded-[1.6rem] border border-white/85 bg-white/84 p-3 shadow-sm sm:grid-cols-2 lg:w-[29rem] lg:grid-cols-3">
+            {[
+              { label: 'WPM', value: wpm },
+              { label: 'Accuracy', value: `${accuracy}%` },
+              { label: 'CPM', value: cpm },
+              { label: 'Errors', value: errors },
+              { label: 'Best WPM', value: bestWpm },
+              { label: 'Rounds', value: rounds },
+            ].map((stat) => (
+              <div key={stat.label} className="rounded-[1.15rem] bg-slate-50 px-4 py-3 text-center">
+                <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-500">{stat.label}</p>
+                <p className="mt-2 text-xl font-extrabold text-slate-950">{stat.value}</p>
               </div>
-            </div>
-            <div className="rounded-[1.15rem] bg-sky-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sky-600">Status</p>
-              <p className="mt-2 text-sm font-extrabold uppercase tracking-[0.18em] text-slate-950">{isFinished ? 'Finished' : isRunning ? 'Running' : 'Ready'}</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-sky-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sky-600">Rounds</p>
-              <p className="mt-2 text-xl font-extrabold text-slate-950">{rounds}</p>
-            </div>
+            ))}
           </div>
         </div>
 
-        <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_280px]">
-          <div className="rounded-[1.8rem] border border-sky-100 bg-[#eef5fb] p-5 shadow-inner lg:p-6">
-            <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sky-600">Typing passage</p>
-            <div className="mt-4 rounded-[1.5rem] border border-white/85 bg-white/86 p-5 text-lg leading-8 text-slate-800 shadow-sm">
-              {passageMarkup.map((item) => (
-                <span key={item.id} className={`rounded px-0.5 ${item.className}`}>
-                  {item.character === ' ' ? '\u00A0' : item.character}
+        <div className="mt-6 grid gap-4 xl:grid-cols-[minmax(0,1fr)_260px]">
+          <div className="rounded-[1.8rem] border border-white/80 bg-white/92 p-4 shadow-sm sm:p-5">
+            <button
+              className="block h-[11.5rem] w-full overflow-y-auto rounded-[1.5rem] bg-slate-50/90 px-3 py-4 text-left shadow-inner outline-none ring-offset-0 transition focus-visible:ring-2 focus-visible:ring-sky-300 sm:h-[13rem] sm:px-4"
+              onClick={() => inputRef.current?.focus()}
+              type="button"
+            >
+              <div className="flex flex-wrap items-center gap-x-2 gap-y-3 text-lg leading-8 sm:text-xl sm:leading-9">
+                {wordSequence.map((word, index) => (
+                  <TypingWord
+                    activeInput={currentInput}
+                    isActive={index === activeWordIndex}
+                    isPast={index < activeWordIndex}
+                    key={`${word}-${index}`}
+                    targetWord={word}
+                    typedWord={typedWords[index] || ''}
+                    wordRef={(node) => {
+                      if (node) {
+                        wordRefs.current[index] = node;
+                      }
+                    }}
+                  />
+                ))}
+              </div>
+            </button>
+
+            <div className="mt-4 rounded-[1.35rem] border border-sky-100 bg-sky-50/75 p-3 sm:p-4">
+              <p className="text-[11px] font-extrabold uppercase tracking-[0.2em] text-sky-700">Live input</p>
+              <input
+                autoCapitalize="off"
+                autoComplete="off"
+                autoCorrect="off"
+                className="mt-3 w-full rounded-2xl border border-white bg-white px-4 py-3 text-base font-semibold text-slate-900 outline-none transition focus:border-sky-300 focus:ring-2 focus:ring-sky-200"
+                disabled={roundStatus === 'finished'}
+                onChange={handleChange}
+                onFocus={() => {
+                  if (!isRunning && roundStatus !== 'finished') {
+                    setRoundStatus('idle');
+                  }
+                }}
+                placeholder={roundStatus === 'finished' ? 'Round complete — restart for a fresh flow' : 'Start typing here…'}
+                ref={inputRef}
+                spellCheck={false}
+                type="text"
+                value={currentInput}
+              />
+              <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div className="space-y-2">
+                  <p className="text-sm font-semibold leading-6 text-slate-600">{helperMessage}</p>
+                  <span className="inline-flex rounded-full bg-white px-3 py-1 text-xs font-extrabold uppercase tracking-[0.16em] text-sky-700 shadow-sm">
+                    Current word: {activeWord || 'done'}
+                  </span>
+                </div>
+                <span className={`inline-flex rounded-full px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] ${timeLeft > 10 ? 'bg-emerald-100 text-emerald-800' : timeLeft > 0 ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-700'}`}>
+                  {timeLeft}s left
                 </span>
-              ))}
-            </div>
-
-            <label className="mt-5 block text-[11px] font-extrabold uppercase tracking-[0.22em] text-sky-600" htmlFor="typing-speed-input">Type here</label>
-            <textarea
-              id="typing-speed-input"
-              autoCapitalize="none"
-              autoCorrect="off"
-              className="mt-3 min-h-[168px] w-full rounded-[1.5rem] border border-sky-200 bg-white px-5 py-4 text-base font-semibold text-slate-950 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-200 disabled:cursor-not-allowed disabled:bg-slate-50"
-              disabled={isFinished}
-              onChange={(event) => {
-                const nextValue = event.target.value;
-                if (!isRunning && !isFinished) {
-                  setIsRunning(true);
-                  setMessage('Timer started — keep it smooth, not rushed.');
-                }
-                if (!isFinished) {
-                  setTypedText(nextValue);
-                }
-              }}
-              placeholder="Start typing the highlighted passage here..."
-              value={typedText}
-            />
-
-            <div className="mt-4 flex flex-wrap gap-2.5">
-              <button className="rounded-full bg-slate-950 px-5 py-3 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-900" onClick={startRound} type="button">
-                Start fresh timer
-              </button>
-              <button className="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-white px-5 py-3 text-sm font-extrabold text-slate-900 shadow-sm transition hover:-translate-y-0.5" onClick={resetRound} type="button">
-                <RotateCcw size={16} /> New passage
-              </button>
+              </div>
             </div>
           </div>
 
-          <div className="flex flex-col gap-4 rounded-[1.8rem] border border-white/80 bg-white/78 p-4 shadow-sm">
-            <div className="rounded-[1.4rem] border border-sky-100 bg-sky-50/70 p-4">
-              <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sky-600">Current stats</p>
-              <div className="mt-3 grid gap-2 text-sm font-semibold text-slate-700">
-                <p>Accuracy: <span className="font-extrabold text-slate-950">{showResults ? currentStats.accuracy : 100}%</span></p>
-                <p>CPM: <span className="font-extrabold text-slate-950">{showResults ? currentStats.cpm : 0}</span></p>
-                <p>Errors: <span className="font-extrabold text-slate-950">{showResults ? currentStats.errors : 0}</span></p>
-                <p>Correct chars: <span className="font-extrabold text-slate-950">{showResults ? currentStats.correctChars : 0}</span></p>
-              </div>
+          <div className="space-y-4">
+            <div className="rounded-[1.6rem] border border-white/80 bg-white/92 p-4 shadow-sm">
+              <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-slate-600">Flow tips</p>
+              <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-700">
+                <li>- Words keep extending, so you can stay in the rhythm for the whole timer.</li>
+                <li>- Space commits a word and scrolls the active one into view.</li>
+                <li>- On mobile, tap the word panel anytime to refocus the keyboard.</li>
+              </ul>
             </div>
-
-            <div className="rounded-[1.4rem] border border-sky-100 bg-white p-4 shadow-sm">
-              <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sky-600">How to read it</p>
-              <div className="mt-3 space-y-2.5 text-sm leading-7 text-slate-700">
-                <p>WPM estimates how many standard words you typed correctly each minute.</p>
-                <p>Accuracy shows how clean your keystrokes were.</p>
-                <p>CPM helps if you want a finer-grained progress number.</p>
-              </div>
-            </div>
-
-            <div className="rounded-[1.4rem] border border-sky-100 bg-white p-4 text-sm font-semibold leading-7 text-slate-700 shadow-sm">
-              {message}
-            </div>
+            <button
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-slate-900 px-5 py-3.5 text-sm font-extrabold text-white transition hover:bg-slate-800"
+              onClick={() => resetRound(timerPreset)}
+              type="button"
+            >
+              <RotateCcw size={16} /> Restart typing flow
+            </button>
           </div>
         </div>
       </div>

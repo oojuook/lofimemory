@@ -5,7 +5,9 @@ const BOARD_SIZE = 9;
 const BOX_SIZE = 3;
 const DUPLICATE_GROUP_SIZE = 2;
 const INNER_BORDER_WIDTH = 1;
-const SUBGRID_BORDER_WIDTH = 2;
+const SUBGRID_BORDER_WIDTH = 3;
+const INNER_BORDER_COLOR = '#ffffff';
+const SUBGRID_BORDER_COLOR = '#b8c8c0';
 const DIGITS = Array.from({ length: BOARD_SIZE }, (_, index) => index + 1);
 
 const puzzleBank = {
@@ -224,6 +226,10 @@ function SudokuCellButton({ cellClass, cellId, colIndex, notes, onSelect, rowInd
         borderLeftWidth: colIndex % BOX_SIZE === 0 ? SUBGRID_BORDER_WIDTH : INNER_BORDER_WIDTH,
         borderRightWidth: colIndex === BOARD_SIZE - 1 ? SUBGRID_BORDER_WIDTH : INNER_BORDER_WIDTH,
         borderBottomWidth: rowIndex === BOARD_SIZE - 1 ? SUBGRID_BORDER_WIDTH : INNER_BORDER_WIDTH,
+        borderTopColor: rowIndex % BOX_SIZE === 0 ? SUBGRID_BORDER_COLOR : INNER_BORDER_COLOR,
+        borderLeftColor: colIndex % BOX_SIZE === 0 ? SUBGRID_BORDER_COLOR : INNER_BORDER_COLOR,
+        borderRightColor: colIndex === BOARD_SIZE - 1 ? SUBGRID_BORDER_COLOR : INNER_BORDER_COLOR,
+        borderBottomColor: rowIndex === BOARD_SIZE - 1 ? SUBGRID_BORDER_COLOR : INNER_BORDER_COLOR,
       }}
       type="button"
     >
@@ -256,7 +262,7 @@ function SudokuBoard({
 }) {
   return (
     <div className="rounded-[1.75rem] border border-white/80 bg-white/92 p-4 shadow-sm">
-      <div className="grid grid-cols-9 gap-[3px] rounded-[1.5rem] bg-[#dfe7df] p-[6px] sm:gap-1 sm:p-3">
+      <div className="grid grid-cols-9 gap-[3px] rounded-[1.5rem] bg-[#cdd9d0] p-[6px] sm:gap-1 sm:p-3">
         {board.map((row, rowIndex) => row.map((value, colIndex) => {
           const cellId = getCellId(rowIndex, colIndex);
           const editable = isEditableCell(rowIndex, colIndex);

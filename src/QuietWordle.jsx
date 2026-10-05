@@ -9,6 +9,20 @@ const difficultyPools = {
     { word: 'REST', hint: 'What a slow evening gives you' },
     { word: 'MOSS', hint: 'Something soft and green outdoors' },
     { word: 'COZY', hint: 'Warm, safe, and comfortable' },
+    { word: 'LOFI', hint: 'A mellow musical mood' },
+    { word: 'POND', hint: 'A still little body of water' },
+    { word: 'LILY', hint: 'A flower that fits the pad theme' },
+    { word: 'MINT', hint: 'A cool little green leaf' },
+    { word: 'DUSK', hint: 'The soft light after sunset' },
+    { word: 'RAIN', hint: 'Gentle weather at the window' },
+    { word: 'HUSH', hint: 'A very quiet kind of sound' },
+    { word: 'WAVE', hint: 'A moving line of water' },
+    { word: 'SAGE', hint: 'A calm green shade' },
+    { word: 'NEST', hint: 'A sheltered little place' },
+    { word: 'FERN', hint: 'A leafy forest plant' },
+    { word: 'DEEP', hint: 'A fuller kind of breath' },
+    { word: 'TIDE', hint: 'Water rising and falling' },
+    { word: 'GLEN', hint: 'A quiet little valley' },
   ],
   medium: [
     { word: 'DREAM', hint: 'A wandering thought or night story' },
@@ -17,6 +31,20 @@ const difficultyPools = {
     { word: 'PLANT', hint: 'A quiet little desk companion' },
     { word: 'COAST', hint: 'A calm place near the sea' },
     { word: 'LIGHT', hint: 'A soft glow in the room' },
+    { word: 'EMBER', hint: 'A small warm glow in the ashes' },
+    { word: 'STONE', hint: 'Something grounded and solid' },
+    { word: 'SHORE', hint: 'Where water meets land' },
+    { word: 'GROVE', hint: 'A cluster of quiet trees' },
+    { word: 'BLOOM', hint: 'What flowers begin to do' },
+    { word: 'STILL', hint: 'Not moving much at all' },
+    { word: 'LATTE', hint: 'A warm café drink' },
+    { word: 'RIVER', hint: 'A flowing line of water' },
+    { word: 'DRIFT', hint: 'To move slowly with the current' },
+    { word: 'GLEAM', hint: 'A quick soft shine' },
+    { word: 'QUIET', hint: 'A softer kind of sound level' },
+    { word: 'MUSIC', hint: 'What fills the page with mood' },
+    { word: 'BROOK', hint: 'A small calm stream' },
+    { word: 'PETAL', hint: 'Part of a flower bloom' },
   ],
   hard: [
     { word: 'BREEZY', hint: 'Light and airy in mood' },
@@ -25,6 +53,20 @@ const difficultyPools = {
     { word: 'SUNLIT', hint: 'Filled with gentle light' },
     { word: 'MELLOW', hint: 'Relaxed, soft, and unhurried' },
     { word: 'GARDEN', hint: 'A quiet green place to wander' },
+    { word: 'WILLOW', hint: 'A tree with long hanging branches' },
+    { word: 'RIPPLE', hint: 'A tiny wave pattern on water' },
+    { word: 'CANDLE', hint: 'A small warm light source' },
+    { word: 'POCKET', hint: 'A little place that holds things' },
+    { word: 'VELVET', hint: 'A texture that feels rich and soft' },
+    { word: 'WANDER', hint: 'To move without much hurry' },
+    { word: 'BLOOMS', hint: 'Flowers opening up' },
+    { word: 'SILVER', hint: 'A cool bright metal tone' },
+    { word: 'THRIVE', hint: 'To grow well and feel alive' },
+    { word: 'LAGOON', hint: 'A sheltered pool of water' },
+    { word: 'AURORA', hint: 'A glowing sky display' },
+    { word: 'HARBOR', hint: 'A sheltered water stop' },
+    { word: 'GENTLE', hint: 'Soft, calm, and kind' },
+    { word: 'TENDER', hint: 'Soft in feeling or touch' },
   ],
 };
 
@@ -180,7 +222,7 @@ export default function QuietWordle({ difficulty = 'medium' }) {
     setGuesses([]);
     setCurrentGuess('');
     setRoundStatus('playing');
-    setMessage('Fresh board, same calm pace.');
+    setMessage('Fresh board, another cozy word — no daily cap.');
     if (resetStreak) {
       setStreak(0);
     }
@@ -313,7 +355,7 @@ export default function QuietWordle({ difficulty = 'medium' }) {
               <Sparkles size={14} /> {config.label} word guess
             </div>
             <h3 className="mt-4 text-3xl font-bold tracking-tight text-sage-950">Quiet Wordle</h3>
-            <p className="mt-2 max-w-2xl text-sm leading-7 text-sage-700">A cozy Wordle-style puzzle for when you want a familiar word-guessing game without losing the soft relaxed mood of the page. Type or tap letters, read the color hints, and keep the rounds light.</p>
+            <p className="mt-2 max-w-2xl text-sm leading-7 text-sage-700">A cozy Wordle-style puzzle for when you want a familiar word-guessing game without losing the soft relaxed mood of the page. Type or tap letters, read the color hints, and keep playing through unlimited cozy rounds.</p>
             <p className="mt-2 text-sm font-semibold text-sage-600">{config.note}</p>
           </div>
           <div className="grid gap-2 rounded-[1.5rem] border border-white/85 bg-white/80 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[23rem]">

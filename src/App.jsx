@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import radioVinylIcon from './assets/lofi-radio-vinyl.png';
 import { onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
 import { collection, deleteDoc, doc, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore';
@@ -8,6 +8,9 @@ import {
   ArrowUp,
   BookOpen,
   CalendarDays,
+  Cloud,
+  CloudRain,
+  CloudSun,
   Compass,
   Feather,
   Eye,
@@ -16,8 +19,10 @@ import {
   HeartHandshake,
   ImagePlus,
   Leaf,
+  LocateFixed,
   Lock,
   Mail,
+  MapPin,
   Moon,
   Newspaper,
   Paintbrush,
@@ -1453,6 +1458,57 @@ function buildCalendarDays(monthKey) {
   ];
 }
 
+function FrogIcon({ size = 18 }) {
+  return <span aria-hidden="true" style={{ fontSize: `${size + 4}px`, lineHeight: 1 }}>🐸</span>;
+}
+
+function getForecastVisuals(weatherCode) {
+  if ([0, 1].includes(weatherCode)) {
+    return { emoji: '☀️', label: 'Clear', Icon: CloudSun, chipClass: 'bg-amber-100 text-amber-800' };
+  }
+
+  if ([2, 3, 45, 48].includes(weatherCode)) {
+    return { emoji: '☁️', label: 'Cloudy', Icon: Cloud, chipClass: 'bg-slate-100 text-slate-700' };
+  }
+
+  if ([51, 53, 55, 56, 57].includes(weatherCode)) {
+    return { emoji: '🌦️', label: 'Drizzle', Icon: CloudRain, chipClass: 'bg-sky-100 text-sky-800' };
+  }
+
+  if ([61, 63, 65, 66, 67, 80, 81, 82].includes(weatherCode)) {
+    return { emoji: '🌧️', label: 'Rain', Icon: CloudRain, chipClass: 'bg-sky-100 text-sky-800' };
+  }
+
+  if ([71, 73, 75, 77, 85, 86].includes(weatherCode)) {
+    return { emoji: '❄️', label: 'Snow', Icon: Cloud, chipClass: 'bg-cyan-100 text-cyan-800' };
+  }
+
+  if ([95, 96, 99].includes(weatherCode)) {
+    return { emoji: '⛈️', label: 'Storm', Icon: CloudRain, chipClass: 'bg-indigo-100 text-indigo-800' };
+  }
+
+  return { emoji: '🌤️', label: 'Forecast', Icon: CloudSun, chipClass: 'bg-sage-100 text-sage-800' };
+}
+
+function formatForecastTemperature(value) {
+  return Number.isFinite(value) ? `${Math.round(value)}°` : '—';
+}
+
+function buildForecastByDate(dailyForecast = {}) {
+  const dates = dailyForecast.time || [];
+  const codes = dailyForecast.weather_code || [];
+  const maxTemps = dailyForecast.temperature_2m_max || [];
+  const minTemps = dailyForecast.temperature_2m_min || [];
+
+  return Object.fromEntries(dates.map((dateKey, index) => [dateKey, {
+    dateKey,
+    weatherCode: codes[index],
+    maxTemp: maxTemps[index],
+    minTemp: minTemps[index]
+  }]));
+}
+
+
 function getInitialEntries() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
@@ -2347,6 +2403,10 @@ function App() {
   const [selectedEntry, setSelectedEntry] = useState(null);
   const [calendarMonth, setCalendarMonth] = useState(() => initialCalendarDate.slice(0, 7));
   const [selectedCalendarDate, setSelectedCalendarDate] = useState(initialCalendarDate);
+  const [calendarForecastByDate, setCalendarForecastByDate] = useState({});
+  const [calendarForecastStatus, setCalendarForecastStatus] = useState('We can add a local forecast here once location access is allowed.');
+  const [calendarForecastPermission, setCalendarForecastPermission] = useState('idle');
+  const [calendarForecastLocation, setCalendarForecastLocation] = useState('');
   const [isEditingEntry, setIsEditingEntry] = useState(false);
   const [editTitle, setEditTitle] = useState('');
   const [editBody, setEditBody] = useState('');
@@ -2453,10 +2513,10 @@ function App() {
     },
     {
       id: 'stream-surfer',
-      title: 'Stream Surfer',
-      detail: 'Gentle lane dodging',
-      description: 'Slide through a calm river run when you want a little movement without the noise.',
-      icon: Waves,
+      title: 'Lilypad Hopper',
+      detail: 'Gentle pond dodging',
+      description: 'Hop through a calm lily-pad run when you want a little movement without the noise.',
+      icon: FrogIcon,
       tone: 'from-sky-100 to-cyan-50 text-sky-700',
       component: <StreamSurfer difficulty={selectedGameDifficulty} />
     },
@@ -2518,7 +2578,7 @@ function App() {
       id: 'typing-speed-test',
       title: 'Typing Speed Test',
       detail: 'Calm WPM check',
-      description: 'Type a soft passage, watch your WPM and accuracy, and get a clean little typing-speed snapshot without the usual pressure.',
+      description: 'Type through a continuous monkeytype-style flow where the words keep moving, your WPM stays visible, and the whole thing still feels calm on mobile.',
       icon: PenLine,
       tone: 'from-sky-100 to-indigo-50 text-sky-700',
       component: <TypingSpeedTest difficulty={selectedGameDifficulty} />
@@ -3242,6 +3302,72 @@ function App() {
   const calendarDays = useMemo(() => buildCalendarDays(calendarMonth), [calendarMonth]);
   const selectedDateEntries = entriesByDate[selectedCalendarDate] || [];
   const selectedImportantDate = importantDates[selectedCalendarDate] || null;
+  const selectedCalendarForecast = calendarForecastByDate[selectedCalendarDate] || null;
+  const selectedCalendarForecastVisuals = getForecastVisuals(selectedCalendarForecast?.weatherCode);
+
+  const loadCalendarForecast = useCallback(() => {
+    if (typeof navigator === 'undefined' || !navigator.geolocation) {
+      setCalendarForecastPermission('unsupported');
+      setCalendarForecastStatus('Location-based weather is not available in this browser.');
+      return;
+    }
+
+    setCalendarForecastPermission('loading');
+    setCalendarForecastStatus('Checking your location for a local forecast...');
+
+    navigator.geolocation.getCurrentPosition(async ({ coords }) => {
+      try {
+        const forecastUrl = `https://api.open-meteo.com/v1/forecast?latitude=${coords.latitude}&longitude=${coords.longitude}&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=16`;
+        const reverseUrl = `https://geocoding-api.open-meteo.com/v1/reverse?latitude=${coords.latitude}&longitude=${coords.longitude}&language=en&format=json`;
+        const [forecastResponse, reverseResponse] = await Promise.all([
+          fetch(forecastUrl),
+          fetch(reverseUrl).catch(() => null)
+        ]);
+
+        if (!forecastResponse.ok) {
+          throw new Error('Forecast request failed');
+        }
+
+        const forecastPayload = await forecastResponse.json();
+        const reversePayload = reverseResponse?.ok ? await reverseResponse.json() : null;
+        const resolvedPlace = reversePayload?.results?.[0];
+        const resolvedName = resolvedPlace?.city || resolvedPlace?.town || resolvedPlace?.village || resolvedPlace?.county || 'Near you';
+
+        setCalendarForecastByDate(buildForecastByDate(forecastPayload.daily));
+        setCalendarForecastLocation(resolvedName);
+        setCalendarForecastPermission('granted');
+        setCalendarForecastStatus(`Forecast ready for ${resolvedName}.`);
+      } catch {
+        setCalendarForecastPermission('error');
+        setCalendarForecastStatus('We could not load the local forecast right now. Try again in a moment.');
+      }
+    }, (error) => {
+      if (error.code === error.PERMISSION_DENIED) {
+        setCalendarForecastPermission('denied');
+        setCalendarForecastStatus('Location access is off, so the calendar forecast is waiting for permission.');
+        return;
+      }
+
+      setCalendarForecastPermission('error');
+      setCalendarForecastStatus('We could not read your location just now. Try again when the signal feels steadier.');
+    }, {
+      enableHighAccuracy: false,
+      timeout: 10000,
+      maximumAge: 1000 * 60 * 30
+    });
+  }, []);
+
+  useEffect(() => {
+    if (activeTab !== 'memories' || calendarForecastPermission !== 'idle') {
+      return;
+    }
+
+    if (Object.keys(calendarForecastByDate).length > 0) {
+      return;
+    }
+
+    loadCalendarForecast();
+  }, [activeTab, calendarForecastByDate, calendarForecastPermission, loadCalendarForecast]);
   const importantDateCount = useMemo(() => Object.keys(importantDates).length, [importantDates]);
   const upcomingImportantDates = useMemo(() => Object.entries(importantDates)
     .map(([dateKey, item]) => ({
@@ -6192,6 +6318,27 @@ function App() {
               <span className="rounded-full border border-white/90 bg-white/88 px-3 py-2 shadow-sm">{upcomingReminderCount} upcoming reminders</span>
               <span className="rounded-full border border-white/90 bg-white/88 px-3 py-2 shadow-sm">{selectedDateEntries.length} page{selectedDateEntries.length === 1 ? '' : 's'} on this day</span>
             </div>
+            <div className="mb-4 rounded-[1.4rem] border border-white/85 bg-white/90 p-4 shadow-inner sm:p-5">
+              <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+                <div>
+                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Local forecast</p>
+                  <div className="mt-2 flex flex-wrap items-center gap-2 text-sm font-semibold text-sage-700">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-sage-100 bg-sage-50 px-3 py-1.5">
+                      <MapPin size={14} /> {calendarForecastLocation || 'Near you'}
+                    </span>
+                    {selectedCalendarForecast && (
+                      <span className={`rounded-full px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.16em] ${selectedCalendarForecastVisuals.chipClass}`}>
+                        {selectedCalendarForecastVisuals.emoji} {selectedCalendarForecastVisuals.label} · {formatForecastTemperature(selectedCalendarForecast.maxTemp)} / {formatForecastTemperature(selectedCalendarForecast.minTemp)}
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-3 text-sm leading-6 text-sage-700">{calendarForecastStatus}</p>
+                </div>
+                <button className="inline-flex items-center justify-center gap-2 rounded-full border border-sage-200 bg-white px-4 py-2.5 text-sm font-extrabold text-sage-800 transition hover:bg-sage-50" onClick={loadCalendarForecast} type="button">
+                  <LocateFixed size={16} /> {calendarForecastPermission === 'granted' ? 'Refresh forecast' : 'Use my location'}
+                </button>
+              </div>
+            </div>
             <div className="mb-4 rounded-[1.5rem] bg-white/82 p-2.5 shadow-inner sm:rounded-[1.75rem] sm:p-3">
               <div className="flex items-center justify-between gap-2 rounded-[1.2rem] bg-white/75 px-2 py-2 shadow-sm">
                 <button className="rounded-full bg-white px-3 py-2 text-sm font-extrabold text-sage-800 shadow-sm" onClick={() => setCalendarMonth(shiftMonthKey(calendarMonth, -1))} type="button">‹</button>
@@ -6209,11 +6356,13 @@ function App() {
               {calendarDays.map((day, index) => {
                 const dayEntries = day ? entriesByDate[day.dateKey] || [] : [];
                 const hasImportantDate = day ? Boolean(importantDates[day.dateKey]) : false;
+                const dayForecast = day ? calendarForecastByDate[day.dateKey] : null;
+                const dayForecastVisuals = getForecastVisuals(dayForecast?.weatherCode);
                 const isSelected = day?.dateKey === selectedCalendarDate;
                 const isToday = day?.dateKey === todayISO();
                 return day ? (
                   <button
-                    className={`relative aspect-square rounded-xl border text-xs font-extrabold transition hover:-translate-y-0.5 sm:rounded-2xl sm:text-sm ${isSelected ? 'border-sage-800 bg-sage-900 text-white shadow-lift' : isToday ? 'border-sage-300 bg-sage-100 text-sage-900' : 'border-sage-100 bg-white text-sage-800 hover:bg-sage-50'}`}
+                    className={`relative aspect-square rounded-xl border px-1 py-1 text-xs font-extrabold transition hover:-translate-y-0.5 sm:rounded-2xl sm:px-1.5 sm:py-1.5 sm:text-sm ${isSelected ? 'border-sage-800 bg-sage-900 text-white shadow-lift' : isToday ? 'border-sage-300 bg-sage-100 text-sage-900' : 'border-sage-100 bg-white text-sage-800 hover:bg-sage-50'}`}
                     key={day.dateKey}
                     onClick={() => {
                       setSelectedCalendarDate(day.dateKey);
@@ -6221,8 +6370,11 @@ function App() {
                     }}
                     type="button"
                   >
-                    {day.day}
+                    <span>{day.day}</span>
                     {hasImportantDate && <span className={`absolute right-1 top-1 text-[9px] sm:right-1.5 sm:top-1.5 sm:text-[10px] ${isSelected ? 'text-sand-100' : 'text-rose-500'}`}>✦</span>}
+                    {dayForecast && (
+                      <span className={`absolute bottom-1 right-1 text-[11px] sm:bottom-1.5 sm:right-1.5 sm:text-[13px] ${isSelected ? 'text-white' : ''}`}>{dayForecastVisuals.emoji}</span>
+                    )}
                     {dayEntries.length > 0 && <span className={`absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full sm:h-1.5 sm:w-1.5 ${isSelected ? 'bg-white' : 'bg-sage-700'}`} />}
                   </button>
                 ) : <div key={`blank-${index}`} />;
@@ -6232,7 +6384,15 @@ function App() {
               <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                 <div className="max-w-2xl">
                   <p className="text-xs font-extrabold uppercase tracking-widest text-sage-600">{selectedCalendarDate}</p>
-                  <p className="mt-1 text-sm font-semibold leading-6 text-sage-700">Keep the calendar focused on the days that matter, then let notification permission and service-worker support surface today and tomorrow reminders more cleanly.</p>
+                  <p className="mt-1 text-sm font-semibold leading-6 text-sage-700">Keep the calendar focused on the days that matter, then let reminders and local forecast context help you plan around the shape of the day.</p>
+                  {selectedCalendarForecast && (
+                    <div className="mt-3 inline-flex flex-wrap items-center gap-2 rounded-2xl border border-sage-100 bg-sage-50 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.16em] text-sage-800">
+                      <selectedCalendarForecastVisuals.Icon size={14} />
+                      <span>{selectedCalendarForecastVisuals.label}</span>
+                      <span>{formatForecastTemperature(selectedCalendarForecast.maxTemp)} high</span>
+                      <span>{formatForecastTemperature(selectedCalendarForecast.minTemp)} low</span>
+                    </div>
+                  )}
                 </div>
                 <div className="flex w-full flex-col gap-2 sm:w-auto lg:min-w-[230px]">
                   <button className={`w-full rounded-full px-4 py-2.5 text-sm font-extrabold transition ${selectedImportantDate ? 'bg-sage-100 text-sage-800 hover:bg-sage-200' : 'bg-sage-900 text-white hover:bg-sage-800'}`} onClick={() => openImportantDateEditor(selectedCalendarDate)} type="button">

@@ -9,7 +9,7 @@ const difficultySettings = {
     spawnBase: 100,
     moveEase: 0.24,
     label: 'Easy',
-    note: 'Slower water and more room to glide around hazards.'
+    note: 'Slower water and more room to glide around hazards.',
   },
   medium: {
     startSpeed: 4.5,
@@ -18,7 +18,7 @@ const difficultySettings = {
     spawnBase: 90,
     moveEase: 0.2,
     label: 'Medium',
-    note: 'Balanced and rhythmic for a steady little reset.'
+    note: 'Balanced and rhythmic for a steady little reset.',
   },
   hard: {
     startSpeed: 5.3,
@@ -27,8 +27,8 @@ const difficultySettings = {
     spawnBase: 80,
     moveEase: 0.17,
     label: 'Hard',
-    note: 'Quicker streams and tighter reactions for sharper focus.'
-  }
+    note: 'Quicker streams and tighter reactions for sharper focus.',
+  },
 };
 
 export default function StreamSurfer({ difficulty = 'medium' }) {
@@ -47,7 +47,7 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
     obstacles: [],
     frames: 0,
     score: 0,
-    waterOffset: 0
+    waterOffset: 0,
   });
 
   const laneWidth = 200;
@@ -61,7 +61,7 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
       obstacles: [],
       frames: 0,
       score: 0,
-      waterOffset: 0
+      waterOffset: 0,
     };
     setScore(0);
     setGameState('start');
@@ -69,16 +69,26 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
   }, [config.startSpeed, highScoreKey]);
 
   const handleMove = (direction) => {
-    if (gameState !== 'playing') return;
+    if (gameState !== 'playing') {
+      return;
+    }
     const state = stateRef.current;
-    if (direction === -1 && state.lane > 0) state.lane -= 1;
-    if (direction === 1 && state.lane < 2) state.lane += 1;
+    if (direction === -1 && state.lane > 0) {
+      state.lane -= 1;
+    }
+    if (direction === 1 && state.lane < 2) {
+      state.lane += 1;
+    }
   };
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.code === 'ArrowLeft' || event.code === 'KeyA') handleMove(-1);
-      if (event.code === 'ArrowRight' || event.code === 'KeyD') handleMove(1);
+      if (event.code === 'ArrowLeft' || event.code === 'KeyA') {
+        handleMove(-1);
+      }
+      if (event.code === 'ArrowRight' || event.code === 'KeyD') {
+        handleMove(1);
+      }
       if (event.code === 'Space' && gameState !== 'playing') {
         event.preventDefault();
         startGame();
@@ -96,7 +106,7 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
       obstacles: [],
       frames: 0,
       score: 0,
-      waterOffset: 0
+      waterOffset: 0,
     };
     setScore(0);
     setGameState('playing');
@@ -104,31 +114,55 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return undefined;
+    if (!canvas) {
+      return undefined;
+    }
     const ctx = canvas.getContext('2d');
     let animationId;
 
-    const drawBoat = (x, y) => {
+    const drawFrog = (x, y) => {
       ctx.save();
       ctx.translate(x, y);
-      ctx.fillStyle = '#ffffff';
-      ctx.shadowColor = 'rgba(0,0,0,0.1)';
-      ctx.shadowBlur = 10;
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.14)';
+      ctx.shadowBlur = 12;
+
+      ctx.fillStyle = '#6b9f50';
       ctx.beginPath();
-      ctx.moveTo(0, -25);
-      ctx.lineTo(18, 15);
-      ctx.lineTo(0, 5);
-      ctx.lineTo(-18, 15);
-      ctx.closePath();
+      ctx.ellipse(0, 6, 24, 18, 0, 0, Math.PI * 2);
       ctx.fill();
 
-      ctx.fillStyle = '#f0f5f2';
       ctx.beginPath();
-      ctx.moveTo(0, -25);
-      ctx.lineTo(18, 15);
-      ctx.lineTo(0, 5);
-      ctx.closePath();
+      ctx.ellipse(-14, 16, 9, 7, Math.PI / 5, 0, Math.PI * 2);
+      ctx.ellipse(14, 16, 9, 7, -Math.PI / 5, 0, Math.PI * 2);
       ctx.fill();
+
+      ctx.beginPath();
+      ctx.ellipse(-12, -10, 8, 8, 0, 0, Math.PI * 2);
+      ctx.ellipse(12, -10, 8, 8, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = '#d9efc9';
+      ctx.beginPath();
+      ctx.ellipse(0, 3, 11, 8, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(-12, -10, 3.5, 0, Math.PI * 2);
+      ctx.arc(12, -10, 3.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = '#18261b';
+      ctx.beginPath();
+      ctx.arc(-12, -10, 1.6, 0, Math.PI * 2);
+      ctx.arc(12, -10, 1.6, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.strokeStyle = '#29432f';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(0, 6, 8, 0.2, Math.PI - 0.2);
+      ctx.stroke();
       ctx.restore();
     };
 
@@ -176,7 +210,9 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
           state.obstacles.push({ lane, y: -50, passed: false });
         }
 
-        if (state.frames % 300 === 0) state.speed += config.speedRamp;
+        if (state.frames % 300 === 0) {
+          state.speed += config.speedRamp;
+        }
 
         const targetX = getLaneCenter(state.lane);
         state.visualX += (targetX - state.visualX) * config.moveEase;
@@ -204,7 +240,7 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
         state.visualX = getLaneCenter(1);
       }
 
-      drawBoat(state.visualX, canvas.height - 80);
+      drawFrog(state.visualX, canvas.height - 80);
       animationId = requestAnimationFrame(draw);
     };
 
@@ -226,11 +262,11 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
           <div className="inline-flex items-center gap-2 rounded-full border border-teal-200 bg-white/88 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-teal-700 shadow-sm">
             <Sparkles size={14} /> {config.label} current
           </div>
-          <h3 className="mt-3 text-2xl font-bold text-teal-900">Stream Surfer</h3>
-          <p className="text-sm font-semibold text-teal-700">A rhythmic 3-lane dodge game to clear your mind.</p>
+          <h3 className="mt-3 text-2xl font-bold text-teal-900">Lilypad Hopper</h3>
+          <p className="text-sm font-semibold text-teal-700">A frog-themed 3-lane pond dodge that feels lighter on mobile.</p>
           <p className="mt-1 text-sm text-teal-600">{config.note}</p>
         </div>
-        <div className="flex gap-4 text-sm font-extrabold uppercase tracking-widest text-teal-700">
+        <div className="flex flex-wrap gap-3 text-sm font-extrabold uppercase tracking-widest text-teal-700">
           <span className="rounded-full bg-teal-100 px-4 py-2 shadow-sm">Score: {score}</span>
           <span className="rounded-full border border-teal-200 bg-white px-4 py-2 shadow-sm">Best: {highScore}</span>
         </div>
@@ -239,36 +275,54 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
         <canvas ref={canvasRef} width={600} height={400} className="block h-full w-full touch-none" />
 
         {gameState === 'playing' && (
-          <div className="absolute inset-0 flex sm:hidden">
-            <div className="flex-1" onTouchStart={(event) => { event.preventDefault(); handleMove(-1); }} />
-            <div className="flex-1" onTouchStart={(event) => { event.preventDefault(); handleMove(1); }} />
+          <div className="pointer-events-none absolute inset-x-3 bottom-3 flex items-center justify-between gap-3 sm:hidden">
+            <button
+              className="pointer-events-auto inline-flex min-h-[3rem] flex-1 items-center justify-center rounded-2xl bg-white/88 px-4 py-3 text-sm font-extrabold text-teal-900 shadow-sm backdrop-blur"
+              onTouchStart={(event) => {
+                event.preventDefault();
+                handleMove(-1);
+              }}
+              type="button"
+            >
+              <ArrowLeft size={18} className="mr-2" /> Hop left
+            </button>
+            <button
+              className="pointer-events-auto inline-flex min-h-[3rem] flex-1 items-center justify-center rounded-2xl bg-white/88 px-4 py-3 text-sm font-extrabold text-teal-900 shadow-sm backdrop-blur"
+              onTouchStart={(event) => {
+                event.preventDefault();
+                handleMove(1);
+              }}
+              type="button"
+            >
+              Hop right <ArrowRight size={18} className="ml-2" />
+            </button>
           </div>
         )}
 
         {gameState === 'start' && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/30 backdrop-blur-[3px]">
-            <button onClick={startGame} className="mb-4 flex items-center gap-3 rounded-full bg-teal-700 px-8 py-4 text-sm font-bold text-white shadow-lift transition hover:-translate-y-1 hover:bg-teal-600" type="button">
-              <Play size={18} /> Start surfing
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/30 px-4 text-center backdrop-blur-[3px]">
+            <button onClick={startGame} className="mb-4 flex items-center gap-3 rounded-full bg-teal-700 px-6 py-4 text-sm font-bold text-white shadow-lift transition hover:-translate-y-1 hover:bg-teal-600 sm:px-8" type="button">
+              <Play size={18} /> Start hopping
             </button>
-            <p className="flex items-center gap-4 rounded-full bg-white/80 px-5 py-2 text-sm font-semibold text-teal-900">
+            <p className="flex flex-wrap items-center justify-center gap-3 rounded-full bg-white/80 px-4 py-2 text-sm font-semibold text-teal-900 sm:gap-4 sm:px-5">
               <span><ArrowLeft size={16} className="mr-1 inline" /> Left</span>
-              <span className="h-4 w-px bg-teal-200" />
+              <span className="hidden h-4 w-px bg-teal-200 sm:block" />
               <span>Right <ArrowRight size={16} className="ml-1 inline" /></span>
             </p>
           </div>
         )}
 
         {gameState === 'over' && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/60 backdrop-blur-[5px]">
-            <p className="mb-2 font-display text-4xl font-extrabold text-teal-950">You bumped a lily pad.</p>
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/60 px-4 text-center backdrop-blur-[5px]">
+            <p className="mb-2 font-display text-3xl font-extrabold text-teal-950 sm:text-4xl">Your frog slipped off the pad.</p>
             <p className="mb-3 text-lg font-bold text-teal-800">Final Score: {score}</p>
             <p className="mb-8 rounded-full bg-white/75 px-4 py-2 text-sm font-semibold text-teal-700">{config.note}</p>
             <button
               onClick={startGame}
-              className="flex items-center gap-3 rounded-full bg-teal-700 px-8 py-4 text-sm font-bold text-white shadow-lift transition hover:-translate-y-1 hover:bg-teal-600"
+              className="flex items-center gap-3 rounded-full bg-teal-700 px-6 py-4 text-sm font-bold text-white shadow-lift transition hover:-translate-y-1 hover:bg-teal-600 sm:px-8"
               type="button"
             >
-              <RotateCcw size={18} /> Surf again
+              <RotateCcw size={18} /> Hop again
             </button>
           </div>
         )}
