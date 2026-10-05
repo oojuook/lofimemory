@@ -5157,10 +5157,11 @@ function App() {
                 <span className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Popular guides</span>
                 <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-games.html">Chill games</a>
                 <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-games.html">Lofi games</a>
+                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-music-website.html">Lofi music website</a>
+                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/website-to-relax.html">Website to relax</a>
                 <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/relaxing-browser-games.html">Relaxing browser games</a>
                 <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/cozy-browser-games.html">Cozy browser games</a>
                 <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-place-online.html">Chill place online</a>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/games-to-relax.html">Games to relax</a>
               </div>
 
               <div className="mt-8 grid gap-4 sm:grid-cols-3 xl:grid-cols-3">
@@ -5395,16 +5396,16 @@ function App() {
                     <button className="text-sm font-extrabold text-sage-800 underline decoration-sage-300 underline-offset-4" onClick={() => openHomeSection('guides')} type="button">View all guide collections</button>
                   </div>
                   <div className="mt-4 flex flex-wrap gap-2.5">
-                    {(showAllSearches ? seoPopularSearches : seoPopularSearches.slice(0, 8)).map((item) => (
+                    {(showAllSearches ? seoPopularSearches : seoPopularSearches.slice(0, 12)).map((item) => (
                       <a className="rounded-full border border-sage-200 bg-sage-50/70 px-4 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href={item.href} key={item.href}>{item.label}</a>
                     ))}
-                    {!showAllSearches && seoPopularSearches.length > 8 && (
+                    {!showAllSearches && seoPopularSearches.length > 12 && (
                       <button 
                         onClick={() => setShowAllSearches(true)}
                         className="rounded-full border border-sage-200 border-dashed bg-white/50 px-4 py-2 text-sm font-bold text-sage-600 transition hover:bg-white hover:text-sage-900"
                         type="button"
                       >
-                        + {seoPopularSearches.length - 8} more
+                        + {seoPopularSearches.length - 12} more
                       </button>
                     )}
                   </div>
@@ -6742,7 +6743,7 @@ function App() {
           </div>
         </div>
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {seoLandingBlocks.slice(0, 6).map((item) => (
+          {seoLandingBlocks.slice(0, 8).map((item) => (
             <article className="customizable-card rounded-3xl border border-white/70 bg-white/80 p-6 shadow-lift backdrop-blur transition hover:-translate-y-1 hover:bg-white/95" key={item.title}>
               <div className="rounded-full bg-sage-100 px-3 py-1 text-xs font-extrabold uppercase tracking-widest text-sage-800">Reader guide</div>
               <h3 className="mt-4 text-2xl font-extrabold leading-tight text-ink">{item.title}</h3>
