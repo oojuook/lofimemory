@@ -187,21 +187,30 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
     const drawLilyPad = (x, y) => {
       ctx.save();
       ctx.translate(x, y);
-      ctx.fillStyle = '#5da05b';
+      ctx.shadowColor = 'rgba(34, 91, 63, 0.18)';
+      ctx.shadowBlur = 10;
+      ctx.shadowOffsetY = 4;
+      ctx.fillStyle = '#4f9752';
       ctx.beginPath();
-      ctx.ellipse(0, 0, 31, 24, -0.16, 0, Math.PI * 2);
+      ctx.ellipse(0, 0, 35, 27, -0.16, 0, Math.PI * 2);
       ctx.fill();
       ctx.fillStyle = '#7dd06f';
       ctx.beginPath();
-      ctx.ellipse(-2, -2, 23, 17, -0.16, 0, Math.PI * 2);
+      ctx.ellipse(-2, -2, 27, 20, -0.16, 0, Math.PI * 2);
       ctx.fill();
       ctx.fillStyle = '#dff4e4';
       ctx.beginPath();
-      ctx.moveTo(3, 0);
-      ctx.lineTo(32, -14);
-      ctx.lineTo(32, 14);
+      ctx.moveTo(5, 0);
+      ctx.lineTo(34, -17);
+      ctx.lineTo(34, 17);
       ctx.closePath();
       ctx.fill();
+      ctx.strokeStyle = 'rgba(233, 252, 236, 0.85)';
+      ctx.lineWidth = 1.25;
+      ctx.beginPath();
+      ctx.moveTo(-14, -6);
+      ctx.quadraticCurveTo(-2, 0, 13, 6);
+      ctx.stroke();
       ctx.restore();
     };
 
@@ -260,7 +269,7 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
           obstacle.y += state.speed;
           drawLilyPad(getLaneCenter(obstacle.lane), obstacle.y);
 
-          if (Math.abs(getLaneCenter(obstacle.lane) - playerCollisionX) < 56 && Math.abs(obstacle.y - playerY) < 42) {
+          if (Math.abs(getLaneCenter(obstacle.lane) - playerCollisionX) < 46 && Math.abs(obstacle.y - (playerY + 6)) < 30) {
             setGameState('over');
           }
 

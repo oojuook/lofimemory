@@ -361,7 +361,7 @@ export default function QuietTetris({ difficulty = 'medium' }) {
             <p className="mt-2 max-w-2xl text-sm leading-7 text-violet-700">A cozy block-stacking game for people who want something more arcadey without losing the calm visual feel. The difficulty changes the falling speed, so easy, medium, and hard genuinely play differently.</p>
             <p className="mt-2 text-sm font-semibold text-violet-600">{config.note}</p>
           </div>
-          <div className="grid gap-2 rounded-[1.5rem] border border-white/85 bg-white/80 p-3 shadow-sm sm:grid-cols-4 lg:min-w-[31rem]">
+          <div className="grid gap-2 rounded-[1.5rem] border border-white/85 bg-white/80 p-3 shadow-sm sm:grid-cols-2 xl:grid-cols-4 lg:min-w-[31rem]">
             <div className="rounded-[1.15rem] bg-violet-50 px-4 py-3 text-center">
               <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-violet-500">Score</p>
               <p className="mt-2 text-xl font-extrabold text-violet-950">{score}</p>
@@ -381,9 +381,9 @@ export default function QuietTetris({ difficulty = 'medium' }) {
           </div>
         </div>
 
-        <div className="mt-6 grid gap-5 lg:grid-cols-[minmax(0,1fr)_230px]">
+        <div className="mt-6 grid gap-5 xl:grid-cols-[minmax(0,1fr)_220px]">
           <div>
-            <div className="relative rounded-[1.8rem] border border-violet-100 bg-[#f6f2ff] p-3 shadow-inner sm:p-4">
+            <div className="relative mx-auto w-full max-w-[22rem] rounded-[1.8rem] border border-violet-100 bg-[#f6f2ff] p-3 shadow-inner sm:max-w-[24rem] sm:p-4">
               <div className="grid gap-[3px] rounded-[1.2rem] bg-[#ece6fb] p-[3px]" style={{ gridTemplateColumns: `repeat(${COLS}, minmax(0, 1fr))` }}>
                 {displayBoard.flat().map((cell, index) => (
                   <div
@@ -409,7 +409,7 @@ export default function QuietTetris({ difficulty = 'medium' }) {
               )}
             </div>
 
-            <div className="mt-4 grid gap-2 sm:grid-cols-4">
+            <div className="mt-4 grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
               <button className="rounded-full border border-violet-200 bg-white px-4 py-3 text-sm font-extrabold text-violet-900 shadow-sm" onClick={() => movePiece(0, -1)} type="button"><ArrowLeft size={16} className="mr-2 inline" />Left</button>
               <button className="rounded-full border border-violet-200 bg-white px-4 py-3 text-sm font-extrabold text-violet-900 shadow-sm" onClick={rotatePiece} type="button"><RotateCcw size={16} className="mr-2 inline" />Rotate</button>
               <button className="rounded-full border border-violet-200 bg-white px-4 py-3 text-sm font-extrabold text-violet-900 shadow-sm" onClick={() => movePiece(1, 0)} type="button"><ArrowDown size={16} className="mr-2 inline" />Down</button>
@@ -428,7 +428,7 @@ export default function QuietTetris({ difficulty = 'medium' }) {
                   return (
                     <div
                       key={`next-block-${index + 1}`}
-                      className="h-7 w-7 rounded-[0.45rem] border border-white/70"
+                      className="h-6 w-6 rounded-[0.45rem] border border-white/70 sm:h-7 sm:w-7"
                       style={{ backgroundColor: hasBlock ? SHAPES[nextType].color : '#ffffff' }}
                     />
                   );

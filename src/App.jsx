@@ -1565,6 +1565,7 @@ function normalizeImportantDatesRecord(value) {
       }
       return [dateKey, {
         note: typeof item?.note === 'string' ? item.note : '',
+        details: typeof item?.details === 'string' ? item.details : '',
         time: typeof item?.time === 'string' ? item.time : '',
         remindersEnabled: item?.remindersEnabled !== false,
         createdAt: item?.createdAt || new Date().toISOString()
@@ -2413,7 +2414,7 @@ function App() {
     { id: 'write', title: 'Thoughts', description: 'Write only when it helps', icon: PenLine, iconTone: 'bg-[#dbead9] text-sage-700', onClick: () => navigateToTab('write') },
     { id: 'notes', title: 'Notes', description: 'Keep important things nearby', icon: FileText, iconTone: 'bg-[#d8f0ec] text-teal-700', onClick: () => navigateToTab('notes') },
     { id: 'breathe', title: 'Breathe', description: 'Focus & breathe', icon: Wind, iconTone: 'bg-[#dbe8f8] text-sky-700', onClick: () => navigateToTab('breathe') },
-    { id: 'memories', title: 'Memories', description: 'Return to saved moments', icon: CalendarDays, iconTone: 'bg-[#efe6d8] text-sand-700', onClick: () => navigateToTab('insights') },
+    { id: 'memories', title: 'Memories', description: 'Return to saved moments', icon: CalendarDays, iconTone: 'bg-[#efe6d8] text-sand-700', onClick: () => navigateToTab('memories') },
     { id: 'vibes', title: 'Vibes', description: 'See your mood flow', icon: HeartHandshake, iconTone: 'bg-[#f4dce7] text-rose-700', onClick: () => navigateToTab('insights') }
   ];
   const [selectedGameDifficulty, setSelectedGameDifficulty] = useState('medium');
@@ -2436,6 +2437,7 @@ function App() {
   const [importantDates, setImportantDates] = useState(getInitialImportantDates);
   const [importanceModalOpen, setImportanceModalOpen] = useState(false);
   const [importanceDraft, setImportanceDraft] = useState('');
+  const [importanceDetailsDraft, setImportanceDetailsDraft] = useState('');
   const [importanceTimeDraft, setImportanceTimeDraft] = useState('');
   const [importanceReminderEnabled, setImportanceReminderEnabled] = useState(true);
   const [notificationPermission, setNotificationPermission] = useState(() => {
@@ -2674,6 +2676,7 @@ function App() {
     }
   ];
   const selectedUnwindGameConfig = unwindGames.find((game) => game.id === selectedUnwindGame) || unwindGames[0];
+  const selectedDifficultyConfig = difficultyOptions.find((difficulty) => difficulty.id === selectedGameDifficulty) || difficultyOptions[1];
 
   const selectUnwindGame = (gameId) => {
     if (gameId === selectedUnwindGame) {
@@ -3208,7 +3211,7 @@ function App() {
         if (nextLog[reminderKey]) continue;
         const title = reminderType === 'today' ? 'Important event today' : 'Important event tomorrow';
         const timeLabel = item.time ? ` at ${formatReminderTime(item.time)}` : '';
-        const body = `${item.note}${timeLabel}${reminderType === 'tomorrow' ? '. Tomorrow is worth planning for.' : '. It is on your schedule today.'}`;
+        const body = `${item.note}${timeLabel}${item.details ? `. ${item.details}` : ''}${reminderType === 'tomorrow' ? '. Tomorrow is worth planning for.' : '. It is on your schedule today.'}`;
         await showImportantReminderNotification({
           title,
           body,
@@ -3459,6 +3462,7 @@ function App() {
     .map(([dateKey, item]) => ({
       dateKey,
       note: item?.note || '',
+      details: item?.details || '',
       time: item?.time || '',
       remindersEnabled: item?.remindersEnabled !== false,
       createdAt: item?.createdAt || '',
@@ -3672,10 +3676,17 @@ function App() {
           },
           events: {
             onReady: (event) => {
-              setRadioStatusMessage('Auto-starting lofi radio');
+              setRadioStatusMessage('Starting lofi radio');
               try {
                 event.target.setVolume(radioVolume);
+                if (radioUnlockedRef.current) {
+                  event.target.unMute?.();
+                } else {
+                  event.target.mute?.();
+                }
                 event.target.playVideo();
+                setRadioNeedsInteraction(!radioUnlockedRef.current);
+                setRadioStatusMessage(radioUnlockedRef.current ? 'Lofi radio playing' : 'Lofi radio live — tap once for sound');
               } catch {
                 setRadioNeedsInteraction(true);
                 setRadioStatusMessage('Tap once for sound');
@@ -3683,13 +3694,17 @@ function App() {
             },
             onStateChange: (event) => {
               if (event.data === YT.PlayerState.PLAYING) {
-                setRadioNeedsInteraction(false);
-                setRadioStatusMessage(radioUnlockedRef.current ? 'Lofi radio playing' : 'Lofi radio live');
+                setRadioNeedsInteraction(!radioUnlockedRef.current);
+                setRadioStatusMessage(radioUnlockedRef.current ? 'Lofi radio playing' : 'Lofi radio live — tap once for sound');
               }
             },
             onAutoplayBlocked: () => {
               setRadioNeedsInteraction(true);
-              setRadioStatusMessage('Autoplay blocked');
+              setRadioStatusMessage('Tap once to turn on the lofi radio');
+              try {
+                radioPlayerRef.current?.mute?.();
+                radioPlayerRef.current?.playVideo?.();
+              } catch {}
             }
           }
         });
@@ -3697,9 +3712,15 @@ function App() {
       }
 
       try {
+        if (radioUnlockedRef.current) {
+          radioPlayerRef.current.unMute?.();
+        } else {
+          radioPlayerRef.current.mute?.();
+        }
         radioPlayerRef.current.setVolume?.(radioVolume);
         radioPlayerRef.current.playVideo?.();
-        setRadioStatusMessage(radioUnlockedRef.current ? 'Lofi radio playing' : 'Starting lofi radio');
+        setRadioNeedsInteraction(!radioUnlockedRef.current);
+        setRadioStatusMessage(radioUnlockedRef.current ? 'Lofi radio playing' : 'Lofi radio live — tap once for sound');
       } catch {
         setRadioNeedsInteraction(true);
         setRadioStatusMessage('Tap once for sound');
@@ -3717,7 +3738,10 @@ function App() {
     }
 
     const unlockRadio = () => {
+      radioUnlockedRef.current = true;
+      setRadioNeedsInteraction(false);
       if (!radioPlayerRef.current) {
+        setRadioStatusMessage('Lofi radio waking up');
         return;
       }
 
@@ -3725,18 +3749,20 @@ function App() {
         radioPlayerRef.current.unMute?.();
         radioPlayerRef.current.setVolume?.(radioVolume);
         radioPlayerRef.current.playVideo?.();
-        radioUnlockedRef.current = true;
-        setRadioNeedsInteraction(false);
         setRadioStatusMessage('Lofi radio playing');
       } catch {}
     };
 
     window.addEventListener('pointerdown', unlockRadio, { once: true });
+    window.addEventListener('touchstart', unlockRadio, { once: true });
     window.addEventListener('keydown', unlockRadio, { once: true });
+    window.addEventListener('focus', unlockRadio, { once: true });
 
     return () => {
       window.removeEventListener('pointerdown', unlockRadio);
+      window.removeEventListener('touchstart', unlockRadio);
       window.removeEventListener('keydown', unlockRadio);
+      window.removeEventListener('focus', unlockRadio);
     };
   }, [isRadioPlaying, radioVolume]);
 
@@ -4828,6 +4854,7 @@ function App() {
     setSelectedCalendarDate(dateKey);
     const existing = importantDates[dateKey];
     setImportanceDraft(existing?.note || '');
+    setImportanceDetailsDraft(existing?.details || '');
     setImportanceTimeDraft(existing?.time || '');
     setImportanceReminderEnabled(existing ? existing.remindersEnabled !== false : true);
     setImportanceModalOpen(true);
@@ -4838,6 +4865,7 @@ function App() {
     setImportantDates(rest);
     setImportanceModalOpen(false);
     setImportanceDraft('');
+    setImportanceDetailsDraft('');
     setImportanceTimeDraft('');
     setImportanceReminderEnabled(true);
   }
@@ -4865,14 +4893,18 @@ function App() {
   }
 
   function saveImportantDate() {
-    if (!importanceDraft.trim()) {
+    const trimmedTitle = importanceDraft.trim();
+    const trimmedDetails = importanceDetailsDraft.trim();
+    const reminderTitle = trimmedTitle || trimmedDetails.split('\n').find(Boolean)?.trim().slice(0, 80) || '';
+    if (!reminderTitle) {
       setImportanceModalOpen(false);
       return;
     }
     setImportantDates({
       ...importantDates,
       [selectedCalendarDate]: {
-        note: importanceDraft.trim(),
+        note: reminderTitle,
+        details: trimmedDetails,
         time: importanceTimeDraft,
         remindersEnabled: importanceReminderEnabled,
         createdAt: new Date().toISOString()
@@ -4880,6 +4912,7 @@ function App() {
     });
     setImportanceModalOpen(false);
     setImportanceDraft('');
+    setImportanceDetailsDraft('');
     setImportanceTimeDraft('');
     setImportanceReminderEnabled(true);
   }
@@ -5021,6 +5054,7 @@ function App() {
         </div>
       )}
 
+      <div className={`transition-opacity duration-500 ${showEntryTransition ? 'pointer-events-none select-none opacity-0' : 'opacity-100'}`}>
       <nav className="sticky top-0 z-20 px-5 pt-5 sm:px-7 xl:px-10">
         <div className="site-nav-shell mx-auto max-w-[1280px] rounded-[2.2rem] border border-white/90 bg-[linear-gradient(180deg,rgba(253,248,242,0.92),rgba(250,243,235,0.82))] p-4 shadow-[0_18px_45px_rgba(146,126,106,0.08)] backdrop-blur-xl lg:p-5">
           <div className="flex flex-col gap-2.5 lg:gap-3 xl:flex-row xl:items-center xl:justify-between">
@@ -5935,25 +5969,6 @@ function App() {
               <h1 className="mb-3 font-display text-4xl font-bold tracking-tight text-sage-950">Pick a chill game</h1>
               <p className="mx-auto max-w-2xl text-lg text-sage-700">Choose the kind of calm you want right now — drift, dodge, merge, match, slide, settle into sudoku, guess cozy words, type, solve clues, sweep, or jump through a soft offline desert run. The whole room stays cozy on mobile, wider on desktop, and easy to settle into with lofi music in the background.</p>
             </div>
-            <div className="mb-6 flex flex-col gap-3 rounded-[1.75rem] border border-white/80 bg-white/78 p-4 shadow-sm backdrop-blur sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Choose your pace</p>
-                <p className="mt-1 text-sm font-semibold text-sage-700">Switch the games between easy, medium, and hard depending on how much focus you want today.</p>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {difficultyOptions.map((difficulty) => (
-                  <button
-                    key={difficulty.id}
-                    className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${selectedGameDifficulty === difficulty.id ? 'bg-sage-900 text-white shadow-sm' : 'border border-sage-200 bg-white text-sage-800 hover:bg-sage-50'}`}
-                    onClick={() => setSelectedGameDifficulty(difficulty.id)}
-                    type="button"
-                  >
-                    {difficulty.label}
-                    <span className={`ml-2 text-[10px] uppercase tracking-[0.18em] ${selectedGameDifficulty === difficulty.id ? 'text-white/75' : 'text-sage-500'}`}>{difficulty.detail}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
             <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
               {unwindGames.map((game) => (
                 <button
@@ -5978,8 +5993,34 @@ function App() {
                 </button>
               ))}
             </div>
-            <div ref={selectedGameInterfaceRef} className="scroll-mt-24 rounded-[2rem] border border-white/80 bg-white/86 p-3 shadow-soft backdrop-blur lg:p-4">
-              {selectedUnwindGameConfig.component}
+            <div ref={selectedGameInterfaceRef} className="scroll-mt-24 rounded-[2rem] border border-white/80 bg-white/90 p-3 shadow-soft backdrop-blur sm:p-4 lg:p-5">
+              <div className="rounded-[1.7rem] border border-sage-100 bg-sage-50/55 p-4 shadow-sm">
+                <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+                  <div>
+                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Game controls</p>
+                    <h2 className="mt-2 text-2xl font-extrabold text-sage-950">{selectedUnwindGameConfig.title}</h2>
+                    <p className="mt-2 max-w-2xl text-sm leading-7 text-sage-700">{selectedUnwindGameConfig.description} Switch the difficulty right here, then keep playing on laptop, desktop, or mobile without leaving the game.</p>
+                  </div>
+                  <div className="flex w-full flex-col gap-2 xl:max-w-[28rem] xl:items-end">
+                    <p className="text-[11px] font-extrabold uppercase tracking-[0.2em] text-sage-600">Difficulty in-game</p>
+                    <div className="flex flex-wrap gap-2 xl:justify-end">
+                      {difficultyOptions.map((difficulty) => (
+                        <button
+                          key={difficulty.id}
+                          className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${selectedGameDifficulty === difficulty.id ? 'bg-sage-900 text-white shadow-sm' : 'border border-sage-200 bg-white text-sage-800 hover:bg-sage-50'}`}
+                          onClick={() => setSelectedGameDifficulty(difficulty.id)}
+                          type="button"
+                        >
+                          {difficulty.label}
+                          <span className={`ml-2 text-[10px] uppercase tracking-[0.18em] ${selectedGameDifficulty === difficulty.id ? 'text-white/75' : 'text-sage-500'}`}>{difficulty.detail}</span>
+                        </button>
+                      ))}
+                    </div>
+                    <p className="text-xs font-semibold text-sage-600">Current setting: {selectedDifficultyConfig.label} — {selectedDifficultyConfig.detail}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4">{selectedUnwindGameConfig.component}</div>
             </div>
             <div className="mt-6 rounded-[1.8rem] border border-white/80 bg-white/82 p-5 shadow-sm backdrop-blur">
               <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
@@ -6039,7 +6080,7 @@ function App() {
               </article>
               <article className="rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
                 <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Right now</p>
-                <h2 className="mt-3 text-2xl font-extrabold text-sage-950">{selectedUnwindGameConfig.title} • {selectedGameDifficulty}</h2>
+                <h2 className="mt-3 text-2xl font-extrabold text-sage-950">{selectedUnwindGameConfig.title} • {selectedDifficultyConfig.label}</h2>
                 <p className="mt-3 text-sm leading-7 text-sage-700">{selectedUnwindGameConfig.description}</p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   <span className="rounded-full border border-sage-200 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Switch anytime</span>
@@ -6578,7 +6619,7 @@ function App() {
                 </div>
                 <div className="flex w-full flex-col gap-2 sm:w-auto lg:min-w-[230px]">
                   <button className={`w-full rounded-full px-4 py-2.5 text-sm font-extrabold transition ${selectedImportantDate ? 'bg-sage-100 text-sage-800 hover:bg-sage-200' : 'bg-sage-900 text-white hover:bg-sage-800'}`} onClick={() => openImportantDateEditor(selectedCalendarDate)} type="button">
-                    {selectedImportantDate ? 'Edit reminder' : 'Add reminder'}
+                    {selectedImportantDate ? 'Edit reminder or note' : 'Add reminder or note'}
                   </button>
                   <button className={`w-full rounded-full border px-4 py-2.5 text-sm font-extrabold transition ${notificationPermission === 'granted' ? 'border-sage-200 bg-white text-sage-700 hover:bg-sage-50' : 'border-sage-900 bg-white text-sage-900 hover:bg-sage-50'}`} onClick={requestNotificationPermission} type="button">
                     {notificationPermission === 'granted' ? 'Notifications allowed' : 'Allow browser notifications'}
@@ -6615,6 +6656,7 @@ function App() {
                     <div className="min-w-0 flex-1">
                       <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Next reminder</p>
                       <p className="mt-2 text-sm font-extrabold leading-6 text-sage-900">{nextUpcomingReminder.note}</p>
+                      {nextUpcomingReminder.details && <p className="mt-1 line-clamp-2 text-sm font-semibold leading-6 text-sage-700">{nextUpcomingReminder.details}</p>}
                       <p className="mt-1 text-xs font-bold uppercase tracking-[0.16em] text-sage-500">{formatDate(nextUpcomingReminder.dateKey)}{nextUpcomingReminder.time ? ` · ${formatReminderTime(nextUpcomingReminder.time)}` : ''}</p>
                     </div>
                     <span className="rounded-full border border-sage-100 bg-white px-3 py-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-700">{nextUpcomingReminder.relativeLabel}</span>
@@ -6625,13 +6667,16 @@ function App() {
               {selectedImportantDate && (
                 <div className="mt-4 rounded-2xl border border-rose-100 bg-rose-50/70 p-4 shadow-sm">
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                    <div>
-                      <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-rose-600">Important reminder</p>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-rose-600">Saved reminder or note</p>
                       <p className="mt-2 text-sm font-semibold leading-6 text-sage-800">{selectedImportantDate.note}</p>
+                      {selectedImportantDate.details && (
+                        <p className="mt-2 whitespace-pre-wrap text-sm leading-6 text-sage-700">{selectedImportantDate.details}</p>
+                      )}
                     </div>
                     <div className="flex flex-wrap gap-2 text-[11px] font-extrabold uppercase tracking-[0.18em] text-rose-700">
                       {selectedImportantDate.time && <span className="rounded-full border border-rose-100 bg-white/90 px-3 py-2">{formatReminderTime(selectedImportantDate.time)}</span>}
-                      <span className="rounded-full border border-rose-100 bg-white/90 px-3 py-2">{selectedImportantDate.remindersEnabled ? 'Reminders on' : 'Reminders off'}</span>
+                      <span className="rounded-full border border-rose-100 bg-white/90 px-3 py-2">{selectedImportantDate.remindersEnabled ? 'Reminders on' : 'Saved as note only'}</span>
                       <span className="rounded-full border border-rose-100 bg-white/90 px-3 py-2">{getRelativeReminderLabel(selectedCalendarDate)}</span>
                     </div>
                   </div>
@@ -6652,29 +6697,42 @@ function App() {
                       <div className="flex flex-wrap items-start justify-between gap-3">
                         <div className="min-w-0 flex-1">
                           <p className="text-sm font-extrabold leading-6 text-sage-900">{item.note}</p>
+                          {item.details && <p className="mt-1 line-clamp-2 text-sm font-semibold leading-6 text-sage-700">{item.details}</p>}
                           <p className="mt-1 text-xs font-bold uppercase tracking-[0.16em] text-sage-500">{formatDate(item.dateKey)}{item.time ? ` · ${formatReminderTime(item.time)}` : ''}</p>
                         </div>
                         <span className="rounded-full border border-sage-100 bg-sage-50 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-700">{item.relativeLabel}</span>
                       </div>
                     </button>
                   )) : (
-                    <p className="rounded-2xl border border-dashed border-sage-200 bg-sage-50/50 px-4 py-4 text-sm font-semibold leading-6 text-sage-500">No upcoming reminders yet. Add one for birthdays, meetings, travel, deadlines, or anything you want to see ahead of time.</p>
+                    <p className="rounded-2xl border border-dashed border-sage-200 bg-sage-50/50 px-4 py-4 text-sm font-semibold leading-6 text-sage-500">No upcoming reminders or saved notes yet. Add one for birthdays, meetings, travel, deadlines, or anything you want to keep on that day.</p>
                   )}
                 </div>
               </div>
 
               {importanceModalOpen && (
                 <div className="mt-4 rounded-2xl border border-sage-100 bg-sage-50/80 p-4 shadow-sm">
-                  <label className="block text-sm font-bold text-sage-800">
-                    What should they remember?
-                    <textarea
-                      className="mt-3 min-h-[96px] w-full rounded-2xl border border-sage-100 bg-white px-4 py-3 font-semibold leading-6 text-sage-900 outline-none transition focus:border-sage-300"
-                      maxLength={180}
-                      onChange={(event) => setImportanceDraft(event.target.value)}
-                      placeholder="Client call, interview, exam, anniversary, family plan..."
-                      value={importanceDraft}
-                    />
-                  </label>
+                  <div className="grid gap-3">
+                    <label className="block text-sm font-bold text-sage-800">
+                      Reminder title or short note
+                      <input
+                        className="mt-3 w-full rounded-2xl border border-sage-100 bg-white px-4 py-3 font-semibold text-sage-900 outline-none transition focus:border-sage-300"
+                        maxLength={80}
+                        onChange={(event) => setImportanceDraft(event.target.value)}
+                        placeholder="Client call, exam, trip, birthday, grocery note..."
+                        value={importanceDraft}
+                      />
+                    </label>
+                    <label className="block text-sm font-bold text-sage-800">
+                      Extra notes (optional)
+                      <textarea
+                        className="mt-3 min-h-[112px] w-full rounded-2xl border border-sage-100 bg-white px-4 py-3 font-semibold leading-6 text-sage-900 outline-none transition focus:border-sage-300"
+                        maxLength={320}
+                        onChange={(event) => setImportanceDetailsDraft(event.target.value)}
+                        placeholder="Add what you want to be reminded about, details for the plan, or just keep a note on this day."
+                        value={importanceDetailsDraft}
+                      />
+                    </label>
+                  </div>
                   <div className="mt-3 grid gap-3 sm:grid-cols-[minmax(0,220px)_minmax(0,1fr)]">
                     <label className="block text-sm font-bold text-sage-800">
                       Time (optional)
@@ -6687,11 +6745,11 @@ function App() {
                     </label>
                     <label className="flex items-center gap-3 rounded-2xl border border-sage-100 bg-white px-4 py-3 text-sm font-semibold text-sage-800">
                       <input checked={importanceReminderEnabled} className="h-4 w-4 rounded border-sage-300 text-sage-700 focus:ring-sage-300" onChange={(event) => setImportanceReminderEnabled(event.target.checked)} type="checkbox" />
-                      Notify me on the day and the day before if browser notifications are allowed
+                      Send a reminder on the day and the day before if browser notifications are allowed
                     </label>
                   </div>
                   <div className="mt-4 flex flex-wrap gap-2">
-                    <button className="rounded-full bg-sage-900 px-4 py-2 text-sm font-extrabold text-white transition hover:bg-sage-800" onClick={saveImportantDate} type="button">Save reminder</button>
+                    <button className="rounded-full bg-sage-900 px-4 py-2 text-sm font-extrabold text-white transition hover:bg-sage-800" onClick={saveImportantDate} type="button">Save reminder or note</button>
                     <button className="rounded-full border border-sage-200 bg-white px-4 py-2 text-sm font-extrabold text-sage-700 transition hover:bg-sage-50" onClick={() => setImportanceModalOpen(false)} type="button">Cancel</button>
                   </div>
                 </div>
@@ -7331,12 +7389,12 @@ function App() {
               }
 
               setIsRadioPlaying(true);
+              radioUnlockedRef.current = true;
               if (radioPlayerRef.current) {
                 try {
                   radioPlayerRef.current.unMute?.();
                   radioPlayerRef.current.setVolume?.(radioVolume);
                   radioPlayerRef.current.playVideo?.();
-                  radioUnlockedRef.current = true;
                   setRadioNeedsInteraction(false);
                   setRadioStatusMessage('Lofi radio playing');
                 } catch {}
@@ -7531,13 +7589,14 @@ function App() {
       )}
 
       <button
-        className={`fixed z-40 flex h-12 w-12 items-center justify-center rounded-full bg-sage-900 text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800 ${cookieConsentAccepted ? 'bottom-6 right-6' : 'bottom-40 right-4 sm:bottom-32 sm:right-6'}`}
+        className={`fixed z-40 flex h-12 w-12 items-center justify-center rounded-full bg-sage-900 text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800 ${cookieConsentAccepted ? 'bottom-6 right-6' : 'bottom-44 right-4 sm:bottom-36 sm:right-6'}`}
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         type="button"
         aria-label="Back to top"
       >
         <ArrowUp size={20} />
       </button>
+      </div>
     </main>
   );
 }

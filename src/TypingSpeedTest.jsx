@@ -455,7 +455,7 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
         <div className="mt-6 grid gap-4 xl:grid-cols-[minmax(0,1fr)_260px]">
           <div className="rounded-[1.8rem] border border-white/80 bg-white/92 p-4 shadow-sm sm:p-5">
             <button
-              className="block h-[11.5rem] w-full overflow-y-auto rounded-[1.5rem] bg-slate-50/90 px-3 py-4 text-left shadow-inner outline-none ring-offset-0 transition focus-visible:ring-2 focus-visible:ring-sky-300 sm:h-[13rem] sm:px-4"
+              className={`block w-full overflow-y-auto rounded-[1.5rem] bg-slate-50/90 px-3 py-4 text-left shadow-inner outline-none ring-offset-0 transition focus-visible:ring-2 focus-visible:ring-sky-300 sm:px-4 ${typingMode === 'sentences' ? 'min-h-[15rem] sm:min-h-[17rem] lg:min-h-[18rem]' : 'h-[11.5rem] sm:h-[13rem]'}`}
               onClick={() => inputRef.current?.focus()}
               type="button"
             >

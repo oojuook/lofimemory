@@ -283,7 +283,7 @@ export default function QuietTiles({ difficulty = 'medium' }) {
         </div>
 
         <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_180px]">
-          <div className="rounded-[1.8rem] border border-slate-100 bg-[#efe4d8] p-4 shadow-inner lg:p-5">
+          <div className="relative rounded-[1.8rem] border border-slate-100 bg-[#efe4d8] p-4 shadow-inner lg:p-5">
             <div className="grid gap-3" style={{ gridTemplateColumns: `repeat(${BOARD_SIZE}, minmax(0, 1fr))` }}>
               {boardCoordinates.map(({ row, col }) => {
                 const value = board[row][col];
@@ -297,6 +297,36 @@ export default function QuietTiles({ difficulty = 'medium' }) {
                 );
               })}
             </div>
+            {gameState === 'lost' && (
+              <div className="absolute inset-0 flex items-center justify-center rounded-[1.8rem] bg-white/82 p-4 backdrop-blur-[3px]">
+                <div className="w-full max-w-sm rounded-[1.5rem] border border-white/85 bg-white/92 p-5 text-center shadow-soft">
+                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-slate-500">Round over</p>
+                  <h4 className="mt-3 text-3xl font-extrabold text-slate-950">No moves left</h4>
+                  <div className="mt-4 grid gap-2 sm:grid-cols-3">
+                    <div className="rounded-[1rem] bg-slate-50 px-3 py-3">
+                      <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-slate-500">Score</p>
+                      <p className="mt-1 text-xl font-extrabold text-slate-950">{score}</p>
+                    </div>
+                    <div className="rounded-[1rem] bg-slate-50 px-3 py-3">
+                      <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-slate-500">Best</p>
+                      <p className="mt-1 text-xl font-extrabold text-slate-950">{bestScore}</p>
+                    </div>
+                    <div className="rounded-[1rem] bg-slate-50 px-3 py-3">
+                      <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-slate-500">Largest</p>
+                      <p className="mt-1 text-xl font-extrabold text-slate-950">{largestTile}</p>
+                    </div>
+                  </div>
+                  <p className="mt-4 text-sm font-semibold text-slate-600">Target tile: {config.target}. Reset whenever you want another gentle run.</p>
+                  <button
+                    className="mt-5 inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-3 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-800"
+                    onClick={resetGame}
+                    type="button"
+                  >
+                    <RotateCcw size={16} /> Play again
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="rounded-[1.8rem] border border-white/80 bg-white/78 p-4 shadow-sm">

@@ -98,20 +98,50 @@ export default function ZenGame({ difficulty = 'medium' }) {
       ctx.save();
       ctx.translate(x, y);
       ctx.rotate(angle);
-      ctx.fillStyle = '#587f49';
+      ctx.shadowColor = 'rgba(78, 109, 63, 0.2)';
+      ctx.shadowBlur = 12;
+      ctx.shadowOffsetY = 5;
+
+      const leafGradient = ctx.createLinearGradient(-18, -20, 22, 22);
+      leafGradient.addColorStop(0, '#7fb26d');
+      leafGradient.addColorStop(0.55, '#5f8f4e');
+      leafGradient.addColorStop(1, '#456b39');
+      ctx.fillStyle = leafGradient;
       ctx.beginPath();
-      ctx.moveTo(0, -12);
-      ctx.quadraticCurveTo(18, -12, 18, 6);
-      ctx.quadraticCurveTo(18, 18, 0, 18);
-      ctx.quadraticCurveTo(-18, 18, -18, 6);
-      ctx.quadraticCurveTo(-18, -12, 0, -12);
+      ctx.moveTo(0, -22);
+      ctx.bezierCurveTo(18, -20, 30, -2, 24, 18);
+      ctx.bezierCurveTo(12, 24, 4, 28, 0, 32);
+      ctx.bezierCurveTo(-5, 27, -16, 22, -24, 16);
+      ctx.bezierCurveTo(-30, -4, -18, -19, 0, -22);
+      ctx.closePath();
       ctx.fill();
 
-      ctx.strokeStyle = '#edf4e8';
-      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = '#edf7e9';
+      ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.moveTo(0, -10);
-      ctx.quadraticCurveTo(5, 5, 0, 16);
+      ctx.moveTo(0, -18);
+      ctx.quadraticCurveTo(3, 4, -1, 28);
+      ctx.stroke();
+
+      ctx.strokeStyle = 'rgba(237, 247, 233, 0.85)';
+      ctx.lineWidth = 1.15;
+      [
+        { x1: -1, y1: -6, x2: -12, y2: 1 },
+        { x1: 1, y1: -2, x2: 13, y2: 7 },
+        { x1: -2, y1: 8, x2: -13, y2: 15 },
+        { x1: 0, y1: 11, x2: 12, y2: 18 }
+      ].forEach((vein) => {
+        ctx.beginPath();
+        ctx.moveTo(vein.x1, vein.y1);
+        ctx.quadraticCurveTo((vein.x1 + vein.x2) / 2, (vein.y1 + vein.y2) / 2 - 1, vein.x2, vein.y2);
+        ctx.stroke();
+      });
+
+      ctx.strokeStyle = '#7d5a34';
+      ctx.lineWidth = 2.1;
+      ctx.beginPath();
+      ctx.moveTo(-2, 30);
+      ctx.quadraticCurveTo(-6, 37, -12, 42);
       ctx.stroke();
       ctx.restore();
     };

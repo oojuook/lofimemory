@@ -17,11 +17,11 @@ const difficultySettings = {
     startSpeed: 7.2,
     maxSpeed: 11.2,
     acceleration: 0.0026,
-    spawnMin: 290,
-    spawnMax: 410,
+    spawnMin: 350,
+    spawnMax: 500,
     fallBoost: 0.16,
     label: 'Easy',
-    note: 'Closer to the original runner, but with extra space between obstacles.'
+    note: 'Closer to the original runner, with very generous cactus spacing for easier reading.'
   },
   medium: {
     gravity: 0.72,
@@ -29,11 +29,11 @@ const difficultySettings = {
     startSpeed: 8.2,
     maxSpeed: 13.2,
     acceleration: 0.0031,
-    spawnMin: 250,
-    spawnMax: 360,
+    spawnMin: 310,
+    spawnMax: 450,
     fallBoost: 0.22,
     label: 'Medium',
-    note: 'The closest match to the classic Chrome runner feel, with much fairer cactus spacing.'
+    note: 'The closest match to the classic Chrome runner feel, with cleaner and fairer spacing between obstacles.'
   },
   hard: {
     gravity: 0.78,
@@ -41,11 +41,11 @@ const difficultySettings = {
     startSpeed: 9.2,
     maxSpeed: 15.3,
     acceleration: 0.0039,
-    spawnMin: 210,
-    spawnMax: 300,
+    spawnMin: 265,
+    spawnMax: 380,
     fallBoost: 0.3,
     label: 'Hard',
-    note: 'The same offline-runner style with faster ground and tighter but still playable spacing.'
+    note: 'Faster ground and a more demanding rhythm, but still spaced enough to stay playable.'
   }
 };
 
@@ -270,6 +270,7 @@ export default function DinosaurDash({ difficulty = 'medium' }) {
     }
 
     const ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = false;
     let animationId;
 
     const drawCloud = (x, y, width) => {
@@ -441,8 +442,9 @@ export default function DinosaurDash({ difficulty = 'medium' }) {
 
         state.obstacleCooldown -= state.speed;
         if (state.obstacleCooldown <= 0) {
-          state.obstacles.push(createObstacle(state.score));
-          state.obstacleCooldown = randomBetween(config.spawnMin, config.spawnMax) + Math.min(90, state.score * 0.12);
+          const nextObstacle = createObstacle(state.score);
+          state.obstacles.push(nextObstacle);
+          state.obstacleCooldown = randomBetween(config.spawnMin, config.spawnMax) + nextObstacle.width * 2.6 + Math.min(42, state.score * 0.04);
         }
 
         const dinoHitbox = getDinoHitbox(state);
@@ -536,6 +538,7 @@ export default function DinosaurDash({ difficulty = 'medium' }) {
             height={CANVAS_HEIGHT}
             className="block h-full w-full cursor-pointer touch-none"
             onClick={jump}
+            style={{ imageRendering: 'pixelated' }}
           />
 
           {gameState === 'start' && (
