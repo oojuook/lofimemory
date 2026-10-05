@@ -2388,7 +2388,6 @@ function App() {
   const [activeTab, setActiveTab] = useState(initialActiveTab);
   const [activeHomeSection, setActiveHomeSection] = useState(getInitialHomeSection);
   const [showEntryTransition, setShowEntryTransition] = useState(initialActiveTab === 'home');
-  const [entryTransitionClosing, setEntryTransitionClosing] = useState(false);
   const [entries, setEntries] = useState(getInitialEntries);
   const [selectedMood, setSelectedMood] = useState('Calm');
   const [title, setTitle] = useState('');
@@ -2792,7 +2791,6 @@ function App() {
   function navigateToTab(tabId) {
     setActiveTab(tabId);
     setShowEntryTransition(false);
-    setEntryTransitionClosing(false);
     if (tabId === 'home') {
       setActiveHomeSection('overview');
     }
@@ -2801,22 +2799,14 @@ function App() {
 
   useEffect(() => {
     if (!showEntryTransition) {
-      setEntryTransitionClosing(false);
       return undefined;
     }
 
-    const closeTimer = window.setTimeout(() => {
-      setEntryTransitionClosing(true);
-    }, 2100);
-    const hideTimer = window.setTimeout(() => {
+    const timerId = window.setTimeout(() => {
       setShowEntryTransition(false);
-      setEntryTransitionClosing(false);
-    }, 2720);
+    }, 1700);
 
-    return () => {
-      window.clearTimeout(closeTimer);
-      window.clearTimeout(hideTimer);
-    };
+    return () => window.clearTimeout(timerId);
   }, [showEntryTransition]);
 
   function openHomeSection(sectionId = 'overview') {
@@ -5009,81 +4999,11 @@ function App() {
 
 
       {showEntryTransition && (
-        <div className={`fixed inset-0 z-40 overflow-hidden bg-[radial-gradient(circle_at_top,rgba(255,130,214,0.34),transparent_24%),radial-gradient(circle_at_50%_18%,rgba(255,88,188,0.38),transparent_18%),linear-gradient(180deg,#1d0d52_0%,#34117c_42%,#5925a3_68%,#f7b5ef_100%)] px-6 transition-all duration-700 ${entryTransitionClosing ? 'opacity-0 scale-[1.03]' : 'opacity-100 scale-100'}`}>
-
-          <div className="pointer-events-none absolute inset-0 overflow-hidden">
-            <div className="absolute left-1/2 top-[11%] h-36 w-36 -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_35%_35%,rgba(255,202,247,0.98),rgba(255,110,214,0.9)_38%,rgba(255,66,180,0.8)_72%,rgba(255,66,180,0.18)_100%)] shadow-[0_0_90px_rgba(255,108,218,0.38)] sm:h-52 sm:w-52" />
-            <div className="absolute left-[14%] top-[18%] h-3 w-3 rounded-full bg-white/90 shadow-[0_0_18px_rgba(255,255,255,0.9)]" />
-            <div className="absolute left-[24%] top-[28%] h-2.5 w-2.5 rounded-full bg-[#ffe680] shadow-[0_0_18px_rgba(255,230,128,0.95)]" />
-            <div className="absolute right-[22%] top-[20%] h-4 w-4 rounded-full bg-white/90 shadow-[0_0_18px_rgba(255,255,255,0.9)]" />
-            <div className="absolute right-[28%] top-[31%] h-2.5 w-2.5 rounded-full bg-[#ffe680] shadow-[0_0_18px_rgba(255,230,128,0.95)]" />
-            <div className="absolute bottom-0 left-0 right-0 h-[40%] bg-[linear-gradient(180deg,rgba(10,8,38,0)_0%,rgba(12,12,56,0.24)_20%,rgba(9,18,79,0.92)_20.5%,rgba(17,80,162,0.82)_44%,rgba(42,204,220,0.5)_66%,rgba(255,183,241,0.85)_100%)]" />
-            <div className="absolute bottom-[26%] left-[-4%] h-40 w-[42%] rounded-tr-[6rem] bg-[linear-gradient(180deg,rgba(44,228,149,0.9),rgba(6,93,92,0.96))] blur-[2px] sm:h-48" />
-            <div className="absolute bottom-[24%] right-[-6%] h-36 w-[38%] rounded-tl-[6rem] bg-[linear-gradient(180deg,rgba(44,228,149,0.88),rgba(6,93,92,0.96))] blur-[2px] sm:h-44" />
-            <div className="absolute bottom-[18%] left-[6%] hidden h-[44%] w-10 rounded-t-[1.8rem] bg-[linear-gradient(180deg,rgba(255,237,248,0.94),rgba(255,194,233,0.96))] shadow-[0_0_35px_rgba(255,196,233,0.35)] sm:block" />
-            <div className="absolute bottom-[18%] right-[8%] hidden h-[46%] w-10 rounded-t-[1.8rem] bg-[linear-gradient(180deg,rgba(255,237,248,0.94),rgba(255,194,233,0.96))] shadow-[0_0_35px_rgba(255,196,233,0.35)] sm:block" />
-            <div className="absolute bottom-[23%] left-[20%] h-16 w-9 rounded-t-[999px] rounded-b-[0.7rem] bg-[#18092f] shadow-[0_12px_25px_rgba(0,0,0,0.28)]" />
-            <div className="absolute bottom-[33.2%] left-[21.2%] h-3 w-3 rotate-45 rounded-[0.3rem] bg-[#18092f]" />
-            <div className="absolute bottom-[33.2%] left-[23.2%] h-3 w-3 rotate-45 rounded-[0.3rem] bg-[#18092f]" />
-            <div className="absolute bottom-[25%] left-[25.4%] h-10 w-3 rounded-full bg-[#18092f]" />
-          </div>
-
-          <div className={`relative mx-auto flex min-h-screen w-full max-w-6xl items-center justify-center transition-all duration-700 ${entryTransitionClosing ? 'translate-y-6 scale-[0.985] opacity-0' : 'translate-y-0 scale-100 opacity-100'}`}>
-            <div className="grid w-full items-end gap-10 lg:grid-cols-[1.06fr_0.94fr] lg:gap-14">
-              <div className="relative overflow-hidden rounded-[2.8rem] border border-white/18 bg-white/10 p-7 text-white shadow-[0_35px_90px_rgba(15,5,50,0.35)] backdrop-blur-md sm:p-8 lg:p-10">
-                <div className="absolute inset-0 bg-[linear-gradient(140deg,rgba(255,255,255,0.16),rgba(255,255,255,0.05)_46%,rgba(110,76,255,0.16))]" />
-                <div className="relative">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/12 px-4 py-2 text-[11px] font-extrabold uppercase tracking-[0.34em] text-white/88 backdrop-blur-md">
-                    <Gamepad2 size={14} /> dreamier arcade intro
-                  </div>
-                  <div className="mt-7 flex items-center gap-4">
-                    <div className="flex h-20 w-20 items-center justify-center rounded-[1.9rem] border border-white/22 bg-white/18 p-2.5 shadow-[0_16px_35px_rgba(14,5,50,0.24)]">
-                      <img src={headerLogoIcon} alt="Lofi Memory logo" className="h-full w-full rounded-[1.3rem] object-cover" />
-                    </div>
-                    <div>
-                      <p className="text-[11px] font-extrabold uppercase tracking-[0.42em] text-white/72">Lofi Memory</p>
-                      <p className="mt-2 text-sm font-semibold text-white/72">games, music, notes & quiet resets</p>
-                    </div>
-                  </div>
-                  <h1 className="mt-8 max-w-xl font-display text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-[3.45rem]">A softer little world to slip into.</h1>
-                  <p className="mt-4 max-w-xl text-sm font-semibold leading-7 text-white/78 sm:text-[15px]">A dreamy little corner for late-night games, lofi radio, notes, and soft resets — like stepping into a cozy pixel postcard before your home cards appear.</p>
-                  <div className="mt-8 inline-flex items-center gap-3 rounded-full border border-white/22 bg-black/18 px-4 py-2.5 text-sm font-bold text-white/86 shadow-[0_14px_32px_rgba(9,4,34,0.24)]">
-                    <span className="flex h-2.5 w-2.5 rounded-full bg-[#b5ff9d] shadow-[0_0_16px_rgba(181,255,157,0.95)]" />
-                    Opening your chill corner...
-                  </div>
-                </div>
-              </div>
-
-              <div className="relative mx-auto w-full max-w-[24rem] pb-4 lg:pb-10">
-                <div className="absolute inset-x-10 bottom-0 h-12 rounded-full bg-[#2ff3ff]/30 blur-3xl" />
-                <div className="relative ml-auto w-[88%] rotate-[14deg] rounded-[2.6rem] border border-[#ffd3f3]/75 bg-[linear-gradient(180deg,rgba(255,214,245,0.97),rgba(246,190,235,0.92))] p-4 shadow-[0_32px_80px_rgba(25,8,78,0.34)] sm:p-5">
-                  <div className="rounded-[1.9rem] border border-white/65 bg-[linear-gradient(180deg,#311270_0%,#5020a0_40%,#2b57b9_76%,#4de4ff_100%)] p-4 shadow-inner">
-                    <div className="relative overflow-hidden rounded-[1.4rem] border border-white/15 bg-[#1b104d] px-4 py-5 text-white shadow-[inset_0_0_45px_rgba(255,95,210,0.25)]">
-                      <div className="absolute right-4 top-4 h-10 w-10 rounded-full bg-[radial-gradient(circle_at_35%_35%,rgba(255,235,196,1),rgba(255,225,106,0.92)_38%,rgba(255,225,106,0.06)_100%)]" />
-                      <div className="absolute left-0 right-0 top-0 h-full bg-[linear-gradient(180deg,rgba(255,255,255,0.06),transparent_36%,rgba(255,131,226,0.1))]" />
-                      <div className="absolute bottom-0 left-[-5%] h-20 w-[62%] rounded-tr-[3rem] bg-[linear-gradient(180deg,rgba(20,216,123,0.88),rgba(7,101,80,0.96))]" />
-                      <div className="absolute bottom-0 right-[-8%] h-14 w-[42%] rounded-tl-[3rem] bg-[linear-gradient(180deg,rgba(255,164,225,0.82),rgba(160,84,255,0.86))]" />
-                      <div className="relative">
-                        <p className="text-[10px] font-extrabold uppercase tracking-[0.34em] text-white/68">great vibes only</p>
-                        <p className="mt-20 text-sm font-extrabold uppercase tracking-[0.22em] text-white/82">Press start softly</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="mt-4 flex items-center justify-between px-2 text-[#7f4484]">
-                    <div className="grid h-14 w-14 place-items-center rounded-full bg-white/55 shadow-inner">
-                      <div className="relative h-7 w-7">
-                        <div className="absolute left-1/2 top-0 h-full w-2 -translate-x-1/2 rounded-full bg-[#b1d596]" />
-                        <div className="absolute left-0 top-1/2 h-2 w-full -translate-y-1/2 rounded-full bg-[#b1d596]" />
-                      </div>
-                    </div>
-                    <div className="flex gap-3">
-                      <span className="h-5 w-5 rounded-full bg-[#d2b6ef] shadow-inner" />
-                      <span className="h-5 w-5 rounded-full bg-[#a1d598] shadow-inner" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-[#f4eee7]/92 backdrop-blur-md">
+          <div className="px-6 text-center">
+            <div className="mx-auto h-24 w-24 rounded-full border border-white/80 bg-white/78 shadow-soft" />
+            <p className="mt-6 text-[11px] font-extrabold uppercase tracking-[0.42em] text-sage-600">Lofi Memory</p>
+            <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-sage-950 sm:text-5xl">Arrive softly.</h1>
           </div>
         </div>
       )}
