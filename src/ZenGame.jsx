@@ -21,13 +21,13 @@ const difficultySettings = {
     note: 'Balanced and floaty — a calm focus rhythm.'
   },
   hard: {
-    gravity: 0.37,
-    jumpVelocity: -6.25,
-    obstacleSpeed: 3.45,
-    gapSize: 142,
-    spawnRate: 102,
+    gravity: 0.42,
+    jumpVelocity: -6.55,
+    obstacleSpeed: 4.2,
+    gapSize: 128,
+    spawnRate: 86,
     label: 'Hard',
-    note: 'Faster gaps and tighter pipes for a noticeably sharper challenge.'
+    note: 'Much faster gaps and tighter pipes for a noticeably sharper challenge.'
   }
 };
 
