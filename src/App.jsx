@@ -2388,6 +2388,7 @@ function App() {
   const [activeTab, setActiveTab] = useState(initialActiveTab);
   const [activeHomeSection, setActiveHomeSection] = useState(getInitialHomeSection);
   const [showEntryTransition, setShowEntryTransition] = useState(initialActiveTab === 'home');
+  const [entryTransitionClosing, setEntryTransitionClosing] = useState(false);
   const [entries, setEntries] = useState(getInitialEntries);
   const [selectedMood, setSelectedMood] = useState('Calm');
   const [title, setTitle] = useState('');
@@ -2791,6 +2792,7 @@ function App() {
   function navigateToTab(tabId) {
     setActiveTab(tabId);
     setShowEntryTransition(false);
+    setEntryTransitionClosing(false);
     if (tabId === 'home') {
       setActiveHomeSection('overview');
     }
@@ -2799,14 +2801,22 @@ function App() {
 
   useEffect(() => {
     if (!showEntryTransition) {
+      setEntryTransitionClosing(false);
       return undefined;
     }
 
-    const timerId = window.setTimeout(() => {
+    const closeTimer = window.setTimeout(() => {
+      setEntryTransitionClosing(true);
+    }, 1650);
+    const hideTimer = window.setTimeout(() => {
       setShowEntryTransition(false);
-    }, 1700);
+      setEntryTransitionClosing(false);
+    }, 2450);
 
-    return () => window.clearTimeout(timerId);
+    return () => {
+      window.clearTimeout(closeTimer);
+      window.clearTimeout(hideTimer);
+    };
   }, [showEntryTransition]);
 
   function openHomeSection(sectionId = 'overview') {
@@ -4992,24 +5002,25 @@ function App() {
   return (
     <main className={`personalized-site design-${selectedDesign} ${comfortMode ? 'comfort-mode' : ''} min-h-screen overflow-hidden bg-sand-50 pb-24 text-ink lg:pb-0`} style={themeStyle}>
       <div className="pointer-events-none fixed inset-0 -z-10">
-        <div className="absolute left-0 top-0 h-96 w-96 rounded-full bg-sage-200/70 blur-3xl" />
-        <div className="absolute right-0 top-56 h-96 w-96 rounded-full bg-sand-200/80 blur-3xl" />
-        <div className="absolute bottom-0 left-1/3 h-80 w-80 rounded-full bg-teal-100/70 blur-3xl" />
+        <div className="absolute left-[-2rem] top-0 h-[28rem] w-[28rem] rounded-full bg-[#efe4d7]/80 blur-3xl" />
+        <div className="absolute right-[-3rem] top-44 h-[26rem] w-[26rem] rounded-full bg-[#f8efe5]/85 blur-3xl" />
+        <div className="absolute bottom-[-4rem] left-1/3 h-[22rem] w-[22rem] rounded-full bg-[#f2e8dc]/78 blur-3xl" />
       </div>
 
 
       {showEntryTransition && (
-        <div className="fixed inset-0 z-40 flex items-center justify-center bg-[#f4eee7]/92 backdrop-blur-md">
-          <div className="px-6 text-center">
-            <div className="mx-auto h-24 w-24 rounded-full border border-white/80 bg-white/78 shadow-soft" />
-            <p className="mt-6 text-[11px] font-extrabold uppercase tracking-[0.42em] text-sage-600">Lofi Memory</p>
-            <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-sage-950 sm:text-5xl">Arrive softly.</h1>
+        <div className={`fixed inset-0 z-40 flex items-center justify-center bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.42),transparent_30%),linear-gradient(180deg,rgba(248,243,235,0.98)_0%,rgba(242,234,224,0.97)_100%)] backdrop-blur-[10px] transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${entryTransitionClosing ? 'opacity-0' : 'opacity-100'}`}>
+          <div className={`px-6 text-center transition-all duration-[1050ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${entryTransitionClosing ? 'translate-y-3 scale-[1.02] opacity-0' : 'translate-y-0 scale-100 opacity-100'}`}>
+            <div className="mx-auto h-24 w-24 rounded-full border border-white/90 bg-white/88 shadow-[0_18px_50px_rgba(158,136,114,0.12)] ring-8 ring-white/30" />
+            <p className="mt-6 text-[11px] font-extrabold uppercase tracking-[0.42em] text-[#8d7763]">Lofi Memory</p>
+            <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-[#3d3025] sm:text-5xl">Arrive softly.</h1>
+            <p className="mt-3 text-sm font-semibold tracking-[0.08em] text-[#8c7967]">A calm little pause before your space opens.</p>
           </div>
         </div>
       )}
 
       <nav className="sticky top-0 z-20 px-5 pt-5 sm:px-7 xl:px-10">
-        <div className="site-nav-shell mx-auto max-w-[1280px] rounded-[2.2rem] border border-white/80 bg-white/78 p-4 shadow-soft backdrop-blur-xl lg:p-5">
+        <div className="site-nav-shell mx-auto max-w-[1280px] rounded-[2.2rem] border border-white/90 bg-[linear-gradient(180deg,rgba(253,248,242,0.92),rgba(250,243,235,0.82))] p-4 shadow-[0_18px_45px_rgba(146,126,106,0.08)] backdrop-blur-xl lg:p-5">
           <div className="flex flex-col gap-2.5 lg:gap-3 xl:flex-row xl:items-center xl:justify-between">
             <a className="flex items-center gap-3.5" href="#home" onClick={() => openHomeSection('home')}>
               <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[1.35rem] border border-white/80 bg-white/88 p-1.5 shadow-[0_12px_34px_rgba(117,127,119,0.14)] ring-1 ring-sage-100 overflow-hidden">
@@ -5114,17 +5125,17 @@ function App() {
       {showMinimalHomeOverview && (
       <section id="home" className="mx-auto max-w-[1040px] px-5 pb-20 pt-10 sm:px-7 xl:px-10">
         <div className="mb-6 text-center">
-          <p className="text-[11px] font-extrabold uppercase tracking-[0.34em] text-sage-600">Choose your chill space</p>
-          <p className="mt-3 text-sm font-semibold leading-7 text-sage-700">Pick the corner that fits your mood right now.</p>
+          <p className="text-[11px] font-extrabold uppercase tracking-[0.34em] text-[#9a806a]">Choose your chill space</p>
+          <p className="mt-3 text-sm font-semibold leading-7 text-[#7f6a58]">Pick the corner that fits your mood right now.</p>
         </div>
-        <div className="rounded-[2rem] border border-white/80 bg-white/58 p-3 shadow-[0_20px_70px_rgba(117,127,119,0.12)] backdrop-blur-xl sm:p-4">
+        <div className="rounded-[2rem] border border-white/90 bg-[linear-gradient(180deg,rgba(255,252,247,0.78),rgba(247,239,229,0.68))] p-3 shadow-[0_18px_52px_rgba(146,126,106,0.08)] backdrop-blur-xl sm:p-4">
           <div className="grid gap-3 md:grid-cols-2">
             {homeEntryCards.map((card) => {
               const Icon = card.icon;
               return (
                 <button
                   key={card.id}
-                  className="group flex w-full items-center gap-4 rounded-[1.75rem] border border-[#e2d9cf] bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(248,244,239,0.9))] px-5 py-5 text-left shadow-[0_12px_34px_rgba(120,127,119,0.08)] transition duration-300 hover:-translate-y-1 hover:border-sage-300 hover:shadow-[0_18px_42px_rgba(120,127,119,0.12)]"
+                  className="group flex w-full items-center gap-4 rounded-[1.75rem] border border-[#eadfce] bg-[linear-gradient(135deg,rgba(255,255,255,0.94),rgba(249,242,234,0.92))] px-5 py-5 text-left shadow-[0_10px_26px_rgba(146,126,106,0.07)] transition duration-300 hover:-translate-y-1 hover:border-[#d8c6b2] hover:shadow-[0_16px_34px_rgba(146,126,106,0.1)]"
                   onClick={card.onClick}
                   type="button"
                 >
@@ -5132,8 +5143,8 @@ function App() {
                     <Icon size={22} />
                   </div>
                   <div>
-                    <p className="text-lg font-extrabold text-sage-950">{card.title}</p>
-                    <p className="text-sm font-semibold text-sage-700">{card.description}</p>
+                    <p className="text-lg font-extrabold text-[#3d3025]">{card.title}</p>
+                    <p className="text-sm font-semibold text-[#7c6856]">{card.description}</p>
                   </div>
                 </button>
               );
@@ -5146,64 +5157,64 @@ function App() {
       {activeTab === 'home' && activeHomeSection === 'overview' && !showMinimalHomeOverview && (
       <section id="home" className="mx-auto grid max-w-[1280px] gap-8 px-5 pb-28 pt-10 sm:px-7 lg:grid-cols-12 lg:pb-12 xl:gap-12 xl:px-10">
         <div className="lg:col-span-8">
-          <div className="relative overflow-hidden rounded-[2.35rem] border border-white/90 bg-gradient-to-br from-white/96 via-white/92 to-sage-50/82 p-8 shadow-[0_24px_75px_rgba(101,121,104,0.16)] backdrop-blur-xl lg:p-10 xl:p-11">
-            <div className="pointer-events-none absolute -left-10 top-12 h-28 w-28 rounded-full bg-sage-100/45 blur-3xl"></div>
-            <div className="pointer-events-none absolute right-4 top-4 h-32 w-32 rounded-full bg-sand-100/40 blur-3xl"></div>
+          <div className="relative overflow-hidden rounded-[2.35rem] border border-white/90 bg-[linear-gradient(180deg,rgba(255,251,246,0.95),rgba(247,239,230,0.86))] p-8 shadow-[0_24px_60px_rgba(146,126,106,0.1)] backdrop-blur-xl lg:p-10 xl:p-11">
+            <div className="pointer-events-none absolute -left-10 top-12 h-28 w-28 rounded-full bg-[#efe4d8]/55 blur-3xl"></div>
+            <div className="pointer-events-none absolute right-4 top-4 h-32 w-32 rounded-full bg-[#f7eee3]/65 blur-3xl"></div>
             <div className="relative">
               <div className="mb-8 flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
                 <div className="flex flex-wrap items-center gap-3">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-sage-200/90 bg-white/95 px-4 py-2 text-sm font-bold text-sage-950 shadow-sm">
-                    <Sparkles size={16} /> Your chill corner online
+                  <div className="inline-flex items-center gap-2 rounded-full border border-[#eadfce] bg-white/96 px-4 py-2 text-sm font-bold text-[#4a3a2d] shadow-sm">
+                    <Sparkles size={16} /> Softer browser corner
                   </div>
-                  <div className="inline-flex items-center gap-2 rounded-full border border-sage-200/80 bg-sage-50/82 px-4 py-2 text-sm font-bold text-sage-800 shadow-sm">
-                    <Quote size={14} /> Cozy · calm · all-in-one
+                  <div className="inline-flex items-center gap-2 rounded-full border border-[#eadfce] bg-[#f8f0e6]/88 px-4 py-2 text-sm font-bold text-[#7f6957] shadow-sm">
+                    <Quote size={14} /> Quiet · simple · all-in-one
                   </div>
                 </div>
-                <div className="max-w-sm rounded-[1.45rem] border border-white/85 bg-white/74 px-4 py-3 shadow-sm backdrop-blur">
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Stay awhile</p>
-                  <p className="mt-1 text-sm font-semibold leading-6 text-sage-700">Play something gentle, drop a note, or just slow down here for a few quiet minutes.</p>
+                <div className="max-w-sm rounded-[1.45rem] border border-white/90 bg-white/76 px-4 py-3 shadow-sm backdrop-blur">
+                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#9a806a]">Stay awhile</p>
+                  <p className="mt-1 text-sm font-semibold leading-6 text-[#7c6957]">Play something gentle, drop a note, or just slow down here for a few quiet minutes.</p>
                 </div>
               </div>
-              <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.96] tracking-tight text-sage-950 md:text-6xl">A soft place to hang out and reset.</h1>
-              <p className="mt-5 max-w-3xl text-[1.28rem] font-semibold leading-9 text-sage-900">Lofi Memory is an all-in-one browser space for chill games, lofi music, quick notes, private thoughts, breathing room, and small daily plans whenever you want a calmer corner online.</p>
-              <p className="mt-4 max-w-[42rem] text-lg leading-8 text-sage-700">Play for a bit, let the lofi radio start in the background, keep a to-do list nearby, or write something down without bouncing between different apps.</p>
+              <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.96] tracking-tight text-[#3d3025] md:text-6xl">A soft place to hang out and reset.</h1>
+              <p className="mt-5 max-w-3xl text-[1.22rem] font-semibold leading-8 text-[#5d4c3e]">Lofi Memory is an all-in-one browser space for chill games, lofi music, quick notes, private thoughts, breathing room, and small daily plans whenever you want a calmer corner online.</p>
+              <p className="mt-4 max-w-[42rem] text-lg leading-8 text-[#7a6756]">Play for a bit, let the lofi radio start in the background, keep a to-do list nearby, or write something down without bouncing between different apps.</p>
 
               <div className="mt-7 grid gap-3 md:grid-cols-3">
-                <div className="rounded-[1.5rem] border border-white/85 bg-white/78 p-4 shadow-sm backdrop-blur">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-sage-100 text-sage-800 shadow-sm">
+                <div className="rounded-[1.5rem] border border-white/90 bg-white/74 p-4 shadow-sm backdrop-blur">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#efe4d8] text-[#6a5849] shadow-sm">
                     <Moon size={17} />
                   </div>
-                  <p className="mt-3 text-sm font-extrabold text-sage-950">Stay unhurried</p>
-                  <p className="mt-1 text-sm leading-6 text-sage-700">Open one small thing at a time and let the rest of the page stay soft and quiet.</p>
+                  <p className="mt-3 text-sm font-extrabold text-[#3d3025]">Stay unhurried</p>
+                  <p className="mt-1 text-sm leading-6 text-[#7c6957]">Open one small thing at a time and let the rest of the page stay soft and quiet.</p>
                 </div>
-                <div className="rounded-[1.5rem] border border-white/85 bg-white/78 p-4 shadow-sm backdrop-blur">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-teal-100 text-teal-700 shadow-sm">
+                <div className="rounded-[1.5rem] border border-white/90 bg-white/74 p-4 shadow-sm backdrop-blur">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#f5eadb] text-[#8b6f54] shadow-sm">
                     <Wind size={17} />
                   </div>
-                  <p className="mt-3 text-sm font-extrabold text-sage-950">Reset fast</p>
-                  <p className="mt-1 text-sm leading-6 text-sage-700">Breathe, play, plan, and come back to yourself without the site feeling noisy or demanding.</p>
+                  <p className="mt-3 text-sm font-extrabold text-[#3d3025]">Reset fast</p>
+                  <p className="mt-1 text-sm leading-6 text-[#7c6957]">Breathe, play, plan, and come back to yourself without the site feeling noisy or demanding.</p>
                 </div>
-                <div className="rounded-[1.5rem] border border-white/85 bg-white/78 p-4 shadow-sm backdrop-blur">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-sand-100 text-sand-600 shadow-sm">
+                <div className="rounded-[1.5rem] border border-white/90 bg-white/74 p-4 shadow-sm backdrop-blur">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#f0e7dc] text-[#7a6553] shadow-sm">
                     <ShieldCheck size={17} />
                   </div>
-                  <p className="mt-3 text-sm font-extrabold text-sage-950">Keep it yours</p>
-                  <p className="mt-1 text-sm leading-6 text-sage-700">Private thoughts, little plans, and saved moments can stay close without feeling exposed.</p>
+                  <p className="mt-3 text-sm font-extrabold text-[#3d3025]">Keep it yours</p>
+                  <p className="mt-1 text-sm leading-6 text-[#7c6957]">Private thoughts, little plans, and saved moments can stay close without feeling exposed.</p>
                 </div>
               </div>
 
               <div className="mt-9 flex flex-wrap gap-3">
-                <a className="inline-flex items-center gap-2 rounded-full bg-sage-900 px-5 py-3 text-sm font-extrabold text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800" href="#unwind" onClick={() => navigateToTab('unwind')}>
+                <a className="inline-flex items-center gap-2 rounded-full bg-[#4f3f32] px-5 py-3 text-sm font-extrabold text-white shadow-[0_12px_28px_rgba(97,74,56,0.16)] transition hover:-translate-y-1 hover:bg-[#433528]" href="#unwind" onClick={() => navigateToTab('unwind')}>
                   <Leaf size={17} /> Play a chill game
                 </a>
-                <a className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white px-5 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-1 hover:border-sage-300 hover:bg-sage-50" href="#notes" onClick={() => navigateToTab('notes')}>
+                <a className="inline-flex items-center gap-2 rounded-full border border-[#e2d3c2] bg-white/92 px-5 py-3 text-sm font-extrabold text-[#4f3f32] shadow-sm transition hover:-translate-y-1 hover:border-[#d3bea8] hover:bg-white" href="#notes" onClick={() => navigateToTab('notes')}>
                   <FileText size={17} /> Open notes & to-dos
                 </a>
-                <button className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white px-5 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-1 hover:border-sage-300 hover:bg-sage-50" onClick={() => setCustomizerOpen(true)} type="button">
+                <button className="inline-flex items-center gap-2 rounded-full border border-[#e2d3c2] bg-white/92 px-5 py-3 text-sm font-extrabold text-[#4f3f32] shadow-sm transition hover:-translate-y-1 hover:border-[#d3bea8] hover:bg-white" onClick={() => setCustomizerOpen(true)} type="button">
                   <Palette size={17} /> Choose your theme
                 </button>
                 {hasPin && (
-                  <button className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white px-5 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-1 hover:border-sage-300 hover:bg-sage-50" onClick={() => setPinSettingsOpen(true)} type="button">
+                  <button className="inline-flex items-center gap-2 rounded-full border border-[#e2d3c2] bg-white/92 px-5 py-3 text-sm font-extrabold text-[#4f3f32] shadow-sm transition hover:-translate-y-1 hover:border-[#d3bea8] hover:bg-white" onClick={() => setPinSettingsOpen(true)} type="button">
                     <Shield size={17} /> Privacy settings
                   </button>
                 )}
@@ -5211,15 +5222,15 @@ function App() {
 
               <div className="mt-7 grid gap-3 lg:grid-cols-3">
                 {hangoutInvitations.map((invitation) => (
-                  <button key={invitation.title} className="group rounded-[1.55rem] border border-sage-100 bg-white/88 p-4 text-left shadow-sm transition hover:-translate-y-1 hover:border-sage-200 hover:bg-white hover:shadow-lift" onClick={() => navigateToTab(invitation.tab)} type="button">
+                  <button key={invitation.title} className="group rounded-[1.55rem] border border-[#eadfce] bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(248,241,232,0.86))] p-4 text-left shadow-sm transition hover:-translate-y-1 hover:border-[#d9c7b3] hover:bg-white hover:shadow-[0_14px_30px_rgba(146,126,106,0.08)]" onClick={() => navigateToTab(invitation.tab)} type="button">
                     <div className="flex items-start justify-between gap-3">
-                      <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-500">{invitation.eyebrow}</p>
-                      <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-sage-100 text-sage-700">
+                      <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#9a806a]">{invitation.eyebrow}</p>
+                      <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-[#efe4d8] text-[#7b6552]">
                         <invitation.icon size={16} />
                       </span>
                     </div>
-                    <h3 className="mt-3 text-lg font-extrabold leading-tight text-sage-950 group-hover:text-sage-800">{invitation.title}</h3>
-                    <p className="mt-2 text-sm leading-6 text-sage-700">{invitation.detail}</p>
+                    <h3 className="mt-3 text-lg font-extrabold leading-tight text-[#3d3025] group-hover:text-[#4f3f32]">{invitation.title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-[#7c6957]">{invitation.detail}</p>
                   </button>
                 ))}
               </div>
