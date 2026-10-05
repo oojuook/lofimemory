@@ -7185,10 +7185,10 @@ function App() {
       `}</style>
 
       {/* Floating Lofi Radio Player */}
-      <div className={`fixed z-50 ${cookieConsentAccepted ? 'bottom-6 right-20 sm:right-24' : 'bottom-44 right-4 sm:bottom-36 sm:right-6 lg:right-8'}`}>
+      <div className={`fixed z-50 ${cookieConsentAccepted ? 'bottom-12 left-4 sm:left-5 lg:bottom-16 xl:left-[max(1rem,calc((100vw-1280px)/2-4.25rem))]' : 'bottom-32 left-4 sm:bottom-28 sm:left-5 lg:bottom-32 xl:left-[max(1rem,calc((100vw-1280px)/2-4.25rem))]'}`}>
 
         <div ref={radioPlayerContainerRef} className="pointer-events-none absolute h-1 w-1 opacity-0" aria-hidden="true" />
-        <div className="group relative h-[3.45rem] w-[3.45rem] sm:h-[3.9rem] sm:w-[3.9rem] lg:h-[4.05rem] lg:w-[4.05rem]">
+        <div className="group relative h-[3.6rem] w-[3.6rem] sm:h-[3.9rem] sm:w-[3.9rem] lg:h-[4.05rem] lg:w-[4.05rem]">
           <div
             ref={radioDialRef}
             aria-label="Adjust lofi radio volume"
@@ -7248,12 +7248,12 @@ function App() {
                 } catch {}
               }
             }}
-            className={`absolute inset-[0.76rem] z-20 flex items-center justify-center overflow-hidden rounded-full transition duration-300 hover:-translate-y-1 ${
+            className={`absolute inset-[0.74rem] z-20 flex items-center justify-center overflow-hidden rounded-full transition duration-300 hover:-translate-y-1 ${
               isRadioPlaying
-                ? 'bg-sage-200/92 ring-1 ring-white/60 shadow-[0_10px_28px_rgba(72,111,66,0.22)] hover:bg-sage-200'
-                : 'bg-sage-100/92 shadow-[0_10px_24px_rgba(72,111,66,0.14)] hover:bg-sage-100'
+                ? 'bg-sage-200/90 ring-1 ring-white/60 shadow-[0_8px_22px_rgba(72,111,66,0.18)] hover:bg-sage-200'
+                : 'bg-sage-100/90 shadow-[0_8px_18px_rgba(72,111,66,0.12)] hover:bg-sage-100'
             }`}
-            title="Toggle Lofi Radio"
+            title={radioNeedsInteraction ? 'Tap once for sound' : radioStatusMessage}
             type="button"
           >
             {isRadioPlaying && (
@@ -7277,9 +7277,11 @@ function App() {
               </span>
             </span>
           </button>
-          <div className={`pointer-events-none absolute -top-10 right-0 w-max max-w-[10rem] rounded-2xl border border-white/80 bg-white/92 px-3 py-1.5 text-center text-[10px] font-extrabold uppercase tracking-[0.14em] text-sage-700 shadow-sm backdrop-blur-xl transition duration-300 ${radioNeedsInteraction ? 'translate-y-0 opacity-100' : '-translate-y-1 opacity-0'}`}>
-            {radioNeedsInteraction ? 'Tap once for sound' : radioStatusMessage}
-          </div>
+          {radioNeedsInteraction && (
+            <div className="pointer-events-none absolute -top-10 left-0 w-max max-w-[10rem] rounded-2xl border border-white/80 bg-white/92 px-3 py-1.5 text-center text-[10px] font-extrabold uppercase tracking-[0.14em] text-sage-700 shadow-sm backdrop-blur-xl">
+              Tap once for sound
+            </div>
+          )}
           <div className={`pointer-events-none absolute -bottom-2 left-1/2 -translate-x-1/2 rounded-full border border-white/75 bg-white/88 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-sage-600 shadow-sm backdrop-blur-xl transition duration-300 ${isRadioDialFeedbackVisible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'}`}>
             {radioVolume}%
           </div>
