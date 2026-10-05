@@ -5088,10 +5088,10 @@ function App() {
       )}
 
       <nav className="sticky top-0 z-20 px-5 pt-5 sm:px-7 xl:px-10">
-        <div className="site-nav-shell mx-auto max-w-[1280px] rounded-[2.2rem] border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.86),rgba(246,240,255,0.84),rgba(236,247,255,0.8))] p-4 shadow-[0_18px_55px_rgba(67,40,129,0.15)] backdrop-blur-xl lg:p-5">
+        <div className="site-nav-shell mx-auto max-w-[1280px] rounded-[2.2rem] border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.88),rgba(244,240,255,0.86),rgba(239,247,255,0.82))] p-4 shadow-[0_18px_55px_rgba(67,40,129,0.14)] backdrop-blur-xl lg:p-5">
           <div className="flex flex-col gap-2.5 lg:gap-3 xl:flex-row xl:items-center xl:justify-between">
             <a className="flex items-center gap-3.5" href="#home" onClick={() => openHomeSection('home')}>
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[1.35rem] border border-white/80 bg-white/88 p-1.5 shadow-[0_12px_34px_rgba(117,127,119,0.14)] ring-1 ring-sage-100 overflow-hidden">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[1.35rem] border border-white/85 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(247,241,255,0.88))] p-1.5 shadow-[0_12px_34px_rgba(117,127,119,0.12)] ring-1 ring-white/70 overflow-hidden">
                 <img src={headerLogoIcon} alt="Lofi Memory Logo" className="h-full w-full rounded-[1rem] object-cover" />
               </div>
               <div>
@@ -5121,7 +5121,7 @@ function App() {
 
             <div className="site-nav-actions flex w-full flex-wrap items-center gap-2 lg:justify-end xl:w-auto xl:max-w-[34rem] xl:flex-none xl:flex-nowrap">
               {user ? (
-                <div className="flex min-w-[210px] flex-1 items-center justify-between gap-3 rounded-full border border-sage-200 bg-white/92 px-4 py-2.5 shadow-lift xl:flex-none">
+                <div className="flex min-w-[210px] flex-1 items-center justify-between gap-3 rounded-full border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.88),rgba(246,241,255,0.8))] px-4 py-2.5 shadow-[0_10px_26px_rgba(76,63,140,0.08)] xl:flex-none">
                   <div className="min-w-0">
                     <p className="truncate text-sm font-extrabold text-sage-950">{user.displayName || user.email}</p>
                     <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-sage-600">{cloudStatus}</p>
@@ -5131,7 +5131,7 @@ function App() {
                   </div>
                 </div>
               ) : (
-                <button className="flex min-w-[208px] flex-1 items-center justify-between gap-3 rounded-full border border-sage-200 bg-white/92 px-4 py-2.5 text-left shadow-lift transition hover:-translate-y-0.5 hover:bg-white xl:flex-none" onClick={signInWithGoogle} disabled={authLoading} type="button">
+                <button className="flex min-w-[208px] flex-1 items-center justify-between gap-3 rounded-full border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.9),rgba(246,241,255,0.82))] px-4 py-2.5 text-left shadow-[0_10px_26px_rgba(76,63,140,0.08)] transition hover:-translate-y-0.5 hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(248,243,255,0.9))] xl:flex-none" onClick={signInWithGoogle} disabled={authLoading} type="button">
                   <div>
                     <p className="text-sm font-extrabold text-sage-950">{authLoading ? 'Checking login...' : 'Sign in with Google'}</p>
                     <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-sage-600">Sync across devices</p>
@@ -5141,9 +5141,9 @@ function App() {
                   </div>
                 </button>
               )}
-              <div className="flex flex-wrap items-center gap-2 rounded-full border border-sage-100 bg-white/82 p-1.5 shadow-sm xl:flex-nowrap">
+              <div className="flex flex-wrap items-center gap-2 rounded-full border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.82),rgba(246,241,255,0.74))] p-1.5 shadow-[0_10px_24px_rgba(76,63,140,0.06)] xl:flex-nowrap">
                 {user && (
-                  <button className="rounded-full border border-sage-200 bg-white/90 px-3.5 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:bg-white" onClick={handleSignOut} type="button">
+                  <button className="rounded-full border border-white/75 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(247,242,255,0.88))] px-3.5 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.98),rgba(250,246,255,0.94))]" onClick={handleSignOut} type="button">
                     Sign out
                   </button>
                 )}
@@ -5170,22 +5170,22 @@ function App() {
                     SEO studio
                   </button>
                 )}
-                <button className={`rounded-full border px-3.5 py-2 text-sm font-bold transition hover:-translate-y-0.5 ${comfortMode ? 'border-sage-800 bg-sage-900 text-white' : 'border-sage-200 bg-white/90 text-sage-800 hover:bg-white'}`} onClick={() => setComfortMode(!comfortMode)} type="button">
+                <button className={`rounded-full border px-3.5 py-2 text-sm font-bold transition hover:-translate-y-0.5 ${comfortMode ? 'border-violet-700/80 bg-violet-700 text-white shadow-[0_8px_20px_rgba(89,73,179,0.22)]' : 'border-white/75 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(247,242,255,0.88))] text-sage-800 hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.98),rgba(250,246,255,0.94))]'}`} onClick={() => setComfortMode(!comfortMode)} type="button">
                   Comfort
                 </button>
-                <button className="rounded-full border border-sage-200 bg-white/90 px-3.5 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:bg-white" onClick={() => (hasPin ? setPinSettingsOpen(true) : setLocked(true))} type="button">
+                <button className="rounded-full border border-white/75 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(247,242,255,0.88))] px-3.5 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.98),rgba(250,246,255,0.94))]" onClick={() => (hasPin ? setPinSettingsOpen(true) : setLocked(true))} type="button">
                   {hasPin ? 'Privacy' : 'Set lock'}
                 </button>
               </div>
             </div>
           </div>
-          <div className="site-nav-links mt-2 hidden flex-wrap items-center justify-center gap-2 rounded-[1.5rem] border border-white/65 bg-[linear-gradient(135deg,rgba(255,255,255,0.78),rgba(245,239,255,0.72))] p-1.5 shadow-[0_14px_36px_rgba(67,40,129,0.08)] lg:flex">
-            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#home" onClick={() => navigateToTab('home')}>Chill</a>
-            <button className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" onClick={() => setCustomizerOpen(true)} type="button">Vibes</button>
-            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#unwind" onClick={() => navigateToTab('unwind')}>Games</a>
-            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#resources" onClick={() => openHomeSection('resources')}>Relax</a>
-            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#faq" onClick={() => openHomeSection('faq')}>Help</a>
-            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#contact" onClick={() => openHomeSection('contact')}>Contact</a>
+          <div className="site-nav-links mt-2 hidden flex-wrap items-center justify-center gap-2 rounded-[1.5rem] border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.8),rgba(244,239,255,0.76),rgba(239,246,255,0.72))] p-1.5 shadow-[0_14px_36px_rgba(67,40,129,0.08)] lg:flex">
+            <a className="rounded-full border border-white/75 bg-[linear-gradient(135deg,rgba(255,255,255,0.94),rgba(247,242,255,0.9))] px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-white hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.99),rgba(250,246,255,0.94))]" href="#home" onClick={() => navigateToTab('home')}>Chill</a>
+            <button className="rounded-full border border-white/75 bg-[linear-gradient(135deg,rgba(255,255,255,0.94),rgba(247,242,255,0.9))] px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-white hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.99),rgba(250,246,255,0.94))]" onClick={() => setCustomizerOpen(true)} type="button">Vibes</button>
+            <a className="rounded-full border border-white/75 bg-[linear-gradient(135deg,rgba(255,255,255,0.94),rgba(247,242,255,0.9))] px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-white hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.99),rgba(250,246,255,0.94))]" href="#unwind" onClick={() => navigateToTab('unwind')}>Games</a>
+            <a className="rounded-full border border-white/75 bg-[linear-gradient(135deg,rgba(255,255,255,0.94),rgba(247,242,255,0.9))] px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-white hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.99),rgba(250,246,255,0.94))]" href="#resources" onClick={() => openHomeSection('resources')}>Relax</a>
+            <a className="rounded-full border border-white/75 bg-[linear-gradient(135deg,rgba(255,255,255,0.94),rgba(247,242,255,0.9))] px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-white hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.99),rgba(250,246,255,0.94))]" href="#faq" onClick={() => openHomeSection('faq')}>Help</a>
+            <a className="rounded-full border border-white/75 bg-[linear-gradient(135deg,rgba(255,255,255,0.94),rgba(247,242,255,0.9))] px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-white hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.99),rgba(250,246,255,0.94))]" href="#contact" onClick={() => openHomeSection('contact')}>Contact</a>
           </div>
         </div>
       </nav>
@@ -5417,10 +5417,10 @@ function App() {
         </div>
 
         <aside className="flex flex-col gap-5 lg:col-span-4">
-          <div className="rounded-[1.9rem] border border-white/80 bg-white/72 p-5 shadow-soft backdrop-blur-xl">
+          <div className="rounded-[1.9rem] border border-white/70 bg-[linear-gradient(160deg,rgba(255,255,255,0.82),rgba(244,239,255,0.72),rgba(235,246,255,0.68))] p-5 shadow-[0_18px_50px_rgba(64,48,128,0.09)] backdrop-blur-xl">
             <div className="flex items-center justify-between gap-3">
               <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">Start where it helps most</p>
-              <span className="rounded-full border border-sage-100 bg-sage-50 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-800">Core spaces</span>
+              <span className="rounded-full border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.88),rgba(247,241,255,0.82))] px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-800">Core spaces</span>
             </div>
             <div className="mt-4 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:gap-4">
               {[
@@ -5431,7 +5431,7 @@ function App() {
                 { id: 'memories', label: 'Memories', detail: 'Return to saved moments', icon: BookOpen, tone: 'bg-sand-100 text-sand-600' },
                 { id: 'insights', label: 'Vibes', detail: 'See your mood flow', icon: Sparkles, tone: 'bg-rose-100 text-rose-700' }
               ].map((tab) => (
-                <button key={tab.id} className="group flex items-center gap-3 rounded-2xl border border-sage-100 bg-white/92 px-4 py-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-200 hover:bg-white hover:shadow-lift" onClick={() => navigateToTab(tab.id)} type="button">
+                <button key={tab.id} className="group flex items-center gap-3 rounded-2xl border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.9),rgba(247,242,255,0.8))] px-4 py-3 text-left shadow-[0_10px_24px_rgba(67,40,129,0.06)] transition hover:-translate-y-0.5 hover:border-white hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(249,245,255,0.9))] hover:shadow-[0_14px_28px_rgba(67,40,129,0.09)]" onClick={() => navigateToTab(tab.id)} type="button">
                   <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl shadow-sm transition group-hover:scale-105 ${tab.tone}`}>
                     <tab.icon size={18} />
                   </div>
@@ -5444,20 +5444,20 @@ function App() {
             </div>
           </div>
 
-          <div className="rounded-[1.9rem] border border-white/80 bg-gradient-to-br from-white/84 to-sand-50/70 p-6 shadow-soft backdrop-blur-xl">
+          <div className="rounded-[1.9rem] border border-white/70 bg-[linear-gradient(165deg,rgba(255,255,255,0.84),rgba(247,241,255,0.74),rgba(238,246,255,0.68))] p-6 shadow-[0_18px_50px_rgba(64,48,128,0.09)] backdrop-blur-xl">
             <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-800">Why it feels good to stay here</p>
             <h3 className="mt-3 text-2xl font-extrabold leading-tight text-ink">The page feels like a chill place first, so writing can arrive naturally.</h3>
             <p className="mt-3 max-w-sm text-sm leading-7 text-sage-800">There is a clear place to begin, soft privacy cues, cozy game breaks, and just enough support to help a first sentence feel easy instead of exposed.</p>
             <div className="mt-6 grid gap-3.5 text-sm font-semibold text-sage-900">
-              <div className="flex items-center gap-3 rounded-2xl border border-sage-200 bg-white/96 px-4 py-3.5 shadow-sm">
+              <div className="flex items-center gap-3 rounded-2xl border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(247,242,255,0.84))] px-4 py-3.5 shadow-[0_10px_22px_rgba(67,40,129,0.05)]">
                 <Sparkles size={15} className="text-sage-700" />
                 <span>Starter lines help you begin without filling the page with noise</span>
               </div>
-              <div className="flex items-center gap-3 rounded-2xl border border-sage-200 bg-white/96 px-4 py-3.5 shadow-sm">
+              <div className="flex items-center gap-3 rounded-2xl border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(247,242,255,0.84))] px-4 py-3.5 shadow-[0_10px_22px_rgba(67,40,129,0.05)]">
                 <ShieldCheck size={15} className="text-sage-700" />
                 <span>Privacy cues keep the space personal before you write a word</span>
               </div>
-              <div className="flex items-center gap-3 rounded-2xl border border-sage-200 bg-white/96 px-4 py-3.5 shadow-sm">
+              <div className="flex items-center gap-3 rounded-2xl border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(247,242,255,0.84))] px-4 py-3.5 shadow-[0_10px_22px_rgba(67,40,129,0.05)]">
                 <BookOpen size={15} className="text-sage-700" />
                 <span>Saved pages stay easy to revisit when you want perspective later</span>
               </div>
