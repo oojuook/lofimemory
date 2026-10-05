@@ -1,57 +1,154 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Play, RotateCcw, Sparkles } from 'lucide-react';
 
-const CANVAS_WIDTH = 720;
-const CANVAS_HEIGHT = 400;
-const GROUND_Y = 320;
+const CANVAS_WIDTH = 960;
+const CANVAS_HEIGHT = 260;
+const GROUND_LINE_Y = 206;
+const DINO_X = 72;
+const DINO_STAND_WIDTH = 44;
+const DINO_STAND_HEIGHT = 48;
+const DINO_DUCK_WIDTH = 58;
+const DINO_DUCK_HEIGHT = 30;
 
 const difficultySettings = {
   easy: {
-    gravity: 0.6,
-    jumpVelocity: -11.4,
-    startSpeed: 6,
-    maxSpeed: 10.8,
-    spawnFloor: 60,
-    spawnBase: 108,
+    gravity: 0.68,
+    jumpVelocity: -13.2,
+    startSpeed: 7.2,
+    maxSpeed: 11.2,
+    acceleration: 0.0026,
+    spawnMin: 86,
+    spawnMax: 130,
+    fallBoost: 0.16,
     label: 'Easy',
-    note: 'A softer desert run with more breathing room between cacti.',
+    note: 'Closer to the original runner, but with a touch more breathing room between obstacles.'
   },
   medium: {
-    gravity: 0.69,
-    jumpVelocity: -11.9,
-    startSpeed: 7.4,
-    maxSpeed: 12.9,
-    spawnFloor: 48,
-    spawnBase: 90,
+    gravity: 0.72,
+    jumpVelocity: -13.7,
+    startSpeed: 8.2,
+    maxSpeed: 13.2,
+    acceleration: 0.0031,
+    spawnMin: 74,
+    spawnMax: 116,
+    fallBoost: 0.22,
     label: 'Medium',
-    note: 'A balanced offline dash for steady focus.',
+    note: 'The closest match to the classic no-internet runner feel.'
   },
   hard: {
     gravity: 0.78,
-    jumpVelocity: -12.35,
-    startSpeed: 8.8,
-    maxSpeed: 15.1,
-    spawnFloor: 38,
-    spawnBase: 76,
+    jumpVelocity: -14.1,
+    startSpeed: 9.2,
+    maxSpeed: 15.3,
+    acceleration: 0.0039,
+    spawnMin: 62,
+    spawnMax: 98,
+    fallBoost: 0.3,
     label: 'Hard',
-    note: 'Faster ground, tighter jumps, and denser cactus timing for a real challenge.',
+    note: 'The same offline-runner style with faster ground and tighter reaction windows.'
   }
 };
 
+function randomBetween(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+function getGroundTop(ducking = false) {
+  return GROUND_LINE_Y - (ducking ? DINO_DUCK_HEIGHT : DINO_STAND_HEIGHT);
+}
+
 function buildInitialState(startSpeed) {
   return {
-    dinoY: GROUND_Y,
+    dinoY: getGroundTop(false),
     velocityY: 0,
+    ducking: false,
     speed: startSpeed,
-    score: 0,
     frames: 0,
+    distance: 0,
+    score: 0,
+    obstacleCooldown: 90,
     obstacles: [],
-    dustOffset: 0,
+    groundOffset: 0,
     clouds: [
-      { x: 120, y: 88, size: 30 },
-      { x: 360, y: 62, size: 24 },
-      { x: 560, y: 104, size: 34 }
+      { x: 210, y: 62, width: 46 },
+      { x: 540, y: 46, width: 32 },
+      { x: 790, y: 78, width: 42 }
     ]
+  };
+}
+
+function getScoreDisplay(score) {
+  return String(score).padStart(5, '0');
+}
+
+function createObstacle(score) {
+  const cactusChoices = [
+    { type: 'small-cactus', width: 18, height: 38, y: GROUND_LINE_Y - 38 },
+    { type: 'large-cactus', width: 24, height: 50, y: GROUND_LINE_Y - 50 },
+    { type: 'double-cactus', width: 40, height: 40, y: GROUND_LINE_Y - 40 },
+    { type: 'triple-cactus', width: 58, height: 42, y: GROUND_LINE_Y - 42 }
+  ];
+
+  const birdHeights = [GROUND_LINE_Y - 74, GROUND_LINE_Y - 100, GROUND_LINE_Y - 128];
+  const allowBird = score >= 80 && Math.random() > 0.72;
+
+  if (allowBird) {
+    return {
+      type: 'ptero',
+      width: 46,
+      height: 32,
+      y: birdHeights[Math.floor(Math.random() * birdHeights.length)],
+      x: CANVAS_WIDTH + 36,
+      flapFrame: 0,
+      passed: false
+    };
+  }
+
+  const template = cactusChoices[Math.floor(Math.random() * cactusChoices.length)];
+  return {
+    ...template,
+    x: CANVAS_WIDTH + 36,
+    passed: false
+  };
+}
+
+function intersects(a, b) {
+  return a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+}
+
+function getDinoHitbox(state) {
+  if (state.ducking && state.velocityY === 0) {
+    return {
+      left: DINO_X + 4,
+      right: DINO_X + DINO_DUCK_WIDTH - 6,
+      top: state.dinoY + 6,
+      bottom: state.dinoY + DINO_DUCK_HEIGHT - 2
+    };
+  }
+
+  return {
+    left: DINO_X + 6,
+    right: DINO_X + DINO_STAND_WIDTH - 5,
+    top: state.dinoY + 4,
+    bottom: state.dinoY + DINO_STAND_HEIGHT - 2
+  };
+}
+
+function getObstacleHitbox(obstacle) {
+  if (obstacle.type === 'ptero') {
+    return {
+      left: obstacle.x + 4,
+      right: obstacle.x + obstacle.width - 4,
+      top: obstacle.y + 6,
+      bottom: obstacle.y + obstacle.height - 5
+    };
+  }
+
+  return {
+    left: obstacle.x + 2,
+    right: obstacle.x + obstacle.width - 2,
+    top: obstacle.y + 2,
+    bottom: obstacle.y + obstacle.height
   };
 }
 
@@ -60,226 +157,343 @@ export default function DinosaurDash({ difficulty = 'medium' }) {
   const bestScoreKey = `quiet-journal-dinosaur-dash-best-${difficulty}`;
 
   const canvasRef = useRef(null);
+  const stateRef = useRef(buildInitialState(config.startSpeed));
+  const gameStateRef = useRef('start');
+
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(() => parseInt(localStorage.getItem(bestScoreKey) || '0', 10));
   const [gameState, setGameState] = useState('start');
 
-  const stateRef = useRef(buildInitialState(config.startSpeed));
-
-  useEffect(() => {
+  const resetToStart = useCallback(() => {
     stateRef.current = buildInitialState(config.startSpeed);
-    setScore(0);
+    gameStateRef.current = 'start';
     setGameState('start');
+    setScore(0);
     setBestScore(parseInt(localStorage.getItem(bestScoreKey) || '0', 10));
   }, [bestScoreKey, config.startSpeed]);
 
-  const startGame = useCallback(() => {
-    stateRef.current = buildInitialState(config.startSpeed);
-    setScore(0);
+  useEffect(() => {
+    resetToStart();
+  }, [resetToStart]);
+
+  const startGame = useCallback((withJump = false) => {
+    const freshState = buildInitialState(config.startSpeed);
+    if (withJump) {
+      freshState.velocityY = config.jumpVelocity;
+    }
+    stateRef.current = freshState;
+    gameStateRef.current = 'playing';
     setGameState('playing');
-  }, [config.startSpeed]);
+    setScore(0);
+  }, [config.jumpVelocity, config.startSpeed]);
 
   const jump = useCallback(() => {
     const state = stateRef.current;
-    if (gameState === 'start' || gameState === 'over') {
-      startGame();
-      stateRef.current.velocityY = config.jumpVelocity;
+
+    if (gameStateRef.current === 'start' || gameStateRef.current === 'over') {
+      startGame(true);
       return;
     }
-    if (gameState === 'playing' && state.dinoY >= GROUND_Y - 1) {
-      state.velocityY = config.jumpVelocity;
+
+    const isGrounded = state.velocityY === 0 && state.dinoY >= getGroundTop(state.ducking) - 1;
+    if (!isGrounded) {
+      return;
     }
-  }, [config.jumpVelocity, gameState, startGame]);
+
+    state.ducking = false;
+    state.dinoY = getGroundTop(false);
+    state.velocityY = config.jumpVelocity;
+  }, [config.jumpVelocity, startGame]);
+
+  const setDuck = useCallback((shouldDuck) => {
+    const state = stateRef.current;
+    if (gameStateRef.current !== 'playing') {
+      return;
+    }
+
+    if (shouldDuck) {
+      if (state.velocityY === 0) {
+        state.ducking = true;
+        state.dinoY = getGroundTop(true);
+      } else if (state.velocityY > 0) {
+        state.ducking = true;
+        state.velocityY += config.fallBoost;
+      }
+      return;
+    }
+
+    if (state.velocityY === 0) {
+      state.ducking = false;
+      state.dinoY = getGroundTop(false);
+    } else {
+      state.ducking = false;
+    }
+  }, [config.fallBoost]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
+      if (event.repeat) {
+        return;
+      }
+
       if (event.code === 'Space' || event.code === 'ArrowUp' || event.code === 'KeyW') {
         event.preventDefault();
         jump();
       }
+
+      if (event.code === 'ArrowDown' || event.code === 'KeyS') {
+        event.preventDefault();
+        setDuck(true);
+      }
     };
+
+    const handleKeyUp = (event) => {
+      if (event.code === 'ArrowDown' || event.code === 'KeyS') {
+        event.preventDefault();
+        setDuck(false);
+      }
+    };
+
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [jump]);
+    window.addEventListener('keyup', handleKeyUp);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, [jump, setDuck]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return undefined;
+    if (!canvas) {
+      return undefined;
+    }
+
     const ctx = canvas.getContext('2d');
     let animationId;
 
-    const drawRoundedRect = (x, y, width, height, radius, fillStyle) => {
-      ctx.fillStyle = fillStyle;
-      ctx.beginPath();
-      ctx.moveTo(x + radius, y);
-      ctx.lineTo(x + width - radius, y);
-      ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-      ctx.lineTo(x + width, y + height - radius);
-      ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-      ctx.lineTo(x + radius, y + height);
-      ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-      ctx.lineTo(x, y + radius);
-      ctx.quadraticCurveTo(x, y, x + radius, y);
-      ctx.closePath();
-      ctx.fill();
+    const drawCloud = (x, y, width) => {
+      ctx.fillStyle = '#535353';
+      ctx.fillRect(x, y + 12, width, 3);
+      ctx.fillRect(x + 6, y + 6, width - 12, 3);
+      ctx.fillRect(x + 12, y, width - 24, 3);
+      ctx.fillRect(x + 18, y + 18, width - 30, 3);
     };
 
-    const drawCloud = (x, y, size) => {
-      ctx.save();
-      ctx.fillStyle = 'rgba(255,255,255,0.92)';
-      ctx.beginPath();
-      ctx.arc(x, y, size * 0.38, 0, Math.PI * 2);
-      ctx.arc(x + size * 0.34, y - size * 0.16, size * 0.3, 0, Math.PI * 2);
-      ctx.arc(x + size * 0.64, y, size * 0.42, 0, Math.PI * 2);
-      ctx.arc(x + size * 0.3, y + size * 0.14, size * 0.46, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-    };
+    const drawGround = (offset) => {
+      ctx.fillStyle = '#535353';
+      ctx.fillRect(0, GROUND_LINE_Y, CANVAS_WIDTH, 2);
 
-    const drawDino = (x, y, frame) => {
-      const bob = gameState === 'playing' ? Math.sin(frame / 7) * 1.5 : Math.sin(Date.now() / 280) * 1.5;
-      ctx.save();
-      ctx.translate(x, y + bob);
-      drawRoundedRect(-18, -44, 42, 30, 10, '#31453a');
-      drawRoundedRect(8, -62, 26, 22, 9, '#31453a');
-      drawRoundedRect(24, -54, 12, 10, 4, '#31453a');
-      drawRoundedRect(-4, -66, 8, 12, 4, '#31453a');
-      drawRoundedRect(4, -66, 8, 12, 4, '#31453a');
-      drawRoundedRect(-16, -18, 10, 24, 5, '#31453a');
-      drawRoundedRect(2, -18, 10, 24, 5, '#31453a');
-      drawRoundedRect(-28, -34, 16, 9, 4, '#31453a');
-      drawRoundedRect(-36, -28, 12, 8, 4, '#31453a');
-      ctx.fillStyle = '#f8fbf5';
-      ctx.beginPath();
-      ctx.arc(22, -53, 3.5, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.fillStyle = '#31453a';
-      ctx.beginPath();
-      ctx.arc(23, -53, 1.2, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-    };
-
-    const drawCactus = (x, height, variant = 0) => {
-      const width = variant === 1 ? 22 : 18;
-      const y = GROUND_Y - height;
-      drawRoundedRect(x, y, width, height, 6, '#87a96b');
-      drawRoundedRect(x - 10, y + 22, 12, 38, 5, '#87a96b');
-      if (variant === 1) {
-        drawRoundedRect(x + width - 2, y + 34, 12, 46, 5, '#87a96b');
-      }
-      ctx.fillStyle = '#6f9158';
-      for (let row = y + 10; row < GROUND_Y; row += 16) {
-        ctx.fillRect(x + 4, row, width - 8, 2);
+      for (let x = -offset; x < CANVAS_WIDTH + 60; x += 32) {
+        ctx.fillRect(x, GROUND_LINE_Y + 12, 14, 2);
+        ctx.fillRect(x + 20, GROUND_LINE_Y + 16, 10, 2);
+        ctx.fillRect(x + 6, GROUND_LINE_Y + 20, 5, 2);
       }
     };
 
-    const draw = () => {
+    const drawStandingDino = (x, y, frame) => {
+      const stepFrame = Math.floor(frame / 6) % 2;
+      ctx.fillStyle = '#535353';
+      ctx.fillRect(x + 10, y, 20, 18);
+      ctx.fillRect(x + 4, y + 18, 28, 18);
+      ctx.fillRect(x, y + 24, 10, 6);
+      ctx.fillRect(x + 30, y + 8, 12, 10);
+      ctx.fillRect(x + 34, y + 16, 8, 4);
+      ctx.fillRect(x + 14, y - 10, 10, 10);
+      ctx.fillRect(x + 8, y + 22, 6, 8);
+      ctx.fillRect(x + 12, y + 34, 6, 14);
+      ctx.fillRect(x + 26, y + 34, 6, 14);
+      ctx.fillRect(x + 20, y + 20, 4, 8);
+      ctx.fillStyle = '#f7f7f7';
+      ctx.fillRect(x + 26, y + 6, 4, 4);
+      ctx.fillStyle = '#535353';
+      if (stepFrame === 0) {
+        ctx.fillRect(x + 12, y + 44, 10, 4);
+        ctx.fillRect(x + 26, y + 40, 10, 4);
+      } else {
+        ctx.fillRect(x + 12, y + 40, 10, 4);
+        ctx.fillRect(x + 26, y + 44, 10, 4);
+      }
+    };
+
+    const drawDuckingDino = (x, y, frame) => {
+      const stepFrame = Math.floor(frame / 5) % 2;
+      ctx.fillStyle = '#535353';
+      ctx.fillRect(x + 8, y + 6, 34, 16);
+      ctx.fillRect(x + 18, y, 16, 12);
+      ctx.fillRect(x + 34, y + 4, 16, 8);
+      ctx.fillRect(x, y + 12, 12, 6);
+      ctx.fillRect(x + 10, y + 20, 8, 10);
+      ctx.fillRect(x + 36, y + 20, 8, 10);
+      ctx.fillStyle = '#f7f7f7';
+      ctx.fillRect(x + 28, y + 4, 4, 4);
+      ctx.fillStyle = '#535353';
+      if (stepFrame === 0) {
+        ctx.fillRect(x + 8, y + 26, 16, 4);
+        ctx.fillRect(x + 30, y + 22, 16, 4);
+      } else {
+        ctx.fillRect(x + 8, y + 22, 16, 4);
+        ctx.fillRect(x + 30, y + 26, 16, 4);
+      }
+    };
+
+    const drawCactus = (obstacle) => {
+      const { x, y, type } = obstacle;
+      ctx.fillStyle = '#535353';
+
+      if (type === 'small-cactus') {
+        ctx.fillRect(x + 6, y, 8, 38);
+        ctx.fillRect(x, y + 14, 6, 10);
+        ctx.fillRect(x + 14, y + 10, 6, 12);
+        return;
+      }
+
+      if (type === 'large-cactus') {
+        ctx.fillRect(x + 8, y, 10, 50);
+        ctx.fillRect(x, y + 18, 8, 14);
+        ctx.fillRect(x + 18, y + 12, 8, 18);
+        return;
+      }
+
+      if (type === 'double-cactus') {
+        ctx.fillRect(x + 4, y + 6, 8, 34);
+        ctx.fillRect(x + 18, y, 10, 40);
+        ctx.fillRect(x + 30, y + 10, 8, 30);
+        return;
+      }
+
+      ctx.fillRect(x + 4, y + 10, 8, 32);
+      ctx.fillRect(x + 20, y, 10, 42);
+      ctx.fillRect(x + 40, y + 8, 10, 34);
+    };
+
+    const drawPtero = (obstacle, frame) => {
+      const wingFrame = Math.floor(frame / 8) % 2;
+      const { x, y } = obstacle;
+      ctx.fillStyle = '#535353';
+      ctx.fillRect(x + 16, y + 10, 18, 10);
+      ctx.fillRect(x + 30, y + 6, 12, 6);
+      ctx.fillRect(x + 6, y + 12, 12, 4);
+      ctx.fillRect(x + 14, y + 18, 8, 10);
+      ctx.fillRect(x + 28, y + 18, 8, 10);
+      if (wingFrame === 0) {
+        ctx.fillRect(x, y + 8, 16, 4);
+        ctx.fillRect(x + 20, y, 16, 4);
+      } else {
+        ctx.fillRect(x + 2, y + 2, 16, 4);
+        ctx.fillRect(x + 18, y + 16, 18, 4);
+      }
+    };
+
+    const drawScoreboard = (currentScore, highScore) => {
+      ctx.fillStyle = '#535353';
+      ctx.font = '700 18px monospace';
+      ctx.textAlign = 'right';
+      ctx.fillText(`HI ${getScoreDisplay(highScore)} ${getScoreDisplay(currentScore)}`, CANVAS_WIDTH - 28, 28);
+      ctx.textAlign = 'left';
+    };
+
+    const drawFrame = () => {
       const state = stateRef.current;
 
-      const background = ctx.createLinearGradient(0, 0, 0, CANVAS_HEIGHT);
-      background.addColorStop(0, '#fbf5ee');
-      background.addColorStop(1, '#f1e5d7');
-      ctx.fillStyle = background;
+      ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+      ctx.fillStyle = '#f7f7f7';
       ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
       state.clouds.forEach((cloud) => {
-        cloud.x -= state.speed * 0.16;
-        if (cloud.x < -90) {
-          cloud.x = CANVAS_WIDTH + Math.random() * 80;
-          cloud.y = 54 + Math.random() * 72;
-          cloud.size = 20 + Math.random() * 24;
+        if (gameStateRef.current === 'playing') {
+          cloud.x -= state.speed * 0.16;
+          if (cloud.x < -cloud.width - 20) {
+            cloud.x = CANVAS_WIDTH + randomBetween(30, 120);
+            cloud.y = randomBetween(30, 84);
+            cloud.width = randomBetween(28, 52);
+          }
         }
-        drawCloud(cloud.x, cloud.y, cloud.size);
+        drawCloud(cloud.x, cloud.y, cloud.width);
       });
 
-      ctx.fillStyle = 'rgba(210, 185, 155, 0.45)';
-      ctx.beginPath();
-      ctx.moveTo(0, GROUND_Y + 16);
-      ctx.quadraticCurveTo(140, GROUND_Y - 10, 260, GROUND_Y + 8);
-      ctx.quadraticCurveTo(420, GROUND_Y + 26, CANVAS_WIDTH, GROUND_Y - 6);
-      ctx.lineTo(CANVAS_WIDTH, CANVAS_HEIGHT);
-      ctx.lineTo(0, CANVAS_HEIGHT);
-      ctx.closePath();
-      ctx.fill();
-
-      ctx.strokeStyle = '#9f8567';
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.moveTo(0, GROUND_Y + 8);
-      ctx.lineTo(CANVAS_WIDTH, GROUND_Y + 8);
-      ctx.stroke();
-
-      state.dustOffset += state.speed;
-      ctx.strokeStyle = '#d5c1ac';
-      ctx.lineWidth = 2;
-      ctx.setLineDash([18, 16]);
-      ctx.lineDashOffset = -state.dustOffset;
-      ctx.beginPath();
-      ctx.moveTo(0, GROUND_Y + 18);
-      ctx.lineTo(CANVAS_WIDTH, GROUND_Y + 18);
-      ctx.stroke();
-      ctx.setLineDash([]);
-
-      if (gameState === 'playing') {
+      if (gameStateRef.current === 'playing') {
         state.frames += 1;
-        state.speed = Math.min(config.maxSpeed, config.startSpeed + state.frames / 520);
-        state.velocityY += config.gravity;
-        state.dinoY = Math.min(GROUND_Y, state.dinoY + state.velocityY);
-        if (state.dinoY >= GROUND_Y) {
-          state.dinoY = GROUND_Y;
+        state.speed = Math.min(config.maxSpeed, config.startSpeed + state.frames * config.acceleration);
+        state.distance += state.speed * 0.12;
+        state.groundOffset = (state.groundOffset + state.speed) % 32;
+
+        if (state.velocityY !== 0 || state.dinoY < getGroundTop(state.ducking) - 1) {
+          state.velocityY += config.gravity + (state.ducking && state.velocityY > 0 ? config.fallBoost : 0);
+          state.dinoY += state.velocityY;
+        }
+
+        if (state.ducking && state.velocityY === 0) {
+          state.dinoY = getGroundTop(true);
+        }
+
+        if (!state.ducking && state.velocityY === 0) {
+          state.dinoY = getGroundTop(false);
+        }
+
+        if (state.dinoY >= getGroundTop(false)) {
+          state.dinoY = state.ducking ? getGroundTop(true) : getGroundTop(false);
           state.velocityY = 0;
         }
 
-        if (state.frames % Math.max(config.spawnFloor, config.spawnBase - Math.floor(state.speed * 3)) === 0) {
-          const variant = Math.random() > 0.65 ? 1 : 0;
-          const height = variant === 1 ? 72 : 62;
-          const width = variant === 1 ? 32 : 24;
-          state.obstacles.push({ x: CANVAS_WIDTH + 40, height, width, variant });
+        state.obstacleCooldown -= state.speed;
+        if (state.obstacleCooldown <= 0) {
+          state.obstacles.push(createObstacle(state.score));
+          state.obstacleCooldown = randomBetween(config.spawnMin, config.spawnMax) - Math.min(20, state.score * 0.05);
         }
+
+        const dinoHitbox = getDinoHitbox(state);
+        const remainingObstacles = [];
 
         state.obstacles.forEach((obstacle) => {
           obstacle.x -= state.speed;
-          drawCactus(obstacle.x, obstacle.height, obstacle.variant);
 
-          const dinoLeft = 104;
-          const dinoRight = 140;
-          const dinoTop = state.dinoY - 62;
-          const dinoBottom = state.dinoY + 8;
-          const obstacleLeft = obstacle.x - 10;
-          const obstacleRight = obstacle.x + obstacle.width + 10;
-          const obstacleTop = GROUND_Y - obstacle.height;
-          const obstacleBottom = GROUND_Y + 6;
+          if (!obstacle.passed && obstacle.x + obstacle.width < DINO_X + 12) {
+            obstacle.passed = true;
+          }
 
-          if (dinoRight > obstacleLeft && dinoLeft < obstacleRight && dinoBottom > obstacleTop && dinoTop < obstacleBottom) {
+          if (obstacle.x + obstacle.width > -40) {
+            remainingObstacles.push(obstacle);
+          }
+
+          if (gameStateRef.current === 'playing' && intersects(dinoHitbox, getObstacleHitbox(obstacle))) {
+            gameStateRef.current = 'over';
             setGameState('over');
           }
         });
 
-        const activeObstacles = [];
-        state.obstacles.forEach((obstacle) => {
-          if (!obstacle.passed && obstacle.x + obstacle.width < 118) {
-            obstacle.passed = true;
-            state.score += 1;
-            setScore(state.score);
-          }
-          if (obstacle.x > -80) activeObstacles.push(obstacle);
-        });
-        state.obstacles = activeObstacles;
+        state.obstacles = remainingObstacles;
+
+        const nextScore = Math.floor(state.distance);
+        if (nextScore !== state.score) {
+          state.score = nextScore;
+          setScore(nextScore);
+        }
       }
 
-      drawDino(122, state.dinoY, state.frames);
+      drawGround(state.groundOffset);
 
-      ctx.fillStyle = '#7a6655';
-      ctx.font = '700 14px Inter, sans-serif';
-      ctx.fillText('Offline desert run', 28, 36);
+      state.obstacles.forEach((obstacle) => {
+        if (obstacle.type === 'ptero') {
+          drawPtero(obstacle, state.frames);
+        } else {
+          drawCactus(obstacle);
+        }
+      });
 
-      animationId = window.requestAnimationFrame(draw);
+      if (state.ducking && state.velocityY === 0) {
+        drawDuckingDino(DINO_X, state.dinoY, state.frames);
+      } else {
+        drawStandingDino(DINO_X, state.dinoY, state.frames);
+      }
+
+      drawScoreboard(score, bestScore);
+      animationId = window.requestAnimationFrame(drawFrame);
     };
 
-    animationId = window.requestAnimationFrame(draw);
+    animationId = window.requestAnimationFrame(drawFrame);
     return () => window.cancelAnimationFrame(animationId);
-  }, [config.gravity, config.maxSpeed, config.spawnBase, config.spawnFloor, config.startSpeed, gameState]);
+  }, [bestScore, config.acceleration, config.fallBoost, config.gravity, config.maxSpeed, config.spawnMax, config.spawnMin, config.startSpeed, score]);
 
   useEffect(() => {
     if (gameState === 'over' && score > bestScore) {
@@ -289,54 +503,65 @@ export default function DinosaurDash({ difficulty = 'medium' }) {
   }, [bestScore, bestScoreKey, gameState, score]);
 
   return (
-    <div className="mx-auto mt-12 w-full max-w-2xl pb-12">
+    <div className="mx-auto mt-12 w-full max-w-4xl pb-12">
       <div className="mb-4 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
         <div>
-          <div className="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white/88 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-stone-700 shadow-sm">
-            <Sparkles size={14} /> {config.label} desert pace
+          <div className="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-stone-700 shadow-sm">
+            <Sparkles size={14} /> {config.label} runner pace
           </div>
           <h3 className="mt-3 text-2xl font-bold text-stone-900">Dinosaur Dash</h3>
-          <p className="text-sm font-semibold text-stone-700">A soft offline-runner spin on the classic no-internet dino game.</p>
+          <p className="text-sm font-semibold text-stone-700">A much closer take on the classic no-internet dinosaur runner.</p>
           <p className="mt-1 text-sm text-stone-600">{config.note}</p>
         </div>
-        <div className="flex gap-4 text-sm font-extrabold uppercase tracking-widest text-stone-700">
-          <span className="rounded-full bg-stone-200/70 px-4 py-2 shadow-sm">Score: {score}</span>
-          <span className="rounded-full border border-stone-200 bg-white px-4 py-2 shadow-sm">Best: {bestScore}</span>
+        <div className="flex flex-wrap gap-3 text-sm font-extrabold uppercase tracking-[0.18em] text-stone-700">
+          <span className="rounded-full border border-stone-300 bg-white px-4 py-2 shadow-sm">Score {score}</span>
+          <span className="rounded-full border border-stone-300 bg-white px-4 py-2 shadow-sm">Best {bestScore}</span>
         </div>
       </div>
 
-      <div className="relative overflow-hidden rounded-[2rem] border border-stone-200 bg-[#f8efe3] shadow-sm transition hover:shadow-soft" style={{ aspectRatio: '9 / 5' }}>
-        <canvas
-          ref={canvasRef}
-          width={CANVAS_WIDTH}
-          height={CANVAS_HEIGHT}
-          className="block h-full w-full cursor-pointer touch-none"
-          onClick={jump}
-        />
+      <div className="rounded-[1.8rem] border border-stone-300 bg-white p-3 shadow-sm sm:p-4">
+        <div className="mb-3 flex flex-wrap gap-2 text-xs font-bold uppercase tracking-[0.18em] text-stone-600">
+          <span className="rounded-full border border-stone-200 px-3 py-1">Space / ↑ jump</span>
+          <span className="rounded-full border border-stone-200 px-3 py-1">↓ duck</span>
+          <span className="rounded-full border border-stone-200 px-3 py-1">Tap to jump</span>
+        </div>
 
-        {gameState === 'start' && (
-          <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center bg-white/28 backdrop-blur-[3px]">
-            <button className="pointer-events-auto mb-4 flex items-center gap-3 rounded-full bg-stone-800 px-8 py-4 text-sm font-bold text-white shadow-lift transition hover:-translate-y-1 hover:bg-stone-700" onClick={jump} type="button">
-              <Play size={18} /> Tap to run
-            </button>
-            <p className="rounded-full bg-white/80 px-4 py-2 text-sm font-semibold text-stone-900">Press Space, ↑, W, or tap to jump.</p>
-          </div>
-        )}
+        <div className="relative overflow-hidden rounded-[1.4rem] border border-stone-300 bg-[#f7f7f7]" style={{ aspectRatio: `${CANVAS_WIDTH} / ${CANVAS_HEIGHT}` }}>
+          <canvas
+            ref={canvasRef}
+            width={CANVAS_WIDTH}
+            height={CANVAS_HEIGHT}
+            className="block h-full w-full cursor-pointer touch-none"
+            onClick={jump}
+          />
 
-        {gameState === 'over' && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/45 backdrop-blur-[4px]">
-            <p className="mb-2 font-display text-4xl font-extrabold text-stone-950">Connection restored.</p>
-            <p className="mb-3 text-lg font-bold text-stone-800">Final score: {score}</p>
-            <p className="mb-8 rounded-full bg-white/75 px-4 py-2 text-sm font-semibold text-stone-700">{config.note}</p>
-            <button
-              onClick={startGame}
-              className="flex items-center gap-3 rounded-full bg-stone-800 px-8 py-4 text-sm font-bold text-white shadow-lift transition hover:-translate-y-1 hover:bg-stone-700"
-              type="button"
-            >
-              <RotateCcw size={18} /> Run again
-            </button>
-          </div>
-        )}
+          {gameState === 'start' && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80">
+              <button
+                className="mb-4 flex items-center gap-3 rounded-full border border-stone-800 bg-stone-900 px-7 py-3 text-sm font-bold uppercase tracking-[0.18em] text-white transition hover:bg-stone-800"
+                onClick={() => startGame(true)}
+                type="button"
+              >
+                <Play size={16} /> Start run
+              </button>
+              <p className="rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-semibold text-stone-800">Jump over cacti, duck under birds, and keep the run going.</p>
+            </div>
+          )}
+
+          {gameState === 'over' && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/86">
+              <p className="text-3xl font-extrabold uppercase tracking-[0.24em] text-stone-900">Game over</p>
+              <p className="mt-3 text-base font-bold text-stone-700">Final score: {score}</p>
+              <button
+                onClick={() => startGame(false)}
+                className="mt-6 flex items-center gap-3 rounded-full border border-stone-800 bg-stone-900 px-7 py-3 text-sm font-bold uppercase tracking-[0.18em] text-white transition hover:bg-stone-800"
+                type="button"
+              >
+                <RotateCcw size={16} /> Restart
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
