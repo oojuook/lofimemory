@@ -189,17 +189,17 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
       ctx.translate(x, y);
       ctx.fillStyle = '#5da05b';
       ctx.beginPath();
-      ctx.ellipse(0, 0, 24, 20, -0.16, 0, Math.PI * 2);
+      ctx.ellipse(0, 0, 31, 24, -0.16, 0, Math.PI * 2);
       ctx.fill();
       ctx.fillStyle = '#7dd06f';
       ctx.beginPath();
-      ctx.ellipse(-2, -2, 17, 13, -0.16, 0, Math.PI * 2);
+      ctx.ellipse(-2, -2, 23, 17, -0.16, 0, Math.PI * 2);
       ctx.fill();
       ctx.fillStyle = '#dff4e4';
       ctx.beginPath();
-      ctx.moveTo(2, 0);
-      ctx.lineTo(26, -11);
-      ctx.lineTo(26, 11);
+      ctx.moveTo(3, 0);
+      ctx.lineTo(32, -14);
+      ctx.lineTo(32, 14);
       ctx.closePath();
       ctx.fill();
       ctx.restore();
@@ -254,16 +254,17 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
         state.visualX += (targetX - state.visualX) * config.moveEase;
 
         const playerY = canvas.height - 80;
+        const playerCollisionX = getLaneCenter(state.lane);
 
         state.obstacles.forEach((obstacle) => {
           obstacle.y += state.speed;
           drawLilyPad(getLaneCenter(obstacle.lane), obstacle.y);
 
-          if (Math.abs(getLaneCenter(obstacle.lane) - state.visualX) < 30 && Math.abs(obstacle.y - playerY) < 35) {
+          if (Math.abs(getLaneCenter(obstacle.lane) - playerCollisionX) < 56 && Math.abs(obstacle.y - playerY) < 42) {
             setGameState('over');
           }
 
-          if (!obstacle.passed && obstacle.y > playerY + 30) {
+          if (!obstacle.passed && obstacle.y > playerY + 36) {
             obstacle.passed = true;
             state.score += 1;
             setScore(state.score);

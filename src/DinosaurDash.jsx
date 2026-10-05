@@ -17,11 +17,11 @@ const difficultySettings = {
     startSpeed: 7.2,
     maxSpeed: 11.2,
     acceleration: 0.0026,
-    spawnMin: 86,
-    spawnMax: 130,
+    spawnMin: 290,
+    spawnMax: 410,
     fallBoost: 0.16,
     label: 'Easy',
-    note: 'Closer to the original runner, but with a touch more breathing room between obstacles.'
+    note: 'Closer to the original runner, but with extra space between obstacles.'
   },
   medium: {
     gravity: 0.72,
@@ -29,11 +29,11 @@ const difficultySettings = {
     startSpeed: 8.2,
     maxSpeed: 13.2,
     acceleration: 0.0031,
-    spawnMin: 74,
-    spawnMax: 116,
+    spawnMin: 250,
+    spawnMax: 360,
     fallBoost: 0.22,
     label: 'Medium',
-    note: 'The closest match to the classic no-internet runner feel.'
+    note: 'The closest match to the classic Chrome runner feel, with much fairer cactus spacing.'
   },
   hard: {
     gravity: 0.78,
@@ -41,11 +41,11 @@ const difficultySettings = {
     startSpeed: 9.2,
     maxSpeed: 15.3,
     acceleration: 0.0039,
-    spawnMin: 62,
-    spawnMax: 98,
+    spawnMin: 210,
+    spawnMax: 300,
     fallBoost: 0.3,
     label: 'Hard',
-    note: 'The same offline-runner style with faster ground and tighter reaction windows.'
+    note: 'The same offline-runner style with faster ground and tighter but still playable spacing.'
   }
 };
 
@@ -66,7 +66,7 @@ function buildInitialState(startSpeed) {
     frames: 0,
     distance: 0,
     score: 0,
-    obstacleCooldown: 90,
+    obstacleCooldown: 260,
     obstacles: [],
     groundOffset: 0,
     clouds: [
@@ -90,7 +90,7 @@ function createObstacle(score) {
   ];
 
   const birdHeights = [GROUND_LINE_Y - 74, GROUND_LINE_Y - 100, GROUND_LINE_Y - 128];
-  const allowBird = score >= 80 && Math.random() > 0.72;
+  const allowBird = score >= 220 && Math.random() > 0.82;
 
   if (allowBird) {
     return {
@@ -442,7 +442,7 @@ export default function DinosaurDash({ difficulty = 'medium' }) {
         state.obstacleCooldown -= state.speed;
         if (state.obstacleCooldown <= 0) {
           state.obstacles.push(createObstacle(state.score));
-          state.obstacleCooldown = randomBetween(config.spawnMin, config.spawnMax) - Math.min(20, state.score * 0.05);
+          state.obstacleCooldown = randomBetween(config.spawnMin, config.spawnMax) + Math.min(90, state.score * 0.12);
         }
 
         const dinoHitbox = getDinoHitbox(state);

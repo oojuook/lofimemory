@@ -2384,6 +2384,7 @@ function App() {
   const initialCalendarDate = getInitialSelectedCalendarDate();
   const [activeTab, setActiveTab] = useState(initialActiveTab);
   const [activeHomeSection, setActiveHomeSection] = useState(getInitialHomeSection);
+  const [showEntryTransition, setShowEntryTransition] = useState(initialActiveTab === 'home');
   const [entries, setEntries] = useState(getInitialEntries);
   const [selectedMood, setSelectedMood] = useState('Calm');
   const [title, setTitle] = useState('');
@@ -2402,6 +2403,15 @@ function App() {
   const [draggedPlannerTodoId, setDraggedPlannerTodoId] = useState(null);
   const [saveReward, setSaveReward] = useState('');
   const [selectedUnwindGame, setSelectedUnwindGame] = useState('drifting-leaf');
+  const showMinimalHomeOverview = activeTab === 'home' && activeHomeSection === 'overview';
+  const homeEntryCards = [
+    { id: 'write', title: 'Thoughts', description: 'Write only when it helps', icon: PenLine, iconTone: 'bg-[#dbead9] text-sage-700', onClick: () => navigateToTab('write') },
+    { id: 'notes', title: 'Notes', description: 'Keep important things nearby', icon: FileText, iconTone: 'bg-[#d8f0ec] text-teal-700', onClick: () => navigateToTab('notes') },
+    { id: 'breathe', title: 'Breathe', description: 'Focus & breathe', icon: Wind, iconTone: 'bg-[#dbe8f8] text-sky-700', onClick: () => navigateToTab('breathe') },
+    { id: 'unwind', title: 'Games', description: 'Chill games', icon: Leaf, iconTone: 'bg-[#ddefdc] text-emerald-700', onClick: () => navigateToTab('unwind') },
+    { id: 'memories', title: 'Memories', description: 'Return to saved moments', icon: CalendarDays, iconTone: 'bg-[#efe6d8] text-sand-700', onClick: () => navigateToTab('insights') },
+    { id: 'vibes', title: 'Vibes', description: 'See your mood flow', icon: HeartHandshake, iconTone: 'bg-[#f4dce7] text-rose-700', onClick: () => navigateToTab('insights') }
+  ];
   const [selectedGameDifficulty, setSelectedGameDifficulty] = useState('medium');
   const selectedGameInterfaceRef = useRef(null);
   const shouldAutoScrollToGameRef = useRef(false);
@@ -2777,16 +2787,30 @@ function App() {
 
   function navigateToTab(tabId) {
     setActiveTab(tabId);
+    setShowEntryTransition(false);
     if (tabId === 'home') {
       setActiveHomeSection('overview');
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  useEffect(() => {
+    if (!showEntryTransition) {
+      return undefined;
+    }
+
+    const timerId = window.setTimeout(() => {
+      setShowEntryTransition(false);
+    }, 1700);
+
+    return () => window.clearTimeout(timerId);
+  }, [showEntryTransition]);
+
   function openHomeSection(sectionId = 'overview') {
     const nextSection = homeSectionMap[sectionId] || 'overview';
     setActiveTab('home');
     setActiveHomeSection(nextSection);
+    setShowEntryTransition(false);
     if (typeof window !== 'undefined') {
       const url = new URL(window.location.href);
       url.hash = nextSection === 'overview' ? 'home' : nextSection;
@@ -4970,6 +4994,16 @@ function App() {
       </div>
 
 
+      {showEntryTransition && (
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-[#f4eee7]/92 backdrop-blur-md">
+          <div className="px-6 text-center">
+            <div className="mx-auto h-24 w-24 rounded-full border border-white/80 bg-white/78 shadow-soft" />
+            <p className="mt-6 text-[11px] font-extrabold uppercase tracking-[0.42em] text-sage-600">Lofi Memory</p>
+            <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-sage-950 sm:text-5xl">Arrive softly.</h1>
+          </div>
+        </div>
+      )}
+
       <nav className="sticky top-0 z-20 px-5 pt-5 sm:px-7 xl:px-10">
         <div className="site-nav-shell mx-auto max-w-[1280px] rounded-[2.2rem] border border-white/80 bg-white/78 p-4 shadow-soft backdrop-blur-xl lg:p-5">
           <div className="flex flex-col gap-2.5 lg:gap-3 xl:flex-row xl:items-center xl:justify-between">
@@ -5073,7 +5107,33 @@ function App() {
         </div>
       </nav>
 
-      {activeTab === 'home' && activeHomeSection === 'overview' && (
+      {showMinimalHomeOverview && (
+      <section id="home" className="mx-auto max-w-[860px] px-5 pb-20 pt-10 sm:px-7 xl:px-10">
+        <div className="space-y-3">
+          {homeEntryCards.map((card) => {
+            const Icon = card.icon;
+            return (
+              <button
+                key={card.id}
+                className="flex w-full items-center gap-4 rounded-[1.6rem] border border-[#dfd8cf] bg-white/92 px-5 py-5 text-left shadow-[0_10px_30px_rgba(120,127,119,0.08)] transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white"
+                onClick={card.onClick}
+                type="button"
+              >
+                <div className={`flex h-12 w-12 items-center justify-center rounded-full ${card.iconTone}`}>
+                  <Icon size={22} />
+                </div>
+                <div>
+                  <p className="text-lg font-extrabold text-sage-950">{card.title}</p>
+                  <p className="text-sm font-semibold text-sage-700">{card.description}</p>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+      )}
+
+      {activeTab === 'home' && activeHomeSection === 'overview' && !showMinimalHomeOverview && (
       <section id="home" className="mx-auto grid max-w-[1280px] gap-8 px-5 pb-28 pt-10 sm:px-7 lg:grid-cols-12 lg:pb-12 xl:gap-12 xl:px-10">
         <div className="lg:col-span-8">
           <div className="relative overflow-hidden rounded-[2.35rem] border border-white/90 bg-gradient-to-br from-white/96 via-white/92 to-sage-50/82 p-8 shadow-[0_24px_75px_rgba(101,121,104,0.16)] backdrop-blur-xl lg:p-10 xl:p-11">
@@ -5329,7 +5389,7 @@ function App() {
       </section>
       )}
 
-      {activeTab === 'home' && (
+      {activeTab === 'home' && !showMinimalHomeOverview && (
       <section className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-4">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="flex-1">
@@ -6689,7 +6749,7 @@ function App() {
 
       {activeTab === 'home' && (
       <>
-      {activeHomeSection === 'overview' && (
+      {activeHomeSection === 'overview' && !showMinimalHomeOverview && (
       <section className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-4">
         <div className="quote-card quote-card-premium rounded-3xl border border-white/70 p-8 shadow-soft">
           <Quote className="mb-8 opacity-80" size={34} />
