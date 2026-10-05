@@ -134,16 +134,23 @@ export default function QuietSnake({ difficulty = 'medium' }) {
 
         setSnake((currentSnake) => {
           const head = currentSnake[0];
-          const nextHead = { x: head.x + activeDirection.x, y: head.y + activeDirection.y };
-          const hitWall = nextHead.x < 0 || nextHead.y < 0 || nextHead.x >= config.cellCount || nextHead.y >= config.cellCount;
-          const hitSelf = currentSnake.some((segment) => segment.x === nextHead.x && segment.y === nextHead.y);
+          const nextHead = {
+            x: (head.x + activeDirection.x + config.cellCount) % config.cellCount,
+            y: (head.y + activeDirection.y + config.cellCount) % config.cellCount,
+          };
+          const didEat = nextHead.x === food.x && nextHead.y === food.y;
+          const hitSelf = currentSnake.some((segment, index) => {
+            if (!didEat && index === currentSnake.length - 1) {
+              return false;
+            }
+            return segment.x === nextHead.x && segment.y === nextHead.y;
+          });
 
-          if (hitWall || hitSelf) {
+          if (hitSelf) {
             setGameState('over');
             return currentSnake;
           }
 
-          const didEat = nextHead.x === food.x && nextHead.y === food.y;
           const nextSnake = [nextHead, ...currentSnake];
 
           if (!didEat) {
@@ -193,7 +200,7 @@ export default function QuietSnake({ difficulty = 'medium' }) {
               <Sparkles size={14} /> {config.label} snake flow
             </div>
             <h3 className="mt-4 text-3xl font-bold tracking-tight text-emerald-950">Quiet Snake</h3>
-            <p className="mt-2 max-w-2xl text-sm leading-7 text-emerald-800">A cozy snake run with soft colors, clean turns, and a quick arcade reset when you want something classic.</p>
+            <p className="mt-2 max-w-2xl text-sm leading-7 text-emerald-800">A classic snake run with a cleaner retro board, wrap-around edges, and quick arcade rounds when you want something simple and sharp.</p>
             <p className="mt-2 text-sm font-semibold text-emerald-700">{config.note}</p>
           </div>
           <div className="grid gap-2 rounded-[1.5rem] border border-white/85 bg-white/80 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[21rem]">
@@ -214,24 +221,33 @@ export default function QuietSnake({ difficulty = 'medium' }) {
 
         <div className="mt-6 grid gap-5 xl:grid-cols-[minmax(0,1fr)_240px]">
           <div>
-            <div className="relative mx-auto w-full max-w-[26rem] rounded-[1.8rem] border border-emerald-100 bg-[#edf8ef] p-3 shadow-inner sm:p-4">
-              <div className="grid gap-[3px] rounded-[1.2rem] bg-[#d4ead6] p-[3px]" style={{ gridTemplateColumns: `repeat(${config.cellCount}, minmax(0, 1fr))` }}>
+            <div className="relative mx-auto w-full max-w-[26rem] border-[10px] border-[#5f7754] bg-[#9abf88] p-4 shadow-[inset_0_0_0_2px_rgba(20,20,20,0.08)] sm:p-5">
+              <div className="grid bg-[#9abf88]" style={{ gridTemplateColumns: `repeat(${config.cellCount}, minmax(0, 1fr))` }}>
                 {cells.map((cell) => (
                   <div
                     key={cell.key}
-                    className={`${cellClass} rounded-[0.38rem] border border-white/70 ${cell.isHead ? 'bg-emerald-700 shadow-[inset_0_0_0_1px_rgba(16,185,129,0.18)]' : cell.isSnake ? 'bg-emerald-500' : cell.isFood ? 'bg-amber-400' : 'bg-[#eef7ef]'}`}
-                  />
+                    className={`relative ${cellClass} ${cell.isSnake ? 'bg-[#111111]' : 'bg-transparent'}`}
+                  >
+                    {cell.isFood ? (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="relative h-3 w-3 sm:h-3.5 sm:w-3.5">
+                          <span className="absolute left-1/2 top-0 h-full w-[2px] -translate-x-1/2 bg-[#111111]" />
+                          <span className="absolute left-0 top-1/2 h-[2px] w-full -translate-y-1/2 bg-[#111111]" />
+                        </div>
+                      </div>
+                    ) : null}
+                  </div>
                 ))}
               </div>
 
               {gameState !== 'playing' && (
-                <div className="absolute inset-0 flex items-center justify-center rounded-[1.8rem] bg-white/70 p-4 backdrop-blur-[2px]">
-                  <div className="max-w-sm rounded-[1.4rem] border border-white/90 bg-white/92 px-5 py-5 text-center shadow-soft">
-                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-emerald-600">{gameState === 'over' ? 'Run over' : 'Ready to glide'}</p>
-                    <h4 className="mt-3 text-3xl font-extrabold text-emerald-950">{gameState === 'over' ? 'You clipped the trail' : 'Start a soft snake round'}</h4>
-                    <p className="mt-3 text-sm leading-7 text-emerald-800">{gameState === 'over' ? 'Take another loop and see how long you can keep the line tidy.' : 'Use arrow keys or the touch controls to steer toward the amber fruit.'}</p>
+                <div className="absolute inset-0 flex items-center justify-center bg-[#9abf88]/86 p-4 backdrop-blur-[1px]">
+                  <div className="max-w-sm border-4 border-[#111111] bg-[#cfe0bc] px-5 py-5 text-center shadow-[8px_8px_0_rgba(17,17,17,0.14)]">
+                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#30412a]">{gameState === 'over' ? 'Run over' : 'Ready to glide'}</p>
+                    <h4 className="mt-3 text-3xl font-extrabold text-[#111111]">{gameState === 'over' ? 'You clipped the trail' : 'Start a retro snake round'}</h4>
+                    <p className="mt-3 text-sm leading-7 text-[#30412a]">{gameState === 'over' ? 'Loop again and keep the line clean for a longer run.' : 'Use the arrow keys or touch controls to chase the fruit and wrap through the board edges.'}</p>
                     <button
-                      className="mt-5 inline-flex items-center gap-2 rounded-full bg-emerald-900 px-5 py-3 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-800"
+                      className="mt-5 inline-flex items-center gap-2 border-2 border-[#111111] bg-[#111111] px-5 py-3 text-sm font-extrabold text-[#f3f6ea] shadow-[4px_4px_0_rgba(17,17,17,0.16)] transition hover:-translate-y-0.5"
                       onClick={startGame}
                       type="button"
                     >
@@ -254,9 +270,9 @@ export default function QuietSnake({ difficulty = 'medium' }) {
             <div className="rounded-[1.5rem] border border-white/80 bg-white/92 p-4 shadow-sm">
               <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-emerald-600">How it plays</p>
               <ul className="mt-3 space-y-2 text-sm font-semibold leading-6 text-emerald-800">
-                <li>- Steer into the amber fruit to grow the line.</li>
-                <li>- Avoid the walls and your own body.</li>
-                <li>- Faster difficulty means tighter turns and quicker reads.</li>
+                <li>- Steer into the fruit to grow the line.</li>
+                <li>- Slip through one edge and reappear on the opposite side.</li>
+                <li>- Only your own body ends the run, so keep the trail tidy.</li>
               </ul>
             </div>
             <button
