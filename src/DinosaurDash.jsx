@@ -89,7 +89,7 @@ function createObstacle(score) {
     { type: 'triple-cactus', width: 58, height: 42, y: GROUND_LINE_Y - 42 }
   ];
 
-  const birdHeights = [GROUND_LINE_Y - 74, GROUND_LINE_Y - 100, GROUND_LINE_Y - 128];
+  const birdHeights = [GROUND_LINE_Y - 54, GROUND_LINE_Y - 64];
   const allowBird = score >= 220 && Math.random() > 0.82;
 
   if (allowBird) {
@@ -550,7 +550,7 @@ export default function DinosaurDash({ difficulty = 'medium' }) {
               >
                 <Play size={16} /> Start run
               </button>
-              <p className="rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-semibold text-stone-800">Jump over cacti, duck under birds, and keep the run going.</p>
+              <p className="rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-semibold text-stone-800">Jump over cacti, duck under low birds, and keep the run going.</p>
             </div>
           )}
 

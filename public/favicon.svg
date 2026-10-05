@@ -1,11 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <!-- Background Circle -->
-  <rect width="512" height="512" rx="256" fill="#45643b" />
-  
-  <!-- Waves Icon -->
-  <svg x="133" y="133" width="246" height="246" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M2 12q2.5 2 5 0t5 0 5 0 5 0" />
-    <path d="M2 19q2.5 2 5 0t5 0 5 0 5 0" />
-    <path d="M2 5q2.5 2 5 0t5 0 5 0 5 0" />
-  </svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <rect width="512" height="512" rx="156" fill="#F3E9DD" />
+  <rect x="36" y="36" width="440" height="440" rx="132" fill="#FBF6F0" stroke="#E4D6C8" stroke-width="12" />
+  <path d="M150 280v-28c0-73.902 59.098-133 132-133s132 59.098 132 133v28" stroke="#3E322A" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="126" y="254" width="76" height="132" rx="38" fill="#F8F1E8" stroke="#3E322A" stroke-width="24"/>
+  <rect x="310" y="254" width="76" height="132" rx="38" fill="#F8F1E8" stroke="#3E322A" stroke-width="24"/>
+  <path d="M206 355c18 12 38 18 50 18s32-6 50-18" stroke="#C58D5A" stroke-width="18" stroke-linecap="round"/>
+  <path d="M178 250c0-58.542 47.458-106 106-106s106 47.458 106 106" stroke="#8D7763" stroke-opacity="0.35" stroke-width="12" stroke-linecap="round"/>
 </svg>

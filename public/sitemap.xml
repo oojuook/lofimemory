@@ -565,4 +565,24 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/sentence-typing-test.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.79</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/snake-game-online.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/browser-tetris-game.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/memories-calendar.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

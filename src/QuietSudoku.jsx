@@ -29,6 +29,21 @@ const puzzleBank = {
       puzzle: '003020600900305001001806400008102900700000008006708200002609500800203009005010300',
       solution: '483921657967345821251876493548132976729564138136798245372689514814253769695417382',
     },
+    {
+      id: 'easy-porch-breeze',
+      puzzle: '034000012000100340198002000000701400406850090010024056061537084207409030000006100',
+      solution: '534678912672195348198342567859761423426853791713924856961537284287419635345286179',
+    },
+    {
+      id: 'easy-cozy-window',
+      puzzle: '483000600067300001250870403000100900709500138100098040070680004800000700095010300',
+      solution: '483921657967345821251876493548132976729564138136798245372689514814253769695417382',
+    },
+    {
+      id: 'easy-slow-morning',
+      puzzle: '030269700602000003100830502006095000370080010901003028519306070000000000060008009',
+      solution: '435269781682571493197834562826195347374682915951743628519326874248957136763418259',
+    },
   ],
   medium: [
     {
@@ -41,6 +56,21 @@ const puzzleBank = {
       puzzle: '200080300060070084030500209000105408000000000402706000301007040720040060004010003',
       solution: '245981376169273584837564219976125438513498627482736951391657842728349165654812793',
     },
+    {
+      id: 'medium-tea-break',
+      puzzle: '045000006109003000037560000900005400503490607082036001000050002700300005054002000',
+      solution: '245981376169273584837564219976125438513498627482736951391657842728349165654812793',
+    },
+    {
+      id: 'medium-quiet-corner',
+      puzzle: '062800050705406003000700420100000005059000048048000000900170034000059001000603000',
+      solution: '462831957795426183381795426173984265659312748248567319926178534834259671517643892',
+    },
+    {
+      id: 'medium-late-afternoon',
+      puzzle: '100300098000000000002008040490085370218070006000000401000000809900061000521000000',
+      solution: '145327698839654127672918543496185372218473956753296481367542819984761235521839764',
+    },
   ],
   hard: [
     {
@@ -52,6 +82,45 @@ const puzzleBank = {
       id: 'hard-midnight-glow',
       puzzle: '005300000800000020070010500400005300010070006003200080060500009004000030000009700',
       solution: '145327698839654127672918543496185372218473956753296481367542819984761235521839764',
+    },
+    {
+      id: 'hard-desk-lamp',
+      puzzle: '034670900670000348000042000859700020006003000000000000000007004080000030005200070',
+      solution: '534678912672195348198342567859761423426853791713924856961537284287419635345286179',
+    },
+    {
+      id: 'hard-still-rain',
+      puzzle: '080021600007305000050806003000000070000060038100700000000000004000053700005410000',
+      solution: '483921657967345821251876493548132976729564138136798245372689514814253769695417382',
+    },
+    {
+      id: 'hard-after-midnight',
+      puzzle: '000060780600501000190030000000190007000000000000703020000000800200050030003008209',
+      solution: '435269781682571493197834562826195347374682915951743628519326874248957136763418259',
+    },
+  ],
+  expert: [
+    {
+      id: 'expert-quiet-platform',
+      puzzle: '045000000060000080000060000000000008010000020080030901091007802000049005000010000',
+      solution: '245981376169273584837564219976125438513498627482736951391657842728349165654812793',
+    },
+    {
+      id: 'expert-deep-focus',
+      puzzle: '000801000090000100000700406000004005600012040000067000000000000000200670007600000',
+      solution: '462831957795426183381795426173984265659312748248567319926178534834259671517643892',
+    },
+  ],
+  extreme: [
+    {
+      id: 'extreme-shadow-room',
+      puzzle: '000000000000000000000918500400005300000003056750096000000042000000000000000800060',
+      solution: '145327698839654127672918543496185372218473956753296481367542819984761235521839764',
+    },
+    {
+      id: 'extreme-master-climb',
+      puzzle: '000000000000090000000000000050000400426800090710024006000000080087000600000000000',
+      solution: '534678912672195348198342567859761423426853791713924856961537284287419635345286179',
     },
   ],
 };
@@ -68,6 +137,14 @@ const difficultySettings = {
   hard: {
     label: 'Hard',
     note: 'Fewer clues and a deeper focus stretch for quieter concentration.',
+  },
+  expert: {
+    label: 'Expert',
+    note: 'Sparse clues and more advanced pattern reading, closer to the tougher web sudoku styles.',
+  },
+  extreme: {
+    label: 'Extreme',
+    note: 'The toughest calm grid here — very few clues and a real long-form logic grind.',
   },
 };
 
@@ -371,8 +448,10 @@ function SudokuSidebar({
   mistakesLeft,
   notesMode,
   revealSelectedCell,
+  roundStatus,
   setNotesMode,
   startFreshPuzzle,
+  startRound,
 }) {
   return (
     <div className="space-y-4">
@@ -386,6 +465,22 @@ function SudokuSidebar({
           >
             <Edit3 size={12} /> {notesMode ? 'Pencil on' : 'Pencil off'}
           </button>
+        </div>
+        <div className="mt-4 rounded-[1.25rem] border border-slate-200 bg-slate-50 px-4 py-4">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-slate-500">Round control</p>
+              <p className="mt-2 text-sm font-semibold leading-6 text-slate-700">{roundStatus === 'ready' ? 'Press start to begin this Sudoku and start the timer.' : roundStatus === 'playing' ? 'The timer is running — keep going.' : 'This board is finished. Start a new one whenever you want.'}</p>
+            </div>
+            <button
+              className={`inline-flex items-center justify-center rounded-full px-4 py-2.5 text-sm font-extrabold transition ${roundStatus === 'ready' ? 'bg-slate-900 text-white hover:bg-slate-800' : 'border border-slate-200 bg-white text-slate-500'}`}
+              disabled={roundStatus !== 'ready'}
+              onClick={startRound}
+              type="button"
+            >
+              Start Sudoku
+            </button>
+          </div>
         </div>
         <p className="mt-3 text-sm leading-7 text-slate-700">{message}</p>
         <p className="mt-2 text-xs font-semibold text-slate-500">Press <span className="font-extrabold text-slate-700">N</span> to toggle pencil marks, then tap 1–9 to add tiny notes. Pen mode gives you {mistakesLeft} of {MAX_PEN_MISTAKES} tries left.</p>
@@ -453,17 +548,20 @@ function SudokuSidebar({
 }
 
 export default function QuietSudoku({ difficulty = 'medium' }) {
-  const config = difficultySettings[difficulty] || difficultySettings.medium;
-  const pool = puzzleBank[difficulty] || puzzleBank.medium;
-  const roundsKey = `quiet-journal-quiet-sudoku-rounds-${difficulty}`;
+  const initialDifficulty = puzzleBank[difficulty] ? difficulty : 'medium';
+  const [selectedDifficulty, setSelectedDifficulty] = useState(initialDifficulty);
+
+  const config = difficultySettings[selectedDifficulty] || difficultySettings.medium;
+  const pool = puzzleBank[selectedDifficulty] || puzzleBank.medium;
+  const roundsKey = `quiet-journal-quiet-sudoku-rounds-${selectedDifficulty}`;
 
   const [activePuzzle, setActivePuzzle] = useState(() => pickPuzzle(pool));
   const [board, setBoard] = useState(() => parseBoardString(activePuzzle.puzzle));
   const [selectedCell, setSelectedCell] = useState(() => getFirstEditableCell(parseBoardString(activePuzzle.puzzle)));
-  const [message, setMessage] = useState('Tap a square and place one number at a time — no rush.');
+  const [message, setMessage] = useState('Press start when you are ready, then work through the grid one number at a time.');
   const [checkedCells, setCheckedCells] = useState([]);
   const [completedRounds, setCompletedRounds] = useState(() => parseInt(localStorage.getItem(roundsKey) || '0', 10));
-  const [roundStatus, setRoundStatus] = useState('playing');
+  const [roundStatus, setRoundStatus] = useState('ready');
   const [notesMode, setNotesMode] = useState(false);
   const [notesByCell, setNotesByCell] = useState({});
   const [penMistakes, setPenMistakes] = useState(0);
@@ -475,6 +573,12 @@ export default function QuietSudoku({ difficulty = 'medium' }) {
   const openCells = useMemo(() => board.flat().filter((value) => value === 0).length, [board]);
   const elapsedLabel = useMemo(() => formatElapsedTime(elapsedSeconds), [elapsedSeconds]);
   const mistakesLeft = Math.max(MAX_PEN_MISTAKES - penMistakes, 0);
+
+  useEffect(() => {
+    if (puzzleBank[difficulty]) {
+      setSelectedDifficulty(difficulty);
+    }
+  }, [difficulty]);
 
   const activeValue = selectedCell ? board[selectedCell.row][selectedCell.col] : 0;
   const selectedBoxRow = selectedCell ? Math.floor(selectedCell.row / BOX_SIZE) : -1;
@@ -489,7 +593,7 @@ export default function QuietSudoku({ difficulty = 'medium' }) {
     setSelectedCell(getFirstEditableCell(nextBoard));
     setMessage(nextMessage);
     setCheckedCells([]);
-    setRoundStatus('playing');
+    setRoundStatus('ready');
     setNotesMode(false);
     setNotesByCell({});
     setPenMistakes(0);
@@ -498,8 +602,17 @@ export default function QuietSudoku({ difficulty = 'medium' }) {
   }, [roundsKey]);
 
   useEffect(() => {
-    resetPuzzleState(pickPuzzle(pool), 'Tap a square and place one number at a time — no rush.');
+    resetPuzzleState(pickPuzzle(pool), 'Press start when you are ready, then work through the grid one number at a time.');
   }, [pool, resetPuzzleState]);
+
+  const startRound = useCallback(() => {
+    if (roundStatus !== 'ready') {
+      return;
+    }
+
+    setRoundStatus('playing');
+    setMessage('Timer started — keep the logic steady and the pen entries clean.');
+  }, [roundStatus]);
 
   useEffect(() => {
     if (roundStatus !== 'playing') {
@@ -751,6 +864,28 @@ export default function QuietSudoku({ difficulty = 'medium' }) {
           openCells={openCells}
         />
 
+        <div className="mt-5 rounded-[1.5rem] border border-white/80 bg-white/88 p-4 shadow-sm">
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-slate-600">Sudoku level</p>
+              <p className="mt-2 text-sm font-semibold text-slate-700">Choose from easy through extreme, inspired by the tougher web Sudoku ladder.</p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {Object.entries(difficultySettings).map(([level, levelConfig]) => (
+                <button
+                  key={level}
+                  className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${selectedDifficulty === level ? 'bg-slate-900 text-white shadow-sm' : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}`}
+                  onClick={() => setSelectedDifficulty(level)}
+                  type="button"
+                >
+                  {levelConfig.label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <p className="mt-3 text-sm leading-7 text-slate-600">{config.note}</p>
+        </div>
+
         <div className="mt-6 grid gap-5 xl:grid-cols-[minmax(0,1fr)_280px]">
           <div className="relative">
             <SudokuBoard
@@ -765,6 +900,22 @@ export default function QuietSudoku({ difficulty = 'medium' }) {
               selectedCell={selectedCell}
               setSelectedCell={setSelectedCell}
             />
+            {roundStatus === 'ready' && (
+              <div className="absolute inset-0 flex items-center justify-center rounded-[1.75rem] bg-white/76 p-4 backdrop-blur-[3px]">
+                <div className="w-full max-w-sm rounded-[1.5rem] border border-white/85 bg-white/92 p-5 text-center shadow-soft">
+                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-slate-500">Ready when you are</p>
+                  <h4 className="mt-3 text-3xl font-extrabold text-slate-950">Press start to begin</h4>
+                  <p className="mt-3 text-sm leading-7 text-slate-600">Pick a level, then start the board when you want the timer to begin.</p>
+                  <button
+                    className="mt-5 inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-3 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-800"
+                    onClick={startRound}
+                    type="button"
+                  >
+                    Start Sudoku
+                  </button>
+                </div>
+              </div>
+            )}
             {roundStatus === 'over' && (
               <div className="absolute inset-0 flex items-center justify-center rounded-[1.75rem] bg-white/82 p-4 backdrop-blur-[3px]">
                 <div className="w-full max-w-sm rounded-[1.5rem] border border-white/85 bg-white/92 p-5 text-center shadow-soft">
@@ -791,8 +942,10 @@ export default function QuietSudoku({ difficulty = 'medium' }) {
             mistakesLeft={mistakesLeft}
             notesMode={notesMode}
             revealSelectedCell={revealSelectedCell}
+            roundStatus={roundStatus}
             setNotesMode={setNotesMode}
             startFreshPuzzle={startFreshPuzzle}
+            startRound={startRound}
           />
         </div>
       </div>

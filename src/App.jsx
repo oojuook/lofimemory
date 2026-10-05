@@ -55,6 +55,7 @@ import TypingSpeedTest from './TypingSpeedTest';
 import QuietClues from './QuietClues';
 import QuietWordle from './QuietWordle';
 import QuietSudoku from './QuietSudoku';
+import QuietSnake from './QuietSnake';
 import { auth, db, getMessagingIfSupported, googleProvider } from './firebase';
 
 const STORAGE_KEY = 'quiet-harbor-journal-v1';
@@ -835,7 +836,7 @@ const seoGuidePages = [
   { label: 'Helpful read', title: 'Games to relax', text: 'Explore calm game styles like memory, logic, and endless runners that feel easy to enjoy.', href: '/games-to-relax.html' },
   { label: 'Helpful read', title: 'Things to do to relax', text: 'See the simple habits people lean on most often when they want to rest, chill, and reset.', href: '/things-to-do-to-relax.html' },
   { label: 'Popular guide', title: 'Memory games for anxiety', text: 'Play calm memory games for anxiety to clear your mind before writing.', href: '/memory-games-for-anxiety.html' },
-  { label: 'Helpful read', title: 'Mindful gaming app', text: 'Play mindful games like Drifting Leaf and Lotus Match to relax your mind.', href: '/mindful-gaming-app.html' },
+  { label: 'Helpful read', title: 'Mindful gaming app', text: 'Play mindful games like Drifting Seed and Lotus Match to relax your mind.', href: '/mindful-gaming-app.html' },
 
   { label: 'Popular guide', title: 'Relaxing fidget games', text: 'Play relaxing fidget games online to clear your mind before writing.', href: '/relaxing-fidget-games.html' },
   { label: 'Helpful read', title: 'Online Minesweeper', text: 'Clear a cozy online Minesweeper board when you want a calmer kind of focus.', href: '/minesweeper-online.html' },
@@ -1498,6 +1499,158 @@ function buildCalendarDays(monthKey) {
 
 function FrogIcon({ size = 18 }) {
   return <span aria-hidden="true" style={{ fontSize: `${size + 4}px`, lineHeight: 1 }}>🐸</span>;
+}
+
+function SnakeIcon({ size = 18 }) {
+  return <span aria-hidden="true" style={{ fontSize: `${size + 2}px`, lineHeight: 1 }}>🐍</span>;
+}
+
+function GamePreview({ gameId }) {
+  const shellClass = 'mt-4 overflow-hidden rounded-[1.35rem] border border-sage-100 bg-sage-50/80 p-3 shadow-inner';
+
+  if (gameId === 'drifting-leaf') {
+    return (
+      <div className={shellClass}>
+        <div className="flex h-20 items-center justify-center rounded-[1rem] bg-gradient-to-br from-emerald-100 via-lime-50 to-white">
+          <div className="flex items-center gap-5 text-2xl text-emerald-700"><span>🍃</span><span className="-translate-y-1">•</span><span>🌰</span></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'stream-surfer') {
+    return (
+      <div className={shellClass}>
+        <div className="grid h-20 gap-2 rounded-[1rem] bg-gradient-to-b from-sky-100 to-cyan-50 p-2">
+          {[0, 1, 2].map((lane) => <div key={lane} className="relative rounded-full bg-white/50"><span className={`absolute text-lg ${lane === 1 ? 'left-2 top-1/2 -translate-y-1/2' : 'right-3 top-1/2 -translate-y-1/2'}`}>{lane === 1 ? '🐸' : '🪷'}</span></div>)}
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'lotus-match') {
+    return (
+      <div className={shellClass}>
+        <div className="grid h-20 grid-cols-4 gap-2 rounded-[1rem] bg-pink-50/80 p-2">
+          {['🌸', '🪷', '🌼', '🌺', '🪷', '🌸', '🌺', '🌼'].map((icon, index) => <div key={index + 1} className="flex items-center justify-center rounded-xl bg-white text-lg">{icon}</div>)}
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'quiet-tiles') {
+    return (
+      <div className={shellClass}>
+        <div className="grid h-20 grid-cols-4 gap-2 rounded-[1rem] bg-[#efe4d8] p-2 text-xs font-extrabold text-slate-700">
+          {[2, 4, 8, '', '', 16, '', 32].map((value, index) => <div key={index + 1} className="flex items-center justify-center rounded-xl bg-white/90">{value}</div>)}
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'quiet-tetris') {
+    return (
+      <div className={shellClass}>
+        <div className="grid h-20 grid-cols-6 gap-1 rounded-[1rem] bg-violet-50/85 p-2">
+          {[0, 1, 2, 8, 14, 15, 16, 20, 21].map((index) => <div key={index} className={`rounded-[0.45rem] ${[0, 1, 2, 8].includes(index) ? 'bg-cyan-400' : [14, 15].includes(index) ? 'bg-amber-400' : [16, 20, 21].includes(index) ? 'bg-violet-400' : 'bg-white'}`} />)}
+          {Array.from({ length: 27 }, (_, index) => index).filter((index) => ![0, 1, 2, 8, 14, 15, 16, 20, 21].includes(index)).map((index) => <div key={`fill-${index}`} className="rounded-[0.45rem] bg-white" />)}
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'quiet-slide') {
+    return (
+      <div className={shellClass}>
+        <div className="grid h-20 grid-cols-4 gap-2 rounded-[1rem] bg-sky-50/85 p-2 text-sm font-extrabold text-slate-700">
+          {[1, 2, 3, 4, 5, 6, 7, ''].map((value, index) => <div key={index + 1} className={`flex items-center justify-center rounded-xl ${value === '' ? 'border border-dashed border-slate-300 bg-transparent' : 'bg-white'}`}>{value}</div>)}
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'quiet-words') {
+    return (
+      <div className={shellClass}>
+        <div className="flex h-20 flex-wrap content-center gap-2 rounded-[1rem] bg-amber-50/85 p-3 text-xs font-extrabold uppercase tracking-[0.18em] text-amber-700">
+          {['calm', 'glow', 'rest', 'bloom'].map((word) => <span key={word} className="rounded-full bg-white px-3 py-2">{word}</span>)}
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'typing-speed-test') {
+    return (
+      <div className={shellClass}>
+        <div className="flex h-20 flex-col justify-center gap-2 rounded-[1rem] bg-sky-50/85 p-3">
+          <div className="h-3 w-3/4 rounded-full bg-slate-300" />
+          <div className="h-3 w-full rounded-full bg-slate-200" />
+          <div className="h-3 w-4/5 rounded-full bg-slate-300" />
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'quiet-clues') {
+    return (
+      <div className={shellClass}>
+        <div className="grid h-20 grid-cols-5 gap-1 rounded-[1rem] bg-rose-50/80 p-2">
+          {['bg-slate-900', 'bg-white', 'bg-white', 'bg-slate-900', 'bg-white', 'bg-white', 'bg-white', 'bg-white', 'bg-white', 'bg-white', 'bg-slate-900', 'bg-white', 'bg-white', 'bg-white', 'bg-slate-900'].map((tone, index) => <div key={index + 1} className={`rounded-[0.4rem] ${tone}`} />)}
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'quiet-wordle') {
+    return (
+      <div className={shellClass}>
+        <div className="grid h-20 grid-cols-5 gap-2 rounded-[1rem] bg-stone-50 p-3 text-sm font-extrabold text-white">
+          {['bg-emerald-500', 'bg-amber-400', 'bg-slate-300', 'bg-slate-300', 'bg-emerald-500'].map((tone, index) => <div key={index + 1} className={`flex items-center justify-center rounded-xl ${tone}`}>{'CRISP'[index]}</div>)}
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'quiet-sudoku') {
+    return (
+      <div className={shellClass}>
+        <div className="grid h-20 grid-cols-3 gap-1 rounded-[1rem] bg-slate-100/80 p-2 text-sm font-extrabold text-slate-700">
+          {['5', '', '3', '', '7', '', '9', '', '1'].map((value, index) => <div key={index + 1} className="flex items-center justify-center rounded-lg bg-white">{value}</div>)}
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'mind-sweeper') {
+    return (
+      <div className={shellClass}>
+        <div className="grid h-20 grid-cols-4 gap-1 rounded-[1rem] bg-slate-300 p-2 text-xs font-extrabold">
+          {['1', '', '🚩', '', '', '2', '', '', '', '', '💣', '', '', '', '', ''].map((value, index) => <div key={index + 1} className={`flex items-center justify-center border border-slate-400 ${value ? 'bg-slate-100' : 'bg-slate-200'}`}>{value}</div>)}
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'quiet-snake') {
+    return (
+      <div className={shellClass}>
+        <div className="grid h-20 grid-cols-6 gap-1 rounded-[1rem] bg-emerald-50/80 p-2">
+          {Array.from({ length: 24 }, (_, index) => <div key={index + 1} className={`rounded-[0.45rem] ${[7, 8, 9, 15].includes(index) ? 'bg-emerald-500' : index === 10 ? 'bg-amber-400' : 'bg-white'}`} />)}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={shellClass}>
+      <div className="relative h-20 rounded-[1rem] bg-gradient-to-b from-stone-100 to-amber-50 p-3">
+        <div className="absolute bottom-3 left-3 h-10 w-4 rounded-sm bg-stone-600" />
+        <div className="absolute bottom-3 left-8 h-7 w-3 rounded-sm bg-stone-600" />
+        <div className="absolute left-1/2 top-4 h-4 w-9 rounded-full border-2 border-stone-600" />
+        <div className="absolute bottom-2 left-0 right-0 h-[2px] bg-stone-400" />
+      </div>
+    </div>
+  );
 }
 
 function getForecastVisuals(weatherCode) {
@@ -2559,7 +2712,7 @@ function App() {
   const unwindGames = [
     {
       id: 'drifting-leaf',
-      title: 'Drifting Leaf',
+      title: 'Drifting Seed',
       detail: 'Soft endless glide',
       description: 'A slow, floaty game for clearing your head before you write.',
       icon: Leaf,
@@ -2664,6 +2817,15 @@ function App() {
       icon: Shield,
       tone: 'from-lime-100 to-emerald-50 text-lime-700',
       component: <MindSweeper difficulty={selectedGameDifficulty} />
+    },
+    {
+      id: 'quiet-snake',
+      title: 'Quiet Snake',
+      detail: 'Classic arcade loop',
+      description: 'A cozy snake run with clear turns, quick rounds, and a gentle retro feel.',
+      icon: SnakeIcon,
+      tone: 'from-emerald-100 to-lime-50 text-emerald-700',
+      component: <QuietSnake difficulty={selectedGameDifficulty} />
     },
     {
       id: 'dinosaur-dash',
@@ -5967,7 +6129,7 @@ function App() {
             <div className="mb-10 text-center">
               <p className="mb-2 text-sm font-bold uppercase tracking-widest text-sage-600">Relax & Play</p>
               <h1 className="mb-3 font-display text-4xl font-bold tracking-tight text-sage-950">Pick a chill game</h1>
-              <p className="mx-auto max-w-2xl text-lg text-sage-700">Choose the kind of calm you want right now — drift, dodge, merge, match, slide, settle into sudoku, guess cozy words, type, solve clues, sweep, or jump through a soft offline desert run. The whole room stays cozy on mobile, wider on desktop, and easy to settle into with lofi music in the background.</p>
+              <p className="mx-auto max-w-2xl text-lg text-sage-700">Choose the kind of calm you want right now — drift, dodge, merge, match, slide, settle into sudoku, guess cozy words, type, solve clues, sweep, loop through snake, or jump through a soft offline desert run. The whole room stays cozy on mobile, wider on desktop, and easy to settle into with lofi music in the background.</p>
             </div>
             <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
               {unwindGames.map((game) => (
@@ -5986,6 +6148,7 @@ function App() {
                       <game.icon size={18} />
                     </span>
                   </div>
+                  <GamePreview gameId={game.id} />
                   <p className="mt-4 text-sm leading-relaxed text-sage-700">{game.description}</p>
                   <div className="mt-5 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.2em] text-sage-600">
                     {selectedUnwindGame === game.id ? 'Now playing' : 'Open game'}
@@ -6711,41 +6874,48 @@ function App() {
 
               {importanceModalOpen && (
                 <div className="mt-4 rounded-2xl border border-sage-100 bg-sage-50/80 p-4 shadow-sm">
-                  <div className="grid gap-3">
-                    <label className="block text-sm font-bold text-sage-800">
-                      Reminder title or short note
+                  <div className="mb-3 rounded-[1.25rem] border border-sage-100 bg-white/88 px-4 py-3">
+                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Reminder or note setup</p>
+                    <p className="mt-2 text-sm font-semibold leading-6 text-sage-700">Use the first box for the short title people will see on the calendar. Use the second box for the longer note or reminder details.</p>
+                  </div>
+                  <div className="grid gap-3 lg:grid-cols-2">
+                    <label className="block rounded-[1.25rem] border border-sage-100 bg-white p-4 shadow-sm">
+                      <span className="text-sm font-extrabold text-sage-900">Calendar title</span>
+                      <span className="mt-1 block text-xs font-semibold uppercase tracking-[0.16em] text-sage-500">Short and visible on the day</span>
                       <input
-                        className="mt-3 w-full rounded-2xl border border-sage-100 bg-white px-4 py-3 font-semibold text-sage-900 outline-none transition focus:border-sage-300"
+                        className="mt-3 w-full rounded-2xl border border-sage-200 bg-sage-50/70 px-4 py-3 font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
                         maxLength={80}
                         onChange={(event) => setImportanceDraft(event.target.value)}
-                        placeholder="Client call, exam, trip, birthday, grocery note..."
+                        placeholder="Exam at 3pm, family dinner, project deadline..."
                         value={importanceDraft}
                       />
                     </label>
-                    <label className="block text-sm font-bold text-sage-800">
-                      Extra notes (optional)
+                    <label className="block rounded-[1.25rem] border border-sage-100 bg-white p-4 shadow-sm">
+                      <span className="text-sm font-extrabold text-sage-900">Notes or reminder details</span>
+                      <span className="mt-1 block text-xs font-semibold uppercase tracking-[0.16em] text-sage-500">What you want to remember or do</span>
                       <textarea
-                        className="mt-3 min-h-[112px] w-full rounded-2xl border border-sage-100 bg-white px-4 py-3 font-semibold leading-6 text-sage-900 outline-none transition focus:border-sage-300"
+                        className="mt-3 min-h-[128px] w-full rounded-2xl border border-sage-200 bg-sage-50/70 px-4 py-3 font-semibold leading-6 text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
                         maxLength={320}
                         onChange={(event) => setImportanceDetailsDraft(event.target.value)}
-                        placeholder="Add what you want to be reminded about, details for the plan, or just keep a note on this day."
+                        placeholder="Type the reminder details, meeting notes, packing list, or anything you want saved on this date."
                         value={importanceDetailsDraft}
                       />
                     </label>
                   </div>
                   <div className="mt-3 grid gap-3 sm:grid-cols-[minmax(0,220px)_minmax(0,1fr)]">
-                    <label className="block text-sm font-bold text-sage-800">
-                      Time (optional)
+                    <label className="block rounded-[1.25rem] border border-sage-100 bg-white p-4 shadow-sm">
+                      <span className="text-sm font-extrabold text-sage-900">Reminder time</span>
+                      <span className="mt-1 block text-xs font-semibold uppercase tracking-[0.16em] text-sage-500">Optional time for the alert</span>
                       <input
-                        className="mt-2 w-full rounded-2xl border border-sage-100 bg-white px-4 py-3 font-semibold text-sage-900 outline-none transition focus:border-sage-300"
+                        className="mt-3 w-full rounded-2xl border border-sage-200 bg-sage-50/70 px-4 py-3 font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
                         onChange={(event) => setImportanceTimeDraft(event.target.value)}
                         type="time"
                         value={importanceTimeDraft}
                       />
                     </label>
-                    <label className="flex items-center gap-3 rounded-2xl border border-sage-100 bg-white px-4 py-3 text-sm font-semibold text-sage-800">
+                    <label className="flex items-center gap-3 rounded-[1.25rem] border border-sage-100 bg-white px-4 py-4 text-sm font-semibold text-sage-800 shadow-sm">
                       <input checked={importanceReminderEnabled} className="h-4 w-4 rounded border-sage-300 text-sage-700 focus:ring-sage-300" onChange={(event) => setImportanceReminderEnabled(event.target.checked)} type="checkbox" />
-                      Send a reminder on the day and the day before if browser notifications are allowed
+                      Turn on a reminder for the day before and the day itself if browser notifications are allowed
                     </label>
                   </div>
                   <div className="mt-4 flex flex-wrap gap-2">

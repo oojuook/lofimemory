@@ -96,6 +96,19 @@ function generateWordBatch(pool, count) {
   return Array.from({ length: count }, () => pool[Math.floor(Math.random() * pool.length)]);
 }
 
+function generateDistinctWordBatch(pool, count, previousBatch = []) {
+  const previousSignature = previousBatch.join(' ');
+  let nextBatch = generateWordBatch(pool, count);
+  let attempts = 0;
+
+  while (previousSignature && nextBatch.join(' ') === previousSignature && attempts < 6) {
+    nextBatch = generateWordBatch(pool, count);
+    attempts += 1;
+  }
+
+  return nextBatch;
+}
+
 function compareText(targetText, typedText) {
   const maxLength = Math.max(targetText.length, typedText.length);
   let correctChars = 0;
@@ -182,7 +195,7 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
   const wordRefs = useRef({});
 
   const [timerPreset, setTimerPreset] = useState(30);
-  const [wordSequence, setWordSequence] = useState(() => generateWordBatch(wordPools[difficulty] || wordPools.medium, WORD_INITIAL_COUNT));
+  const [wordSequence, setWordSequence] = useState(() => generateDistinctWordBatch(wordPools[difficulty] || wordPools.medium, WORD_INITIAL_COUNT));
   const [typedWords, setTypedWords] = useState([]);
   const [sentenceTarget, setSentenceTarget] = useState(() => pickRandom(sentencePassages[difficulty] || sentencePassages.medium));
   const [currentInput, setCurrentInput] = useState('');
@@ -230,7 +243,7 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
 
   const resetRound = useCallback((nextPreset = timerPreset, nextMode = typingMode) => {
     if (nextMode === 'words') {
-      setWordSequence(generateWordBatch(wordPool, WORD_INITIAL_COUNT));
+      setWordSequence((previous) => generateDistinctWordBatch(wordPool, WORD_INITIAL_COUNT, previous));
       setTypedWords([]);
     } else {
       setSentenceTarget((previous) => pickRandom(sentencePool, previous));
