@@ -1379,9 +1379,11 @@ const colorThemes = [
 ];
 
 const designStyles = [
-  { id: 'soft', name: 'Soft Cards', description: 'Rounded, airy, and gentle.', radius: '1.5rem', texture: 'none' },
-  { id: 'editorial', name: 'Editorial', description: 'More magazine-like and refined.', radius: '0.85rem', texture: 'linear-gradient(135deg, rgba(255,255,255,0.52), rgba(255,255,255,0))' },
-  { id: 'playful', name: 'Playful Calm', description: 'Bubbly shapes with a lighter mood.', radius: '2.25rem', texture: 'radial-gradient(circle at 15% 20%, rgba(255,255,255,0.55), transparent 28%)' }
+  { id: 'soft', name: 'Lavender Haze', description: 'Soft pastel dusk with gentle glow all the way to the edges.', radius: '1.5rem', texture: 'none' },
+  { id: 'editorial', name: 'Rainy Window', description: 'Moody window-lit blues with warm desk-light ambience.', radius: '0.85rem', texture: 'linear-gradient(135deg, rgba(255,255,255,0.52), rgba(255,255,255,0))' },
+  { id: 'playful', name: 'Arcade Dream', description: 'Dreamy neon playroom energy with a calmer retro glow.', radius: '2.25rem', texture: 'radial-gradient(circle at 15% 20%, rgba(255,255,255,0.55), transparent 28%)' },
+  { id: 'twilight', name: 'Twilight Loft', description: 'A dusky room glow with city-light warmth and softer shadows.', radius: '1.8rem', texture: 'linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0))' },
+  { id: 'midnight', name: 'Midnight Study', description: 'Deep indigo margins, window light, and a calm late-night desk feel.', radius: '1.25rem', texture: 'radial-gradient(circle at 50% 0%, rgba(255,255,255,0.18), transparent 30%)' }
 ];
 
 const quoteCardColors = [
@@ -1437,6 +1439,28 @@ const journalAtmospherePresets = [
     journalFontId: 'hand',
     quoteFontId: 'hand',
     companionAnimation: 'bounce'
+  },
+  {
+    id: 'twilight-loft',
+    name: 'Twilight Loft',
+    note: 'Dusky window light with a softer city-evening glow.',
+    themeId: 'sunrise',
+    designId: 'twilight',
+    quoteBg: '#9a6847',
+    journalFontId: 'serif',
+    quoteFontId: 'sans',
+    companionAnimation: 'float'
+  },
+  {
+    id: 'midnight-study',
+    name: 'Midnight Study',
+    note: 'Cool indigo margins and a quiet desk-after-dark mood.',
+    themeId: 'ocean',
+    designId: 'midnight',
+    quoteBg: '#2f7585',
+    journalFontId: 'sans',
+    quoteFontId: 'serif',
+    companionAnimation: 'wave'
   }
 ];
 
@@ -1862,6 +1886,105 @@ function InfoCard({ icon: Icon, title, children }) {
   );
 }
 
+function PageAtmosphere({ sceneId }) {
+  if (sceneId === 'soft') {
+    return (
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,#31245f_0%,#5d4f96_22%,#9b8dc3_44%,#d8d0e7_67%,#f4eff7_100%)]" />
+        <div className="absolute inset-y-0 left-0 w-[20vw] min-w-[5rem] bg-[linear-gradient(90deg,rgba(43,29,88,0.96),rgba(84,66,145,0.4),rgba(84,66,145,0))]" />
+        <div className="absolute inset-y-0 right-0 w-[20vw] min-w-[5rem] bg-[linear-gradient(270deg,rgba(43,29,88,0.96),rgba(84,66,145,0.4),rgba(84,66,145,0))]" />
+        <div className="absolute inset-x-[8%] top-0 h-44 rounded-b-[3rem] bg-[linear-gradient(180deg,rgba(255,151,222,0.26),rgba(255,151,222,0.08)_52%,rgba(255,151,222,0)_100%)]" />
+        <div className="absolute left-1/2 top-16 h-44 w-44 -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_40%_38%,rgba(255,232,247,0.98),rgba(255,160,227,0.74)_42%,rgba(255,160,227,0.12)_74%,rgba(255,160,227,0)_100%)] shadow-[0_0_120px_rgba(255,168,229,0.34)]" />
+        <div className="absolute left-[5%] top-[18%] h-[58vh] w-28 rounded-[2rem] border-x border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.02)_54%,rgba(255,255,255,0)_100%)]" />
+        <div className="absolute right-[6%] top-[15%] h-[60vh] w-24 rounded-[2rem] border-x border-white/12 bg-[linear-gradient(180deg,rgba(205,224,255,0.12),rgba(205,224,255,0.02)_58%,rgba(205,224,255,0)_100%)]" />
+        <div className="absolute left-[16%] top-[26%] h-3 w-3 rounded-full bg-white/85 shadow-[0_0_16px_rgba(255,255,255,0.9)]" />
+        <div className="absolute right-[18%] top-[24%] h-3 w-3 rounded-full bg-[#ffe680] shadow-[0_0_18px_rgba(255,230,128,0.88)]" />
+        <div className="absolute inset-x-0 bottom-0 h-[28vh] bg-[linear-gradient(180deg,rgba(28,20,65,0)_0%,rgba(38,29,82,0.26)_24%,rgba(76,71,120,0.42)_56%,rgba(236,231,242,0.92)_100%)]" />
+        <div className="absolute bottom-[-4rem] left-[8%] h-56 w-[34rem] rounded-[4rem] bg-[radial-gradient(circle_at_40%_30%,rgba(255,140,223,0.2),rgba(112,88,190,0.14)_48%,rgba(112,88,190,0)_72%)]" />
+        <div className="absolute bottom-[-3rem] right-[6%] h-52 w-[28rem] rounded-[4rem] bg-[radial-gradient(circle_at_58%_28%,rgba(118,229,255,0.16),rgba(85,88,190,0.14)_48%,rgba(85,88,190,0)_74%)]" />
+      </div>
+    );
+  }
+
+  if (sceneId === 'playful') {
+    return (
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,#1f124c_0%,#32176f_16%,#53319a_34%,#6f53c4_48%,#80d3e8_74%,#efe8f7_100%)]" />
+        <div className="absolute inset-y-0 left-0 w-[22vw] min-w-[5rem] bg-[linear-gradient(90deg,rgba(27,14,67,0.98),rgba(84,49,176,0.42),rgba(84,49,176,0))]" />
+        <div className="absolute inset-y-0 right-0 w-[22vw] min-w-[5rem] bg-[linear-gradient(270deg,rgba(27,14,67,0.98),rgba(84,49,176,0.42),rgba(84,49,176,0))]" />
+        <div className="absolute inset-x-[10%] top-0 h-48 rounded-b-[3rem] bg-[linear-gradient(180deg,rgba(255,119,223,0.34),rgba(176,127,255,0.16)_42%,rgba(49,29,97,0)_100%)]" />
+        <div className="absolute left-[7%] top-0 h-[78vh] w-24 rounded-b-[2rem] border-x border-[#ffb8e6]/15 bg-[linear-gradient(180deg,rgba(255,132,219,0.22),rgba(255,132,219,0.05)_56%,rgba(255,132,219,0)_100%)]" />
+        <div className="absolute right-[8%] top-0 h-[76vh] w-24 rounded-b-[2rem] border-x border-[#b8c6ff]/15 bg-[linear-gradient(180deg,rgba(138,121,255,0.18),rgba(138,121,255,0.04)_56%,rgba(138,121,255,0)_100%)]" />
+        <div className="absolute left-1/2 top-16 h-48 w-48 -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_40%_38%,rgba(255,225,247,0.98),rgba(255,147,226,0.86)_40%,rgba(255,147,226,0.18)_74%,rgba(255,147,226,0)_100%)] shadow-[0_0_100px_rgba(255,140,228,0.28)]" />
+        <div className="absolute left-[15%] top-[34%] h-3 w-3 rounded-full bg-white/85 shadow-[0_0_16px_rgba(255,255,255,0.92)]" />
+        <div className="absolute right-[15%] top-[31%] h-3 w-3 rounded-full bg-[#ffe680] shadow-[0_0_18px_rgba(255,230,128,0.88)]" />
+        <div className="absolute inset-x-[-10%] bottom-[-1rem] h-[18rem] bg-[linear-gradient(180deg,rgba(28,20,65,0)_0%,rgba(26,19,61,0.18)_22%,rgba(23,18,53,0.48)_56%,rgba(19,16,42,0.74)_100%)]" />
+        <div className="absolute bottom-[-2rem] left-[8%] h-[15rem] w-[28rem] rounded-[3rem] bg-[radial-gradient(circle_at_42%_24%,rgba(255,122,224,0.14),rgba(60,37,122,0.14)_46%,rgba(18,16,42,0)_72%)]" />
+        <div className="absolute bottom-[-2rem] right-[6%] h-[14rem] w-[24rem] rounded-[3rem] bg-[radial-gradient(circle_at_58%_28%,rgba(120,223,255,0.12),rgba(61,41,127,0.12)_46%,rgba(18,16,42,0)_74%)]" />
+      </div>
+    );
+  }
+
+  if (sceneId === 'twilight') {
+    return (
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,#241229_0%,#45304e_18%,#715769_34%,#a67e77_52%,#dcc1b0_72%,#f5eee6_100%)]" />
+        <div className="absolute inset-y-0 left-0 w-[20vw] min-w-[5rem] bg-[linear-gradient(90deg,rgba(46,24,30,0.98),rgba(107,68,64,0.46),rgba(107,68,64,0))]" />
+        <div className="absolute inset-y-0 right-0 w-[20vw] min-w-[5rem] bg-[linear-gradient(270deg,rgba(46,24,30,0.98),rgba(107,68,64,0.46),rgba(107,68,64,0))]" />
+        <div className="absolute inset-x-[9%] top-0 h-28 bg-[linear-gradient(180deg,rgba(64,34,42,0.9),rgba(64,34,42,0.2),rgba(64,34,42,0))]" />
+        <div className="absolute left-[9%] top-0 h-[78vh] w-20 rounded-b-[1.8rem] border-r border-[#8c6b63]/30 bg-[linear-gradient(180deg,rgba(90,56,51,0.88),rgba(90,56,51,0.18)_42%,rgba(90,56,51,0)_100%)]" />
+        <div className="absolute right-[9%] top-0 h-[78vh] w-20 rounded-b-[1.8rem] border-l border-[#8c6b63]/30 bg-[linear-gradient(180deg,rgba(90,56,51,0.88),rgba(90,56,51,0.18)_42%,rgba(90,56,51,0)_100%)]" />
+        <div className="absolute inset-x-[15%] top-[8%] bottom-[24%] bg-[radial-gradient(circle_at_50%_14%,rgba(255,196,150,0.18),rgba(90,56,51,0.08)_44%,rgba(17,10,20,0)_72%)]" />
+        <div className="absolute left-[16%] top-[42%] h-3 w-3 rounded-full bg-[#ffd09a] shadow-[0_0_18px_rgba(255,208,154,0.76)]" />
+        <div className="absolute right-[16%] top-[39%] h-3 w-3 rounded-full bg-[#ffb47f] shadow-[0_0_18px_rgba(255,180,127,0.72)]" />
+        <div className="absolute left-[24%] top-[50%] h-2.5 w-2.5 rounded-full bg-[#ffd09a] shadow-[0_0_14px_rgba(255,208,154,0.72)]" />
+        <div className="absolute inset-x-0 bottom-0 h-[32vh] bg-[linear-gradient(180deg,rgba(35,23,29,0)_0%,rgba(66,39,37,0.32)_34%,rgba(128,91,67,0.54)_66%,rgba(243,230,219,0.95)_100%)]" />
+        <div className="absolute bottom-[9%] left-[12%] h-24 w-[20rem] rounded-[2.5rem] bg-[radial-gradient(circle_at_50%_50%,rgba(255,180,111,0.24),rgba(255,180,111,0)_72%)]" />
+        <div className="absolute bottom-[11%] right-[12%] h-20 w-[16rem] rounded-[2rem] bg-[radial-gradient(circle_at_50%_50%,rgba(255,211,159,0.2),rgba(255,211,159,0)_72%)]" />
+      </div>
+    );
+  }
+
+  if (sceneId === 'midnight') {
+    return (
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,#11142d_0%,#172347_16%,#23406a_34%,#44698d_50%,#8aa0b1_72%,#e9edf2_100%)]" />
+        <div className="absolute inset-y-0 left-0 w-[22vw] min-w-[5rem] bg-[linear-gradient(90deg,rgba(11,15,35,0.99),rgba(30,44,79,0.42),rgba(30,44,79,0))]" />
+        <div className="absolute inset-y-0 right-0 w-[22vw] min-w-[5rem] bg-[linear-gradient(270deg,rgba(11,15,35,0.99),rgba(30,44,79,0.42),rgba(30,44,79,0))]" />
+        <div className="absolute inset-x-[12%] top-0 h-24 bg-[linear-gradient(180deg,rgba(17,23,45,0.92),rgba(17,23,45,0.28),rgba(17,23,45,0))]" />
+        <div className="absolute left-[8%] top-0 h-[80vh] w-16 rounded-b-[1.5rem] border-r border-[#90a9c4]/18 bg-[linear-gradient(180deg,rgba(42,62,100,0.75),rgba(42,62,100,0.1)_42%,rgba(42,62,100,0)_100%)]" />
+        <div className="absolute right-[8%] top-0 h-[80vh] w-16 rounded-b-[1.5rem] border-l border-[#90a9c4]/18 bg-[linear-gradient(180deg,rgba(42,62,100,0.75),rgba(42,62,100,0.1)_42%,rgba(42,62,100,0)_100%)]" />
+        <div className="absolute inset-x-[14%] top-[10%] bottom-[24%] bg-[radial-gradient(circle_at_50%_16%,rgba(131,178,220,0.22),rgba(70,102,152,0.1)_44%,rgba(12,18,30,0)_72%)]" />
+        <div className="absolute left-[18%] top-[38%] h-3 w-3 rounded-full bg-[#ffd3a4] shadow-[0_0_18px_rgba(255,211,164,0.76)]" />
+        <div className="absolute right-[20%] top-[44%] h-2.5 w-2.5 rounded-full bg-[#9be5ff] shadow-[0_0_16px_rgba(155,229,255,0.76)]" />
+        <div className="absolute left-1/2 top-[19%] h-56 w-56 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(121,168,184,0.18),rgba(121,168,184,0)_72%)]" />
+        <div className="absolute inset-x-0 bottom-0 h-[32vh] bg-[linear-gradient(180deg,rgba(20,18,31,0)_0%,rgba(26,32,49,0.24)_34%,rgba(63,77,91,0.46)_64%,rgba(232,237,242,0.94)_100%)]" />
+        <div className="absolute bottom-[8%] left-[14%] h-20 w-[18rem] rounded-[2rem] bg-[radial-gradient(circle_at_50%_50%,rgba(255,174,89,0.24),rgba(255,174,89,0)_72%)]" />
+        <div className="absolute bottom-[10%] right-[12%] h-16 w-[14rem] rounded-[2rem] bg-[radial-gradient(circle_at_50%_50%,rgba(255,196,128,0.2),rgba(255,196,128,0)_72%)]" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,#1a162b_0%,#2a303f_16%,#446474_36%,#6c8a92_52%,#b6a79f_72%,#efe5e1_100%)]" />
+      <div className="absolute inset-y-0 left-0 w-[22vw] min-w-[5rem] bg-[linear-gradient(90deg,rgba(35,23,26,0.99),rgba(79,53,52,0.94),rgba(79,53,52,0))]" />
+      <div className="absolute inset-y-0 right-0 w-[22vw] min-w-[5rem] bg-[linear-gradient(270deg,rgba(35,23,26,0.99),rgba(79,53,52,0.94),rgba(79,53,52,0))]" />
+      <div className="absolute inset-x-[11%] top-0 h-24 bg-[linear-gradient(180deg,rgba(58,35,38,0.92),rgba(58,35,38,0.24),rgba(58,35,38,0))]" />
+      <div className="absolute inset-x-[15%] top-[8%] bottom-[20%] bg-[radial-gradient(circle_at_50%_18%,rgba(140,186,200,0.24),rgba(73,102,114,0.12)_48%,rgba(10,17,24,0)_72%)]" />
+      <div className="absolute left-[8%] top-0 h-[80vh] w-16 rounded-b-[1.6rem] border-r border-[#7f6964]/30 bg-[linear-gradient(180deg,rgba(87,59,58,0.82),rgba(87,59,58,0.18)_44%,rgba(87,59,58,0)_100%)]" />
+      <div className="absolute right-[8%] top-0 h-[80vh] w-16 rounded-b-[1.6rem] border-l border-[#7f6964]/30 bg-[linear-gradient(180deg,rgba(87,59,58,0.82),rgba(87,59,58,0.18)_44%,rgba(87,59,58,0)_100%)]" />
+      <div className="absolute left-[18%] top-[36%] h-3 w-3 rounded-full bg-[#ffd59f] shadow-[0_0_18px_rgba(255,205,145,0.8)]" />
+      <div className="absolute left-[28%] top-[46%] h-2.5 w-2.5 rounded-full bg-[#ffb784] shadow-[0_0_16px_rgba(255,183,132,0.72)]" />
+      <div className="absolute right-[22%] top-[42%] h-3 w-3 rounded-full bg-[#ffd59f] shadow-[0_0_18px_rgba(255,205,145,0.8)]" />
+      <div className="absolute left-1/2 top-[18%] h-56 w-56 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(121,168,184,0.18),rgba(121,168,184,0)_72%)]" />
+      <div className="absolute inset-x-0 bottom-0 h-[30vh] bg-[linear-gradient(180deg,rgba(27,21,37,0)_0%,rgba(41,32,39,0.28)_34%,rgba(89,63,52,0.56)_66%,rgba(232,213,201,0.95)_100%)]" />
+      <div className="absolute bottom-[8%] left-[14%] h-20 w-[18rem] rounded-[2rem] bg-[radial-gradient(circle_at_50%_50%,rgba(255,174,89,0.28),rgba(255,174,89,0)_72%)]" />
+      <div className="absolute bottom-[10%] right-[12%] h-16 w-[14rem] rounded-[2rem] bg-[radial-gradient(circle_at_50%_50%,rgba(255,196,128,0.24),rgba(255,196,128,0)_72%)]" />
+    </div>
+  );
+}
+
 function ThemeStudio({
   selectedTheme,
   selectedDesign,
@@ -1919,9 +2042,9 @@ function ThemeStudio({
               <Palette className="text-white/90" size={34} />
               <button className="rounded-full bg-white/20 px-4 py-2 text-sm font-bold text-white transition hover:bg-white/30" onClick={onClose} type="button">Done</button>
             </div>
-            <p className="mt-7 text-sm font-bold uppercase tracking-widest text-white/80">Customize your space</p>
-            <h2 className="mt-3 font-display text-4xl font-bold leading-tight">Choose the look that feels right today.</h2>
-            <p className="mt-4 leading-7 text-white/85">Visitors can personalize colors and style. Their choice is saved only in their own browser, and this drawer can stay tucked away.</p>
+            <p className="mt-7 text-sm font-bold uppercase tracking-widest text-white/80">Customize your vibe</p>
+            <h2 className="mt-3 font-display text-4xl font-bold leading-tight">Choose the whole-page scene that feels right today.</h2>
+            <p className="mt-4 leading-7 text-white/85">Visitors can switch the full atmosphere — including the outer margins and overall page shell — and their choice stays saved in their own browser.</p>
           </div>
           <div className="space-y-7 p-7 lg:col-span-8 lg:p-8">
             <div>
@@ -1959,6 +2082,7 @@ function ThemeStudio({
                 <span className="mt-3 block text-sm font-semibold text-sage-700">Pick any accent color.</span>
               </label>
               <div className="grid gap-3 lg:col-span-2">
+                <div className="mb-1 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-sage-700"><Palette size={16} /> Whole-page vibe</div>
                 {designStyles.map((style) => (
                   <button
                     className={`custom-option flex items-center justify-between rounded-3xl border bg-white p-4 text-left transition hover:-translate-y-1 ${selectedDesign === style.id ? 'is-selected border-sage-500 shadow-lift' : 'border-sage-100'}`}
@@ -2785,6 +2909,7 @@ function App() {
     '--accent-glow': selectedTheme === 'custom' ? customColor : activeTheme.glow,
     '--shape-radius': activeDesign.radius,
     '--theme-texture': activeDesign.texture,
+    '--page-surface': 'transparent',
     '--quote-bg': quoteBg
   };
 
@@ -4999,23 +5124,8 @@ function App() {
   }
 
   return (
-    <main className={`personalized-site design-${selectedDesign} ${comfortMode ? 'comfort-mode' : ''} min-h-screen overflow-hidden bg-[#ece5f3] pb-24 text-ink lg:pb-0`} style={themeStyle}>
-      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[linear-gradient(180deg,#21164a_0%,#2b1b61_16%,#47328a_30%,#7658a8_42%,#d8cce7_62%,#f1ecf5_100%)]">
-        <div className="absolute inset-x-[12%] top-0 h-[19rem] rounded-b-[3rem] border border-white/8 bg-[linear-gradient(180deg,rgba(255,119,223,0.34),rgba(176,127,255,0.18)_42%,rgba(49,29,97,0)_100%)]" />
-        <div className="absolute left-[8%] top-0 h-[18rem] w-24 rounded-b-[2rem] border-x border-[#ffb8e6]/15 bg-[linear-gradient(180deg,rgba(255,132,219,0.22),rgba(255,132,219,0.05)_56%,rgba(255,132,219,0)_100%)]" />
-        <div className="absolute left-[20%] top-0 h-[18rem] w-20 rounded-b-[2rem] border-x border-[#ffb8e6]/12 bg-[linear-gradient(180deg,rgba(255,132,219,0.14),rgba(255,132,219,0.02)_58%,rgba(255,132,219,0)_100%)]" />
-        <div className="absolute right-[18%] top-0 h-[17rem] w-24 rounded-b-[2rem] border-x border-[#ffb8e6]/12 bg-[linear-gradient(180deg,rgba(138,121,255,0.14),rgba(138,121,255,0.02)_58%,rgba(138,121,255,0)_100%)]" />
-        <div className="absolute left-1/2 top-16 h-48 w-48 -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_40%_38%,rgba(255,225,247,0.98),rgba(255,147,226,0.86)_40%,rgba(255,147,226,0.18)_74%,rgba(255,147,226,0)_100%)] shadow-[0_0_100px_rgba(255,140,228,0.28)]" />
-        <div className="absolute left-[9%] top-[36%] h-3 w-3 rounded-full bg-white/85 shadow-[0_0_16px_rgba(255,255,255,0.92)]" />
-        <div className="absolute right-[12%] top-[34%] h-3 w-3 rounded-full bg-[#ffe680] shadow-[0_0_18px_rgba(255,230,128,0.88)]" />
-        <div className="absolute left-[18%] top-[21%] h-24 w-16 rounded-[1.5rem] bg-[linear-gradient(180deg,rgba(255,120,223,0.18),rgba(255,120,223,0.02))] blur-sm" />
-        <div className="absolute left-[28%] top-[18%] h-32 w-20 rounded-[1.8rem] bg-[linear-gradient(180deg,rgba(170,123,255,0.16),rgba(170,123,255,0.02))] blur-sm" />
-        <div className="absolute right-[22%] top-[20%] h-28 w-16 rounded-[1.6rem] bg-[linear-gradient(180deg,rgba(255,120,223,0.16),rgba(255,120,223,0.02))] blur-sm" />
-        <div className="absolute inset-x-[-10%] bottom-[-1rem] h-[18rem] bg-[linear-gradient(180deg,rgba(28,20,65,0)_0%,rgba(26,19,61,0.18)_22%,rgba(23,18,53,0.48)_56%,rgba(19,16,42,0.74)_100%)]" />
-        <div className="absolute bottom-[-2rem] left-[8%] h-[15rem] w-[28rem] rounded-[3rem] bg-[radial-gradient(circle_at_42%_24%,rgba(255,122,224,0.14),rgba(60,37,122,0.14)_46%,rgba(18,16,42,0)_72%)]" />
-        <div className="absolute bottom-[-2rem] right-[6%] h-[14rem] w-[24rem] rounded-[3rem] bg-[radial-gradient(circle_at_58%_28%,rgba(120,223,255,0.12),rgba(61,41,127,0.12)_46%,rgba(18,16,42,0)_74%)]" />
-        <div className="absolute bottom-[8rem] right-[14%] h-32 w-32 rounded-full bg-[radial-gradient(circle,rgba(175,137,255,0.16),rgba(175,137,255,0)_72%)]" />
-      </div>
+    <main className={`personalized-site design-${selectedDesign} ${comfortMode ? 'comfort-mode' : ''} min-h-screen overflow-hidden bg-transparent pb-24 text-ink lg:pb-0`} style={themeStyle}>
+      <PageAtmosphere sceneId={selectedDesign} />
 
 
       {showEntryTransition && (

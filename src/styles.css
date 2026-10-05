@@ -79,9 +79,9 @@ input::placeholder {
 
 .personalized-site {
   background:
+    var(--page-surface, linear-gradient(180deg, color-mix(in srgb, var(--accent-soft) 72%, white), #fffaf2 44%, #fffaf2)),
     radial-gradient(circle at 10% 8%, color-mix(in srgb, var(--accent-glow) 26%, transparent), transparent 24rem),
-    radial-gradient(circle at 90% 24%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 22rem),
-    linear-gradient(180deg, color-mix(in srgb, var(--accent-soft) 72%, white), #fffaf2 44%, #fffaf2);
+    radial-gradient(circle at 90% 24%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 22rem);
 }
 
 .personalized-site .customizable-card,
