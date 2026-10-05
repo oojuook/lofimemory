@@ -182,7 +182,14 @@ function toggleCellNote(notesByCell, cellId, value) {
   };
 }
 
+function getSudokuBoxTone(rowIndex, colIndex) {
+  const boxRow = Math.floor(rowIndex / BOX_SIZE);
+  const boxCol = Math.floor(colIndex / BOX_SIZE);
+  return (boxRow + boxCol) % 2 === 0 ? 'moss' : 'sand';
+}
+
 function getSudokuCellClass({
+  boxTone,
   checkedWrong,
   conflict,
   editable,
@@ -193,7 +200,7 @@ function getSudokuCellClass({
   selected,
 }) {
   if (!editable) {
-    return 'bg-[#edf1ea] text-slate-900';
+    return boxTone === 'moss' ? 'bg-[#e8efe5] text-slate-900' : 'bg-[#efe9df] text-slate-900';
   }
 
   if (checkedWrong || conflict) {
@@ -209,10 +216,10 @@ function getSudokuCellClass({
   }
 
   if (inSameRow || inSameCol || inSameBox) {
-    return 'bg-sky-50 text-slate-900';
+    return boxTone === 'moss' ? 'bg-sky-100 text-slate-900' : 'bg-[#e8f1fb] text-slate-900';
   }
 
-  return 'bg-[#fbf8f2] text-slate-900';
+  return boxTone === 'moss' ? 'bg-[#f4f8f1] text-slate-900' : 'bg-[#fbf6ee] text-slate-900';
 }
 
 function SudokuCellButton({ cellClass, cellId, colIndex, notes, onSelect, rowIndex, selected, value }) {
@@ -262,7 +269,7 @@ function SudokuBoard({
 }) {
   return (
     <div className="rounded-[1.75rem] border border-white/80 bg-white/92 p-4 shadow-sm">
-      <div className="grid grid-cols-9 gap-[3px] rounded-[1.5rem] bg-[#cdd9d0] p-[6px] sm:gap-1 sm:p-3">
+      <div className="grid grid-cols-9 gap-1 rounded-[1.6rem] bg-[#c7d2ca] p-[7px] sm:p-3">
         {board.map((row, rowIndex) => row.map((value, colIndex) => {
           const cellId = getCellId(rowIndex, colIndex);
           const editable = isEditableCell(rowIndex, colIndex);
@@ -275,7 +282,9 @@ function SudokuBoard({
           const inSameBox = selectedCell
             && selectedBoxRow === Math.floor(rowIndex / BOX_SIZE)
             && selectedBoxCol === Math.floor(colIndex / BOX_SIZE);
+          const boxTone = getSudokuBoxTone(rowIndex, colIndex);
           const cellClass = getSudokuCellClass({
+            boxTone,
             checkedWrong,
             conflict,
             editable,

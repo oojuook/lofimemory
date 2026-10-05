@@ -3,31 +3,31 @@ import { Play, RotateCcw, Sparkles } from 'lucide-react';
 
 const difficultySettings = {
   easy: {
-    gravity: 0.24,
-    jumpVelocity: -5.3,
-    obstacleSpeed: 2.15,
-    gapSize: 190,
-    spawnRate: 150,
+    gravity: 0.22,
+    jumpVelocity: -5.2,
+    obstacleSpeed: 2,
+    gapSize: 198,
+    spawnRate: 156,
     label: 'Easy',
     note: 'A slower drift with a wider path to breathe through.'
   },
   medium: {
-    gravity: 0.28,
-    jumpVelocity: -5.8,
-    obstacleSpeed: 2.5,
+    gravity: 0.29,
+    jumpVelocity: -5.9,
+    obstacleSpeed: 2.65,
     gapSize: 170,
-    spawnRate: 130,
+    spawnRate: 128,
     label: 'Medium',
     note: 'Balanced and floaty — a calm focus rhythm.'
   },
   hard: {
-    gravity: 0.34,
-    jumpVelocity: -6.1,
-    obstacleSpeed: 3.05,
-    gapSize: 148,
-    spawnRate: 110,
+    gravity: 0.37,
+    jumpVelocity: -6.25,
+    obstacleSpeed: 3.45,
+    gapSize: 142,
+    spawnRate: 102,
     label: 'Hard',
-    note: 'A tighter path for a sharper little challenge.'
+    note: 'Faster gaps and tighter pipes for a noticeably sharper challenge.'
   }
 };
 

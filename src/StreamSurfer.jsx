@@ -3,31 +3,31 @@ import { Play, RotateCcw, ArrowLeft, ArrowRight, Sparkles } from 'lucide-react';
 
 const difficultySettings = {
   easy: {
-    startSpeed: 4,
-    speedRamp: 0.16,
-    spawnFloor: 38,
-    spawnBase: 100,
-    moveEase: 0.24,
+    startSpeed: 3.8,
+    speedRamp: 0.14,
+    spawnFloor: 42,
+    spawnBase: 108,
+    moveEase: 0.25,
     label: 'Easy',
     note: 'Slower water and more room to glide around hazards.',
   },
   medium: {
-    startSpeed: 4.5,
-    speedRamp: 0.2,
+    startSpeed: 4.8,
+    speedRamp: 0.22,
     spawnFloor: 30,
-    spawnBase: 90,
+    spawnBase: 88,
     moveEase: 0.2,
     label: 'Medium',
     note: 'Balanced and rhythmic for a steady little reset.',
   },
   hard: {
-    startSpeed: 5.3,
-    speedRamp: 0.24,
-    spawnFloor: 24,
-    spawnBase: 80,
-    moveEase: 0.17,
+    startSpeed: 6.2,
+    speedRamp: 0.3,
+    spawnFloor: 22,
+    spawnBase: 70,
+    moveEase: 0.16,
     label: 'Hard',
-    note: 'Quicker streams and tighter reactions for sharper focus.',
+    note: 'Fast water, denser hazards, and tighter reactions for a sharper challenge.',
   },
 };
 
@@ -126,43 +126,61 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
       ctx.shadowColor = 'rgba(0, 0, 0, 0.14)';
       ctx.shadowBlur = 12;
 
-      ctx.fillStyle = '#6b9f50';
+      const headGradient = ctx.createLinearGradient(0, -26, 0, 24);
+      headGradient.addColorStop(0, '#16a34a');
+      headGradient.addColorStop(1, '#4b9f43');
+      const throatGradient = ctx.createLinearGradient(0, 2, 0, 28);
+      throatGradient.addColorStop(0, '#f7e46a');
+      throatGradient.addColorStop(1, '#f1a45d');
+
+      ctx.fillStyle = headGradient;
       ctx.beginPath();
-      ctx.ellipse(0, 6, 24, 18, 0, 0, Math.PI * 2);
+      ctx.roundRect(-24, -18, 48, 34, 16);
       ctx.fill();
 
+      ctx.fillStyle = throatGradient;
       ctx.beginPath();
-      ctx.ellipse(-14, 16, 9, 7, Math.PI / 5, 0, Math.PI * 2);
-      ctx.ellipse(14, 16, 9, 7, -Math.PI / 5, 0, Math.PI * 2);
+      ctx.roundRect(-19, -2, 38, 20, 10);
       ctx.fill();
 
+      ctx.fillStyle = headGradient;
       ctx.beginPath();
-      ctx.ellipse(-12, -10, 8, 8, 0, 0, Math.PI * 2);
-      ctx.ellipse(12, -10, 8, 8, 0, 0, Math.PI * 2);
+      ctx.arc(-13, -16, 9, 0, Math.PI * 2);
+      ctx.arc(13, -16, 9, 0, Math.PI * 2);
       ctx.fill();
 
-      ctx.fillStyle = '#d9efc9';
+      ctx.fillStyle = '#f3d35f';
       ctx.beginPath();
-      ctx.ellipse(0, 3, 11, 8, 0, 0, Math.PI * 2);
+      ctx.arc(-13, -16, 5.5, 0, Math.PI * 2);
+      ctx.arc(13, -16, 5.5, 0, Math.PI * 2);
       ctx.fill();
 
-      ctx.fillStyle = '#ffffff';
+      ctx.fillStyle = '#201a24';
       ctx.beginPath();
-      ctx.arc(-12, -10, 3.5, 0, Math.PI * 2);
-      ctx.arc(12, -10, 3.5, 0, Math.PI * 2);
+      ctx.arc(-13, -16, 2.8, 0, Math.PI * 2);
+      ctx.arc(13, -16, 2.8, 0, Math.PI * 2);
       ctx.fill();
 
-      ctx.fillStyle = '#18261b';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.42)';
       ctx.beginPath();
-      ctx.arc(-12, -10, 1.6, 0, Math.PI * 2);
-      ctx.arc(12, -10, 1.6, 0, Math.PI * 2);
+      ctx.arc(-15, -18, 1.3, 0, Math.PI * 2);
+      ctx.arc(11, -18, 1.3, 0, Math.PI * 2);
       ctx.fill();
 
-      ctx.strokeStyle = '#29432f';
+      ctx.fillStyle = '#2b3b2b';
+      ctx.beginPath();
+      ctx.arc(-4, -6, 1.4, 0, Math.PI * 2);
+      ctx.arc(4, -6, 1.4, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.strokeStyle = '#3b5535';
       ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
       ctx.beginPath();
-      ctx.arc(0, 6, 8, 0.2, Math.PI - 0.2);
+      ctx.moveTo(-9, 2);
+      ctx.quadraticCurveTo(0, 6, 9, 2);
       ctx.stroke();
+
       ctx.restore();
     };
 

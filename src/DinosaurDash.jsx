@@ -7,34 +7,34 @@ const GROUND_Y = 320;
 
 const difficultySettings = {
   easy: {
-    gravity: 0.62,
-    jumpVelocity: -11.6,
-    startSpeed: 6.4,
-    maxSpeed: 11.1,
-    spawnFloor: 56,
-    spawnBase: 104,
+    gravity: 0.6,
+    jumpVelocity: -11.4,
+    startSpeed: 6,
+    maxSpeed: 10.8,
+    spawnFloor: 60,
+    spawnBase: 108,
     label: 'Easy',
-    note: 'A softer desert run with more breathing room between cacti.'
+    note: 'A softer desert run with more breathing room between cacti.',
   },
   medium: {
-    gravity: 0.68,
-    jumpVelocity: -11.8,
-    startSpeed: 7,
-    maxSpeed: 12.5,
+    gravity: 0.69,
+    jumpVelocity: -11.9,
+    startSpeed: 7.4,
+    maxSpeed: 12.9,
     spawnFloor: 48,
-    spawnBase: 92,
+    spawnBase: 90,
     label: 'Medium',
-    note: 'A balanced offline dash for steady focus.'
+    note: 'A balanced offline dash for steady focus.',
   },
   hard: {
-    gravity: 0.74,
-    jumpVelocity: -12.2,
-    startSpeed: 7.8,
-    maxSpeed: 13.8,
-    spawnFloor: 40,
-    spawnBase: 84,
+    gravity: 0.78,
+    jumpVelocity: -12.35,
+    startSpeed: 8.8,
+    maxSpeed: 15.1,
+    spawnFloor: 38,
+    spawnBase: 76,
     label: 'Hard',
-    note: 'Quicker steps and tighter timing when you want a sharper challenge.'
+    note: 'Faster ground, tighter jumps, and denser cactus timing for a real challenge.',
   }
 };
 
