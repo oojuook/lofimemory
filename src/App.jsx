@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import radioVinylIcon from './assets/lofi-radio-vinyl.png';
+import headerLogoIcon from './assets/lofi-header-logo.png';
 import { onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
 import { collection, deleteDoc, doc, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore';
 import { getToken, onMessage } from 'firebase/messaging';
@@ -2385,6 +2386,7 @@ function App() {
   const [activeTab, setActiveTab] = useState(initialActiveTab);
   const [activeHomeSection, setActiveHomeSection] = useState(getInitialHomeSection);
   const [showEntryTransition, setShowEntryTransition] = useState(initialActiveTab === 'home');
+  const [entryTransitionClosing, setEntryTransitionClosing] = useState(false);
   const [entries, setEntries] = useState(getInitialEntries);
   const [selectedMood, setSelectedMood] = useState('Calm');
   const [title, setTitle] = useState('');
@@ -2788,29 +2790,30 @@ function App() {
   function navigateToTab(tabId) {
     setActiveTab(tabId);
     setShowEntryTransition(false);
+    setEntryTransitionClosing(false);
     if (tabId === 'home') {
       setActiveHomeSection('overview');
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  useEffect(() => {
-    if (!showEntryTransition) {
-      return undefined;
+  function handleEnterSite() {
+    if (entryTransitionClosing) {
+      return;
     }
-
-    const timerId = window.setTimeout(() => {
+    setEntryTransitionClosing(true);
+    window.setTimeout(() => {
       setShowEntryTransition(false);
-    }, 1700);
-
-    return () => window.clearTimeout(timerId);
-  }, [showEntryTransition]);
+      setEntryTransitionClosing(false);
+    }, 520);
+  }
 
   function openHomeSection(sectionId = 'overview') {
     const nextSection = homeSectionMap[sectionId] || 'overview';
     setActiveTab('home');
     setActiveHomeSection(nextSection);
     setShowEntryTransition(false);
+    setEntryTransitionClosing(false);
     if (typeof window !== 'undefined') {
       const url = new URL(window.location.href);
       url.hash = nextSection === 'overview' ? 'home' : nextSection;
@@ -4995,11 +4998,21 @@ function App() {
 
 
       {showEntryTransition && (
-        <div className="fixed inset-0 z-40 flex items-center justify-center bg-[#f4eee7]/92 backdrop-blur-md">
-          <div className="px-6 text-center">
-            <div className="mx-auto h-24 w-24 rounded-full border border-white/80 bg-white/78 shadow-soft" />
-            <p className="mt-6 text-[11px] font-extrabold uppercase tracking-[0.42em] text-sage-600">Lofi Memory</p>
+        <div className={`fixed inset-0 z-40 flex items-center justify-center bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.92),rgba(244,238,231,0.96)_48%,rgba(237,231,222,0.98))] px-6 backdrop-blur-md transition-all duration-500 ${entryTransitionClosing ? 'opacity-0 scale-[1.02]' : 'opacity-100 scale-100'}`}>
+          <div className={`w-full max-w-xl text-center transition-all duration-500 ${entryTransitionClosing ? 'translate-y-4 opacity-0' : 'translate-y-0 opacity-100'}`}>
+            <div className="mx-auto flex h-28 w-28 items-center justify-center rounded-[2rem] border border-white/80 bg-white/82 p-3 shadow-[0_18px_60px_rgba(117,127,119,0.16)]">
+              <img src={headerLogoIcon} alt="Lofi Memory logo" className="h-full w-full rounded-[1.4rem] object-cover" />
+            </div>
+            <p className="mt-7 text-[11px] font-extrabold uppercase tracking-[0.42em] text-sage-600">Lofi Memory</p>
             <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-sage-950 sm:text-5xl">Arrive softly.</h1>
+            <p className="mx-auto mt-4 max-w-md text-sm font-semibold leading-7 text-sage-700">A calmer corner for games, notes, thoughts, and small resets whenever you want to slip into a gentler mood.</p>
+            <button
+              className="mt-8 inline-flex items-center justify-center rounded-full border border-white/80 bg-white/92 px-7 py-3 text-sm font-extrabold uppercase tracking-[0.22em] text-sage-900 shadow-[0_14px_38px_rgba(117,127,119,0.16)] transition hover:-translate-y-0.5 hover:bg-white"
+              onClick={handleEnterSite}
+              type="button"
+            >
+              Click to enter
+            </button>
           </div>
         </div>
       )}
@@ -5007,9 +5020,9 @@ function App() {
       <nav className="sticky top-0 z-20 px-5 pt-5 sm:px-7 xl:px-10">
         <div className="site-nav-shell mx-auto max-w-[1280px] rounded-[2.2rem] border border-white/80 bg-white/78 p-4 shadow-soft backdrop-blur-xl lg:p-5">
           <div className="flex flex-col gap-2.5 lg:gap-3 xl:flex-row xl:items-center xl:justify-between">
-            <a className="flex items-center gap-3" href="#home" onClick={() => openHomeSection('home')}>
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-3xl bg-white shadow-lift ring-1 ring-sage-100 overflow-hidden">
-                <img src="/logo-transparent.png" alt="Lofi Memory Logo" className="h-10 w-10 object-contain" />
+            <a className="flex items-center gap-3.5" href="#home" onClick={() => openHomeSection('home')}>
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[1.35rem] border border-white/80 bg-white/88 p-1.5 shadow-[0_12px_34px_rgba(117,127,119,0.14)] ring-1 ring-sage-100 overflow-hidden">
+                <img src={headerLogoIcon} alt="Lofi Memory Logo" className="h-full w-full rounded-[1rem] object-cover" />
               </div>
               <div>
                 <p className="font-display text-2xl font-bold text-sage-900">Lofi Memory</p>
@@ -5108,27 +5121,33 @@ function App() {
       </nav>
 
       {showMinimalHomeOverview && (
-      <section id="home" className="mx-auto max-w-[860px] px-5 pb-20 pt-10 sm:px-7 xl:px-10">
-        <div className="space-y-3">
-          {homeEntryCards.map((card) => {
-            const Icon = card.icon;
-            return (
-              <button
-                key={card.id}
-                className="flex w-full items-center gap-4 rounded-[1.6rem] border border-[#dfd8cf] bg-white/92 px-5 py-5 text-left shadow-[0_10px_30px_rgba(120,127,119,0.08)] transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white"
-                onClick={card.onClick}
-                type="button"
-              >
-                <div className={`flex h-12 w-12 items-center justify-center rounded-full ${card.iconTone}`}>
-                  <Icon size={22} />
-                </div>
-                <div>
-                  <p className="text-lg font-extrabold text-sage-950">{card.title}</p>
-                  <p className="text-sm font-semibold text-sage-700">{card.description}</p>
-                </div>
-              </button>
-            );
-          })}
+      <section id="home" className="mx-auto max-w-[1040px] px-5 pb-20 pt-10 sm:px-7 xl:px-10">
+        <div className="mb-6 text-center">
+          <p className="text-[11px] font-extrabold uppercase tracking-[0.34em] text-sage-600">Choose your chill space</p>
+          <p className="mt-3 text-sm font-semibold leading-7 text-sage-700">Pick the corner that fits your mood right now.</p>
+        </div>
+        <div className="rounded-[2rem] border border-white/80 bg-white/58 p-3 shadow-[0_20px_70px_rgba(117,127,119,0.12)] backdrop-blur-xl sm:p-4">
+          <div className="grid gap-3 md:grid-cols-2">
+            {homeEntryCards.map((card) => {
+              const Icon = card.icon;
+              return (
+                <button
+                  key={card.id}
+                  className="group flex w-full items-center gap-4 rounded-[1.75rem] border border-[#e2d9cf] bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(248,244,239,0.9))] px-5 py-5 text-left shadow-[0_12px_34px_rgba(120,127,119,0.08)] transition duration-300 hover:-translate-y-1 hover:border-sage-300 hover:shadow-[0_18px_42px_rgba(120,127,119,0.12)]"
+                  onClick={card.onClick}
+                  type="button"
+                >
+                  <div className={`flex h-[3.25rem] w-[3.25rem] items-center justify-center rounded-full shadow-inner transition group-hover:scale-105 ${card.iconTone}`}>
+                    <Icon size={22} />
+                  </div>
+                  <div>
+                    <p className="text-lg font-extrabold text-sage-950">{card.title}</p>
+                    <p className="text-sm font-semibold text-sage-700">{card.description}</p>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </section>
       )}
