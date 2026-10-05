@@ -4999,12 +4999,22 @@ function App() {
   }
 
   return (
-    <main className={`personalized-site design-${selectedDesign} ${comfortMode ? 'comfort-mode' : ''} min-h-screen overflow-hidden bg-[#f6efff] pb-24 text-ink lg:pb-0`} style={themeStyle}>
-      <div className="pointer-events-none fixed inset-0 -z-10">
-        <div className="absolute left-[-4rem] top-[-4rem] h-[26rem] w-[26rem] rounded-full bg-[#ff92e1]/35 blur-3xl" />
-        <div className="absolute right-[-3rem] top-20 h-[28rem] w-[28rem] rounded-full bg-[#8f7dff]/28 blur-3xl" />
-        <div className="absolute bottom-[-5rem] left-[18%] h-[22rem] w-[22rem] rounded-full bg-[#6ce9ff]/24 blur-3xl" />
-        <div className="absolute left-1/2 top-24 h-52 w-52 -translate-x-1/2 rounded-full bg-[#ffd1f2]/18 blur-3xl" />
+    <main className={`personalized-site design-${selectedDesign} ${comfortMode ? 'comfort-mode' : ''} min-h-screen overflow-hidden bg-[#ece5f3] pb-24 text-ink lg:pb-0`} style={themeStyle}>
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[linear-gradient(180deg,#21164a_0%,#2b1b61_16%,#47328a_30%,#7658a8_42%,#d8cce7_62%,#f1ecf5_100%)]">
+        <div className="absolute inset-x-[12%] top-0 h-[19rem] rounded-b-[3rem] border border-white/8 bg-[linear-gradient(180deg,rgba(255,119,223,0.34),rgba(176,127,255,0.18)_42%,rgba(49,29,97,0)_100%)]" />
+        <div className="absolute left-[8%] top-0 h-[18rem] w-24 rounded-b-[2rem] border-x border-[#ffb8e6]/15 bg-[linear-gradient(180deg,rgba(255,132,219,0.22),rgba(255,132,219,0.05)_56%,rgba(255,132,219,0)_100%)]" />
+        <div className="absolute left-[20%] top-0 h-[18rem] w-20 rounded-b-[2rem] border-x border-[#ffb8e6]/12 bg-[linear-gradient(180deg,rgba(255,132,219,0.14),rgba(255,132,219,0.02)_58%,rgba(255,132,219,0)_100%)]" />
+        <div className="absolute right-[18%] top-0 h-[17rem] w-24 rounded-b-[2rem] border-x border-[#ffb8e6]/12 bg-[linear-gradient(180deg,rgba(138,121,255,0.14),rgba(138,121,255,0.02)_58%,rgba(138,121,255,0)_100%)]" />
+        <div className="absolute left-1/2 top-16 h-48 w-48 -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_40%_38%,rgba(255,225,247,0.98),rgba(255,147,226,0.86)_40%,rgba(255,147,226,0.18)_74%,rgba(255,147,226,0)_100%)] shadow-[0_0_100px_rgba(255,140,228,0.28)]" />
+        <div className="absolute left-[9%] top-[36%] h-3 w-3 rounded-full bg-white/85 shadow-[0_0_16px_rgba(255,255,255,0.92)]" />
+        <div className="absolute right-[12%] top-[34%] h-3 w-3 rounded-full bg-[#ffe680] shadow-[0_0_18px_rgba(255,230,128,0.88)]" />
+        <div className="absolute left-[18%] top-[21%] h-24 w-16 rounded-[1.5rem] bg-[linear-gradient(180deg,rgba(255,120,223,0.18),rgba(255,120,223,0.02))] blur-sm" />
+        <div className="absolute left-[28%] top-[18%] h-32 w-20 rounded-[1.8rem] bg-[linear-gradient(180deg,rgba(170,123,255,0.16),rgba(170,123,255,0.02))] blur-sm" />
+        <div className="absolute right-[22%] top-[20%] h-28 w-16 rounded-[1.6rem] bg-[linear-gradient(180deg,rgba(255,120,223,0.16),rgba(255,120,223,0.02))] blur-sm" />
+        <div className="absolute inset-x-[-10%] bottom-[-1rem] h-[18rem] bg-[linear-gradient(180deg,rgba(28,20,65,0)_0%,rgba(26,19,61,0.18)_22%,rgba(23,18,53,0.48)_56%,rgba(19,16,42,0.74)_100%)]" />
+        <div className="absolute bottom-[-2rem] left-[8%] h-[15rem] w-[28rem] rounded-[3rem] bg-[radial-gradient(circle_at_42%_24%,rgba(255,122,224,0.14),rgba(60,37,122,0.14)_46%,rgba(18,16,42,0)_72%)]" />
+        <div className="absolute bottom-[-2rem] right-[6%] h-[14rem] w-[24rem] rounded-[3rem] bg-[radial-gradient(circle_at_58%_28%,rgba(120,223,255,0.12),rgba(61,41,127,0.12)_46%,rgba(18,16,42,0)_74%)]" />
+        <div className="absolute bottom-[8rem] right-[14%] h-32 w-32 rounded-full bg-[radial-gradient(circle,rgba(175,137,255,0.16),rgba(175,137,255,0)_72%)]" />
       </div>
 
 
