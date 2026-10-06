@@ -6691,229 +6691,167 @@ function App() {
           </div>
 
           {memoriesView === 'calendar' && (
-          <div className="overflow-hidden rounded-[2rem] border border-white/80 bg-gradient-to-br from-white/88 via-sage-50/68 to-sand-50/72 p-4 shadow-soft backdrop-blur sm:p-6 lg:p-8">
-            <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div className="rounded-[2rem] border border-white/80 bg-white/84 p-4 shadow-soft backdrop-blur sm:p-5 lg:p-6">
+            <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.22em] text-sage-600 sm:text-sm sm:tracking-widest">Journal calendar</p>
+                <p className="text-xs font-bold uppercase tracking-[0.22em] text-sage-600">Journal calendar</p>
                 <h2 className="mt-1 text-2xl font-extrabold text-ink sm:text-3xl">Memories</h2>
               </div>
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-3xl bg-white text-sage-700 shadow-sm">
-                <CalendarDays size={20} />
+              <div className="flex flex-wrap gap-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-sage-700">
+                <span className="rounded-full border border-sage-100 bg-sage-50 px-3 py-2">{importantDateCount} saved</span>
+                <span className="rounded-full border border-sage-100 bg-sage-50 px-3 py-2">{upcomingReminderCount} reminders</span>
               </div>
             </div>
-            <div className="mb-5 flex flex-wrap gap-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-sage-700 sm:text-xs sm:tracking-[0.18em]">
-              <span className="rounded-full border border-white/90 bg-white/88 px-3 py-2 shadow-sm">{importantDateCount} saved dates</span>
-              <span className="rounded-full border border-white/90 bg-white/88 px-3 py-2 shadow-sm">{upcomingReminderCount} reminders</span>
-            </div>
-            <div className="mb-4 rounded-[1.5rem] bg-white/82 p-2.5 shadow-inner sm:rounded-[1.75rem] sm:p-3">
-              <div className="flex items-center justify-between gap-2 rounded-[1.2rem] bg-white/75 px-2 py-2 shadow-sm">
-                <button className="rounded-full bg-white px-3 py-2 text-sm font-extrabold text-sage-800 shadow-sm" onClick={() => setCalendarMonth(shiftMonthKey(calendarMonth, -1))} type="button">‹</button>
-                <p className="text-center text-sm font-extrabold text-sage-950 sm:text-base">{formatMonthLabel(calendarMonth)}</p>
-                <button className="rounded-full bg-white px-3 py-2 text-sm font-extrabold text-sage-800 shadow-sm" onClick={() => setCalendarMonth(shiftMonthKey(calendarMonth, 1))} type="button">›</button>
-              </div>
-              <button className="mt-3 inline-flex w-full items-center justify-center rounded-full border border-sage-100 bg-white px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700 shadow-sm transition hover:bg-sage-50 sm:w-auto" onClick={() => { setCalendarMonth(todayISO().slice(0, 7)); setSelectedCalendarDate(todayISO()); }} type="button">
-                Jump to today
-              </button>
-            </div>
-            <div className="grid grid-cols-7 gap-0.5 text-center text-[10px] font-extrabold uppercase tracking-[0.12em] text-sage-500 sm:gap-1 sm:text-xs sm:tracking-wider">
-              {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => <div key={day}>{day}</div>)}
-            </div>
-            <div className="mt-2 grid grid-cols-7 gap-0.5 sm:gap-1">
-              {calendarDays.map((day, index) => {
-                const dayEntries = day ? entriesByDate[day.dateKey] || [] : [];
-                const hasImportantDate = day ? Boolean(importantDates[day.dateKey]) : false;
-                const dayForecast = day ? calendarForecastByDate[day.dateKey] : null;
-                const dayForecastVisuals = getForecastVisuals(dayForecast?.weatherCode);
-                const isSelected = day?.dateKey === selectedCalendarDate;
-                const isToday = day?.dateKey === todayISO();
-                return day ? (
-                  <button
-                    className={`relative aspect-square rounded-xl border px-1 py-1 text-xs font-extrabold transition hover:-translate-y-0.5 sm:rounded-2xl sm:px-1.5 sm:py-1.5 sm:text-sm ${isSelected ? 'border-sage-800 bg-sage-900 text-white shadow-lift' : isToday ? 'border-sage-300 bg-sage-100 text-sage-900' : 'border-sage-100 bg-white text-sage-800 hover:bg-sage-50'}`}
-                    key={day.dateKey}
-                    onClick={() => {
-                      setSelectedCalendarDate(day.dateKey);
-                      setImportanceModalOpen(false);
-                    }}
-                    type="button"
-                  >
-                    <span>{day.day}</span>
-                    {hasImportantDate && <span className={`absolute right-1 top-1 text-[9px] sm:right-1.5 sm:top-1.5 sm:text-[10px] ${isSelected ? 'text-sand-100' : 'text-rose-500'}`}>✦</span>}
-                    {dayForecast && (
-                      <span className={`absolute bottom-1 right-1 text-[11px] sm:bottom-1.5 sm:right-1.5 sm:text-[13px] ${isSelected ? 'text-white' : ''}`}>{dayForecastVisuals.emoji}</span>
-                    )}
-                    {dayEntries.length > 0 && <span className={`absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full sm:h-1.5 sm:w-1.5 ${isSelected ? 'bg-white' : 'bg-sage-700'}`} />}
-                  </button>
-                ) : <div key={`blank-${index}`} />;
-              })}
-            </div>
-            <div className="mt-5 rounded-[1.75rem] border border-white/80 bg-white/92 p-4 shadow-inner sm:p-5">
-              <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-                <div className="max-w-2xl">
-                  <p className="text-xs font-extrabold uppercase tracking-widest text-sage-600">{selectedCalendarDate}</p>
-                  <p className="mt-1 text-sm font-semibold leading-6 text-sage-700">Keep the calendar focused on the days that matter, then let reminders and local forecast context help you plan around the shape of the day.</p>
-                  {selectedCalendarForecast && (
-                    <div className="mt-3 inline-flex flex-wrap items-center gap-2 rounded-2xl border border-sage-100 bg-sage-50 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.16em] text-sage-800">
-                      <selectedCalendarForecastVisuals.Icon size={14} />
-                      <span>{selectedCalendarForecastVisuals.label}</span>
-                      <span>{formatForecastTemperature(selectedCalendarForecast.maxTemp)} high</span>
-                      <span>{formatForecastTemperature(selectedCalendarForecast.minTemp)} low</span>
-                    </div>
-                  )}
+
+            <div className="grid gap-5 xl:grid-cols-[minmax(19rem,29rem)_minmax(0,1fr)] xl:items-start">
+              <div className="rounded-[1.6rem] border border-sage-100 bg-sage-50/72 p-3 shadow-inner sm:p-4">
+                <div className="mb-3 flex items-center justify-between gap-2 rounded-[1.2rem] bg-white px-2 py-2 shadow-sm">
+                  <button className="rounded-full bg-sage-50 px-3 py-2 text-sm font-extrabold text-sage-800 transition hover:bg-sage-100" onClick={() => setCalendarMonth(shiftMonthKey(calendarMonth, -1))} type="button">‹</button>
+                  <p className="text-center text-sm font-extrabold text-sage-950 sm:text-base">{formatMonthLabel(calendarMonth)}</p>
+                  <button className="rounded-full bg-sage-50 px-3 py-2 text-sm font-extrabold text-sage-800 transition hover:bg-sage-100" onClick={() => setCalendarMonth(shiftMonthKey(calendarMonth, 1))} type="button">›</button>
                 </div>
-                <div className="flex w-full flex-col gap-2 sm:w-auto lg:min-w-[230px]">
-                  <button className={`w-full rounded-full px-4 py-2.5 text-sm font-extrabold transition ${selectedImportantDate ? 'bg-sage-100 text-sage-800 hover:bg-sage-200' : 'bg-sage-900 text-white hover:bg-sage-800'}`} onClick={() => openImportantDateEditor(selectedCalendarDate)} type="button">
-                    {selectedImportantDate ? 'Edit reminder or note' : 'Add reminder or note'}
-                  </button>
-                  <button className={`w-full rounded-full border px-4 py-2.5 text-sm font-extrabold transition ${notificationPermission === 'granted' ? 'border-sage-200 bg-white text-sage-700 hover:bg-sage-50' : 'border-sage-900 bg-white text-sage-900 hover:bg-sage-50'}`} onClick={requestNotificationPermission} type="button">
-                    {notificationPermission === 'granted' ? 'Notifications allowed' : 'Allow browser notifications'}
-                  </button>
-                  {selectedImportantDate && (
-                    <button className="w-full rounded-full bg-rose-100 px-4 py-2.5 text-sm font-extrabold text-rose-700 transition hover:bg-rose-200" onClick={() => deleteImportantDate(selectedCalendarDate)} type="button">
-                      Remove reminder
-                    </button>
-                  )}
+                <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-extrabold uppercase tracking-[0.12em] text-sage-500">
+                  {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => <div key={day}>{day}</div>)}
                 </div>
-              </div>
-
-              <div className="mt-4 flex flex-wrap gap-2 text-[11px] font-extrabold uppercase tracking-[0.18em] text-sage-700">
-                <span className="rounded-full border border-sage-100 bg-sage-50 px-3 py-2">{notificationPermission === 'granted' ? 'Browser permission on' : notificationPermission === 'unsupported' ? 'Notifications unsupported' : 'Permission needed'}</span>
-                <span className="rounded-full border border-sage-100 bg-white px-3 py-2">{reminderStorageLabel}</span>
-                <span className="rounded-full border border-sage-100 bg-white px-3 py-2">{reminderDeliveryLabel}</span>
-                <span className="rounded-full border border-sage-100 bg-white px-3 py-2">{reminderBehaviorLabel}</span>
-                <span className={`rounded-full border px-3 py-2 ${webPushTokenReady ? 'border-teal-200 bg-teal-50 text-teal-700' : 'border-sage-100 bg-white text-sage-700'}`}>{webPushTokenReady ? 'True push ready' : 'Push setup in progress'}</span>
-              </div>
-
-              <div className="mt-4 rounded-2xl border border-sage-100 bg-white/90 px-4 py-3 text-sm font-semibold leading-6 text-sage-700">
-                {webPushStatus}
-              </div>
-
-              {notificationStatusMessage && (
-                <div className="mt-4 rounded-2xl border border-sage-100 bg-sage-50/80 px-4 py-3 text-sm font-semibold leading-6 text-sage-700">
-                  {notificationStatusMessage}
+                <div className="mt-2 grid grid-cols-7 gap-1">
+                  {calendarDays.map((day, index) => {
+                    const dayEntries = day ? entriesByDate[day.dateKey] || [] : [];
+                    const hasImportantDate = day ? Boolean(importantDates[day.dateKey]) : false;
+                    const isSelected = day?.dateKey === selectedCalendarDate;
+                    const isToday = day?.dateKey === todayISO();
+                    return day ? (
+                      <button
+                        className={`relative flex h-11 items-center justify-center rounded-xl border text-xs font-extrabold transition hover:-translate-y-0.5 sm:h-12 sm:text-sm ${isSelected ? 'border-sage-800 bg-sage-900 text-white shadow-lift' : isToday ? 'border-sage-300 bg-white text-sage-900' : 'border-sage-100 bg-white/92 text-sage-800 hover:bg-white'}`}
+                        key={day.dateKey}
+                        onClick={() => {
+                          setSelectedCalendarDate(day.dateKey);
+                          openImportantDateEditor(day.dateKey);
+                        }}
+                        type="button"
+                      >
+                        <span>{day.day}</span>
+                        {hasImportantDate && <span className={`absolute right-1.5 top-1 text-[10px] ${isSelected ? 'text-sand-100' : 'text-rose-500'}`}>✦</span>}
+                        {dayEntries.length > 0 && <span className={`absolute bottom-1.5 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full ${isSelected ? 'bg-white' : 'bg-sage-700'}`} />}
+                      </button>
+                    ) : <div key={`blank-${index}`} />;
+                  })}
                 </div>
-              )}
-
-              {nextUpcomingReminder && (
-                <button className="mt-4 w-full rounded-2xl border border-sage-100 bg-sage-50/75 p-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:bg-white" onClick={() => setSelectedCalendarDate(nextUpcomingReminder.dateKey)} type="button">
-                  <div className="flex flex-wrap items-start justify-between gap-3">
-                    <div className="min-w-0 flex-1">
-                      <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Next reminder</p>
-                      <p className="mt-2 text-sm font-extrabold leading-6 text-sage-900">{nextUpcomingReminder.note}</p>
-                      {nextUpcomingReminder.details && <p className="mt-1 line-clamp-2 text-sm font-semibold leading-6 text-sage-700">{nextUpcomingReminder.details}</p>}
-                      <p className="mt-1 text-xs font-bold uppercase tracking-[0.16em] text-sage-500">{formatDate(nextUpcomingReminder.dateKey)}{nextUpcomingReminder.time ? ` · ${formatReminderTime(nextUpcomingReminder.time)}` : ''}</p>
-                    </div>
-                    <span className="rounded-full border border-sage-100 bg-white px-3 py-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-700">{nextUpcomingReminder.relativeLabel}</span>
-                  </div>
+                <button className="mt-3 inline-flex w-full items-center justify-center rounded-full border border-sage-100 bg-white px-3 py-2 text-xs font-extrabold uppercase tracking-[0.16em] text-sage-700 shadow-sm transition hover:bg-sage-50" onClick={() => { const today = todayISO(); setCalendarMonth(today.slice(0, 7)); setSelectedCalendarDate(today); openImportantDateEditor(today); }} type="button">
+                  Jump to today
                 </button>
-              )}
-
-              {selectedImportantDate && (
-                <div className="mt-4 rounded-2xl border border-rose-100 bg-rose-50/70 p-4 shadow-sm">
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                    <div className="min-w-0 flex-1">
-                      <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-rose-600">Saved reminder or note</p>
-                      <p className="mt-2 text-sm font-semibold leading-6 text-sage-800">{selectedImportantDate.note}</p>
-                      {selectedImportantDate.details && (
-                        <p className="mt-2 whitespace-pre-wrap text-sm leading-6 text-sage-700">{selectedImportantDate.details}</p>
-                      )}
-                    </div>
-                    <div className="flex flex-wrap gap-2 text-[11px] font-extrabold uppercase tracking-[0.18em] text-rose-700">
-                      {selectedImportantDate.time && <span className="rounded-full border border-rose-100 bg-white/90 px-3 py-2">{formatReminderTime(selectedImportantDate.time)}</span>}
-                      <span className="rounded-full border border-rose-100 bg-white/90 px-3 py-2">{selectedImportantDate.remindersEnabled ? 'Reminders on' : 'Saved as note only'}</span>
-                      <span className="rounded-full border border-rose-100 bg-white/90 px-3 py-2">{getRelativeReminderLabel(selectedCalendarDate)}</span>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              <div className="mt-4 rounded-2xl border border-sage-100 bg-white/90 p-4 shadow-sm">
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div>
-                    <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Upcoming reminders</p>
-                    <p className="mt-1 text-sm font-semibold leading-6 text-sage-700">See the next few important dates in one place, then jump straight to the day you want.</p>
-                  </div>
-                  <span className="rounded-full border border-sage-100 bg-sage-50 px-3 py-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-700">{upcomingReminderCount} saved</span>
-                </div>
-                <div className="mt-4 space-y-3">
-                  {upcomingReminderPreview.length ? upcomingReminderPreview.map((item) => (
-                    <button className={`w-full rounded-2xl border px-4 py-3 text-left transition hover:-translate-y-0.5 hover:bg-sage-50 ${item.dateKey === selectedCalendarDate ? 'border-sage-300 bg-sage-50' : 'border-sage-100 bg-white'}`} key={item.dateKey} onClick={() => setSelectedCalendarDate(item.dateKey)} type="button">
-                      <div className="flex flex-wrap items-start justify-between gap-3">
-                        <div className="min-w-0 flex-1">
-                          <p className="text-sm font-extrabold leading-6 text-sage-900">{item.note}</p>
-                          {item.details && <p className="mt-1 line-clamp-2 text-sm font-semibold leading-6 text-sage-700">{item.details}</p>}
-                          <p className="mt-1 text-xs font-bold uppercase tracking-[0.16em] text-sage-500">{formatDate(item.dateKey)}{item.time ? ` · ${formatReminderTime(item.time)}` : ''}</p>
-                        </div>
-                        <span className="rounded-full border border-sage-100 bg-sage-50 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-700">{item.relativeLabel}</span>
-                      </div>
-                    </button>
-                  )) : (
-                    <p className="rounded-2xl border border-dashed border-sage-200 bg-sage-50/50 px-4 py-4 text-sm font-semibold leading-6 text-sage-500">No upcoming reminders or saved notes yet. Add one for birthdays, meetings, travel, deadlines, or anything you want to keep on that day.</p>
-                  )}
-                </div>
               </div>
 
-              {importanceModalOpen && (
-                <div className="mt-4 rounded-[1.8rem] border border-sage-200 bg-white/96 p-5 shadow-[0_22px_55px_rgba(86,108,93,0.16)] sm:p-6 lg:p-7">
-                  <div className="mb-4 rounded-[1.4rem] border border-sage-100 bg-sage-50/78 px-5 py-4">
-                    <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-sage-700">Reminder or note setup</p>
-                    <p className="mt-2 text-base font-semibold leading-7 text-sage-800">Add the short calendar label first, then use the larger notes area for the full reminder, plan, or details you want to see later.</p>
+              <div className="rounded-[1.75rem] border border-sage-100 bg-white/94 p-4 shadow-inner sm:p-5">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <p className="text-xs font-extrabold uppercase tracking-widest text-sage-600">Selected date</p>
+                    <h3 className="mt-1 text-2xl font-extrabold text-ink">{formatDate(selectedCalendarDate)}</h3>
+                    <p className="mt-1 text-sm font-semibold leading-6 text-sage-600">Click any date, then write a note or reminder here.</p>
                   </div>
-                  <div className="grid gap-4">
-                    <label className="block rounded-[1.4rem] border border-sage-100 bg-white p-5 shadow-sm">
-                      <span className="text-base font-extrabold text-sage-900">Calendar title</span>
-                      <span className="mt-1 block text-xs font-semibold uppercase tracking-[0.16em] text-sage-500">Short and visible on the day</span>
-                      <input
-                        className="mt-3 w-full rounded-[1.1rem] border border-sage-200 bg-sage-50/70 px-4 py-4 text-base font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
-                        maxLength={80}
-                        onChange={(event) => setImportanceDraft(event.target.value)}
-                        placeholder="Exam at 3pm, family dinner, project deadline..."
-                        value={importanceDraft}
-                      />
-                    </label>
-                    <label className="block rounded-[1.4rem] border border-sage-100 bg-white p-5 shadow-sm">
-                      <span className="text-base font-extrabold text-sage-900">Notes or reminder details</span>
-                      <span className="mt-1 block text-xs font-semibold uppercase tracking-[0.16em] text-sage-500">What you want to remember or do</span>
-                      <textarea
-                        className="mt-3 min-h-[220px] w-full rounded-[1.1rem] border border-sage-200 bg-sage-50/70 px-4 py-4 text-base font-semibold leading-7 text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
-                        maxLength={320}
-                        onChange={(event) => setImportanceDetailsDraft(event.target.value)}
-                        placeholder="Type the reminder details, meeting notes, packing list, or anything you want saved on this date."
-                        value={importanceDetailsDraft}
-                      />
-                    </label>
-                  </div>
-                  <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(260px,320px)_minmax(0,1fr)]">
-                    <label className="block rounded-[1.4rem] border border-sage-100 bg-white p-5 shadow-sm">
-                      <span className="text-base font-extrabold text-sage-900">Reminder time</span>
-                      <span className="mt-1 block text-xs font-semibold uppercase tracking-[0.16em] text-sage-500">Optional time for the alert</span>
-                      <input
-                        className="mt-3 w-full rounded-[1.1rem] border border-sage-200 bg-sage-50/70 px-4 py-4 text-base font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
-                        onChange={(event) => setImportanceTimeDraft(event.target.value)}
-                        type="time"
-                        value={importanceTimeDraft}
-                      />
-                    </label>
-                    <label className="flex min-h-[5.8rem] items-center gap-3 rounded-[1.4rem] border border-sage-100 bg-white px-5 py-5 text-base font-semibold leading-7 text-sage-800 shadow-sm">
-                      <input checked={importanceReminderEnabled} className="h-4 w-4 rounded border-sage-300 text-sage-700 focus:ring-sage-300" onChange={(event) => setImportanceReminderEnabled(event.target.checked)} type="checkbox" />
-                      Turn on a reminder for the day before and the day itself if browser notifications are allowed
-                    </label>
-                  </div>
-                  <div className="mt-5 flex flex-wrap gap-3">
-                    <button className="rounded-full bg-sage-900 px-5 py-3 text-base font-extrabold text-white transition hover:bg-sage-800" onClick={saveImportantDate} type="button">Save reminder or note</button>
-                    <button className="rounded-full border border-sage-200 bg-white px-5 py-3 text-base font-extrabold text-sage-700 transition hover:bg-sage-50" onClick={() => setImportanceModalOpen(false)} type="button">Cancel</button>
-                  </div>
-                </div>
-              )}
-              {selectedDateEntries.length ? (
-                <div className="mt-4 space-y-3">
-                  {selectedDateEntries.map((entry) => (
-                    <button className="w-full rounded-2xl border border-sage-100 bg-sage-50/78 p-3 text-left transition hover:-translate-y-0.5 hover:bg-white hover:shadow-sm" key={entry.id} onClick={() => setSelectedEntry(entry)} type="button">
-                      <p className="font-extrabold text-sage-950">{entry.title}</p>
-                      <p className="mt-1 line-clamp-2 text-sm font-semibold leading-6 text-sage-700">{getPlainTextFromHtml(entry.body || entry.prompt || '') || 'Photo entry'}</p>
+                  <div className="flex flex-wrap gap-2">
+                    <button className="rounded-full bg-sage-900 px-4 py-2.5 text-sm font-extrabold text-white transition hover:bg-sage-800" onClick={() => openImportantDateEditor(selectedCalendarDate)} type="button">
+                      {selectedImportantDate ? 'Edit note' : 'Write note'}
                     </button>
-                  ))}
+                    {selectedImportantDate && (
+                      <button className="rounded-full bg-rose-100 px-4 py-2.5 text-sm font-extrabold text-rose-700 transition hover:bg-rose-200" onClick={() => deleteImportantDate(selectedCalendarDate)} type="button">
+                        Remove
+                      </button>
+                    )}
+                  </div>
                 </div>
-              ) : <p className="mt-4 text-sm font-semibold leading-6 text-sage-700">No entry for this date yet. Pick this day as your next little check-in.</p>}
+
+                {selectedImportantDate && (
+                  <div className="mt-4 rounded-2xl border border-sage-100 bg-sage-50/76 p-4">
+                    <div className="flex flex-wrap items-start justify-between gap-3">
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-sage-600">Saved note or reminder</p>
+                        <p className="mt-2 text-base font-extrabold leading-6 text-sage-950">{selectedImportantDate.note}</p>
+                        {selectedImportantDate.details && <p className="mt-2 whitespace-pre-wrap text-sm font-semibold leading-6 text-sage-700">{selectedImportantDate.details}</p>}
+                      </div>
+                      <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.16em] text-sage-700">
+                        {selectedImportantDate.time && <span className="rounded-full border border-sage-100 bg-white px-3 py-1.5">{formatReminderTime(selectedImportantDate.time)}</span>}
+                        <span className="rounded-full border border-sage-100 bg-white px-3 py-1.5">{selectedImportantDate.remindersEnabled ? 'Reminder on' : 'Note only'}</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {importanceModalOpen && (
+                  <div className="mt-4 rounded-[1.6rem] border border-sage-200 bg-white p-4 shadow-sm sm:p-5">
+                    <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-700">Add to this date</p>
+                    <div className="mt-4 grid gap-3">
+                      <label className="block">
+                        <span className="text-sm font-extrabold text-sage-900">Title</span>
+                        <input
+                          className="mt-2 w-full rounded-2xl border border-sage-200 bg-sage-50/70 px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
+                          maxLength={80}
+                          onChange={(event) => setImportanceDraft(event.target.value)}
+                          placeholder="Exam, birthday, deadline..."
+                          value={importanceDraft}
+                        />
+                      </label>
+                      <label className="block">
+                        <span className="text-sm font-extrabold text-sage-900">Notes</span>
+                        <textarea
+                          className="mt-2 min-h-[150px] w-full rounded-2xl border border-sage-200 bg-sage-50/70 px-4 py-3 text-sm font-semibold leading-6 text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
+                          maxLength={320}
+                          onChange={(event) => setImportanceDetailsDraft(event.target.value)}
+                          placeholder="Write what you want to remember on this date."
+                          value={importanceDetailsDraft}
+                        />
+                      </label>
+                    </div>
+                    <div className="mt-3 grid gap-3 sm:grid-cols-[minmax(10rem,14rem)_minmax(0,1fr)]">
+                      <label className="block">
+                        <span className="text-sm font-extrabold text-sage-900">Time</span>
+                        <input
+                          className="mt-2 w-full rounded-2xl border border-sage-200 bg-sage-50/70 px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
+                          onChange={(event) => setImportanceTimeDraft(event.target.value)}
+                          type="time"
+                          value={importanceTimeDraft}
+                        />
+                      </label>
+                      <label className="flex items-center gap-3 rounded-2xl border border-sage-100 bg-sage-50/70 px-4 py-3 text-sm font-semibold leading-6 text-sage-800">
+                        <input checked={importanceReminderEnabled} className="h-4 w-4 rounded border-sage-300 text-sage-700 focus:ring-sage-300" onChange={(event) => setImportanceReminderEnabled(event.target.checked)} type="checkbox" />
+                        Remind me if browser notifications are allowed
+                      </label>
+                    </div>
+                    <div className="mt-4 flex flex-wrap gap-3">
+                      <button className="rounded-full bg-sage-900 px-5 py-3 text-sm font-extrabold text-white transition hover:bg-sage-800" onClick={saveImportantDate} type="button">Save</button>
+                      <button className="rounded-full border border-sage-200 bg-white px-5 py-3 text-sm font-extrabold text-sage-700 transition hover:bg-sage-50" onClick={() => setImportanceModalOpen(false)} type="button">Cancel</button>
+                      <button className={`rounded-full border px-5 py-3 text-sm font-extrabold transition ${notificationPermission === 'granted' ? 'border-sage-200 bg-white text-sage-700 hover:bg-sage-50' : 'border-sage-900 bg-white text-sage-900 hover:bg-sage-50'}`} onClick={requestNotificationPermission} type="button">
+                        {notificationPermission === 'granted' ? 'Notifications on' : 'Allow notifications'}
+                      </button>
+                    </div>
+                    {notificationStatusMessage && <p className="mt-3 rounded-2xl bg-sage-50 px-4 py-3 text-sm font-semibold leading-6 text-sage-700">{notificationStatusMessage}</p>}
+                  </div>
+                )}
+
+                {selectedDateEntries.length ? (
+                  <div className="mt-4 space-y-3">
+                    <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Journal entries on this day</p>
+                    {selectedDateEntries.map((entry) => (
+                      <button className="w-full rounded-2xl border border-sage-100 bg-white p-3 text-left transition hover:-translate-y-0.5 hover:bg-sage-50 hover:shadow-sm" key={entry.id} onClick={() => setSelectedEntry(entry)} type="button">
+                        <p className="font-extrabold text-sage-950">{entry.title}</p>
+                        <p className="mt-1 line-clamp-2 text-sm font-semibold leading-6 text-sage-700">{getPlainTextFromHtml(entry.body || entry.prompt || '') || 'Photo entry'}</p>
+                      </button>
+                    ))}
+                  </div>
+                ) : <p className="mt-4 rounded-2xl border border-dashed border-sage-200 bg-sage-50/50 px-4 py-4 text-sm font-semibold leading-6 text-sage-500">No diary entry for this date yet.</p>}
+
+                {upcomingReminderPreview.length > 0 && (
+                  <div className="mt-4 rounded-2xl border border-sage-100 bg-white p-4">
+                    <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Upcoming</p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {upcomingReminderPreview.slice(0, 3).map((item) => (
+                        <button className={`rounded-full border px-3 py-2 text-xs font-extrabold transition hover:bg-sage-50 ${item.dateKey === selectedCalendarDate ? 'border-sage-300 bg-sage-50 text-sage-900' : 'border-sage-100 bg-white text-sage-700'}`} key={item.dateKey} onClick={() => { setSelectedCalendarDate(item.dateKey); openImportantDateEditor(item.dateKey); }} type="button">
+                          {formatDate(item.dateKey)} · {item.note}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
           )}
