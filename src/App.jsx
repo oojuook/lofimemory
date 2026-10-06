@@ -5194,11 +5194,14 @@ function App() {
   }
 
   return (
-    <main className={`personalized-site design-${selectedDesign} ${comfortMode ? 'comfort-mode' : ''} min-h-screen overflow-hidden bg-sand-50 pb-24 text-ink lg:pb-0`} style={themeStyle}>
-      <div className="pointer-events-none fixed inset-0 -z-10">
+    <main className={`personalized-site lofi-vibe design-${selectedDesign} ${comfortMode ? 'comfort-mode' : ''} min-h-screen overflow-hidden bg-sand-50 pb-24 text-ink lg:pb-0`} style={themeStyle}>
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+        <div className="lofi-ambient-grid absolute inset-0" />
         <div className="absolute left-[-2rem] top-0 h-[28rem] w-[28rem] rounded-full bg-[#efe4d7]/80 blur-3xl" />
         <div className="absolute right-[-3rem] top-44 h-[26rem] w-[26rem] rounded-full bg-[#f8efe5]/85 blur-3xl" />
         <div className="absolute bottom-[-4rem] left-1/3 h-[22rem] w-[22rem] rounded-full bg-[#f2e8dc]/78 blur-3xl" />
+        <div className="lofi-record-glow absolute -right-20 top-[22rem] hidden h-72 w-72 rounded-full lg:block" />
+        <div className="lofi-moon-glow absolute left-[6%] top-[34rem] hidden h-28 w-28 rounded-full md:block" />
       </div>
 
 
@@ -5225,7 +5228,7 @@ function App() {
               </div>
               <div>
                 <p className="font-display text-2xl font-bold text-sage-900">Lofi Memory</p>
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-sage-700">Hang out, relax & play</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-sage-700">Lofi, journal & chill games</p>
               </div>
             </a>
             <div className="site-nav-links hidden flex-1 items-center justify-center gap-7 xl:gap-9">
@@ -5357,46 +5360,23 @@ function App() {
             <div className="pointer-events-none absolute -left-10 top-12 h-28 w-28 rounded-full bg-[#efe4d8]/55 blur-3xl"></div>
             <div className="pointer-events-none absolute right-4 top-4 h-32 w-32 rounded-full bg-[#f7eee3]/65 blur-3xl"></div>
             <div className="relative">
-              <div className="mb-8 flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
-                <div className="flex flex-wrap items-center gap-3">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-[#eadfce] bg-white/96 px-4 py-2 text-sm font-bold text-[#4a3a2d] shadow-sm">
-                    <Sparkles size={16} /> Softer browser corner
-                  </div>
-                  <div className="inline-flex items-center gap-2 rounded-full border border-[#eadfce] bg-[#f8f0e6]/88 px-4 py-2 text-sm font-bold text-[#7f6957] shadow-sm">
-                    <Quote size={14} /> Quiet · simple · all-in-one
-                  </div>
-                </div>
-                <div className="max-w-sm rounded-[1.45rem] border border-white/90 bg-white/76 px-4 py-3 shadow-sm backdrop-blur">
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#9a806a]">Stay awhile</p>
-                  <p className="mt-1 text-sm font-semibold leading-6 text-[#7c6957]">Play something gentle, drop a note, or just slow down here for a few quiet minutes.</p>
-                </div>
+              <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#eadfce] bg-white/90 px-4 py-2 text-sm font-bold text-[#4a3a2d] shadow-sm">
+                <Headphones size={16} /> Minimal lofi space
               </div>
-              <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.96] tracking-tight text-[#3d3025] md:text-6xl">A soft place to hang out and reset.</h1>
-              <p className="mt-5 max-w-3xl text-[1.22rem] font-semibold leading-8 text-[#5d4c3e]">Lofi Memory is an all-in-one browser space for chill games, lofi music, quick notes, private thoughts, breathing room, and small daily plans whenever you want a calmer corner online.</p>
-              <p className="mt-4 max-w-[42rem] text-lg leading-8 text-[#7a6756]">Play for a bit, let the lofi radio start in the background, keep a to-do list nearby, or write something down without bouncing between different apps.</p>
+              <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.96] tracking-tight text-[#3d3025] md:text-6xl">A calm lofi corner for quick resets.</h1>
+              <p className="mt-5 max-w-3xl text-[1.18rem] font-semibold leading-8 text-[#5d4c3e]">Chill games, lofi radio, private notes, memories, and tiny breathing breaks — kept soft, simple, and easy to scan.</p>
 
-              <div className="mt-7 grid gap-3 md:grid-cols-3">
-                <div className="rounded-[1.5rem] border border-white/90 bg-white/74 p-4 shadow-sm backdrop-blur">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#efe4d8] text-[#6a5849] shadow-sm">
-                    <Moon size={17} />
+              <div className="lofi-now-playing mt-7 flex flex-col gap-4 rounded-[1.65rem] border border-[#eadfce] bg-[linear-gradient(135deg,rgba(255,255,255,0.9),rgba(248,239,229,0.78))] p-4 shadow-sm backdrop-blur sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="lofi-mini-record flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-[#d8c5af] bg-[#3f342c] shadow-[0_14px_28px_rgba(80,61,47,0.14)]">
+                    <div className="h-5 w-5 rounded-full border border-[#d8c5af] bg-[#f3e7d8]" />
                   </div>
-                  <p className="mt-3 text-sm font-extrabold text-[#3d3025]">Stay unhurried</p>
-                  <p className="mt-1 text-sm leading-6 text-[#7c6957]">Open one small thing at a time and let the rest of the page stay soft and quiet.</p>
-                </div>
-                <div className="rounded-[1.5rem] border border-white/90 bg-white/74 p-4 shadow-sm backdrop-blur">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#f5eadb] text-[#8b6f54] shadow-sm">
-                    <Wind size={17} />
+                  <div>
+                    <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-[#9a806a]">Now playing</p>
+                    <p className="mt-1 text-base font-extrabold text-[#3d3025]">Soft beats · clean focus · no clutter</p>
                   </div>
-                  <p className="mt-3 text-sm font-extrabold text-[#3d3025]">Reset fast</p>
-                  <p className="mt-1 text-sm leading-6 text-[#7c6957]">Breathe, play, plan, and come back to yourself without the site feeling noisy or demanding.</p>
                 </div>
-                <div className="rounded-[1.5rem] border border-white/90 bg-white/74 p-4 shadow-sm backdrop-blur">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#f0e7dc] text-[#7a6553] shadow-sm">
-                    <ShieldCheck size={17} />
-                  </div>
-                  <p className="mt-3 text-sm font-extrabold text-[#3d3025]">Keep it yours</p>
-                  <p className="mt-1 text-sm leading-6 text-[#7c6957]">Private thoughts, little plans, and saved moments can stay close without feeling exposed.</p>
-                </div>
+                <div className="lofi-equalizer" aria-hidden="true"><span /><span /><span /><span /><span /></div>
               </div>
 
               <div className="mt-9 flex flex-wrap gap-3">
