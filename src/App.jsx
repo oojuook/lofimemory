@@ -5259,8 +5259,8 @@ function App() {
               <img src={headerLogoIcon} alt="Lofi Memory logo" className="h-full w-full rounded-full object-cover" />
             </div>
             <p className="mt-6 text-[11px] font-extrabold uppercase tracking-[0.42em] text-[#8d7763]">Lofi Memory</p>
-            <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-[#3d3025] sm:text-5xl">Arrive softly.</h1>
-            <p className="mt-3 text-sm font-semibold tracking-[0.08em] text-[#8c7967]">A calm little pause before your space opens.</p>
+            <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-[#3d3025] sm:text-5xl">Clear your mind.</h1>
+            <p className="mt-3 text-sm font-semibold tracking-[0.08em] text-[#8c7967]">A calm little pause before you relax.</p>
           </div>
         </div>
       )}
@@ -5410,8 +5410,8 @@ function App() {
               <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#eadfce] bg-white/90 px-4 py-2 text-sm font-bold text-[#4a3a2d] shadow-sm">
                 <Headphones size={16} /> Lofi wallpaper mood
               </div>
-              <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.96] tracking-tight text-[#3d3025] md:text-6xl">An all-in-one space for your everyday life.</h1>
-              <p className="mt-5 max-w-3xl text-[1.18rem] font-semibold leading-8 text-[#5d4c3e]">Chill games, private journaling, weather tracking, notes, reminders, and lofi radio — kept soft and simple to make your day easier.</p>
+              <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.96] tracking-tight text-[#3d3025] md:text-6xl">A cozy place to clear your mind and relax.</h1>
+              <p className="mt-5 max-w-3xl text-[1.18rem] font-semibold leading-8 text-[#5d4c3e]">Unwind with lofi music, chill games, and private journaling. An all-in-one everyday space kept soft and simple to help you focus and feel better.</p>
 
               <div className="lofi-now-playing lofi-glass mt-7 flex flex-col gap-4 rounded-[1.65rem] border p-4 shadow-sm backdrop-blur sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-4">
