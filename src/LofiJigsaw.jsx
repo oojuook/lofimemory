@@ -22,20 +22,7 @@ const difficultySettings = {
   }
 };
 
-const sceneTiles = [
-  'from-[#f8e7c9] via-[#f7d9b5] to-[#cbdcc3]',
-  'from-[#f4d3ba] via-[#edbca7] to-[#b9d3bf]',
-  'from-[#d7e4c7] via-[#bdd5b9] to-[#91b39c]',
-  'from-[#f6ddbd] via-[#d7c5a4] to-[#889e83]',
-  'from-[#c6dcbf] via-[#9ebf9a] to-[#6e9373]',
-  'from-[#f8cfae] via-[#dfa084] to-[#8d725d]',
-  'from-[#f7e8d4] via-[#cabfa7] to-[#778c79]',
-  'from-[#eec2a3] via-[#bd8e75] to-[#5f7466]',
-  'from-[#d5e6dc] via-[#9bbfb8] to-[#5f8d92]',
-  'from-[#f5d7af] via-[#e6aa7d] to-[#996a55]',
-  'from-[#cfe0b9] via-[#a6be89] to-[#5d7655]',
-  'from-[#f9ead8] via-[#dec5aa] to-[#8b7a66]'
-];
+const JIGSAW_WALLPAPER = '/lofi-jigsaw-wallpaper.webp';
 
 function buildSolvedBoard(size) {
   const total = size * size;
@@ -87,15 +74,19 @@ function TileArtwork({ tile, size }) {
   const row = Math.floor(tile / size);
   const col = tile % size;
   const total = size * size;
-  const gradient = sceneTiles[tile % sceneTiles.length];
 
   return (
-    <div className={`relative h-full w-full overflow-hidden rounded-[1rem] bg-gradient-to-br ${gradient}`}>
-      <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(circle at 20% 20%, rgba(255,255,255,.8) 0 8%, transparent 9% 100%)' }} />
-      <div className="absolute left-1/2 top-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/35 bg-white/15" />
-      <div className="absolute -bottom-4 left-0 right-0 h-12 rounded-t-[50%] bg-sage-900/10" />
-      <div className="absolute right-2 top-2 rounded-full bg-white/55 px-2 py-0.5 text-[10px] font-black text-sage-800">{tile + 1}/{total - 1}</div>
-      <div className="absolute bottom-2 left-2 text-[10px] font-extrabold uppercase tracking-[0.14em] text-white/85">{row + 1}.{col + 1}</div>
+    <div className="relative h-full w-full overflow-hidden rounded-[1rem] bg-sage-100">
+      <div
+        className="absolute inset-0 scale-[1.02] bg-cover"
+        style={{
+          backgroundImage: `url(${JIGSAW_WALLPAPER})`,
+          backgroundSize: `${size * 100}% ${size * 100}%`,
+          backgroundPosition: `${size === 1 ? 0 : (col / (size - 1)) * 100}% ${size === 1 ? 0 : (row / (size - 1)) * 100}%`
+        }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-br from-white/12 via-transparent to-sage-950/10" />
+      <div className="absolute right-2 top-2 rounded-full bg-white/70 px-2 py-0.5 text-[10px] font-black text-sage-800 shadow-sm">{tile + 1}/{total - 1}</div>
     </div>
   );
 }
@@ -193,6 +184,9 @@ export default function LofiJigsaw({ difficulty = 'medium' }) {
         </div>
 
         <div className="mt-5 rounded-[1.8rem] border border-white/85 bg-white/72 p-3 shadow-soft sm:p-4">
+          <div className="mb-3 overflow-hidden rounded-[1.4rem] border border-white/80 bg-white/70 shadow-sm">
+            <img src={JIGSAW_WALLPAPER} alt="Lofi wallpaper reference for the jigsaw puzzle" className="h-40 w-full object-cover sm:h-56" />
+          </div>
           <div className="grid gap-2" style={{ gridTemplateColumns: `repeat(${size}, minmax(0, 1fr))` }}>
             {board.map((tile, index) => (
               <button

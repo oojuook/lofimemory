@@ -66,7 +66,6 @@ import QuietSudoku from './QuietSudoku';
 import QuietSnake from './QuietSnake';
 import Solitaire from './Solitaire';
 import LofiJigsaw from './LofiJigsaw';
-import { BubblePopGame, ConnectTheDots, MahjongSolitaire, PetalCatcher, SpotTheDifference, TinyGardenIdle, ZenSandGarden } from './AdditionalCozyGames';
 import { auth, db, getMessagingIfSupported, googleProvider } from './firebase';
 
 const STORAGE_KEY = 'quiet-harbor-journal-v1';
@@ -286,35 +285,35 @@ const tips = [
 ];
 
 const wellnessArticles = [
-  { title: 'Why daily word puzzles make relaxing breaks easier', read: 'Article • 2 min read', body: 'See why daily word puzzles feel so satisfying during short breaks and how a calm Wordle-style game can fit naturally into a relaxing online routine.', href: '/article-daily-word-puzzles-relax.html' },
+  { title: 'Why daily word puzzles make relaxing breaks easier', read: 'Article • 4 min read', body: 'See why daily word puzzles feel so satisfying during short breaks and how a calm Wordle-style game can fit naturally into a relaxing online routine.', href: '/article-daily-word-puzzles-relax.html' },
 
-  { title: 'Why word guessing games feel good when your mind is busy', read: 'Article • 2 min read', body: 'Understand why guess-the-word games feel grounding when your mind is overloaded and how a calm Wordle-style round can become a simple reset.', href: '/article-word-guessing-games-busy-mind.html' },
+  { title: 'Why word guessing games feel good when your mind is busy', read: 'Article • 4 min read', body: 'Understand why guess-the-word games feel grounding when your mind is overloaded and how a calm Wordle-style round can become a simple reset.', href: '/article-word-guessing-games-busy-mind.html' },
 
-  { title: 'How gentle memory games provide cognitive relief before writing', read: 'Article • 2 min read', body: 'Understand why playing a simple memory match game can help organize your thoughts and reduce brain fog before journaling.', href: '/article-memory-games-cognitive-relief.html' },
+  { title: 'How gentle memory games provide cognitive relief before writing', read: 'Article • 4 min read', body: 'Understand why playing a simple memory match game can help organize your thoughts and reduce brain fog before journaling.', href: '/article-memory-games-cognitive-relief.html' },
 
-  { title: 'Why mindless gaming helps relieve stress before journaling', read: 'Article • 2 min read', body: 'Discover how simple, repetitive browser games act as a palate cleanser for your brain, reducing anxiety before you start writing.', href: '/article-why-gaming-helps-anxiety.html' },
+  { title: 'Why mindless gaming helps relieve stress before journaling', read: 'Article • 4 min read', body: 'Discover how simple, repetitive browser games act as a palate cleanser for your brain, reducing anxiety before you start writing.', href: '/article-why-gaming-helps-anxiety.html' },
 
   {
     title: 'Why brain dumping at night helps you sleep',
-    read: 'Article • 2 min read',
+    read: 'Article • 4 min read',
     body: 'Discover how emptying your mind into a private journal before bed reduces anxiety and improves sleep quality.',
     href: '/article-brain-dumping-sleep.html'
   },
   {
     title: 'How to keep a digital journal without getting distracted',
-    read: 'Article • 2 min read',
+    read: 'Article • 4 min read',
     body: 'Practical tips for maintaining focus while journaling online, choosing the right tools, and creating a calm digital space.',
     href: '/article-digital-journal-distractions.html'
   },
   {
     title: 'The psychology behind writing your feelings down',
-    read: 'Article • 2 min read',
+    read: 'Article • 4 min read',
     body: 'Explore the psychological benefits of expressive writing and why putting emotions into words helps us heal.',
     href: '/article-psychology-of-journaling.html'
   },
   {
     title: 'How to protect your privacy when journaling online',
-    read: 'Article • 2 min read',
+    read: 'Article • 4 min read',
     body: 'A guide to understanding digital privacy, secure diaries, and keeping your personal thoughts completely safe.',
     href: '/article-protect-privacy-journaling-online.html'
   },
@@ -1651,34 +1650,6 @@ function GamePreview({ gameId }) {
     );
   }
 
-  if (gameId === 'zen-sand-garden') {
-    return <div className={shellClass}><div className="relative h-20 rounded-[1rem] bg-gradient-to-br from-amber-100 to-stone-100"><div className="absolute inset-3 rounded-full border border-amber-700/20" /><div className="absolute left-8 top-8 h-4 w-7 rounded-full bg-stone-500/60" /><div className="absolute right-8 top-5 h-5 w-8 rounded-full bg-stone-600/50" /></div></div>;
-  }
-
-  if (gameId === 'bubble-pop') {
-    return <div className={shellClass}><div className="grid h-20 grid-cols-6 gap-1.5 rounded-[1rem] bg-gradient-to-br from-sky-100 to-cyan-50 p-2">{Array.from({ length: 18 }, (_, i) => <div key={i} className="rounded-full border border-white/80 bg-cyan-200/70 shadow-sm" />)}</div></div>;
-  }
-
-  if (gameId === 'petal-catcher') {
-    return <div className={shellClass}><div className="relative h-20 rounded-[1rem] bg-gradient-to-br from-rose-100 to-emerald-50 overflow-hidden"><span className="absolute left-8 top-3 text-xl">🌸</span><span className="absolute left-1/2 top-6 text-xl">🍃</span><span className="absolute right-8 top-4 text-xl">🪷</span><div className="absolute bottom-3 left-1/2 h-5 w-16 -translate-x-1/2 rounded-b-full border-2 border-rose-300 bg-white/70" /></div></div>;
-  }
-
-  if (gameId === 'mahjong-solitaire') {
-    return <div className={shellClass}><div className="grid h-20 grid-cols-6 gap-1.5 rounded-[1rem] bg-gradient-to-br from-amber-100 to-sage-50 p-2">{['🀄','🌸','🍃','☁️','🌙','✨','🀄','🌸','🍃','☁️','🌙','✨'].map((v,i)=><div key={i} className="flex items-center justify-center rounded-md bg-white text-sm shadow-sm">{v}</div>)}</div></div>;
-  }
-
-  if (gameId === 'spot-the-difference') {
-    return <div className={shellClass}><div className="grid h-20 grid-cols-2 gap-2 rounded-[1rem] bg-gradient-to-br from-indigo-50 to-amber-50 p-2">{[0,1].map((scene)=><div key={scene} className="relative rounded-lg bg-white/70"><span className="absolute left-3 top-3">🛋️</span><span className="absolute bottom-3 right-4">🪴</span>{scene===1 && <span className="absolute right-3 top-3 rounded-full bg-emerald-100 px-1 text-xs">✓</span>}</div>)}</div></div>;
-  }
-
-  if (gameId === 'connect-the-dots') {
-    return <div className={shellClass}><div className="relative h-20 rounded-[1rem] bg-gradient-to-br from-indigo-100 to-sky-50">{[1,2,3,4,5].map((n,i)=><span key={n} className="absolute flex h-5 w-5 items-center justify-center rounded-full bg-white text-[9px] font-black text-indigo-700 shadow-sm" style={{left:`${15+i*17}%`,top:`${55-(i%2)*28}%`}}>{n}</span>)}</div></div>;
-  }
-
-  if (gameId === 'tiny-garden-idle') {
-    return <div className={shellClass}><div className="grid h-20 grid-cols-6 gap-1.5 rounded-[1rem] bg-gradient-to-br from-emerald-100 to-lime-50 p-2">{['🌱','🌿','🌷','·','🌱','·','🌿','·','🌷','🌱','·','🌿'].map((v,i)=><div key={i} className="flex items-center justify-center rounded-md bg-white/70 text-sm shadow-sm">{v}</div>)}</div></div>;
-  }
-
   if (gameId === 'lotus-match') {
     return (
       <div className={shellClass}>
@@ -2888,69 +2859,6 @@ function App() {
       icon: ImagePlus,
       tone: 'from-emerald-100 via-amber-50 to-rose-50 text-emerald-700',
       component: <LofiJigsaw difficulty={selectedGameDifficulty} />
-    },
-    {
-      id: 'zen-sand-garden',
-      title: 'Zen Sand Garden',
-      detail: 'Calm sand drawing',
-      description: 'Tap the soft sand to draw slow rake marks and arrange a tiny relaxing garden.',
-      icon: Sparkles,
-      tone: 'from-amber-100 to-stone-50 text-amber-700',
-      component: <ZenSandGarden difficulty={selectedGameDifficulty} />
-    },
-    {
-      id: 'bubble-pop',
-      title: 'Bubble Pop',
-      detail: 'Soft fidget popping',
-      description: 'Pop gentle bubbles for a quick stress relief game that feels simple and satisfying.',
-      icon: Cloud,
-      tone: 'from-sky-100 to-cyan-50 text-sky-700',
-      component: <BubblePopGame difficulty={selectedGameDifficulty} />
-    },
-    {
-      id: 'petal-catcher',
-      title: 'Petal Catcher',
-      detail: 'Nature arcade reset',
-      description: 'Catch falling petals in a light lofi nature game made for a tiny mindful break.',
-      icon: Leaf,
-      tone: 'from-rose-100 to-emerald-50 text-rose-700',
-      component: <PetalCatcher difficulty={selectedGameDifficulty} />
-    },
-    {
-      id: 'mahjong-solitaire',
-      title: 'Mahjong Solitaire',
-      detail: 'Cozy tile matching',
-      description: 'Match soft Mahjong-inspired tile pairs in a calm logic game for focused unwinding.',
-      icon: Layers,
-      tone: 'from-amber-100 to-sage-50 text-amber-700',
-      component: <MahjongSolitaire difficulty={selectedGameDifficulty} />
-    },
-    {
-      id: 'spot-the-difference',
-      title: 'Spot the Difference',
-      detail: 'Calm visual focus',
-      description: 'Compare two tiny lofi rooms and spot differences for a relaxing visual puzzle.',
-      icon: Eye,
-      tone: 'from-indigo-100 to-amber-50 text-indigo-700',
-      component: <SpotTheDifference difficulty={selectedGameDifficulty} />
-    },
-    {
-      id: 'connect-the-dots',
-      title: 'Connect the Dots',
-      detail: 'Beginner path puzzle',
-      description: 'Connect numbered dots into a small lofi constellation for an easy calming puzzle.',
-      icon: Map,
-      tone: 'from-indigo-100 to-sky-50 text-indigo-700',
-      component: <ConnectTheDots difficulty={selectedGameDifficulty} />
-    },
-    {
-      id: 'tiny-garden-idle',
-      title: 'Tiny Garden Idle',
-      detail: 'Daily cozy garden',
-      description: 'Plant seeds, water them, and grow a tiny garden users can return to each day.',
-      icon: Leaf,
-      tone: 'from-emerald-100 to-lime-50 text-emerald-700',
-      component: <TinyGardenIdle difficulty={selectedGameDifficulty} />
     },
     {
       id: 'lotus-match',
@@ -6514,10 +6422,10 @@ function App() {
                 <div className="rounded-[1.8rem] border border-sage-100 bg-sage-50/55 p-5 shadow-sm backdrop-blur">
                   <div className="flex items-center gap-3">
                     <Sparkles className="text-sage-600" size={20} />
-                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Newly added cozy games</p>
+                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">New game added</p>
                   </div>
-                  <h2 className="mt-3 text-2xl font-extrabold text-sage-950">The full recommended set is now playable.</h2>
-                  <p className="mt-2 text-sm leading-7 text-sage-700">Lofi Jigsaw, Zen Sand Garden, Bubble Pop, Petal Catcher, Mahjong Solitaire, Spot the Difference, Connect the Dots, and Tiny Garden Idle are all now part of the games library.</p>
+                  <h2 className="mt-3 text-2xl font-extrabold text-sage-950">Lofi Jigsaw is now playable.</h2>
+                  <p className="mt-2 text-sm leading-7 text-sage-700">Slide a soft lofi scene back together for a relaxing puzzle break before journaling.</p>
                 </div>
                 <div className="rounded-[1.8rem] border border-sage-100 bg-white/78 p-5 shadow-sm backdrop-blur">
                   <div className="flex items-center gap-3">
