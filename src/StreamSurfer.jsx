@@ -5,8 +5,8 @@ const difficultySettings = {
   easy: {
     startSpeed: 3.8,
     speedRamp: 0.14,
-    spawnFloor: 42,
-    spawnBase: 108,
+    spawnFloor: 72,
+    spawnBase: 128,
     moveEase: 0.25,
     label: 'Easy',
     note: 'Slower water and more room to glide around hazards.'
@@ -14,8 +14,8 @@ const difficultySettings = {
   medium: {
     startSpeed: 4.8,
     speedRamp: 0.22,
-    spawnFloor: 30,
-    spawnBase: 88,
+    spawnFloor: 58,
+    spawnBase: 112,
     moveEase: 0.2,
     label: 'Medium',
     note: 'Balanced and rhythmic for a steady little reset.'
@@ -23,8 +23,8 @@ const difficultySettings = {
   hard: {
     startSpeed: 7.1,
     speedRamp: 0.38,
-    spawnFloor: 16,
-    spawnBase: 58,
+    spawnFloor: 46,
+    spawnBase: 92,
     moveEase: 0.14,
     label: 'Hard',
     note: 'Much faster water, denser hazards, and tighter reactions for a sharper challenge.'
@@ -47,7 +47,8 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
     obstacles: [],
     frames: 0,
     score: 0,
-    waterOffset: 0
+    waterOffset: 0,
+    spawnCooldown: config.spawnBase
   });
 
   const laneWidth = 200;
@@ -61,7 +62,8 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
       obstacles: [],
       frames: 0,
       score: 0,
-      waterOffset: 0
+      waterOffset: 0,
+      spawnCooldown: config.spawnBase
     };
     setScore(0);
     setGameState('start');
@@ -106,7 +108,8 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
       obstacles: [],
       frames: 0,
       score: 0,
-      waterOffset: 0
+      waterOffset: 0,
+      spawnCooldown: config.spawnBase
     };
     setScore(0);
     setGameState('playing');
@@ -250,9 +253,12 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
         state.frames += 1;
         state.waterOffset += state.speed;
 
-        if (state.frames % Math.max(config.spawnFloor, config.spawnBase - Math.floor(state.speed * 5)) === 0) {
+        state.spawnCooldown -= 1;
+        if (state.spawnCooldown <= 0) {
           const lane = Math.floor(Math.random() * 3);
-          state.obstacles.push({ lane, y: -50, passed: false });
+          state.obstacles.push({ lane, y: -62, passed: false });
+          const safeGap = Math.max(config.spawnFloor, config.spawnBase - Math.floor(state.speed * 3));
+          state.spawnCooldown = Math.round(safeGap + randomBetween(22, 52));
         }
 
         if (state.frames % 300 === 0) {
@@ -263,13 +269,16 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
         state.visualX += (targetX - state.visualX) * config.moveEase;
 
         const playerY = canvas.height - 80;
-        const playerCollisionX = getLaneCenter(state.lane);
+        const playerCollisionX = state.visualX;
 
         state.obstacles.forEach((obstacle) => {
           obstacle.y += state.speed;
           drawLilyPad(getLaneCenter(obstacle.lane), obstacle.y);
 
-          if (Math.abs(getLaneCenter(obstacle.lane) - playerCollisionX) < 46 && Math.abs(obstacle.y - (playerY + 6)) < 30) {
+          const obstacleX = getLaneCenter(obstacle.lane);
+          const horizontalOverlap = Math.abs(obstacleX - playerCollisionX) < 34;
+          const verticalOverlap = Math.abs(obstacle.y - (playerY + 8)) < 22;
+          if (horizontalOverlap && verticalOverlap) {
             setGameState('over');
           }
 
