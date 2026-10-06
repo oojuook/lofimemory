@@ -1066,6 +1066,11 @@ input::placeholder {
   to { opacity: 1; }
 }
 
+@keyframes gamePreviewSlide {
+  from { transform: translateX(20px); opacity: 0; }
+  to { transform: translateX(-120px); opacity: 1; }
+}
+
 .site-ui-fade-in {
   animation: uiFadeIn 800ms ease-out 400ms both;
 }

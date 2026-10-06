@@ -17,20 +17,29 @@ import {
   Eye,
   EyeOff,
   FileText,
+  Flag,
   Gamepad2,
+  Grid2x2,
+  Hash,
+  Heart,
   HeartHandshake,
   ImagePlus,
+  Layers,
   Leaf,
   Lock,
   Mail,
+  Map,
+  Keyboard,
   Moon,
   Newspaper,
   Paintbrush,
   Palette,
   PenLine,
   Plus,
+  Puzzle,
   Quote,
   Scale,
+  ScanText,
   Shield,
   ShieldCheck,
   Sparkles,
@@ -39,6 +48,7 @@ import {
   Type,
   Waves,
   Wind,
+  Zap,
 } from 'lucide-react';
 import ZenGame from './ZenGame';
 import StreamSurfer from './StreamSurfer';
@@ -1533,8 +1543,11 @@ function GamePreview({ gameId }) {
   if (gameId === 'drifting-leaf') {
     return (
       <div className={shellClass}>
-        <div className="flex h-20 items-center justify-center rounded-[1rem] bg-gradient-to-br from-emerald-100 via-lime-50 to-white">
-          <div className="flex items-center gap-5 text-2xl text-emerald-700"><span>🍃</span><span className="-translate-y-1">•</span><span>🌰</span></div>
+        <div className="flex h-20 items-center justify-center rounded-[1rem] bg-gradient-to-br from-emerald-100 via-lime-50 to-white overflow-hidden relative">
+          <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #3a5a48 1px, transparent 0)', backgroundSize: '12px 12px' }}></div>
+          <div className="flex items-center gap-5 text-2xl text-emerald-700 relative animate-bounce" style={{ animationDuration: '3.5s' }}>
+            <span>🍃</span><span className="opacity-40 text-sm">•</span><span>🌰</span>
+          </div>
         </div>
       </div>
     );
@@ -1543,8 +1556,14 @@ function GamePreview({ gameId }) {
   if (gameId === 'stream-surfer') {
     return (
       <div className={shellClass}>
-        <div className="grid h-20 gap-2 rounded-[1rem] bg-gradient-to-b from-sky-100 to-cyan-50 p-2">
-          {[0, 1, 2].map((lane) => <div key={lane} className="relative rounded-full bg-white/50"><span className={`absolute text-lg ${lane === 1 ? 'left-2 top-1/2 -translate-y-1/2' : 'right-3 top-1/2 -translate-y-1/2'}`}>{lane === 1 ? '🐸' : '🪷'}</span></div>)}
+        <div className="grid h-20 gap-2 rounded-[1rem] bg-gradient-to-b from-sky-100 to-cyan-50 p-2 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1 bg-white/40 animate-pulse"></div>
+          {[0, 1, 2].map((lane) => (
+            <div key={lane} className="relative rounded-full bg-white/40 border border-white/20 h-4">
+              {lane === 1 && <span className="absolute left-4 top-1/2 -translate-y-1/2 text-lg">🐸</span>}
+              {lane !== 1 && <span className={`absolute ${lane === 0 ? 'right-6' : 'left-8'} top-1/2 -translate-y-1/2 text-sm opacity-60`}>🪷</span>}
+            </div>
+          ))}
         </div>
       </div>
     );
@@ -1553,8 +1572,12 @@ function GamePreview({ gameId }) {
   if (gameId === 'lotus-match') {
     return (
       <div className={shellClass}>
-        <div className="grid h-20 grid-cols-4 gap-2 rounded-[1rem] bg-pink-50/80 p-2">
-          {['🌸', '🪷', '🌼', '🌺', '🪷', '🌸', '🌺', '🌼'].map((icon, index) => <div key={index + 1} className="flex items-center justify-center rounded-xl bg-white text-lg">{icon}</div>)}
+        <div className="flex h-20 items-center justify-center gap-2 rounded-[1rem] bg-gradient-to-br from-rose-100 to-orange-50 p-2">
+          {[0, 1, 2, 3].map((i) => (
+            <div key={i} className={`h-12 w-10 rounded-lg border-2 ${i % 2 === 0 ? 'bg-white border-rose-200' : 'bg-rose-50 border-rose-100 shadow-sm'} flex items-center justify-center text-lg`}>
+              {i === 1 ? '✨' : (i === 2 ? '🌸' : '')}
+            </div>
+          ))}
         </div>
       </div>
     );
@@ -1563,8 +1586,12 @@ function GamePreview({ gameId }) {
   if (gameId === 'quiet-tiles') {
     return (
       <div className={shellClass}>
-        <div className="grid h-20 grid-cols-4 gap-2 rounded-[1rem] bg-[#efe4d8] p-2 text-xs font-extrabold text-slate-700">
-          {[2, 4, 8, '', '', 16, '', 32].map((value, index) => <div key={index + 1} className="flex items-center justify-center rounded-xl bg-white/90">{value}</div>)}
+        <div className="grid h-20 grid-cols-4 gap-1.5 rounded-[1rem] bg-gradient-to-br from-violet-100 to-slate-50 p-2">
+          {[2, 4, 8, 16, '', 32, '', 64].map((val, i) => (
+            <div key={i} className={`flex h-full items-center justify-center rounded-lg ${val ? 'bg-white shadow-sm text-violet-700 font-bold' : 'bg-white/30'} text-[9px]`}>
+              {val}
+            </div>
+          ))}
         </div>
       </div>
     );
@@ -1573,9 +1600,13 @@ function GamePreview({ gameId }) {
   if (gameId === 'quiet-tetris') {
     return (
       <div className={shellClass}>
-        <div className="grid h-20 grid-cols-6 gap-1 rounded-[1rem] bg-violet-50/85 p-2">
-          {[0, 1, 2, 8, 14, 15, 16, 20, 21].map((index) => <div key={index} className={`rounded-[0.45rem] ${[0, 1, 2, 8].includes(index) ? 'bg-cyan-400' : [14, 15].includes(index) ? 'bg-amber-400' : [16, 20, 21].includes(index) ? 'bg-violet-400' : 'bg-white'}`} />)}
-          {Array.from({ length: 27 }, (_, index) => index).filter((index) => ![0, 1, 2, 8, 14, 15, 16, 20, 21].includes(index)).map((index) => <div key={`fill-${index}`} className="rounded-[0.45rem] bg-white" />)}
+        <div className="relative h-20 rounded-[1rem] bg-gradient-to-br from-indigo-100 to-sky-50 p-2 overflow-hidden">
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-0.5">
+            <div className="w-4 h-4 bg-indigo-400 rounded-sm"></div>
+            <div className="w-4 h-4 bg-indigo-400 rounded-sm shadow-sm"></div>
+            <div className="w-4 h-4 bg-indigo-400 rounded-sm"></div>
+          </div>
+          <div className="absolute top-2 right-6 w-4 h-8 bg-sky-400 rounded-sm animate-bounce" style={{ animationDuration: '2.5s' }}></div>
         </div>
       </div>
     );
@@ -1584,8 +1615,12 @@ function GamePreview({ gameId }) {
   if (gameId === 'quiet-slide') {
     return (
       <div className={shellClass}>
-        <div className="grid h-20 grid-cols-4 gap-2 rounded-[1rem] bg-sky-50/85 p-2 text-sm font-extrabold text-slate-700">
-          {[1, 2, 3, 4, 5, 6, 7, ''].map((value, index) => <div key={index + 1} className={`flex items-center justify-center rounded-xl ${value === '' ? 'border border-dashed border-slate-300 bg-transparent' : 'bg-white'}`}>{value}</div>)}
+        <div className="grid h-20 grid-cols-3 gap-1 rounded-[1rem] bg-gradient-to-br from-amber-100 to-stone-50 p-1.5 shadow-inner">
+          {[1, 2, 3, 4, '', 5, 6, 7, 8].map((v, i) => (
+            <div key={i} className={`flex h-full items-center justify-center rounded-md ${v ? 'bg-white shadow-sm text-amber-700 font-bold' : 'bg-transparent'} text-[10px]`}>
+              {v}
+            </div>
+          ))}
         </div>
       </div>
     );
@@ -1594,8 +1629,11 @@ function GamePreview({ gameId }) {
   if (gameId === 'quiet-words') {
     return (
       <div className={shellClass}>
-        <div className="flex h-20 flex-wrap content-center gap-2 rounded-[1rem] bg-amber-50/85 p-3 text-xs font-extrabold uppercase tracking-[0.18em] text-amber-700">
-          {['calm', 'glow', 'rest', 'bloom'].map((word) => <span key={word} className="rounded-full bg-white px-3 py-2">{word}</span>)}
+        <div className="flex h-20 items-center justify-center rounded-[1rem] bg-gradient-to-br from-fuchsia-100 to-rose-50 p-2 relative overflow-hidden">
+          <div className="flex gap-2">
+             <div className="w-12 h-14 bg-white rounded-lg shadow-sm border border-fuchsia-100 rotate-[-4deg] flex items-center justify-center text-xl font-display text-fuchsia-800">A</div>
+             <div className="w-12 h-14 bg-white rounded-lg shadow-sm border border-fuchsia-100 rotate-[3deg] flex items-center justify-center text-xl font-display text-fuchsia-800">B</div>
+          </div>
         </div>
       </div>
     );
@@ -1604,10 +1642,12 @@ function GamePreview({ gameId }) {
   if (gameId === 'typing-speed-test') {
     return (
       <div className={shellClass}>
-        <div className="flex h-20 flex-col justify-center gap-2 rounded-[1rem] bg-sky-50/85 p-3">
-          <div className="h-3 w-3/4 rounded-full bg-slate-300" />
-          <div className="h-3 w-full rounded-full bg-slate-200" />
-          <div className="h-3 w-4/5 rounded-full bg-slate-300" />
+        <div className="flex h-20 flex-col justify-center gap-2 rounded-[1rem] bg-gradient-to-br from-sky-100 to-indigo-50 p-3 overflow-hidden">
+          <div className="h-1.5 w-full bg-white/70 rounded-full"></div>
+          <div className="h-1.5 w-[85%] bg-white/70 rounded-full"></div>
+          <div className="h-1.5 w-[65%] bg-sky-500 rounded-full relative">
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-0.5 h-3 bg-indigo-600 animate-pulse"></div>
+          </div>
         </div>
       </div>
     );
@@ -1616,8 +1656,16 @@ function GamePreview({ gameId }) {
   if (gameId === 'quiet-clues') {
     return (
       <div className={shellClass}>
-        <div className="grid h-20 grid-cols-5 gap-1 rounded-[1rem] bg-rose-50/80 p-2">
-          {['bg-slate-900', 'bg-white', 'bg-white', 'bg-slate-900', 'bg-white', 'bg-white', 'bg-white', 'bg-white', 'bg-white', 'bg-white', 'bg-slate-900', 'bg-white', 'bg-white', 'bg-white', 'bg-slate-900'].map((tone, index) => <div key={index + 1} className={`rounded-[0.4rem] ${tone}`} />)}
+        <div className="flex h-20 items-center justify-center rounded-[1rem] bg-gradient-to-br from-amber-100 to-rose-50 p-2">
+           <div className="w-full bg-white/90 p-2 rounded border border-amber-200 shadow-sm space-y-1.5">
+             <div className="h-1 w-full bg-amber-100 rounded-full opacity-60"></div>
+             <div className="h-1 w-3/4 bg-amber-100 rounded-full opacity-60"></div>
+             <div className="flex gap-1 pt-1">
+               <div className="w-4 h-4 border border-amber-300 rounded-sm flex items-center justify-center text-[8px] font-bold text-amber-700 bg-amber-50">1</div>
+               <div className="w-4 h-4 border border-amber-200 rounded-sm bg-amber-50/30"></div>
+               <div className="w-4 h-4 border border-amber-200 rounded-sm bg-amber-50/30"></div>
+             </div>
+           </div>
         </div>
       </div>
     );
@@ -1626,8 +1674,15 @@ function GamePreview({ gameId }) {
   if (gameId === 'quiet-wordle') {
     return (
       <div className={shellClass}>
-        <div className="grid h-20 grid-cols-5 gap-2 rounded-[1rem] bg-stone-50 p-3 text-sm font-extrabold text-white">
-          {['bg-emerald-500', 'bg-amber-400', 'bg-slate-300', 'bg-slate-300', 'bg-emerald-500'].map((tone, index) => <div key={index + 1} className={`flex items-center justify-center rounded-xl ${tone}`}>{'CRISP'[index]}</div>)}
+        <div className="flex h-20 flex-col items-center justify-center gap-1.5 rounded-[1rem] bg-gradient-to-br from-teal-100 to-sky-50 p-2">
+          <div className="flex gap-1">
+            {['C', 'O', 'Z', 'Y'].map((l, i) => (
+              <div key={i} className={`w-7 h-7 rounded border flex items-center justify-center text-[11px] font-bold ${i < 2 ? 'bg-teal-500 border-teal-600 text-white shadow-sm' : 'bg-white border-teal-200 text-teal-700'}`}>{l}</div>
+            ))}
+          </div>
+          <div className="flex gap-1 opacity-40">
+            {[0, 1, 2, 3].map((i) => <div key={i} className="w-7 h-7 rounded border border-teal-100 bg-white"></div>)}
+          </div>
         </div>
       </div>
     );
@@ -1636,8 +1691,12 @@ function GamePreview({ gameId }) {
   if (gameId === 'quiet-sudoku') {
     return (
       <div className={shellClass}>
-        <div className="grid h-20 grid-cols-3 gap-1 rounded-[1rem] bg-slate-100/80 p-2 text-sm font-extrabold text-slate-700">
-          {['5', '', '3', '', '7', '', '9', '', '1'].map((value, index) => <div key={index + 1} className="flex items-center justify-center rounded-lg bg-white">{value}</div>)}
+        <div className="flex h-20 items-center justify-center rounded-[1rem] bg-gradient-to-br from-cyan-100 to-blue-50 p-2">
+           <div className="grid grid-cols-3 grid-rows-3 gap-0.5 border border-cyan-200 p-0.5 bg-white rounded shadow-sm">
+             {[1,'',3,'',5,'',7,'',9].map((v, i) => (
+               <div key={i} className="w-4 h-4 flex items-center justify-center text-[9px] text-cyan-800 font-bold border border-cyan-50">{v}</div>
+             ))}
+           </div>
         </div>
       </div>
     );
@@ -1646,8 +1705,14 @@ function GamePreview({ gameId }) {
   if (gameId === 'mind-sweeper') {
     return (
       <div className={shellClass}>
-        <div className="grid h-20 grid-cols-4 gap-1 rounded-[1rem] bg-slate-300 p-2 text-xs font-extrabold">
-          {['1', '', '🚩', '', '', '2', '', '', '', '', '💣', '', '', '', '', ''].map((value, index) => <div key={index + 1} className={`flex items-center justify-center border border-slate-400 ${value ? 'bg-slate-100' : 'bg-slate-200'}`}>{value}</div>)}
+        <div className="flex h-20 items-center justify-center rounded-[1rem] bg-gradient-to-br from-lime-100 to-emerald-50 p-2">
+           <div className="grid grid-cols-4 gap-1 bg-white/70 p-1.5 rounded-lg border border-lime-200 shadow-sm">
+             {[0,1,2,3,4,5,6,7].map((i) => (
+               <div key={i} className={`w-4 h-4 rounded-sm border ${i === 2 ? 'bg-emerald-100 border-emerald-300' : 'bg-white border-lime-100 shadow-tiny'} flex items-center justify-center text-[8px] font-bold`}>
+                 {i === 2 ? '🚩' : (i === 5 ? '1' : '')}
+               </div>
+             ))}
+           </div>
         </div>
       </div>
     );
@@ -1656,8 +1721,14 @@ function GamePreview({ gameId }) {
   if (gameId === 'quiet-snake') {
     return (
       <div className={shellClass}>
-        <div className="grid h-20 grid-cols-6 gap-1 rounded-[1rem] bg-emerald-50/80 p-2">
-          {Array.from({ length: 24 }, (_, index) => <div key={index + 1} className={`rounded-[0.45rem] ${[7, 8, 9, 15].includes(index) ? 'bg-emerald-500' : index === 10 ? 'bg-amber-400' : 'bg-white'}`} />)}
+        <div className="relative h-20 rounded-[1rem] bg-gradient-to-br from-emerald-100 to-lime-50 p-2 overflow-hidden">
+          <div className="absolute top-4 left-6 flex flex-col gap-0.5 rotate-[15deg]">
+            <div className="w-3 h-3 bg-emerald-600 rounded-sm"></div>
+            <div className="w-3 h-3 bg-emerald-500 rounded-sm"></div>
+            <div className="w-3 h-3 bg-emerald-400 rounded-sm shadow-sm"></div>
+            <div className="w-3 h-3 bg-emerald-300 rounded-sm"></div>
+          </div>
+          <div className="absolute bottom-6 right-10 w-3 h-3 bg-rose-400 rounded-full animate-pulse shadow-[0_0_10px_rgba(244,63,94,0.5)]"></div>
         </div>
       </div>
     );
@@ -1666,10 +1737,14 @@ function GamePreview({ gameId }) {
   if (gameId === 'solitaire') {
     return (
       <div className={shellClass}>
-        <div className="grid h-20 grid-cols-7 gap-1 rounded-[1rem] bg-emerald-900/85 p-2 text-[10px] font-extrabold">
-          {['A♥', '', 'K♠', '', '7♦', '', 'Q♣', '', '5♠', '', '', '3♥', '', '', '', '', 'J♦', '', '', '', ''].map((value, index) => (
-            <div key={index + 1} className={`flex items-center justify-center rounded-md ${value ? 'bg-white text-slate-800' : 'bg-white/15'}`}>{value}</div>
-          ))}
+        <div className="flex h-20 items-center justify-center gap-2 rounded-[1rem] bg-gradient-to-br from-emerald-800 to-teal-900 p-2 shadow-inner">
+           <div className="w-9 h-13 bg-white rounded border border-emerald-100 shadow-lift flex flex-col items-center justify-center text-xs">
+             <span className="text-rose-600 text-sm">♥</span>
+             <span className="font-bold text-[9px] -mt-1 text-slate-900 uppercase">A</span>
+           </div>
+           <div className="w-9 h-13 bg-white/10 border-2 border-white/20 border-dashed rounded flex items-center justify-center">
+             <span className="text-white/30 text-sm">♠</span>
+           </div>
         </div>
       </div>
     );
@@ -1677,11 +1752,8 @@ function GamePreview({ gameId }) {
 
   return (
     <div className={shellClass}>
-      <div className="relative h-20 rounded-[1rem] bg-gradient-to-b from-stone-100 to-amber-50 p-3">
-        <div className="absolute bottom-3 left-3 h-10 w-4 rounded-sm bg-stone-600" />
-        <div className="absolute bottom-3 left-8 h-7 w-3 rounded-sm bg-stone-600" />
-        <div className="absolute left-1/2 top-4 h-4 w-9 rounded-full border-2 border-stone-600" />
-        <div className="absolute bottom-2 left-0 right-0 h-[2px] bg-stone-400" />
+      <div className="relative h-20 rounded-[1rem] bg-gradient-to-b from-stone-100 to-amber-50 p-3 flex items-center justify-center">
+        <Gamepad2 className="text-stone-300" size={34} />
       </div>
     </div>
   );
@@ -2537,7 +2609,6 @@ function App() {
     { id: 'notes', title: 'Notes', description: 'Keep important things nearby', icon: FileText, iconTone: 'bg-[#d8f0ec] text-teal-700', onClick: () => navigateToTab('notes') },
     { id: 'breathe', title: 'Breathe', description: 'Focus & breathe', icon: Wind, iconTone: 'bg-[#dbe8f8] text-sky-700', onClick: () => navigateToTab('breathe') },
     { id: 'memories', title: 'Weather & Memories', description: 'Save dates and local weather', icon: CalendarDays, iconTone: 'bg-[#efe6d8] text-sand-700', onClick: () => navigateToTab('memories') },
-    { id: 'library', title: 'Library', description: 'Wellness guides', icon: BookOpen, iconTone: 'bg-[#e7f0ea] text-sage-700', onClick: () => { window.location.href = '/blog.html'; } },
     { id: 'vibes', title: 'Vibes', description: 'See your mood flow', icon: HeartHandshake, iconTone: 'bg-[#f4dce7] text-rose-700', onClick: () => navigateToTab('insights') }
   ];
   const [selectedGameDifficulty, setSelectedGameDifficulty] = useState('medium');
@@ -2686,7 +2757,7 @@ function App() {
       title: 'Drifting Seed',
       detail: 'Soft endless glide',
       description: 'A slow, floaty game for clearing your head before you write.',
-      icon: Leaf,
+      icon: Wind,
       tone: 'from-emerald-100 to-sage-50 text-emerald-700',
       component: <ZenGame difficulty={selectedGameDifficulty} />
     },
@@ -2695,7 +2766,7 @@ function App() {
       title: 'Lilypad Hopper',
       detail: 'Gentle pond dodging',
       description: 'Hop through a calm lily-pad run when you want a little movement without the noise.',
-      icon: FrogIcon,
+      icon: Waves,
       tone: 'from-sky-100 to-cyan-50 text-sky-700',
       component: <StreamSurfer difficulty={selectedGameDifficulty} />
     },
@@ -2704,7 +2775,7 @@ function App() {
       title: 'Lotus Match',
       detail: 'Quiet memory reset',
       description: 'Flip calm cards and settle in before journaling or just hanging out for a bit.',
-      icon: Sparkles,
+      icon: Heart,
       tone: 'from-rose-100 to-orange-50 text-rose-700',
       component: <LotusMatch difficulty={selectedGameDifficulty} />
     },
@@ -2713,7 +2784,7 @@ function App() {
       title: 'Tiles',
       detail: 'Cozy 2048-style merge',
       description: 'Slide matching numbers together for the kind of calm puzzle loop people love in relaxing tile games.',
-      icon: Plus,
+      icon: Grid2x2,
       tone: 'from-violet-100 to-slate-50 text-violet-700',
       component: <QuietTiles difficulty={selectedGameDifficulty} />
     },
@@ -2723,7 +2794,7 @@ function App() {
       detail: 'Calm block stacking',
       description: 'Stack colorful blocks, clear tidy rows, and enjoy a softer take on a classic arcade puzzle.',
       icon: Palette,
-      tone: 'from-violet-100 to-sky-50 text-violet-700',
+      tone: 'from-indigo-100 to-sky-50 text-indigo-700',
       component: <QuietTetris difficulty={selectedGameDifficulty} />
     },
     {
@@ -2731,7 +2802,7 @@ function App() {
       title: 'Slide',
       detail: 'Cozy sliding puzzle',
       description: 'Move tiles into place for the kind of familiar low-pressure sliding puzzle people love as a quick reset.',
-      icon: Compass,
+      icon: Puzzle,
       tone: 'from-amber-100 to-stone-50 text-amber-700',
       component: <QuietSlide difficulty={selectedGameDifficulty} />
     },
@@ -2740,7 +2811,7 @@ function App() {
       title: 'Sudoku',
       detail: 'Soft sudoku logic',
       description: 'Settle into a cozy Sudoku board with gentle checking, reveal help, and a familiar number puzzle rhythm.',
-      icon: CalendarDays,
+      icon: Hash,
       tone: 'from-cyan-100 to-blue-50 text-cyan-700',
       component: <QuietSudoku difficulty={selectedGameDifficulty} />
     },
@@ -2749,7 +2820,7 @@ function App() {
       title: 'Wordle',
       detail: 'Soft Wordle-style puzzle',
       description: 'Guess a cozy word in a gentle Wordle-style round when you want something familiar, tidy, and easy to replay.',
-      icon: Type,
+      icon: ScanText,
       tone: 'from-teal-100 to-sky-50 text-teal-700',
       component: <QuietWordle difficulty={selectedGameDifficulty} />
     },
@@ -2758,16 +2829,16 @@ function App() {
       title: 'Words',
       detail: 'Calm word scramble',
       description: 'Unscramble soft words for a familiar word-game loop that keeps the focus light and relaxing.',
-      icon: Feather,
+      icon: Type,
       tone: 'from-fuchsia-100 to-rose-50 text-fuchsia-700',
       component: <QuietWords difficulty={selectedGameDifficulty} />
     },
     {
       id: 'typing-speed-test',
       title: 'Typing Speed Test',
-      detail: 'Calm WPM check',
-      description: 'Type through a continuous monkeytype-style flow where the words keep moving, your WPM stays visible, and the whole thing still feels calm on mobile.',
-      icon: PenLine,
+      detail: 'Gentle typing flow',
+      description: 'Practice typing with calm prompts and find your own comfortable rhythm.',
+      icon: Keyboard,
       tone: 'from-sky-100 to-indigo-50 text-sky-700',
       component: <TypingSpeedTest difficulty={selectedGameDifficulty} />
     },
@@ -2776,7 +2847,7 @@ function App() {
       title: 'Clues',
       detail: 'Mini crossword-style clues',
       description: 'Solve one soft clue at a time for a beginner-friendly crossword mood without the stress of a full puzzle grid.',
-      icon: BookOpen,
+      icon: Map,
       tone: 'from-amber-100 to-rose-50 text-amber-700',
       component: <QuietClues difficulty={selectedGameDifficulty} />
     },
@@ -2785,8 +2856,8 @@ function App() {
       title: 'Mind Sweeper',
       detail: 'Soft logic reset',
       description: 'A cozy Minesweeper-style board for clearing your head one calm tile at a time.',
-      icon: Shield,
-      tone: 'from-lime-100 to-emerald-50 text-lime-700',
+      icon: Flag,
+      tone: 'from-lime-100 to-emerald-50 text-emerald-700',
       component: <MindSweeper difficulty={selectedGameDifficulty} />
     },
     {
@@ -2794,26 +2865,26 @@ function App() {
       title: 'Snake',
       detail: 'Classic arcade loop',
       description: 'A cozy snake run with clear turns, quick rounds, and a gentle retro feel.',
-      icon: SnakeIcon,
+      icon: Zap,
       tone: 'from-emerald-100 to-lime-50 text-emerald-700',
       component: <QuietSnake difficulty={selectedGameDifficulty} />
     },
     {
       id: 'solitaire',
       title: 'Solitaire',
-      detail: 'Cozy card sorting',
-      description: 'Sort a soft Klondike-style card table with simple click controls, foundations, stock, and waste piles.',
-      icon: BookOpen,
-      tone: 'from-amber-100 to-emerald-50 text-amber-700',
+      detail: 'Classic card reset',
+      description: 'Stack cards in a cozy green-felt space, the perfect way to pause and reflect.',
+      icon: Layers,
+      tone: 'from-emerald-800 to-teal-900 text-white',
       component: <Solitaire difficulty={selectedGameDifficulty} />
     },
     {
       id: 'dinosaur-dash',
       title: 'Dinosaur Dash',
-      detail: 'Offline desert run',
-      description: 'A soft no-internet-style dino run with easy jumps, warm desert tones, and a quick reset rhythm.',
-      icon: ArrowUp,
-      tone: 'from-stone-200 to-amber-50 text-stone-700',
+      detail: 'Gentle desert run',
+      description: 'Jump through a soft desert loop when you want a little rhythm and play.',
+      icon: Cloud,
+      tone: 'from-orange-100 to-yellow-50 text-orange-700',
       component: <DinosaurDash difficulty={selectedGameDifficulty} />
     }
   ];
