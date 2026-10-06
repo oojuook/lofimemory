@@ -354,7 +354,7 @@ export default function QuietWordle({ difficulty = 'medium' }) {
             <div className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white/88 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-700 shadow-sm">
               <Sparkles size={14} /> {config.label} word guess
             </div>
-            <h3 className="mt-4 text-3xl font-bold tracking-tight text-sage-950">Quiet Wordle</h3>
+            <h3 className="mt-4 text-3xl font-bold tracking-tight text-sage-950">Wordle</h3>
             <p className="mt-2 max-w-2xl text-sm leading-7 text-sage-700">A cozy Wordle-style puzzle for when you want a familiar word-guessing game without losing the soft relaxed mood of the page. Type or tap letters, read the color hints, and keep playing through unlimited cozy rounds.</p>
             <p className="mt-2 text-sm font-semibold text-sage-600">{config.note}</p>
           </div>

@@ -3,22 +3,25 @@ import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Play, RotateCcw, Sparkles } 
 
 const difficultySettings = {
   easy: {
-    cellCount: 14,
+    boardWidth: 9,
+    boardHeight: 10,
     speedMs: 150,
     label: 'Easy',
-    note: 'Slower turns and a roomier board for an easier warm-up.'
+    note: 'Small 9×10 grid with slower turns for an easier warm-up.'
   },
   medium: {
-    cellCount: 16,
+    boardWidth: 15,
+    boardHeight: 17,
     speedMs: 105,
     label: 'Medium',
-    note: 'A steadier classic snake pace with enough pressure to stay focused.'
+    note: 'Standard 15×17 grid with a steady classic snake pace.'
   },
   hard: {
-    cellCount: 18,
+    boardWidth: 21,
+    boardHeight: 24,
     speedMs: 78,
     label: 'Hard',
-    note: 'Sharper turns and a faster rhythm for a more intense run.'
+    note: 'Large 21×24 grid with sharper turns and a faster rhythm.'
   }
 };
 
@@ -33,21 +36,22 @@ const directionMap = {
   KeyD: { x: 1, y: 0 },
 };
 
-function createInitialSnake(cellCount) {
-  const center = Math.floor(cellCount / 2);
+function createInitialSnake(boardWidth, boardHeight) {
+  const centerX = Math.floor(boardWidth / 2);
+  const centerY = Math.floor(boardHeight / 2);
   return [
-    { x: center, y: center },
-    { x: center - 1, y: center },
-    { x: center - 2, y: center }
+    { x: centerX, y: centerY },
+    { x: centerX - 1, y: centerY },
+    { x: centerX - 2, y: centerY }
   ];
 }
 
-function getRandomFood(cellCount, snake) {
+function getRandomFood(boardWidth, boardHeight, snake) {
   const occupied = new Set(snake.map((segment) => `${segment.x}-${segment.y}`));
   const openCells = [];
 
-  for (let y = 0; y < cellCount; y += 1) {
-    for (let x = 0; x < cellCount; x += 1) {
+  for (let y = 0; y < boardHeight; y += 1) {
+    for (let x = 0; x < boardWidth; x += 1) {
       const key = `${x}-${y}`;
       if (!occupied.has(key)) {
         openCells.push({ x, y });
@@ -66,18 +70,18 @@ export default function QuietSnake({ difficulty = 'medium' }) {
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const bestScoreKey = `quiet-journal-quiet-snake-best-${difficulty}`;
 
-  const [snake, setSnake] = useState(() => createInitialSnake(config.cellCount));
+  const [snake, setSnake] = useState(() => createInitialSnake(config.boardWidth, config.boardHeight));
   const directionRef = useRef({ x: 1, y: 0 });
   const turnQueueRef = useRef([]);
-  const [food, setFood] = useState(() => getRandomFood(config.cellCount, createInitialSnake(config.cellCount)));
+  const [food, setFood] = useState(() => getRandomFood(config.boardWidth, config.boardHeight, createInitialSnake(config.boardWidth, config.boardHeight)));
   const foodRef = useRef(food);
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(() => parseInt(localStorage.getItem(bestScoreKey) || '0', 10));
   const [gameState, setGameState] = useState('start');
 
   const resetGame = useCallback((nextState = 'start') => {
-    const initialSnake = createInitialSnake(config.cellCount);
-    const nextFood = getRandomFood(config.cellCount, initialSnake);
+    const initialSnake = createInitialSnake(config.boardWidth, config.boardHeight);
+    const nextFood = getRandomFood(config.boardWidth, config.boardHeight, initialSnake);
     setSnake(initialSnake);
     directionRef.current = { x: 1, y: 0 };
     turnQueueRef.current = [];
@@ -86,7 +90,7 @@ export default function QuietSnake({ difficulty = 'medium' }) {
     setScore(0);
     setBestScore(parseInt(localStorage.getItem(bestScoreKey) || '0', 10));
     setGameState(nextState);
-  }, [bestScoreKey, config.cellCount]);
+  }, [bestScoreKey, config.boardHeight, config.boardWidth]);
 
   useEffect(() => {
     resetGame('start');
@@ -159,8 +163,8 @@ export default function QuietSnake({ difficulty = 'medium' }) {
       setSnake((currentSnake) => {
         const head = currentSnake[0];
         const nextHead = {
-          x: (head.x + activeDirection.x + config.cellCount) % config.cellCount,
-          y: (head.y + activeDirection.y + config.cellCount) % config.cellCount,
+          x: (head.x + activeDirection.x + config.boardWidth) % config.boardWidth,
+          y: (head.y + activeDirection.y + config.boardHeight) % config.boardHeight,
         };
         const currentFood = foodRef.current;
         const didEat = nextHead.x === currentFood.x && nextHead.y === currentFood.y;
@@ -191,7 +195,7 @@ export default function QuietSnake({ difficulty = 'medium' }) {
             }
             return nextScore;
           });
-          const nextFood = getRandomFood(config.cellCount, nextSnake);
+          const nextFood = getRandomFood(config.boardWidth, config.boardHeight, nextSnake);
           foodRef.current = nextFood;
           setFood(nextFood);
         }
@@ -201,22 +205,22 @@ export default function QuietSnake({ difficulty = 'medium' }) {
     }, config.speedMs);
 
     return () => window.clearInterval(intervalId);
-  }, [bestScoreKey, config.cellCount, config.speedMs, gameState]);
+  }, [bestScoreKey, config.boardHeight, config.boardWidth, config.speedMs, gameState]);
 
   const snakeCellSet = useMemo(() => new Set(snake.map((segment) => `${segment.x}-${segment.y}`)), [snake]);
 
-  const cells = useMemo(() => Array.from({ length: config.cellCount * config.cellCount }, (_, index) => {
-    const x = index % config.cellCount;
-    const y = Math.floor(index / config.cellCount);
+  const cells = useMemo(() => Array.from({ length: config.boardWidth * config.boardHeight }, (_, index) => {
+    const x = index % config.boardWidth;
+    const y = Math.floor(index / config.boardWidth);
     const key = `${x}-${y}`;
     const head = snake[0];
     const isHead = head?.x === x && head?.y === y;
     const isSnake = snakeCellSet.has(key);
     const isFood = food.x === x && food.y === y;
     return { key, isFood, isHead, isSnake };
-  }), [config.cellCount, food, snake, snakeCellSet]);
+  }), [config.boardHeight, config.boardWidth, food, snake, snakeCellSet]);
 
-  const cellClass = config.cellCount >= 18 ? 'h-4 w-4 sm:h-5 sm:w-5' : config.cellCount >= 16 ? 'h-[1.125rem] w-[1.125rem] sm:h-[1.375rem] sm:w-[1.375rem]' : 'h-5 w-5 sm:h-6 sm:w-6';
+  const cellClass = config.boardWidth >= 21 ? 'h-3.5 w-3.5 sm:h-4 sm:w-4' : config.boardWidth >= 15 ? 'h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5' : 'h-7 w-7 sm:h-8 sm:w-8';
 
   return (
     <div className="mx-auto mt-12 w-full max-w-[980px] pb-12">
@@ -226,7 +230,7 @@ export default function QuietSnake({ difficulty = 'medium' }) {
             <div className="inline-flex items-center gap-2 border-2 border-[#111111] bg-[#111111] px-3 py-1.5 font-mono text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#f3f6ea] shadow-[4px_4px_0_rgba(17,17,17,0.14)]">
               <Sparkles size={14} /> {config.label} snake flow
             </div>
-            <h3 className="mt-4 font-mono text-3xl font-bold tracking-tight text-[#111111]">Quiet Snake</h3>
+            <h3 className="mt-4 font-mono text-3xl font-bold tracking-tight text-[#111111]">Snake</h3>
             <p className="mt-2 max-w-2xl text-sm leading-7 text-[#30412a]">A classic snake run with a cleaner retro board, wrap-around edges, and quick arcade rounds when you want something simple and sharp.</p>
             <p className="mt-2 text-sm font-semibold text-[#466038]">{config.note}</p>
           </div>
@@ -241,7 +245,7 @@ export default function QuietSnake({ difficulty = 'medium' }) {
             </div>
             <div className="border-2 border-[#111111] bg-[#9abf88] px-4 py-3 text-center">
               <p className="font-mono text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#22311d]">Board</p>
-              <p className="mt-2 font-mono text-2xl font-extrabold text-[#111111]">{config.cellCount}×{config.cellCount}</p>
+              <p className="mt-2 font-mono text-2xl font-extrabold text-[#111111]">{config.boardWidth}×{config.boardHeight}</p>
             </div>
           </div>
         </div>
@@ -249,7 +253,7 @@ export default function QuietSnake({ difficulty = 'medium' }) {
         <div className="mt-6 grid gap-5 xl:grid-cols-[minmax(0,1fr)_240px]">
           <div>
             <div className="relative mx-auto w-full max-w-[26rem] border-[10px] border-[#5f7754] bg-[#9abf88] p-4 shadow-[inset_0_0_0_2px_rgba(20,20,20,0.08)] sm:p-5">
-              <div className="grid bg-[#9abf88]" style={{ gridTemplateColumns: `repeat(${config.cellCount}, minmax(0, 1fr))` }}>
+              <div className="grid bg-[#9abf88]" style={{ gridTemplateColumns: `repeat(${config.boardWidth}, minmax(0, 1fr))` }}>
                 {cells.map((cell) => (
                   <div
                     key={cell.key}
@@ -257,9 +261,10 @@ export default function QuietSnake({ difficulty = 'medium' }) {
                   >
                     {cell.isFood ? (
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="relative h-3 w-3 sm:h-3.5 sm:w-3.5">
-                          <span className="absolute left-1/2 top-0 h-full w-[2px] -translate-x-1/2 bg-[#111111]" />
-                          <span className="absolute left-0 top-1/2 h-[2px] w-full -translate-y-1/2 bg-[#111111]" />
+                        <div className="grid h-3.5 w-3.5 grid-cols-3 grid-rows-3 gap-[1px] sm:h-4 sm:w-4">
+                          {[0, 1, 0, 1, 1, 1, 0, 1, 0].map((filled, index) => (
+                            <span key={index} className={filled ? 'bg-[#111111]' : 'bg-transparent'} />
+                          ))}
                         </div>
                       </div>
                     ) : null}

@@ -208,7 +208,7 @@ export default function QuietWords({ difficulty = 'medium' }) {
             <div className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white/88 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-700 shadow-sm">
               <Sparkles size={14} /> {config.label} word reset
             </div>
-            <h3 className="mt-4 text-3xl font-bold tracking-tight text-sage-950">Quiet Words</h3>
+            <h3 className="mt-4 text-3xl font-bold tracking-tight text-sage-950">Words</h3>
             <p className="mt-2 max-w-2xl text-sm leading-7 text-sage-700">A cozy word scramble for visitors who want a softer kind of focus. It is simple, familiar, and easy to play for a few minutes when you want a calm word-game loop instead of a noisy challenge.</p>
             <p className="mt-2 text-sm font-semibold text-sage-600">{config.note}</p>
             <div className="mt-3 flex flex-wrap gap-2">

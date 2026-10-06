@@ -178,6 +178,8 @@ export default function QuietTetris({ difficulty = 'medium' }) {
   const [board, setBoard] = useState(createEmptyBoard);
   const [currentPiece, setCurrentPiece] = useState(() => createPiece(pickRandomType()));
   const [nextType, setNextType] = useState(() => pickRandomType());
+  const [heldType, setHeldType] = useState(null);
+  const [holdUsed, setHoldUsed] = useState(false);
   const [score, setScore] = useState(0);
   const [lines, setLines] = useState(0);
   const [bestScore, setBestScore] = useState(() => parseInt(localStorage.getItem(bestScoreKey) || '0', 10));
@@ -187,6 +189,8 @@ export default function QuietTetris({ difficulty = 'medium' }) {
     setBoard(createEmptyBoard());
     setCurrentPiece(createPiece(pickRandomType()));
     setNextType(pickRandomType());
+    setHeldType(null);
+    setHoldUsed(false);
     setScore(0);
     setLines(0);
     setGameState('start');
@@ -199,6 +203,8 @@ export default function QuietTetris({ difficulty = 'medium' }) {
     setBoard(createEmptyBoard());
     setCurrentPiece(createPiece(firstType));
     setNextType(upcoming);
+    setHeldType(null);
+    setHoldUsed(false);
     setScore(0);
     setLines(0);
     setGameState('playing');
@@ -216,6 +222,7 @@ export default function QuietTetris({ difficulty = 'medium' }) {
     setScore(nextScore);
     setLines(nextLines);
     setNextType(upcomingType);
+    setHoldUsed(false);
 
     if (hasCollision(clearedBoard, spawnedPiece, spawnedPiece.row, spawnedPiece.col, spawnedPiece.matrix)) {
       setCurrentPiece(spawnedPiece);
@@ -275,6 +282,39 @@ export default function QuietTetris({ difficulty = 'medium' }) {
     lockCurrentPiece(droppedPiece);
   };
 
+  const holdPiece = () => {
+    if (gameState !== 'playing' || holdUsed) {
+      return;
+    }
+
+    const currentType = currentPiece.type;
+
+    if (!heldType) {
+      const spawnedPiece = createPiece(nextType);
+      const upcomingType = pickRandomType(nextType);
+      setHeldType(currentType);
+      setNextType(upcomingType);
+      setHoldUsed(true);
+      if (hasCollision(board, spawnedPiece, spawnedPiece.row, spawnedPiece.col, spawnedPiece.matrix)) {
+        setCurrentPiece(spawnedPiece);
+        setGameState('over');
+        return;
+      }
+      setCurrentPiece(spawnedPiece);
+      return;
+    }
+
+    const swappedPiece = createPiece(heldType);
+    setHeldType(currentType);
+    setHoldUsed(true);
+    if (hasCollision(board, swappedPiece, swappedPiece.row, swappedPiece.col, swappedPiece.matrix)) {
+      setCurrentPiece(swappedPiece);
+      setGameState('over');
+      return;
+    }
+    setCurrentPiece(swappedPiece);
+  };
+
   useEffect(() => {
     if (gameState !== 'playing') {
       return undefined;
@@ -311,6 +351,9 @@ export default function QuietTetris({ difficulty = 'medium' }) {
       } else if (event.code === 'ArrowUp' || event.code === 'KeyW') {
         event.preventDefault();
         rotatePiece();
+      } else if (event.code === 'KeyC' || event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
+        event.preventDefault();
+        holdPiece();
       } else if (event.code === 'Space') {
         event.preventDefault();
         hardDrop();
@@ -319,7 +362,7 @@ export default function QuietTetris({ difficulty = 'medium' }) {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [board, currentPiece, gameState, nextType, score, lines]);
+  }, [board, currentPiece, gameState, heldType, holdUsed, nextType, score, lines]);
 
   useEffect(() => {
     if (gameState === 'over' && score > bestScore) {
@@ -348,6 +391,7 @@ export default function QuietTetris({ difficulty = 'medium' }) {
   }, [board, currentPiece]);
 
   const nextMatrix = SHAPES[nextType].matrix;
+  const heldMatrix = heldType ? SHAPES[heldType].matrix : null;
 
   return (
     <div className="mx-auto mt-12 w-full max-w-[980px] pb-12">
@@ -357,7 +401,7 @@ export default function QuietTetris({ difficulty = 'medium' }) {
             <div className="inline-flex items-center gap-2 rounded-full border border-violet-200 bg-white/88 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-violet-700 shadow-sm">
               <Sparkles size={14} /> {config.label} stack flow
             </div>
-            <h3 className="mt-4 text-3xl font-bold tracking-tight text-violet-950">Quiet Tetris</h3>
+            <h3 className="mt-4 text-3xl font-bold tracking-tight text-violet-950">Tetris</h3>
             <p className="mt-2 max-w-2xl text-sm leading-7 text-violet-700">A cozy block-stacking game for people who want something more arcadey without losing the calm visual feel. The difficulty changes the falling speed, so easy, medium, and hard genuinely play differently.</p>
             <p className="mt-2 text-sm font-semibold text-violet-600">{config.note}</p>
           </div>
@@ -403,21 +447,48 @@ export default function QuietTetris({ difficulty = 'medium' }) {
                     onClick={startGame}
                     type="button"
                   >
-                    {gameState === 'start' ? 'Start Quiet Tetris' : 'Play again'}
+                    {gameState === 'start' ? 'Start Tetris' : 'Play again'}
                   </button>
                 </div>
               )}
             </div>
 
-            <div className="mt-4 grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="mt-4 grid gap-2 sm:grid-cols-2 xl:grid-cols-5">
               <button className="rounded-full border border-violet-200 bg-white px-4 py-3 text-sm font-extrabold text-violet-900 shadow-sm" onClick={() => movePiece(0, -1)} type="button"><ArrowLeft size={16} className="mr-2 inline" />Left</button>
               <button className="rounded-full border border-violet-200 bg-white px-4 py-3 text-sm font-extrabold text-violet-900 shadow-sm" onClick={rotatePiece} type="button"><RotateCcw size={16} className="mr-2 inline" />Rotate</button>
               <button className="rounded-full border border-violet-200 bg-white px-4 py-3 text-sm font-extrabold text-violet-900 shadow-sm" onClick={() => movePiece(1, 0)} type="button"><ArrowDown size={16} className="mr-2 inline" />Down</button>
+              <button className={`rounded-full px-4 py-3 text-sm font-extrabold shadow-sm ${holdUsed ? 'bg-violet-100 text-violet-400' : 'border border-violet-200 bg-white text-violet-900'}`} onClick={holdPiece} type="button">Hold</button>
               <button className="rounded-full bg-violet-900 px-4 py-3 text-sm font-extrabold text-white shadow-sm" onClick={hardDrop} type="button">Drop</button>
             </div>
           </div>
 
           <div className="space-y-4">
+            <div className="rounded-[1.6rem] border border-white/80 bg-white/88 p-4 shadow-sm">
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-violet-500">Hold block</p>
+                <span className={`rounded-full px-2 py-1 text-[10px] font-extrabold uppercase tracking-[0.14em] ${holdUsed ? 'bg-violet-100 text-violet-400' : 'bg-violet-900 text-white'}`}>{holdUsed ? 'Used' : 'Ready'}</span>
+              </div>
+              <button
+                className="mt-4 inline-grid gap-1 rounded-[1.1rem] bg-violet-50 p-3 text-left"
+                onClick={holdPiece}
+                style={{ gridTemplateColumns: 'repeat(4, minmax(0, 1fr))' }}
+                type="button"
+              >
+                {Array.from({ length: 16 }, (_, index) => {
+                  const row = Math.floor(index / 4);
+                  const col = index % 4;
+                  const hasBlock = heldMatrix?.[row]?.[col];
+                  return (
+                    <div
+                      key={`held-block-${index + 1}`}
+                      className="h-6 w-6 rounded-[0.45rem] border border-white/70 sm:h-7 sm:w-7"
+                      style={{ backgroundColor: hasBlock ? SHAPES[heldType].color : '#ffffff' }}
+                    />
+                  );
+                })}
+              </button>
+              <p className="mt-3 text-xs font-semibold text-violet-600">Press C or Shift to store/swap once per falling piece.</p>
+            </div>
             <div className="rounded-[1.6rem] border border-white/80 bg-white/88 p-4 shadow-sm">
               <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-violet-500">Next block</p>
               <div className="mt-4 inline-grid gap-1 rounded-[1.1rem] bg-violet-50 p-3" style={{ gridTemplateColumns: 'repeat(4, minmax(0, 1fr))' }}>
@@ -441,6 +512,7 @@ export default function QuietTetris({ difficulty = 'medium' }) {
                 <li>- Left / right to slide</li>
                 <li>- Up to rotate</li>
                 <li>- Down to soft drop</li>
+                <li>- C / Shift to hold or swap</li>
                 <li>- Space to hard drop</li>
               </ul>
             </div>

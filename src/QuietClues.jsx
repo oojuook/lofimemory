@@ -157,7 +157,7 @@ export default function QuietClues({ difficulty = 'medium' }) {
             <div className="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white/88 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-stone-700 shadow-sm">
               <Sparkles size={14} /> {config.label} clue flow
             </div>
-            <h3 className="mt-4 text-3xl font-bold tracking-tight text-stone-950">Quiet Clues</h3>
+            <h3 className="mt-4 text-3xl font-bold tracking-tight text-stone-950">Clues</h3>
             <p className="mt-2 max-w-2xl text-sm leading-7 text-stone-700">A beginner-friendly crossword-style game built around short clues and soft words. It keeps the crossword mood without the intimidation of a full puzzle grid, so it is easy to pick up even when your brain feels tired.</p>
             <p className="mt-2 text-sm font-semibold text-stone-600">{config.note}</p>
             <div className="mt-3 inline-flex rounded-full bg-white px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] text-stone-700 shadow-sm">{config.sessionLabel}</div>

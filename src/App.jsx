@@ -54,6 +54,7 @@ import QuietClues from './QuietClues';
 import QuietWordle from './QuietWordle';
 import QuietSudoku from './QuietSudoku';
 import QuietSnake from './QuietSnake';
+import Solitaire from './Solitaire';
 import { auth, db, getMessagingIfSupported, googleProvider } from './firebase';
 
 const STORAGE_KEY = 'quiet-harbor-journal-v1';
@@ -1640,6 +1641,18 @@ function GamePreview({ gameId }) {
     );
   }
 
+  if (gameId === 'solitaire') {
+    return (
+      <div className={shellClass}>
+        <div className="grid h-20 grid-cols-7 gap-1 rounded-[1rem] bg-emerald-900/85 p-2 text-[10px] font-extrabold">
+          {['A♥', '', 'K♠', '', '7♦', '', 'Q♣', '', '5♠', '', '', '3♥', '', '', '', '', 'J♦', '', '', '', ''].map((value, index) => (
+            <div key={index + 1} className={`flex items-center justify-center rounded-md ${value ? 'bg-white text-slate-800' : 'bg-white/15'}`}>{value}</div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={shellClass}>
       <div className="relative h-20 rounded-[1rem] bg-gradient-to-b from-stone-100 to-amber-50 p-3">
@@ -2671,7 +2684,7 @@ function App() {
     },
     {
       id: 'quiet-tiles',
-      title: 'Quiet Tiles',
+      title: 'Tiles',
       detail: 'Cozy 2048-style merge',
       description: 'Slide matching numbers together for the kind of calm puzzle loop people love in relaxing tile games.',
       icon: Plus,
@@ -2680,7 +2693,7 @@ function App() {
     },
     {
       id: 'quiet-tetris',
-      title: 'Quiet Tetris',
+      title: 'Tetris',
       detail: 'Calm block stacking',
       description: 'Stack colorful blocks, clear tidy rows, and enjoy a softer take on a classic arcade puzzle.',
       icon: Palette,
@@ -2689,7 +2702,7 @@ function App() {
     },
     {
       id: 'quiet-slide',
-      title: 'Quiet Slide',
+      title: 'Slide',
       detail: 'Cozy sliding puzzle',
       description: 'Move tiles into place for the kind of familiar low-pressure sliding puzzle people love as a quick reset.',
       icon: Compass,
@@ -2698,7 +2711,7 @@ function App() {
     },
     {
       id: 'quiet-sudoku',
-      title: 'Quiet Sudoku',
+      title: 'Sudoku',
       detail: 'Soft sudoku logic',
       description: 'Settle into a cozy Sudoku board with gentle checking, reveal help, and a familiar number puzzle rhythm.',
       icon: CalendarDays,
@@ -2707,7 +2720,7 @@ function App() {
     },
     {
       id: 'quiet-wordle',
-      title: 'Quiet Wordle',
+      title: 'Wordle',
       detail: 'Soft Wordle-style puzzle',
       description: 'Guess a cozy word in a gentle Wordle-style round when you want something familiar, tidy, and easy to replay.',
       icon: Type,
@@ -2716,7 +2729,7 @@ function App() {
     },
     {
       id: 'quiet-words',
-      title: 'Quiet Words',
+      title: 'Words',
       detail: 'Calm word scramble',
       description: 'Unscramble soft words for a familiar word-game loop that keeps the focus light and relaxing.',
       icon: Feather,
@@ -2734,7 +2747,7 @@ function App() {
     },
     {
       id: 'quiet-clues',
-      title: 'Quiet Clues',
+      title: 'Clues',
       detail: 'Mini crossword-style clues',
       description: 'Solve one soft clue at a time for a beginner-friendly crossword mood without the stress of a full puzzle grid.',
       icon: BookOpen,
@@ -2752,12 +2765,21 @@ function App() {
     },
     {
       id: 'quiet-snake',
-      title: 'Quiet Snake',
+      title: 'Snake',
       detail: 'Classic arcade loop',
       description: 'A cozy snake run with clear turns, quick rounds, and a gentle retro feel.',
       icon: SnakeIcon,
       tone: 'from-emerald-100 to-lime-50 text-emerald-700',
       component: <QuietSnake difficulty={selectedGameDifficulty} />
+    },
+    {
+      id: 'solitaire',
+      title: 'Solitaire',
+      detail: 'Cozy card sorting',
+      description: 'Sort a soft Klondike-style card table with simple click controls, foundations, stock, and waste piles.',
+      icon: BookOpen,
+      tone: 'from-amber-100 to-emerald-50 text-amber-700',
+      component: <Solitaire difficulty={selectedGameDifficulty} />
     },
     {
       id: 'dinosaur-dash',
@@ -5332,7 +5354,7 @@ function App() {
             <div className="pointer-events-none absolute right-4 top-4 h-32 w-32 rounded-full bg-[#f7eee3]/65 blur-3xl"></div>
             <div className="relative">
               <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#eadfce] bg-white/90 px-4 py-2 text-sm font-bold text-[#4a3a2d] shadow-sm">
-                <Headphones size={16} /> Minimal lofi space
+                <Headphones size={16} /> Lofi wallpaper mood
               </div>
               <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.96] tracking-tight text-[#3d3025] md:text-6xl">A calm lofi corner for quick resets.</h1>
               <p className="mt-5 max-w-3xl text-[1.18rem] font-semibold leading-8 text-[#5d4c3e]">Chill games, lofi radio, private notes, memories, and tiny breathing breaks — kept soft, simple, and easy to scan.</p>
@@ -5344,7 +5366,7 @@ function App() {
                   </div>
                   <div>
                     <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-[#9a806a]">Now playing</p>
-                    <p className="mt-1 text-base font-extrabold text-[#3d3025]">Soft beats · clean focus · no clutter</p>
+                    <p className="mt-1 text-base font-extrabold text-[#3d3025]">Dusk room · rain window · soft study beats</p>
                   </div>
                 </div>
                 <div className="lofi-equalizer" aria-hidden="true"><span /><span /><span /><span /><span /></div>
@@ -6145,10 +6167,10 @@ function App() {
               <div className="mt-4 flex flex-wrap gap-2.5">
                 {[
                   { id: 'typing-speed-test', label: 'Typing Speed Test • WPM' },
-                  { id: 'quiet-words', label: 'Quiet Words • simple' },
-                  { id: 'quiet-wordle', label: 'Quiet Wordle • guess the word' },
-                  { id: 'quiet-clues', label: 'Quiet Clues • clue-by-clue' },
-                  { id: 'quiet-tiles', label: 'Quiet Tiles • tap and merge' }
+                  { id: 'quiet-words', label: 'Words • simple' },
+                  { id: 'quiet-wordle', label: 'Wordle • guess the word' },
+                  { id: 'quiet-clues', label: 'Clues • clue-by-clue' },
+                  { id: 'quiet-tiles', label: 'Tiles • tap and merge' }
                 ].map((item) => (
                   <button
                     key={item.id}
@@ -6171,7 +6193,7 @@ function App() {
               </div>
               <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
                 {[
-                  { label: 'Play Quiet Wordle', detail: 'Switch to a familiar word-guessing round when you want one more easy win.', action: () => selectUnwindGame('quiet-wordle'), icon: Type },
+                  { label: 'Play Wordle', detail: 'Switch to a familiar word-guessing round when you want one more easy win.', action: () => selectUnwindGame('quiet-wordle'), icon: Type },
                   { label: 'Breathe for a minute', detail: 'Open the breathing screen for a softer reset between rounds.', action: () => navigateToTab('breathe'), icon: Wind },
                   { label: 'Write one line', detail: 'Catch a thought before it disappears, then come back to the games later.', action: () => navigateToTab('write'), icon: PenLine },
                   { label: 'Open notes', detail: 'Drop a quick to-do or reminder without breaking the calm mood.', action: () => navigateToTab('notes'), icon: FileText }
@@ -6188,7 +6210,7 @@ function App() {
               <article className="rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
                 <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Game-first comfort</p>
                 <h2 className="mt-3 text-2xl font-extrabold text-sage-950">The games are meant to be the easiest place to begin.</h2>
-                <p className="mt-3 text-sm leading-7 text-sage-700">If you just want something light, start with <span className="font-extrabold text-sage-900">Typing Speed Test</span>, <span className="font-extrabold text-sage-900">Quiet Words</span>, <span className="font-extrabold text-sage-900">Quiet Wordle</span>, or <span className="font-extrabold text-sage-900">Quiet Tiles</span> on Easy. Prefer no-rush logic? <span className="font-extrabold text-sage-900">Quiet Sudoku</span>, <span className="font-extrabold text-sage-900">Quiet Clues</span>, <span className="font-extrabold text-sage-900">Quiet Slide</span>, <span className="font-extrabold text-sage-900">Mind Sweeper</span>, and <span className="font-extrabold text-sage-900">Lotus Match</span> are the gentlest puzzle picks.</p>
+                <p className="mt-3 text-sm leading-7 text-sage-700">If you just want something light, start with <span className="font-extrabold text-sage-900">Typing Speed Test</span>, <span className="font-extrabold text-sage-900">Words</span>, <span className="font-extrabold text-sage-900">Wordle</span>, or <span className="font-extrabold text-sage-900">Tiles</span> on Easy. Prefer no-rush logic? <span className="font-extrabold text-sage-900">Sudoku</span>, <span className="font-extrabold text-sage-900">Clues</span>, <span className="font-extrabold text-sage-900">Slide</span>, <span className="font-extrabold text-sage-900">Mind Sweeper</span>, and <span className="font-extrabold text-sage-900">Lotus Match</span> are the gentlest puzzle picks.</p>
               </article>
               <article className="rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
                 <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Right now</p>

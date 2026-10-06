@@ -245,7 +245,7 @@ export default function QuietTiles({ difficulty = 'medium' }) {
             <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/88 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-slate-700 shadow-sm">
               <Sparkles size={14} /> {config.label} merge flow
             </div>
-            <h3 className="mt-4 text-3xl font-bold tracking-tight text-slate-950">Quiet Tiles</h3>
+            <h3 className="mt-4 text-3xl font-bold tracking-tight text-slate-950">Tiles</h3>
             <p className="mt-2 max-w-2xl text-sm leading-7 text-slate-700">A cozy number-merge puzzle inspired by the satisfying rhythm people love in 2048-style games. Slide the board, combine matching tiles, and let the repetition do the relaxing.</p>
             <p className="mt-2 text-sm font-semibold text-slate-600">{config.note}</p>
           </div>

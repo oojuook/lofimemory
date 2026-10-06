@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Play, RotateCcw, ArrowLeft, ArrowRight, Sparkles } from 'lucide-react';
 
+const randomBetween = (min, max) => Math.random() * (max - min) + min;
+
 const difficultySettings = {
   easy: {
     startSpeed: 3.8,
@@ -36,6 +38,7 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
   const highScoreKey = `quiet-journal-surfer-high-${difficulty}`;
 
   const canvasRef = useRef(null);
+  const gameStateRef = useRef('start');
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(() => parseInt(localStorage.getItem(highScoreKey) || '0', 10));
   const [gameState, setGameState] = useState('start');
@@ -48,11 +51,17 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
     frames: 0,
     score: 0,
     waterOffset: 0,
-    spawnCooldown: config.spawnBase
+    spawnCooldown: config.spawnBase,
+    hitFrames: 0,
+    hitObstacle: null
   });
 
   const laneWidth = 200;
   const getLaneCenter = (lane) => lane * laneWidth + laneWidth / 2;
+
+  useEffect(() => {
+    gameStateRef.current = gameState;
+  }, [gameState]);
 
   useEffect(() => {
     stateRef.current = {
@@ -63,24 +72,31 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
       frames: 0,
       score: 0,
       waterOffset: 0,
-      spawnCooldown: config.spawnBase
+      spawnCooldown: config.spawnBase,
+      hitFrames: 0,
+      hitObstacle: null
     };
+    gameStateRef.current = 'start';
     setScore(0);
     setGameState('start');
     setHighScore(parseInt(localStorage.getItem(highScoreKey) || '0', 10));
   }, [config.startSpeed, highScoreKey]);
 
   const handleMove = (direction) => {
-    if (gameState !== 'playing') {
+    if (gameStateRef.current !== 'playing') {
       return;
     }
+
     const state = stateRef.current;
-    if (direction === -1 && state.lane > 0) {
-      state.lane -= 1;
+    const nextLane = Math.min(2, Math.max(0, state.lane + direction));
+
+    if (nextLane === state.lane) {
+      return;
     }
-    if (direction === 1 && state.lane < 2) {
-      state.lane += 1;
-    }
+
+    state.lane = nextLane;
+    const targetX = getLaneCenter(nextLane);
+    state.visualX += (targetX - state.visualX) * 0.68;
   };
 
   useEffect(() => {
@@ -109,8 +125,11 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
       frames: 0,
       score: 0,
       waterOffset: 0,
-      spawnCooldown: config.spawnBase
+      spawnCooldown: config.spawnBase,
+      hitFrames: 0,
+      hitObstacle: null
     };
+    gameStateRef.current = 'playing';
     setScore(0);
     setGameState('playing');
   };
@@ -123,9 +142,12 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
     const ctx = canvas.getContext('2d');
     let animationId;
 
-    const drawFrog = (x, y) => {
+    const drawFrog = (x, y, hit = false) => {
       ctx.save();
-      ctx.translate(x, y);
+      ctx.translate(x + (hit ? Math.sin(stateRef.current.hitFrames * 1.7) * 3 : 0), y + (hit ? 5 : 0));
+      if (hit) {
+        ctx.rotate(Math.sin(stateRef.current.hitFrames * 0.9) * 0.08);
+      }
       ctx.shadowColor = 'rgba(21, 57, 31, 0.16)';
       ctx.shadowBlur = 12;
       ctx.shadowOffsetY = 4;
@@ -217,8 +239,29 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
       ctx.restore();
     };
 
+    const drawHitBurst = (x, y, frame) => {
+      const pulse = Math.max(0, frame);
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.strokeStyle = `rgba(31, 84, 58, ${Math.min(0.86, 0.22 + pulse / 28)})`;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(0, 0, 42 - pulse * 0.55, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.72)';
+      for (let index = 0; index < 6; index += 1) {
+        const angle = (Math.PI * 2 * index) / 6;
+        const distance = 26 + (22 - pulse) * 0.65;
+        ctx.beginPath();
+        ctx.arc(Math.cos(angle) * distance, Math.sin(angle) * distance, 3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+    };
+
     const draw = () => {
       const state = stateRef.current;
+      const currentGameState = gameStateRef.current;
 
       const pondGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
       pondGradient.addColorStop(0, '#eef8f1');
@@ -249,7 +292,7 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
       ctx.stroke();
       ctx.setLineDash([]);
 
-      if (gameState === 'playing') {
+      if (currentGameState === 'playing') {
         state.frames += 1;
         state.waterOffset += state.speed;
 
@@ -271,18 +314,25 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
         const playerY = canvas.height - 80;
         const playerCollisionX = state.visualX;
 
+        let didHit = false;
         state.obstacles.forEach((obstacle) => {
           obstacle.y += state.speed;
           drawLilyPad(getLaneCenter(obstacle.lane), obstacle.y);
 
-          const obstacleX = getLaneCenter(obstacle.lane);
-          const horizontalOverlap = Math.abs(obstacleX - playerCollisionX) < 34;
-          const verticalOverlap = Math.abs(obstacle.y - (playerY + 8)) < 22;
-          if (horizontalOverlap && verticalOverlap) {
-            setGameState('over');
+          if (!didHit) {
+            const obstacleX = getLaneCenter(obstacle.lane);
+            const horizontalOverlap = Math.abs(obstacleX - playerCollisionX) < 34;
+            const verticalOverlap = Math.abs(obstacle.y - (playerY + 8)) < 22;
+            if (horizontalOverlap && verticalOverlap) {
+              didHit = true;
+              state.hitFrames = 26;
+              state.hitObstacle = { ...obstacle };
+              gameStateRef.current = 'hit';
+              setGameState('hit');
+            }
           }
 
-          if (!obstacle.passed && obstacle.y > playerY + 36) {
+          if (!didHit && !obstacle.passed && obstacle.y > playerY + 36) {
             obstacle.passed = true;
             state.score += 1;
             setScore(state.score);
@@ -290,12 +340,23 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
         });
 
         state.obstacles = state.obstacles.filter((obstacle) => obstacle.y < canvas.height + 50);
-      } else if (gameState === 'start') {
+      } else if (currentGameState === 'hit') {
+        state.waterOffset += Math.max(0.8, state.speed * 0.18);
+        state.obstacles.forEach((obstacle) => drawLilyPad(getLaneCenter(obstacle.lane), obstacle.y));
+        if (state.hitObstacle) {
+          drawHitBurst(getLaneCenter(state.hitObstacle.lane), state.hitObstacle.y, state.hitFrames);
+        }
+        state.hitFrames -= 1;
+        if (state.hitFrames <= 0) {
+          gameStateRef.current = 'over';
+          setGameState('over');
+        }
+      } else if (currentGameState === 'start') {
         state.waterOffset += 1;
         state.visualX = getLaneCenter(1);
       }
 
-      drawFrog(state.visualX, canvas.height - 80);
+      drawFrog(state.visualX, canvas.height - 80, currentGameState === 'hit');
       animationId = requestAnimationFrame(draw);
     };
 

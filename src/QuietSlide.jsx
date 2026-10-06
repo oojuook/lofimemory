@@ -185,7 +185,7 @@ export default function QuietSlide({ difficulty = 'medium' }) {
             <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/88 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-slate-700 shadow-sm">
               <Sparkles size={14} /> {config.label} slide loop
             </div>
-            <h3 className="mt-4 text-3xl font-bold tracking-tight text-slate-950">Quiet Slide</h3>
+            <h3 className="mt-4 text-3xl font-bold tracking-tight text-slate-950">Slide</h3>
             <p className="mt-2 max-w-2xl text-sm leading-7 text-slate-700">A cozy sliding puzzle inspired by the classic 15-puzzle style people search for when they want a quiet brain reset. Move each tile into place and let the simple sequence calm everything down.</p>
             <p className="mt-2 text-sm font-semibold text-slate-600">{config.note}</p>
           </div>
