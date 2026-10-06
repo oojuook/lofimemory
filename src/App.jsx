@@ -1505,6 +1505,28 @@ function SnakeIcon({ size = 18 }) {
   return <span aria-hidden="true" style={{ fontSize: `${size + 2}px`, lineHeight: 1 }}>🐍</span>;
 }
 
+function GameSplash({ game, isClosing = false }) {
+  const Icon = game?.icon || Gamepad2;
+  return (
+    <div className={`fixed inset-0 z-[100] flex items-center justify-center bg-[#fffaf2] transition-all duration-[800ms] ease-in-out ${isClosing ? 'scale-110 opacity-0 pointer-events-none' : 'scale-100 opacity-100'}`}>
+      <div className="absolute inset-0 opacity-[0.03] grayscale pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/pinstriped-suit.png")' }}></div>
+      <div className="relative text-center">
+        <div className={`mx-auto mb-10 flex h-32 w-34 items-center justify-center rounded-[3rem] bg-gradient-to-br shadow-soft ${game?.tone || 'from-sage-100 to-white'}`}>
+          <Icon size={56} className="animate-pulse" />
+        </div>
+        <p className="text-[11px] font-extrabold uppercase tracking-[0.45em] text-sage-500">Launching your space</p>
+        <h2 className="mt-4 font-display text-6xl font-bold tracking-tight text-sage-950">{game?.title}</h2>
+        <div className="mt-12 flex flex-col items-center gap-4">
+          <div className="h-1 w-48 overflow-hidden rounded-full bg-sage-100">
+            <div className="h-full bg-sage-600 transition-all duration-[1200ms] ease-out w-full" style={{ animation: 'gameSplashProgress 1.4s ease-in-out infinite' }} />
+          </div>
+          <p className="text-xs font-semibold italic text-sage-400">Arriving softly...</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function GamePreview({ gameId }) {
   const shellClass = 'mt-4 overflow-hidden rounded-[1.35rem] border border-sage-100 bg-sage-50/80 p-3 shadow-inner';
 
@@ -2505,6 +2527,8 @@ function App() {
   const [saveReward, setSaveReward] = useState('');
   const [selectedUnwindGame, setSelectedUnwindGame] = useState('drifting-leaf');
   const [unwindViewMode, setUnwindViewMode] = useState('grid');
+  const [isGameTransitioning, setIsGameTransitioning] = useState(false);
+  const [activeTransitionGameId, setActiveTransitionGameId] = useState(null);
   const [memoriesView, setMemoriesView] = useState('calendar');
   const showMinimalHomeOverview = activeTab === 'home' && activeHomeSection === 'overview';
   const homeEntryCards = [
@@ -2512,7 +2536,8 @@ function App() {
     { id: 'write', title: 'Thoughts', description: 'Write only when it helps', icon: PenLine, iconTone: 'bg-[#dbead9] text-sage-700', onClick: () => navigateToTab('write') },
     { id: 'notes', title: 'Notes', description: 'Keep important things nearby', icon: FileText, iconTone: 'bg-[#d8f0ec] text-teal-700', onClick: () => navigateToTab('notes') },
     { id: 'breathe', title: 'Breathe', description: 'Focus & breathe', icon: Wind, iconTone: 'bg-[#dbe8f8] text-sky-700', onClick: () => navigateToTab('breathe') },
-    { id: 'memories', title: 'Memories', description: 'Return to saved moments', icon: CalendarDays, iconTone: 'bg-[#efe6d8] text-sand-700', onClick: () => navigateToTab('memories') },
+    { id: 'memories', title: 'Weather & Memories', description: 'Save dates and local weather', icon: CalendarDays, iconTone: 'bg-[#efe6d8] text-sand-700', onClick: () => navigateToTab('memories') },
+    { id: 'library', title: 'Library', description: 'Wellness guides', icon: BookOpen, iconTone: 'bg-[#e7f0ea] text-sage-700', onClick: () => { window.location.href = '/blog.html'; } },
     { id: 'vibes', title: 'Vibes', description: 'See your mood flow', icon: HeartHandshake, iconTone: 'bg-[#f4dce7] text-rose-700', onClick: () => navigateToTab('insights') }
   ];
   const [selectedGameDifficulty, setSelectedGameDifficulty] = useState('medium');
@@ -2793,13 +2818,36 @@ function App() {
     }
   ];
   const selectedUnwindGameConfig = unwindGames.find((game) => game.id === selectedUnwindGame) || unwindGames[0];
+  const transitioningGameConfig = unwindGames.find((game) => game.id === activeTransitionGameId) || null;
   const selectedDifficultyConfig = difficultyOptions.find((difficulty) => difficulty.id === selectedGameDifficulty) || difficultyOptions[1];
 
-  const selectUnwindGame = (gameId) => {
-    setSelectedUnwindGame(gameId);
-    setUnwindViewMode('detail');
-    shouldAutoScrollToGameRef.current = true;
-  };
+    const selectUnwindGame = (gameId) => {
+
+      setActiveTransitionGameId(gameId);
+
+      setIsGameTransitioning(true);
+
+      
+
+      window.setTimeout(() => {
+
+        setSelectedUnwindGame(gameId);
+
+        setUnwindViewMode('detail');
+
+        setIsGameTransitioning(false);
+
+        shouldAutoScrollToGameRef.current = true;
+
+        // Scroll immediately to make reveal smooth
+
+        window.scrollTo({ top: 0, behavior: 'instant' });
+
+      }, 1400);
+
+    };
+
+  
 
   const returnToGameLibrary = () => {
     setUnwindViewMode('grid');
@@ -2916,6 +2964,9 @@ function App() {
     setEntryTransitionClosing(false);
     if (tabId === 'home') {
       setActiveHomeSection('overview');
+    }
+    if (tabId === 'unwind') {
+      setUnwindViewMode('grid');
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -5189,6 +5240,7 @@ function App() {
 
   return (
     <main className={`personalized-site lofi-vibe ${wallpaperImage ? 'wallpaper-active' : ''} design-${selectedDesign} ${comfortMode ? 'comfort-mode' : ''} isolate min-h-screen overflow-hidden bg-sand-50 pb-24 text-ink lg:pb-0`} style={themeStyle}>
+      {isGameTransitioning && <GameSplash game={transitioningGameConfig} />}
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
         {wallpaperImage && <div className="lofi-user-wallpaper absolute inset-0" style={{ backgroundImage: `url(${wallpaperImage})` }} />}
         <div className="lofi-ambient-grid absolute inset-0" />
@@ -5215,7 +5267,7 @@ function App() {
 
       <div className={`transition-opacity duration-500 ${showEntryTransition ? 'pointer-events-none select-none opacity-0' : 'opacity-100'}`}>
       <nav className="sticky top-0 z-20 px-5 pt-5 sm:px-7 xl:px-10">
-        <div className="site-nav-shell mx-auto max-w-[1280px] rounded-[2.2rem] border border-white/90 bg-[linear-gradient(180deg,rgba(253,248,242,0.92),rgba(250,243,235,0.82))] p-4 shadow-[0_18px_45px_rgba(146,126,106,0.08)] backdrop-blur-xl lg:p-5">
+        <div className="site-nav-shell lofi-glass mx-auto max-w-[1280px] rounded-[2.2rem] border p-4 shadow-soft backdrop-blur-xl lg:p-5">
           <div className="flex flex-col gap-2.5 lg:gap-3 xl:flex-row xl:items-center xl:justify-between">
             <a className="flex items-center gap-3.5" href="#home" onClick={() => openHomeSection('home')}>
               <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[1.35rem] border border-white/80 bg-white/88 p-1.5 shadow-[0_12px_34px_rgba(117,127,119,0.14)] ring-1 ring-sage-100 overflow-hidden">
@@ -5323,14 +5375,14 @@ function App() {
           <p className="text-[11px] font-extrabold uppercase tracking-[0.34em] text-[#9a806a]">Choose your chill space</p>
             <p className="mt-3 text-sm font-semibold leading-7 text-[#7f6a58]">Pick a space.</p>
         </div>
-        <div className="rounded-[2rem] border border-white/90 bg-[linear-gradient(180deg,rgba(255,252,247,0.78),rgba(247,239,229,0.68))] p-3 shadow-[0_18px_52px_rgba(146,126,106,0.08)] backdrop-blur-xl sm:p-4">
+        <div className="lofi-glass rounded-[2rem] border p-3 shadow-soft backdrop-blur-xl sm:p-4">
           <div className="grid gap-3 md:grid-cols-2">
             {homeEntryCards.map((card) => {
               const Icon = card.icon;
               return (
                 <button
                   key={card.id}
-                  className="group flex w-full items-center gap-4 rounded-[1.75rem] border border-[#eadfce] bg-[linear-gradient(135deg,rgba(255,255,255,0.94),rgba(249,242,234,0.92))] px-5 py-5 text-left shadow-[0_10px_26px_rgba(146,126,106,0.07)] transition duration-300 hover:-translate-y-1 hover:border-[#d8c6b2] hover:shadow-[0_16px_34px_rgba(146,126,106,0.1)]"
+                  className="group lofi-glass flex w-full items-center gap-4 rounded-[1.75rem] border px-5 py-5 text-left shadow-[0_10px_26px_rgba(146,126,106,0.07)] transition duration-300 hover:-translate-y-1 hover:border-[#d8c6b2] hover:shadow-[0_16px_34px_rgba(146,126,106,0.1)]"
                   onClick={card.onClick}
                   type="button"
                 >
@@ -5351,17 +5403,17 @@ function App() {
       {activeTab === 'home' && activeHomeSection === 'overview' && !showMinimalHomeOverview && (
       <section id="home" className="mx-auto grid max-w-[1280px] gap-8 px-5 pb-28 pt-10 sm:px-7 lg:grid-cols-12 lg:pb-12 xl:gap-12 xl:px-10">
         <div className="lg:col-span-8">
-          <div className="relative overflow-hidden rounded-[2.35rem] border border-white/90 bg-[linear-gradient(180deg,rgba(255,251,246,0.95),rgba(247,239,230,0.86))] p-8 shadow-[0_24px_60px_rgba(146,126,106,0.1)] backdrop-blur-xl lg:p-10 xl:p-11">
+          <div className="lofi-glass relative overflow-hidden rounded-[2.35rem] border p-8 shadow-soft backdrop-blur-xl lg:p-10 xl:p-11">
             <div className="pointer-events-none absolute -left-10 top-12 h-28 w-28 rounded-full bg-[#efe4d8]/55 blur-3xl"></div>
             <div className="pointer-events-none absolute right-4 top-4 h-32 w-32 rounded-full bg-[#f7eee3]/65 blur-3xl"></div>
             <div className="relative">
               <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#eadfce] bg-white/90 px-4 py-2 text-sm font-bold text-[#4a3a2d] shadow-sm">
                 <Headphones size={16} /> Lofi wallpaper mood
               </div>
-              <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.96] tracking-tight text-[#3d3025] md:text-6xl">A calm lofi corner for quick resets.</h1>
-              <p className="mt-5 max-w-3xl text-[1.18rem] font-semibold leading-8 text-[#5d4c3e]">Chill games, lofi radio, private notes, memories, and tiny breathing breaks — kept soft, simple, and easy to scan.</p>
+              <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.96] tracking-tight text-[#3d3025] md:text-6xl">An all-in-one space for your everyday life.</h1>
+              <p className="mt-5 max-w-3xl text-[1.18rem] font-semibold leading-8 text-[#5d4c3e]">Chill games, private journaling, weather tracking, notes, reminders, and lofi radio — kept soft and simple to make your day easier.</p>
 
-              <div className="lofi-now-playing mt-7 flex flex-col gap-4 rounded-[1.65rem] border border-[#eadfce] bg-[linear-gradient(135deg,rgba(255,255,255,0.9),rgba(248,239,229,0.78))] p-4 shadow-sm backdrop-blur sm:flex-row sm:items-center sm:justify-between">
+              <div className="lofi-now-playing lofi-glass mt-7 flex flex-col gap-4 rounded-[1.65rem] border p-4 shadow-sm backdrop-blur sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-4">
                   <div className="lofi-mini-record flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-[#d8c5af] bg-[#3f342c] shadow-[0_14px_28px_rgba(80,61,47,0.14)]">
                     <div className="h-5 w-5 rounded-full border border-[#d8c5af] bg-[#f3e7d8]" />
@@ -5393,7 +5445,7 @@ function App() {
 
               <div className="mt-7 grid gap-3 lg:grid-cols-3">
                 {hangoutInvitations.map((invitation) => (
-                  <button key={invitation.title} className="group rounded-[1.55rem] border border-[#eadfce] bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(248,241,232,0.86))] p-4 text-left shadow-sm transition hover:-translate-y-1 hover:border-[#d9c7b3] hover:bg-white hover:shadow-[0_14px_30px_rgba(146,126,106,0.08)]" onClick={() => navigateToTab(invitation.tab)} type="button">
+                  <button key={invitation.title} className="group lofi-glass rounded-[1.55rem] border p-4 text-left shadow-sm transition hover:-translate-y-1 hover:border-[#d9c7b3] hover:shadow-[0_14px_30px_rgba(146,126,106,0.08)]" onClick={() => navigateToTab(invitation.tab)} type="button">
                     <div className="flex items-start justify-between gap-3">
                       <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#9a806a]">{invitation.eyebrow}</p>
                       <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-[#efe4d8] text-[#7b6552]">
@@ -6100,120 +6152,12 @@ function App() {
 
                         {activeTab === 'unwind' && (
           <div id="game-library" className="mx-auto max-w-[1280px] px-4 py-8 lg:px-6 lg:py-14 fade-in">
-            {unwindViewMode === 'grid' ? (
-              <div className="game-library-enter">
-                <div className="mb-10 text-center">
-                  <p className="mb-2 text-sm font-bold uppercase tracking-widest text-sage-600">Relax & Play</p>
-                  <h1 className="mb-3 font-display text-4xl font-bold tracking-tight text-sage-950">Pick a chill game</h1>
-                  <p className="mx-auto max-w-xl text-base text-sage-700">Choose a game, set a difficulty, and open it into its own calm play page.</p>
-                </div>
-                <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-                  {unwindGames.map((game) => (
-                    <button
-                      key={game.id}
-                      className={`group rounded-[2rem] border px-5 py-5 text-left transition duration-300 hover:-translate-y-1 ${selectedUnwindGame === game.id ? 'border-sage-300 bg-white shadow-soft' : 'border-white/70 bg-white/78 hover:border-sage-200 hover:bg-white/92'}`}
-                      onClick={() => selectUnwindGame(game.id)}
-                      type="button"
-                    >
-                      <div className="flex items-start justify-between gap-4">
-                        <div>
-                          <p className="text-xs font-bold uppercase tracking-[0.24em] text-sage-600">{game.detail}</p>
-                          <h2 className="mt-2 font-display text-2xl font-bold text-sage-950">{game.title}</h2>
-                        </div>
-                        <span className={`inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br ${game.tone}`}>
-                          <game.icon size={18} />
-                        </span>
-                      </div>
-                      <GamePreview gameId={game.id} />
-                      <div className="mt-5 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.2em] text-sage-600">
-                        Open game <span className="transition group-hover:translate-x-1">→</span>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-                <div className="mt-6 rounded-[1.8rem] border border-white/80 bg-white/82 p-5 shadow-sm backdrop-blur">
-                  <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-                    <div>
-                      <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Quick start picks</p>
-                      <h2 className="mt-2 text-2xl font-extrabold text-sage-950">Start with the easiest game for your mood.</h2>
-                    </div>
-                    <p className="max-w-xl text-sm leading-7 text-sage-700">These are the friendliest entry points if you want something that feels simple right away.</p>
-                  </div>
-                  <div className="mt-4 flex flex-wrap gap-2.5">
-                    {[
-                      { id: 'typing-speed-test', label: 'Typing Speed Test • WPM' },
-                      { id: 'quiet-words', label: 'Words • simple' },
-                      { id: 'quiet-wordle', label: 'Wordle • guess the word' },
-                      { id: 'quiet-clues', label: 'Clues • clue-by-clue' },
-                      { id: 'quiet-tiles', label: 'Tiles • tap and merge' }
-                    ].map((item) => (
-                      <button
-                        key={item.id}
-                        className="rounded-full border border-sage-200 bg-sage-50/80 px-4 py-2 text-sm font-extrabold text-sage-800 transition hover:bg-white"
-                        onClick={() => selectUnwindGame(item.id)}
-                        type="button"
-                      >
-                        {item.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div className="mt-6 rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
-                  <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-                    <div>
-                      <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Stay in the vibe</p>
-                      <h2 className="mt-2 text-2xl font-extrabold text-sage-950">Finish a round, then keep hanging out here.</h2>
-                    </div>
-                    <p className="max-w-2xl text-sm leading-7 text-sage-700">Lofi Memory works best when you can bounce from one calm thing to another — a game, a breath, a quick note, or one sentence of journaling — without needing to leave the same soft space.</p>
-                  </div>
-                  <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-                    {[
-                      { label: 'Play Wordle', detail: 'Switch to a familiar word-guessing round when you want one more easy win.', action: () => selectUnwindGame('quiet-wordle'), icon: Type },
-                      { label: 'Breathe for a minute', detail: 'Open the breathing screen for a softer reset between rounds.', action: () => navigateToTab('breathe'), icon: Wind },
-                      { label: 'Write one line', detail: 'Catch a thought before it disappears, then come back to the games later.', action: () => navigateToTab('write'), icon: PenLine },
-                      { label: 'Open notes', detail: 'Drop a quick to-do or reminder without breaking the calm mood.', action: () => navigateToTab('notes'), icon: FileText }
-                    ].map((item) => (
-                      <button key={item.label} className="group rounded-[1.45rem] border border-white/85 bg-sage-50/55 p-4 text-left transition hover:-translate-y-1 hover:border-sage-200 hover:bg-white hover:shadow-lift" onClick={item.action} type="button">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-sage-800 shadow-sm transition group-hover:bg-sage-900 group-hover:text-white"><item.icon size={17} /></div>
-                        <h3 className="mt-3 text-base font-extrabold text-sage-950">{item.label}</h3>
-                        <p className="mt-2 text-sm leading-6 text-sage-700">{item.detail}</p>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)]">
-                  <article className="rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
-                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Game-first comfort</p>
-                    <h2 className="mt-3 text-2xl font-extrabold text-sage-950">The games are meant to be the easiest place to begin.</h2>
-                    <p className="mt-3 text-sm leading-7 text-sage-700">If you just want something light, start with <span className="font-extrabold text-sage-900">Typing Speed Test</span>, <span className="font-extrabold text-sage-900">Words</span>, <span className="font-extrabold text-sage-900">Wordle</span>, or <span className="font-extrabold text-sage-900">Tiles</span> on Easy. Prefer no-rush logic? <span className="font-extrabold text-sage-900">Sudoku</span>, <span className="font-extrabold text-sage-900">Clues</span>, <span className="font-extrabold text-sage-900">Slide</span>, <span className="font-extrabold text-sage-900">Mind Sweeper</span>, and <span className="font-extrabold text-sage-900">Lotus Match</span> are the gentlest puzzle picks.</p>
-                  </article>
-                  <article className="rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
-                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Right now</p>
-                    <h2 className="mt-3 text-2xl font-extrabold text-sage-950">{selectedUnwindGameConfig.title} • {selectedDifficultyConfig.label}</h2>
-                    <p className="mt-3 text-sm leading-7 text-sage-700">{selectedUnwindGameConfig.description}</p>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      <span className="rounded-full border border-sage-200 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Switch anytime</span>
-                      <span className="rounded-full border border-sage-200 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Best in short sessions</span>
-                      <span className="rounded-full border border-sage-200 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Made for quick resets</span>
-                    </div>
-                  </article>
-                </div>
-                <div className="mt-6 grid gap-4 xl:grid-cols-3">
-                  {chillResearchHighlights.map((item) => (
-                    <article key={item.title} className="rounded-[1.8rem] border border-white/80 bg-white/82 p-5 shadow-sm backdrop-blur">
-                      <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Chill research</p>
-                      <h2 className="mt-3 text-lg font-extrabold text-sage-950">{item.title}</h2>
-                      <p className="mt-3 text-sm leading-7 text-sage-700">{item.text}</p>
-                    </article>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <div ref={selectedGameInterfaceRef} className="game-detail-enter scroll-mt-24">
+            {unwindViewMode === 'detail' && (
+              <div ref={selectedGameInterfaceRef} className="game-detail-reveal mb-16 scroll-mt-24">
                 <button className="mb-5 inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white/88 px-4 py-2 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-x-0.5 hover:bg-white" onClick={returnToGameLibrary} type="button">
                   <span aria-hidden="true">←</span> Back to games
                 </button>
-                <div className="rounded-[2.2rem] border border-white/80 bg-white/90 p-3 shadow-soft backdrop-blur sm:p-4 lg:p-5">
+                <div className="lofi-glass rounded-[2.2rem] border p-3 shadow-soft backdrop-blur sm:p-4 lg:p-5">
                   <div className="rounded-[1.7rem] border border-sage-100 bg-sage-50/55 p-4 shadow-sm">
                     <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
                       <div>
@@ -6244,6 +6188,124 @@ function App() {
                 </div>
               </div>
             )}
+
+            <div className={unwindViewMode === 'detail' ? 'mt-24 opacity-80 pt-16 border-t border-sage-100 site-ui-fade-in' : 'game-library-enter'}>
+              {unwindViewMode === 'detail' && (
+                <div className="mb-10 text-center">
+                  <h2 className="font-display text-3xl font-bold tracking-tight text-sage-950">Discover more games</h2>
+                  <p className="mt-2 text-sage-600">Pick another one whenever you are ready.</p>
+                </div>
+              )}
+              <div className="mb-10 text-center">
+                {unwindViewMode === 'grid' && (
+                  <>
+                    <p className="mb-2 text-sm font-bold uppercase tracking-widest text-sage-600">Relax & Play</p>
+                    <h1 className="mb-3 font-display text-4xl font-bold tracking-tight text-sage-950">Pick a chill game</h1>
+                    <p className="mx-auto max-w-xl text-base text-sage-700">Choose a game, set a difficulty, and open it into its own calm play page.</p>
+                  </>
+                )}
+              </div>
+              <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+                {unwindGames.map((game) => (
+                  <button
+                    key={game.id}
+                    className={`group rounded-[2rem] border px-5 py-5 text-left transition duration-300 hover:-translate-y-1 ${selectedUnwindGame === game.id ? 'border-sage-300 bg-white shadow-soft' : 'border-white/70 bg-white/78 hover:border-sage-200 hover:bg-white/92'}`}
+                    onClick={() => selectUnwindGame(game.id)}
+                    type="button"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <p className="text-xs font-bold uppercase tracking-[0.24em] text-sage-600">{game.detail}</p>
+                        <h2 className="mt-2 font-display text-2xl font-bold text-sage-950">{game.title}</h2>
+                      </div>
+                      <span className={`inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br ${game.tone}`}>
+                        <game.icon size={18} />
+                      </span>
+                    </div>
+                    <GamePreview gameId={game.id} />
+                    <div className="mt-5 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.2em] text-sage-600">
+                      Open game <span className="transition group-hover:translate-x-1">→</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+              <div className="mt-6 rounded-[1.8rem] border border-white/80 bg-white/82 p-5 shadow-sm backdrop-blur">
+                <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+                  <div>
+                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Quick start picks</p>
+                    <h2 className="mt-2 text-2xl font-extrabold text-sage-950">Start with the easiest game for your mood.</h2>
+                  </div>
+                  <p className="max-w-xl text-sm leading-7 text-sage-700">These are the friendliest entry points if you want something that feels simple right away.</p>
+                </div>
+                <div className="mt-4 flex flex-wrap gap-2.5">
+                  {[
+                    { id: 'typing-speed-test', label: 'Typing Speed Test • WPM' },
+                    { id: 'quiet-words', label: 'Words • simple' },
+                    { id: 'quiet-wordle', label: 'Wordle • guess the word' },
+                    { id: 'quiet-clues', label: 'Clues • clue-by-clue' },
+                    { id: 'quiet-tiles', label: 'Tiles • tap and merge' }
+                  ].map((item) => (
+                    <button
+                      key={item.id}
+                      className="rounded-full border border-sage-200 bg-sage-50/80 px-4 py-2 text-sm font-extrabold text-sage-800 transition hover:bg-white"
+                      onClick={() => selectUnwindGame(item.id)}
+                      type="button"
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="mt-6 rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
+                <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+                  <div>
+                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Stay in the vibe</p>
+                    <h2 className="mt-2 text-2xl font-extrabold text-sage-950">Finish a round, then keep hanging out here.</h2>
+                  </div>
+                  <p className="max-w-2xl text-sm leading-7 text-sage-700">Lofi Memory works best when you can bounce from one calm thing to another — a game, a breath, a quick note, or one sentence of journaling — without needing to leave the same soft space.</p>
+                </div>
+                <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+                  {[
+                    { label: 'Play Wordle', detail: 'Switch to a familiar word-guessing round when you want one more easy win.', action: () => selectUnwindGame('quiet-wordle'), icon: Type },
+                    { label: 'Breathe for a minute', detail: 'Open the breathing screen for a softer reset between rounds.', action: () => navigateToTab('breathe'), icon: Wind },
+                    { label: 'Write one line', detail: 'Catch a thought before it disappears, then come back to the games later.', action: () => navigateToTab('write'), icon: PenLine },
+                    { label: 'Open notes', detail: 'Drop a quick to-do or reminder without breaking the calm mood.', action: () => navigateToTab('notes'), icon: FileText }
+                  ].map((item) => (
+                    <button key={item.label} className="group rounded-[1.45rem] border border-white/85 bg-sage-50/55 p-4 text-left transition hover:-translate-y-1 hover:border-sage-200 hover:bg-white hover:shadow-lift" onClick={item.action} type="button">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-sage-800 shadow-sm transition group-hover:bg-sage-900 group-hover:text-white"><item.icon size={17} /></div>
+                      <h3 className="mt-3 text-base font-extrabold text-sage-950">{item.label}</h3>
+                      <p className="mt-2 text-sm leading-6 text-sage-700">{item.detail}</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)]">
+                <article className="rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
+                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Game-first comfort</p>
+                  <h2 className="mt-3 text-2xl font-extrabold text-sage-950">The games are meant to be the easiest place to begin.</h2>
+                  <p className="mt-3 text-sm leading-7 text-sage-700">If you just want something light, start with <span className="font-extrabold text-sage-900">Typing Speed Test</span>, <span className="font-extrabold text-sage-900">Words</span>, <span className="font-extrabold text-sage-900">Wordle</span>, or <span className="font-extrabold text-sage-900">Tiles</span> on Easy. Prefer no-rush logic? <span className="font-extrabold text-sage-900">Sudoku</span>, <span className="font-extrabold text-sage-900">Clues</span>, <span className="font-extrabold text-sage-900">Slide</span>, <span className="font-extrabold text-sage-900">Mind Sweeper</span>, and <span className="font-extrabold text-sage-900">Lotus Match</span> are the gentlest puzzle picks.</p>
+                </article>
+                <article className="rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
+                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Right now</p>
+                  <h2 className="mt-3 text-2xl font-extrabold text-sage-950">{selectedUnwindGameConfig.title} • {selectedDifficultyConfig.label}</h2>
+                  <p className="mt-3 text-sm leading-7 text-sage-700">{selectedUnwindGameConfig.description}</p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <span className="rounded-full border border-sage-200 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Switch anytime</span>
+                    <span className="rounded-full border border-sage-200 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Best in short sessions</span>
+                    <span className="rounded-full border border-sage-200 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Made for quick resets</span>
+                  </div>
+                </article>
+              </div>
+              <div className="mt-6 grid gap-4 xl:grid-cols-3">
+                {chillResearchHighlights.map((item) => (
+                  <article key={item.title} className="rounded-[1.8rem] border border-white/80 bg-white/82 p-5 shadow-sm backdrop-blur">
+                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Chill research</p>
+                    <h2 className="mt-3 text-lg font-extrabold text-sage-950">{item.title}</h2>
+                    <p className="mt-3 text-sm leading-7 text-sage-700">{item.text}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
           </div>
         )}
 
@@ -7412,7 +7474,7 @@ function App() {
       )}
 
       <footer className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 pb-10 pt-6">
-        <div className="rounded-3xl border border-white/70 bg-white/60 p-6 text-center text-sm leading-7 text-sage-700 shadow-lift backdrop-blur">
+        <div className="lofi-glass rounded-3xl border p-6 text-center text-sm leading-7 text-sage-700 shadow-lift backdrop-blur">
           <div className="mb-3 flex flex-wrap justify-center gap-4 font-bold text-sage-800">
             <a href="#home" onClick={() => openHomeSection('home')}>Home</a>
             <button onClick={() => setCustomizerOpen(true)} type="button">Design</button>
@@ -7555,7 +7617,7 @@ function App() {
         <div className="pointer-events-none fixed bottom-24 right-3 z-40 flex justify-end sm:bottom-6 sm:right-6">
           <div className="pointer-events-auto w-[min(22rem,calc(100vw-1.5rem))] rounded-[1.4rem] border border-sage-200/90 bg-white/94 p-4 shadow-soft backdrop-blur-xl">
             <p className="text-sm font-medium leading-relaxed text-sage-800">
-              We use cookies and browser storage to keep Lofi Memory smooth and support ads. By staying here, you agree to our <a href="/privacy.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Privacy Policy</a>, <a href="/terms.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Terms</a>, and <a href="/cookie-policy.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Cookie Policy</a>.
+              We use cookies and browser storage to keep Lofi Memory smooth and support ads. <span className="font-extrabold text-sage-900">We do not have access to your private diary entries; they are stored securely for you alone.</span> By staying here, you agree to our <a href="/privacy.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Privacy Policy</a>, <a href="/terms.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Terms</a>, and <a href="/cookie-policy.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Cookie Policy</a>.
             </p>
             <div className="mt-3 flex justify-end">
               <button
@@ -7572,7 +7634,7 @@ function App() {
         </div>
       )}
 
-      <div className="fixed inset-x-3 bottom-3 z-30 mx-auto max-w-lg rounded-[1.7rem] border border-white/90 bg-white/90 p-1.5 shadow-soft backdrop-blur-xl lg:hidden">
+      <div className="fixed inset-x-3 bottom-3 z-30 mx-auto max-w-lg rounded-[1.7rem] border lofi-glass p-1.5 shadow-soft backdrop-blur-xl lg:hidden">
         <div className="grid grid-cols-6 gap-1">
         {[
           { id: 'home', label: 'Chill', icon: Headphones },
