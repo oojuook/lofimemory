@@ -851,3 +851,21 @@ input::placeholder {
     animation: none;
   }
 }
+
+.lofi-user-wallpaper {
+  background-position: center;
+  background-size: cover;
+  filter: saturate(0.82) contrast(0.92) brightness(1.08);
+  opacity: 0.28;
+  transform: scale(1.02);
+}
+
+.lofi-user-wallpaper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 16%, rgba(255, 250, 242, 0.30), transparent 30rem),
+    linear-gradient(180deg, rgba(255, 250, 242, 0.76), rgba(247, 239, 229, 0.84));
+  backdrop-filter: blur(1.5px);
+}

@@ -1368,6 +1368,7 @@ const DESIGN_STORAGE_KEY = 'quiet-journal-design-v1';
 const CUSTOM_COLOR_STORAGE_KEY = 'quiet-journal-custom-color-v1';
 const QUOTE_BG_STORAGE_KEY = 'quiet-journal-quote-bg-v1';
 const COMFORT_MODE_STORAGE_KEY = 'quiet-journal-comfort-mode-v1';
+const WALLPAPER_STORAGE_KEY = 'quiet-journal-wallpaper-v1';
 
 const colorThemes = [
   { id: 'sage', name: 'Sage Calm', accent: '#587f49', soft: '#edf4e8', glow: '#bfd8b0' },
@@ -2027,6 +2028,7 @@ function ThemeStudio({
   customWeatherEmoji,
   customWeatherImage,
   customWeathers,
+  wallpaperImage,
   isOpen,
   onClose,
   onThemeChange,
@@ -2038,6 +2040,8 @@ function ThemeStudio({
   onCustomWeatherNameChange,
   onCustomWeatherEmojiChange,
   onCustomWeatherImageUpload,
+  onWallpaperImageUpload,
+  onWallpaperRemove,
   onAddCustomWeather,
   onDeleteCustomWeather
 }) {
@@ -2129,6 +2133,26 @@ function ThemeStudio({
                   </button>
                 ))}
               </div>
+            </div>
+
+            <div className="rounded-3xl border border-sage-100 bg-white p-5 shadow-sm">
+              <div className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-sage-700"><ImagePlus size={16} /> Wallpaper</div>
+              <p className="text-sm leading-6 text-sage-700">Import your own calm wallpaper. It stays soft behind the app with a blur overlay so the page still feels minimal and easy to read.</p>
+              <div className="mt-4 grid gap-4 md:grid-cols-[minmax(0,1fr)_14rem] md:items-center">
+                <label className="flex cursor-pointer items-center justify-center gap-2 rounded-2xl border border-dashed border-sage-300 bg-sage-50/80 px-4 py-4 text-sm font-bold text-sage-800 transition hover:bg-sage-100">
+                  <ImagePlus size={18} /> Import wallpaper
+                  <input accept="image/*" className="hidden" onChange={onWallpaperImageUpload} type="file" />
+                </label>
+                <button className="rounded-2xl border border-sage-200 bg-white px-4 py-4 text-sm font-extrabold text-sage-700 transition hover:bg-sage-50 disabled:cursor-not-allowed disabled:opacity-50" disabled={!wallpaperImage} onClick={onWallpaperRemove} type="button">
+                  Remove wallpaper
+                </button>
+              </div>
+              {wallpaperImage && (
+                <div className="mt-4 overflow-hidden rounded-3xl border border-sage-100 bg-sage-50 p-3">
+                  <div className="h-36 rounded-2xl bg-cover bg-center shadow-inner" style={{ backgroundImage: `url(${wallpaperImage})` }} />
+                  <p className="mt-3 text-sm font-semibold leading-6 text-sage-700">Wallpaper applied. The app automatically keeps it muted so it does not clutter the interface.</p>
+                </div>
+              )}
             </div>
 
             <div className="rounded-3xl border border-sage-100 bg-white p-5 shadow-sm">
@@ -2631,6 +2655,7 @@ function App() {
   const [selectedDesign, setSelectedDesign] = useState(() => localStorage.getItem(DESIGN_STORAGE_KEY) || 'editorial');
   const [customColor, setCustomColor] = useState(() => localStorage.getItem(CUSTOM_COLOR_STORAGE_KEY) || '#587f49');
   const [quoteBg, setQuoteBg] = useState(() => localStorage.getItem(QUOTE_BG_STORAGE_KEY) || '#45643b');
+  const [wallpaperImage, setWallpaperImage] = useState(() => localStorage.getItem(WALLPAPER_STORAGE_KEY) || '');
   const [customizerOpen, setCustomizerOpen] = useState(false);
   const [comfortMode, setComfortMode] = useState(() => localStorage.getItem(COMFORT_MODE_STORAGE_KEY) === 'true');
   const [companion, setCompanion] = useState(getInitialCompanion);
@@ -3484,7 +3509,8 @@ function App() {
     localStorage.setItem(DESIGN_STORAGE_KEY, selectedDesign);
     localStorage.setItem(CUSTOM_COLOR_STORAGE_KEY, customColor);
     localStorage.setItem(QUOTE_BG_STORAGE_KEY, quoteBg);
-  }, [selectedTheme, selectedDesign, customColor, quoteBg]);
+    localStorage.setItem(WALLPAPER_STORAGE_KEY, wallpaperImage);
+  }, [selectedTheme, selectedDesign, customColor, quoteBg, wallpaperImage]);
 
   useEffect(() => {
     localStorage.setItem(COMFORT_MODE_STORAGE_KEY, String(comfortMode));
@@ -4398,6 +4424,19 @@ function App() {
     reader.readAsDataURL(file);
   }
 
+  function handleWallpaperImageUpload(event) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => setWallpaperImage(String(reader.result || ''));
+    reader.readAsDataURL(file);
+    event.target.value = '';
+  }
+
+  function removeWallpaperImage() {
+    setWallpaperImage('');
+  }
+
   function insertTextAtCursor(text) {
     const editor = entryBodyRef.current;
     if (!editor) {
@@ -5196,6 +5235,7 @@ function App() {
   return (
     <main className={`personalized-site lofi-vibe design-${selectedDesign} ${comfortMode ? 'comfort-mode' : ''} min-h-screen overflow-hidden bg-sand-50 pb-24 text-ink lg:pb-0`} style={themeStyle}>
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+        {wallpaperImage && <div className="lofi-user-wallpaper absolute inset-0" style={{ backgroundImage: `url(${wallpaperImage})` }} />}
         <div className="lofi-ambient-grid absolute inset-0" />
         <div className="absolute left-[-2rem] top-0 h-[28rem] w-[28rem] rounded-full bg-[#efe4d7]/80 blur-3xl" />
         <div className="absolute right-[-3rem] top-44 h-[26rem] w-[26rem] rounded-full bg-[#f8efe5]/85 blur-3xl" />
@@ -5740,10 +5780,13 @@ function App() {
         onDesignChange={setSelectedDesign}
         onQuoteBgChange={setQuoteBg}
         onThemeChange={setSelectedTheme}
+        onWallpaperImageUpload={handleWallpaperImageUpload}
+        onWallpaperRemove={removeWallpaperImage}
         quoteBg={quoteBg}
         quoteStyle={quoteStyle}
         selectedDesign={selectedDesign}
         selectedTheme={selectedTheme}
+        wallpaperImage={wallpaperImage}
       />
 
       <PinSettingsDialog
