@@ -150,6 +150,9 @@ const prompts = [
   'How are you really feeling in this moment?',
   'What do you need to hear from yourself today?',
   'What is one thing you can let go of?',
+  'Describe a cozy game moment that felt relaxing.',
+  'What games have helped you clear your mind lately?',
+  'If you were in a lofi world right now, what would it look like?',
   'What small win did you have today?',
   'How would you describe your mood to a friend?',
   'If anger is here, what is it trying to protect?'
@@ -6388,6 +6391,24 @@ function App() {
                       {item.label}
                     </button>
                   ))}
+                </div>
+              </div>
+              <div className="mt-6 grid gap-5 lg:grid-cols-2">
+                <div className="rounded-[1.8rem] border border-sage-100 bg-sage-50/55 p-5 shadow-sm backdrop-blur">
+                  <div className="flex items-center gap-3">
+                    <Sparkles className="text-sage-600" size={20} />
+                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Recommended next games</p>
+                  </div>
+                  <h2 className="mt-3 text-2xl font-extrabold text-sage-950">More cozy games worth adding.</h2>
+                  <p className="mt-2 text-sm leading-7 text-sage-700">Best fits for Lofi Memory: a lofi jigsaw puzzle, zen sand garden, bubble popper, petal catcher, cozy mahjong solitaire, connect-the-dots, spot-the-difference, and a tiny garden idle game.</p>
+                </div>
+                <div className="rounded-[1.8rem] border border-sage-100 bg-white/78 p-5 shadow-sm backdrop-blur">
+                  <div className="flex items-center gap-3">
+                    <PenLine className="text-sage-600" size={20} />
+                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Chill game journal</p>
+                  </div>
+                  <h2 className="mt-3 text-2xl font-extrabold text-sage-950">Play, then write one soft reflection.</h2>
+                  <p className="mt-2 text-sm leading-7 text-sage-700">A calm game can become a journaling prompt: what felt relaxing, what color or sound stayed with you, and what thought became easier to let go.</p>
                 </div>
               </div>
               <div className="mt-6 rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
