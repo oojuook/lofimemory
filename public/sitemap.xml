@@ -630,4 +630,19 @@
     <changefreq>weekly</changefreq>
     <priority>0.84</priority>
   </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/about.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/cookie-policy.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/disclaimer.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>

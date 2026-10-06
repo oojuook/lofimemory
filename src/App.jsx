@@ -7466,8 +7466,11 @@ function App() {
             <a href="#articles" onClick={() => openHomeSection('articles')}>Articles</a>
             <a href="#tips" onClick={() => openHomeSection('tips')}>Tips</a>
             <a href="/blog.html">Blog</a>
+            <a href="/about.html">About</a>
             <a href="/privacy.html">Privacy</a>
             <a href="/terms.html">Terms</a>
+            <a href="/cookie-policy.html">Cookies</a>
+            <a href="/disclaimer.html">Disclaimer</a>
             <a href="/contact.html">Contact</a>
           </div>
           Lofi Memory is a soft browser space to relax, journal, breathe, and play chill games whenever you want a calmer moment online.
@@ -7597,7 +7600,7 @@ function App() {
         <div className="pointer-events-none fixed bottom-24 right-3 z-40 flex justify-end sm:bottom-6 sm:right-6">
           <div className="pointer-events-auto w-[min(22rem,calc(100vw-1.5rem))] rounded-[1.4rem] border border-sage-200/90 bg-white/94 p-4 shadow-soft backdrop-blur-xl">
             <p className="text-sm font-medium leading-relaxed text-sage-800">
-              We use cookies to keep Lofi Memory smooth and support ads. By staying here, you agree to our <a href="/privacy.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Privacy Policy</a> and <a href="/terms.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Terms</a>.
+              We use cookies and browser storage to keep Lofi Memory smooth and support ads. By staying here, you agree to our <a href="/privacy.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Privacy Policy</a>, <a href="/terms.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Terms</a>, and <a href="/cookie-policy.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Cookie Policy</a>.
             </p>
             <div className="mt-3 flex justify-end">
               <button
