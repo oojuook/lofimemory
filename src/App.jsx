@@ -6717,6 +6717,8 @@ function App() {
                   {calendarDays.map((day, index) => {
                     const dayEntries = day ? entriesByDate[day.dateKey] || [] : [];
                     const hasImportantDate = day ? Boolean(importantDates[day.dateKey]) : false;
+                    const dayForecast = day ? calendarForecastByDate[day.dateKey] : null;
+                    const dayForecastVisuals = getForecastVisuals(dayForecast?.weatherCode);
                     const isSelected = day?.dateKey === selectedCalendarDate;
                     const isToday = day?.dateKey === todayISO();
                     return day ? (
@@ -6731,6 +6733,7 @@ function App() {
                       >
                         <span>{day.day}</span>
                         {hasImportantDate && <span className={`absolute right-1.5 top-1 text-[10px] ${isSelected ? 'text-sand-100' : 'text-rose-500'}`}>✦</span>}
+                        {dayForecast && <span className="absolute bottom-1 right-1 text-[10px] leading-none" title={dayForecastVisuals.label}>{dayForecastVisuals.emoji}</span>}
                         {dayEntries.length > 0 && <span className={`absolute bottom-1.5 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full ${isSelected ? 'bg-white' : 'bg-sage-700'}`} />}
                       </button>
                     ) : <div key={`blank-${index}`} />;
@@ -6758,6 +6761,34 @@ function App() {
                       </button>
                     )}
                   </div>
+                </div>
+
+                <div className="mt-4 rounded-2xl border border-sage-100 bg-gradient-to-br from-sage-50/90 to-white p-4 shadow-sm">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-xl shadow-sm">
+                        {selectedCalendarForecast ? selectedCalendarForecastVisuals.emoji : '📍'}
+                      </div>
+                      <div>
+                        <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-sage-600">Local weather</p>
+                        {selectedCalendarForecast ? (
+                          <p className="mt-1 text-sm font-extrabold text-sage-950">
+                            {selectedCalendarForecastVisuals.label} · {formatForecastTemperature(selectedCalendarForecast.maxTemp)} / {formatForecastTemperature(selectedCalendarForecast.minTemp)}
+                          </p>
+                        ) : (
+                          <p className="mt-1 text-sm font-semibold leading-6 text-sage-700">{calendarForecastStatus}</p>
+                        )}
+                        {selectedCalendarForecast && <p className="mt-1 text-xs font-bold uppercase tracking-[0.14em] text-sage-500">{calendarForecastLocation || 'Your location'} · {selectedCalendarDate}</p>}
+                      </div>
+                    </div>
+                    {calendarForecastPermission !== 'loading' && (
+                      <button className="rounded-full border border-sage-200 bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.14em] text-sage-700 transition hover:bg-sage-50" onClick={loadCalendarForecast} type="button">
+                        {calendarForecastPermission === 'granted' ? 'Refresh' : 'Use location'}
+                      </button>
+                    )}
+                    {calendarForecastPermission === 'loading' && <span className="rounded-full border border-sage-100 bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.14em] text-sage-600">Loading</span>}
+                  </div>
+                  {selectedCalendarForecast && <p className="mt-3 text-xs font-semibold leading-5 text-sage-600">Forecast uses your browser location and is available for nearby upcoming dates.</p>}
                 </div>
 
                 {selectedImportantDate && (
