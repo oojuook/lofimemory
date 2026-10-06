@@ -6686,7 +6686,7 @@ function App() {
         )}
 
         {activeTab === 'memories' && (
-        <div className="mt-6 grid gap-6 pb-24 xl:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:pb-0">
+        <div className="mt-6 grid gap-6 pb-24 lg:pb-0">
 
           <div className="overflow-hidden rounded-[2rem] border border-white/80 bg-gradient-to-br from-white/88 via-sage-50/68 to-sand-50/72 p-4 shadow-soft backdrop-blur sm:p-6 lg:p-8">
             <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -6873,28 +6873,28 @@ function App() {
               </div>
 
               {importanceModalOpen && (
-                <div className="mt-4 rounded-2xl border border-sage-100 bg-sage-50/80 p-4 shadow-sm">
-                  <div className="mb-3 rounded-[1.25rem] border border-sage-100 bg-white/88 px-4 py-3">
-                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Reminder or note setup</p>
-                    <p className="mt-2 text-sm font-semibold leading-6 text-sage-700">Use the first box for the short title people will see on the calendar. Use the second box for the longer note or reminder details.</p>
+                <div className="mt-4 rounded-[1.8rem] border border-sage-200 bg-white/96 p-5 shadow-[0_22px_55px_rgba(86,108,93,0.16)] sm:p-6 lg:p-7">
+                  <div className="mb-4 rounded-[1.4rem] border border-sage-100 bg-sage-50/78 px-5 py-4">
+                    <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-sage-700">Reminder or note setup</p>
+                    <p className="mt-2 text-base font-semibold leading-7 text-sage-800">Add the short calendar label first, then use the larger notes area for the full reminder, plan, or details you want to see later.</p>
                   </div>
-                  <div className="grid gap-3 lg:grid-cols-2">
-                    <label className="block rounded-[1.25rem] border border-sage-100 bg-white p-4 shadow-sm">
-                      <span className="text-sm font-extrabold text-sage-900">Calendar title</span>
+                  <div className="grid gap-4">
+                    <label className="block rounded-[1.4rem] border border-sage-100 bg-white p-5 shadow-sm">
+                      <span className="text-base font-extrabold text-sage-900">Calendar title</span>
                       <span className="mt-1 block text-xs font-semibold uppercase tracking-[0.16em] text-sage-500">Short and visible on the day</span>
                       <input
-                        className="mt-3 w-full rounded-2xl border border-sage-200 bg-sage-50/70 px-4 py-3 font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
+                        className="mt-3 w-full rounded-[1.1rem] border border-sage-200 bg-sage-50/70 px-4 py-4 text-base font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
                         maxLength={80}
                         onChange={(event) => setImportanceDraft(event.target.value)}
                         placeholder="Exam at 3pm, family dinner, project deadline..."
                         value={importanceDraft}
                       />
                     </label>
-                    <label className="block rounded-[1.25rem] border border-sage-100 bg-white p-4 shadow-sm">
-                      <span className="text-sm font-extrabold text-sage-900">Notes or reminder details</span>
+                    <label className="block rounded-[1.4rem] border border-sage-100 bg-white p-5 shadow-sm">
+                      <span className="text-base font-extrabold text-sage-900">Notes or reminder details</span>
                       <span className="mt-1 block text-xs font-semibold uppercase tracking-[0.16em] text-sage-500">What you want to remember or do</span>
                       <textarea
-                        className="mt-3 min-h-[128px] w-full rounded-2xl border border-sage-200 bg-sage-50/70 px-4 py-3 font-semibold leading-6 text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
+                        className="mt-3 min-h-[220px] w-full rounded-[1.1rem] border border-sage-200 bg-sage-50/70 px-4 py-4 text-base font-semibold leading-7 text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
                         maxLength={320}
                         onChange={(event) => setImportanceDetailsDraft(event.target.value)}
                         placeholder="Type the reminder details, meeting notes, packing list, or anything you want saved on this date."
@@ -6902,25 +6902,25 @@ function App() {
                       />
                     </label>
                   </div>
-                  <div className="mt-3 grid gap-3 sm:grid-cols-[minmax(0,220px)_minmax(0,1fr)]">
-                    <label className="block rounded-[1.25rem] border border-sage-100 bg-white p-4 shadow-sm">
-                      <span className="text-sm font-extrabold text-sage-900">Reminder time</span>
+                  <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(260px,320px)_minmax(0,1fr)]">
+                    <label className="block rounded-[1.4rem] border border-sage-100 bg-white p-5 shadow-sm">
+                      <span className="text-base font-extrabold text-sage-900">Reminder time</span>
                       <span className="mt-1 block text-xs font-semibold uppercase tracking-[0.16em] text-sage-500">Optional time for the alert</span>
                       <input
-                        className="mt-3 w-full rounded-2xl border border-sage-200 bg-sage-50/70 px-4 py-3 font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
+                        className="mt-3 w-full rounded-[1.1rem] border border-sage-200 bg-sage-50/70 px-4 py-4 text-base font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
                         onChange={(event) => setImportanceTimeDraft(event.target.value)}
                         type="time"
                         value={importanceTimeDraft}
                       />
                     </label>
-                    <label className="flex items-center gap-3 rounded-[1.25rem] border border-sage-100 bg-white px-4 py-4 text-sm font-semibold text-sage-800 shadow-sm">
+                    <label className="flex min-h-[5.8rem] items-center gap-3 rounded-[1.4rem] border border-sage-100 bg-white px-5 py-5 text-base font-semibold leading-7 text-sage-800 shadow-sm">
                       <input checked={importanceReminderEnabled} className="h-4 w-4 rounded border-sage-300 text-sage-700 focus:ring-sage-300" onChange={(event) => setImportanceReminderEnabled(event.target.checked)} type="checkbox" />
                       Turn on a reminder for the day before and the day itself if browser notifications are allowed
                     </label>
                   </div>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    <button className="rounded-full bg-sage-900 px-4 py-2 text-sm font-extrabold text-white transition hover:bg-sage-800" onClick={saveImportantDate} type="button">Save reminder or note</button>
-                    <button className="rounded-full border border-sage-200 bg-white px-4 py-2 text-sm font-extrabold text-sage-700 transition hover:bg-sage-50" onClick={() => setImportanceModalOpen(false)} type="button">Cancel</button>
+                  <div className="mt-5 flex flex-wrap gap-3">
+                    <button className="rounded-full bg-sage-900 px-5 py-3 text-base font-extrabold text-white transition hover:bg-sage-800" onClick={saveImportantDate} type="button">Save reminder or note</button>
+                    <button className="rounded-full border border-sage-200 bg-white px-5 py-3 text-base font-extrabold text-sage-700 transition hover:bg-sage-50" onClick={() => setImportanceModalOpen(false)} type="button">Cancel</button>
                   </div>
                 </div>
               )}

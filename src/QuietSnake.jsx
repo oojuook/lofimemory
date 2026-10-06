@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Play, RotateCcw, Sparkles } from 'lucide-react';
 
 const difficultySettings = {
@@ -67,8 +67,8 @@ export default function QuietSnake({ difficulty = 'medium' }) {
   const bestScoreKey = `quiet-journal-quiet-snake-best-${difficulty}`;
 
   const [snake, setSnake] = useState(() => createInitialSnake(config.cellCount));
-  const [direction, setDirection] = useState({ x: 1, y: 0 });
-  const [nextDirection, setNextDirection] = useState({ x: 1, y: 0 });
+  const directionRef = useRef({ x: 1, y: 0 });
+  const turnQueueRef = useRef([]);
   const [food, setFood] = useState(() => getRandomFood(config.cellCount, createInitialSnake(config.cellCount)));
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(() => parseInt(localStorage.getItem(bestScoreKey) || '0', 10));
@@ -77,8 +77,8 @@ export default function QuietSnake({ difficulty = 'medium' }) {
   const resetGame = useCallback((nextState = 'start') => {
     const initialSnake = createInitialSnake(config.cellCount);
     setSnake(initialSnake);
-    setDirection({ x: 1, y: 0 });
-    setNextDirection({ x: 1, y: 0 });
+    directionRef.current = { x: 1, y: 0 };
+    turnQueueRef.current = [];
     setFood(getRandomFood(config.cellCount, initialSnake));
     setScore(0);
     setBestScore(parseInt(localStorage.getItem(bestScoreKey) || '0', 10));
@@ -89,19 +89,35 @@ export default function QuietSnake({ difficulty = 'medium' }) {
     resetGame('start');
   }, [resetGame]);
 
-  const turnSnake = useCallback((next) => {
-    setNextDirection((current) => {
-      const activeDirection = gameState === 'playing' ? direction : current;
-      if (isReverseDirection(activeDirection, next)) {
-        return current;
-      }
-      return next;
-    });
-  }, [direction, gameState]);
+  const queueTurn = useCallback((next) => {
+    const queuedTurns = turnQueueRef.current;
+    const lastDirection = queuedTurns[queuedTurns.length - 1] || directionRef.current;
 
-  const startGame = useCallback(() => {
+    if (
+      queuedTurns.length >= 2
+      || (lastDirection.x === next.x && lastDirection.y === next.y)
+      || isReverseDirection(lastDirection, next)
+    ) {
+      return;
+    }
+
+    turnQueueRef.current = [...queuedTurns, next];
+  }, []);
+
+  const startGame = useCallback((openingDirection = null) => {
     resetGame('playing');
+    if (openingDirection && !isReverseDirection({ x: 1, y: 0 }, openingDirection)) {
+      turnQueueRef.current = [openingDirection];
+    }
   }, [resetGame]);
+
+  const requestTurn = useCallback((next) => {
+    if (gameState === 'start' || gameState === 'over') {
+      startGame(next);
+      return;
+    }
+    queueTurn(next);
+  }, [gameState, queueTurn, startGame]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -111,17 +127,12 @@ export default function QuietSnake({ difficulty = 'medium' }) {
       }
 
       event.preventDefault();
-      if (gameState === 'start' || gameState === 'over') {
-        startGame();
-        return;
-      }
-
-      turnSnake(next);
+      requestTurn(next);
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [gameState, startGame, turnSnake]);
+  }, [requestTurn]);
 
   useEffect(() => {
     if (gameState !== 'playing') {
@@ -129,54 +140,61 @@ export default function QuietSnake({ difficulty = 'medium' }) {
     }
 
     const intervalId = window.setInterval(() => {
-      setDirection((currentDirection) => {
-        const activeDirection = isReverseDirection(currentDirection, nextDirection) ? currentDirection : nextDirection;
+      const queuedDirection = turnQueueRef.current[0];
+      let activeDirection = directionRef.current;
 
-        setSnake((currentSnake) => {
-          const head = currentSnake[0];
-          const nextHead = {
-            x: (head.x + activeDirection.x + config.cellCount) % config.cellCount,
-            y: (head.y + activeDirection.y + config.cellCount) % config.cellCount,
-          };
-          const didEat = nextHead.x === food.x && nextHead.y === food.y;
-          const hitSelf = currentSnake.some((segment, index) => {
-            if (!didEat && index === currentSnake.length - 1) {
-              return false;
-            }
-            return segment.x === nextHead.x && segment.y === nextHead.y;
-          });
+      if (queuedDirection) {
+        turnQueueRef.current = turnQueueRef.current.slice(1);
+        if (!isReverseDirection(activeDirection, queuedDirection)) {
+          activeDirection = queuedDirection;
+        }
+      }
 
-          if (hitSelf) {
-            setGameState('over');
-            return currentSnake;
+      directionRef.current = activeDirection;
+
+      setSnake((currentSnake) => {
+        const head = currentSnake[0];
+        const nextHead = {
+          x: (head.x + activeDirection.x + config.cellCount) % config.cellCount,
+          y: (head.y + activeDirection.y + config.cellCount) % config.cellCount,
+        };
+        const didEat = nextHead.x === food.x && nextHead.y === food.y;
+        const hitSelf = currentSnake.some((segment, index) => {
+          if (!didEat && index === currentSnake.length - 1) {
+            return false;
           }
-
-          const nextSnake = [nextHead, ...currentSnake];
-
-          if (!didEat) {
-            nextSnake.pop();
-          } else {
-            setScore((previous) => {
-              const nextScore = previous + 1;
-              const storedBest = parseInt(localStorage.getItem(bestScoreKey) || '0', 10);
-              if (nextScore > storedBest) {
-                localStorage.setItem(bestScoreKey, String(nextScore));
-                setBestScore(nextScore);
-              }
-              return nextScore;
-            });
-            setFood(getRandomFood(config.cellCount, nextSnake));
-          }
-
-          return nextSnake;
+          return segment.x === nextHead.x && segment.y === nextHead.y;
         });
 
-        return activeDirection;
+        if (hitSelf) {
+          setGameState('over');
+          turnQueueRef.current = [];
+          return currentSnake;
+        }
+
+        const nextSnake = [nextHead, ...currentSnake];
+
+        if (!didEat) {
+          nextSnake.pop();
+        } else {
+          setScore((previous) => {
+            const nextScore = previous + 1;
+            const storedBest = parseInt(localStorage.getItem(bestScoreKey) || '0', 10);
+            if (nextScore > storedBest) {
+              localStorage.setItem(bestScoreKey, String(nextScore));
+              setBestScore(nextScore);
+            }
+            return nextScore;
+          });
+          setFood(getRandomFood(config.cellCount, nextSnake));
+        }
+
+        return nextSnake;
       });
     }, config.speedMs);
 
     return () => window.clearInterval(intervalId);
-  }, [bestScoreKey, config.cellCount, config.speedMs, food, nextDirection, gameState]);
+  }, [bestScoreKey, config.cellCount, config.speedMs, food, gameState]);
 
   const cells = useMemo(() => Array.from({ length: config.cellCount * config.cellCount }, (_, index) => {
     const x = index % config.cellCount;
@@ -193,28 +211,28 @@ export default function QuietSnake({ difficulty = 'medium' }) {
 
   return (
     <div className="mx-auto mt-12 w-full max-w-[980px] pb-12">
-      <div className="rounded-[2rem] border border-emerald-100 bg-gradient-to-br from-white via-emerald-50/82 to-lime-50/72 p-5 shadow-soft lg:p-6">
+      <div className="rounded-[1.1rem] border-[4px] border-[#111111] bg-[#c8d8b6] p-5 shadow-[10px_10px_0_rgba(17,17,17,0.12)] lg:p-6">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white/88 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-emerald-700 shadow-sm">
+            <div className="inline-flex items-center gap-2 border-2 border-[#111111] bg-[#111111] px-3 py-1.5 font-mono text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#f3f6ea] shadow-[4px_4px_0_rgba(17,17,17,0.14)]">
               <Sparkles size={14} /> {config.label} snake flow
             </div>
-            <h3 className="mt-4 text-3xl font-bold tracking-tight text-emerald-950">Quiet Snake</h3>
-            <p className="mt-2 max-w-2xl text-sm leading-7 text-emerald-800">A classic snake run with a cleaner retro board, wrap-around edges, and quick arcade rounds when you want something simple and sharp.</p>
-            <p className="mt-2 text-sm font-semibold text-emerald-700">{config.note}</p>
+            <h3 className="mt-4 font-mono text-3xl font-bold tracking-tight text-[#111111]">Quiet Snake</h3>
+            <p className="mt-2 max-w-2xl text-sm leading-7 text-[#30412a]">A classic snake run with a cleaner retro board, wrap-around edges, and quick arcade rounds when you want something simple and sharp.</p>
+            <p className="mt-2 text-sm font-semibold text-[#466038]">{config.note}</p>
           </div>
-          <div className="grid gap-2 rounded-[1.5rem] border border-white/85 bg-white/80 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[21rem]">
-            <div className="rounded-[1.15rem] bg-emerald-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-emerald-500">Score</p>
-              <p className="mt-2 text-xl font-extrabold text-emerald-950">{score}</p>
+          <div className="grid gap-2 border-4 border-[#111111] bg-[#dfe9cf] p-3 shadow-[6px_6px_0_rgba(17,17,17,0.12)] sm:grid-cols-3 lg:min-w-[21rem]">
+            <div className="border-2 border-[#111111] bg-[#9abf88] px-4 py-3 text-center">
+              <p className="font-mono text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#22311d]">Score</p>
+              <p className="mt-2 font-mono text-2xl font-extrabold text-[#111111]">{score}</p>
             </div>
-            <div className="rounded-[1.15rem] bg-emerald-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-emerald-500">Best</p>
-              <p className="mt-2 text-xl font-extrabold text-emerald-950">{bestScore}</p>
+            <div className="border-2 border-[#111111] bg-[#9abf88] px-4 py-3 text-center">
+              <p className="font-mono text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#22311d]">Best</p>
+              <p className="mt-2 font-mono text-2xl font-extrabold text-[#111111]">{bestScore}</p>
             </div>
-            <div className="rounded-[1.15rem] bg-emerald-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-emerald-500">Board</p>
-              <p className="mt-2 text-xl font-extrabold text-emerald-950">{config.cellCount}×{config.cellCount}</p>
+            <div className="border-2 border-[#111111] bg-[#9abf88] px-4 py-3 text-center">
+              <p className="font-mono text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#22311d]">Board</p>
+              <p className="mt-2 font-mono text-2xl font-extrabold text-[#111111]">{config.cellCount}×{config.cellCount}</p>
             </div>
           </div>
         </div>
@@ -259,24 +277,24 @@ export default function QuietSnake({ difficulty = 'medium' }) {
             </div>
 
             <div className="mt-4 grid gap-2 sm:grid-cols-4">
-              <button className="rounded-full border border-emerald-200 bg-white px-4 py-3 text-sm font-extrabold text-emerald-900 shadow-sm" onClick={() => turnSnake({ x: 0, y: -1 })} type="button"><ArrowUp size={16} className="mr-2 inline" />Up</button>
-              <button className="rounded-full border border-emerald-200 bg-white px-4 py-3 text-sm font-extrabold text-emerald-900 shadow-sm" onClick={() => turnSnake({ x: -1, y: 0 })} type="button"><ArrowLeft size={16} className="mr-2 inline" />Left</button>
-              <button className="rounded-full border border-emerald-200 bg-white px-4 py-3 text-sm font-extrabold text-emerald-900 shadow-sm" onClick={() => turnSnake({ x: 1, y: 0 })} type="button"><ArrowRight size={16} className="mr-2 inline" />Right</button>
-              <button className="rounded-full border border-emerald-200 bg-white px-4 py-3 text-sm font-extrabold text-emerald-900 shadow-sm" onClick={() => turnSnake({ x: 0, y: 1 })} type="button"><ArrowDown size={16} className="mr-2 inline" />Down</button>
+              <button className="border-2 border-[#111111] bg-[#dfe9cf] px-4 py-3 text-sm font-extrabold text-[#111111] shadow-[4px_4px_0_rgba(17,17,17,0.12)] transition hover:-translate-y-0.5" onClick={() => requestTurn({ x: 0, y: -1 })} type="button"><ArrowUp size={16} className="mr-2 inline" />Up</button>
+              <button className="border-2 border-[#111111] bg-[#dfe9cf] px-4 py-3 text-sm font-extrabold text-[#111111] shadow-[4px_4px_0_rgba(17,17,17,0.12)] transition hover:-translate-y-0.5" onClick={() => requestTurn({ x: -1, y: 0 })} type="button"><ArrowLeft size={16} className="mr-2 inline" />Left</button>
+              <button className="border-2 border-[#111111] bg-[#dfe9cf] px-4 py-3 text-sm font-extrabold text-[#111111] shadow-[4px_4px_0_rgba(17,17,17,0.12)] transition hover:-translate-y-0.5" onClick={() => requestTurn({ x: 1, y: 0 })} type="button"><ArrowRight size={16} className="mr-2 inline" />Right</button>
+              <button className="border-2 border-[#111111] bg-[#dfe9cf] px-4 py-3 text-sm font-extrabold text-[#111111] shadow-[4px_4px_0_rgba(17,17,17,0.12)] transition hover:-translate-y-0.5" onClick={() => requestTurn({ x: 0, y: 1 })} type="button"><ArrowDown size={16} className="mr-2 inline" />Down</button>
             </div>
           </div>
 
           <div className="space-y-4">
-            <div className="rounded-[1.5rem] border border-white/80 bg-white/92 p-4 shadow-sm">
-              <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-emerald-600">How it plays</p>
-              <ul className="mt-3 space-y-2 text-sm font-semibold leading-6 text-emerald-800">
+            <div className="border-4 border-[#111111] bg-[#dfe9cf] p-4 shadow-[6px_6px_0_rgba(17,17,17,0.12)]">
+              <p className="font-mono text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#30412a]">How it plays</p>
+              <ul className="mt-3 space-y-2 text-sm font-semibold leading-6 text-[#30412a]">
                 <li>- Steer into the fruit to grow the line.</li>
                 <li>- Slip through one edge and reappear on the opposite side.</li>
                 <li>- Only your own body ends the run, so keep the trail tidy.</li>
               </ul>
             </div>
             <button
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-4 py-3 text-sm font-extrabold text-emerald-900 shadow-sm transition hover:-translate-y-0.5"
+              className="inline-flex w-full items-center justify-center gap-2 border-2 border-[#111111] bg-[#111111] px-4 py-3 text-sm font-extrabold text-[#f3f6ea] shadow-[4px_4px_0_rgba(17,17,17,0.12)] transition hover:-translate-y-0.5"
               onClick={() => resetGame('start')}
               type="button"
             >
