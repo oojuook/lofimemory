@@ -1507,12 +1507,75 @@ function buildCalendarDays(monthKey) {
   ];
 }
 
+function SeedIcon({ size = 18, className = '' }) {
+  return (
+    <svg aria-hidden="true" className={className} width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <path d="M12 3.4c4.6 0 7.6 3.1 7.6 7.3 0 5-4 9.9-7.6 9.9s-7.6-4.9-7.6-9.9c0-4.2 3-7.3 7.6-7.3Z" fill="currentColor" opacity="0.92" />
+      <path d="M12 5.2c1.7 3.2 1.9 7.7 0 13" stroke="#f5fbef" strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M12 10.2c1.8-.4 3.3-1.2 4.4-2.4" stroke="#f5fbef" strokeWidth="1.1" strokeLinecap="round" opacity="0.85" />
+    </svg>
+  );
+}
+
 function FrogIcon({ size = 18 }) {
-  return <span aria-hidden="true" style={{ fontSize: `${size + 4}px`, lineHeight: 1 }}>🐸</span>;
+  return <span aria-hidden="true" style={{ fontSize: `${size + 6}px`, lineHeight: 1 }}>🐸</span>;
+}
+
+function TetrisIcon({ size = 18, className = '' }) {
+  const block = 'h-[0.32em] w-[0.32em] rounded-[0.08em] bg-current shadow-[inset_0_0_0_1px_rgba(255,255,255,0.45)]';
+  return (
+    <span aria-hidden="true" className={`grid grid-cols-3 gap-[0.07em] ${className}`} style={{ fontSize: `${size * 1.45}px`, lineHeight: 1 }}>
+      <span className={block} /><span className={block} /><span className={block} />
+      <span className="h-[0.32em] w-[0.32em]" /><span className={block} /><span className="h-[0.32em] w-[0.32em]" />
+      <span className="h-[0.32em] w-[0.32em]" /><span className={block} /><span className={block} />
+    </span>
+  );
+}
+
+function SudokuHashIcon({ size = 18 }) {
+  return (
+    <span aria-hidden="true" className="relative inline-flex items-center justify-center font-black" style={{ width: size + 8, height: size + 8, fontSize: size + 2, lineHeight: 1 }}>
+      <span className="absolute inset-0 rounded-lg border border-current opacity-25" />
+      <span className="absolute left-[0.28em] top-[0.18em] text-[0.34em] font-extrabold opacity-80">5</span>
+      <span className="absolute right-[0.25em] bottom-[0.16em] text-[0.34em] font-extrabold opacity-80">9</span>
+      <span>#</span>
+    </span>
+  );
 }
 
 function SnakeIcon({ size = 18 }) {
-  return <span aria-hidden="true" style={{ fontSize: `${size + 2}px`, lineHeight: 1 }}>🐍</span>;
+  return (
+    <span aria-hidden="true" className="inline-flex items-center justify-center" style={{ width: size + 8, height: size + 8 }}>
+      <span className="grid grid-cols-3 gap-[2px] rotate-12">
+        {[0, 1, 2, 3, 4].map((segment) => (
+          <span key={segment} className={`h-[6px] w-[6px] rounded-[2px] bg-current ${segment === 0 ? 'col-start-2' : ''}`} />
+        ))}
+      </span>
+    </span>
+  );
+}
+
+function PokerCardIcon({ size = 18 }) {
+  return (
+    <span aria-hidden="true" className="relative inline-flex items-center justify-center" style={{ width: size + 8, height: size + 8 }}>
+      <span className="absolute h-[1.15em] w-[0.82em] -rotate-12 rounded-[0.18em] border border-current bg-white/80 opacity-80" />
+      <span className="absolute h-[1.15em] w-[0.82em] rotate-6 rounded-[0.18em] border border-current bg-white/95" />
+      <span className="relative text-[0.68em] font-black">A♥</span>
+    </span>
+  );
+}
+
+function DinosaurIcon({ size = 18 }) {
+  return (
+    <span aria-hidden="true" className="relative inline-block" style={{ width: size + 10, height: size + 6 }}>
+      <span className="absolute left-[0.42em] top-[0.16em] h-[0.62em] w-[0.72em] rounded-[0.12em] bg-current" />
+      <span className="absolute left-[0.9em] top-[0.02em] h-[0.18em] w-[0.18em] rounded-full bg-white" />
+      <span className="absolute left-[0.08em] top-[0.7em] h-[0.52em] w-[1.05em] rounded-[0.18em] bg-current" />
+      <span className="absolute left-0 top-[0.82em] h-[0.18em] w-[0.5em] -rotate-12 rounded-full bg-current" />
+      <span className="absolute left-[0.42em] top-[1.15em] h-[0.46em] w-[0.16em] rounded-full bg-current" />
+      <span className="absolute left-[0.78em] top-[1.15em] h-[0.38em] w-[0.16em] rounded-full bg-current" />
+    </span>
+  );
 }
 
 function GameSplash({ game, isClosing = false }) {
@@ -2757,7 +2820,7 @@ function App() {
       title: 'Drifting Seed',
       detail: 'Soft endless glide',
       description: 'A slow, floaty game for clearing your head before you write.',
-      icon: Wind,
+      icon: SeedIcon,
       tone: 'from-emerald-100 to-sage-50 text-emerald-700',
       component: <ZenGame difficulty={selectedGameDifficulty} />
     },
@@ -2766,7 +2829,7 @@ function App() {
       title: 'Lilypad Hopper',
       detail: 'Gentle pond dodging',
       description: 'Hop through a calm lily-pad run when you want a little movement without the noise.',
-      icon: Waves,
+      icon: FrogIcon,
       tone: 'from-sky-100 to-cyan-50 text-sky-700',
       component: <StreamSurfer difficulty={selectedGameDifficulty} />
     },
@@ -2793,7 +2856,7 @@ function App() {
       title: 'Tetris',
       detail: 'Calm block stacking',
       description: 'Stack colorful blocks, clear tidy rows, and enjoy a softer take on a classic arcade puzzle.',
-      icon: Palette,
+      icon: TetrisIcon,
       tone: 'from-indigo-100 to-sky-50 text-indigo-700',
       component: <QuietTetris difficulty={selectedGameDifficulty} />
     },
@@ -2811,7 +2874,7 @@ function App() {
       title: 'Sudoku',
       detail: 'Soft sudoku logic',
       description: 'Settle into a cozy Sudoku board with gentle checking, reveal help, and a familiar number puzzle rhythm.',
-      icon: Hash,
+      icon: SudokuHashIcon,
       tone: 'from-cyan-100 to-blue-50 text-cyan-700',
       component: <QuietSudoku difficulty={selectedGameDifficulty} />
     },
@@ -2865,7 +2928,7 @@ function App() {
       title: 'Snake',
       detail: 'Classic arcade loop',
       description: 'A cozy snake run with clear turns, quick rounds, and a gentle retro feel.',
-      icon: Zap,
+      icon: SnakeIcon,
       tone: 'from-emerald-100 to-lime-50 text-emerald-700',
       component: <QuietSnake difficulty={selectedGameDifficulty} />
     },
@@ -2874,7 +2937,7 @@ function App() {
       title: 'Solitaire',
       detail: 'Classic card reset',
       description: 'Stack cards in a cozy green-felt space, the perfect way to pause and reflect.',
-      icon: Layers,
+      icon: PokerCardIcon,
       tone: 'from-emerald-800 to-teal-900 text-white',
       component: <Solitaire difficulty={selectedGameDifficulty} />
     },
@@ -2883,7 +2946,7 @@ function App() {
       title: 'Dinosaur Dash',
       detail: 'Gentle desert run',
       description: 'Jump through a soft desert loop when you want a little rhythm and play.',
-      icon: Cloud,
+      icon: DinosaurIcon,
       tone: 'from-orange-100 to-yellow-50 text-orange-700',
       component: <DinosaurDash difficulty={selectedGameDifficulty} />
     }
