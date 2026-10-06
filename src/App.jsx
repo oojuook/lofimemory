@@ -21,10 +21,8 @@ import {
   HeartHandshake,
   ImagePlus,
   Leaf,
-  LocateFixed,
   Lock,
   Mail,
-  MapPin,
   Moon,
   Newspaper,
   Paintbrush,
@@ -2561,6 +2559,7 @@ function App() {
   const [draggedPlannerTodoId, setDraggedPlannerTodoId] = useState(null);
   const [saveReward, setSaveReward] = useState('');
   const [selectedUnwindGame, setSelectedUnwindGame] = useState('drifting-leaf');
+  const [memoriesView, setMemoriesView] = useState('calendar');
   const showMinimalHomeOverview = activeTab === 'home' && activeHomeSection === 'overview';
   const homeEntryCards = [
     { id: 'unwind', title: 'Games', description: 'Chill games', icon: Gamepad2, iconTone: 'bg-[#d8dbff] text-violet-700', onClick: () => navigateToTab('unwind') },
@@ -6686,42 +6685,25 @@ function App() {
         {activeTab === 'memories' && (
         <div className="mt-6 grid gap-6 pb-24 lg:pb-0">
 
+          <div className="flex flex-wrap items-center justify-center gap-2 rounded-[1.6rem] border border-white/80 bg-white/78 p-2 shadow-sm backdrop-blur">
+            <button className={`rounded-full px-5 py-2.5 text-sm font-extrabold transition ${memoriesView === 'calendar' ? 'bg-sage-900 text-white shadow-sm' : 'text-sage-700 hover:bg-sage-50'}`} onClick={() => setMemoriesView('calendar')} type="button">Calendar</button>
+            <button className={`rounded-full px-5 py-2.5 text-sm font-extrabold transition ${memoriesView === 'archive' ? 'bg-sage-900 text-white shadow-sm' : 'text-sage-700 hover:bg-sage-50'}`} onClick={() => setMemoriesView('archive')} type="button">Positivity archive</button>
+          </div>
+
+          {memoriesView === 'calendar' && (
           <div className="overflow-hidden rounded-[2rem] border border-white/80 bg-gradient-to-br from-white/88 via-sage-50/68 to-sand-50/72 p-4 shadow-soft backdrop-blur sm:p-6 lg:p-8">
             <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.22em] text-sage-600 sm:text-sm sm:tracking-widest">Journal calendar</p>
-                <h2 className="mt-1 text-2xl font-extrabold text-ink sm:text-3xl">Keep the diary pages you want to revisit.</h2>
-                <p className="mt-2 text-sm font-semibold leading-7 text-sage-700">Mark meaningful dates, revisit saved pages, and return to entries that still matter when you want perspective later.</p>
+                <h2 className="mt-1 text-2xl font-extrabold text-ink sm:text-3xl">Memories</h2>
               </div>
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-3xl bg-white text-sage-700 shadow-sm">
                 <CalendarDays size={20} />
               </div>
             </div>
             <div className="mb-5 flex flex-wrap gap-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-sage-700 sm:text-xs sm:tracking-[0.18em]">
-              <span className="rounded-full border border-white/90 bg-white/88 px-3 py-2 shadow-sm">{importantDateCount} marked dates</span>
-              <span className="rounded-full border border-white/90 bg-white/88 px-3 py-2 shadow-sm">{upcomingReminderCount} upcoming reminders</span>
-              <span className="rounded-full border border-white/90 bg-white/88 px-3 py-2 shadow-sm">{selectedDateEntries.length} page{selectedDateEntries.length === 1 ? '' : 's'} on this day</span>
-            </div>
-            <div className="mb-4 rounded-[1.4rem] border border-white/85 bg-white/90 p-4 shadow-inner sm:p-5">
-              <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-                <div>
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Local forecast</p>
-                  <div className="mt-2 flex flex-wrap items-center gap-2 text-sm font-semibold text-sage-700">
-                    <span className="inline-flex items-center gap-2 rounded-full border border-sage-100 bg-sage-50 px-3 py-1.5">
-                      <MapPin size={14} /> {calendarForecastLocation || 'Near you'}
-                    </span>
-                    {selectedCalendarForecast && (
-                      <span className={`rounded-full px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.16em] ${selectedCalendarForecastVisuals.chipClass}`}>
-                        {selectedCalendarForecastVisuals.emoji} {selectedCalendarForecastVisuals.label} · {formatForecastTemperature(selectedCalendarForecast.maxTemp)} / {formatForecastTemperature(selectedCalendarForecast.minTemp)}
-                      </span>
-                    )}
-                  </div>
-                  <p className="mt-3 text-sm leading-6 text-sage-700">{calendarForecastStatus}</p>
-                </div>
-                <button className="inline-flex items-center justify-center gap-2 rounded-full border border-sage-200 bg-white px-4 py-2.5 text-sm font-extrabold text-sage-800 transition hover:bg-sage-50" onClick={loadCalendarForecast} type="button">
-                  <LocateFixed size={16} /> {calendarForecastPermission === 'granted' ? 'Refresh forecast' : 'Use my location'}
-                </button>
-              </div>
+              <span className="rounded-full border border-white/90 bg-white/88 px-3 py-2 shadow-sm">{importantDateCount} saved dates</span>
+              <span className="rounded-full border border-white/90 bg-white/88 px-3 py-2 shadow-sm">{upcomingReminderCount} reminders</span>
             </div>
             <div className="mb-4 rounded-[1.5rem] bg-white/82 p-2.5 shadow-inner sm:rounded-[1.75rem] sm:p-3">
               <div className="flex items-center justify-between gap-2 rounded-[1.2rem] bg-white/75 px-2 py-2 shadow-sm">
@@ -6934,7 +6916,9 @@ function App() {
               ) : <p className="mt-4 text-sm font-semibold leading-6 text-sage-700">No entry for this date yet. Pick this day as your next little check-in.</p>}
             </div>
           </div>
+          )}
 
+          {memoriesView === 'archive' && (
           <div className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-white/80 bg-gradient-to-br from-white/90 via-white/84 to-sand-50/72 p-4 shadow-soft backdrop-blur sm:p-6 lg:p-8">
             <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div className="flex items-center gap-3">
@@ -6992,6 +6976,7 @@ function App() {
               })}
             </div>
           </div>
+        )}
         </div>
         )}
       </section>

@@ -224,48 +224,49 @@ export default function MindSweeper({ difficulty = 'medium' }) {
   };
 
   const cellSizingClass = boardSize >= 12
-    ? 'h-6 w-6 text-[11px] sm:h-8 sm:w-8 sm:text-xs'
+    ? 'text-[11px] sm:text-xs'
     : boardSize >= 10
-      ? 'h-7 w-7 text-xs sm:h-9 sm:w-9 sm:text-sm'
-      : 'h-8 w-8 text-sm sm:h-10 sm:w-10 sm:text-base';
+      ? 'text-xs sm:text-sm'
+      : 'text-sm sm:text-base';
+  const cellPixelSize = boardSize >= 12 ? 32 : boardSize >= 10 ? 36 : 40;
 
   return (
     <div className="mx-auto mt-12 w-full max-w-[980px] pb-12">
-      <div className="rounded-[2rem] border-[3px] border-[#8f8f8f] bg-[#c9c9c9] p-4 shadow-[0_18px_45px_rgba(63,74,52,0.14)] lg:p-5">
-        <div className="rounded-[1.4rem] border-t-[3px] border-l-[3px] border-[#f8f8f8] border-r-[3px] border-b-[3px] border-r-[#7b7b7b] border-b-[#7b7b7b] bg-[#d4d4d4] p-4 lg:p-5">
+      <div className="rounded-[1.2rem] border-[4px] border-[#16191b] bg-[#2b2f31] p-4 shadow-[0_18px_45px_rgba(18,22,20,0.22)] lg:p-5">
+        <div className="rounded-[0.8rem] border-t-[3px] border-l-[3px] border-[#50565a] border-r-[3px] border-b-[3px] border-r-[#111315] border-b-[#111315] bg-[#383d40] p-4 lg:p-5">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/90 bg-[#efefef] px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#4e5a45] shadow-sm">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#5d6468] bg-[#2b2f31] px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#d9e0df] shadow-sm">
                 <Sparkles size={14} /> {label} sweep
               </div>
-              <h3 className="mt-4 text-3xl font-bold tracking-tight text-[#293125]">Mind Sweeper</h3>
-              <p className="mt-2 max-w-2xl text-sm leading-7 text-[#4a5643]">A retro desktop-style sweep that feels much closer to the classic Minesweeper board. Clear squares carefully, mark mines, and use the safer first click to settle into the board.</p>
+              <h3 className="mt-4 text-3xl font-bold tracking-tight text-[#f1f5f3]">Mind Sweeper</h3>
+              <p className="mt-2 max-w-2xl text-sm leading-7 text-[#c1cbc7]">Classic dark Minesweeper tiles with no spacing between squares.</p>
               <div className="mt-3 flex flex-wrap gap-2">
-                <span className="rounded-full border border-white bg-[#efefef] px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] text-[#4e5a45] shadow-sm">{densityLabel}</span>
-                <span className="rounded-full border border-white bg-[#efefef] px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] text-[#4e5a45] shadow-sm">First tap is always safe</span>
+                <span className="rounded-full border border-[#5d6468] bg-[#2b2f31] px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] text-[#d9e0df] shadow-sm">{densityLabel}</span>
+                <span className="rounded-full border border-[#5d6468] bg-[#2b2f31] px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] text-[#d9e0df] shadow-sm">Safe first tap</span>
               </div>
             </div>
-            <div className="grid gap-2 rounded-[1.2rem] border-t-[3px] border-l-[3px] border-[#f8f8f8] border-r-[3px] border-b-[3px] border-r-[#7b7b7b] border-b-[#7b7b7b] bg-[#d0d0d0] p-3 shadow-sm sm:grid-cols-4 lg:min-w-[31rem]">
-              <div className="rounded-[1rem] bg-[#efefef] px-4 py-3 text-center">
-                <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#6b6b6b]">Grid</p>
-                <p className="mt-2 text-xl font-extrabold text-[#222]">{boardSize}×{boardSize}</p>
+            <div className="grid gap-2 rounded-[0.8rem] border-t-[3px] border-l-[3px] border-[#50565a] border-r-[3px] border-b-[3px] border-r-[#111315] border-b-[#111315] bg-[#2b2f31] p-3 shadow-sm sm:grid-cols-4 lg:min-w-[31rem]">
+              <div className="rounded-[0.55rem] bg-[#1d2022] px-4 py-3 text-center">
+                <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#9fa9a5]">Grid</p>
+                <p className="mt-2 text-xl font-extrabold text-[#f1f5f3]">{boardSize}×{boardSize}</p>
               </div>
-              <div className="rounded-[1rem] bg-[#efefef] px-4 py-3 text-center">
-                <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#6b6b6b]">Mines</p>
-                <p className="mt-2 text-xl font-extrabold text-[#222]">{mineCount}</p>
+              <div className="rounded-[0.55rem] bg-[#1d2022] px-4 py-3 text-center">
+                <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#9fa9a5]">Mines</p>
+                <p className="mt-2 text-xl font-extrabold text-[#f1f5f3]">{mineCount}</p>
               </div>
-              <div className="rounded-[1rem] bg-[#efefef] px-4 py-3 text-center">
-                <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#6b6b6b]">Flags</p>
-                <p className="mt-2 text-xl font-extrabold text-[#222]">{flagCount}</p>
+              <div className="rounded-[0.55rem] bg-[#1d2022] px-4 py-3 text-center">
+                <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#9fa9a5]">Flags</p>
+                <p className="mt-2 text-xl font-extrabold text-[#f1f5f3]">{flagCount}</p>
               </div>
-              <div className="rounded-[1rem] bg-[#efefef] px-4 py-3 text-center">
-                <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#6b6b6b]">Wins</p>
-                <p className="mt-2 text-xl font-extrabold text-[#222]">{wins}</p>
+              <div className="rounded-[0.55rem] bg-[#1d2022] px-4 py-3 text-center">
+                <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#9fa9a5]">Wins</p>
+                <p className="mt-2 text-xl font-extrabold text-[#f1f5f3]">{wins}</p>
               </div>
             </div>
           </div>
 
-          <div className="mt-5 rounded-[1.25rem] border-t-[3px] border-l-[3px] border-[#f8f8f8] border-r-[3px] border-b-[3px] border-r-[#7b7b7b] border-b-[#7b7b7b] bg-[#bfbfbf] p-3 shadow-sm">
+          <div className="mt-5 rounded-[0.7rem] border-t-[3px] border-l-[3px] border-[#50565a] border-r-[3px] border-b-[3px] border-r-[#111315] border-b-[#111315] bg-[#222629] p-3 shadow-sm">
             <div className="grid gap-3 lg:grid-cols-[132px_minmax(0,1fr)_132px] lg:items-center">
               <div className="rounded-[0.9rem] border-[3px] border-[#2a2a2a] bg-black px-3 py-2 text-center font-mono text-3xl font-extrabold tracking-[0.18em] text-[#ff3b30] shadow-inner">
                 {String(remainingMines).padStart(3, '0')}
@@ -299,21 +300,22 @@ export default function MindSweeper({ difficulty = 'medium' }) {
                 {String(boardProgress).padStart(3, '0')}
               </div>
             </div>
-            <div className="mt-3 flex flex-wrap items-center justify-between gap-3 text-xs font-extrabold uppercase tracking-[0.18em] text-[#565656]">
+            <div className="mt-3 flex flex-wrap items-center justify-between gap-3 text-xs font-extrabold uppercase tracking-[0.18em] text-[#b7c1bd]">
               <span>{gameState === 'won' ? 'Board cleared' : gameState === 'lost' ? 'Mine popped' : 'Keep sweeping'}</span>
               <span>{revealedCount}/{safeTiles} safe cells open</span>
             </div>
           </div>
 
-          <div className="mt-5 overflow-x-auto rounded-none border-t-[4px] border-l-[4px] border-[#f8f8f8] border-r-[4px] border-b-[4px] border-r-[#7b7b7b] border-b-[#7b7b7b] bg-[#bdbdbd] p-2 text-center shadow-inner sm:p-2.5">
-            <div className="inline-grid gap-0 border border-[#8f8f8f]" style={{ gridTemplateColumns: `repeat(${boardSize}, max-content)` }}>
+          <div className="mt-5 overflow-x-auto rounded-none border-t-[4px] border-l-[4px] border-[#50565a] border-r-[4px] border-b-[4px] border-r-[#111315] border-b-[#111315] bg-[#24282a] p-2 text-center shadow-inner sm:p-2.5">
+            <div className="inline-grid gap-0 border-2 border-[#151719] bg-[#151719]" style={{ gridTemplateColumns: `repeat(${boardSize}, ${cellPixelSize}px)` }}>
               {board.flat().map((cell) => {
                 const showMine = cell.revealed && cell.mine;
                 const isHidden = !cell.revealed;
                 return (
                   <button
                     key={`${cell.row}-${cell.col}`}
-                    className={`flex items-center justify-center rounded-none font-extrabold leading-none transition ${cellSizingClass} ${isHidden ? 'border-t-[2px] border-l-[2px] border-r-[2px] border-b-[2px] border-t-white border-l-white border-r-[#7b7b7b] border-b-[#7b7b7b] bg-[#c7c7c7] active:border-t-[#7b7b7b] active:border-l-[#7b7b7b] active:border-r-white active:border-b-white' : 'border border-[#8f8f8f] bg-[#c6c6c6]'} ${showMine ? 'bg-[#f7c9c9] text-[#8b1111]' : ''} ${cell.flagged ? 'text-[#cf2d27]' : ''}`}
+                    className={`box-border m-0 flex items-center justify-center rounded-none p-0 font-extrabold leading-none transition ${cellSizingClass} ${isHidden ? 'border-t-[2px] border-l-[2px] border-r-[2px] border-b-[2px] border-t-[#7b8388] border-l-[#7b8388] border-r-[#16191b] border-b-[#16191b] bg-[#4f5559] active:border-t-[#16191b] active:border-l-[#16191b] active:border-r-[#7b8388] active:border-b-[#7b8388]' : 'border border-[#24282a] bg-[#303538]'} ${showMine ? 'bg-[#7b2424] text-[#ffd0d0]' : ''} ${cell.flagged ? 'text-[#ff4a43]' : ''}`}
+                    style={{ width: `${cellPixelSize}px`, height: `${cellPixelSize}px` }}
                     onClick={() => handleCellAction(cell.row, cell.col)}
                     onContextMenu={(event) => {
                       event.preventDefault();
