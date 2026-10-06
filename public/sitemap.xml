@@ -605,4 +605,29 @@
     <changefreq>weekly</changefreq>
     <priority>0.82</priority>
   </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/lofi-vibes.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.84</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/chill-vibes.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.84</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/place-to-chill-online.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.84</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/studying-with-lofi.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.84</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/mental-health-journal-online.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.84</priority>
+  </url>
 </urlset>
