@@ -5309,7 +5309,7 @@ function App() {
               </div>
             </div>
           </div>
-          <div className="site-nav-links mt-2 hidden flex-wrap items-center justify-center gap-2 rounded-[1.5rem] border border-sage-100 bg-white/88 p-1.5 lg:flex">
+          <div className="site-nav-links mt-2 hidden flex-wrap items-center justify-center gap-2 rounded-[1.5rem] border border-sage-100 bg-white/88 p-1.5 2xl:flex">
             <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#home" onClick={() => navigateToTab('home')}>Chill</a>
             <button className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" onClick={() => setCustomizerOpen(true)} type="button">Vibes</button>
             <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#unwind" onClick={() => navigateToTab('unwind')}>Games</a>
@@ -5324,7 +5324,7 @@ function App() {
       <section id="home" className="mx-auto max-w-[1040px] px-5 pb-20 pt-10 sm:px-7 xl:px-10">
         <div className="mb-6 text-center">
           <p className="text-[11px] font-extrabold uppercase tracking-[0.34em] text-[#9a806a]">Choose your chill space</p>
-          <p className="mt-3 text-sm font-semibold leading-7 text-[#7f6a58]">Pick the corner that fits your mood right now.</p>
+            <p className="mt-3 text-sm font-semibold leading-7 text-[#7f6a58]">Pick a space.</p>
         </div>
         <div className="rounded-[2rem] border border-white/90 bg-[linear-gradient(180deg,rgba(255,252,247,0.78),rgba(247,239,229,0.68))] p-3 shadow-[0_18px_52px_rgba(146,126,106,0.08)] backdrop-blur-xl sm:p-4">
           <div className="grid gap-3 md:grid-cols-2">
@@ -5342,7 +5342,6 @@ function App() {
                   </div>
                   <div>
                     <p className="text-lg font-extrabold text-[#3d3025]">{card.title}</p>
-                    <p className="text-sm font-semibold text-[#7c6856]">{card.description}</p>
                   </div>
                 </button>
               );
@@ -6129,7 +6128,7 @@ function App() {
             <div className="mb-10 text-center">
               <p className="mb-2 text-sm font-bold uppercase tracking-widest text-sage-600">Relax & Play</p>
               <h1 className="mb-3 font-display text-4xl font-bold tracking-tight text-sage-950">Pick a chill game</h1>
-              <p className="mx-auto max-w-2xl text-lg text-sage-700">Choose the kind of calm you want right now — drift, dodge, merge, match, slide, settle into sudoku, guess cozy words, type, solve clues, sweep, loop through snake, or jump through a soft offline desert run. The whole room stays cozy on mobile, wider on desktop, and easy to settle into with lofi music in the background.</p>
+              <p className="mx-auto max-w-xl text-base text-sage-700">Choose a game, set a difficulty, and play.</p>
             </div>
             <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
               {unwindGames.map((game) => (
@@ -6149,7 +6148,6 @@ function App() {
                     </span>
                   </div>
                   <GamePreview gameId={game.id} />
-                  <p className="mt-4 text-sm leading-relaxed text-sage-700">{game.description}</p>
                   <div className="mt-5 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.2em] text-sage-600">
                     {selectedUnwindGame === game.id ? 'Now playing' : 'Open game'}
                   </div>
@@ -6162,7 +6160,7 @@ function App() {
                   <div>
                     <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Game controls</p>
                     <h2 className="mt-2 text-2xl font-extrabold text-sage-950">{selectedUnwindGameConfig.title}</h2>
-                    <p className="mt-2 max-w-2xl text-sm leading-7 text-sage-700">{selectedUnwindGameConfig.description} Switch the difficulty right here, then keep playing on laptop, desktop, or mobile without leaving the game.</p>
+                    <p className="mt-2 max-w-2xl text-sm leading-7 text-sage-700">Set the difficulty, then play.</p>
                   </div>
                   <div className="flex w-full flex-col gap-2 xl:max-w-[28rem] xl:items-end">
                     <p className="text-[11px] font-extrabold uppercase tracking-[0.2em] text-sage-600">Difficulty in-game</p>

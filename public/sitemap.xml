@@ -585,4 +585,24 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/study-relaxing-website.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/keep-your-mind-free.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/chill-study-games.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/relaxing-study-break.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.82</priority>
+  </url>
 </urlset>

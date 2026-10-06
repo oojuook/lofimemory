@@ -224,10 +224,10 @@ export default function MindSweeper({ difficulty = 'medium' }) {
   };
 
   const cellSizingClass = boardSize >= 12
-    ? 'h-7 w-7 text-[11px] sm:h-9 sm:w-9 sm:text-xs'
+    ? 'h-6 w-6 text-[11px] sm:h-8 sm:w-8 sm:text-xs'
     : boardSize >= 10
-      ? 'h-8 w-8 text-xs sm:h-10 sm:w-10 sm:text-sm'
-      : 'h-9 w-9 text-sm sm:h-11 sm:w-11 sm:text-base';
+      ? 'h-7 w-7 text-xs sm:h-9 sm:w-9 sm:text-sm'
+      : 'h-8 w-8 text-sm sm:h-10 sm:w-10 sm:text-base';
 
   return (
     <div className="mx-auto mt-12 w-full max-w-[980px] pb-12">
@@ -305,15 +305,15 @@ export default function MindSweeper({ difficulty = 'medium' }) {
             </div>
           </div>
 
-          <div className="mt-5 rounded-[1.25rem] border-t-[4px] border-l-[4px] border-[#f8f8f8] border-r-[4px] border-b-[4px] border-r-[#7b7b7b] border-b-[#7b7b7b] bg-[#bdbdbd] p-2.5 shadow-inner sm:p-3">
-            <div className="grid gap-[2px] sm:gap-[3px]" style={{ gridTemplateColumns: `repeat(${boardSize}, minmax(0, 1fr))` }}>
+          <div className="mt-5 overflow-x-auto rounded-none border-t-[4px] border-l-[4px] border-[#f8f8f8] border-r-[4px] border-b-[4px] border-r-[#7b7b7b] border-b-[#7b7b7b] bg-[#bdbdbd] p-2 text-center shadow-inner sm:p-2.5">
+            <div className="inline-grid gap-0 border border-[#8f8f8f]" style={{ gridTemplateColumns: `repeat(${boardSize}, max-content)` }}>
               {board.flat().map((cell) => {
                 const showMine = cell.revealed && cell.mine;
                 const isHidden = !cell.revealed;
                 return (
                   <button
                     key={`${cell.row}-${cell.col}`}
-                    className={`flex items-center justify-center font-extrabold transition ${cellSizingClass} ${isHidden ? 'border-t-[2px] border-l-[2px] border-r-[2px] border-b-[2px] border-t-white border-l-white border-r-[#7b7b7b] border-b-[#7b7b7b] bg-[#c7c7c7] active:border-t-[#7b7b7b] active:border-l-[#7b7b7b] active:border-r-white active:border-b-white' : 'border border-[#9b9b9b] bg-[#d7d7d7]'} ${showMine ? 'bg-[#f7c9c9] text-[#8b1111]' : ''} ${cell.flagged ? 'text-[#cf2d27]' : ''}`}
+                    className={`flex items-center justify-center rounded-none font-extrabold leading-none transition ${cellSizingClass} ${isHidden ? 'border-t-[2px] border-l-[2px] border-r-[2px] border-b-[2px] border-t-white border-l-white border-r-[#7b7b7b] border-b-[#7b7b7b] bg-[#c7c7c7] active:border-t-[#7b7b7b] active:border-l-[#7b7b7b] active:border-r-white active:border-b-white' : 'border border-[#8f8f8f] bg-[#c6c6c6]'} ${showMine ? 'bg-[#f7c9c9] text-[#8b1111]' : ''} ${cell.flagged ? 'text-[#cf2d27]' : ''}`}
                     onClick={() => handleCellAction(cell.row, cell.col)}
                     onContextMenu={(event) => {
                       event.preventDefault();

@@ -4,19 +4,19 @@ import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Play, RotateCcw, Sparkles } 
 const difficultySettings = {
   easy: {
     cellCount: 14,
-    speedMs: 190,
+    speedMs: 150,
     label: 'Easy',
     note: 'Slower turns and a roomier board for an easier warm-up.'
   },
   medium: {
     cellCount: 16,
-    speedMs: 135,
+    speedMs: 105,
     label: 'Medium',
     note: 'A steadier classic snake pace with enough pressure to stay focused.'
   },
   hard: {
     cellCount: 18,
-    speedMs: 96,
+    speedMs: 78,
     label: 'Hard',
     note: 'Sharper turns and a faster rhythm for a more intense run.'
   }
@@ -94,7 +94,7 @@ export default function QuietSnake({ difficulty = 'medium' }) {
     const lastDirection = queuedTurns[queuedTurns.length - 1] || directionRef.current;
 
     if (
-      queuedTurns.length >= 2
+      queuedTurns.length >= 3
       || (lastDirection.x === next.x && lastDirection.y === next.y)
       || isReverseDirection(lastDirection, next)
     ) {

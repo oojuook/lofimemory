@@ -444,7 +444,11 @@ export default function DinosaurDash({ difficulty = 'medium' }) {
         if (state.obstacleCooldown <= 0) {
           const nextObstacle = createObstacle(state.score);
           state.obstacles.push(nextObstacle);
-          state.obstacleCooldown = randomBetween(config.spawnMin, config.spawnMax) + nextObstacle.width * 2.6 + Math.min(42, state.score * 0.04);
+          const variedGap = randomBetween(config.spawnMin, config.spawnMax)
+            + randomBetween(-70, 95)
+            + (Math.random() > 0.76 ? randomBetween(95, 185) : 0)
+            - (Math.random() > 0.84 ? randomBetween(35, 70) : 0);
+          state.obstacleCooldown = Math.max(config.spawnMin * 0.72, variedGap + nextObstacle.width * randomBetween(1.6, 3.4) + Math.min(42, state.score * 0.04));
         }
 
         const dinoHitbox = getDinoHitbox(state);
