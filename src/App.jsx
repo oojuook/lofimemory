@@ -2851,6 +2851,7 @@ function App() {
       description: 'A slow, floaty game for clearing your head before you write.',
       icon: SeedIcon,
       tone: 'from-emerald-100 to-sage-50 text-emerald-700',
+      playingSpace: 'max-w-[900px]',
       component: <ZenGame difficulty={selectedGameDifficulty} />
     },
     {
@@ -2860,6 +2861,7 @@ function App() {
       description: 'Hop through a calm lily-pad run when you want a little movement without the noise.',
       icon: FrogIcon,
       tone: 'from-sky-100 to-cyan-50 text-sky-700',
+      playingSpace: 'max-w-[1120px]',
       component: <StreamSurfer difficulty={selectedGameDifficulty} />
     },
     {
@@ -2869,6 +2871,7 @@ function App() {
       description: 'Slide a soft lofi scene back together for a relaxing puzzle break before journaling.',
       icon: ImagePlus,
       tone: 'from-emerald-100 via-amber-50 to-rose-50 text-emerald-700',
+      playingSpace: 'max-w-[1080px]',
       component: <LofiJigsaw difficulty={selectedGameDifficulty} />
     },
     {
@@ -2878,6 +2881,7 @@ function App() {
       description: 'Flip calm cards and settle in before journaling or just hanging out for a bit.',
       icon: Heart,
       tone: 'from-rose-100 to-orange-50 text-rose-700',
+      playingSpace: 'max-w-[1020px]',
       component: <LotusMatch difficulty={selectedGameDifficulty} />
     },
     {
@@ -2887,6 +2891,7 @@ function App() {
       description: 'Slide matching numbers together for the kind of calm puzzle loop people love in relaxing tile games.',
       icon: Grid2x2,
       tone: 'from-violet-100 to-slate-50 text-violet-700',
+      playingSpace: 'max-w-[820px]',
       component: <QuietTiles difficulty={selectedGameDifficulty} />
     },
     {
@@ -2896,6 +2901,7 @@ function App() {
       description: 'Stack colorful blocks, clear tidy rows, and enjoy a softer take on a classic arcade puzzle.',
       icon: TetrisIcon,
       tone: 'from-indigo-100 to-sky-50 text-indigo-700',
+      playingSpace: 'max-w-[1120px]',
       component: <QuietTetris difficulty={selectedGameDifficulty} />
     },
     {
@@ -2905,6 +2911,7 @@ function App() {
       description: 'Move tiles into place for the kind of familiar low-pressure sliding puzzle people love as a quick reset.',
       icon: Puzzle,
       tone: 'from-amber-100 to-stone-50 text-amber-700',
+      playingSpace: 'max-w-[860px]',
       component: <QuietSlide difficulty={selectedGameDifficulty} />
     },
     {
@@ -2914,6 +2921,7 @@ function App() {
       description: 'Settle into a cozy Sudoku board with gentle checking, reveal help, and a familiar number puzzle rhythm.',
       icon: SudokuHashIcon,
       tone: 'from-cyan-100 to-blue-50 text-cyan-700',
+      playingSpace: 'max-w-[980px]',
       component: <QuietSudoku difficulty={selectedGameDifficulty} />
     },
     {
@@ -2923,6 +2931,7 @@ function App() {
       description: 'Guess a cozy word in a gentle Wordle-style round when you want something familiar, tidy, and easy to replay.',
       icon: ScanText,
       tone: 'from-teal-100 to-sky-50 text-teal-700',
+      playingSpace: 'max-w-[780px]',
       component: <QuietWordle difficulty={selectedGameDifficulty} />
     },
     {
@@ -2932,6 +2941,7 @@ function App() {
       description: 'Unscramble soft words for a familiar word-game loop that keeps the focus light and relaxing.',
       icon: Type,
       tone: 'from-fuchsia-100 to-rose-50 text-fuchsia-700',
+      playingSpace: 'max-w-[860px]',
       component: <QuietWords difficulty={selectedGameDifficulty} />
     },
     {
@@ -2941,6 +2951,7 @@ function App() {
       description: 'Practice typing with calm prompts and find your own comfortable rhythm.',
       icon: Keyboard,
       tone: 'from-sky-100 to-indigo-50 text-sky-700',
+      playingSpace: 'max-w-[960px]',
       component: <TypingSpeedTest difficulty={selectedGameDifficulty} />
     },
     {
@@ -2950,6 +2961,7 @@ function App() {
       description: 'Solve one soft clue at a time for a beginner-friendly crossword mood without the stress of a full puzzle grid.',
       icon: Map,
       tone: 'from-amber-100 to-rose-50 text-amber-700',
+      playingSpace: 'max-w-[820px]',
       component: <QuietClues difficulty={selectedGameDifficulty} />
     },
     {
@@ -2959,6 +2971,7 @@ function App() {
       description: 'A cozy Minesweeper-style board for clearing your head one calm tile at a time.',
       icon: Flag,
       tone: 'from-lime-100 to-emerald-50 text-emerald-700',
+      playingSpace: 'max-w-[980px]',
       component: <MindSweeper difficulty={selectedGameDifficulty} />
     },
     {
@@ -2968,6 +2981,7 @@ function App() {
       description: 'A cozy snake run with clear turns, quick rounds, and a gentle retro feel.',
       icon: SnakeIcon,
       tone: 'from-emerald-100 to-lime-50 text-emerald-700',
+      playingSpace: 'max-w-[1040px]',
       component: <QuietSnake difficulty={selectedGameDifficulty} />
     },
     {
@@ -2977,6 +2991,7 @@ function App() {
       description: 'Stack cards in a cozy green-felt space, the perfect way to pause and reflect.',
       icon: PokerCardIcon,
       tone: 'from-emerald-800 to-teal-900 text-white',
+      playingSpace: 'max-w-[1180px]',
       component: <Solitaire difficulty={selectedGameDifficulty} />
     },
     {
@@ -2986,6 +3001,7 @@ function App() {
       description: 'Jump through a soft desert loop when you want a little rhythm and play.',
       icon: DinosaurIcon,
       tone: 'from-orange-100 to-yellow-50 text-orange-700',
+      playingSpace: 'max-w-[1060px]',
       component: <DinosaurDash difficulty={selectedGameDifficulty} />
     }
   ];
@@ -6356,7 +6372,7 @@ function App() {
                       </div>
                     </div>
                   </div>
-                  <div className="mt-4">{selectedUnwindGameConfig.component}</div>
+                  <div className={`mx-auto mt-5 w-full ${selectedUnwindGameConfig.playingSpace || 'max-w-[980px]'}`}>{selectedUnwindGameConfig.component}</div>
                 </div>
               </div>
             )}

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Play, RotateCcw, Sparkles } from 'lucide-react';
+import { Play, RotateCcw } from 'lucide-react';
 
 const SUITS = ['♠', '♥', '♦', '♣'];
 const RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
@@ -80,11 +80,14 @@ function canMoveToFoundation(card, foundation) {
 }
 
 function Card({ card, selected = false, compact = false, onClick }) {
+  const sizeClass = compact ? 'h-[4.35rem] w-[3rem] sm:h-[5.35rem] sm:w-[3.75rem]' : 'h-[5.35rem] w-[3.75rem] sm:h-24 sm:w-16';
+  const baseClass = `${sizeClass} shrink-0 rounded-[0.8rem] transition duration-200`;
+
   if (!card) {
     return (
       <button
         aria-label="Empty card slot"
-        className={`${compact ? 'h-16 w-11' : 'h-[4.8rem] w-14'} rounded-xl border-2 border-emerald-700/20 bg-emerald-900/15`}
+        className={`${baseClass} border-2 border-white/20 bg-emerald-950/16 shadow-inner`}
         onClick={onClick}
         type="button"
       />
@@ -95,12 +98,12 @@ function Card({ card, selected = false, compact = false, onClick }) {
     return (
       <button
         aria-label="Hidden card"
-        className={`${compact ? 'h-16 w-11' : 'h-[4.8rem] w-14'} rounded-xl border border-white/40 bg-gradient-to-br from-emerald-600 via-emerald-500 to-emerald-600 shadow-md ring-1 ring-emerald-400/50`}
+        className={`${baseClass} grid place-items-center border border-emerald-100/55 bg-[radial-gradient(circle_at_35%_25%,rgba(255,255,255,0.28),transparent_28%),linear-gradient(145deg,#0f8f50,#08733f_48%,#075a33)] shadow-[0_5px_12px_rgba(0,0,0,0.22)] ring-1 ring-emerald-300/30 hover:-translate-y-0.5`}
         onClick={onClick}
         type="button"
       >
-        <div className="mx-auto h-8 w-8 rounded-full border border-white/30 bg-white/10 flex items-center justify-center">
-          <span className="text-white/60 text-xs font-black">✦</span>
+        <div className="grid h-8 w-8 place-items-center rounded-full border border-white/35 bg-white/12 sm:h-10 sm:w-10">
+          <span className="text-sm font-black text-white/72">✦</span>
         </div>
       </button>
     );
@@ -108,17 +111,17 @@ function Card({ card, selected = false, compact = false, onClick }) {
 
   return (
     <button
-      className={`${compact ? 'h-16 w-11' : 'h-[4.8rem] w-14'} flex flex-col justify-between rounded-xl border-2 bg-white p-1 text-left font-black shadow-md transition hover:-translate-y-0.5 ${selected ? 'border-amber-400 scale-105 z-10' : 'border-white'} ${cardColor(card)}`}
+      className={`${baseClass} relative flex flex-col justify-between border bg-[#fffdf8] p-1.5 text-left font-black shadow-[0_5px_12px_rgba(0,0,0,0.22)] hover:-translate-y-0.5 ${selected ? 'z-20 -translate-y-1 border-amber-300 ring-4 ring-amber-200/80' : 'border-white/95'} ${cardColor(card)}`}
       onClick={onClick}
       type="button"
     >
-      <div className="flex flex-col gap-0.5 leading-none">
-        <span className="text-[11px]">{card.rank}</span>
-        <span className="text-[10px] opacity-80">{card.suit}</span>
+      <div className="flex flex-col leading-none">
+        <span className="text-[12px] sm:text-sm">{card.rank}</span>
+        <span className="text-[11px] opacity-85 sm:text-xs">{card.suit}</span>
       </div>
-      <span className="self-center text-xl leading-none">{card.suit}</span>
-      <div className="flex flex-col items-end gap-0.5 leading-none opacity-40 grayscale-[0.5]">
-         <span className="text-[9px]">{card.rank}</span>
+      <span className="self-center text-2xl leading-none sm:text-3xl">{card.suit}</span>
+      <div className="rotate-180 self-end leading-none opacity-55">
+        <span className="text-[12px] sm:text-sm">{card.rank}</span>
       </div>
     </button>
   );
@@ -298,56 +301,56 @@ export default function Solitaire({ difficulty = 'medium' }) {
   const wasteTop = game.waste[game.waste.length - 1];
 
   return (
-    <div className="mx-auto mt-12 w-full max-w-[1120px] pb-12">
-      <div className="overflow-hidden rounded-[2.25rem] border border-emerald-900/20 bg-[#0b6b3a] shadow-soft">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 bg-emerald-950/28 px-4 py-3 text-white sm:px-6">
+    <div className="mx-auto w-full pb-6 sm:pb-8">
+      <div className="overflow-hidden rounded-[1.8rem] border border-emerald-950/25 bg-[#0b6f3c] shadow-[0_22px_50px_rgba(8,69,38,0.28)]">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 bg-[#086133] px-4 py-3 text-white sm:px-6">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/12 text-xl shadow-inner">♣</div>
+            <div className="grid h-9 w-9 place-items-center rounded-full bg-white/14 text-lg shadow-inner">♣</div>
             <div>
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.24em] text-emerald-100/80">Google-style card table</p>
-              <h3 className="text-2xl font-black tracking-tight">Solitaire</h3>
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.22em] text-emerald-100/80">Clean card table</p>
+              <h3 className="font-display text-2xl font-black tracking-tight">Solitaire</h3>
             </div>
           </div>
-          <div className="flex flex-wrap items-center gap-2 text-[11px] font-black uppercase tracking-[0.18em]">
-            <button className="rounded-full bg-white/14 px-4 py-2 text-white shadow-sm transition hover:bg-white/22" onClick={resetGame} type="button">New</button>
-            <span className="rounded-full bg-white/14 px-4 py-2">{config.label}</span>
-            <span className="rounded-full bg-white/14 px-4 py-2">Moves {game.moves}</span>
-            <span className="rounded-full bg-white/14 px-4 py-2">Home {foundationCount}/52</span>
+          <div className="flex flex-wrap items-center gap-2 text-[11px] font-black uppercase tracking-[0.16em]">
+            <button className="rounded-full bg-white px-4 py-2 text-emerald-900 shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-50" onClick={resetGame} type="button">New</button>
+            <span className="rounded-full bg-white/13 px-4 py-2">{config.label}</span>
+            <span className="rounded-full bg-white/13 px-4 py-2">Moves {game.moves}</span>
+            <span className="rounded-full bg-white/13 px-4 py-2">Home {foundationCount}/52</span>
           </div>
         </div>
 
-        <div className="relative min-h-[520px] bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.16),transparent_42%),linear-gradient(135deg,#0a7a42,#085d34)] p-4 sm:p-6">
-          <div className="pointer-events-none absolute inset-0 opacity-[0.08]" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #ffffff 0 1px, transparent 1px 10px)' }} />
-          <div className="relative flex flex-col gap-6">
-            <div className="flex items-start justify-between gap-5">
-              <div className="flex gap-3">
+        <div className="relative min-h-[560px] overflow-x-auto bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.18),transparent_38%),linear-gradient(135deg,#0b7c43,#075b33)] p-4 sm:p-6 lg:p-8">
+          <div className="pointer-events-none absolute inset-0 opacity-[0.06]" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #ffffff 0 1px, transparent 1px 12px)' }} />
+          <div className="relative mx-auto flex min-w-[560px] max-w-[920px] flex-col gap-8">
+            <div className="flex items-start justify-between gap-6">
+              <div className="flex gap-4">
                 <div className="text-center">
                   {game.stock.length > 0 ? <Card card={{ id: 'stock', faceUp: false }} compact onClick={drawFromStock} /> : <Card compact onClick={drawFromStock} />}
-                  <span className="mt-1 block text-[10px] font-extrabold uppercase tracking-[0.16em] text-white/80">Deck {game.stock.length}</span>
+                  <span className="mt-2 block text-[10px] font-extrabold uppercase tracking-[0.16em] text-white/78">Deck {game.stock.length}</span>
                 </div>
                 <div className="text-center">
                   <Card card={wasteTop} compact selected={selected?.type === 'waste'} onClick={selectWaste} />
-                  <span className="mt-1 block text-[10px] font-extrabold uppercase tracking-[0.16em] text-white/80">Waste</span>
+                  <span className="mt-2 block text-[10px] font-extrabold uppercase tracking-[0.16em] text-white/78">Waste</span>
                 </div>
               </div>
 
-              <div className="flex flex-wrap justify-end gap-3">
+              <div className="flex justify-end gap-4">
                 {SUITS.map((suit) => {
                   const pile = game.foundations[suit];
                   const topCard = pile[pile.length - 1];
                   return (
                     <div key={suit} className="text-center">
                       <Card card={topCard} compact selected={selected?.type === 'foundation' && selected.suit === suit} onClick={() => selectFoundation(suit)} />
-                      <span className={`mt-1 block text-sm font-black ${isRed(suit) ? 'text-rose-100' : 'text-white/90'}`}>{suit}</span>
+                      <span className={`mt-2 block text-sm font-black ${isRed(suit) ? 'text-rose-100' : 'text-white/90'}`}>{suit}</span>
                     </div>
                   );
                 })}
               </div>
             </div>
 
-            <div className="grid grid-cols-7 gap-2 overflow-x-auto pb-4 sm:gap-4">
+            <div className="grid grid-cols-7 gap-3 pb-8 sm:gap-4 lg:gap-5">
               {game.tableau.map((column, columnIndex) => (
-                <div key={`column-${columnIndex + 1}`} className="min-w-[4rem] space-y-[-2rem] rounded-2xl bg-black/6 p-1 pb-14">
+                <div key={`column-${columnIndex + 1}`} className="min-h-[19rem] min-w-[3.6rem] space-y-[-2.45rem] rounded-[1.1rem] bg-emerald-950/10 p-1.5 pb-20 sm:space-y-[-2.85rem]">
                   {column.length === 0 ? (
                     <Card compact onClick={() => moveSelectedToTableau(columnIndex)} />
                   ) : column.map((card, cardIndex) => {
@@ -368,8 +371,8 @@ export default function Solitaire({ difficulty = 'medium' }) {
           </div>
         </div>
 
-        <div className="flex flex-col gap-3 bg-emerald-950/20 px-4 py-4 text-sm font-semibold text-emerald-50 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-          <p>{hasWon ? 'You cleared the full table — beautifully done.' : game.message}</p>
+        <div className="flex flex-col gap-3 bg-[#07542f] px-4 py-4 text-sm font-semibold text-emerald-50 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+          <p>{hasWon ? 'Done — you cleared the full table beautifully.' : game.message}</p>
           <button className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-extrabold text-emerald-900 shadow-sm transition hover:-translate-y-0.5" onClick={resetGame} type="button">
             {hasWon ? <Play size={16} /> : <RotateCcw size={16} />} {hasWon ? 'Play again' : 'Reset deck'}
           </button>
