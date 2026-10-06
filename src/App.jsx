@@ -2021,7 +2021,6 @@ function ThemeStudio({
   selectedDesign,
   customColor,
   quoteBg,
-  companion,
   journalStyle,
   quoteStyle,
   customWeatherName,
@@ -2035,7 +2034,6 @@ function ThemeStudio({
   onDesignChange,
   onCustomColorChange,
   onQuoteBgChange,
-  onCompanionChange,
   onAtmosphereApply,
   onCustomWeatherNameChange,
   onCustomWeatherEmojiChange,
@@ -2045,27 +2043,6 @@ function ThemeStudio({
   onAddCustomWeather,
   onDeleteCustomWeather
 }) {
-  const animationOptions = [
-    { id: 'breathe', label: 'Breathe' },
-    { id: 'bounce', label: 'Bounce' },
-    { id: 'float', label: 'Float' },
-    { id: 'wiggle', label: 'Wiggle' },
-    { id: 'spin', label: 'Spin' },
-    { id: 'wave', label: 'Wave' },
-    { id: 'none', label: 'Still' }
-  ];
-
-  function handleCompanionImage(event) {
-    const file = event.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      const safeUploadSize = file.type.startsWith('video/') ? 150 : 120;
-      onCompanionChange({ ...companion, character: String(reader.result || ''), size: safeUploadSize, leaf: '', x: 0, y: 0 });
-    };
-    reader.readAsDataURL(file);
-  }
-
   return (
     <div className={`customizer-shell fixed inset-y-0 right-0 z-30 flex transition ${isOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}>
       <div className={`fixed inset-0 bg-ink/20 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`} onClick={onClose} />
@@ -2244,75 +2221,6 @@ function ThemeStudio({
                   </div>
                 </div>
               )}
-            </div>
-
-            <div>
-              <div className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-sage-700"><Sparkles size={16} /> Quote companion</div>
-              <div className="grid gap-4 rounded-3xl border border-sage-100 bg-sage-50/70 p-5">
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <label className="block text-sm font-bold text-sage-800">
-                    Mascot emoji or character
-                    <input
-                      className="mt-2 w-full rounded-2xl border border-sage-100 bg-white px-4 py-3 text-base outline-none focus:border-sage-400"
-                      maxLength={4}
-                      onChange={(event) => onCompanionChange({ ...companion, character: event.target.value })}
-                      placeholder="🐭"
-                      value={companion.character?.startsWith('data:') ? '' : companion.character}
-                    />
-                  </label>
-                  <label className="block text-sm font-bold text-sage-800">
-                    Leaf / prop
-                    <input
-                      className="mt-2 w-full rounded-2xl border border-sage-100 bg-white px-4 py-3 text-base outline-none focus:border-sage-400"
-                      maxLength={4}
-                      onChange={(event) => onCompanionChange({ ...companion, leaf: event.target.value })}
-                      placeholder="🍃"
-                      value={companion.leaf}
-                    />
-                  </label>
-                </div>
-                <label className="block text-sm font-bold text-sage-800">
-                  Upload your own photo, GIF, or video to replace the mascot
-                  <label className="mt-2 flex cursor-pointer items-center justify-center rounded-2xl border border-dashed border-sage-300 bg-white px-4 py-4 text-sm font-bold text-sage-700 transition hover:border-sage-500 hover:text-sage-900">
-                    <ImagePlus size={16} className="mr-2" /> Choose image, GIF, or video
-                    <input accept="image/*,image/gif,video/*" className="hidden" onChange={handleCompanionImage} type="file" />
-                  </label>
-                </label>
-                <label className="block text-sm font-bold text-sage-800">
-                  Mascot size ({companion.size}px)
-                  <input className="mt-2 w-full cursor-pointer accent-sage-700" min="40" max="420" onChange={(event) => onCompanionChange({ ...companion, size: Number(event.target.value) })} type="range" value={companion.size} />
-                </label>
-                <div>
-                  <span className="block text-sm font-bold text-sage-800">Animation style</span>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {animationOptions.map((option) => (
-                      <button
-                        className={`rounded-full px-4 py-2 text-sm font-bold transition ${companion.animation === option.id ? 'bg-sage-900 text-white' : 'bg-white text-sage-800 shadow-sm hover:bg-sage-100'}`}
-                        key={option.id}
-                        onClick={() => onCompanionChange({ ...companion, animation: option.id })}
-                        type="button"
-                      >
-                        {option.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-3 pt-1">
-                  <label className="flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold text-sage-800 shadow-sm">
-                    <input checked={companion.rainEnabled} onChange={(event) => onCompanionChange({ ...companion, rainEnabled: event.target.checked })} type="checkbox" />
-                    Rain drops
-                  </label>
-                  <label className="flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold text-sage-800 shadow-sm">
-                    <input checked={companion.sootSpritesEnabled} onChange={(event) => onCompanionChange({ ...companion, sootSpritesEnabled: event.target.checked })} type="checkbox" />
-                    Soot sprites
-                  </label>
-                </div>
-                {companion.character?.startsWith('data:') && (
-                  <button className="w-full rounded-2xl bg-rose-50 px-4 py-3 text-sm font-extrabold text-rose-700 transition hover:bg-rose-100" onClick={() => onCompanionChange({ ...companion, character: '🐭' })} type="button">
-                    Remove custom photo
-                  </button>
-                )}
-              </div>
             </div>
           </div>
         </div>
@@ -5760,7 +5668,6 @@ function App() {
       )}
 
       <ThemeStudio
-        companion={companion}
         customColor={customColor}
         customWeatherEmoji={customWeatherEmoji}
         customWeatherImage={customWeatherImage}
@@ -5771,7 +5678,6 @@ function App() {
         onAtmosphereApply={applyJournalAtmosphere}
         onAddCustomWeather={addCustomWeather}
         onClose={() => setCustomizerOpen(false)}
-        onCompanionChange={setCompanion}
         onCustomColorChange={setCustomColor}
         onCustomWeatherEmojiChange={setCustomWeatherEmoji}
         onCustomWeatherImageUpload={handleWeatherImageUpload}
