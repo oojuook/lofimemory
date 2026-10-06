@@ -7,8 +7,8 @@ const difficultySettings = {
   easy: {
     startSpeed: 3.8,
     speedRamp: 0.14,
-    spawnFloor: 72,
-    spawnBase: 128,
+    spawnFloor: 48,
+    spawnBase: 84,
     moveEase: 0.25,
     label: 'Easy',
     note: 'Slower water and more room to glide around hazards.'
@@ -16,8 +16,8 @@ const difficultySettings = {
   medium: {
     startSpeed: 4.8,
     speedRamp: 0.22,
-    spawnFloor: 58,
-    spawnBase: 112,
+    spawnFloor: 36,
+    spawnBase: 72,
     moveEase: 0.2,
     label: 'Medium',
     note: 'Balanced and rhythmic for a steady little reset.'
@@ -25,8 +25,8 @@ const difficultySettings = {
   hard: {
     startSpeed: 7.1,
     speedRamp: 0.38,
-    spawnFloor: 46,
-    spawnBase: 92,
+    spawnFloor: 26,
+    spawnBase: 58,
     moveEase: 0.14,
     label: 'Hard',
     note: 'Much faster water, denser hazards, and tighter reactions for a sharper challenge.'
@@ -301,7 +301,7 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
           const lane = Math.floor(Math.random() * 3);
           state.obstacles.push({ lane, y: -62, passed: false });
           const safeGap = Math.max(config.spawnFloor, config.spawnBase - Math.floor(state.speed * 3));
-          state.spawnCooldown = Math.round(safeGap + randomBetween(22, 52));
+          state.spawnCooldown = Math.round(safeGap + randomBetween(8, 28));
         }
 
         if (state.frames % 300 === 0) {
