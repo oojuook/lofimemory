@@ -56,19 +56,43 @@ const sentencePassages = {
     'Soft rain taps the window while the room stays warm and quiet.',
     'A calm pond reflects the clouds as the evening slowly settles in.',
     'Warm tea and a gentle breeze can make a tired day feel lighter.',
-    'Cozy lights and soft music turn a short typing break into a calm ritual.'
+    'Cozy lights and soft music turn a short typing break into a calm ritual.',
+    'The little radio hums softly while you type one clean line at a time.',
+    'A sleepy cat curls beside the desk as the playlist keeps moving.',
+    'Golden light lands on the notebook and makes the page feel kind.',
+    'Tiny waves roll across the shore while your hands find a steady pace.',
+    'A quiet room can make simple words feel easier to follow.',
+    'The moon looks gentle tonight, and the keyboard feels calm.',
+    'Fresh flowers near the window make the morning feel softer.',
+    'Slow music helps each word arrive without needing to rush.'
   ],
   medium: [
     'The lilypad garden feels brighter when the rhythm stays steady and the page remains easy to read.',
     'A quiet desk and a clear mind can make each sentence feel smoother, lighter, and easier to finish.',
     'Gentle music, softer colors, and a calmer layout help typing practice feel more enjoyable over time.',
-    'When the interface feels simple and welcoming, longer passages become much easier to focus on.'
+    'When the interface feels simple and welcoming, longer passages become much easier to focus on.',
+    'The best study breaks feel small, useful, and calm enough to return from without losing focus.',
+    'A mellow beat in the background can turn ordinary typing practice into a peaceful little routine.',
+    'The city lights outside the window blur softly while the sentence waits for careful attention.',
+    'Good practice is not always fast; sometimes it is steady, accurate, and easy to repeat.',
+    'The page feels better when every button has space to breathe and every word has room to land.',
+    'A cozy browser corner can hold games, notes, and music without becoming noisy or distracting.',
+    'Each reset should bring a fresh prompt so practice feels new instead of repeating the same line.',
+    'Typing feels more natural when the sentence has a clear rhythm and a gentle visual flow.'
   ],
   hard: [
     'The atmosphere becomes more meditative when a longer passage asks for patience, cleaner spacing, and steady concentration from beginning to end.',
     'A responsive layout and a calmer background can transform sentence practice into a more restorative ritual, even when the words become more demanding.',
     'Comfortable typing often comes from repeating longer prompts until momentum, accuracy, and rhythm begin to harmonize naturally.',
-    'Storybook evenings and a mellow soundtrack can make sustained concentration feel beautifully consistent instead of tense or rushed.'
+    'Storybook evenings and a mellow soundtrack can make sustained concentration feel beautifully consistent instead of tense or rushed.',
+    'A minimal lofi workspace should feel expressive without becoming crowded, letting soft textures and warm colors support the user quietly.',
+    'When a game responds instantly to every key press, the experience feels fair, smooth, and much easier to enjoy for a longer session.',
+    'Imported wallpapers can change the whole mood of a page when the overlay, contrast, and card surfaces adapt together carefully.',
+    'A thoughtful interface keeps the most important action close by, hides unnecessary noise, and still leaves room for personal style.',
+    'Longer typing passages are useful because they reveal whether the rhythm, spacing, punctuation, and focus can stay consistent over time.',
+    'The quietest designs often require the most care, because every shadow, pause, animation, and word needs to earn its place.',
+    'A relaxing website should feel smooth on a phone, comfortable on a laptop, and spacious enough on a larger screen without changing its personality.',
+    'Lofi music, gentle games, private writing, and small reminders can work together when the whole page stays calm, readable, and responsive.'
   ]
 };
 

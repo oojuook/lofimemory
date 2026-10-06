@@ -4336,7 +4336,30 @@ function App() {
     const file = event.target.files?.[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = () => setWallpaperImage(String(reader.result || ''));
+    reader.onload = () => {
+      const rawImage = String(reader.result || '');
+      if (!rawImage || file.type === 'image/gif') {
+        setWallpaperImage(rawImage);
+        return;
+      }
+      const image = new Image();
+      image.onload = () => {
+        const maxSide = 1800;
+        const scale = Math.min(1, maxSide / Math.max(image.width, image.height));
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.max(1, Math.round(image.width * scale));
+        canvas.height = Math.max(1, Math.round(image.height * scale));
+        const context = canvas.getContext('2d');
+        if (!context) {
+          setWallpaperImage(rawImage);
+          return;
+        }
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        setWallpaperImage(canvas.toDataURL('image/jpeg', 0.86));
+      };
+      image.onerror = () => setWallpaperImage(rawImage);
+      image.src = rawImage;
+    };
     reader.readAsDataURL(file);
     event.target.value = '';
   }
@@ -5141,7 +5164,7 @@ function App() {
   }
 
   return (
-    <main className={`personalized-site lofi-vibe design-${selectedDesign} ${comfortMode ? 'comfort-mode' : ''} min-h-screen overflow-hidden bg-sand-50 pb-24 text-ink lg:pb-0`} style={themeStyle}>
+    <main className={`personalized-site lofi-vibe ${wallpaperImage ? 'wallpaper-active' : ''} design-${selectedDesign} ${comfortMode ? 'comfort-mode' : ''} isolate min-h-screen overflow-hidden bg-sand-50 pb-24 text-ink lg:pb-0`} style={themeStyle}>
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
         {wallpaperImage && <div className="lofi-user-wallpaper absolute inset-0" style={{ backgroundImage: `url(${wallpaperImage})` }} />}
         <div className="lofi-ambient-grid absolute inset-0" />

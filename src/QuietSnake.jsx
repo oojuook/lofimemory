@@ -70,16 +70,19 @@ export default function QuietSnake({ difficulty = 'medium' }) {
   const directionRef = useRef({ x: 1, y: 0 });
   const turnQueueRef = useRef([]);
   const [food, setFood] = useState(() => getRandomFood(config.cellCount, createInitialSnake(config.cellCount)));
+  const foodRef = useRef(food);
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(() => parseInt(localStorage.getItem(bestScoreKey) || '0', 10));
   const [gameState, setGameState] = useState('start');
 
   const resetGame = useCallback((nextState = 'start') => {
     const initialSnake = createInitialSnake(config.cellCount);
+    const nextFood = getRandomFood(config.cellCount, initialSnake);
     setSnake(initialSnake);
     directionRef.current = { x: 1, y: 0 };
     turnQueueRef.current = [];
-    setFood(getRandomFood(config.cellCount, initialSnake));
+    foodRef.current = nextFood;
+    setFood(nextFood);
     setScore(0);
     setBestScore(parseInt(localStorage.getItem(bestScoreKey) || '0', 10));
     setGameState(nextState);
@@ -105,9 +108,10 @@ export default function QuietSnake({ difficulty = 'medium' }) {
   }, []);
 
   const startGame = useCallback((openingDirection = null) => {
+    const validOpeningDirection = openingDirection && Number.isFinite(openingDirection.x) && Number.isFinite(openingDirection.y) ? openingDirection : null;
     resetGame('playing');
-    if (openingDirection && !isReverseDirection({ x: 1, y: 0 }, openingDirection)) {
-      turnQueueRef.current = [openingDirection];
+    if (validOpeningDirection && !isReverseDirection({ x: 1, y: 0 }, validOpeningDirection)) {
+      turnQueueRef.current = [validOpeningDirection];
     }
   }, [resetGame]);
 
@@ -158,7 +162,8 @@ export default function QuietSnake({ difficulty = 'medium' }) {
           x: (head.x + activeDirection.x + config.cellCount) % config.cellCount,
           y: (head.y + activeDirection.y + config.cellCount) % config.cellCount,
         };
-        const didEat = nextHead.x === food.x && nextHead.y === food.y;
+        const currentFood = foodRef.current;
+        const didEat = nextHead.x === currentFood.x && nextHead.y === currentFood.y;
         const hitSelf = currentSnake.some((segment, index) => {
           if (!didEat && index === currentSnake.length - 1) {
             return false;
@@ -186,7 +191,9 @@ export default function QuietSnake({ difficulty = 'medium' }) {
             }
             return nextScore;
           });
-          setFood(getRandomFood(config.cellCount, nextSnake));
+          const nextFood = getRandomFood(config.cellCount, nextSnake);
+          foodRef.current = nextFood;
+          setFood(nextFood);
         }
 
         return nextSnake;
@@ -194,7 +201,9 @@ export default function QuietSnake({ difficulty = 'medium' }) {
     }, config.speedMs);
 
     return () => window.clearInterval(intervalId);
-  }, [bestScoreKey, config.cellCount, config.speedMs, food, gameState]);
+  }, [bestScoreKey, config.cellCount, config.speedMs, gameState]);
+
+  const snakeCellSet = useMemo(() => new Set(snake.map((segment) => `${segment.x}-${segment.y}`)), [snake]);
 
   const cells = useMemo(() => Array.from({ length: config.cellCount * config.cellCount }, (_, index) => {
     const x = index % config.cellCount;
@@ -202,10 +211,10 @@ export default function QuietSnake({ difficulty = 'medium' }) {
     const key = `${x}-${y}`;
     const head = snake[0];
     const isHead = head?.x === x && head?.y === y;
-    const isSnake = snake.some((segment) => segment.x === x && segment.y === y);
+    const isSnake = snakeCellSet.has(key);
     const isFood = food.x === x && food.y === y;
     return { key, isFood, isHead, isSnake };
-  }), [config.cellCount, food, snake]);
+  }), [config.cellCount, food, snake, snakeCellSet]);
 
   const cellClass = config.cellCount >= 18 ? 'h-4 w-4 sm:h-5 sm:w-5' : config.cellCount >= 16 ? 'h-[1.125rem] w-[1.125rem] sm:h-[1.375rem] sm:w-[1.375rem]' : 'h-5 w-5 sm:h-6 sm:w-6';
 
@@ -266,7 +275,7 @@ export default function QuietSnake({ difficulty = 'medium' }) {
                     <p className="mt-3 text-sm leading-7 text-[#30412a]">{gameState === 'over' ? 'Loop again and keep the line clean for a longer run.' : 'Use the arrow keys or touch controls to chase the fruit and wrap through the board edges.'}</p>
                     <button
                       className="mt-5 inline-flex items-center gap-2 border-2 border-[#111111] bg-[#111111] px-5 py-3 text-sm font-extrabold text-[#f3f6ea] shadow-[4px_4px_0_rgba(17,17,17,0.16)] transition hover:-translate-y-0.5"
-                      onClick={startGame}
+                      onClick={() => startGame()}
                       type="button"
                     >
                       {gameState === 'over' ? <RotateCcw size={16} /> : <Play size={16} />} {gameState === 'over' ? 'Play again' : 'Start run'}

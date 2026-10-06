@@ -159,17 +159,24 @@ export default function DinosaurDash({ difficulty = 'medium' }) {
   const canvasRef = useRef(null);
   const stateRef = useRef(buildInitialState(config.startSpeed));
   const gameStateRef = useRef('start');
+  const scoreRef = useRef(0);
+  const bestScoreRef = useRef(parseInt(localStorage.getItem(bestScoreKey) || '0', 10));
+  const lastRenderedScoreRef = useRef(0);
 
   const [score, setScore] = useState(0);
-  const [bestScore, setBestScore] = useState(() => parseInt(localStorage.getItem(bestScoreKey) || '0', 10));
+  const [bestScore, setBestScore] = useState(() => bestScoreRef.current);
   const [gameState, setGameState] = useState('start');
 
   const resetToStart = useCallback(() => {
     stateRef.current = buildInitialState(config.startSpeed);
     gameStateRef.current = 'start';
     setGameState('start');
+    const storedBest = parseInt(localStorage.getItem(bestScoreKey) || '0', 10);
+    scoreRef.current = 0;
+    lastRenderedScoreRef.current = 0;
+    bestScoreRef.current = storedBest;
     setScore(0);
-    setBestScore(parseInt(localStorage.getItem(bestScoreKey) || '0', 10));
+    setBestScore(storedBest);
   }, [bestScoreKey, config.startSpeed]);
 
   useEffect(() => {
@@ -183,6 +190,8 @@ export default function DinosaurDash({ difficulty = 'medium' }) {
     }
     stateRef.current = freshState;
     gameStateRef.current = 'playing';
+    scoreRef.current = 0;
+    lastRenderedScoreRef.current = 0;
     setGameState('playing');
     setScore(0);
   }, [config.jumpVelocity, config.startSpeed]);
@@ -467,6 +476,7 @@ export default function DinosaurDash({ difficulty = 'medium' }) {
 
           if (gameStateRef.current === 'playing' && intersects(dinoHitbox, getObstacleHitbox(obstacle))) {
             gameStateRef.current = 'over';
+            setScore(scoreRef.current);
             setGameState('over');
           }
         });
@@ -476,7 +486,14 @@ export default function DinosaurDash({ difficulty = 'medium' }) {
         const nextScore = Math.floor(state.distance);
         if (nextScore !== state.score) {
           state.score = nextScore;
-          setScore(nextScore);
+          scoreRef.current = nextScore;
+          if (nextScore - lastRenderedScoreRef.current >= 5 || nextScore < 15) {
+            lastRenderedScoreRef.current = nextScore;
+            setScore(nextScore);
+          }
+          if (nextScore > bestScoreRef.current) {
+            bestScoreRef.current = nextScore;
+          }
         }
       }
 
@@ -496,16 +513,17 @@ export default function DinosaurDash({ difficulty = 'medium' }) {
         drawStandingDino(DINO_X, state.dinoY, state.frames);
       }
 
-      drawScoreboard(score, bestScore);
+      drawScoreboard(scoreRef.current, bestScoreRef.current);
       animationId = window.requestAnimationFrame(drawFrame);
     };
 
     animationId = window.requestAnimationFrame(drawFrame);
     return () => window.cancelAnimationFrame(animationId);
-  }, [bestScore, config.acceleration, config.fallBoost, config.gravity, config.maxSpeed, config.spawnMax, config.spawnMin, config.startSpeed, score]);
+  }, [config.acceleration, config.fallBoost, config.gravity, config.maxSpeed, config.spawnMax, config.spawnMin, config.startSpeed]);
 
   useEffect(() => {
     if (gameState === 'over' && score > bestScore) {
+      bestScoreRef.current = score;
       setBestScore(score);
       localStorage.setItem(bestScoreKey, String(score));
     }
