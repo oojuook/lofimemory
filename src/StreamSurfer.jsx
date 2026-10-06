@@ -23,13 +23,13 @@ const difficultySettings = {
     note: 'Balanced and rhythmic for a steady little reset.'
   },
   hard: {
-    startSpeed: 7.1,
-    speedRamp: 0.38,
-    spawnFloor: 26,
-    spawnBase: 58,
-    moveEase: 0.14,
+    startSpeed: 10.5,
+    speedRamp: 0.52,
+    spawnFloor: 18,
+    spawnBase: 42,
+    moveEase: 0.12,
     label: 'Hard',
-    note: 'Much faster water, denser hazards, and tighter reactions for a sharper challenge.'
+    note: 'Extreme water speed, rapid hazards, and very tight lilypad spacing for a high-focus challenge.'
   }
 };
 
@@ -300,8 +300,8 @@ export default function StreamSurfer({ difficulty = 'medium' }) {
         if (state.spawnCooldown <= 0) {
           const lane = Math.floor(Math.random() * 3);
           state.obstacles.push({ lane, y: -62, passed: false });
-          const safeGap = Math.max(config.spawnFloor, config.spawnBase - Math.floor(state.speed * 3));
-          state.spawnCooldown = Math.round(safeGap + randomBetween(8, 28));
+          const safeGap = Math.max(config.spawnFloor, config.spawnBase - Math.floor(state.speed * 3.5));
+          state.spawnCooldown = Math.round(safeGap + randomBetween(4, 18));
         }
 
         if (state.frames % 300 === 0) {

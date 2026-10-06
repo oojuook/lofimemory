@@ -1067,8 +1067,14 @@ input::placeholder {
 }
 
 @keyframes gamePreviewSlide {
-  from { transform: translateX(20px); opacity: 0; }
-  to { transform: translateX(-120px); opacity: 1; }
+  from { transform: scale(1); opacity: 1; }
+  to { transform: scale(1.05) translateY(-2px); opacity: 0.95; }
+}
+
+@keyframes jigsawTileNudge {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(4px, -2px); }
+  100% { transform: translate(0, 0); }
 }
 
 .site-ui-fade-in {

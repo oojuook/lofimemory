@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { ImagePlus, RotateCcw, Sparkles } from 'lucide-react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { ImagePlus, RotateCcw, Sparkles, Timer } from 'lucide-react';
 
 const difficultySettings = {
   easy: {
@@ -22,7 +22,7 @@ const difficultySettings = {
   }
 };
 
-const JIGSAW_WALLPAPER = '/lofi-jigsaw-wallpaper.webp';
+const JIGSAW_WALLPAPER = '/lofi-jigsaw-wallpaper.png';
 
 function buildSolvedBoard(size) {
   const total = size * size;
@@ -68,6 +68,12 @@ function getMoveLabel(moves) {
   return `${moves} soft moves`;
 }
 
+function formatTime(totalSeconds) {
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes}:${String(seconds).padStart(2, '0')}`;
+}
+
 function TileArtwork({ tile, size }) {
   if (tile === null) return null;
 
@@ -100,14 +106,33 @@ export default function LofiJigsaw({ difficulty = 'medium' }) {
   const [board, setBoard] = useState(() => shuffleBoard(size, shuffleMoves));
   const [moves, setMoves] = useState(0);
   const [status, setStatus] = useState('playing');
+  const [time, setTime] = useState(0);
   const [bestScore, setBestScore] = useState(() => parseInt(localStorage.getItem(bestScoreKey) || '0', 10));
+
+  const timerRef = useRef(null);
 
   useEffect(() => {
     setBoard(shuffleBoard(size, shuffleMoves));
     setMoves(0);
     setStatus('playing');
+    setTime(0);
     setBestScore(parseInt(localStorage.getItem(bestScoreKey) || '0', 10));
+
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setTime((t) => t + 1);
+    }, 1000);
+
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
   }, [size, shuffleMoves, bestScoreKey]);
+
+  useEffect(() => {
+    if (status === 'won' && timerRef.current) {
+      clearInterval(timerRef.current);
+    }
+  }, [status]);
 
   const emptyIndex = board.indexOf(null);
   const neighborSet = useMemo(() => new Set(getNeighbors(emptyIndex, size)), [emptyIndex, size]);
@@ -117,6 +142,11 @@ export default function LofiJigsaw({ difficulty = 'medium' }) {
     setBoard(shuffleBoard(size, shuffleMoves));
     setMoves(0);
     setStatus('playing');
+    setTime(0);
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setTime((t) => t + 1);
+    }, 1000);
     setBestScore(parseInt(localStorage.getItem(bestScoreKey) || '0', 10));
   };
 
@@ -162,8 +192,8 @@ export default function LofiJigsaw({ difficulty = 'medium' }) {
               <p className="mt-2 text-xl font-extrabold text-sage-950">{moves}</p>
             </div>
             <div className="rounded-[1.15rem] bg-sage-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sage-500">Pieces</p>
-              <p className="mt-2 text-xl font-extrabold text-sage-950">{totalTiles}</p>
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sage-500 inline-flex items-center justify-center gap-1"><Timer size={11} /> Time</p>
+              <p className="mt-2 text-xl font-extrabold text-sage-950">{formatTime(time)}</p>
             </div>
             <div className="rounded-[1.15rem] bg-sage-50 px-4 py-3 text-center">
               <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sage-500">Best</p>
@@ -173,7 +203,10 @@ export default function LofiJigsaw({ difficulty = 'medium' }) {
         </div>
 
         <div className="mt-5 flex flex-col gap-3 rounded-[1.6rem] border border-white/80 bg-white/72 p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between">
-          <p className="text-sm font-semibold text-sage-700">{solved ? 'The whole scene is back together — soft work.' : `Tap a piece beside the empty space to slide it. ${getMoveLabel(moves)} so far.`}</p>
+          <div className="flex items-center gap-3">
+             {solved && <div className="flex h-8 items-center gap-2 rounded-full bg-emerald-100 px-3 py-1 text-xs font-black uppercase tracking-widest text-emerald-800 shadow-sm animate-bounce">Done!</div>}
+             <p className="text-sm font-semibold text-sage-700">{solved ? 'The whole scene is back together — soft work.' : `Tap a piece beside the empty space to slide it. ${getMoveLabel(moves)} so far.`}</p>
+          </div>
           <button
             className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5"
             onClick={resetPuzzle}
@@ -192,7 +225,8 @@ export default function LofiJigsaw({ difficulty = 'medium' }) {
               <button
                 key={`${tile ?? 'empty'}-${index}`}
                 aria-label={tile === null ? 'Empty jigsaw space' : `Move puzzle piece ${tile + 1}`}
-                className={`aspect-square rounded-[1.15rem] border text-left shadow-sm transition ${tile === null ? 'border-dashed border-sage-200 bg-sage-50/60' : neighborSet.has(index) && !solved ? 'border-white/90 bg-white hover:-translate-y-0.5 hover:shadow-lift' : 'border-white/80 bg-white/86'} ${solved ? 'ring-2 ring-emerald-200' : ''}`}
+                className={`aspect-square rounded-[1.15rem] border text-left shadow-sm transition-all duration-300 ease-out ${tile === null ? 'border-dashed border-sage-200 bg-sage-50/60' : neighborSet.has(index) && !solved ? 'border-white/90 bg-white hover:-translate-y-0.5 hover:shadow-lift' : 'border-white/80 bg-white/86'} ${solved ? 'ring-2 ring-emerald-200' : ''}`}
+                style={neighborSet.has(index) && !solved ? { animation: 'jigsawTileNudge 3.2s infinite ease-in-out' } : undefined}
                 disabled={tile === null || solved || !neighborSet.has(index)}
                 onClick={() => moveTile(index)}
                 type="button"

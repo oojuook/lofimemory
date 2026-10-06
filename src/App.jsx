@@ -1639,12 +1639,23 @@ function GamePreview({ gameId }) {
   if (gameId === 'lofi-jigsaw') {
     return (
       <div className={shellClass}>
-        <div className="grid h-20 grid-cols-4 gap-1 rounded-[1rem] bg-gradient-to-br from-emerald-100 via-amber-50 to-rose-50 p-2">
-          {[0, 1, 2, 3, 4, '', 5, 6, 7, 8, 9, 10].map((tile, i) => (
-            <div key={i} className={`rounded-md border ${tile === '' ? 'border-dashed border-sage-200 bg-white/30' : 'border-white/70 bg-gradient-to-br from-white/85 to-sage-100/60 shadow-sm'} flex items-center justify-center text-[8px] font-black text-sage-700`}>
-              {tile !== '' ? '▣' : ''}
-            </div>
-          ))}
+        <div className="grid h-20 grid-cols-4 gap-1 rounded-[1rem] bg-sage-100 p-2 overflow-hidden relative">
+          {[0, 1, 2, 3, 4, '', 5, 6, 7, 8, 9, 10].map((tile, i) => {
+            const row = tile === '' ? 1 : Math.floor(tile / 4);
+            const col = tile === '' ? 1 : tile % 4;
+            return (
+              <div
+                key={i}
+                className={`rounded-md border ${tile === '' ? 'border-dashed border-sage-200 bg-white/30' : 'border-white/70 bg-cover shadow-sm'} flex items-center justify-center text-[8px] font-black text-white transition-transform duration-1000 ease-in-out`}
+                style={tile === '' ? {} : {
+                  backgroundImage: 'url(/lofi-jigsaw-wallpaper.png)',
+                  backgroundSize: '400% 300%',
+                  backgroundPosition: `${col * 33.33}% ${row * 50}%`,
+                  animation: tile === 4 ? 'jigsawTileNudge 3s infinite ease-in-out' : (tile === 5 ? 'jigsawTileNudge 3s infinite ease-in-out reverse' : undefined)
+                }}
+              />
+            );
+          })}
         </div>
       </div>
     );

@@ -84,7 +84,7 @@ function Card({ card, selected = false, compact = false, onClick }) {
     return (
       <button
         aria-label="Empty card slot"
-        className={`${compact ? 'h-16 w-11' : 'h-[4.8rem] w-14'} rounded-xl border border-dashed border-violet-200 bg-white/38`}
+        className={`${compact ? 'h-16 w-11' : 'h-[4.8rem] w-14'} rounded-xl border-2 border-emerald-700/20 bg-emerald-900/15`}
         onClick={onClick}
         type="button"
       />
@@ -95,24 +95,31 @@ function Card({ card, selected = false, compact = false, onClick }) {
     return (
       <button
         aria-label="Hidden card"
-        className={`${compact ? 'h-16 w-11' : 'h-[4.8rem] w-14'} rounded-xl border border-violet-200 bg-gradient-to-br from-violet-200 via-sky-100 to-white shadow-sm ring-1 ring-white/70`}
+        className={`${compact ? 'h-16 w-11' : 'h-[4.8rem] w-14'} rounded-xl border border-white/40 bg-gradient-to-br from-emerald-600 via-emerald-500 to-emerald-600 shadow-md ring-1 ring-emerald-400/50`}
         onClick={onClick}
         type="button"
       >
-        <span className="text-lg text-violet-500">✦</span>
+        <div className="mx-auto h-8 w-8 rounded-full border border-white/30 bg-white/10 flex items-center justify-center">
+          <span className="text-white/60 text-xs font-black">✦</span>
+        </div>
       </button>
     );
   }
 
   return (
     <button
-      className={`${compact ? 'h-16 w-11' : 'h-[4.8rem] w-14'} flex flex-col justify-between rounded-xl border bg-white px-2 py-1.5 text-left font-extrabold shadow-sm transition hover:-translate-y-0.5 ${selected ? 'border-violet-500 ring-4 ring-violet-200' : 'border-white/80'} ${cardColor(card)}`}
+      className={`${compact ? 'h-16 w-11' : 'h-[4.8rem] w-14'} flex flex-col justify-between rounded-xl border-2 bg-white p-1 text-left font-black shadow-md transition hover:-translate-y-0.5 ${selected ? 'border-amber-400 scale-105 z-10' : 'border-white'} ${cardColor(card)}`}
       onClick={onClick}
       type="button"
     >
-      <span className="text-sm leading-none">{card.rank}</span>
+      <div className="flex flex-col gap-0.5 leading-none">
+        <span className="text-[11px]">{card.rank}</span>
+        <span className="text-[10px] opacity-80">{card.suit}</span>
+      </div>
       <span className="self-center text-xl leading-none">{card.suit}</span>
-      <span className="self-end text-sm leading-none">{card.rank}</span>
+      <div className="flex flex-col items-end gap-0.5 leading-none opacity-40 grayscale-[0.5]">
+         <span className="text-[9px]">{card.rank}</span>
+      </div>
     </button>
   );
 }
@@ -291,82 +298,79 @@ export default function Solitaire({ difficulty = 'medium' }) {
   const wasteTop = game.waste[game.waste.length - 1];
 
   return (
-    <div className="mx-auto mt-12 w-full max-w-[1080px] pb-12">
-      <div className="rounded-[2rem] border border-amber-100 bg-gradient-to-br from-white via-amber-50/78 to-rose-50/70 p-5 shadow-soft lg:p-6">
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-          <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-white/88 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-amber-700 shadow-sm">
-              <Sparkles size={14} /> {config.label} card flow
+    <div className="mx-auto mt-12 w-full max-w-[1120px] pb-12">
+      <div className="overflow-hidden rounded-[2.25rem] border border-emerald-900/20 bg-[#0b6b3a] shadow-soft">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 bg-emerald-950/28 px-4 py-3 text-white sm:px-6">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/12 text-xl shadow-inner">♣</div>
+            <div>
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.24em] text-emerald-100/80">Google-style card table</p>
+              <h3 className="text-2xl font-black tracking-tight">Solitaire</h3>
             </div>
-            <h3 className="mt-4 text-3xl font-bold tracking-tight text-amber-950">Solitaire</h3>
-            <p className="mt-2 max-w-2xl text-sm leading-7 text-amber-800">A calm Klondike-style solitaire table for slower card sorting. Click a card to pick it up, then click a column or foundation to place it.</p>
-            <p className="mt-2 text-sm font-semibold text-amber-700">{config.note}</p>
           </div>
-          <div className="grid gap-2 rounded-[1.5rem] border border-white/85 bg-white/80 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[25rem]">
-            <div className="rounded-[1.15rem] bg-amber-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-amber-600">Moves</p>
-              <p className="mt-2 text-xl font-extrabold text-amber-950">{game.moves}</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-amber-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-amber-600">Home</p>
-              <p className="mt-2 text-xl font-extrabold text-amber-950">{foundationCount}/52</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-amber-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-amber-600">Draw</p>
-              <p className="mt-2 text-xl font-extrabold text-amber-950">{config.drawCount}</p>
-            </div>
+          <div className="flex flex-wrap items-center gap-2 text-[11px] font-black uppercase tracking-[0.18em]">
+            <button className="rounded-full bg-white/14 px-4 py-2 text-white shadow-sm transition hover:bg-white/22" onClick={resetGame} type="button">New</button>
+            <span className="rounded-full bg-white/14 px-4 py-2">{config.label}</span>
+            <span className="rounded-full bg-white/14 px-4 py-2">Moves {game.moves}</span>
+            <span className="rounded-full bg-white/14 px-4 py-2">Home {foundationCount}/52</span>
           </div>
         </div>
 
-        <div className="mt-6 rounded-[1.8rem] border border-white/80 bg-emerald-900/90 p-4 shadow-inner sm:p-5">
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-            <div className="flex gap-3">
-              <div className="relative">
-                {game.stock.length > 0 ? <Card card={{ id: 'stock', faceUp: false }} compact onClick={drawFromStock} /> : <Card compact onClick={drawFromStock} />}
-                <span className="mt-1 block text-center text-[10px] font-extrabold uppercase tracking-[0.16em] text-white/80">Deck {game.stock.length}</span>
+        <div className="relative min-h-[520px] bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.16),transparent_42%),linear-gradient(135deg,#0a7a42,#085d34)] p-4 sm:p-6">
+          <div className="pointer-events-none absolute inset-0 opacity-[0.08]" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #ffffff 0 1px, transparent 1px 10px)' }} />
+          <div className="relative flex flex-col gap-6">
+            <div className="flex items-start justify-between gap-5">
+              <div className="flex gap-3">
+                <div className="text-center">
+                  {game.stock.length > 0 ? <Card card={{ id: 'stock', faceUp: false }} compact onClick={drawFromStock} /> : <Card compact onClick={drawFromStock} />}
+                  <span className="mt-1 block text-[10px] font-extrabold uppercase tracking-[0.16em] text-white/80">Deck {game.stock.length}</span>
+                </div>
+                <div className="text-center">
+                  <Card card={wasteTop} compact selected={selected?.type === 'waste'} onClick={selectWaste} />
+                  <span className="mt-1 block text-[10px] font-extrabold uppercase tracking-[0.16em] text-white/80">Waste</span>
+                </div>
               </div>
-              <Card card={wasteTop} compact selected={selected?.type === 'waste'} onClick={selectWaste} />
-            </div>
 
-            <div className="flex flex-wrap gap-3">
-              {SUITS.map((suit) => {
-                const pile = game.foundations[suit];
-                const topCard = pile[pile.length - 1];
-                return (
-                  <div key={suit} className="text-center">
-                    <Card card={topCard} compact selected={selected?.type === 'foundation' && selected.suit === suit} onClick={() => selectFoundation(suit)} />
-                    <span className={`mt-1 block text-sm font-extrabold ${isRed(suit) ? 'text-rose-200' : 'text-white/85'}`}>{suit}</span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="mt-6 grid grid-cols-7 gap-2 overflow-x-auto pb-2 sm:gap-3">
-            {game.tableau.map((column, columnIndex) => (
-              <div key={`column-${columnIndex + 1}`} className="min-w-[4rem] space-y-[-2rem] rounded-2xl bg-white/8 p-1.5 pb-10">
-                {column.length === 0 ? (
-                  <Card compact onClick={() => moveSelectedToTableau(columnIndex)} />
-                ) : column.map((card, cardIndex) => {
-                  const isSelected = selectedKey === `tableau-${columnIndex}-${cardIndex}`;
+              <div className="flex flex-wrap justify-end gap-3">
+                {SUITS.map((suit) => {
+                  const pile = game.foundations[suit];
+                  const topCard = pile[pile.length - 1];
                   return (
-                    <Card
-                      card={card}
-                      compact
-                      key={card.id}
-                      selected={isSelected}
-                      onClick={() => selectTableauCard(columnIndex, cardIndex)}
-                    />
+                    <div key={suit} className="text-center">
+                      <Card card={topCard} compact selected={selected?.type === 'foundation' && selected.suit === suit} onClick={() => selectFoundation(suit)} />
+                      <span className={`mt-1 block text-sm font-black ${isRed(suit) ? 'text-rose-100' : 'text-white/90'}`}>{suit}</span>
+                    </div>
                   );
                 })}
               </div>
-            ))}
+            </div>
+
+            <div className="grid grid-cols-7 gap-2 overflow-x-auto pb-4 sm:gap-4">
+              {game.tableau.map((column, columnIndex) => (
+                <div key={`column-${columnIndex + 1}`} className="min-w-[4rem] space-y-[-2rem] rounded-2xl bg-black/6 p-1 pb-14">
+                  {column.length === 0 ? (
+                    <Card compact onClick={() => moveSelectedToTableau(columnIndex)} />
+                  ) : column.map((card, cardIndex) => {
+                    const isSelected = selectedKey === `tableau-${columnIndex}-${cardIndex}`;
+                    return (
+                      <Card
+                        card={card}
+                        compact
+                        key={card.id}
+                        selected={isSelected}
+                        onClick={() => selectTableauCard(columnIndex, cardIndex)}
+                      />
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        <div className="mt-4 flex flex-col gap-3 rounded-[1.4rem] border border-amber-100 bg-white/86 p-4 text-sm font-semibold text-amber-800 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 bg-emerald-950/20 px-4 py-4 text-sm font-semibold text-emerald-50 sm:flex-row sm:items-center sm:justify-between sm:px-6">
           <p>{hasWon ? 'You cleared the full table — beautifully done.' : game.message}</p>
-          <button className="inline-flex items-center justify-center gap-2 rounded-full bg-amber-900 px-5 py-3 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-amber-800" onClick={resetGame} type="button">
+          <button className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-extrabold text-emerald-900 shadow-sm transition hover:-translate-y-0.5" onClick={resetGame} type="button">
             {hasWon ? <Play size={16} /> : <RotateCcw size={16} />} {hasWon ? 'Play again' : 'Reset deck'}
           </button>
         </div>
