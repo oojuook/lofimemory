@@ -3,413 +3,121 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-    <title>Lofi Music, Chill Vibes & Relaxing Online Space Blog | Lofi Memory</title>
-    <meta name="description" content="Explore lofi music, relaxing online spaces, chill vibes, study breaks, private journaling, and cozy games inside Lofi Memory." />
+    <title>Lofi Memory Blog | Calm Music, Journaling, Relaxation & Cozy Game Reads</title>
+    <meta name="description" content="Read original Lofi Memory articles about private journaling, relaxation, sleep, digital focus, and cozy game breaks in one calmer blog hub." />
+    <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://lofimemory.vercel.app/blog.html" />
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6094559377350805" crossorigin="anonymous"></script>
     <style>
-      body { font-family: 'Inter', sans-serif; background-color: #f7f9f7; color: #1e2926; margin: 0; padding: 0; }
-      .nav-header { padding: 20px; text-align: center; }
-      .nav-header a { text-decoration: none; color: #31442c; font-weight: 700; font-size: 1.25rem; display: inline-flex; align-items: center; gap: 10px;}
-      .nav-logo { display:inline-flex; width:34px; height:34px; border-radius:12px; align-items:center; justify-content:center; background:#fff; box-shadow:0 6px 18px rgba(49,68,44,.08); font-size:18px; }
-      .landing-container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
-      h1 { font-size: 2.5rem; font-weight: 800; color: #1e2926; margin-bottom: 10px; text-align: center; }
-      .subtitle { text-align: center; font-size: 1.1rem; color: #45643b; margin-bottom: 50px; }
-      .grid { display: grid; gap: 20px; grid-template-columns: 1fr; }
-      @media (min-width: 768px) { .grid { grid-template-columns: 1fr 1fr; } }
-      .card { background: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.7); border-radius: 24px; padding: 30px; text-decoration: none; display: block; transition: transform 0.2s, background 0.2s; box-shadow: 0 4px 20px rgba(0,0,0,0.03); backdrop-filter: blur(10px); }
-      .card:hover { transform: translateY(-4px); background: #ffffff; }
-      .card-tag { display: inline-block; background: #31442c; color: white; padding: 4px 12px; border-radius: 99px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; }
-      .card h3 { color: #1e2926; font-size: 1.35rem; margin: 0 0 10px; font-weight: 800; }
-      .card p { color: #3a5133; font-size: 0.95rem; line-height: 1.6; margin: 0; }
-      .topic-strip { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin: -30px auto 36px; }
-      .topic-strip a { border:1px solid rgba(49,68,44,.16); background:rgba(255,255,255,.72); color:#31442c; border-radius:999px; padding:9px 14px; text-decoration:none; font-size:.86rem; font-weight:800; }
-      .section-title { grid-column:1/-1; margin: 34px 0 16px; font-size: 1rem; color:#31442c; text-transform:uppercase; letter-spacing:.16em; font-weight:900; }
+      :root { color-scheme: light; --bg:#f7f9f7; --ink:#1e2926; --muted:#5b6d64; --panel:rgba(255,255,255,.92); --border:rgba(255,255,255,.84); --shadow:0 18px 44px rgba(43,61,49,.08); --sage:#284a3a; --sage-soft:#e7f0ea; --peach:#f7ede4; }
+      * { box-sizing:border-box; }
+      body { margin:0; font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:linear-gradient(180deg,#f9fbf8 0%,#f4eee6 100%); color:var(--ink); line-height:1.7; }
+      a { color:var(--sage); }
+      .shell { width:min(1120px,calc(100% - 32px)); margin:0 auto; }
+      .hero { padding:40px 0 28px; }
+      .hero-card,.section,.article-card,.note-card { background:var(--panel); border:1px solid var(--border); border-radius:30px; box-shadow:var(--shadow); }
+      .hero-card { padding:30px; }
+      .eyebrow { display:inline-flex; align-items:center; padding:10px 16px; border-radius:999px; background:var(--sage-soft); color:var(--sage); font-size:12px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; }
+      h1 { margin:18px 0 12px; font-size:clamp(2.4rem,5vw,4.4rem); line-height:1; letter-spacing:-.04em; }
+      h2 { margin:0 0 14px; font-size:clamp(1.45rem,3vw,2rem); }
+      h3 { margin:0 0 10px; font-size:1.15rem; }
+      p { margin:0; }
+      .lead { max-width:760px; font-size:1.1rem; color:var(--muted); }
+      .actions, .tag-row, .grid, .reading-grid, .trust-grid { display:grid; gap:18px; }
+      .actions { grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); margin-top:24px; }
+      .action-link { display:flex; align-items:center; justify-content:center; min-height:56px; border-radius:999px; text-decoration:none; font-weight:800; }
+      .action-link.primary { background:var(--sage); color:#fff; }
+      .action-link.secondary { border:1px solid #d7e2db; color:var(--sage); background:#fff; }
+      .tag-row { grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); margin-top:20px; }
+      .tag { padding:14px 16px; border-radius:20px; background:#fff; border:1px solid #dfe8e2; color:var(--sage); font-weight:700; }
+      .section { padding:28px; margin-bottom:22px; }
+      .reading-grid { grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); }
+      .article-card { padding:22px; display:grid; gap:14px; }
+      .meta { font-size:.82rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#6a7f73; }
+      .article-card p { color:var(--muted); }
+      .article-card a { text-decoration:none; font-weight:800; }
+      .trust-grid { grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
+      .note-card { padding:22px; }
+      footer { padding:18px 0 42px; color:var(--muted); text-align:center; }
+      footer nav { display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin-bottom:14px; }
     </style>
   </head>
   <body>
-    <div class="nav-header">
-      <a href="/">
-        <span class="nav-logo" aria-hidden="true">♫</span>
-        Lofi Memory
-      </a>
-    </div>
-    <div class="landing-container">
-      <h1>Lofi Music, Chill Vibes & Relaxing Blog</h1>
-      <p class="subtitle">Your library for listening to lofi music, relaxing online, chill vibes, study breaks, private journaling, and cozy games.</p>
-      <nav class="topic-strip" aria-label="Popular Lofi Memory topics">
-        <a href="/lofi-music-website.html">Lofi music</a>
-        <a href="/free-lofi-music-website.html">Free lofi music</a>
-        <a href="/listen-to-lofi-music-online.html">Listen to lofi</a>
-        <a href="/lofi-music-to-relax.html">Lofi to relax</a>
-        <a href="/calm-place-to-listen-to-music.html">Calm music place</a>
-        <a href="/lofi-radio-online.html">Lofi radio</a>
-        <a href="/relaxing-music-online.html">Relaxing music</a>
-        <a href="/chill-music-online.html">Chill music</a>
-        <a href="/chill-website-with-music.html">Chill site + music</a>
-        <a href="/chill-music-and-games.html">Music + games</a>
-        <a href="/music-games-website.html">Music games site</a>
-        <a href="/listen-to-music-and-play-games.html">Listen + play</a>
-        <a href="/online-music-player-with-games.html">Music player + games</a>
-        <a href="/lofi-music-for-gaming.html">Lofi gaming music</a>
-        <a href="/games-to-play-while-listening-to-music.html">Games with music</a>
-        <a href="/relaxing-games-with-music.html">Relaxing games + music</a>
-        <a href="/lofi-game-room.html">Lofi game room</a>
-        <a href="/lofi-browser-games.html">Lofi browser games</a>
-        <a href="/cozy-games-with-lofi-music.html">Cozy lofi games</a>
-        <a href="/chill-browser-games-with-music.html">Chill browser games</a>
-        <a href="/cozy-online-games-and-music.html">Cozy games + music</a>
-        <a href="/lofi-study-music.html">Study music</a>
-        <a href="/chill-website-for-study-breaks.html">Study break website</a>
-        <a href="/calm-website.html">Calm website</a>
-        <a href="/cozy-website-for-music-games-journaling.html">Cozy website</a>
-        <a href="/lofi-vibes.html">Lofi vibes</a>
-        <a href="/chill-vibes.html">Chill vibes</a>
-        <a href="/online-space-to-relax-and-chill.html">Relax online space</a>
-        <a href="/website-to-relax.html">Website to relax</a>
-        <a href="/relax-and-play-games.html">Relax and play</a>
-        <a href="/relaxing-website-with-games-and-music.html">Relaxing site + games</a>
-        <a href="/relaxing-study-break.html">Relaxing study breaks</a>
-        <a href="/studying-with-lofi.html">Studying with lofi</a>
-        <a href="/chill-games.html">Chill games</a>
-        <a href="/online-diary.html">Online diary</a>
-        <a href="/memories-calendar.html">Memories calendar</a>
+    <header class="hero">
+      <div class="shell">
+        <div class="hero-card">
+          <div class="eyebrow">Lofi Memory Blog</div>
+          <h1>Original reads for calmer days online.</h1>
+          <p class="lead">This blog is the reading side of Lofi Memory: a place for longer, more useful writing about private journaling, lighter routines, digital calm, sleep-friendly brain dumps, and cozy game breaks that help you reset without making the web feel louder.</p>
+          <div class="actions">
+            <a class="action-link primary" href="/">Open Lofi Memory</a>
+            <a class="action-link secondary" href="/editorial-policy.html">Read editorial policy</a>
+            <a class="action-link secondary" href="/privacy.html">Review privacy policy</a>
+          </div>
+          <div class="tag-row">
+            <div class="tag">Private journaling</div>
+            <div class="tag">Relaxation and focus</div>
+            <div class="tag">Sleep and reflection</div>
+            <div class="tag">Cozy game breaks</div>
+            <div class="tag">Digital calm</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="shell">
+      <section class="section">
+        <h2>What you will find here</h2>
+        <p>Lofi Memory works best when the experience feels trustworthy before it feels optimized. That means this hub now points visitors toward the pages that explain the product clearly, offer original reading value, and help them decide whether the site is useful for their own routines. Instead of scattering attention across dozens of tiny search pages, the blog gathers the stronger, more complete reads in one place so people can browse naturally and understand the product without guessing.</p>
+      </section>
+
+      <section class="section">
+        <h2>Featured articles</h2>
+        <div class="reading-grid">
+          <article class="article-card"><div class="meta">Journaling • Privacy</div><h3>How to protect your privacy when journaling online</h3><p>A practical read on personal boundaries, trust signals, storage choices, and what a calmer private writing space should explain clearly.</p><a href="/article-protect-privacy-journaling-online.html">Read the article</a></article>
+          <article class="article-card"><div class="meta">Journaling • Psychology</div><h3>The psychology of journaling: why writing things down helps</h3><p>Why journaling can reduce mental noise, strengthen recall, and turn vague feelings into something easier to understand.</p><a href="/article-psychology-of-journaling.html">Read the article</a></article>
+          <article class="article-card"><div class="meta">Habits • Getting started</div><h3>How to start a journaling habit that actually lasts</h3><p>Small routines, lower pressure, and better cues for turning writing into something you can realistically keep.</p><a href="/article-how-to-start-journaling-habit.html">Read the article</a></article>
+          <article class="article-card"><div class="meta">Product fit • Privacy</div><h3>The benefits of using a private online diary</h3><p>A closer look at when a browser-based diary can feel more flexible, secure, and sustainable than scattered notes.</p><a href="/article-benefits-of-private-online-diary.html">Read the article</a></article>
+          <article class="article-card"><div class="meta">Reflection • Sleep</div><h3>Can brain dumping before sleep help quiet a busy mind?</h3><p>How a short pre-sleep writing routine can lower mental carryover, reduce clutter, and make bedtime feel less crowded.</p><a href="/article-brain-dumping-sleep.html">Read the article</a></article>
+          <article class="article-card"><div class="meta">Reflection • Daily practice</div><h3>Daily reflection and mental health: why small check-ins matter</h3><p>Why short, honest check-ins are often more repeatable than heavy self-improvement systems.</p><a href="/article-daily-reflection-mental-health.html">Read the article</a></article>
+          <article class="article-card"><div class="meta">Games • Mental reset</div><h3>How gentle memory games provide cognitive relief before writing</h3><p>A read on why a brief puzzle can create just enough structure to help your thoughts settle before journaling.</p><a href="/article-memory-games-cognitive-relief.html">Read the article</a></article>
+          <article class="article-card"><div class="meta">Games • Relaxation</div><h3>Why gaming helps anxiety for some people</h3><p>What repetitive, low-stakes play can offer when you need a small buffer between stress and the next task.</p><a href="/article-why-gaming-helps-anxiety.html">Read the article</a></article>
+          <article class="article-card"><div class="meta">Prompts • Self discovery</div><h3>Journaling prompts for self-discovery that do not feel forced</h3><p>Gentle prompts that help you begin without turning the page into a performance.</p><a href="/article-journaling-prompts-self-discovery.html">Read the article</a></article>
+          <article class="article-card"><div class="meta">Focus • Digital habits</div><h3>How a digital journal can reduce distractions</h3><p>Why the right online setup can feel simpler, not noisier, when your goal is fewer tabs and a clearer head.</p><a href="/article-digital-journal-distractions.html">Read the article</a></article>
+          <article class="article-card"><div class="meta">Games • Word breaks</div><h3>Why daily word puzzles make relaxing breaks easier</h3><p>A quick look at why familiar word loops can feel grounding when you want a tidy brain reset.</p><a href="/article-daily-word-puzzles-relax.html">Read the article</a></article>
+          <article class="article-card"><div class="meta">Games • Cognitive rhythm</div><h3>Why word guessing games feel good when your mind is busy</h3><p>How small pattern-recognition wins can provide relief without demanding too much energy.</p><a href="/article-word-guessing-games-busy-mind.html">Read the article</a></article>
+          <article class="article-card"><div class="meta">Games • Music</div><h3>The benefits of lofi gaming for mental health and focus</h3><p>Why music, visual softness, and low-pressure play can work together as a gentler online break.</p><a href="/article-benefits-lofi-gaming-mental-health.html">Read the article</a></article>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Trust and site information</h2>
+        <p>If you are deciding whether Lofi Memory is a good fit before you sign in, save anything, or interact with ads, start with these pages. They explain the product, the site standards, and how to ask questions or request a correction.</p>
+        <div class="trust-grid" style="margin-top:18px;">
+          <article class="note-card"><h3>About Lofi Memory</h3><p>What the product is trying to be, what tools are included, and why the overall experience is designed to stay soft and uncluttered.</p><p style="margin-top:12px;"><a href="/about.html">Open About</a></p></article>
+          <article class="note-card"><h3>Editorial policy</h3><p>How content is reviewed, what gets published, how corrections are handled, and where the site draws the line on wellbeing claims.</p><p style="margin-top:12px;"><a href="/editorial-policy.html">Open editorial policy</a></p></article>
+          <article class="note-card"><h3>Privacy and cookies</h3><p>How local storage, sign-in, notifications, embedded media, and advertising-related technologies may be used on the site.</p><p style="margin-top:12px;"><a href="/privacy.html">Privacy</a> · <a href="/cookie-policy.html">Cookies</a></p></article>
+          <article class="note-card"><h3>Questions or corrections</h3><p>How to reach the site owner for support, privacy requests, content corrections, or ad-related questions.</p><p style="margin-top:12px;"><a href="/contact.html">Open contact page</a></p></article>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Why this hub matters</h2>
+        <p>The best version of this site is not a maze of tiny keyword pages. It is a calm product with real tools, clear trust pages, and articles that stand on their own even if someone never clicks anything else. This blog is meant to make that clearer: fewer doorway-style paths, more useful reading, and a simpler way for both visitors and reviewers to understand what Lofi Memory offers.</p>
+      </section>
+    </main>
+
+    <footer class="shell">
+      <nav>
+        <a href="/">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/editorial-policy.html">Editorial Policy</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/cookie-policy.html">Cookie Policy</a>
+        <a href="/disclaimer.html">Disclaimer</a>
+        <a href="/contact.html">Contact</a>
       </nav>
-      
-      <div class="grid">
-        <a href="/article-benefits-lofi-gaming-mental-health.html" class="card">
-          <span class="card-tag">Science</span>
-          <h3>Why lofi music and cozy games feel good for your brain</h3>
-          <p>Discover how lofi beats, soft vibes, and gentle games can support focus, calmer breaks, and memory reflection.</p>
-        </a>
-        
-        <!-- Gaming & Music & Study Section -->
-        <h2 class="section-title">Lofi Music, Chill Vibes & Relax Guides</h2>
-        <a href="/lofi-music-website.html" class="card">
-          <span class="card-tag">Music</span>
-          <h3>Lofi music for relaxing, studying, and chill vibes</h3>
-          <p>Explore how listening to lofi music online can set a calm atmosphere while you relax, study, write, or simply vibe.</p>
-        </a>
-        <a href="/free-lofi-music-website.html" class="card">
-          <span class="card-tag">Free Music</span>
-          <h3>Free lofi music website with games</h3>
-          <p>Open a free lofi music website that also keeps relaxing games, notes, journaling, and reminders close by.</p>
-        </a>
-        <a href="/listen-to-lofi-music-online.html" class="card">
-          <span class="card-tag">Music</span>
-          <h3>Listen to lofi music online</h3>
-          <p>Start with soft beats, then keep games, notes, journaling, and breathing nearby in one calm browser space.</p>
-        </a>
-        <a href="/lofi-music-to-relax.html" class="card">
-          <span class="card-tag">Relax Music</span>
-          <h3>Lofi music to relax, chill, and clear your mind</h3>
-          <p>Start with lofi music, then ease into cozy games, notes, journaling, reminders, and small reset moments.</p>
-        </a>
-        <a href="/calm-place-to-listen-to-music.html" class="card">
-          <span class="card-tag">Calm Listening</span>
-          <h3>A calm place to listen to music online</h3>
-          <p>Find a quieter online tab for lofi radio, relaxing games, private writing, notes, and gentle focus breaks.</p>
-        </a>
-        <a href="/lofi-radio-online.html" class="card">
-          <span class="card-tag">Radio</span>
-          <h3>Lofi radio online for a softer tab</h3>
-          <p>Use Lofi Memory as a cozy radio page for relaxing, studying, writing, or clearing your mind without opening a noisy feed.</p>
-        </a>
-        <a href="/relaxing-music-online.html" class="card">
-          <span class="card-tag">Relax</span>
-          <h3>Relaxing music online with lofi vibes</h3>
-          <p>Find a calm place for relaxing music, low-clutter visuals, private notes, and gentle games when you want one.</p>
-        </a>
-        <a href="/chill-music-online.html" class="card">
-          <span class="card-tag">Chill</span>
-          <h3>Chill music online for study breaks</h3>
-          <p>Keep lofi music, chill vibes, notes, and tiny reset activities together in a softer online place.</p>
-        </a>
-        <a href="/chill-website-with-music.html" class="card">
-          <span class="card-tag">Chill Site</span>
-          <h3>Chill website with music, games, and notes</h3>
-          <p>Keep lofi music at the center while relaxing games, notes, journaling, and reminders stay nearby.</p>
-        </a>
-        <a href="/chill-music-and-games.html" class="card">
-          <span class="card-tag">Music + Games</span>
-          <h3>A chill website for listening to music and playing games</h3>
-          <p>Start lofi music, play cozy browser games, and keep notes, journaling, and reminders nearby in one soft online space.</p>
-        </a>
-        <a href="/music-games-website.html" class="card">
-          <span class="card-tag">Music + Games</span>
-          <h3>Music and games website for chill breaks</h3>
-          <p>Listen to lofi music, play relaxing games, and keep your notes, breathing tools, and journal in one calm browser tab.</p>
-        </a>
-        <a href="/listen-to-music-and-play-games.html" class="card">
-          <span class="card-tag">Listen + Play</span>
-          <h3>Listen to music and play games online</h3>
-          <p>Use one cozy tab for background lofi music, relaxing browser games, notes, reminders, and private journaling.</p>
-        </a>
-        <a href="/online-music-player-with-games.html" class="card">
-          <span class="card-tag">Music Player</span>
-          <h3>Online music player with games</h3>
-          <p>Keep a lofi music player running beside cozy games, notes, reminders, and journaling in a soft browser room.</p>
-        </a>
-        <a href="/lofi-music-for-gaming.html" class="card">
-          <span class="card-tag">Gaming Music</span>
-          <h3>Lofi music for gaming and chill breaks</h3>
-          <p>Use lofi music as a soft background for cozy browser games, puzzles, study breaks, and gentle resets.</p>
-        </a>
-        <a href="/games-to-play-while-listening-to-music.html" class="card">
-          <span class="card-tag">Games</span>
-          <h3>Games to play while listening to music</h3>
-          <p>Find calm games that pair naturally with background lofi music, from cards and puzzles to word rounds and jigsaw breaks.</p>
-        </a>
-        <a href="/relaxing-games-with-music.html" class="card">
-          <span class="card-tag">Relax Games</span>
-          <h3>Relaxing games with music</h3>
-          <p>Pair lofi music with cozy puzzles, cards, arcade breaks, and typing practice for a softer way to reset.</p>
-        </a>
-        <a href="/lofi-game-room.html" class="card">
-          <span class="card-tag">Game Room</span>
-          <h3>Lofi game room for cozy music and games</h3>
-          <p>Step into a soft online game room with lofi radio, cozy browser games, notes, reminders, and chill visuals.</p>
-        </a>
-        <a href="/lofi-browser-games.html" class="card">
-          <span class="card-tag">Lofi Games</span>
-          <h3>Lofi browser games with calming music</h3>
-          <p>Open lofi browser games that feel soft, quick, and easy to enjoy while relaxing music plays in the background.</p>
-        </a>
-        <a href="/cozy-games-with-lofi-music.html" class="card">
-          <span class="card-tag">Cozy Games</span>
-          <h3>Cozy games with lofi music</h3>
-          <p>Play cozy games with lofi music in the background for a warm break that feels relaxing instead of loud.</p>
-        </a>
-        <a href="/chill-browser-games-with-music.html" class="card">
-          <span class="card-tag">Browser Games</span>
-          <h3>Chill browser games with music</h3>
-          <p>Open calm browser games with lofi music, private notes, journaling, and reminders nearby.</p>
-        </a>
-        <a href="/cozy-online-games-and-music.html" class="card">
-          <span class="card-tag">Cozy Online</span>
-          <h3>Cozy online games and music</h3>
-          <p>Use one soft online room for lofi music, cozy games, notes, memories, and daily reset moments.</p>
-        </a>
-        <a href="/lofi-study-music.html" class="card">
-          <span class="card-tag">Study Music</span>
-          <h3>Lofi study music for focus</h3>
-          <p>Use lofi music, notes, breathing, and relaxing games to keep study breaks calmer and easier to return from.</p>
-        </a>
-        <a href="/chill-website-for-study-breaks.html" class="card">
-          <span class="card-tag">Study Break</span>
-          <h3>Chill website for study breaks</h3>
-          <p>Take a short study break with lofi music, cozy games, breathing, notes, and a calm page that does not pull you into scrolling.</p>
-        </a>
-        <a href="/music-for-journaling.html" class="card">
-          <span class="card-tag">Journal Music</span>
-          <h3>Music for journaling and reflection</h3>
-          <p>Pair lofi music with private diary writing, memories, notes, and gentle games when you need a softer page.</p>
-        </a>
-        <a href="/calm-website.html" class="card">
-          <span class="card-tag">Calm Website</span>
-          <h3>A calm website for music, notes, and games</h3>
-          <p>Find a softer online place with lofi music, chill visuals, relaxing games, notes, and private writing.</p>
-        </a>
-        <a href="/online-space-to-relax-and-chill.html" class="card">
-          <span class="card-tag">Relax Online</span>
-          <h3>An online space to relax and chill</h3>
-          <p>Listen to music, play relaxing games, journal privately, keep notes, and clear your mind without a noisy feed.</p>
-        </a>
-        <a href="/relax-and-play-games.html" class="card">
-          <span class="card-tag">Relax + Play</span>
-          <h3>Relax and play games online</h3>
-          <p>Clear your mind with lofi music, gentle games, notes, breathing, reminders, and private journaling in one tab.</p>
-        </a>
-        <a href="/relaxing-website-with-games-and-music.html" class="card">
-          <span class="card-tag">Relaxing Site</span>
-          <h3>Relaxing website with games and music</h3>
-          <p>Use one relaxing website for lofi music, cozy games, private notes, journaling, and small daily reset tools.</p>
-        </a>
-        <a href="/cozy-website-for-music-games-journaling.html" class="card">
-          <span class="card-tag">Cozy Website</span>
-          <h3>A cozy website for music, games, and journaling</h3>
-          <p>Combine lofi music, relaxing games, private writing, notes, reminders, and memories in one gentle online room.</p>
-        </a>
-        <a href="/studying-with-lofi.html" class="card">
-          <span class="card-tag">Studying</span>
-          <h3>Studying with lofi without getting distracted</h3>
-          <p>Use soft beats, small rituals, and simple tools to make a study session feel easier to begin and easier to continue.</p>
-        </a>
-        <a href="/relaxing-study-break.html" class="card">
-          <span class="card-tag">Study Break</span>
-          <h3>How to take a relaxing study break</h3>
-          <p>Build short breaks around breathing, lofi radio, cozy vibes, and relaxing games so you can reset without losing the rhythm of your day.</p>
-        </a>
-        <a href="/cozy-browser-games.html" class="card">
-          <span class="card-tag">Games</span>
-          <h3>Cozy browser games for gentle resets</h3>
-          <p>Find soft, low-pressure games like Solitaire, Tetris, Snake, Sudoku, and word puzzles for a quick mental pause.</p>
-        </a>
-        <a href="/chill-games.html" class="card">
-          <span class="card-tag">Chill Games</span>
-          <h3>Chill games you can play in one cozy app</h3>
-          <p>See why browser-based chill games fit naturally beside journaling, notes, reminders, music, and weather check-ins.</p>
-        </a>
-        <a href="/chill-game-journaling.html" class="card">
-          <span class="card-tag">Game Journal</span>
-          <h3>Chill game journaling for calmer reflection</h3>
-          <p>Learn how to pair cozy browser games with a private journal so a short play break becomes a mindful daily reset.</p>
-        </a>
-        <a href="/jigsaw-puzzle-online.html" class="card">
-          <span class="card-tag">Puzzle Game</span>
-          <h3>Play a cozy lofi jigsaw puzzle online</h3>
-          <p>Slide a soft lofi scene back together in a relaxing online puzzle designed for study breaks and journal warm-ups.</p>
-        </a>
-        <a href="/study-relaxing-website.html" class="card">
-          <span class="card-tag">Relax</span>
-          <h3>A study relaxing website for focus and calm</h3>
-          <p>Learn how Lofi Memory combines music, gentle tools, notes, and games into a softer study and relaxation space.</p>
-        </a>
-        <a href="/chill-study-games.html" class="card">
-          <span class="card-tag">Focus</span>
-          <h3>Chill study games for short focus breaks</h3>
-          <p>Use relaxing mini-games between tasks to clear your head without opening noisy feeds or leaving your browser.</p>
-        </a>
-        <a href="/lofi-vibes.html" class="card">
-          <span class="card-tag">Vibes</span>
-          <h3>Lofi vibes for a personal everyday space</h3>
-          <p>Bring together music, cozy visuals, private writing, and small tools to make a calmer digital room that feels yours.</p>
-        </a>
-        <h2 class="section-title">Gentle Game Side Quests</h2>
-        <a href="/lofi-games.html" class="card">
-          <span class="card-tag">Lofi Games</span>
-          <h3>Lofi games for a cozy browser break</h3>
-          <p>Play soft mini-games inside a lofi environment made for relaxing, studying, and gentle everyday resets.</p>
-        </a>
-        <a href="/games-to-relax.html" class="card">
-          <span class="card-tag">Relax Games</span>
-          <h3>Games to relax when your brain feels full</h3>
-          <p>Explore light puzzle and arcade games that help you pause without turning your break into noisy scrolling.</p>
-        </a>
-        <a href="/relaxing-browser-games.html" class="card">
-          <span class="card-tag">Browser Games</span>
-          <h3>Relaxing browser games with no heavy setup</h3>
-          <p>Open a calm game instantly, from word puzzles to classic cards, right beside your notes and lofi radio.</p>
-        </a>
-        <a href="/wordle-online.html" class="card">
-          <span class="card-tag">Word Games</span>
-          <h3>Wordle online and daily word puzzles</h3>
-          <p>Use word guessing games for a short, satisfying focus break before returning to study, work, or journaling.</p>
-        </a>
-        <a href="/sudoku-online.html" class="card">
-          <span class="card-tag">Sudoku</span>
-          <h3>Sudoku online for a calmer logic pause</h3>
-          <p>Practice gentle logic with pencil marks, timer support, and a cozy puzzle layout for quiet concentration.</p>
-        </a>
-        <a href="/browser-tetris-game.html" class="card">
-          <span class="card-tag">Tetris</span>
-          <h3>Browser Tetris for quick focus resets</h3>
-          <p>Stack blocks, use hold controls, and take a familiar retro break without leaving the Lofi Memory space.</p>
-        </a>
-        <h2 class="section-title">Everyday App & Lifestyle</h2>
-        <a href="/everyday-life-app-guide.html" class="card">
-          <span class="card-tag">Utility</span>
-          <h3>How to use an all-in-one everyday life app</h3>
-          <p>Maximize your day by combining weather tracking, notes, reminders, and journaling in one cozy space.</p>
-        </a>
-        <a href="/chill-online-tools.html" class="card">
-          <span class="card-tag">Relax</span>
-          <h3>Minimalist online tools for a chill digital life</h3>
-          <p>Find out which simple browser tools help reduce digital noise and bring more calm to your routine.</p>
-        </a>
-        <h2 class="section-title">Focus & Cognition</h2>
-        <a href="/article-memory-games-cognitive-relief.html" class="card">
-          <span class="card-tag">Cognitive</span>
-          <h3>How gentle memory games provide cognitive relief before writing</h3>
-          <p>Understand why playing a simple memory match game can help organize your thoughts and reduce brain fog before journaling.</p>
-        </a>
-        <!-- New Articles -->
-        <a href="/article-brain-dumping-sleep.html" class="card">
-          <span class="card-tag">Sleep</span>
-          <h3>Why brain dumping at night helps you sleep</h3>
-          <p>Discover how emptying your mind into a private journal before bed reduces anxiety.</p>
-        </a>
-        <a href="/article-digital-journal-distractions.html" class="card">
-          <span class="card-tag">Focus</span>
-          <h3>How to keep a digital journal without getting distracted</h3>
-          <p>Practical tips for maintaining focus while journaling online.</p>
-        </a>
-        <a href="/article-psychology-of-journaling.html" class="card">
-          <span class="card-tag">Psychology</span>
-          <h3>The psychology behind writing your feelings down</h3>
-          <p>Explore the psychological benefits of expressive writing and emotional healing.</p>
-        </a>
-        <a href="/article-protect-privacy-journaling-online.html" class="card">
-          <span class="card-tag">Privacy</span>
-          <h3>How to protect your privacy when journaling online</h3>
-          <p>A guide to understanding digital privacy and secure diaries.</p>
-        </a>
-        
-        <!-- Gaming & Focus -->
-        <a href="/article-why-gaming-helps-anxiety.html" class="card">
-          <span class="card-tag">Gaming</span>
-          <h3>Why gaming helps with daily anxiety</h3>
-          <p>Understand how simple arcade loops and cozy puzzles provide a mental reset.</p>
-        </a>
-        <a href="/article-daily-word-puzzles-relax.html" class="card">
-          <span class="card-tag">Relaxation</span>
-          <h3>Why daily word puzzles make relaxing breaks easier</h3>
-          <p>See why daily word puzzles feel so satisfying during short breaks.</p>
-        </a>
-        <a href="/article-word-guessing-games-busy-mind.html" class="card">
-          <span class="card-tag">Focus</span>
-          <h3>Why word guessing games feel good when your mind is busy</h3>
-          <p>Understand why guess-the-word games feel grounding when you are overloaded.</p>
-        </a>
-        
-        <!-- SEO Guides -->
-        <a href="/aesthetic-journal-app.html" class="card">
-          <span class="card-tag">Guides</span>
-          <h3>Aesthetic journal apps for creative writers</h3>
-          <p>How beautiful design helps you maintain a consistent writing habit.</p>
-        </a>
-        <a href="/daily-journal-app.html" class="card">
-          <span class="card-tag">Guides</span>
-          <h3>Choosing the right daily journal app</h3>
-          <p>Features to look for when picking a space for your private thoughts.</p>
-        </a>
-        <a href="/gratitude-journal-online.html" class="card">
-          <span class="card-tag">Wellbeing</span>
-          <h3>How to keep a gratitude journal online</h3>
-          <p>Simple ways to track what you are thankful for each day.</p>
-        </a>
-        <a href="/digital-bullet-journal.html" class="card">
-          <span class="card-tag">Productivity</span>
-          <h3>Setting up a digital bullet journal</h3>
-          <p>Minimalist techniques for organizing your life and mind.</p>
-        </a>
-        
-        <!-- Old Articles -->
-        <a href="/article-how-to-start-journaling-habit.html" class="card">
-          <span class="card-tag">Habits</span>
-          <h3>How to start a journaling habit for anxiety</h3>
-          <p>A comprehensive guide to building a journaling routine that feels gentle and sustainable.</p>
-        </a>
-        <a href="/article-benefits-of-private-online-diary.html" class="card">
-          <span class="card-tag">Benefits</span>
-          <h3>The unexpected benefits of a private online diary</h3>
-          <p>From enhanced emotional regulation to unparalleled convenience.</p>
-        </a>
-        <a href="/article-daily-reflection-mental-health.html" class="card">
-          <span class="card-tag">Mental Health</span>
-          <h3>Why daily reflection is essential for mental health</h3>
-          <p>Taking time for daily reflection is a fundamental requirement for maintaining self-awareness.</p>
-        </a>
-        <a href="/article-journaling-prompts-self-discovery.html" class="card">
-          <span class="card-tag">Prompts</span>
-          <h3>Journaling prompts for deep self-discovery</h3>
-          <p>Curated journaling prompts that act as a gentle guide without pressure.</p>
-        </a>
-      </div>
-      
-      <div style="text-align: center; margin-top: 60px;">
-        <a href="/" style="display: inline-block; padding: 15px 30px; background-color: #587f49; color: #ffffff; text-decoration: none; border-radius: 9999px; font-weight: 700;">Start Lofi Memory</a>
-      </div>
-    </div>
+      <p>Last updated: October 2026</p>
+    </footer>
   </body>
 </html>

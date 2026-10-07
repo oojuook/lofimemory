@@ -400,379 +400,49 @@ const wellnessArticles = [
 
 const seoLandingBlocks = [
   {
-    title: 'Daily word puzzle',
-    text: 'Play a calm daily word puzzle when you want a familiar little brain reset that feels cozy, tidy, and easy to revisit.',
-    href: '/daily-word-puzzle.html'
+    title: 'Read the Lofi Memory blog',
+    text: 'Start with a curated reading hub that explains the product more clearly and links to the strongest original articles first.',
+    href: '/blog.html'
   },
   {
-    title: 'Guess the word game',
-    text: 'Play a gentle guess-the-word game online when you want a simple word challenge with soft feedback and no noisy pressure.',
-    href: '/guess-the-word-game.html'
+    title: 'Editorial policy',
+    text: 'Review how Lofi Memory handles accuracy, originality, corrections, and the boundary between wellbeing language and medical claims.',
+    href: '/editorial-policy.html'
   },
   {
-    title: 'Daily word game',
-    text: 'Find a daily word game you can open for a quick relaxing round before moving into notes, music, or journaling.',
-    href: '/daily-word-game.html'
+    title: 'Privacy policy',
+    text: 'See how journal storage, browser data, sign-in, notifications, embeds, and advertising-related technologies are explained to visitors.',
+    href: '/privacy.html'
   },
   {
-    title: 'Wordle online',
-    text: 'Play a calm Wordle-style game online when you want a familiar word-guessing loop that still feels cozy, gentle, and easy to revisit.',
-    href: '/wordle-online.html'
+    title: 'About Lofi Memory',
+    text: 'Learn what the product includes, why the experience is intentionally calm, and how journaling, music, and games fit together.',
+    href: '/about.html'
   },
   {
-    title: 'Crossword game online',
-    text: 'Play a calm crossword-style game online when you want clue-by-clue progress without the pressure of a full newspaper puzzle.',
-    href: '/crossword-game-online.html'
+    title: 'Protect privacy when journaling online',
+    text: 'Read a practical article on trust signals, storage expectations, and how to choose a calmer place to write online.',
+    href: '/article-protect-privacy-journaling-online.html'
   },
   {
-    title: 'WPM test',
-    text: 'Check your WPM in a calm browser space when you want a quick typing-speed snapshot with cleaner pacing and softer visuals.',
-    href: '/wpm-test.html'
+    title: 'Why journaling helps',
+    text: 'Understand the psychology of journaling and why writing things down can make thoughts easier to process and revisit.',
+    href: '/article-psychology-of-journaling.html'
   },
   {
-    title: 'Typing speed test',
-    text: 'Take a calm typing speed test when you want a soft WPM check with accuracy stats, readable passages, and a gentler browser-game feel.',
-    href: '/typing-game-online.html'
+    title: 'How to start a journaling habit',
+    text: 'Use a simple article on building a realistic writing rhythm that feels gentle enough to keep during busy weeks.',
+    href: '/article-how-to-start-journaling-habit.html'
   },
   {
-    title: 'Typing practice online',
-    text: 'Practice typing online in a calmer browser space when you want short readable passages, timer presets, and a cozy rhythm to return to.',
-    href: '/typing-practice-online.html'
+    title: 'Games before writing',
+    text: 'See why a short memory or cozy puzzle break can help your attention settle before you start reflecting.',
+    href: '/article-memory-games-cognitive-relief.html'
   },
   {
-    title: 'Typing accuracy test',
-    text: 'Take a typing accuracy test when you want to focus on cleaner keystrokes, fewer errors, and a softer pace instead of pure speed.',
-    href: '/typing-accuracy-test.html'
-  },
-  {
-    title: 'Beginner typing test',
-    text: 'Open a beginner typing test when you want a friendlier place to warm up, build confidence, and practice typing without pressure.',
-    href: '/beginner-typing-test.html'
-  },
-  {
-    title: 'Chill place online',
-    text: 'Find a chill place online where you can listen to lofi music, relax, breathe, write, and play calm games without the page feeling noisy.',
-    href: '/chill-place-online.html'
-  },
-  {
-    title: 'Chill games',
-    text: 'Open chill games that feel soft, beginner-friendly, and easy to stay with when you want a calmer browser break.',
-    href: '/chill-games.html'
-  },
-  {
-    title: 'Lofi games',
-    text: 'Find lofi games and soft browser loops that pair naturally with music, quiet focus, and low-pressure play.',
-    href: '/lofi-games.html'
-  },
-  {
-    title: 'Relaxing browser games',
-    text: 'Explore relaxing browser games for light puzzle play, calm movement, and easy unwind sessions that do not feel loud.',
-    href: '/relaxing-browser-games.html'
-  },
-  {
-    title: 'Lofi music website',
-    text: 'Find a lofi music website for soft beats, chill vibes, quiet writing tools, and a calm place to hang out online.',
-    href: '/lofi-music-website.html'
-  },
-  {
-    title: 'Website to relax',
-    text: 'Open a website to relax when you want lofi music, chill vibes, breathing room, notes, and relaxing games.',
-    href: '/website-to-relax.html'
-  },
-  {
-    title: 'Word game online',
-    text: 'Play a calm word game online when you want a soft vocabulary puzzle that feels familiar, light, and easy to revisit.',
-    href: '/word-game-online.html'
-  },
-  {
-    title: 'Sudoku online',
-    text: 'Play Sudoku online in a cozy browser space when you want a familiar number puzzle with pencil marks, soft checking, and a calmer rhythm.',
-    href: '/sudoku-online.html'
-  },
-  {
-    title: 'Sliding puzzle online',
-    text: 'Play a cozy sliding puzzle online when you want a familiar tile-moving challenge that feels tidy, calm, and easy to revisit.',
-    href: '/sliding-puzzle-online.html'
-  },
-  {
-    title: '2048 online',
-    text: 'Play a calm 2048-style number merge game when you want a familiar puzzle loop that feels satisfying and easy to revisit.',
-    href: '/2048-online.html'
-  },
-  {
-    title: 'Cozy browser games',
-    text: 'Find cozy browser games that feel easy to open, easy to understand, and satisfying when you just want to relax for a few minutes.',
-    href: '/cozy-browser-games.html'
-  },
-  {
-    title: 'Games to relax',
-    text: 'Explore gentle game styles like memory, logic, puzzle, and soft endless play when you want a calm reset instead of a loud challenge.',
-    href: '/games-to-relax.html'
-  },
-  {
-    title: 'Things to do to relax',
-    text: 'Read simple ideas people lean on most often when they want to chill, rest, and settle their mind after a busy day.',
-    href: '/things-to-do-to-relax.html'
-  },
-  {
-    title: 'Private online diary',
-    text: 'Use Lofi Memory as a private online diary when you want a calm place to write daily thoughts, check in with yourself, and keep reflections personal.',
-    href: '/private-online-diary.html'
-  },
-  {
-    title: 'Online diary',
-    text: 'Explore an online diary that feels gentle, private, and easy to return to when you want a softer daily writing habit.',
-    href: '/online-diary.html'
-  },
-  {
-    title: 'Diary app',
-    text: 'See how a diary app can stay calm, beginner-friendly, and private enough for quick check-ins or longer reflection.',
-    href: '/diary-app.html'
-  },
-  {
-    title: 'Best diary app',
-    text: 'Compare what makes the best diary app feel quieter, easier to keep, and more supportive of honest daily reflection.',
-    href: '/best-diary-app.html'
-  },
-  {
-    title: 'Where to write a diary online',
-    text: 'A practical guide for people comparing where to write a diary online, what to look for, and how to choose a softer digital diary space.',
-    href: '/where-to-write-a-diary-online.html'
-  },
-  {
-    title: 'Online journal',
-    text: 'Explore a calmer online journal flow for daily writing, emotional clarity, and private reflection that feels lighter to return to.',
-    href: '/online-journal.html'
-  },
-  {
-    title: 'Journal app',
-    text: 'Find a journal app that feels calmer to use, easier to revisit, and more supportive of real daily reflection.',
-    href: '/journal-app.html'
-  },
-  {
-    title: 'Digital diary',
-    text: 'See how a digital diary can feel lighter to keep, easier to revisit, and more natural to use for honest everyday reflection.',
-    href: '/digital-diary.html'
-  },
-  {
-    title: 'Mood journal',
-    text: 'Track feelings over time with a mood journal flow that makes it easier to notice patterns, save gentle notes, and reflect without turning the process into pressure.',
-    href: '/mood-journal.html'
-  },
-  {
-    title: 'Online diary with lock',
-    text: 'If you want an online diary with lock protection, you can add a soft PIN for the browser while still keeping the journaling experience simple and welcoming.',
-    href: '/online-diary-with-lock.html'
-  },
-  {
-    title: 'How to write a diary',
-    text: 'Read a calmer beginner guide for how to write a diary when you want simple steps, softer prompts, and an easier way to start.',
-    href: '/how-to-write-a-diary.html'
-  },
-  {
-    title: 'Journal prompts',
-    text: 'Use prompt-based journaling when the blank page feels too open and you want softer ways to begin writing.',
-    href: '/journal-prompts.html'
-  },
-  {
-    title: 'Daily reflection journal',
-    text: 'Build a calmer evening journaling habit with short check-ins, gentle review questions, and quieter end-of-day notes.',
-    href: '/daily-reflection-journal.html'
-  },
-  {
-    title: 'Free online diary',
-    text: 'Explore a free online diary option that still feels calm, personal, and supportive enough for everyday writing.',
-    href: '/free-online-diary.html'
-  },
-  {
-    title: 'Daily journal app',
-    text: 'Find a daily journal app that helps you come back to one honest check-in, short note, or reflection at a time.',
-    href: '/daily-journal-app.html'
-  },
-  {
-    title: 'Gratitude journal',
-    text: 'Use gratitude journaling in a softer way, with room for small wins, ordinary moments, and grounded daily appreciation.',
-    href: '/gratitude-journal.html'
-  },
-  {
-    title: 'Private journal app',
-    text: 'Find a private journal app that feels personal, uncluttered, and easier to trust with honest everyday writing.',
-    href: '/private-journal-app.html'
-  },
-  {
-    title: 'Secure online journal',
-    text: 'Explore a secure online journal approach that keeps privacy cues clear while still feeling calm and welcoming to use.',
-    href: '/secure-online-journal.html'
-  },
-  {
-    title: 'Self care journal',
-    text: 'Use a self care journal for gentler check-ins, steadier reflection, and small daily ways to notice what helps.',
-    href: '/self-care-journal.html'
-  },
-  {
-    title: 'Personal diary online',
-    text: 'Keep a personal diary online when you want a softer place for private thoughts, everyday life notes, and honest reflection.',
-    href: '/personal-diary-online.html'
-  },
-  {
-    title: 'Online diary for adults',
-    text: 'Find an online diary for adults that feels calm, personal, and realistic enough for busy everyday life.',
-    href: '/online-diary-for-adults.html'
-  },
-  {
-    title: 'Daily check in journal',
-    text: 'Use a daily check in journal for short emotional check-ins, small reminders, and steadier self-awareness over time.',
-    href: '/daily-check-in-journal.html'
-  },
-  {
-    title: 'Morning journal prompts',
-    text: 'Start the day with morning journal prompts that feel soft, useful, and realistic before life gets noisy.',
-    href: '/morning-journal-prompts.html'
-  },
-  {
-    title: 'Evening journal prompts',
-    text: 'Use evening journal prompts to slow the day down, clear your head, and keep a calmer end-of-day habit.',
-    href: '/evening-journal-prompts.html'
-  },
-  {
-    title: 'Reflection prompts for adults',
-    text: 'Explore reflection prompts for adults that feel grounded, private, and helpful for real everyday life.',
-    href: '/reflection-prompts-for-adults.html'
-  },
-  {
-    title: 'Journaling routine',
-    text: 'Build a journaling routine that feels realistic, calm, and easy to repeat even during busy weeks.',
-    href: '/journaling-routine.html'
-  },
-  {
-    title: 'Daily writing habit',
-    text: 'Create a daily writing habit with small check-ins, flexible prompts, and a private place to return to.',
-    href: '/daily-writing-habit.html'
-  },
-  {
-    title: 'Habit tracker journal',
-    text: 'Use a habit tracker journal to connect practical routines with gentle reflection and personal notes.',
-    href: '/habit-tracker-journal.html'
-  },
-  {
-    title: 'Online journal with lock',
-    text: 'Choose an online journal with lock when you want private writing, calmer reflection, and clearer browser-based protection.',
-    href: '/online-journal-with-lock.html'
-  },
-  {
-    title: 'Daily journaling app',
-    text: 'Find a daily journaling app that makes quick check-ins, prompts, and repeatable writing habits easier to keep.',
-    href: '/daily-journaling-app.html'
-  },
-  {
-    title: 'Journal for overthinking',
-    text: 'Use a journal for overthinking to slow spirals down, name what feels loud, and return to calmer thoughts.',
-    href: '/journal-for-overthinking.html'
-  },
-  {
-    title: 'Self reflection journal',
-    text: 'Keep a self reflection journal for private questions, calmer self-awareness, and grounded end-of-day insight.',
-    href: '/self-reflection-journal.html'
-  },
-  {
-    title: 'Best online diary',
-    text: 'Compare what makes the best online diary feel private, easy to keep, and gentle enough for honest daily writing.',
-    href: '/best-online-diary.html'
-  },
-  {
-    title: 'Private diary app for adults',
-    text: 'Choose a private diary app for adults when you want calmer writing, privacy, and a more grown-up journaling rhythm.',
-    href: '/private-diary-app-for-adults.html'
-  },
-  {
-    title: 'Digital journal with prompts',
-    text: 'Use a digital journal with prompts when you want help starting, reflecting, and keeping a steadier writing habit.',
-    href: '/digital-journal-with-prompts.html'
-  },
-  {
-    title: 'Daily mental health journal',
-    text: 'Keep a daily mental health journal for mood check-ins, reflection, and softer emotional awareness through everyday writing.',
-    href: '/daily-mental-health-journal.html'
-  },
-  {
-    title: 'Online diary app',
-    text: 'Find an online diary app that makes private writing, quick check-ins, and calmer daily journaling easier to keep.',
-    href: '/online-diary-app.html'
-  },
-  {
-    title: 'Diary website',
-    text: 'Choose a diary website when you want a simple online place for personal writing, prompts, and gentle reflection.',
-    href: '/diary-website.html'
-  },
-  {
-    title: 'Personal diary app',
-    text: 'Use a personal diary app for private thoughts, mood tracking, and small honest daily writing moments.',
-    href: '/personal-diary-app.html'
-  },
-  {
-    title: 'Secure diary app',
-    text: 'Pick a secure diary app when you want calmer private journaling with clearer protection and personal boundaries.',
-    href: '/secure-diary-app.html'
-  },
-  {
-    title: 'Write diary online',
-    text: 'Write diary online when you want a simple private place to keep daily thoughts, small memories, and honest reflection in one browser-based space.',
-    href: '/write-diary-online.html'
-  },
-  {
-    title: 'Diary with password',
-    text: 'Choose a diary with password protection when you want private writing, a calmer sense of safety, and easier day-to-day journaling.',
-    href: '/diary-with-password.html'
-  },
-  {
-    title: 'My online diary',
-    text: 'Use my online diary style writing when you want a personal digital space that feels like your own corner of the day.',
-    href: '/my-online-diary.html'
-  },
-  {
-    title: 'Journal app for anxiety',
-    text: 'Find a journal app for anxiety that helps slow racing thoughts, name feelings gently, and keep private check-ins simple.',
-    href: '/journal-app-for-anxiety.html'
-  },
-  {
-    title: 'Online diary for students',
-    text: 'Explore an online diary for students that makes private writing, stress check-ins, and daily reflection feel simple and manageable.',
-    href: '/online-diary-for-students.html'
-  },
-  {
-    title: 'Private diary online free',
-    text: 'Choose a private diary online free option when you want personal writing space, calm design, and easy daily access without extra friction.',
-    href: '/private-diary-online-free.html'
-  },
-  {
-    title: 'Daily self care journal',
-    text: 'Use a daily self care journal to notice what you need, reflect gently, and keep supportive habits in a calmer writing space.',
-    href: '/daily-self-care-journal.html'
-  },
-  {
-    title: 'Online diary with password',
-    text: 'Pick an online diary with password protection when you want a private digital diary that feels both safe and easy to return to.',
-    href: '/online-diary-with-password.html'
-  },
-  {
-    title: 'Diary app for teens',
-    text: 'Explore a diary app for teens that offers a private place for feelings, school stress, identity, and daily reflection without extra pressure.',
-    href: '/diary-app-for-teens.html'
-  },
-  {
-    title: 'Free online journal with lock',
-    text: 'Choose a free online journal with lock support when you want privacy, simple writing, and a calmer digital journal you can return to easily.',
-    href: '/free-online-journal-with-lock.html'
-  },
-  {
-    title: 'Private journal for stress',
-    text: 'Use a private journal for stress to unload pressure, name what feels heavy, and keep personal reflection in a quiet writing space.',
-    href: '/private-journal-for-stress.html'
-  },
-  {
-    title: 'Daily reflection app',
-    text: 'Find a daily reflection app that helps you slow down, notice patterns, and keep honest check-ins simple enough to sustain.',
-    href: '/daily-reflection-app.html'
+    title: 'Brain dumping for sleep',
+    text: 'Read how a short end-of-day writing habit can lower mental clutter and make nighttime feel calmer.',
+    href: '/article-brain-dumping-sleep.html'
   }
 ];
 
@@ -815,7 +485,7 @@ const seoFaqs = [
   },
   {
     question: 'Does Lofi Memory also have guides for prompts and daily reflection?',
-    answer: 'Yes. There are dedicated reading pages for digital diary use, journal prompts, daily reflection, free online diary use, gratitude journaling, secure online journaling, self care journaling, personal diary online use, online diary for adults, daily check-in journaling, morning prompts, evening prompts, habit journaling, privacy-focused journaling, journaling through overthinking, self reflection, prompt-based journaling, adult diary use, and mental health check-ins.'
+    answer: 'Yes. The blog now points to the strongest articles first, including privacy-focused journaling, daily reflection, journaling habits, sleep-friendly brain dumping, and calmer game-break reads.'
   },
   {
     question: 'Can I use Lofi Memory for notes, reminders, and recurring tasks too?',
@@ -828,613 +498,60 @@ const seoFaqs = [
 ];
 
 const seoGuidePages = [
-  { label: 'Popular guide', title: 'Daily word puzzle', text: 'Play a calm daily word puzzle when you want a familiar word challenge that feels cozy, tidy, and easy to return to.', href: '/daily-word-puzzle.html' },
-  { label: 'Popular guide', title: 'Guess the word game', text: 'Play a gentle guess-the-word game online when you want soft feedback, quick rounds, and a friendlier browser puzzle.', href: '/guess-the-word-game.html' },
-  { label: 'Popular guide', title: 'Daily word game', text: 'Find a daily word game you can open for a quick relaxing round before moving into music, notes, or journaling.', href: '/daily-word-game.html' },
-  { label: 'Popular guide', title: 'Wordle online', text: 'Play a calm Wordle-style puzzle online when you want a familiar word-guessing game that still feels gentle and beginner-friendly.', href: '/wordle-online.html' },
-  { label: 'Popular guide', title: 'Crossword game online', text: 'Play a calm crossword-style game online when you want an easy clue loop that feels more welcoming than a full crossword grid.', href: '/crossword-game-online.html' },
-  { label: 'Popular guide', title: 'Sudoku online', text: 'Play Sudoku online in a cozy browser space when you want familiar number logic, pencil marks, and a calmer puzzle rhythm.', href: '/sudoku-online.html' },
-  { label: 'Popular guide', title: 'WPM test', text: 'Check your WPM in a calm browser space when you want a quick typing-speed snapshot without the usual pressure.', href: '/wpm-test.html' },
-  { label: 'Popular guide', title: 'Typing speed test', text: 'Take a calm typing speed test when you want a soft WPM check, clean stats, and an easy browser challenge.', href: '/typing-game-online.html' },
-  { label: 'Popular guide', title: 'Typing practice online', text: 'Practice typing online with readable passages, timer presets, and a calmer browser rhythm you can revisit often.', href: '/typing-practice-online.html' },
-  { label: 'Helpful read', title: 'Typing accuracy test', text: 'Take a typing accuracy test when you want cleaner keystrokes, fewer errors, and a softer pace than a pure speed sprint.', href: '/typing-accuracy-test.html' },
-  { label: 'Helpful read', title: 'Beginner typing test', text: 'Open a beginner typing test when you want a welcoming warm-up with clear stats and no noisy pressure.', href: '/beginner-typing-test.html' },
-  { label: 'Popular guide', title: 'Typing test online', text: 'Open a relaxed typing test online when you want clear stats, readable passages, and a calmer browser experience.', href: '/typing-test-online.html' },
-  { label: 'Popular guide', title: 'Chill place online', text: 'Find a cozy online place to listen to lofi music, chill, relax, and keep private notes in one calm space.', href: '/chill-place-online.html' },
-  { label: 'Popular guide', title: 'Chill games', text: 'Open chill games that feel easy to start, soft on the eyes, and welcoming when you just want to relax.', href: '/chill-games.html' },
-  { label: 'Popular guide', title: 'Lofi games', text: 'Find lofi games that pair naturally with music, soft focus, and low-pressure browser play.', href: '/lofi-games.html' },
-  { label: 'Helpful read', title: 'Relaxing browser games', text: 'Explore relaxing browser games for calm puzzle loops, gentle runners, and cozy short breaks.', href: '/relaxing-browser-games.html' },
-  { label: 'Helpful read', title: 'Lofi music website', text: 'Find a lofi music website for calm beats, chill vibes, notes, journaling, and a softer space to stay in.', href: '/lofi-music-website.html' },
-  { label: 'Popular guide', title: 'Free lofi music website', text: 'Open a free lofi music website with relaxing games, journaling, notes, reminders, and cozy visuals nearby.', href: '/free-lofi-music-website.html' },
-  { label: 'Popular guide', title: 'Listen to lofi music online', text: 'Listen to lofi music online in a calm browser space with cozy games, notes, and journaling nearby.', href: '/listen-to-lofi-music-online.html' },
-  { label: 'Popular guide', title: 'Lofi music to relax', text: 'Listen to lofi music to relax, chill, clear your mind, play cozy games, and take a soft reset.', href: '/lofi-music-to-relax.html' },
-  { label: 'Helpful read', title: 'Calm place to listen to music', text: 'Find a calm place to listen to music online with lofi radio, relaxing games, private notes, and gentle focus tools.', href: '/calm-place-to-listen-to-music.html' },
-  { label: 'Helpful read', title: 'Lofi radio online', text: 'Open lofi radio online when you want relaxing beats, chill vibes, and a softer tab for writing or focus.', href: '/lofi-radio-online.html' },
-  { label: 'Helpful read', title: 'Relaxing music online', text: 'Use relaxing music online with low-clutter tools for notes, breathing, private writing, and gentle breaks.', href: '/relaxing-music-online.html' },
-  { label: 'Helpful read', title: 'Chill music online', text: 'Find chill music online for lofi vibes, studying, relaxing, and a softer place to stay for a while.', href: '/chill-music-online.html' },
-  { label: 'Popular guide', title: 'Chill website with music', text: 'Open a chill website with lofi music, relaxing games, private notes, journaling, and reminders nearby.', href: '/chill-website-with-music.html' },
-  { label: 'Popular guide', title: 'Chill music and games', text: 'Open a chill website for listening to lofi music, playing cozy games, journaling, and keeping notes nearby.', href: '/chill-music-and-games.html' },
-  { label: 'Popular guide', title: 'Music and games website', text: 'Find a music and games website for lofi radio, relaxing browser games, notes, journaling, and calm breaks.', href: '/music-games-website.html' },
-  { label: 'Popular guide', title: 'Listen to music and play games', text: 'Listen to lofi music and play cozy games online in one calm tab with notes, journaling, and reminders nearby.', href: '/listen-to-music-and-play-games.html' },
-  { label: 'Helpful read', title: 'Online music player with games', text: 'Use an online music player with relaxing games, lofi radio, notes, and journaling together in one soft browser space.', href: '/online-music-player-with-games.html' },
-  { label: 'Helpful read', title: 'Lofi music for gaming', text: 'Play relaxing browser games with lofi music in the background for a calmer gaming and puzzle break.', href: '/lofi-music-for-gaming.html' },
-  { label: 'Popular guide', title: 'Games to play while listening to music', text: 'Play cozy games while listening to lofi music, from Solitaire and Sudoku to Jigsaw, Snake, and word games.', href: '/games-to-play-while-listening-to-music.html' },
-  { label: 'Helpful read', title: 'Relaxing games with music', text: 'Pair relaxing games with lofi music when you want a calmer browser break that still feels fun.', href: '/relaxing-games-with-music.html' },
-  { label: 'Popular guide', title: 'Lofi game room', text: 'Step into a lofi game room with relaxing music, cozy games, private notes, and calm visuals in one soft tab.', href: '/lofi-game-room.html' },
-  { label: 'Helpful read', title: 'Lofi browser games', text: 'Open lofi browser games that stay cozy, lightweight, and easy to play while music keeps the vibe soft.', href: '/lofi-browser-games.html' },
-  { label: 'Helpful read', title: 'Chill browser games with music', text: 'Play chill browser games with lofi music, notes, journaling, and reminders nearby.', href: '/chill-browser-games-with-music.html' },
-  { label: 'Popular guide', title: 'Cozy games with lofi music', text: 'Play cozy games with lofi music in the background when you want a warm and relaxing online break.', href: '/cozy-games-with-lofi-music.html' },
-  { label: 'Popular guide', title: 'Cozy online games and music', text: 'Use one soft online room for lofi music, cozy games, notes, memories, and daily reset moments.', href: '/cozy-online-games-and-music.html' },
-  { label: 'Helpful read', title: 'Lofi study music', text: 'Use lofi study music with notes, reminders, breathing, and relaxing games for calmer focus sessions.', href: '/lofi-study-music.html' },
-  { label: 'Helpful read', title: 'Chill website for study breaks', text: 'Take a short study break with lofi music, relaxing games, breathing, notes, and a calm page that helps you return to focus.', href: '/chill-website-for-study-breaks.html' },
-  { label: 'Helpful read', title: 'Music for journaling', text: 'Pair lofi music with private journaling, memories, notes, and gentle games when you want reflection to feel softer.', href: '/music-for-journaling.html' },
-  { label: 'Popular guide', title: 'Calm website', text: 'Find a calm website with lofi music, chill visuals, private notes, relaxing games, and space to breathe.', href: '/calm-website.html' },
-  { label: 'Popular guide', title: 'Online space to relax and chill', text: 'Use an online space to relax and chill with lofi music, cozy games, private journaling, notes, and reminders.', href: '/online-space-to-relax-and-chill.html' },
-  { label: 'Popular guide', title: 'Relax and play games', text: 'Relax and play games online with lofi music, gentle tools, notes, breathing, and private journaling in one tab.', href: '/relax-and-play-games.html' },
-  { label: 'Popular guide', title: 'Relaxing website with games and music', text: 'Use one relaxing website for lofi music, cozy games, private notes, journaling, and small reset tools.', href: '/relaxing-website-with-games-and-music.html' },
-  { label: 'Helpful read', title: 'Cozy website for music, games, and journaling', text: 'Use one cozy website for lofi music, relaxing games, private journaling, notes, reminders, and gentle daily reset moments.', href: '/cozy-website-for-music-games-journaling.html' },
-  { label: 'Popular guide', title: 'Website to relax', text: 'Open a website to relax when you want lofi listening, chill vibes, soft notes, and a cleaner online corner.', href: '/website-to-relax.html' },
-  { label: 'Popular guide', title: 'Word game online', text: 'Play a calm word game online when you want a familiar puzzle that feels light and relaxing.', href: '/word-game-online.html' },
-  { label: 'Popular guide', title: 'Sliding puzzle online', text: 'Play a cozy sliding puzzle online when you want a simple tile game that feels calm and satisfying.', href: '/sliding-puzzle-online.html' },
-  { label: 'Popular guide', title: '2048 online', text: 'Play a calm 2048-style number merge game when you want an easy puzzle that still feels satisfying.', href: '/2048-online.html' },
-  { label: 'Popular guide', title: 'Cozy browser games', text: 'Find soft browser games people like to play when they want to relax, reset, and stay for a while.', href: '/cozy-browser-games.html' },
-  { label: 'Helpful read', title: 'Games to relax', text: 'Explore calm game styles like memory, logic, and endless runners that feel easy to enjoy.', href: '/games-to-relax.html' },
-  { label: 'Helpful read', title: 'Things to do to relax', text: 'See the simple habits people lean on most often when they want to rest, chill, and reset.', href: '/things-to-do-to-relax.html' },
-  { label: 'Popular guide', title: 'Memory games for anxiety', text: 'Play calm memory games for anxiety to clear your mind before writing.', href: '/memory-games-for-anxiety.html' },
-  { label: 'Helpful read', title: 'Mindful gaming app', text: 'Play mindful games like Drifting Seed and Lotus Match to relax your mind.', href: '/mindful-gaming-app.html' },
-
-  { label: 'Popular guide', title: 'Relaxing fidget games', text: 'Play relaxing fidget games online to clear your mind before writing.', href: '/relaxing-fidget-games.html' },
-  { label: 'Helpful read', title: 'Online Minesweeper', text: 'Clear a cozy online Minesweeper board when you want a calmer kind of focus.', href: '/minesweeper-online.html' },
-  { label: 'Helpful read', title: 'Calming games for anxiety', text: 'Quiet your racing thoughts with simple, repetitive games designed to soothe your mind.', href: '/calming-games-for-anxiety.html' },
-
-  {
-    label: 'Popular guide',
-    title: 'Web based diary',
-    text: 'Access your personal writing from anywhere, requiring no downloads.',
-    href: '/web-based-diary.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Browser based journal',
-    text: 'A fast, beautiful journal for writing thoughts instantly without installing apps.',
-    href: '/browser-based-journal.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Cozy journal app',
-    text: 'A warm, comforting space designed to feel like a safe haven for your thoughts.',
-    href: '/cozy-journal-app.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Calm diary app',
-    text: 'A quiet, distraction-free environment to reflect and find peace.',
-    href: '/calm-diary-app.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Self discovery journal',
-    text: 'Explore your inner thoughts with online prompts and reflection guides.',
-    href: '/self-discovery-journal.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Morning pages app',
-    text: 'Start your day with clarity through stream-of-consciousness writing.',
-    href: '/morning-pages-app.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'CBT journal app',
-    text: 'Track moods and reframe thoughts to support your mental health journey.',
-    href: '/cbt-journal-app.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Therapy journal online',
-    text: 'Keep track of breakthroughs, session notes, and emotional patterns securely.',
-    href: '/therapy-journal-online.html'
-  },
-
-  {
-    label: 'Helpful read',
-    title: 'Aesthetic journal app',
-    text: 'For writers who appreciate a beautiful, calming space with elegant typography and minimalistic design.',
-    href: '/aesthetic-journal-app.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Mood tracker diary',
-    text: 'Combine your daily feelings and thoughts in a private online space to track emotions.',
-    href: '/mood-tracker-diary.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Gratitude journal online',
-    text: 'A positive journaling practice for quiet reflection, appreciation, and stress relief.',
-    href: '/gratitude-journal-online.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Minimalist diary app',
-    text: 'A clutter-free, minimalist diary app for those who want a focused, distraction-free environment.',
-    href: '/minimalist-diary-app.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Private diary for overthinkers',
-    text: 'Clear your mind safely in a secure diary that helps process anxiety and organize racing thoughts.',
-    href: '/private-diary-for-overthinkers.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Online diary for mental health',
-    text: 'A gentle, private, and secure space for daily therapeutic journaling.',
-    href: '/online-diary-for-mental-health.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Digital bullet journal',
-    text: 'A flexible way to organize thoughts, tasks, and daily reflections in a clean format.',
-    href: '/digital-bullet-journal.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Secure online journal',
-    text: 'Keep your personal writing completely private with encrypted login and a safe environment.',
-    href: '/secure-online-journal.html'
-  },
-
-  {
-    label: 'Popular guide',
-    title: 'Private online diary guide',
-    text: 'A calm starting page for people who want a private place to journal online.',
-    href: '/private-online-diary.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Online diary guide',
-    text: 'A direct page for people searching for an online diary that feels soft, personal, and easy to keep.',
-    href: '/online-diary.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Diary app guide',
-    text: 'A softer guide for people comparing diary apps and looking for a calmer writing experience.',
-    href: '/diary-app.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Best diary app guide',
-    text: 'A practical comparison page for people trying to decide what makes the best diary app worth returning to.',
-    href: '/best-diary-app.html'
-  },
-  {
-    label: 'Search guide',
-    title: 'Where to write a diary online',
-    text: 'A reader-friendly page for people choosing where to write a diary online without adding noise or pressure.',
-    href: '/where-to-write-a-diary-online.html'
-  },
-  {
-    label: 'Search guide',
-    title: 'Online journal guide',
-    text: 'A broader guide for people who want an online journal for gentle writing and reflection.',
-    href: '/online-journal.html'
-  },
-  {
-    label: 'Search guide',
-    title: 'Journal app guide',
-    text: 'A clearer guide for people searching for a journal app that supports reflection without pressure.',
-    href: '/journal-app.html'
-  },
-  {
-    label: 'Search guide',
-    title: 'Digital diary guide',
-    text: 'A gentle overview of what makes a digital diary easier to keep, revisit, and trust day after day.',
-    href: '/digital-diary.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Mood journal guide',
-    text: 'A focused page for people who want mood tracking and gentle reflection in one space.',
-    href: '/mood-journal.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Online diary with lock guide',
-    text: 'A privacy-focused page for people who want a journal with optional browser lock protection.',
-    href: '/online-diary-with-lock.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'How to write a diary',
-    text: 'A beginner-friendly guide for starting a diary with softer prompts, simple structure, and less pressure.',
-    href: '/how-to-write-a-diary.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Journal prompts',
-    text: 'A prompt collection for days when starting feels harder than writing.',
-    href: '/journal-prompts.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Daily reflection journal',
-    text: 'A softer evening reading page for daily reflection and end-of-day journaling.',
-    href: '/daily-reflection-journal.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Free online diary guide',
-    text: 'A calm guide for people who want a free online diary without losing privacy, softness, or daily writing ease.',
-    href: '/free-online-diary.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Daily journal app guide',
-    text: 'A steady guide for people searching for a daily journal app that supports short returns and consistent reflection.',
-    href: '/daily-journal-app.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Gratitude journal guide',
-    text: 'A gentle gratitude journaling page for noticing small wins, grounded moments, and everyday appreciation.',
-    href: '/gratitude-journal.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Private journal app guide',
-    text: 'A privacy-first page for people searching for a journal app that feels personal, calm, and easier to trust.',
-    href: '/private-journal-app.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Secure online journal guide',
-    text: 'A calmer guide for people comparing secure online journal options and wanting privacy without a cold experience.',
-    href: '/secure-online-journal.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Self care journal guide',
-    text: 'A softer self care journaling page for steady check-ins, gentle reflection, and realistic daily support.',
-    href: '/self-care-journal.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Personal diary online guide',
-    text: 'A calm page for people who want a personal diary online that feels private, gentle, and easy to return to.',
-    href: '/personal-diary-online.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Online diary for adults guide',
-    text: 'A more grown-up online diary page for adults who want a calmer writing space for real everyday life.',
-    href: '/online-diary-for-adults.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Daily check in journal guide',
-    text: 'A gentle daily check-in page for short reflections, emotional clarity, and steadier self-awareness.',
-    href: '/daily-check-in-journal.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Morning journal prompts',
-    text: 'A softer prompt page for starting the day with a little clarity, intention, and self-kindness.',
-    href: '/morning-journal-prompts.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Evening journal prompts',
-    text: 'A calmer end-of-day prompt page for reflection, release, and small notes before rest.',
-    href: '/evening-journal-prompts.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Reflection prompts for adults',
-    text: 'A grounded prompt page for adults who want private reflection that fits real life.',
-    href: '/reflection-prompts-for-adults.html'
-  },
-  {
-    label: 'Habit guide',
-    title: 'Journaling routine',
-    text: 'A calm routine-building page for people who want journaling to feel repeatable instead of demanding.',
-    href: '/journaling-routine.html'
-  },
-  {
-    label: 'Habit guide',
-    title: 'Daily writing habit',
-    text: 'A small-step guide for building a daily writing habit with lower pressure and more consistency.',
-    href: '/daily-writing-habit.html'
-  },
-  {
-    label: 'Habit guide',
-    title: 'Habit tracker journal',
-    text: 'A practical guide to combining habit tracking, private notes, and reflective journaling in one calm place.',
-    href: '/habit-tracker-journal.html'
-  },
-  {
-    label: 'Privacy guide',
-    title: 'Online journal with lock',
-    text: 'A reassuring guide for people who want an online journal with lock-style privacy and calmer digital writing.',
-    href: '/online-journal-with-lock.html'
-  },
-  {
-    label: 'Habit guide',
-    title: 'Daily journaling app',
-    text: 'A softer guide for people comparing daily journaling apps and looking for an easier repeatable writing rhythm.',
-    href: '/daily-journaling-app.html'
-  },
-  {
-    label: 'Mindset guide',
-    title: 'Journal for overthinking',
-    text: 'A supportive guide for people who want to journal through spirals, racing thoughts, and mental clutter.',
-    href: '/journal-for-overthinking.html'
-  },
-  {
-    label: 'Reflection guide',
-    title: 'Self reflection journal',
-    text: 'A grounded guide for keeping a self reflection journal with prompts, calmer check-ins, and end-of-day perspective.',
-    href: '/self-reflection-journal.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Best online diary',
-    text: 'A calmer comparison page for people looking for the best online diary for privacy, ease, and repeatable daily use.',
-    href: '/best-online-diary.html'
-  },
-  {
-    label: 'Adults guide',
-    title: 'Private diary app for adults',
-    text: 'A grown-up diary guide for adults who want privacy, calmer design, and a softer place to keep personal writing.',
-    href: '/private-diary-app-for-adults.html'
-  },
-  {
-    label: 'Prompt guide',
-    title: 'Digital journal with prompts',
-    text: 'A helpful guide for people who want a digital journal with prompts that make blank pages feel less intimidating.',
-    href: '/digital-journal-with-prompts.html'
-  },
-  {
-    label: 'Wellbeing guide',
-    title: 'Daily mental health journal',
-    text: 'A gentle daily journaling guide for mood awareness, emotional check-ins, and steadier mental wellbeing support.',
-    href: '/daily-mental-health-journal.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Online diary app',
-    text: 'A direct guide for people searching for an online diary app that feels private, calm, and easy to keep using.',
-    href: '/online-diary-app.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Diary website',
-    text: 'A straightforward guide for choosing a diary website with personal writing space, prompts, and a gentler layout.',
-    href: '/diary-website.html'
-  },
-  {
-    label: 'Personal guide',
-    title: 'Personal diary app',
-    text: 'A softer guide for people who want a personal diary app for private notes, moods, and reflective daily writing.',
-    href: '/personal-diary-app.html'
-  },
-  {
-    label: 'Privacy guide',
-    title: 'Secure diary app',
-    text: 'A practical privacy guide for people comparing secure diary apps and calmer ways to protect personal writing.',
-    href: '/secure-diary-app.html'
-  },
-  {
-    label: 'Search guide',
-    title: 'Write diary online',
-    text: 'A direct guide for people searching where and how to write diary online without losing privacy or calm.',
-    href: '/write-diary-online.html'
-  },
-  {
-    label: 'Privacy guide',
-    title: 'Diary with password',
-    text: 'A reassuring guide for people who want a diary with password protection and a softer private writing flow.',
-    href: '/diary-with-password.html'
-  },
-  {
-    label: 'Personal guide',
-    title: 'My online diary',
-    text: 'A personal writing guide for people looking for an online diary that feels like their own quiet everyday space.',
-    href: '/my-online-diary.html'
-  },
-  {
-    label: 'Wellbeing guide',
-    title: 'Journal app for anxiety',
-    text: 'A supportive guide for people comparing journal apps for anxiety, calmer reflection, and steady private check-ins.',
-    href: '/journal-app-for-anxiety.html'
-  },
-  {
-    label: 'Student guide',
-    title: 'Online diary for students',
-    text: 'A practical guide for students who want a quiet online diary for stress, study life, and private daily reflection.',
-    href: '/online-diary-for-students.html'
-  },
-  {
-    label: 'Free guide',
-    title: 'Private diary online free',
-    text: 'A simple guide for people looking for a private diary online free option that still feels calm and personal.',
-    href: '/private-diary-online-free.html'
-  },
-  {
-    label: 'Wellbeing guide',
-    title: 'Daily self care journal',
-    text: 'A gentle guide for building a daily self care journal around feelings, needs, small rituals, and easier reflection.',
-    href: '/daily-self-care-journal.html'
-  },
-  {
-    label: 'Privacy guide',
-    title: 'Online diary with password',
-    text: 'A privacy guide for people comparing online diary options with password protection and calmer personal writing space.',
-    href: '/online-diary-with-password.html'
-  },
-  {
-    label: 'Teen guide',
-    title: 'Diary app for teens',
-    text: 'A supportive guide for teens who want a private diary app for stress, feelings, and everyday life without making writing feel formal.',
-    href: '/diary-app-for-teens.html'
-  },
-  {
-    label: 'Free guide',
-    title: 'Free online journal with lock',
-    text: 'A practical guide for people looking for a free online journal with lock support and a calmer private writing flow.',
-    href: '/free-online-journal-with-lock.html'
-  },
-  {
-    label: 'Stress guide',
-    title: 'Private journal for stress',
-    text: 'A gentle guide for using a private journal to process stress, reduce mental clutter, and reflect without being watched.',
-    href: '/private-journal-for-stress.html'
-  },
-  {
-    label: 'Reflection guide',
-    title: 'Daily reflection app',
-    text: 'A clear guide for people comparing daily reflection apps that help turn small check-ins into a meaningful habit.',
-    href: '/daily-reflection-app.html'
-  }
+  { label: 'Featured hub', title: 'Lofi Memory blog', text: 'Browse the strongest original articles, trust pages, and calmer reading paths in one curated place.', href: '/blog.html' },
+  { label: 'Trust page', title: 'About Lofi Memory', text: 'Understand what the product includes, how it fits together, and why the design stays intentionally calm.', href: '/about.html' },
+  { label: 'Trust page', title: 'Editorial policy', text: 'See how originality, accuracy, corrections, and wellbeing boundaries are handled across the site.', href: '/editorial-policy.html' },
+  { label: 'Trust page', title: 'Privacy policy', text: 'Review how storage, sign-in, notifications, embedded media, and advertising-related technologies are described.', href: '/privacy.html' },
+  { label: 'Trust page', title: 'Contact and corrections', text: 'Find the direct support route for privacy requests, content corrections, bug reports, and ad questions.', href: '/contact.html' },
+  { label: 'Helpful read', title: 'How to protect your privacy when journaling online', text: 'A practical read on trust, storage expectations, and what to look for before you write online.', href: '/article-protect-privacy-journaling-online.html' },
+  { label: 'Helpful read', title: 'The psychology of journaling', text: 'Understand why writing can reduce mental noise and make thoughts easier to process.', href: '/article-psychology-of-journaling.html' },
+  { label: 'Helpful read', title: 'How to start a journaling habit', text: 'Learn how to build a writing routine that feels realistic enough to keep through busy weeks.', href: '/article-how-to-start-journaling-habit.html' },
+  { label: 'Helpful read', title: 'Benefits of a private online diary', text: 'See when a browser-based diary can feel more flexible, organized, and sustainable than scattered notes.', href: '/article-benefits-of-private-online-diary.html' },
+  { label: 'Helpful read', title: 'Daily reflection and mental health', text: 'Read why short, honest check-ins are often easier to sustain than heavier self-improvement systems.', href: '/article-daily-reflection-mental-health.html' },
+  { label: 'Helpful read', title: 'Brain dumping before sleep', text: 'See how a short writing habit can reduce bedtime mental clutter and support calmer evenings.', href: '/article-brain-dumping-sleep.html' },
+  { label: 'Helpful read', title: 'How a digital journal can reduce distractions', text: 'Explore why the right online setup can feel simpler, not noisier, when your goal is focus.', href: '/article-digital-journal-distractions.html' },
+  { label: 'Helpful read', title: 'Journaling prompts for self-discovery', text: 'Use gentler prompts that help you begin without turning the page into a performance.', href: '/article-journaling-prompts-self-discovery.html' },
+  { label: 'Helpful read', title: 'Memory games before writing', text: 'Read why a short puzzle break can help your attention settle before reflection.', href: '/article-memory-games-cognitive-relief.html' },
+  { label: 'Helpful read', title: 'Why gaming helps anxiety for some people', text: 'Understand what repetitive, low-stakes play can offer as a small buffer between stress and the next task.', href: '/article-why-gaming-helps-anxiety.html' },
+  { label: 'Helpful read', title: 'Daily word puzzles for relaxing breaks', text: 'See why familiar word loops can feel grounding when you want a tidy reset.', href: '/article-daily-word-puzzles-relax.html' },
+  { label: 'Helpful read', title: 'Word guessing games when your mind is busy', text: 'Learn how small pattern-recognition wins can provide relief without demanding too much energy.', href: '/article-word-guessing-games-busy-mind.html' },
+  { label: 'Helpful read', title: 'Benefits of lofi gaming for focus', text: 'Explore how music, visual softness, and low-pressure play can work together as a gentler online break.', href: '/article-benefits-lofi-gaming-mental-health.html' }
 ];
 
 const seoGuideGroups = [
   {
-    title: 'Find lofi music, chill vibes, and relaxing games',
-    description: 'Best for visitors looking for a lofi music website, a relaxing online space, chill vibes, and cozy games they can open quickly and enjoy without pressure.',
-    links: seoGuidePages.filter((page) => ['Chill place online', 'Chill games', 'Lofi games', 'Relaxing browser games', 'Lofi music website', 'Free lofi music website', 'Listen to lofi music online', 'Lofi music to relax', 'Calm place to listen to music', 'Lofi radio online', 'Relaxing music online', 'Chill music online', 'Chill website with music', 'Chill music and games', 'Music and games website', 'Listen to music and play games', 'Online music player with games', 'Lofi music for gaming', 'Games to play while listening to music', 'Relaxing games with music', 'Lofi game room', 'Lofi browser games', 'Chill browser games with music', 'Cozy games with lofi music', 'Cozy online games and music', 'Lofi study music', 'Chill website for study breaks', 'Music for journaling', 'Calm website', 'Online space to relax and chill', 'Relax and play games', 'Relaxing website with games and music', 'Cozy website for music, games, and journaling', 'Website to relax', 'Daily word puzzle', 'Guess the word game', 'Daily word game', 'Wordle online', 'Word game online', 'Crossword game online', 'Sudoku online', 'WPM test', 'Typing speed test', 'Typing practice online', 'Typing accuracy test', 'Beginner typing test', 'Typing test online', 'Cozy browser games', 'Games to relax', 'Relaxing fidget games', 'Online Minesweeper', 'Calming games for anxiety', 'Memory games for anxiety', 'Mindful gaming app'].includes(page.title))
+    title: 'Start with trust and product clarity',
+    description: 'Best for visitors who want to understand what Lofi Memory is, how content is reviewed, and how privacy or support questions are handled.',
+    links: seoGuidePages.filter((page) => ['Lofi Memory blog', 'About Lofi Memory', 'Editorial policy', 'Privacy policy', 'Contact and corrections'].includes(page.title))
   },
   {
-    title: 'Start a private diary',
-    description: 'Best for visitors comparing private diary, online diary, and secure journal options.',
-    links: seoGuidePages.filter((page) => ['Private online diary guide', 'Online diary guide', 'Best online diary', 'Online diary app', 'Diary website', 'Write diary online', 'My online diary', 'Online diary for students', 'Online diary with lock guide', 'Online diary with password', 'Free online journal with lock', 'Online journal with lock', 'Private journal app guide', 'Private diary app for adults', 'Private diary online free', 'Personal diary app', 'Secure diary app', 'Diary with password', 'Secure online journal guide', 'Personal diary online guide', 'Online diary for adults guide', 'Diary app for teens', 'Secure online journal', 'Cozy journal app', 'Therapy journal online'].includes(page.title))
+    title: 'Read the strongest journaling articles',
+    description: 'Best for people exploring private writing, calmer routines, sleep-friendly reflection, and digital focus habits.',
+    links: seoGuidePages.filter((page) => ['How to protect your privacy when journaling online', 'The psychology of journaling', 'How to start a journaling habit', 'Benefits of a private online diary', 'Daily reflection and mental health', 'Brain dumping before sleep', 'How a digital journal can reduce distractions', 'Journaling prompts for self-discovery'].includes(page.title))
   },
   {
-    title: 'Build a writing habit',
-    description: 'Best for people who want a repeatable routine, daily check-ins, and a softer habit tracker.',
-    links: seoGuidePages.filter((page) => ['Daily journal app guide', 'Daily check in journal guide', 'Daily journaling app', 'Journaling routine', 'Daily writing habit', 'Habit tracker journal', 'Daily mental health journal', 'Online diary for mental health', 'Digital bullet journal', 'Morning pages app', 'CBT journal app'].includes(page.title))
-  },
-  {
-    title: 'Find prompts and reflection ideas',
-    description: 'Best for visitors who need help starting, reflecting, or writing without pressure.',
-    links: seoGuidePages.filter((page) => ['How to write a diary', 'Journal prompts', 'Digital journal with prompts', 'Daily reflection journal', 'Self reflection journal', 'Morning journal prompts', 'Evening journal prompts', 'Reflection prompts for adults', 'Gratitude journal guide', 'Self care journal guide', 'Daily self care journal', 'Journal app for anxiety', 'Private journal for stress', 'Daily reflection app', 'Gratitude journal online', 'Private diary for overthinkers', 'Calm diary app', 'Self discovery journal'].includes(page.title))
-  },
-  {
-    title: 'Compare diary and journal tools',
-    description: 'Best for searchers evaluating apps, online journals, digital diaries, mood journals, and calmer writing support.',
-    links: seoGuidePages.filter((page) => ['Diary app guide', 'Best diary app guide', 'Best online diary', 'Online diary app', 'Diary website', 'Write diary online', 'Diary with password', 'Online diary for students', 'Private diary online free', 'My online diary', 'Online diary with password', 'Diary app for teens', 'Free online journal with lock', 'Where to write a diary online', 'Online journal guide', 'Journal app guide', 'Journal app for anxiety', 'Private journal for stress', 'Daily reflection app', 'Journal for overthinking', 'Digital diary guide', 'Mood journal guide', 'Free online diary guide', 'Aesthetic journal app', 'Mood tracker diary', 'Minimalist diary app', 'Web based diary', 'Browser based journal'].includes(page.title))
+    title: 'Explore calmer game-break reads',
+    description: 'Best for visitors who like the music-and-games side of Lofi Memory but still want article-level value before they click around.',
+    links: seoGuidePages.filter((page) => ['Memory games before writing', 'Why gaming helps anxiety for some people', 'Daily word puzzles for relaxing breaks', 'Word guessing games when your mind is busy', 'Benefits of lofi gaming for focus'].includes(page.title))
   }
 ];
 
 const seoPopularSearches = [
-  { label: 'Listen to lofi music online', href: '/listen-to-lofi-music-online.html' },
-  { label: 'Lofi music to relax', href: '/lofi-music-to-relax.html' },
-  { label: 'Calm place to listen to music', href: '/calm-place-to-listen-to-music.html' },
-  { label: 'Chill website with music', href: '/chill-website-with-music.html' },
-  { label: 'Online space to relax and chill', href: '/online-space-to-relax-and-chill.html' },
-  { label: 'Lofi music website', href: '/lofi-music-website.html' },
-  { label: 'Free lofi music website', href: '/free-lofi-music-website.html' },
-  { label: 'Relaxing music online', href: '/relaxing-music-online.html' },
-  { label: 'Chill music online', href: '/chill-music-online.html' },
-  { label: 'Lofi radio online', href: '/lofi-radio-online.html' },
-  { label: 'Chill place online', href: '/chill-place-online.html' },
-  { label: 'Website to relax', href: '/website-to-relax.html' },
-  { label: 'Relaxing site with games and music', href: '/relaxing-website-with-games-and-music.html' },
-  { label: 'Relax and play games', href: '/relax-and-play-games.html' },
-  { label: 'Chill music and games', href: '/chill-music-and-games.html' },
-  { label: 'Music and games website', href: '/music-games-website.html' },
-  { label: 'Listen to music and play games', href: '/listen-to-music-and-play-games.html' },
-  { label: 'Music player with games', href: '/online-music-player-with-games.html' },
-  { label: 'Lofi gaming music', href: '/lofi-music-for-gaming.html' },
-  { label: 'Games with music', href: '/games-to-play-while-listening-to-music.html' },
-  { label: 'Relaxing games with music', href: '/relaxing-games-with-music.html' },
-  { label: 'Lofi game room', href: '/lofi-game-room.html' },
-  { label: 'Lofi browser games', href: '/lofi-browser-games.html' },
-  { label: 'Chill browser games with music', href: '/chill-browser-games-with-music.html' },
-  { label: 'Cozy lofi games', href: '/cozy-games-with-lofi-music.html' },
-  { label: 'Cozy games and music', href: '/cozy-online-games-and-music.html' },
-  { label: 'Cozy music games journal', href: '/cozy-website-for-music-games-journaling.html' },
-  { label: 'Study break website', href: '/chill-website-for-study-breaks.html' },
-  { label: 'Chill games', href: '/chill-games.html' },
-  { label: 'Lofi games', href: '/lofi-games.html' },
-  { label: 'Relaxing browser games', href: '/relaxing-browser-games.html' },
-  { label: 'Cozy browser games', href: '/cozy-browser-games.html' },
-  { label: 'Games to relax', href: '/games-to-relax.html' },
-  { label: 'Daily word puzzle', href: '/daily-word-puzzle.html' },
-  { label: 'Guess the word game', href: '/guess-the-word-game.html' },
-  { label: 'Daily word game', href: '/daily-word-game.html' },
-  { label: 'Wordle online', href: '/wordle-online.html' },
-  { label: 'Crossword game online', href: '/crossword-game-online.html' },
-  { label: 'Sudoku online', href: '/sudoku-online.html' },
-  { label: 'WPM test', href: '/wpm-test.html' },
-  { label: 'Typing speed test', href: '/typing-game-online.html' },
-  { label: 'Typing practice online', href: '/typing-practice-online.html' },
-  { label: 'Typing accuracy test', href: '/typing-accuracy-test.html' },
-  { label: 'Beginner typing test', href: '/beginner-typing-test.html' },
-  { label: 'Typing test online', href: '/typing-test-online.html' },
-  { label: 'Word game online', href: '/word-game-online.html' },
-  { label: 'Sliding puzzle online', href: '/sliding-puzzle-online.html' },
-  { label: '2048 online', href: '/2048-online.html' },
-  { label: 'Cozy browser games', href: '/cozy-browser-games.html' },
-  { label: 'Games to relax', href: '/games-to-relax.html' },
-  { label: 'Things to do to relax', href: '/things-to-do-to-relax.html' },
-  { label: 'Memory games for anxiety', href: '/memory-games-for-anxiety.html' },
-  { label: 'Mindful gaming app', href: '/mindful-gaming-app.html' },
-
-  { label: 'Relaxing fidget games', href: '/relaxing-fidget-games.html' },
-  { label: 'Online Minesweeper', href: '/minesweeper-online.html' },
-  { label: 'Calming games for anxiety', href: '/calming-games-for-anxiety.html' },
-
-  { label: 'Web based diary', href: '/web-based-diary.html' },
-  { label: 'Browser based journal', href: '/browser-based-journal.html' },
-  { label: 'Cozy journal app', href: '/cozy-journal-app.html' },
-  { label: 'Calm diary app', href: '/calm-diary-app.html' },
-  { label: 'Self discovery journal', href: '/self-discovery-journal.html' },
-  { label: 'Morning pages app', href: '/morning-pages-app.html' },
-  { label: 'CBT journal app', href: '/cbt-journal-app.html' },
-  { label: 'Therapy journal online', href: '/therapy-journal-online.html' },
-
-  { label: 'Aesthetic journal app', href: '/aesthetic-journal-app.html' },
-  { label: 'Mood tracker diary', href: '/mood-tracker-diary.html' },
-  { label: 'Gratitude journal online', href: '/gratitude-journal-online.html' },
-  { label: 'Minimalist diary app', href: '/minimalist-diary-app.html' },
-  { label: 'Private diary for overthinkers', href: '/private-diary-for-overthinkers.html' },
-  { label: 'Online diary for mental health', href: '/online-diary-for-mental-health.html' },
-  { label: 'Digital bullet journal', href: '/digital-bullet-journal.html' },
-  { label: 'Secure online journal', href: '/secure-online-journal.html' },
-
-  { label: 'Private online diary', href: '/private-online-diary.html' },
-  { label: 'Best online diary', href: '/best-online-diary.html' },
-  { label: 'Online diary app', href: '/online-diary-app.html' },
-  { label: 'Diary website', href: '/diary-website.html' },
-  { label: 'Private diary app for adults', href: '/private-diary-app-for-adults.html' },
-  { label: 'Personal diary app', href: '/personal-diary-app.html' },
-  { label: 'Secure diary app', href: '/secure-diary-app.html' },
-  { label: 'Write diary online', href: '/write-diary-online.html' },
-  { label: 'Diary with password', href: '/diary-with-password.html' },
-  { label: 'My online diary', href: '/my-online-diary.html' },
-  { label: 'Journal app for anxiety', href: '/journal-app-for-anxiety.html' },
-  { label: 'Online diary for students', href: '/online-diary-for-students.html' },
-  { label: 'Private diary online free', href: '/private-diary-online-free.html' },
-  { label: 'Daily self care journal', href: '/daily-self-care-journal.html' },
-  { label: 'Online diary with password', href: '/online-diary-with-password.html' },
-  { label: 'Diary app for teens', href: '/diary-app-for-teens.html' },
-  { label: 'Free online journal with lock', href: '/free-online-journal-with-lock.html' },
-  { label: 'Private journal for stress', href: '/private-journal-for-stress.html' },
-  { label: 'Daily reflection app', href: '/daily-reflection-app.html' },
-  { label: 'Journal app for adults', href: '/journal-app-for-adults.html' },
-  { label: 'Private online notebook', href: '/private-online-notebook.html' },
-  { label: 'Mental wellness journal app', href: '/mental-wellness-journal-app.html' },
-  { label: 'Simple online diary', href: '/simple-online-diary.html' },
-  { label: 'Journal prompts', href: '/journal-prompts.html' },
-  { label: 'Digital journal with prompts', href: '/digital-journal-with-prompts.html' },
-  { label: 'Daily reflection journal', href: '/daily-reflection-journal.html' },
-  { label: 'Daily mental health journal', href: '/daily-mental-health-journal.html' },
-  { label: 'Online journal with lock', href: '/online-journal-with-lock.html' },
-  { label: 'Daily journaling app', href: '/daily-journaling-app.html' },
-  { label: 'Journal for overthinking', href: '/journal-for-overthinking.html' },
-  { label: 'Self reflection journal', href: '/self-reflection-journal.html' }
+  { label: 'Lofi Memory blog', href: '/blog.html' },
+  { label: 'About Lofi Memory', href: '/about.html' },
+  { label: 'Editorial policy', href: '/editorial-policy.html' },
+  { label: 'Privacy policy', href: '/privacy.html' },
+  { label: 'How journaling helps', href: '/article-psychology-of-journaling.html' },
+  { label: 'Protect privacy when journaling online', href: '/article-protect-privacy-journaling-online.html' },
+  { label: 'How to start a journaling habit', href: '/article-how-to-start-journaling-habit.html' },
+  { label: 'Benefits of a private online diary', href: '/article-benefits-of-private-online-diary.html' },
+  { label: 'Daily reflection and mental health', href: '/article-daily-reflection-mental-health.html' },
+  { label: 'Brain dumping before sleep', href: '/article-brain-dumping-sleep.html' },
+  { label: 'Memory games before writing', href: '/article-memory-games-cognitive-relief.html' },
+  { label: 'Why gaming helps anxiety', href: '/article-why-gaming-helps-anxiety.html' },
+  { label: 'Word puzzles for relaxing breaks', href: '/article-daily-word-puzzles-relax.html' },
+  { label: 'Word guessing games and busy minds', href: '/article-word-guessing-games-busy-mind.html' },
+  { label: 'Benefits of lofi gaming for focus', href: '/article-benefits-lofi-gaming-mental-health.html' }
 ];
 
 const THEME_STORAGE_KEY = 'quiet-journal-theme-v1';
@@ -7773,6 +6890,7 @@ function App() {
             <a href="#tips" onClick={() => openHomeSection('tips')}>Tips</a>
             <a href="/blog.html">Blog</a>
             <a href="/about.html">About</a>
+            <a href="/editorial-policy.html">Editorial Policy</a>
             <a href="/privacy.html">Privacy</a>
             <a href="/terms.html">Terms</a>
             <a href="/cookie-policy.html">Cookies</a>
