@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { RotateCcw, Sparkles } from 'lucide-react';
 
-const lotusIcons = ['🌸', '🪷', '🌙', '☁️', '✨', '🍃', '🫧', '🕯️', '🪻', '🐚', '🌊', '🫖'];
+const lotusIcons = ['A♠', 'K♥', 'Q♦', 'J♣', '10♠', '9♥', '8♦', '7♣', '6♠', '5♥', '4♦', '3♣'];
 
 const difficultySettings = {
   easy: {
@@ -179,7 +179,7 @@ export default function LotusMatch({ difficulty = 'medium' }) {
   const statusMessage = status === 'ready'
     ? 'Press start when you want the preview to begin.'
     : status === 'preview'
-      ? 'Memorize the board while every symbol is still glowing.'
+      ? 'Memorize the board while every card is still glowing.'
       : hasWon
         ? 'You matched every pair — lovely work.'
         : 'Tap two cards at a time and follow the pattern.';
@@ -193,7 +193,7 @@ export default function LotusMatch({ difficulty = 'medium' }) {
               <Sparkles size={14} /> {label} memory flow
             </div>
             <h3 className="mt-4 text-3xl font-bold tracking-tight text-sage-950">Lotus Match</h3>
-            <p className="mt-2 max-w-2xl text-sm leading-7 text-sage-700">A soft memory game for quiet focus. Watch the symbols bloom, remember where they rest, and match the pairs at your own pace.</p>
+            <p className="mt-2 max-w-2xl text-sm leading-7 text-sage-700">A soft memory game for quiet focus. Watch the poker cards flip, remember where they rest, and match the pairs at your own pace.</p>
             <p className="mt-2 text-sm font-semibold text-sage-600">{note}</p>
             <p className="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-sage-500">{pairCount} pairs • {previewLabel} preview • {mismatchLabel} reset</p>
           </div>
@@ -247,7 +247,7 @@ export default function LotusMatch({ difficulty = 'medium' }) {
               <div className="max-w-md rounded-[1.6rem] border border-white/90 bg-white/92 px-6 py-6 text-center shadow-soft">
                 <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-500">Ready when you are</p>
                 <h4 className="mt-3 text-2xl font-extrabold text-sage-950">Take a quick look, then match from memory.</h4>
-                <p className="mt-3 text-sm leading-7 text-sage-700">This {label.toLowerCase()} round gives you {previewLabel} to study {pairCount} pairs before the petals turn over.</p>
+                <p className="mt-3 text-sm leading-7 text-sage-700">This {label.toLowerCase()} round gives you {previewLabel} to study {pairCount} pairs before the cards flip over.</p>
                 <button
                   className="mt-5 inline-flex items-center gap-2 rounded-full bg-sage-900 px-5 py-2.5 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5"
                   onClick={startRound}

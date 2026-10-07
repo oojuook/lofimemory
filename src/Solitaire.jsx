@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Play, RotateCcw } from 'lucide-react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { Maximize2, Minimize2, Play, RotateCcw } from 'lucide-react';
 
 const SUITS = ['♠', '♥', '♦', '♣'];
 const RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
@@ -12,8 +12,8 @@ const difficultySettings = {
   },
   medium: {
     label: 'Medium',
-    drawCount: 1,
-    note: 'Classic one-card draw with a little more attention on tidy moves.'
+    drawCount: 2,
+    note: 'Draw two cards at a time for a slightly trickier but still cozy round.'
   },
   hard: {
     label: 'Hard',
@@ -127,17 +127,57 @@ function Card({ card, selected = false, compact = false, onClick }) {
   );
 }
 
+function WastePile({ cards, drawCount, selected = false, onClick }) {
+  const visibleCards = cards.slice(-Math.max(1, drawCount));
+  const compactHeight = 'h-[4.35rem] sm:h-[5.35rem]';
+  const stackWidthClass = drawCount >= 3 ? 'w-[5.8rem] sm:w-[7rem]' : drawCount === 2 ? 'w-[4.9rem] sm:w-[6rem]' : 'w-[3rem] sm:w-[3.75rem]';
+
+  if (visibleCards.length === 0) {
+    return <Card compact onClick={onClick} />;
+  }
+
+  return (
+    <div className={`relative ${compactHeight} ${stackWidthClass}`}>
+      {visibleCards.map((card, index) => {
+        const isTopCard = index === visibleCards.length - 1;
+        const offsetX = drawCount >= 3 ? index * 20 : index * 16;
+        const offsetY = drawCount >= 3 ? index * 10 : index * 7;
+        return (
+          <div
+            className="absolute left-0 top-0"
+            key={`${card.id}-${index}`}
+            style={{ transform: `translate(${offsetX}px, ${offsetY}px)`, zIndex: index + 1 }}
+          >
+            <Card card={card} compact selected={selected && isTopCard} onClick={onClick} />
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function Solitaire({ difficulty = 'medium' }) {
   const config = difficultySettings[difficulty] || difficultySettings.medium;
+  const containerRef = useRef(null);
   const [game, setGame] = useState(() => dealGame());
   const [selected, setSelected] = useState(null);
   const [winCards, setWinCards] = useState([]);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
     setGame(dealGame());
     setSelected(null);
     setWinCards([]);
   }, [difficulty]);
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(document.fullscreenElement === containerRef.current);
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
 
   const foundationCount = useMemo(() => Object.values(game.foundations).reduce((total, pile) => total + pile.length, 0), [game.foundations]);
   const hasWon = foundationCount === 52;
@@ -167,6 +207,23 @@ export default function Solitaire({ difficulty = 'medium' }) {
     setGame(dealGame());
     setSelected(null);
     setWinCards([]);
+  };
+
+  const toggleFullscreen = async () => {
+    if (!containerRef.current) return;
+
+    try {
+      if (document.fullscreenElement === containerRef.current) {
+        await document.exitFullscreen();
+      } else {
+        await containerRef.current.requestFullscreen();
+      }
+    } catch (error) {
+      setGame((previous) => ({
+        ...previous,
+        message: 'Fullscreen is not available in this browser yet.'
+      }));
+    }
   };
 
   const drawFromStock = () => {
@@ -322,11 +379,10 @@ export default function Solitaire({ difficulty = 'medium' }) {
   };
 
   const selectedKey = selected ? `${selected.type}-${selected.columnIndex ?? selected.suit ?? 'waste'}-${selected.cardIndex ?? 0}` : '';
-  const wasteTop = game.waste[game.waste.length - 1];
 
   return (
-    <div className="mx-auto w-full pb-6 sm:pb-8">
-      <div className="overflow-hidden rounded-[1.8rem] border border-emerald-950/25 bg-[#0b6f3c] shadow-[0_22px_50px_rgba(8,69,38,0.28)]">
+    <div ref={containerRef} className={`mx-auto w-full ${isFullscreen ? 'min-h-screen bg-[#07542f] p-3 sm:p-5' : 'pb-6 sm:pb-8'}`}>
+      <div className={`overflow-hidden rounded-[1.8rem] border border-emerald-950/25 bg-[#0b6f3c] shadow-[0_22px_50px_rgba(8,69,38,0.28)] ${isFullscreen ? 'flex min-h-[calc(100vh-1.5rem)] flex-col sm:min-h-[calc(100vh-2.5rem)]' : ''}`}>
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 bg-[#086133] px-4 py-3 text-white sm:px-6">
           <div className="flex items-center gap-3">
             <div className="grid h-9 w-9 place-items-center rounded-full bg-white/14 text-lg shadow-inner">♣</div>
@@ -337,13 +393,17 @@ export default function Solitaire({ difficulty = 'medium' }) {
           </div>
           <div className="flex flex-wrap items-center gap-2 text-[11px] font-black uppercase tracking-[0.16em]">
             <button className="rounded-full bg-white px-4 py-2 text-emerald-900 shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-50" onClick={resetGame} type="button">New</button>
+            <button className="inline-flex items-center gap-2 rounded-full bg-white/13 px-4 py-2 text-white transition hover:-translate-y-0.5 hover:bg-white/20" onClick={toggleFullscreen} type="button">
+              {isFullscreen ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
+              {isFullscreen ? 'Exit full' : 'Full screen'}
+            </button>
             <span className="rounded-full bg-white/13 px-4 py-2">{config.label}</span>
             <span className="rounded-full bg-white/13 px-4 py-2">Moves {game.moves}</span>
             <span className="rounded-full bg-white/13 px-4 py-2">Home {foundationCount}/52</span>
           </div>
         </div>
 
-        <div className="relative min-h-[560px] overflow-x-auto bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.18),transparent_38%),linear-gradient(135deg,#0b7c43,#075b33)] p-4 sm:p-6 lg:p-8">
+        <div className={`relative min-h-[560px] overflow-x-auto bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.18),transparent_38%),linear-gradient(135deg,#0b7c43,#075b33)] p-4 sm:p-6 lg:p-8 ${isFullscreen ? 'flex-1' : ''}`}>
           <div className="pointer-events-none absolute inset-0 opacity-[0.06]" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #ffffff 0 1px, transparent 1px 12px)' }} />
           
           {hasWon && (
@@ -376,7 +436,7 @@ export default function Solitaire({ difficulty = 'medium' }) {
             </div>
           )}
 
-          <div className="relative mx-auto flex min-w-[560px] max-w-[920px] flex-col gap-8">
+          <div className={`relative mx-auto flex min-w-[560px] max-w-[920px] flex-col gap-8 ${isFullscreen ? 'h-full' : ''}`}>
             <div className="flex items-start justify-between gap-6">
               <div className="flex gap-4">
                 <div className="text-center">
@@ -384,7 +444,7 @@ export default function Solitaire({ difficulty = 'medium' }) {
                   <span className="mt-2 block text-[10px] font-extrabold uppercase tracking-[0.16em] text-white/78">Deck {game.stock.length}</span>
                 </div>
                 <div className="text-center">
-                  <Card card={wasteTop} compact selected={selected?.type === 'waste'} onClick={selectWaste} />
+                  <WastePile cards={game.waste} drawCount={config.drawCount} selected={selected?.type === 'waste'} onClick={selectWaste} />
                   <span className="mt-2 block text-[10px] font-extrabold uppercase tracking-[0.16em] text-white/78">Waste</span>
                 </div>
               </div>
