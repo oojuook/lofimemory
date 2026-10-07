@@ -6655,6 +6655,7 @@ function App() {
                   <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'doing' ? 'border-sage-900 bg-sage-900 text-white' : 'border-sage-100 bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('doing')} type="button">Doing {inProgressPlannerTodoCount}</button>
                   <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'done' ? 'border-sage-900 bg-sage-900 text-white' : 'border-sage-100 bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('done')} type="button">Done {completedPlannerTodoCount}</button>
                   <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'high' ? 'border-sage-900 bg-sage-900 text-white' : 'border-sage-100 bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('high')} type="button">High {plannerBoard.todos.filter((todo) => todo.priority === 'high').length}</button>
+                  <span className="rounded-full border border-sage-100 bg-white px-3 py-1">{plannerStorageLabel}</span>
                 </div>
               </div>
 

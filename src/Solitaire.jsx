@@ -131,18 +131,42 @@ export default function Solitaire({ difficulty = 'medium' }) {
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const [game, setGame] = useState(() => dealGame());
   const [selected, setSelected] = useState(null);
+  const [winCards, setWinCards] = useState([]);
 
   useEffect(() => {
     setGame(dealGame());
     setSelected(null);
+    setWinCards([]);
   }, [difficulty]);
 
   const foundationCount = useMemo(() => Object.values(game.foundations).reduce((total, pile) => total + pile.length, 0), [game.foundations]);
   const hasWon = foundationCount === 52;
 
+  useEffect(() => {
+    if (hasWon && winCards.length === 0) {
+      const cards = [];
+      const suits = SUITS;
+      for (let i = 0; i < 52; i += 1) {
+        const suit = suits[i % 4];
+        const rank = RANKS[Math.floor(i / 4)];
+        cards.push({
+          id: `win-${i}`,
+          suit,
+          rank,
+          x: (Math.random() - 0.5) * 1200,
+          y: (Math.random() - 0.5) * 800 + 400,
+          r: (Math.random() - 0.5) * 720,
+          delay: i * 50
+        });
+      }
+      setWinCards(cards);
+    }
+  }, [hasWon, winCards.length]);
+
   const resetGame = () => {
     setGame(dealGame());
     setSelected(null);
+    setWinCards([]);
   };
 
   const drawFromStock = () => {
@@ -321,6 +345,37 @@ export default function Solitaire({ difficulty = 'medium' }) {
 
         <div className="relative min-h-[560px] overflow-x-auto bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.18),transparent_38%),linear-gradient(135deg,#0b7c43,#075b33)] p-4 sm:p-6 lg:p-8">
           <div className="pointer-events-none absolute inset-0 opacity-[0.06]" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #ffffff 0 1px, transparent 1px 12px)' }} />
+          
+          {hasWon && (
+            <div className="pointer-events-none absolute inset-0 z-50 overflow-hidden">
+              {winCards.map((card) => (
+                <div
+                  key={card.id}
+                  className="solitaire-win-card"
+                  style={{
+                    '--win-x': `${card.x}px`,
+                    '--win-y': `${card.y}px`,
+                    '--win-r': `${card.r}deg`,
+                    animationDelay: `${card.delay}ms`,
+                    left: '50%',
+                    top: '40%'
+                  }}
+                >
+                  <div className={`h-[5.35rem] w-[3.75rem] sm:h-24 sm:w-16 flex flex-col justify-between rounded-[0.8rem] border border-white/95 bg-[#fffdf8] p-1.5 text-left font-black shadow-lg ${isRed(card.suit) ? 'text-rose-500' : 'text-slate-800'}`}>
+                    <div className="flex flex-col leading-none">
+                      <span className="text-[12px] sm:text-sm">{card.rank}</span>
+                      <span className="text-[11px] opacity-85 sm:text-xs">{card.suit}</span>
+                    </div>
+                    <span className="self-center text-2xl leading-none sm:text-3xl">{card.suit}</span>
+                    <div className="rotate-180 self-end leading-none opacity-55">
+                      <span className="text-[12px] sm:text-sm">{card.rank}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
           <div className="relative mx-auto flex min-w-[560px] max-w-[920px] flex-col gap-8">
             <div className="flex items-start justify-between gap-6">
               <div className="flex gap-4">

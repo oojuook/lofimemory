@@ -1077,6 +1077,22 @@ input::placeholder {
   100% { transform: translate(0, 0); }
 }
 
+@keyframes solitaireCardWin {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate(var(--win-x), var(--win-y)) rotate(var(--win-r));
+  }
+}
+
+.solitaire-win-card {
+  position: absolute;
+  pointer-events: none;
+  z-index: 50;
+  animation: solitaireCardWin 1.5s ease-out forwards;
+}
+
 .site-ui-fade-in {
   animation: uiFadeIn 800ms ease-out 400ms both;
 }
