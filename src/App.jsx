@@ -1,6 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import radioVinylIcon from './assets/lofi-radio-vinyl.png';
 import headerLogoIcon from './assets/lofi-header-logo.png';
+import minesweeperIconImage from './assets/minesweeper-icon.png';
+import solitairePreviewImage from './assets/solitaire-preview.png';
+import dinoDashPreviewImage from './assets/dino-dash-preview.png';
+import dinoDashIconImage from './assets/dino-dash-icon.png';
 import { onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
 import { collection, deleteDoc, doc, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore';
 import { getToken, onMessage } from 'firebase/messaging';
@@ -17,7 +21,6 @@ import {
   Eye,
   EyeOff,
   FileText,
-  Flag,
   Gamepad2,
   Grid2x2,
   Hash,
@@ -1624,6 +1627,22 @@ function PokerCardIcon({ size = 18 }) {
   );
 }
 
+function ImageGameIcon({ src, alt, size = 18, className = '' }) {
+  return (
+    <span aria-hidden="true" className={`inline-flex items-center justify-center overflow-hidden rounded-xl ${className}`} style={{ width: size + 14, height: size + 14 }}>
+      <img alt={alt} className="h-full w-full object-cover" src={src} />
+    </span>
+  );
+}
+
+function MinesweeperImageIcon(props) {
+  return <ImageGameIcon {...props} alt="Minesweeper icon" src={minesweeperIconImage} />;
+}
+
+function DinoDashImageIcon(props) {
+  return <ImageGameIcon {...props} alt="Dino Dash icon" src={dinoDashIconImage} />;
+}
+
 function DinosaurIcon({ size = 18 }) {
   return (
     <span aria-hidden="true" className="relative inline-block" style={{ width: size + 10, height: size + 6 }}>
@@ -1884,14 +1903,20 @@ function GamePreview({ gameId }) {
   if (gameId === 'solitaire') {
     return (
       <div className={shellClass}>
-        <div className="flex h-20 items-center justify-center gap-2 rounded-[1rem] bg-gradient-to-br from-emerald-800 to-teal-900 p-2 shadow-inner">
-           <div className="w-9 h-13 bg-white rounded border border-emerald-100 shadow-lift flex flex-col items-center justify-center text-xs">
-             <span className="text-rose-600 text-sm">♥</span>
-             <span className="font-bold text-[9px] -mt-1 text-slate-900 uppercase">A</span>
-           </div>
-           <div className="w-9 h-13 bg-white/10 border-2 border-white/20 border-dashed rounded flex items-center justify-center">
-             <span className="text-white/30 text-sm">♠</span>
-           </div>
+        <div className="relative h-20 overflow-hidden rounded-[1rem] bg-gradient-to-br from-emerald-800 to-teal-900 shadow-inner">
+          <img alt="Solitaire preview" className="h-full w-full object-cover" src={solitairePreviewImage} />
+          <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/35 via-transparent to-white/10" />
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'dinosaur-dash') {
+    return (
+      <div className={shellClass}>
+        <div className="relative h-20 overflow-hidden rounded-[1rem] bg-gradient-to-br from-orange-100 to-yellow-50 shadow-inner">
+          <img alt="Dinosaur Dash preview" className="h-full w-full object-cover" src={dinoDashPreviewImage} />
+          <div className="absolute inset-0 bg-gradient-to-t from-orange-950/10 via-transparent to-white/10" />
         </div>
       </div>
     );
@@ -3024,7 +3049,7 @@ function App() {
       title: 'Mind Sweeper',
       detail: 'Soft logic reset',
       description: 'A cozy Minesweeper-style board for clearing your head one calm tile at a time.',
-      icon: Flag,
+      icon: MinesweeperImageIcon,
       tone: 'from-lime-100 to-emerald-50 text-emerald-700',
       playingSpace: 'max-w-[980px]',
       component: <MindSweeper difficulty={selectedGameDifficulty} />
@@ -3054,7 +3079,7 @@ function App() {
       title: 'Dinosaur Dash',
       detail: 'Gentle desert run',
       description: 'Jump through a soft desert loop when you want a little rhythm and play.',
-      icon: DinosaurIcon,
+      icon: DinoDashImageIcon,
       tone: 'from-orange-100 to-yellow-50 text-orange-700',
       playingSpace: 'max-w-[1060px]',
       component: <DinosaurDash difficulty={selectedGameDifficulty} />
