@@ -92,11 +92,15 @@ function Card({
   selected = false,
   compact = false,
   onClick,
+  onDoubleClick,
   draggable = false,
   onDragStart,
+  onDrag,
   onDragEnd,
   onDragOver,
-  onDrop
+  onDrop,
+  cardRef,
+  ghosted = false
 }) {
   const sizeClass = compact ? 'h-[4.35rem] w-[3rem] sm:h-[5.35rem] sm:w-[3.75rem]' : 'h-[5.35rem] w-[3.75rem] sm:h-24 sm:w-16';
   const baseClass = `${sizeClass} shrink-0 rounded-[0.8rem] transition duration-200`;
@@ -104,8 +108,9 @@ function Card({
   if (!card) {
     return (
       <button
+        ref={cardRef}
         aria-label="Empty card slot"
-        className={`${baseClass} border-2 border-white/20 bg-emerald-950/16 shadow-inner`}
+        className={`${baseClass} border-2 border-white/20 bg-emerald-950/16 shadow-inner ${ghosted ? 'opacity-0' : ''}`}
         onClick={onClick}
         onDragOver={onDragOver}
         onDrop={onDrop}
@@ -117,8 +122,9 @@ function Card({
   if (!card.faceUp) {
     return (
       <button
+        ref={cardRef}
         aria-label="Hidden card"
-        className={`${baseClass} grid place-items-center border border-emerald-100/55 bg-[radial-gradient(circle_at_35%_25%,rgba(255,255,255,0.28),transparent_28%),linear-gradient(145deg,#0f8f50,#08733f_48%,#075a33)] shadow-[0_5px_12px_rgba(0,0,0,0.22)] ring-1 ring-emerald-300/30 hover:-translate-y-0.5`}
+        className={`${baseClass} grid place-items-center border border-emerald-100/55 bg-[radial-gradient(circle_at_35%_25%,rgba(255,255,255,0.28),transparent_28%),linear-gradient(145deg,#0f8f50,#08733f_48%,#075a33)] shadow-[0_5px_12px_rgba(0,0,0,0.22)] ring-1 ring-emerald-300/30 hover:-translate-y-0.5 ${ghosted ? 'opacity-0' : ''}`}
         onClick={onClick}
         onDragOver={onDragOver}
         onDrop={onDrop}
@@ -133,9 +139,12 @@ function Card({
 
   return (
     <button
-      className={`${baseClass} relative flex flex-col justify-between border bg-[#fffdf8] p-1.5 text-left font-black shadow-[0_5px_12px_rgba(0,0,0,0.22)] hover:-translate-y-0.5 ${selected ? 'z-20 -translate-y-1 border-amber-300 ring-4 ring-amber-200/80' : 'border-white/95'} ${cardColor(card)}`}
+      ref={cardRef}
+      className={`${baseClass} relative flex flex-col justify-between border bg-[#fffdf8] p-1.5 text-left font-black shadow-[0_5px_12px_rgba(0,0,0,0.22)] hover:-translate-y-0.5 ${selected ? 'z-20 -translate-y-1 border-amber-300 ring-4 ring-amber-200/80' : 'border-white/95'} ${cardColor(card)} ${ghosted ? 'opacity-0' : ''}`}
       draggable={draggable}
       onClick={onClick}
+      onDoubleClick={onDoubleClick}
+      onDrag={onDrag}
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
       onDragOver={onDragOver}
@@ -159,9 +168,13 @@ function WastePile({
   drawCount,
   selected = false,
   onClick,
+  onDoubleClick,
   draggable = false,
   onDragStart,
-  onDragEnd
+  onDrag,
+  onDragEnd,
+  cardRef,
+  ghosted = false
 }) {
   const visibleCards = cards.slice(-Math.max(1, drawCount));
   const compactHeight = 'h-[4.35rem] sm:h-[5.35rem]';
@@ -186,9 +199,13 @@ function WastePile({
             <Card
               card={card}
               compact
+              cardRef={isTopCard ? cardRef : undefined}
               draggable={Boolean(draggable && isTopCard)}
+              ghosted={Boolean(ghosted && isTopCard)}
               selected={Boolean(selected && isTopCard)}
               onClick={isTopCard ? onClick : undefined}
+              onDoubleClick={isTopCard ? onDoubleClick : undefined}
+              onDrag={isTopCard ? onDrag : undefined}
               onDragEnd={isTopCard ? onDragEnd : undefined}
               onDragStart={isTopCard ? onDragStart : undefined}
             />
@@ -202,10 +219,20 @@ function WastePile({
 export default function Solitaire({ difficulty = 'medium' }) {
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const containerRef = useRef(null);
+  const playfieldRef = useRef(null);
+  const foundationRefs = useRef({});
+  const cardRefs = useRef({});
+  const dragGhostRef = useRef(null);
+  const autoFinishTimerRef = useRef(null);
+  const moveSelectionToFoundationRef = useRef(null);
+  const triggerAutoFinishRef = useRef(null);
   const [game, setGame] = useState(() => dealGame());
   const [selected, setSelected] = useState(null);
   const [draggedSelection, setDraggedSelection] = useState(null);
   const [dragOverTarget, setDragOverTarget] = useState(null);
+  const [dragPreview, setDragPreview] = useState(null);
+  const [flightCards, setFlightCards] = useState([]);
+  const [isAutoFinishing, setIsAutoFinishing] = useState(false);
   const [winCards, setWinCards] = useState([]);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
@@ -214,6 +241,10 @@ export default function Solitaire({ difficulty = 'medium' }) {
     setSelected(null);
     setDraggedSelection(null);
     setDragOverTarget(null);
+    setDragPreview(null);
+    setFlightCards([]);
+    window.clearTimeout(autoFinishTimerRef.current);
+    setIsAutoFinishing(false);
     setWinCards([]);
   }, [difficulty]);
 
@@ -226,8 +257,88 @@ export default function Solitaire({ difficulty = 'medium' }) {
     return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
   }, []);
 
+  useEffect(() => () => window.clearTimeout(autoFinishTimerRef.current), []);
+
   const foundationCount = useMemo(() => Object.values(game.foundations).reduce((total, pile) => total + pile.length, 0), [game.foundations]);
   const hasWon = foundationCount === 52;
+  const canAutoFinish = useMemo(() => (
+    !hasWon
+    && game.stock.length === 0
+    && game.waste.length === 0
+    && game.tableau.every((column) => column.every((card) => card.faceUp))
+  ), [game.stock.length, game.tableau, game.waste.length, hasWon]);
+
+  const getSelectionKey = (source) => {
+    if (!source) return '';
+    if (source.type === 'tableau') {
+      return `tableau-${source.columnIndex}-${source.cardIndex}`;
+    }
+    if (source.type === 'foundation') {
+      return `foundation-${source.suit}`;
+    }
+    return source.type;
+  };
+
+  const setCardNode = (source) => (node) => {
+    const key = getSelectionKey(source);
+    if (!key) return;
+    if (node) {
+      cardRefs.current[key] = node;
+    } else {
+      delete cardRefs.current[key];
+    }
+  };
+
+  const setFoundationNode = (suit) => (node) => {
+    if (node) {
+      foundationRefs.current[suit] = node;
+    } else {
+      delete foundationRefs.current[suit];
+    }
+  };
+
+  const queueFlightCard = (source, card) => {
+    const sourceNode = cardRefs.current[getSelectionKey(source)];
+    const targetNode = foundationRefs.current[card.suit];
+    const fieldNode = playfieldRef.current;
+    if (!sourceNode || !targetNode || !fieldNode) return;
+
+    const sourceRect = sourceNode.getBoundingClientRect();
+    const targetRect = targetNode.getBoundingClientRect();
+    const fieldRect = fieldNode.getBoundingClientRect();
+    const id = `${card.id}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+
+    setFlightCards((previous) => ([
+      ...previous,
+      {
+        id,
+        card,
+        startX: sourceRect.left - fieldRect.left,
+        startY: sourceRect.top - fieldRect.top,
+        endX: targetRect.left - fieldRect.left,
+        endY: targetRect.top - fieldRect.top
+      }
+    ]));
+
+    window.setTimeout(() => {
+      setFlightCards((previous) => previous.filter((item) => item.id !== id));
+    }, 420);
+  };
+
+  const findAutoFinishMove = (state) => {
+    for (let columnIndex = 0; columnIndex < state.tableau.length; columnIndex += 1) {
+      const column = state.tableau[columnIndex];
+      const card = column[column.length - 1];
+      if (card && canMoveToFoundation(card, state.foundations[card.suit])) {
+        return {
+          source: { type: 'tableau', columnIndex, cardIndex: column.length - 1 },
+          suit: card.suit,
+          card
+        };
+      }
+    }
+    return null;
+  };
 
   useEffect(() => {
     if (hasWon && winCards.length === 0) {
@@ -255,6 +366,10 @@ export default function Solitaire({ difficulty = 'medium' }) {
     setSelected(null);
     setDraggedSelection(null);
     setDragOverTarget(null);
+    setDragPreview(null);
+    setFlightCards([]);
+    window.clearTimeout(autoFinishTimerRef.current);
+    setIsAutoFinishing(false);
     setWinCards([]);
   };
 
@@ -384,6 +499,14 @@ export default function Solitaire({ difficulty = 'medium' }) {
 
   const moveSelectionToFoundation = (suit, source = selected) => {
     if (!source) return;
+    const currentCards = getCardsFromSelection(source, game);
+    if (
+      currentCards.length === 1
+      && currentCards[0].suit === suit
+      && canMoveToFoundation(currentCards[0], game.foundations[suit])
+    ) {
+      queueFlightCard(source, currentCards[0]);
+    }
     setGame((previous) => {
       const cards = getCardsFromSelection(source, previous);
       if (
@@ -410,7 +533,65 @@ export default function Solitaire({ difficulty = 'medium' }) {
     }
     setDraggedSelection(null);
     setDragOverTarget(null);
+    setDragPreview(null);
   };
+
+  const tryAutoFoundation = (source) => {
+    if (!source) return false;
+    const cards = getCardsFromSelection(source, game);
+    if (cards.length !== 1) return false;
+    const [card] = cards;
+    if (!card.faceUp) return false;
+    if (!canMoveToFoundation(card, game.foundations[card.suit])) return false;
+    moveSelectionToFoundation(card.suit, source);
+    return true;
+  };
+
+  const triggerAutoFinish = () => {
+    if (!canAutoFinish || isAutoFinishing || hasWon) return false;
+    const nextMove = findAutoFinishMove(game);
+    if (!nextMove) return false;
+    setIsAutoFinishing(true);
+    moveSelectionToFoundation(nextMove.suit, nextMove.source);
+    return true;
+  };
+
+  moveSelectionToFoundationRef.current = moveSelectionToFoundation;
+  triggerAutoFinishRef.current = triggerAutoFinish;
+
+  useEffect(() => {
+    if (!isAutoFinishing) return undefined;
+    const nextMove = findAutoFinishMove(game);
+    if (!nextMove) {
+      setIsAutoFinishing(false);
+      return undefined;
+    }
+    autoFinishTimerRef.current = window.setTimeout(() => {
+      moveSelectionToFoundationRef.current?.(nextMove.suit, nextMove.source);
+    }, 180);
+    return () => window.clearTimeout(autoFinishTimerRef.current);
+  }, [game, isAutoFinishing]);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.repeat) return;
+      if (event.key?.toLowerCase() === 'f') {
+        if (triggerAutoFinishRef.current?.()) {
+          event.preventDefault();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  useEffect(() => {
+    if (!canAutoFinish && isAutoFinishing) {
+      window.clearTimeout(autoFinishTimerRef.current);
+      setIsAutoFinishing(false);
+    }
+  }, [canAutoFinish, isAutoFinishing]);
 
   const selectWaste = () => {
     if (game.waste.length === 0) return;
@@ -445,6 +626,14 @@ export default function Solitaire({ difficulty = 'medium' }) {
     setSelected({ type: 'tableau', columnIndex, cardIndex });
   };
 
+  const doubleClickWaste = () => {
+    tryAutoFoundation({ type: 'waste' });
+  };
+
+  const doubleClickTableauCard = (columnIndex, cardIndex) => {
+    tryAutoFoundation({ type: 'tableau', columnIndex, cardIndex });
+  };
+
   const getDragSelection = (event) => {
     const raw = event.dataTransfer.getData('text/plain');
     if (!raw) return draggedSelection;
@@ -455,16 +644,34 @@ export default function Solitaire({ difficulty = 'medium' }) {
     }
   };
 
+  const updateDragPreviewPosition = (clientX, clientY, source = draggedSelection) => {
+    if (!source || clientX === null || clientX === undefined || clientY === null || clientY === undefined) return;
+    const fieldRect = playfieldRef.current?.getBoundingClientRect();
+    const cards = getCardsFromSelection(source, game);
+    if (cards.length === 0 || !fieldRect) return;
+    setDragPreview({
+      source,
+      cards,
+      x: clientX - fieldRect.left,
+      y: clientY - fieldRect.top
+    });
+  };
+
   const beginDrag = (event, source) => {
     setDraggedSelection(source);
     setSelected(source);
+    updateDragPreviewPosition(event.clientX, event.clientY, source);
     event.dataTransfer.effectAllowed = 'move';
     event.dataTransfer.setData('text/plain', JSON.stringify(source));
+    if (dragGhostRef.current) {
+      event.dataTransfer.setDragImage(dragGhostRef.current, 0, 0);
+    }
   };
 
   const endDrag = () => {
     setDraggedSelection(null);
     setDragOverTarget(null);
+    setDragPreview(null);
   };
 
   const handleTableauDragOver = (event, columnIndex) => {
@@ -516,6 +723,14 @@ export default function Solitaire({ difficulty = 'medium' }) {
 
   const selectedKey = selected ? `${selected.type}-${selected.columnIndex ?? selected.suit ?? 'waste'}-${selected.cardIndex ?? 0}` : '';
 
+  const isCardGhosted = (source) => {
+    if (!draggedSelection || !source) return false;
+    if (source.type === 'tableau' && draggedSelection.type === 'tableau') {
+      return source.columnIndex === draggedSelection.columnIndex && source.cardIndex >= draggedSelection.cardIndex;
+    }
+    return selectionsMatch(source, draggedSelection);
+  };
+
   return (
     <div ref={containerRef} className={`mx-auto w-full ${isFullscreen ? 'min-h-screen bg-[#07542f] p-3 sm:p-5' : 'pb-6 sm:pb-8'}`}>
       <div className={`overflow-hidden rounded-[1.8rem] border border-emerald-950/25 bg-[#0b6f3c] shadow-[0_22px_50px_rgba(8,69,38,0.28)] ${isFullscreen ? 'flex min-h-[calc(100vh-1.5rem)] flex-col sm:min-h-[calc(100vh-2.5rem)]' : ''}`}>
@@ -533,6 +748,11 @@ export default function Solitaire({ difficulty = 'medium' }) {
               {isFullscreen ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
               {isFullscreen ? 'Exit full' : 'Full screen'}
             </button>
+            {canAutoFinish ? (
+              <button className="rounded-full bg-amber-300 px-4 py-2 text-emerald-950 shadow-sm transition hover:-translate-y-0.5 hover:bg-amber-200" onClick={triggerAutoFinish} type="button">
+                {isAutoFinishing ? 'Finishing…' : 'Auto finish · F'}
+              </button>
+            ) : null}
             <span className="rounded-full bg-white/13 px-4 py-2">{config.label}</span>
             <span className="rounded-full bg-white/13 px-4 py-2">Moves {game.moves}</span>
             <span className="rounded-full bg-white/13 px-4 py-2">Home {foundationCount}/52</span>
@@ -572,7 +792,60 @@ export default function Solitaire({ difficulty = 'medium' }) {
             </div>
           ) : null}
 
-          <div className={`relative mx-auto flex min-w-[560px] max-w-[920px] flex-col gap-8 ${isFullscreen ? 'h-full' : ''}`}>
+          <div ref={playfieldRef} className={`relative mx-auto flex min-w-[560px] max-w-[920px] flex-col gap-8 ${isFullscreen ? 'h-full' : ''}`}>
+            <style>
+              {`@keyframes foundation-flight {
+                from {
+                  transform: translate(var(--from-x), var(--from-y)) rotate(-6deg) scale(1);
+                  opacity: 0.96;
+                }
+                to {
+                  transform: translate(var(--to-x), var(--to-y)) rotate(0deg) scale(0.94);
+                  opacity: 0.12;
+                }
+              }`}
+            </style>
+            <div ref={dragGhostRef} className="pointer-events-none fixed left-0 top-0 h-1 w-1 opacity-0" />
+
+            {flightCards.length > 0 ? (
+              <div className="pointer-events-none absolute inset-0 z-30 overflow-visible">
+                {flightCards.map((item) => (
+                  <div
+                    className="absolute left-0 top-0"
+                    key={item.id}
+                    style={{
+                      '--from-x': `${item.startX}px`,
+                      '--from-y': `${item.startY}px`,
+                      '--to-x': `${item.endX}px`,
+                      '--to-y': `${item.endY}px`,
+                      animation: 'foundation-flight 420ms ease-out forwards'
+                    }}
+                  >
+                    <Card card={item.card} compact />
+                  </div>
+                ))}
+              </div>
+            ) : null}
+
+            {dragPreview ? (
+              <div
+                className="pointer-events-none absolute left-0 top-0 z-40"
+                style={{ transform: `translate(${dragPreview.x - 24}px, ${dragPreview.y - 34}px)` }}
+              >
+                <div className="relative">
+                  {dragPreview.cards.map((card, index) => (
+                    <div
+                      className="absolute left-0 top-0"
+                      key={`${card.id}-preview`}
+                      style={{ transform: `translate(${index * 4}px, ${index * 28}px) rotate(${index % 2 === 0 ? -2 : 2}deg)` }}
+                    >
+                      <Card card={card} compact />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+
             <div className="flex items-start justify-between gap-6">
               <div className="flex gap-4">
                 <div className="text-center">
@@ -583,9 +856,13 @@ export default function Solitaire({ difficulty = 'medium' }) {
                   <WastePile
                     cards={game.waste}
                     drawCount={config.drawCount}
+                    cardRef={setCardNode({ type: 'waste' })}
                     draggable={game.waste.length > 0}
+                    ghosted={isCardGhosted({ type: 'waste' })}
                     selected={selected?.type === 'waste'}
                     onClick={selectWaste}
+                    onDoubleClick={doubleClickWaste}
+                    onDrag={(event) => updateDragPreviewPosition(event.clientX, event.clientY, { type: 'waste' })}
                     onDragEnd={endDrag}
                     onDragStart={(event) => beginDrag(event, { type: 'waste' })}
                   />
@@ -603,9 +880,17 @@ export default function Solitaire({ difficulty = 'medium' }) {
                       <Card
                         card={topCard}
                         compact
+                        cardRef={(node) => {
+                          setFoundationNode(suit)(node);
+                          if (topCard) {
+                            setCardNode({ type: 'foundation', suit })(node);
+                          }
+                        }}
                         draggable={Boolean(topCard)}
+                        ghosted={isCardGhosted({ type: 'foundation', suit })}
                         selected={selected?.type === 'foundation' && selected.suit === suit}
                         onClick={() => selectFoundation(suit)}
+                        onDrag={(event) => updateDragPreviewPosition(event.clientX, event.clientY, { type: 'foundation', suit })}
                         onDragEnd={topCard ? endDrag : undefined}
                         onDragOver={(event) => handleFoundationDragOver(event, suit)}
                         onDragStart={topCard ? (event) => beginDrag(event, { type: 'foundation', suit }) : undefined}
@@ -634,10 +919,14 @@ export default function Solitaire({ difficulty = 'medium' }) {
                       <Card
                         card={card}
                         compact
+                        cardRef={setCardNode({ type: 'tableau', columnIndex, cardIndex })}
                         draggable={card.faceUp}
+                        ghosted={isCardGhosted({ type: 'tableau', columnIndex, cardIndex })}
                         key={card.id}
                         selected={isSelected}
                         onClick={() => selectTableauCard(columnIndex, cardIndex)}
+                        onDoubleClick={() => doubleClickTableauCard(columnIndex, cardIndex)}
+                        onDrag={(event) => updateDragPreviewPosition(event.clientX, event.clientY, { type: 'tableau', columnIndex, cardIndex })}
                         onDragEnd={card.faceUp ? endDrag : undefined}
                         onDragStart={card.faceUp ? (event) => beginDrag(event, { type: 'tableau', columnIndex, cardIndex }) : undefined}
                       />
@@ -650,7 +939,7 @@ export default function Solitaire({ difficulty = 'medium' }) {
         </div>
 
         <div className="flex flex-col gap-3 bg-[#07542f] px-4 py-4 text-sm font-semibold text-emerald-50 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-          <p>{hasWon ? 'Done — you cleared the full table beautifully.' : game.message}</p>
+          <p>{hasWon ? 'Done — you cleared the full table beautifully.' : canAutoFinish ? 'Everything is revealed — press F or tap Auto finish to sweep the cards home.' : game.message}</p>
           <button className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-extrabold text-emerald-900 shadow-sm transition hover:-translate-y-0.5" onClick={resetGame} type="button">
             {hasWon ? <Play size={16} /> : <RotateCcw size={16} />} {hasWon ? 'Play again' : 'Reset deck'}
           </button>
