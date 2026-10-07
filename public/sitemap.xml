@@ -670,4 +670,24 @@
     <changefreq>weekly</changefreq>
     <priority>0.88</priority>
   </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/listen-to-lofi-music-online.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/lofi-radio-online.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/relaxing-music-online.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.81</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/chill-music-online.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.81</priority>
+  </url>
 </urlset>
