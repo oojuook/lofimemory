@@ -847,9 +847,13 @@ const seoGuidePages = [
   { label: 'Helpful read', title: 'Chill music online', text: 'Find chill music online for lofi vibes, studying, relaxing, and a softer place to stay for a while.', href: '/chill-music-online.html' },
   { label: 'Popular guide', title: 'Chill music and games', text: 'Open a chill website for listening to lofi music, playing cozy games, journaling, and keeping notes nearby.', href: '/chill-music-and-games.html' },
   { label: 'Popular guide', title: 'Music and games website', text: 'Find a music and games website for lofi radio, relaxing browser games, notes, journaling, and calm breaks.', href: '/music-games-website.html' },
+  { label: 'Popular guide', title: 'Listen to music and play games', text: 'Listen to lofi music and play cozy games online in one calm tab with notes, journaling, and reminders nearby.', href: '/listen-to-music-and-play-games.html' },
   { label: 'Popular guide', title: 'Games to play while listening to music', text: 'Play cozy games while listening to lofi music, from Solitaire and Sudoku to Jigsaw, Snake, and word games.', href: '/games-to-play-while-listening-to-music.html' },
+  { label: 'Helpful read', title: 'Relaxing games with music', text: 'Pair relaxing games with lofi music when you want a calmer browser break that still feels fun.', href: '/relaxing-games-with-music.html' },
   { label: 'Popular guide', title: 'Lofi game room', text: 'Step into a lofi game room with relaxing music, cozy games, private notes, and calm visuals in one soft tab.', href: '/lofi-game-room.html' },
+  { label: 'Helpful read', title: 'Lofi browser games', text: 'Open lofi browser games that stay cozy, lightweight, and easy to play while music keeps the vibe soft.', href: '/lofi-browser-games.html' },
   { label: 'Helpful read', title: 'Lofi study music', text: 'Use lofi study music with notes, reminders, breathing, and relaxing games for calmer focus sessions.', href: '/lofi-study-music.html' },
+  { label: 'Helpful read', title: 'Chill website for study breaks', text: 'Take a short study break with lofi music, relaxing games, breathing, notes, and a calm page that helps you return to focus.', href: '/chill-website-for-study-breaks.html' },
   { label: 'Helpful read', title: 'Music for journaling', text: 'Pair lofi music with private journaling, memories, notes, and gentle games when you want reflection to feel softer.', href: '/music-for-journaling.html' },
   { label: 'Popular guide', title: 'Calm website', text: 'Find a calm website with lofi music, chill visuals, private notes, relaxing games, and space to breathe.', href: '/calm-website.html' },
   { label: 'Helpful read', title: 'Cozy website for music, games, and journaling', text: 'Use one cozy website for lofi music, relaxing games, private journaling, notes, reminders, and gentle daily reset moments.', href: '/cozy-website-for-music-games-journaling.html' },
@@ -1283,7 +1287,7 @@ const seoGuideGroups = [
   {
     title: 'Find lofi music, chill vibes, and relaxing games',
     description: 'Best for visitors looking for a lofi music website, a relaxing online space, chill vibes, and cozy games they can open quickly and enjoy without pressure.',
-    links: seoGuidePages.filter((page) => ['Chill place online', 'Chill games', 'Lofi games', 'Relaxing browser games', 'Lofi music website', 'Listen to lofi music online', 'Lofi radio online', 'Relaxing music online', 'Chill music online', 'Chill music and games', 'Music and games website', 'Games to play while listening to music', 'Lofi game room', 'Lofi study music', 'Music for journaling', 'Calm website', 'Cozy website for music, games, and journaling', 'Website to relax', 'Daily word puzzle', 'Guess the word game', 'Daily word game', 'Wordle online', 'Word game online', 'Crossword game online', 'Sudoku online', 'WPM test', 'Typing speed test', 'Typing practice online', 'Typing accuracy test', 'Beginner typing test', 'Typing test online', 'Cozy browser games', 'Games to relax', 'Relaxing fidget games', 'Online Minesweeper', 'Calming games for anxiety', 'Memory games for anxiety', 'Mindful gaming app'].includes(page.title))
+    links: seoGuidePages.filter((page) => ['Chill place online', 'Chill games', 'Lofi games', 'Relaxing browser games', 'Lofi music website', 'Listen to lofi music online', 'Lofi radio online', 'Relaxing music online', 'Chill music online', 'Chill music and games', 'Music and games website', 'Listen to music and play games', 'Games to play while listening to music', 'Relaxing games with music', 'Lofi game room', 'Lofi browser games', 'Lofi study music', 'Chill website for study breaks', 'Music for journaling', 'Calm website', 'Cozy website for music, games, and journaling', 'Website to relax', 'Daily word puzzle', 'Guess the word game', 'Daily word game', 'Wordle online', 'Word game online', 'Crossword game online', 'Sudoku online', 'WPM test', 'Typing speed test', 'Typing practice online', 'Typing accuracy test', 'Beginner typing test', 'Typing test online', 'Cozy browser games', 'Games to relax', 'Relaxing fidget games', 'Online Minesweeper', 'Calming games for anxiety', 'Memory games for anxiety', 'Mindful gaming app'].includes(page.title))
   },
   {
     title: 'Start a private diary',
@@ -1327,9 +1331,13 @@ const seoPopularSearches = [
   { label: 'Lofi music website', href: '/lofi-music-website.html' },
   { label: 'Chill music and games', href: '/chill-music-and-games.html' },
   { label: 'Music and games website', href: '/music-games-website.html' },
+  { label: 'Listen to music and play games', href: '/listen-to-music-and-play-games.html' },
   { label: 'Games with music', href: '/games-to-play-while-listening-to-music.html' },
+  { label: 'Relaxing games with music', href: '/relaxing-games-with-music.html' },
   { label: 'Lofi game room', href: '/lofi-game-room.html' },
+  { label: 'Lofi browser games', href: '/lofi-browser-games.html' },
   { label: 'Cozy music games journal', href: '/cozy-website-for-music-games-journaling.html' },
+  { label: 'Study break website', href: '/chill-website-for-study-breaks.html' },
   { label: 'Website to relax', href: '/website-to-relax.html' },
   { label: 'Word game online', href: '/word-game-online.html' },
   { label: 'Sliding puzzle online', href: '/sliding-puzzle-online.html' },
