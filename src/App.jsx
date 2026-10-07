@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import radioVinylIcon from './assets/lofi-radio-vinyl.png';
 import headerLogoIcon from './assets/lofi-header-logo.png';
 import minesweeperIconImage from './assets/minesweeper-icon.png';
+import solitaireIconImage from './assets/solitaire-icon.png';
 import solitairePreviewImage from './assets/solitaire-preview.png';
 import dinoDashPreviewImage from './assets/dino-dash-preview.png';
 import dinoDashIconImage from './assets/dino-dash-icon.png';
@@ -1617,16 +1618,6 @@ function SnakeIcon({ size = 18 }) {
   );
 }
 
-function PokerCardIcon({ size = 18 }) {
-  return (
-    <span aria-hidden="true" className="relative inline-flex items-center justify-center" style={{ width: size + 8, height: size + 8 }}>
-      <span className="absolute h-[1.15em] w-[0.82em] -rotate-12 rounded-[0.18em] border border-current bg-white/80 opacity-80" />
-      <span className="absolute h-[1.15em] w-[0.82em] rotate-6 rounded-[0.18em] border border-current bg-white/95" />
-      <span className="relative text-[0.68em] font-black">A♥</span>
-    </span>
-  );
-}
-
 function ImageGameIcon({ src, alt, size = 18, className = '' }) {
   return (
     <span aria-hidden="true" className={`inline-flex items-center justify-center overflow-hidden rounded-xl ${className}`} style={{ width: size + 14, height: size + 14 }}>
@@ -1637,6 +1628,10 @@ function ImageGameIcon({ src, alt, size = 18, className = '' }) {
 
 function MinesweeperImageIcon(props) {
   return <ImageGameIcon {...props} alt="Minesweeper icon" src={minesweeperIconImage} />;
+}
+
+function SolitaireImageIcon(props) {
+  return <ImageGameIcon {...props} alt="Solitaire icon" src={solitaireIconImage} />;
 }
 
 function DinoDashImageIcon(props) {
@@ -3069,7 +3064,7 @@ function App() {
       title: 'Solitaire',
       detail: 'Classic card reset',
       description: 'Stack cards in a cozy green-felt space, the perfect way to pause and reflect.',
-      icon: PokerCardIcon,
+      icon: SolitaireImageIcon,
       tone: 'from-emerald-800 to-teal-900 text-white',
       playingSpace: 'max-w-[1180px]',
       component: <Solitaire difficulty={selectedGameDifficulty} />
