@@ -4,6 +4,8 @@ import headerLogoIcon from './assets/lofi-header-logo.png';
 import minesweeperIconImage from './assets/minesweeper-icon.png';
 import solitaireIconImage from './assets/solitaire-icon.png';
 import solitairePreviewImage from './assets/solitaire-preview.png';
+import sudokuIconImage from './assets/sudoku-icon.png';
+import wordleIconImage from './assets/wordle-icon.png';
 import dinoDashPreviewImage from './assets/dino-dash-preview.png';
 import dinoDashIconImage from './assets/dino-dash-icon.png';
 import { onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
@@ -24,7 +26,6 @@ import {
   FileText,
   Gamepad2,
   Grid2x2,
-  Hash,
   Heart,
   HeartHandshake,
   ImagePlus,
@@ -43,7 +44,6 @@ import {
   Puzzle,
   Quote,
   Scale,
-  ScanText,
   Shield,
   ShieldCheck,
   Sparkles,
@@ -1595,17 +1595,6 @@ function TetrisIcon({ size = 18, className = '' }) {
   );
 }
 
-function SudokuHashIcon({ size = 18 }) {
-  return (
-    <span aria-hidden="true" className="relative inline-flex items-center justify-center font-black" style={{ width: size + 8, height: size + 8, fontSize: size + 2, lineHeight: 1 }}>
-      <span className="absolute inset-0 rounded-lg border border-current opacity-25" />
-      <span className="absolute left-[0.28em] top-[0.18em] text-[0.34em] font-extrabold opacity-80">5</span>
-      <span className="absolute right-[0.25em] bottom-[0.16em] text-[0.34em] font-extrabold opacity-80">9</span>
-      <span>#</span>
-    </span>
-  );
-}
-
 function SnakeIcon({ size = 18 }) {
   return (
     <span aria-hidden="true" className="inline-flex items-center justify-center" style={{ width: size + 8, height: size + 8 }}>
@@ -1632,6 +1621,14 @@ function MinesweeperImageIcon(props) {
 
 function SolitaireImageIcon(props) {
   return <ImageGameIcon {...props} alt="Solitaire icon" src={solitaireIconImage} />;
+}
+
+function SudokuImageIcon(props) {
+  return <ImageGameIcon {...props} alt="Sudoku icon" src={sudokuIconImage} />;
+}
+
+function WordleImageIcon(props) {
+  return <ImageGameIcon {...props} alt="Wordle icon" src={wordleIconImage} />;
 }
 
 function DinoDashImageIcon(props) {
@@ -2994,7 +2991,7 @@ function App() {
       title: 'Sudoku',
       detail: 'Soft sudoku logic',
       description: 'Settle into a cozy Sudoku board with gentle checking, reveal help, and a familiar number puzzle rhythm.',
-      icon: SudokuHashIcon,
+      icon: SudokuImageIcon,
       tone: 'from-cyan-100 to-blue-50 text-cyan-700',
       playingSpace: 'max-w-[980px]',
       component: <QuietSudoku difficulty={selectedGameDifficulty} />
@@ -3004,7 +3001,7 @@ function App() {
       title: 'Wordle',
       detail: 'Soft Wordle-style puzzle',
       description: 'Guess a cozy word in a gentle Wordle-style round when you want something familiar, tidy, and easy to replay.',
-      icon: ScanText,
+      icon: WordleImageIcon,
       tone: 'from-teal-100 to-sky-50 text-teal-700',
       playingSpace: 'max-w-[780px]',
       component: <QuietWordle difficulty={selectedGameDifficulty} />

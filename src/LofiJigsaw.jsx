@@ -23,6 +23,7 @@ const difficultySettings = {
 };
 
 const JIGSAW_WALLPAPER = '/lofi-jigsaw-wallpaper.png';
+const CUSTOM_JIGSAW_WALLPAPER_KEY = 'quiet-journal-lofi-jigsaw-custom-wallpaper-v1';
 
 function buildSolvedBoard(size) {
   const total = size * size;
@@ -74,7 +75,7 @@ function formatTime(totalSeconds) {
   return `${minutes}:${String(seconds).padStart(2, '0')}`;
 }
 
-function TileArtwork({ tile, size }) {
+function TileArtwork({ tile, size, imageSrc }) {
   if (tile === null) return null;
 
   const row = Math.floor(tile / size);
@@ -86,7 +87,7 @@ function TileArtwork({ tile, size }) {
       <div
         className="absolute inset-0 scale-[1.02] bg-cover"
         style={{
-          backgroundImage: `url(${JIGSAW_WALLPAPER})`,
+          backgroundImage: `url(${imageSrc})`,
           backgroundSize: `${size * 100}% ${size * 100}%`,
           backgroundPosition: `${size === 1 ? 0 : (col / (size - 1)) * 100}% ${size === 1 ? 0 : (row / (size - 1)) * 100}%`
         }}
@@ -108,6 +109,8 @@ export default function LofiJigsaw({ difficulty = 'medium' }) {
   const [status, setStatus] = useState('playing');
   const [time, setTime] = useState(0);
   const [bestScore, setBestScore] = useState(() => parseInt(localStorage.getItem(bestScoreKey) || '0', 10));
+  const [customWallpaper, setCustomWallpaper] = useState(() => localStorage.getItem(CUSTOM_JIGSAW_WALLPAPER_KEY) || '');
+  const puzzleImage = customWallpaper || JIGSAW_WALLPAPER;
 
   const timerRef = useRef(null);
 
@@ -148,6 +151,46 @@ export default function LofiJigsaw({ difficulty = 'medium' }) {
       setTime((t) => t + 1);
     }, 1000);
     setBestScore(parseInt(localStorage.getItem(bestScoreKey) || '0', 10));
+  };
+
+  const handleWallpaperUpload = (event) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = typeof reader.result === 'string' ? reader.result : '';
+      if (!result) return;
+
+      const image = new Image();
+      image.onload = () => {
+        const maxSide = 1400;
+        const scale = Math.min(1, maxSide / Math.max(image.width, image.height));
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.max(1, Math.round(image.width * scale));
+        canvas.height = Math.max(1, Math.round(image.height * scale));
+        const context = canvas.getContext('2d');
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        const compressed = canvas.toDataURL('image/jpeg', 0.86);
+        setCustomWallpaper(compressed);
+        localStorage.setItem(CUSTOM_JIGSAW_WALLPAPER_KEY, compressed);
+        resetPuzzle();
+      };
+      image.onerror = () => {
+        setCustomWallpaper(result);
+        localStorage.setItem(CUSTOM_JIGSAW_WALLPAPER_KEY, result);
+        resetPuzzle();
+      };
+      image.src = result;
+    };
+    reader.readAsDataURL(file);
+    event.target.value = '';
+  };
+
+  const restoreDefaultWallpaper = () => {
+    setCustomWallpaper('');
+    localStorage.removeItem(CUSTOM_JIGSAW_WALLPAPER_KEY);
+    resetPuzzle();
   };
 
   const moveTile = (index) => {
@@ -207,18 +250,33 @@ export default function LofiJigsaw({ difficulty = 'medium' }) {
              {solved && <div className="flex h-8 items-center gap-2 rounded-full bg-emerald-100 px-3 py-1 text-xs font-black uppercase tracking-widest text-emerald-800 shadow-sm animate-bounce">Done!</div>}
              <p className="text-sm font-semibold text-sage-700">{solved ? 'The whole scene is back together — soft work.' : `Tap a piece beside the empty space to slide it. ${getMoveLabel(moves)} so far.`}</p>
           </div>
-          <button
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5"
-            onClick={resetPuzzle}
-            type="button"
-          >
-            <RotateCcw size={16} /> {solved ? 'Play again' : 'Shuffle new puzzle'}
-          </button>
+          <div className="flex flex-wrap items-center justify-end gap-2">
+            <label className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-sage-900 px-4 py-2 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-800">
+              <ImagePlus size={16} /> Use your wallpaper
+              <input accept="image/*" className="hidden" onChange={handleWallpaperUpload} type="file" />
+            </label>
+            {customWallpaper && (
+              <button
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5"
+                onClick={restoreDefaultWallpaper}
+                type="button"
+              >
+                Default image
+              </button>
+            )}
+            <button
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5"
+              onClick={resetPuzzle}
+              type="button"
+            >
+              <RotateCcw size={16} /> {solved ? 'Play again' : 'Shuffle new puzzle'}
+            </button>
+          </div>
         </div>
 
         <div className="mt-5 rounded-[1.8rem] border border-white/85 bg-white/72 p-3 shadow-soft sm:p-4">
           <div className="mb-3 overflow-hidden rounded-[1.4rem] border border-white/80 bg-white/70 shadow-sm">
-            <img src={JIGSAW_WALLPAPER} alt="Lofi wallpaper reference for the jigsaw puzzle" className="h-40 w-full object-cover sm:h-56" />
+            <img src={puzzleImage} alt={customWallpaper ? 'Custom wallpaper reference for the jigsaw puzzle' : 'Lofi wallpaper reference for the jigsaw puzzle'} className="h-40 w-full object-cover sm:h-56" />
           </div>
           <div className="grid gap-2" style={{ gridTemplateColumns: `repeat(${size}, minmax(0, 1fr))` }}>
             {board.map((tile, index) => (
@@ -231,7 +289,7 @@ export default function LofiJigsaw({ difficulty = 'medium' }) {
                 onClick={() => moveTile(index)}
                 type="button"
               >
-                <TileArtwork tile={tile} size={size} />
+                <TileArtwork tile={tile} size={size} imageSrc={puzzleImage} />
               </button>
             ))}
           </div>
