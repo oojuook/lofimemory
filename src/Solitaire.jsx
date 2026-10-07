@@ -25,6 +25,14 @@ const difficultySettings = {
 const isRed = (suit) => suit === '♥' || suit === '♦';
 const cardColor = (card) => (isRed(card.suit) ? 'text-rose-500' : 'text-slate-800');
 
+function selectionsMatch(first, second) {
+  if (!first || !second) return false;
+  return first.type === second.type
+    && first.columnIndex === second.columnIndex
+    && first.cardIndex === second.cardIndex
+    && first.suit === second.suit;
+}
+
 function createDeck() {
   return SUITS.flatMap((suit) => RANKS.map((rank, index) => ({
     id: `${suit}-${rank}`,
@@ -79,7 +87,17 @@ function canMoveToFoundation(card, foundation) {
   return topCard.suit === card.suit && card.value === topCard.value + 1;
 }
 
-function Card({ card, selected = false, compact = false, onClick }) {
+function Card({
+  card,
+  selected = false,
+  compact = false,
+  onClick,
+  draggable = false,
+  onDragStart,
+  onDragEnd,
+  onDragOver,
+  onDrop
+}) {
   const sizeClass = compact ? 'h-[4.35rem] w-[3rem] sm:h-[5.35rem] sm:w-[3.75rem]' : 'h-[5.35rem] w-[3.75rem] sm:h-24 sm:w-16';
   const baseClass = `${sizeClass} shrink-0 rounded-[0.8rem] transition duration-200`;
 
@@ -89,6 +107,8 @@ function Card({ card, selected = false, compact = false, onClick }) {
         aria-label="Empty card slot"
         className={`${baseClass} border-2 border-white/20 bg-emerald-950/16 shadow-inner`}
         onClick={onClick}
+        onDragOver={onDragOver}
+        onDrop={onDrop}
         type="button"
       />
     );
@@ -100,6 +120,8 @@ function Card({ card, selected = false, compact = false, onClick }) {
         aria-label="Hidden card"
         className={`${baseClass} grid place-items-center border border-emerald-100/55 bg-[radial-gradient(circle_at_35%_25%,rgba(255,255,255,0.28),transparent_28%),linear-gradient(145deg,#0f8f50,#08733f_48%,#075a33)] shadow-[0_5px_12px_rgba(0,0,0,0.22)] ring-1 ring-emerald-300/30 hover:-translate-y-0.5`}
         onClick={onClick}
+        onDragOver={onDragOver}
+        onDrop={onDrop}
         type="button"
       >
         <div className="grid h-8 w-8 place-items-center rounded-full border border-white/35 bg-white/12 sm:h-10 sm:w-10">
@@ -112,7 +134,12 @@ function Card({ card, selected = false, compact = false, onClick }) {
   return (
     <button
       className={`${baseClass} relative flex flex-col justify-between border bg-[#fffdf8] p-1.5 text-left font-black shadow-[0_5px_12px_rgba(0,0,0,0.22)] hover:-translate-y-0.5 ${selected ? 'z-20 -translate-y-1 border-amber-300 ring-4 ring-amber-200/80' : 'border-white/95'} ${cardColor(card)}`}
+      draggable={draggable}
       onClick={onClick}
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+      onDragOver={onDragOver}
+      onDrop={onDrop}
       type="button"
     >
       <div className="flex flex-col leading-none">
@@ -127,7 +154,15 @@ function Card({ card, selected = false, compact = false, onClick }) {
   );
 }
 
-function WastePile({ cards, drawCount, selected = false, onClick }) {
+function WastePile({
+  cards,
+  drawCount,
+  selected = false,
+  onClick,
+  draggable = false,
+  onDragStart,
+  onDragEnd
+}) {
   const visibleCards = cards.slice(-Math.max(1, drawCount));
   const compactHeight = 'h-[4.35rem] sm:h-[5.35rem]';
   const stackWidthClass = drawCount >= 3 ? 'w-[5.8rem] sm:w-[7rem]' : drawCount === 2 ? 'w-[4.9rem] sm:w-[6rem]' : 'w-[3rem] sm:w-[3.75rem]';
@@ -145,10 +180,18 @@ function WastePile({ cards, drawCount, selected = false, onClick }) {
         return (
           <div
             className="absolute left-0 top-0"
-            key={`${card.id}-${index}`}
+            key={card.id}
             style={{ transform: `translate(${offsetX}px, ${offsetY}px)`, zIndex: index + 1 }}
           >
-            <Card card={card} compact selected={selected && isTopCard} onClick={onClick} />
+            <Card
+              card={card}
+              compact
+              draggable={Boolean(draggable && isTopCard)}
+              selected={Boolean(selected && isTopCard)}
+              onClick={isTopCard ? onClick : undefined}
+              onDragEnd={isTopCard ? onDragEnd : undefined}
+              onDragStart={isTopCard ? onDragStart : undefined}
+            />
           </div>
         );
       })}
@@ -161,12 +204,16 @@ export default function Solitaire({ difficulty = 'medium' }) {
   const containerRef = useRef(null);
   const [game, setGame] = useState(() => dealGame());
   const [selected, setSelected] = useState(null);
+  const [draggedSelection, setDraggedSelection] = useState(null);
+  const [dragOverTarget, setDragOverTarget] = useState(null);
   const [winCards, setWinCards] = useState([]);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
     setGame(dealGame());
     setSelected(null);
+    setDraggedSelection(null);
+    setDragOverTarget(null);
     setWinCards([]);
   }, [difficulty]);
 
@@ -206,6 +253,8 @@ export default function Solitaire({ difficulty = 'medium' }) {
   const resetGame = () => {
     setGame(dealGame());
     setSelected(null);
+    setDraggedSelection(null);
+    setDragOverTarget(null);
     setWinCards([]);
   };
 
@@ -218,7 +267,7 @@ export default function Solitaire({ difficulty = 'medium' }) {
       } else {
         await containerRef.current.requestFullscreen();
       }
-    } catch (error) {
+    } catch {
       setGame((previous) => ({
         ...previous,
         message: 'Fullscreen is not available in this browser yet.'
@@ -268,70 +317,84 @@ export default function Solitaire({ difficulty = 'medium' }) {
     });
   };
 
-  const getSelectedCards = (state = game) => {
-    if (!selected) return [];
-    if (selected.type === 'waste') {
+  const getCardsFromSelection = (source = selected, state = game) => {
+    if (!source) return [];
+    if (source.type === 'waste') {
       const card = state.waste[state.waste.length - 1];
       return card ? [card] : [];
     }
-    if (selected.type === 'tableau') {
-      return state.tableau[selected.columnIndex].slice(selected.cardIndex);
+    if (source.type === 'tableau') {
+      return state.tableau[source.columnIndex].slice(source.cardIndex);
     }
-    if (selected.type === 'foundation') {
-      const pile = state.foundations[selected.suit];
+    if (source.type === 'foundation') {
+      const pile = state.foundations[source.suit];
       const card = pile[pile.length - 1];
       return card ? [card] : [];
     }
     return [];
   };
 
-  const removeSelectedCards = (state, cards) => {
-    if (selected.type === 'waste') {
+  const removeCardsFromSelection = (state, source, cards) => {
+    if (!source) return state;
+    if (source.type === 'waste') {
       return { ...state, waste: state.waste.slice(0, -1) };
     }
-    if (selected.type === 'tableau') {
-      const tableau = state.tableau.map((pile, index) => (index === selected.columnIndex ? pile.slice(0, selected.cardIndex) : pile));
-      const sourcePile = tableau[selected.columnIndex];
+    if (source.type === 'tableau') {
+      const tableau = state.tableau.map((pile, index) => (index === source.columnIndex ? pile.slice(0, source.cardIndex) : pile));
+      const sourcePile = tableau[source.columnIndex];
       const topCard = sourcePile[sourcePile.length - 1];
       if (topCard && !topCard.faceUp) {
         sourcePile[sourcePile.length - 1] = { ...topCard, faceUp: true };
       }
       return { ...state, tableau };
     }
-    if (selected.type === 'foundation') {
+    if (source.type === 'foundation') {
       return {
         ...state,
         foundations: {
           ...state.foundations,
-          [selected.suit]: state.foundations[selected.suit].slice(0, -cards.length)
+          [source.suit]: state.foundations[source.suit].slice(0, -cards.length)
         }
       };
     }
     return state;
   };
 
-  const moveSelectedToTableau = (columnIndex) => {
-    if (!selected) return;
+  const moveSelectionToTableau = (columnIndex, source = selected) => {
+    if (!source) return;
     setGame((previous) => {
-      const cards = getSelectedCards(previous);
-      if (cards.length === 0 || !canMoveToTableau(cards[0], previous.tableau[columnIndex])) {
+      const cards = getCardsFromSelection(source, previous);
+      if (
+        cards.length === 0
+        || (source.type === 'tableau' && source.columnIndex === columnIndex)
+        || !canMoveToTableau(cards[0], previous.tableau[columnIndex])
+      ) {
         return { ...previous, message: 'That card does not fit there yet.' };
       }
-      const withoutCards = removeSelectedCards(previous, cards);
+      const withoutCards = removeCardsFromSelection(previous, source, cards);
       const tableau = withoutCards.tableau.map((pile, index) => (index === columnIndex ? [...pile, ...cards] : pile));
       return { ...withoutCards, tableau, moves: previous.moves + 1, message: 'Moved the card stack.' };
     });
-    setSelected(null);
+    if (selectionsMatch(selected, source)) {
+      setSelected(null);
+    }
+    setDraggedSelection(null);
+    setDragOverTarget(null);
   };
 
-  const moveSelectedToFoundation = (suit) => {
-    if (!selected) return;
+  const moveSelectionToFoundation = (suit, source = selected) => {
+    if (!source) return;
     setGame((previous) => {
-      const cards = getSelectedCards(previous);
-      if (cards.length !== 1 || cards[0].suit !== suit || !canMoveToFoundation(cards[0], previous.foundations[suit])) {
+      const cards = getCardsFromSelection(source, previous);
+      if (
+        cards.length !== 1
+        || cards[0].suit !== suit
+        || (source.type === 'foundation' && source.suit === suit)
+        || !canMoveToFoundation(cards[0], previous.foundations[suit])
+      ) {
         return { ...previous, message: 'Foundations build upward from Ace to King.' };
       }
-      const withoutCards = removeSelectedCards(previous, cards);
+      const withoutCards = removeCardsFromSelection(previous, source, cards);
       return {
         ...withoutCards,
         foundations: {
@@ -342,7 +405,11 @@ export default function Solitaire({ difficulty = 'medium' }) {
         message: `Placed ${cards[0].rank}${cards[0].suit} on the foundation.`
       };
     });
-    setSelected(null);
+    if (selectionsMatch(selected, source)) {
+      setSelected(null);
+    }
+    setDraggedSelection(null);
+    setDragOverTarget(null);
   };
 
   const selectWaste = () => {
@@ -353,7 +420,7 @@ export default function Solitaire({ difficulty = 'medium' }) {
   const selectFoundation = (suit) => {
     const pile = game.foundations[suit];
     if (selected) {
-      moveSelectedToFoundation(suit);
+      moveSelectionToFoundation(suit);
       return;
     }
     if (pile.length > 0) {
@@ -371,11 +438,80 @@ export default function Solitaire({ difficulty = 'medium' }) {
     }
 
     if (selected) {
-      moveSelectedToTableau(columnIndex);
+      moveSelectionToTableau(columnIndex);
       return;
     }
 
     setSelected({ type: 'tableau', columnIndex, cardIndex });
+  };
+
+  const getDragSelection = (event) => {
+    const raw = event.dataTransfer.getData('text/plain');
+    if (!raw) return draggedSelection;
+    try {
+      return JSON.parse(raw);
+    } catch {
+      return draggedSelection;
+    }
+  };
+
+  const beginDrag = (event, source) => {
+    setDraggedSelection(source);
+    setSelected(source);
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData('text/plain', JSON.stringify(source));
+  };
+
+  const endDrag = () => {
+    setDraggedSelection(null);
+    setDragOverTarget(null);
+  };
+
+  const handleTableauDragOver = (event, columnIndex) => {
+    const source = getDragSelection(event);
+    const cards = getCardsFromSelection(source, game);
+    if (
+      !source
+      || cards.length === 0
+      || (source.type === 'tableau' && source.columnIndex === columnIndex)
+      || !canMoveToTableau(cards[0], game.tableau[columnIndex])
+    ) {
+      return;
+    }
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+    setDragOverTarget(`tableau-${columnIndex}`);
+  };
+
+  const handleTableauDrop = (event, columnIndex) => {
+    event.preventDefault();
+    const source = getDragSelection(event);
+    setDragOverTarget(null);
+    moveSelectionToTableau(columnIndex, source);
+  };
+
+  const handleFoundationDragOver = (event, suit) => {
+    const source = getDragSelection(event);
+    const cards = getCardsFromSelection(source, game);
+    if (
+      !source
+      || cards.length !== 1
+      || cards[0].suit !== suit
+      || (source.type === 'foundation' && source.suit === suit)
+      || !canMoveToFoundation(cards[0], game.foundations[suit])
+    ) {
+      return;
+    }
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+    setDragOverTarget(`foundation-${suit}`);
+  };
+
+  const handleFoundationDrop = (event, suit) => {
+    event.preventDefault();
+    const source = getDragSelection(event);
+    setDragOverTarget(null);
+    moveSelectionToFoundation(suit, source);
   };
 
   const selectedKey = selected ? `${selected.type}-${selected.columnIndex ?? selected.suit ?? 'waste'}-${selected.cardIndex ?? 0}` : '';
@@ -406,7 +542,7 @@ export default function Solitaire({ difficulty = 'medium' }) {
         <div className={`relative min-h-[560px] overflow-x-auto bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.18),transparent_38%),linear-gradient(135deg,#0b7c43,#075b33)] p-4 sm:p-6 lg:p-8 ${isFullscreen ? 'flex-1' : ''}`}>
           <div className="pointer-events-none absolute inset-0 opacity-[0.06]" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #ffffff 0 1px, transparent 1px 12px)' }} />
           
-          {hasWon && (
+          {hasWon ? (
             <div className="pointer-events-none absolute inset-0 z-50 overflow-hidden">
               {winCards.map((card) => (
                 <div
@@ -434,7 +570,7 @@ export default function Solitaire({ difficulty = 'medium' }) {
                 </div>
               ))}
             </div>
-          )}
+          ) : null}
 
           <div className={`relative mx-auto flex min-w-[560px] max-w-[920px] flex-col gap-8 ${isFullscreen ? 'h-full' : ''}`}>
             <div className="flex items-start justify-between gap-6">
@@ -444,7 +580,15 @@ export default function Solitaire({ difficulty = 'medium' }) {
                   <span className="mt-2 block text-[10px] font-extrabold uppercase tracking-[0.16em] text-white/78">Deck {game.stock.length}</span>
                 </div>
                 <div className="text-center">
-                  <WastePile cards={game.waste} drawCount={config.drawCount} selected={selected?.type === 'waste'} onClick={selectWaste} />
+                  <WastePile
+                    cards={game.waste}
+                    drawCount={config.drawCount}
+                    draggable={game.waste.length > 0}
+                    selected={selected?.type === 'waste'}
+                    onClick={selectWaste}
+                    onDragEnd={endDrag}
+                    onDragStart={(event) => beginDrag(event, { type: 'waste' })}
+                  />
                   <span className="mt-2 block text-[10px] font-extrabold uppercase tracking-[0.16em] text-white/78">Waste</span>
                 </div>
               </div>
@@ -453,9 +597,20 @@ export default function Solitaire({ difficulty = 'medium' }) {
                 {SUITS.map((suit) => {
                   const pile = game.foundations[suit];
                   const topCard = pile[pile.length - 1];
+                  const isDragTarget = dragOverTarget === `foundation-${suit}`;
                   return (
-                    <div key={suit} className="text-center">
-                      <Card card={topCard} compact selected={selected?.type === 'foundation' && selected.suit === suit} onClick={() => selectFoundation(suit)} />
+                    <div key={suit} className={`rounded-[1rem] p-1 text-center transition ${isDragTarget ? 'bg-white/12 ring-2 ring-amber-200/70' : ''}`}>
+                      <Card
+                        card={topCard}
+                        compact
+                        draggable={Boolean(topCard)}
+                        selected={selected?.type === 'foundation' && selected.suit === suit}
+                        onClick={() => selectFoundation(suit)}
+                        onDragEnd={topCard ? endDrag : undefined}
+                        onDragOver={(event) => handleFoundationDragOver(event, suit)}
+                        onDragStart={topCard ? (event) => beginDrag(event, { type: 'foundation', suit }) : undefined}
+                        onDrop={(event) => handleFoundationDrop(event, suit)}
+                      />
                       <span className={`mt-2 block text-sm font-black ${isRed(suit) ? 'text-rose-100' : 'text-white/90'}`}>{suit}</span>
                     </div>
                   );
@@ -465,18 +620,26 @@ export default function Solitaire({ difficulty = 'medium' }) {
 
             <div className="grid grid-cols-7 gap-3 pb-8 sm:gap-4 lg:gap-5">
               {game.tableau.map((column, columnIndex) => (
-                <div key={`column-${columnIndex + 1}`} className="min-h-[19rem] min-w-[3.6rem] space-y-[-2.45rem] rounded-[1.1rem] bg-emerald-950/10 p-1.5 pb-20 sm:space-y-[-2.85rem]">
+                <div
+                  key={`column-${columnIndex + 1}`}
+                  className={`min-h-[19rem] min-w-[3.6rem] space-y-[-2.45rem] rounded-[1.1rem] p-1.5 pb-20 transition sm:space-y-[-2.85rem] ${dragOverTarget === `tableau-${columnIndex}` ? 'bg-white/14 ring-2 ring-amber-200/70' : 'bg-emerald-950/10'}`}
+                  onDragOver={(event) => handleTableauDragOver(event, columnIndex)}
+                  onDrop={(event) => handleTableauDrop(event, columnIndex)}
+                >
                   {column.length === 0 ? (
-                    <Card compact onClick={() => moveSelectedToTableau(columnIndex)} />
+                    <Card compact onClick={() => moveSelectionToTableau(columnIndex)} onDragOver={(event) => handleTableauDragOver(event, columnIndex)} onDrop={(event) => handleTableauDrop(event, columnIndex)} />
                   ) : column.map((card, cardIndex) => {
                     const isSelected = selectedKey === `tableau-${columnIndex}-${cardIndex}`;
                     return (
                       <Card
                         card={card}
                         compact
+                        draggable={card.faceUp}
                         key={card.id}
                         selected={isSelected}
                         onClick={() => selectTableauCard(columnIndex, cardIndex)}
+                        onDragEnd={card.faceUp ? endDrag : undefined}
+                        onDragStart={card.faceUp ? (event) => beginDrag(event, { type: 'tableau', columnIndex, cardIndex }) : undefined}
                       />
                     );
                   })}
