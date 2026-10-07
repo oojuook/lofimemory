@@ -175,9 +175,9 @@ const hangoutInvitations = [
     icon: FileText
   },
   {
-    title: 'Play a side quest',
+    title: 'Play relaxing games',
     eyebrow: 'Chill games',
-    detail: 'Open a gentle game only when you want a small reset beside the music.',
+    detail: 'Open a gentle game while the music plays when you want a small reset.',
     tab: 'unwind',
     icon: Leaf
   }
@@ -447,7 +447,7 @@ const seoLandingBlocks = [
   },
   {
     title: 'Chill place online',
-    text: 'Find a chill place online where you can listen to lofi music, relax, breathe, write, and open a calm game only when you want a small side quest.',
+    text: 'Find a chill place online where you can listen to lofi music, relax, breathe, write, and play calm games without the page feeling noisy.',
     href: '/chill-place-online.html'
   },
   {
@@ -472,7 +472,7 @@ const seoLandingBlocks = [
   },
   {
     title: 'Website to relax',
-    text: 'Open a website to relax when you want lofi music, chill vibes, breathing room, notes, and gentle games as side quests.',
+    text: 'Open a website to relax when you want lofi music, chill vibes, breathing room, notes, and relaxing games.',
     href: '/website-to-relax.html'
   },
   {
@@ -841,10 +841,14 @@ const seoGuidePages = [
   { label: 'Popular guide', title: 'Lofi games', text: 'Find lofi games that pair naturally with music, soft focus, and low-pressure browser play.', href: '/lofi-games.html' },
   { label: 'Helpful read', title: 'Relaxing browser games', text: 'Explore relaxing browser games for calm puzzle loops, gentle runners, and cozy short breaks.', href: '/relaxing-browser-games.html' },
   { label: 'Helpful read', title: 'Lofi music website', text: 'Find a lofi music website for calm beats, chill vibes, notes, journaling, and a softer space to stay in.', href: '/lofi-music-website.html' },
-  { label: 'Popular guide', title: 'Listen to lofi music online', text: 'Listen to lofi music online in a calm browser space with notes, journaling, and tiny side quests nearby.', href: '/listen-to-lofi-music-online.html' },
+  { label: 'Popular guide', title: 'Listen to lofi music online', text: 'Listen to lofi music online in a calm browser space with cozy games, notes, and journaling nearby.', href: '/listen-to-lofi-music-online.html' },
   { label: 'Helpful read', title: 'Lofi radio online', text: 'Open lofi radio online when you want relaxing beats, chill vibes, and a softer tab for writing or focus.', href: '/lofi-radio-online.html' },
   { label: 'Helpful read', title: 'Relaxing music online', text: 'Use relaxing music online with low-clutter tools for notes, breathing, private writing, and gentle breaks.', href: '/relaxing-music-online.html' },
   { label: 'Helpful read', title: 'Chill music online', text: 'Find chill music online for lofi vibes, studying, relaxing, and a softer place to stay for a while.', href: '/chill-music-online.html' },
+  { label: 'Popular guide', title: 'Chill music and games', text: 'Open a chill website for listening to lofi music, playing cozy games, journaling, and keeping notes nearby.', href: '/chill-music-and-games.html' },
+  { label: 'Helpful read', title: 'Lofi study music', text: 'Use lofi study music with notes, reminders, breathing, and relaxing games for calmer focus sessions.', href: '/lofi-study-music.html' },
+  { label: 'Helpful read', title: 'Music for journaling', text: 'Pair lofi music with private journaling, memories, notes, and gentle games when you want reflection to feel softer.', href: '/music-for-journaling.html' },
+  { label: 'Popular guide', title: 'Calm website', text: 'Find a calm website with lofi music, chill visuals, private notes, relaxing games, and space to breathe.', href: '/calm-website.html' },
   { label: 'Popular guide', title: 'Website to relax', text: 'Open a website to relax when you want lofi listening, chill vibes, soft notes, and a cleaner online corner.', href: '/website-to-relax.html' },
   { label: 'Popular guide', title: 'Word game online', text: 'Play a calm word game online when you want a familiar puzzle that feels light and relaxing.', href: '/word-game-online.html' },
   { label: 'Popular guide', title: 'Sliding puzzle online', text: 'Play a cozy sliding puzzle online when you want a simple tile game that feels calm and satisfying.', href: '/sliding-puzzle-online.html' },
@@ -1273,9 +1277,9 @@ const seoGuidePages = [
 
 const seoGuideGroups = [
   {
-    title: 'Find lofi music, chill vibes, and gentle game side quests',
-    description: 'Best for visitors looking for a lofi music website, a relaxing online space, chill vibes, soft browser play, and optional cozy games they can open without pressure.',
-    links: seoGuidePages.filter((page) => ['Chill place online', 'Chill games', 'Lofi games', 'Relaxing browser games', 'Lofi music website', 'Listen to lofi music online', 'Lofi radio online', 'Relaxing music online', 'Chill music online', 'Website to relax', 'Daily word puzzle', 'Guess the word game', 'Daily word game', 'Wordle online', 'Word game online', 'Crossword game online', 'Sudoku online', 'WPM test', 'Typing speed test', 'Typing practice online', 'Typing accuracy test', 'Beginner typing test', 'Typing test online', 'Cozy browser games', 'Games to relax', 'Relaxing fidget games', 'Online Minesweeper', 'Calming games for anxiety', 'Memory games for anxiety', 'Mindful gaming app'].includes(page.title))
+    title: 'Find lofi music, chill vibes, and relaxing games',
+    description: 'Best for visitors looking for a lofi music website, a relaxing online space, chill vibes, and cozy games they can open quickly and enjoy without pressure.',
+    links: seoGuidePages.filter((page) => ['Chill place online', 'Chill games', 'Lofi games', 'Relaxing browser games', 'Lofi music website', 'Listen to lofi music online', 'Lofi radio online', 'Relaxing music online', 'Chill music online', 'Chill music and games', 'Lofi study music', 'Music for journaling', 'Calm website', 'Website to relax', 'Daily word puzzle', 'Guess the word game', 'Daily word game', 'Wordle online', 'Word game online', 'Crossword game online', 'Sudoku online', 'WPM test', 'Typing speed test', 'Typing practice online', 'Typing accuracy test', 'Beginner typing test', 'Typing test online', 'Cozy browser games', 'Games to relax', 'Relaxing fidget games', 'Online Minesweeper', 'Calming games for anxiety', 'Memory games for anxiety', 'Mindful gaming app'].includes(page.title))
   },
   {
     title: 'Start a private diary',
@@ -3733,11 +3737,11 @@ function App() {
   const seoStudioContext = useMemo(() => ([
     'Brand: Lofi Memory',
     'Canonical: https://lofimemory.vercel.app/',
-    'Core positioning: lofi music website, listen to lofi music online, chill vibes, relax online, relaxing website, website to relax, clear your mind, calm online space, private journal, notes, reminders, and gentle games as optional side quests.',
-    'Hero title: A cozy place to listen, relax, and clear your mind.',
-    'Hero summary: Lofi Memory helps visitors listen to lofi music, relax, chill, write down thoughts, and keep the day softly organized.',
-    'Hero support line: The main objective is a calm lofi space for music, vibes, relaxing, and clearing your mind; games should be framed as gentle side quests rather than the main product.',
-    'Current guide paths: /lofi-music-website.html, /website-to-relax.html, /chill-place-online.html, /things-to-do-to-relax.html, /relaxing-study-break.html, /studying-with-lofi.html, /online-journal.html, /private-online-diary.html, /daily-journal-app.html, /relaxing-browser-games.html, /games-to-relax.html.',
+    'Core positioning: a chill website for listening to lofi music, playing relaxing games, relaxing online, chill vibes, website to relax, clear your mind, private journal, notes, reminders, and calm online space.',
+    'Hero title: A cozy website to listen to music, play games, and chill.',
+    'Hero summary: Lofi Memory helps visitors listen to lofi music, play relaxing games, chill, write down thoughts, and keep the day softly organized.',
+    'Hero support line: The main objective is a calm lofi website for listening to music, relaxing, playing cozy games, and clearing your mind.',
+    'Current guide paths: /lofi-music-website.html, /listen-to-lofi-music-online.html, /chill-music-and-games.html, /lofi-radio-online.html, /relaxing-music-online.html, /chill-music-online.html, /lofi-study-music.html, /website-to-relax.html, /chill-place-online.html, /things-to-do-to-relax.html, /relaxing-study-break.html, /studying-with-lofi.html, /online-journal.html, /private-online-diary.html, /daily-journal-app.html, /relaxing-browser-games.html, /games-to-relax.html.',
     'Write view framing: A page for your diary. Write today\'s diary page in your own words.',
     'Privacy cues: optional PIN lock, local-first journaling, Google sign-in for sync, entries saved privately per user.',
     `Live product signals: ${entries.length} total entries in this session, ${streak} day streak, average mood ${averageMood}, cloud status ${cloudStatus}.`,
@@ -5467,7 +5471,7 @@ function App() {
               </div>
               <div>
                 <p className="font-display text-2xl font-bold text-sage-900">Lofi Memory</p>
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-sage-700">Lofi music, chill vibes & journal</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-sage-700">Chill music, lofi games & journal</p>
               </div>
             </a>
             <div className="site-nav-links hidden flex-1 items-center justify-center gap-7 xl:gap-9">
@@ -5602,8 +5606,8 @@ function App() {
               <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#eadfce] bg-white/90 px-4 py-2 text-sm font-bold text-[#4a3a2d] shadow-sm">
                 <Headphones size={16} /> Lofi music & chill vibes
               </div>
-              <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.96] tracking-tight text-[#3d3025] md:text-6xl">A cozy place to listen, relax, and clear your mind.</h1>
-              <p className="mt-5 max-w-3xl text-[1.18rem] font-semibold leading-8 text-[#5d4c3e]">Listen to lofi music, relax, chill, write down your thoughts, and keep your day gently organized. Games are here as a quiet side quest when you want a small reset.</p>
+              <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.96] tracking-tight text-[#3d3025] md:text-6xl">A cozy website to listen to music, play games, and chill.</h1>
+              <p className="mt-5 max-w-3xl text-[1.18rem] font-semibold leading-8 text-[#5d4c3e]">Listen to lofi music, play relaxing games, chill, write down your thoughts, and keep your day gently organized in one soft online space.</p>
 
               <div className="lofi-now-playing lofi-glass mt-7 flex flex-col gap-4 rounded-[1.65rem] border p-4 shadow-sm backdrop-blur sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-4">
@@ -5623,7 +5627,7 @@ function App() {
                   <Headphones size={17} /> Start lofi music
                 </button>
                 <a className="inline-flex items-center gap-2 rounded-full border border-[#e2d3c2] bg-white/92 px-5 py-3 text-sm font-extrabold text-[#4f3f32] shadow-sm transition hover:-translate-y-1 hover:border-[#d3bea8] hover:bg-white" href="#unwind" onClick={() => navigateToTab('unwind')}>
-                  <Leaf size={17} /> Play a side quest
+                  <Leaf size={17} /> Play relaxing games
                 </a>
                 <a className="inline-flex items-center gap-2 rounded-full border border-[#e2d3c2] bg-white/92 px-5 py-3 text-sm font-extrabold text-[#4f3f32] shadow-sm transition hover:-translate-y-1 hover:border-[#d3bea8] hover:bg-white" href="#notes" onClick={() => navigateToTab('notes')}>
                   <FileText size={17} /> Open notes & to-dos
@@ -5669,6 +5673,8 @@ function App() {
                 <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-radio-online.html">Lofi radio</a>
                 <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/relaxing-music-online.html">Relaxing music</a>
                 <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-music-online.html">Chill music</a>
+                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-music-and-games.html">Music + games</a>
+                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-study-music.html">Study music</a>
                 <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-vibes.html">Lofi vibes</a>
                 <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-vibes.html">Chill vibes</a>
                 <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/website-to-relax.html">Website to relax</a>
@@ -5688,7 +5694,7 @@ function App() {
                   <div>
                     <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">All-in-one soft corner</p>
                     <h3 className="mt-3 text-2xl font-extrabold leading-tight text-ink">Listen, relax, plan, and write without jumping between tabs.</h3>
-                    <p className="mt-3 max-w-2xl text-sm leading-7 text-sage-800">Lofi Memory is meant to feel like a calm browser hangout. You can let the lofi stream roll, keep your to-do list nearby, breathe for a minute, write something down, or open a chill game as a soft side quest.</p>
+                    <p className="mt-3 max-w-2xl text-sm leading-7 text-sage-800">Lofi Memory is meant to feel like a calm browser hangout. You can let the lofi stream roll, play a chill game, keep your to-do list nearby, breathe for a minute, or write something down whenever you feel like it.</p>
                   </div>
                   <div className="mt-6 space-y-3.5">
                     <button className="group flex w-full items-start gap-4 rounded-[1.5rem] border border-sage-200 bg-white/96 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50 hover:shadow-lift" onClick={() => setIsRadioPlaying(true)} type="button">
@@ -5904,7 +5910,7 @@ function App() {
                   <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
                     <div>
                       <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-600">Popular calm searches</p>
-                      <h3 className="mt-2 text-xl font-extrabold text-ink">Quick links for lofi music, chill vibes, relaxing routines, and gentle game side quests.</h3>
+                      <h3 className="mt-2 text-xl font-extrabold text-ink">Quick links for lofi music, chill vibes, relaxing routines, and cozy games.</h3>
                     </div>
                     <button className="text-sm font-extrabold text-sage-800 underline decoration-sage-300 underline-offset-4" onClick={() => openHomeSection('guides')} type="button">View all guide collections</button>
                   </div>
@@ -7709,7 +7715,7 @@ function App() {
             <a href="/disclaimer.html">Disclaimer</a>
             <a href="/contact.html">Contact</a>
           </div>
-          Lofi Memory is a soft browser space to listen to lofi music, relax, journal, breathe, and open chill games only when you want a calmer side quest online.
+          Lofi Memory is a soft browser space to listen to lofi music, relax, journal, breathe, and play chill games whenever you want a calmer moment online.
         </div>
       </footer>
       </>

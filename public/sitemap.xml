@@ -690,4 +690,24 @@
     <changefreq>weekly</changefreq>
     <priority>0.81</priority>
   </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/chill-music-and-games.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.83</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/lofi-study-music.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/music-for-journaling.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.78</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/calm-website.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.82</priority>
+  </url>
 </urlset>
