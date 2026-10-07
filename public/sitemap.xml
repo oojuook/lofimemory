@@ -706,6 +706,21 @@
     <priority>0.83</priority>
   </url>
   <url>
+    <loc>https://lofimemory.vercel.app/lofi-music-to-relax.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.84</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/calm-place-to-listen-to-music.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.83</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/chill-website-with-music.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.83</priority>
+  </url>
+  <url>
     <loc>https://lofimemory.vercel.app/online-music-player-with-games.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.83</priority>
@@ -769,6 +784,11 @@
     <loc>https://lofimemory.vercel.app/relax-and-play-games.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/online-space-to-relax-and-chill.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.83</priority>
   </url>
   <url>
     <loc>https://lofimemory.vercel.app/chill-website-for-study-breaks.html</loc>
