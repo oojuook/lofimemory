@@ -821,7 +821,7 @@ export default function Solitaire({ difficulty = 'medium' }) {
           </div>
         </div>
 
-        <div className={`relative min-h-[560px] overflow-x-auto bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.18),transparent_38%),linear-gradient(135deg,#0b7c43,#075b33)] p-4 sm:p-6 lg:p-8 ${isFullscreen ? 'flex-1' : ''}`}>
+        <div className={`relative min-h-[560px] overflow-auto bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.18),transparent_38%),linear-gradient(135deg,#0b7c43,#075b33)] p-4 sm:p-6 lg:p-8 ${isFullscreen ? 'flex-1' : ''}`}>
           <div className="pointer-events-none absolute inset-0 opacity-[0.06]" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #ffffff 0 1px, transparent 1px 12px)' }} />
           
           {hasWon ? (

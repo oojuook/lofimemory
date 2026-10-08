@@ -3222,7 +3222,6 @@ function App() {
   const radioDialSweepDegrees = (radioVolume / 100) * RADIO_DIAL_SWEEP;
   const radioDialDegrees = RADIO_DIAL_START + radioDialSweepDegrees;
   const activeBreatheRoom = useMemo(() => breatheRoomOptions.find((room) => room.id === selectedBreatheRoom) || breatheRoomOptions[0], [selectedBreatheRoom]);
-  const ActiveBreatheRoomIcon = activeBreatheRoom.icon;
 
   const scheduleRadioDialFeedbackHide = (delay = 850) => {
     if (radioDialFeedbackTimeoutRef.current) {
@@ -5907,7 +5906,6 @@ function App() {
             <div className="grid gap-6 md:grid-cols-3">
               {breatheRoomOptions.map((option) => {
                 const isSelected = selectedBreatheRoom === option.id;
-                const OptionIcon = option.icon;
                 return (
                   <button
                     key={option.id}
@@ -5921,10 +5919,7 @@ function App() {
                        <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-white/10" />
                        <div className="absolute inset-0 opacity-20 transition-opacity group-hover:opacity-30" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)', backgroundSize: '16px 16px', color: 'white' }} />
                        <div className={`relative z-10 flex flex-col items-center gap-4 transition-transform duration-700 ${isSelected ? 'scale-110' : 'scale-100 group-hover:scale-105'}`}>
-                         <div className="flex h-20 w-20 items-center justify-center rounded-[2rem] bg-white/80 text-sage-900 shadow-soft backdrop-blur-sm">
-                           <OptionIcon size={40} strokeWidth={1.5} />
-                         </div>
-                         <span className="text-3xl drop-shadow">{option.decoration}</span>
+                         <span className="text-4xl drop-shadow">{option.decoration}</span>
                        </div>
                        {isSelected ? (
                          <div className="absolute bottom-4 flex gap-1">
@@ -5960,9 +5955,6 @@ function App() {
                   'scale-90 opacity-70'
                 }`} />
                 <div className="relative z-10 flex flex-col items-center text-center">
-                  <div className={`mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow-sm transition-all duration-700 ${activeBreatheRoom.textTone}`}>
-                    <ActiveBreatheRoomIcon size={28} />
-                  </div>
                   <div className="font-display text-3xl font-bold tracking-wide text-sage-900 transition-opacity duration-1000">
                     {['Inhale', 'Hold', 'Exhale', 'Hold'][breathePhase]}
                   </div>
