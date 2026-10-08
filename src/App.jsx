@@ -2107,7 +2107,7 @@ function App() {
       id: 'quiet-tetris',
       title: 'Tetris',
       detail: 'Calm block stacking',
-      description: 'Stack colorful blocks, clear tidy rows, and enjoy a softer take on a classic arcade puzzle.',
+      description: 'Stack colorful blocks, clear tidy rows, and watch the pace increase by level like classic Tetris while keeping the cozy lofi mood.',
       icon: TetrisIcon,
       tone: 'from-indigo-100 to-sky-50 text-indigo-700',
       playingSpace: 'max-w-[1120px]',

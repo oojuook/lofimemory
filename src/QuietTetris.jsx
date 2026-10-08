@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { ArrowDown, ArrowLeft, ArrowRight, RotateCcw, Sparkles } from 'lucide-react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { ArrowDown, ArrowLeft, RotateCcw, Sparkles } from 'lucide-react';
 
 const ROWS = 20;
 const COLS = 10;
@@ -68,18 +68,21 @@ const pieceTypes = Object.keys(SHAPES);
 const difficultySettings = {
   easy: {
     label: 'Easy',
-    dropMs: 880,
-    note: 'A slower stack rate so it is easier to settle into the board.'
+    dropMs: 920,
+    minDropMs: 240,
+    note: 'A slower stack rate that still speeds up gently every 10 cleared lines.'
   },
   medium: {
     label: 'Medium',
-    dropMs: 620,
-    note: 'A classic pace with enough pressure to stay satisfying.'
+    dropMs: 680,
+    minDropMs: 170,
+    note: 'A classic pace where each level makes the falling pieces a little faster.'
   },
   hard: {
     label: 'Hard',
-    dropMs: 420,
-    note: 'Faster falling pieces so every decision matters more.'
+    dropMs: 480,
+    minDropMs: 120,
+    note: 'A faster arcade pace with sharper level-based acceleration.'
   }
 };
 
@@ -163,11 +166,11 @@ function clearCompletedLines(board) {
   };
 }
 
-function getLineScore(linesCleared) {
-  if (linesCleared === 1) return 100;
-  if (linesCleared === 2) return 300;
-  if (linesCleared === 3) return 500;
-  if (linesCleared >= 4) return 800;
+function getLineScore(linesCleared, level = 1) {
+  if (linesCleared === 1) return 100 * level;
+  if (linesCleared === 2) return 300 * level;
+  if (linesCleared === 3) return 500 * level;
+  if (linesCleared >= 4) return 800 * level;
   return 0;
 }
 
@@ -184,6 +187,13 @@ export default function QuietTetris({ difficulty = 'medium' }) {
   const [lines, setLines] = useState(0);
   const [bestScore, setBestScore] = useState(() => parseInt(localStorage.getItem(bestScoreKey) || '0', 10));
   const [gameState, setGameState] = useState('start');
+  const currentLevel = useMemo(() => Math.min(20, Math.floor(lines / 10) + 1), [lines]);
+  const levelProgress = lines % 10;
+  const dropInterval = useMemo(
+    () => Math.max(config.minDropMs, Math.round(config.dropMs * (0.86 ** (currentLevel - 1)))),
+    [config.dropMs, config.minDropMs, currentLevel]
+  );
+  const speedLabel = `${dropInterval}ms`;
 
   useEffect(() => {
     setBoard(createEmptyBoard());
@@ -210,10 +220,10 @@ export default function QuietTetris({ difficulty = 'medium' }) {
     setGameState('playing');
   };
 
-  const lockCurrentPiece = (pieceToLock = currentPiece) => {
+  const lockCurrentPiece = useCallback((pieceToLock = currentPiece) => {
     const mergedBoard = mergePiece(board, pieceToLock);
     const { board: clearedBoard, linesCleared } = clearCompletedLines(mergedBoard);
-    const nextScore = score + getLineScore(linesCleared);
+    const nextScore = score + getLineScore(linesCleared, currentLevel);
     const nextLines = lines + linesCleared;
     const spawnedPiece = createPiece(nextType);
     const upcomingType = pickRandomType(nextType);
@@ -231,9 +241,9 @@ export default function QuietTetris({ difficulty = 'medium' }) {
     }
 
     setCurrentPiece(spawnedPiece);
-  };
+  }, [board, currentLevel, currentPiece, lines, nextType, score]);
 
-  const movePiece = (rowDelta, colDelta) => {
+  const movePiece = useCallback((rowDelta, colDelta) => {
     if (gameState !== 'playing') {
       return;
     }
@@ -249,9 +259,9 @@ export default function QuietTetris({ difficulty = 'medium' }) {
     }
 
     setCurrentPiece((previous) => ({ ...previous, row: nextRow, col: nextCol }));
-  };
+  }, [board, currentPiece, gameState, lockCurrentPiece]);
 
-  const rotatePiece = () => {
+  const rotatePiece = useCallback(() => {
     if (gameState !== 'playing') {
       return;
     }
@@ -265,9 +275,9 @@ export default function QuietTetris({ difficulty = 'medium' }) {
         return;
       }
     }
-  };
+  }, [board, currentPiece, gameState]);
 
-  const hardDrop = () => {
+  const hardDrop = useCallback(() => {
     if (gameState !== 'playing') {
       return;
     }
@@ -280,9 +290,9 @@ export default function QuietTetris({ difficulty = 'medium' }) {
     const droppedPiece = { ...currentPiece, row: nextRow };
     setCurrentPiece(droppedPiece);
     lockCurrentPiece(droppedPiece);
-  };
+  }, [board, currentPiece, gameState, lockCurrentPiece]);
 
-  const holdPiece = () => {
+  const holdPiece = useCallback(() => {
     if (gameState !== 'playing' || holdUsed) {
       return;
     }
@@ -313,7 +323,7 @@ export default function QuietTetris({ difficulty = 'medium' }) {
       return;
     }
     setCurrentPiece(swappedPiece);
-  };
+  }, [board, currentPiece, gameState, heldType, holdUsed, nextType]);
 
   useEffect(() => {
     if (gameState !== 'playing') {
@@ -322,10 +332,10 @@ export default function QuietTetris({ difficulty = 'medium' }) {
 
     const timer = window.setInterval(() => {
       movePiece(1, 0);
-    }, config.dropMs);
+    }, dropInterval);
 
     return () => window.clearInterval(timer);
-  }, [board, config.dropMs, currentPiece, gameState, nextType, score, lines]);
+  }, [dropInterval, gameState, movePiece]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -362,7 +372,7 @@ export default function QuietTetris({ difficulty = 'medium' }) {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [board, currentPiece, gameState, heldType, holdUsed, nextType, score, lines]);
+  }, [gameState, hardDrop, holdPiece, movePiece, rotatePiece]);
 
   useEffect(() => {
     if (gameState === 'over' && score > bestScore) {
@@ -402,10 +412,10 @@ export default function QuietTetris({ difficulty = 'medium' }) {
               <Sparkles size={14} /> {config.label} stack flow
             </div>
             <h3 className="mt-4 text-3xl font-bold tracking-tight text-violet-950">Tetris</h3>
-            <p className="mt-2 max-w-2xl text-sm leading-7 text-violet-700">A cozy block-stacking game for people who want something more arcadey without losing the calm visual feel. The difficulty changes the falling speed, so easy, medium, and hard genuinely play differently.</p>
+            <p className="mt-2 max-w-2xl text-sm leading-7 text-violet-700">A cozy block-stacking game inspired by classic Tetris pacing: every 10 cleared lines raises the level, makes pieces fall faster, and gives higher line-clear points.</p>
             <p className="mt-2 text-sm font-semibold text-violet-600">{config.note}</p>
           </div>
-          <div className="grid gap-2 rounded-[1.5rem] border border-white/85 bg-white/80 p-3 shadow-sm sm:grid-cols-2 xl:grid-cols-4 lg:min-w-[31rem]">
+          <div className="grid gap-2 rounded-[1.5rem] border border-white/85 bg-white/80 p-3 shadow-sm sm:grid-cols-2 xl:grid-cols-5 lg:min-w-[34rem]">
             <div className="rounded-[1.15rem] bg-violet-50 px-4 py-3 text-center">
               <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-violet-500">Score</p>
               <p className="mt-2 text-xl font-extrabold text-violet-950">{score}</p>
@@ -415,12 +425,16 @@ export default function QuietTetris({ difficulty = 'medium' }) {
               <p className="mt-2 text-xl font-extrabold text-violet-950">{lines}</p>
             </div>
             <div className="rounded-[1.15rem] bg-violet-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-violet-500">Best</p>
-              <p className="mt-2 text-xl font-extrabold text-violet-950">{bestScore}</p>
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-violet-500">Level</p>
+              <p className="mt-2 text-xl font-extrabold text-violet-950">{currentLevel}</p>
             </div>
             <div className="rounded-[1.15rem] bg-violet-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-violet-500">Drop</p>
-              <p className="mt-2 text-xl font-extrabold text-violet-950">{config.dropMs}ms</p>
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-violet-500">Speed</p>
+              <p className="mt-2 text-xl font-extrabold text-violet-950">{speedLabel}</p>
+            </div>
+            <div className="rounded-[1.15rem] bg-violet-50 px-4 py-3 text-center">
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-violet-500">Best</p>
+              <p className="mt-2 text-xl font-extrabold text-violet-950">{bestScore}</p>
             </div>
           </div>
         </div>
@@ -428,6 +442,15 @@ export default function QuietTetris({ difficulty = 'medium' }) {
         <div className="mt-6 grid gap-5 xl:grid-cols-[minmax(0,1fr)_220px]">
           <div>
             <div className="relative mx-auto w-full max-w-[22rem] rounded-[1.8rem] border border-violet-100 bg-[#f6f2ff] p-3 shadow-inner sm:max-w-[24rem] sm:p-4">
+              <div className="mb-3 rounded-[1.2rem] border border-white/75 bg-white/72 p-3">
+                <div className="flex items-center justify-between text-[11px] font-extrabold uppercase tracking-[0.18em] text-violet-500">
+                  <span>Level {currentLevel}</span>
+                  <span>{10 - levelProgress} line{levelProgress === 9 ? '' : 's'} to next speed</span>
+                </div>
+                <div className="mt-2 h-2 overflow-hidden rounded-full bg-violet-100">
+                  <div className="h-full rounded-full bg-gradient-to-r from-violet-500 to-sky-400 transition-all" style={{ width: `${levelProgress * 10}%` }} />
+                </div>
+              </div>
               <div className="grid gap-[3px] rounded-[1.2rem] bg-[#ece6fb] p-[3px]" style={{ gridTemplateColumns: `repeat(${COLS}, minmax(0, 1fr))` }}>
                 {displayBoard.flat().map((cell, index) => (
                   <div
