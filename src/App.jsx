@@ -2224,7 +2224,7 @@ function App() {
       tone: 'from-sky-100 to-cyan-50 text-sky-700',
       preview: gameLilypadPreview,
       playingSpace: 'max-w-[1120px]',
-      component: <StreamSurfer difficulty={selectedGameDifficulty} />
+      component: <StreamSurfer difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
     },
     {
       id: 'lofi-jigsaw',
@@ -2235,7 +2235,7 @@ function App() {
       tone: 'from-emerald-100 via-amber-50 to-rose-50 text-emerald-700',
       preview: gameJigsawPreview,
       playingSpace: 'max-w-[1080px]',
-      component: <LofiJigsaw difficulty={selectedGameDifficulty} />
+      component: <LofiJigsaw difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
     },
     {
       id: 'lotus-match',
@@ -2257,7 +2257,7 @@ function App() {
       tone: 'from-violet-100 to-slate-50 text-violet-700',
       preview: gameTilesPreview,
       playingSpace: 'max-w-[820px]',
-      component: <QuietTiles difficulty={selectedGameDifficulty} />
+      component: <QuietTiles difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
     },
     {
       id: 'quiet-tetris',
@@ -2279,7 +2279,7 @@ function App() {
       tone: 'from-amber-100 to-stone-50 text-amber-700',
       preview: gameSlidePreview,
       playingSpace: 'max-w-[860px]',
-      component: <QuietSlide difficulty={selectedGameDifficulty} />
+      component: <QuietSlide difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
     },
     {
       id: 'quiet-sudoku',
@@ -2290,7 +2290,7 @@ function App() {
       tone: 'from-cyan-100 to-blue-50 text-cyan-700',
       preview: gameSudokuPreview,
       playingSpace: 'max-w-[980px]',
-      component: <QuietSudoku difficulty={selectedGameDifficulty} />
+      component: <QuietSudoku difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
     },
     {
       id: 'quiet-wordle',
@@ -2301,7 +2301,7 @@ function App() {
       tone: 'from-teal-100 to-sky-50 text-teal-700',
       preview: gameWordlePreview,
       playingSpace: 'max-w-[780px]',
-      component: <QuietWordle difficulty={selectedGameDifficulty} />
+      component: <QuietWordle difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
     },
     {
       id: 'quiet-words',
@@ -2312,7 +2312,7 @@ function App() {
       tone: 'from-fuchsia-100 to-rose-50 text-fuchsia-700',
       preview: gameWordsPreview,
       playingSpace: 'max-w-[860px]',
-      component: <QuietWords difficulty={selectedGameDifficulty} />
+      component: <QuietWords difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
     },
     {
       id: 'typing-speed-test',
@@ -2323,7 +2323,7 @@ function App() {
       tone: 'from-sky-100 to-indigo-50 text-sky-700',
       preview: gameTypingPreview,
       playingSpace: 'max-w-[960px]',
-      component: <TypingSpeedTest difficulty={selectedGameDifficulty} />
+      component: <TypingSpeedTest difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
     },
     {
       id: 'quiet-clues',
@@ -2334,7 +2334,7 @@ function App() {
       tone: 'from-amber-100 to-rose-50 text-amber-700',
       preview: gameCluesPreview,
       playingSpace: 'max-w-[820px]',
-      component: <QuietClues difficulty={selectedGameDifficulty} />
+      component: <QuietClues difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
     },
     {
       id: 'quiet-snake',
@@ -2356,7 +2356,7 @@ function App() {
       tone: 'from-orange-100 to-yellow-50 text-orange-700',
       preview: gameDinoPreview,
       playingSpace: 'max-w-[1060px]',
-      component: <DinosaurDash difficulty={selectedGameDifficulty} />
+      component: <DinosaurDash difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
     }
   ];
   const selectedUnwindGameConfig = unwindGames.find((game) => game.id === selectedUnwindGame) || unwindGames[0];
@@ -4983,7 +4983,7 @@ function App() {
                 onClick={card.onClick}
                 type="button"
               >
-                <img src={card.preview} alt={`${card.title} preview`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+                <img src={card.preview} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" aria-hidden="true" />
                 <div className="absolute inset-0 bg-gradient-to-br from-black/45 via-black/5 to-transparent" />
                 <div className="relative z-10 p-2">
                   <p className="text-lg font-black tracking-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">{card.title}</p>
@@ -5816,16 +5816,7 @@ function App() {
                     </div>
                   </div>
                   <div className={`mx-auto mt-5 w-full ${isFullscreen ? 'max-w-none' : (selectedUnwindGameConfig.playingSpace || 'max-w-[980px]')}`}>
-                    {gameVisualTheme === 'lofi' ? (
-                      <div className="relative overflow-hidden rounded-[2.4rem] border border-white/70 p-4 shadow-[0_24px_80px_rgba(83,62,44,0.18)] sm:p-6">
-                        <img src={selectedUnwindGameConfig.preview} alt="" className="absolute inset-0 h-full w-full object-cover opacity-35 blur-[1px] scale-105" aria-hidden="true" />
-                        <div className="absolute inset-0 bg-gradient-to-br from-[#fff7ec]/82 via-[#f4e2cf]/68 to-[#d9c6ff]/48" />
-                        <div className="absolute inset-x-8 top-6 h-24 rounded-full bg-white/35 blur-3xl" />
-                        <div className="lofi-game-skin relative z-10 rounded-[2rem] border border-white/80 bg-white/72 p-3 shadow-soft backdrop-blur-md sm:p-5">
-                          {selectedUnwindGameConfig.component}
-                        </div>
-                      </div>
-                    ) : selectedUnwindGameConfig.component}
+                    {selectedUnwindGameConfig.component}
                   </div>
                 </div>
               </div>
@@ -5855,7 +5846,7 @@ function App() {
                     onClick={() => selectUnwindGame(game.id)}
                     type="button"
                   >
-                    <img src={game.preview} alt={`${game.title} preview`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+                    <img src={game.preview} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" aria-hidden="true" />
                     <div className="absolute inset-0 bg-gradient-to-br from-black/48 via-black/10 to-transparent" />
                     <div className="relative z-10 p-1">
                       <p className="text-xs font-black uppercase tracking-[0.24em] text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]">{game.detail}</p>

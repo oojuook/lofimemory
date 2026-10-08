@@ -282,52 +282,66 @@ function getSudokuCellClass({
   inSameRow,
   sameValue,
   selected,
+  isLofi = false,
 }) {
   if (!editable) {
+    if (isLofi) {
+      return boxTone === 'moss' ? 'bg-[#efe3d2] text-[#4a3a2d]' : 'bg-[#f8eee3] text-[#4a3a2d]';
+    }
     return boxTone === 'moss' ? 'bg-[#e8efe5] text-slate-900' : 'bg-[#efe9df] text-slate-900';
   }
 
   if (checkedWrong || conflict) {
-    return 'bg-rose-100 text-rose-900';
+    return isLofi ? 'bg-[#f4d6cf] text-[#8d4b45]' : 'bg-rose-100 text-rose-900';
   }
 
   if (selected) {
-    return 'bg-sky-200 text-sky-950';
+    return isLofi ? 'bg-[#f5e6d3] text-[#4a3a2d]' : 'bg-sky-200 text-sky-950';
   }
 
   if (sameValue) {
-    return 'bg-amber-100 text-amber-950';
+    return isLofi ? 'bg-[#f7e2b7] text-[#7a5227]' : 'bg-amber-100 text-amber-950';
   }
 
   if (inSameRow || inSameCol || inSameBox) {
+    if (isLofi) {
+      return boxTone === 'moss' ? 'bg-[#f9f1e5] text-[#4a3a2d]' : 'bg-[#fbf6ee] text-[#4a3a2d]';
+    }
     return boxTone === 'moss' ? 'bg-sky-100 text-slate-900' : 'bg-[#e8f1fb] text-slate-900';
+  }
+
+  if (isLofi) {
+    return boxTone === 'moss' ? 'bg-[#fffaf4] text-[#4a3a2d]' : 'bg-[#fdf4e8] text-[#4a3a2d]';
   }
 
   return boxTone === 'moss' ? 'bg-[#f4f8f1] text-slate-900' : 'bg-[#fbf6ee] text-slate-900';
 }
 
-function SudokuCellButton({ cellClass, cellId, colIndex, notes, onSelect, rowIndex, selected, value }) {
+function SudokuCellButton({ cellClass, cellId, colIndex, isLofi = false, notes, onSelect, rowIndex, selected, value }) {
+  const innerBorderColor = isLofi ? 'rgba(255, 248, 240, 0.92)' : INNER_BORDER_COLOR;
+  const subgridBorderColor = isLofi ? '#d8c4af' : SUBGRID_BORDER_COLOR;
+
   return (
     <button
       key={cellId}
-      className={`flex aspect-square min-h-[2.35rem] items-center justify-center rounded-[0.7rem] border text-base font-extrabold transition sm:min-h-[3.1rem] sm:text-lg ${selected ? 'border-sky-400 shadow-sm' : 'border-white/70'} ${cellClass}`}
+      className={`flex aspect-square min-h-[2.35rem] items-center justify-center rounded-[0.7rem] border text-base font-extrabold transition sm:min-h-[3.1rem] sm:text-lg ${selected ? (isLofi ? 'border-amber-300 shadow-[0_10px_20px_rgba(83,62,44,0.1)]' : 'border-sky-400 shadow-sm') : (isLofi ? 'border-white/60' : 'border-white/70')} ${cellClass}`}
       onClick={onSelect}
       style={{
         borderTopWidth: rowIndex % BOX_SIZE === 0 ? SUBGRID_BORDER_WIDTH : INNER_BORDER_WIDTH,
         borderLeftWidth: colIndex % BOX_SIZE === 0 ? SUBGRID_BORDER_WIDTH : INNER_BORDER_WIDTH,
         borderRightWidth: colIndex === BOARD_SIZE - 1 ? SUBGRID_BORDER_WIDTH : INNER_BORDER_WIDTH,
         borderBottomWidth: rowIndex === BOARD_SIZE - 1 ? SUBGRID_BORDER_WIDTH : INNER_BORDER_WIDTH,
-        borderTopColor: rowIndex % BOX_SIZE === 0 ? SUBGRID_BORDER_COLOR : INNER_BORDER_COLOR,
-        borderLeftColor: colIndex % BOX_SIZE === 0 ? SUBGRID_BORDER_COLOR : INNER_BORDER_COLOR,
-        borderRightColor: colIndex === BOARD_SIZE - 1 ? SUBGRID_BORDER_COLOR : INNER_BORDER_COLOR,
-        borderBottomColor: rowIndex === BOARD_SIZE - 1 ? SUBGRID_BORDER_COLOR : INNER_BORDER_COLOR,
+        borderTopColor: rowIndex % BOX_SIZE === 0 ? subgridBorderColor : innerBorderColor,
+        borderLeftColor: colIndex % BOX_SIZE === 0 ? subgridBorderColor : innerBorderColor,
+        borderRightColor: colIndex === BOARD_SIZE - 1 ? subgridBorderColor : innerBorderColor,
+        borderBottomColor: rowIndex === BOARD_SIZE - 1 ? subgridBorderColor : innerBorderColor,
       }}
       type="button"
     >
       {value ? (
         value
       ) : (
-        <div className="grid w-full grid-cols-3 gap-[1px] px-[2px] text-[0.55rem] font-bold leading-none text-slate-500 sm:text-[0.65rem]">
+        <div className={`grid w-full grid-cols-3 gap-[1px] px-[2px] text-[0.55rem] font-bold leading-none sm:text-[0.65rem] ${isLofi ? 'text-[#8c755f]' : 'text-slate-500'}`}>
           {DIGITS.map((digit) => (
             <span key={`${cellId}-${digit}`} className={notes.includes(digit) ? 'opacity-100' : 'opacity-0'}>
               {digit}
@@ -345,6 +359,7 @@ function SudokuBoard({
   checkedCells,
   conflictSet,
   isEditableCell,
+  isLofi = false,
   notesByCell,
   selectedBoxCol,
   selectedBoxRow,
@@ -352,8 +367,8 @@ function SudokuBoard({
   setSelectedCell,
 }) {
   return (
-    <div className="rounded-[1.75rem] border border-white/80 bg-white/92 p-4 shadow-sm">
-      <div className="grid grid-cols-9 gap-1 rounded-[1.6rem] bg-[#c7d2ca] p-[7px] sm:p-3">
+    <div className={`rounded-[1.75rem] border p-4 shadow-sm ${isLofi ? 'border-white/70 bg-white/72 backdrop-blur-sm' : 'border-white/80 bg-white/92'}`}>
+      <div className={`grid grid-cols-9 gap-1 rounded-[1.6rem] p-[7px] sm:p-3 ${isLofi ? 'bg-[#e2cfbb]/90' : 'bg-[#c7d2ca]'}`}>
         {board.map((row, rowIndex) => row.map((value, colIndex) => {
           const cellId = getCellId(rowIndex, colIndex);
           const editable = isEditableCell(rowIndex, colIndex);
@@ -377,6 +392,7 @@ function SudokuBoard({
             inSameRow,
             sameValue,
             selected,
+            isLofi,
           });
 
           return (
@@ -384,6 +400,7 @@ function SudokuBoard({
               cellClass={cellClass}
               cellId={cellId}
               colIndex={colIndex}
+              isLofi={isLofi}
               key={cellId}
               notes={editable && value === 0 ? (notesByCell[cellId] || []) : []}
               onSelect={() => setSelectedCell({ row: rowIndex, col: colIndex })}
@@ -398,42 +415,34 @@ function SudokuBoard({
   );
 }
 
-function SudokuHeader({ completedRounds, config, conflictCount, elapsedLabel, mistakesLeft, notesMode, openCells }) {
+function SudokuHeader({ completedRounds, config, conflictCount, elapsedLabel, isLofi = false, mistakesLeft, notesMode, openCells }) {
   return (
     <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
       <div>
-        <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/88 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-slate-700 shadow-sm">
+        <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-slate-200 bg-white/88 text-slate-700'}`}>
           <Sparkles size={14} /> {config.label} sudoku flow
         </div>
-        <h3 className="mt-4 text-3xl font-bold tracking-tight text-slate-950">Sudoku</h3>
-        <p className="mt-2 max-w-2xl text-sm leading-7 text-slate-700">
+        <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>Sudoku</h3>
+        <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-700'}`}>
           A cozy Sudoku board for when you want a familiar logic puzzle that still feels slow, tidy,
           and easy to settle into.
         </p>
-        <p className="mt-2 text-sm font-semibold text-slate-600">{config.note}</p>
+        <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-slate-600'}`}>{config.note}</p>
       </div>
-      <div className="grid gap-2 rounded-[1.5rem] border border-white/85 bg-white/80 p-3 shadow-sm sm:grid-cols-2 xl:grid-cols-5 lg:min-w-[34rem]">
-        <div className="rounded-[1.15rem] bg-slate-50 px-4 py-3 text-center">
-          <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-500">Solved</p>
-          <p className="mt-2 text-xl font-extrabold text-slate-950">{completedRounds}</p>
-        </div>
-        <div className="rounded-[1.15rem] bg-slate-50 px-4 py-3 text-center">
-          <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-500">Open cells</p>
-          <p className="mt-2 text-xl font-extrabold text-slate-950">{openCells}</p>
-        </div>
-        <div className="rounded-[1.15rem] bg-slate-50 px-4 py-3 text-center">
-          <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-500">Conflicts</p>
-          <p className="mt-2 text-xl font-extrabold text-slate-950">{conflictCount}</p>
-        </div>
-        <div className="rounded-[1.15rem] bg-slate-50 px-4 py-3 text-center">
-          <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-500">Timer</p>
-          <p className="mt-2 text-xl font-extrabold text-slate-950">{elapsedLabel}</p>
-        </div>
-        <div className="rounded-[1.15rem] bg-slate-50 px-4 py-3 text-center">
-          <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-500">Pen tries left</p>
-          <p className="mt-2 text-xl font-extrabold text-slate-950">{mistakesLeft}</p>
-          <p className="mt-1 text-[11px] font-semibold text-slate-500">{notesMode ? 'Pencil notes on' : 'Pen mode on'}</p>
-        </div>
+      <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-2 xl:grid-cols-5 lg:min-w-[34rem] ${isLofi ? 'rounded-[1.35rem] border border-white/70 bg-white/65 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
+        {[
+          ['Solved', completedRounds, null],
+          ['Open cells', openCells, null],
+          ['Conflicts', conflictCount, null],
+          ['Timer', elapsedLabel, null],
+          ['Pen tries left', mistakesLeft, notesMode ? 'Pencil notes on' : 'Pen mode on']
+        ].map(([label, value, note]) => (
+          <div key={label} className={`${isLofi ? 'rounded-[0.95rem] bg-amber-50/90 text-amber-900' : 'rounded-[1.15rem] bg-slate-50'} px-4 py-3 text-center`}>
+            <p className={`text-[10px] font-extrabold uppercase tracking-[0.2em] ${isLofi ? 'text-amber-800/60' : 'text-slate-500'}`}>{label}</p>
+            <p className={`mt-2 text-xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>{value}</p>
+            {note ? <p className={`mt-1 text-[11px] font-semibold ${isLofi ? 'text-amber-800/60' : 'text-slate-500'}`}>{note}</p> : null}
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -444,6 +453,7 @@ function SudokuSidebar({
   checkBoard,
   clearSelectedCell,
   handleDigitInput,
+  isLofi = false,
   message,
   mistakesLeft,
   notesMode,
@@ -455,25 +465,25 @@ function SudokuSidebar({
 }) {
   return (
     <div className="space-y-4">
-      <div className="rounded-[1.5rem] border border-white/80 bg-white/92 p-4 shadow-sm">
+      <div className={`rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-white/70 bg-white/72 backdrop-blur-sm' : 'border-white/80 bg-white/92'}`}>
         <div className="flex items-center justify-between gap-3">
-          <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-slate-600">Soft guidance</p>
+          <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-slate-600'}`}>Soft guidance</p>
           <button
-            className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.16em] transition ${notesMode ? 'bg-sky-100 text-sky-950' : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}`}
+            className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.16em] transition ${notesMode ? (isLofi ? 'bg-[#f5e6d3] text-[#4a3a2d]' : 'bg-sky-100 text-sky-950') : (isLofi ? 'border border-amber-200 bg-white text-amber-900 hover:bg-[#fff8f0]' : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-50')}`}
             onClick={() => setNotesMode((previous) => !previous)}
             type="button"
           >
             <Edit3 size={12} /> {notesMode ? 'Pencil on' : 'Pencil off'}
           </button>
         </div>
-        <div className="mt-4 rounded-[1.25rem] border border-slate-200 bg-slate-50 px-4 py-4">
+        <div className={`mt-4 rounded-[1.25rem] border px-4 py-4 ${isLofi ? 'border-amber-200/60 bg-amber-50/75' : 'border-slate-200 bg-slate-50'}`}>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-slate-500">Round control</p>
-              <p className="mt-2 text-sm font-semibold leading-6 text-slate-700">{roundStatus === 'ready' ? 'Press start to begin this Sudoku and start the timer.' : roundStatus === 'playing' ? 'The timer is running — keep going.' : 'This board is finished. Start a new one whenever you want.'}</p>
+              <p className={`text-[11px] font-extrabold uppercase tracking-[0.18em] ${isLofi ? 'text-amber-800/70' : 'text-slate-500'}`}>Round control</p>
+              <p className={`mt-2 text-sm font-semibold leading-6 ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-700'}`}>{roundStatus === 'ready' ? 'Press start to begin this Sudoku and start the timer.' : roundStatus === 'playing' ? 'The timer is running — keep going.' : 'This board is finished. Start a new one whenever you want.'}</p>
             </div>
             <button
-              className={`inline-flex items-center justify-center rounded-full px-4 py-2.5 text-sm font-extrabold transition ${roundStatus === 'ready' ? 'bg-slate-900 text-white hover:bg-slate-800' : 'border border-slate-200 bg-white text-slate-500'}`}
+              className={`inline-flex items-center justify-center rounded-full px-4 py-2.5 text-sm font-extrabold transition ${roundStatus === 'ready' ? (isLofi ? 'bg-[#4a3a2d] text-white hover:bg-[#3d3025]' : 'bg-slate-900 text-white hover:bg-slate-800') : (isLofi ? 'border border-amber-200 bg-white text-amber-400' : 'border border-slate-200 bg-white text-slate-500')}`}
               disabled={roundStatus !== 'ready'}
               onClick={startRound}
               type="button"
@@ -482,32 +492,32 @@ function SudokuSidebar({
             </button>
           </div>
         </div>
-        <p className="mt-3 text-sm leading-7 text-slate-700">{message}</p>
-        <p className="mt-2 text-xs font-semibold text-slate-500">Press <span className="font-extrabold text-slate-700">N</span> to toggle pencil marks, then tap 1–9 to add tiny notes. Pen mode gives you {mistakesLeft} of {MAX_PEN_MISTAKES} tries left.</p>
+        <p className={`mt-3 text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-700'}`}>{message}</p>
+        <p className={`mt-2 text-xs font-semibold ${isLofi ? 'text-amber-800/60' : 'text-slate-500'}`}>Press <span className={`font-extrabold ${isLofi ? 'text-[#4a3a2d]' : 'text-slate-700'}`}>N</span> to toggle pencil marks, then tap 1–9 to add tiny notes. Pen mode gives you {mistakesLeft} of {MAX_PEN_MISTAKES} tries left.</p>
         <div className="mt-4 grid gap-2 sm:grid-cols-2 xl:grid-cols-1">
           <button
-            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-4 py-3 text-sm font-extrabold text-white transition hover:bg-slate-800"
+            className={`inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-extrabold text-white transition ${isLofi ? 'bg-[#4a3a2d] hover:bg-[#3d3025]' : 'bg-slate-900 hover:bg-slate-800'}`}
             onClick={checkBoard}
             type="button"
           >
             Check board
           </button>
           <button
-            className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-extrabold text-slate-800 transition hover:bg-white"
+            className={`inline-flex items-center justify-center gap-2 rounded-2xl border px-4 py-3 text-sm font-extrabold transition ${isLofi ? 'border-amber-200 bg-amber-50/90 text-amber-900 hover:bg-white' : 'border-slate-200 bg-slate-50 text-slate-800 hover:bg-white'}`}
             onClick={revealSelectedCell}
             type="button"
           >
             Reveal selected cell
           </button>
           <button
-            className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-extrabold text-slate-800 transition hover:bg-slate-50"
+            className={`inline-flex items-center justify-center gap-2 rounded-2xl border px-4 py-3 text-sm font-extrabold transition ${isLofi ? 'border-amber-200 bg-white text-amber-900 hover:bg-[#fff8f0]' : 'border-slate-200 bg-white text-slate-800 hover:bg-slate-50'}`}
             onClick={clearSelectedCell}
             type="button"
           >
             Clear square
           </button>
           <button
-            className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-extrabold text-slate-800 transition hover:bg-slate-50"
+            className={`inline-flex items-center justify-center gap-2 rounded-2xl border px-4 py-3 text-sm font-extrabold transition ${isLofi ? 'border-amber-200 bg-white text-amber-900 hover:bg-[#fff8f0]' : 'border-slate-200 bg-white text-slate-800 hover:bg-slate-50'}`}
             onClick={startFreshPuzzle}
             type="button"
           >
@@ -516,10 +526,10 @@ function SudokuSidebar({
         </div>
       </div>
 
-      <div className="rounded-[1.5rem] border border-white/80 bg-white/92 p-4 shadow-sm">
+      <div className={`rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-white/70 bg-white/72 backdrop-blur-sm' : 'border-white/80 bg-white/92'}`}>
         <div className="flex items-center justify-between gap-3">
-          <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-slate-600">Number pad</p>
-          <span className={`rounded-full px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.16em] ${notesMode ? 'bg-sky-100 text-sky-900' : 'bg-slate-100 text-slate-600'}`}>
+          <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-slate-600'}`}>Number pad</p>
+          <span className={`rounded-full px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.16em] ${notesMode ? (isLofi ? 'bg-[#f5e6d3] text-[#4a3a2d]' : 'bg-sky-100 text-sky-900') : (isLofi ? 'bg-amber-50 text-amber-700' : 'bg-slate-100 text-slate-600')}`}>
             {notesMode ? 'Pencil marks' : 'Fill mode'}
           </span>
         </div>
@@ -527,7 +537,7 @@ function SudokuSidebar({
           {DIGITS.map((number) => (
             <button
               key={number}
-              className={`rounded-2xl border px-0 py-3 text-sm font-extrabold transition ${activeValue === number && !notesMode ? 'border-sky-300 bg-sky-100 text-sky-950' : 'border-slate-200 bg-slate-50 text-slate-900 hover:bg-white'}`}
+              className={`rounded-2xl border px-0 py-3 text-sm font-extrabold transition ${activeValue === number && !notesMode ? (isLofi ? 'border-amber-300 bg-[#f5e6d3] text-[#4a3a2d]' : 'border-sky-300 bg-sky-100 text-sky-950') : (isLofi ? 'border-amber-200 bg-amber-50/90 text-amber-900 hover:bg-white' : 'border-slate-200 bg-slate-50 text-slate-900 hover:bg-white')}`}
               onClick={() => handleDigitInput(number)}
               type="button"
             >
@@ -535,7 +545,7 @@ function SudokuSidebar({
             </button>
           ))}
           <button
-            className="col-span-5 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-extrabold text-slate-800 transition hover:bg-slate-50"
+            className={`col-span-5 rounded-2xl border px-4 py-3 text-sm font-extrabold transition ${isLofi ? 'border-amber-200 bg-white text-amber-900 hover:bg-[#fff8f0]' : 'border-slate-200 bg-white text-slate-800 hover:bg-slate-50'}`}
             onClick={clearSelectedCell}
             type="button"
           >
@@ -547,7 +557,8 @@ function SudokuSidebar({
   );
 }
 
-export default function QuietSudoku({ difficulty = 'medium' }) {
+export default function QuietSudoku({ difficulty = 'medium', theme = 'lofi' }) {
+  const isLofi = theme === 'lofi';
   const initialDifficulty = puzzleBank[difficulty] ? difficulty : 'medium';
   const [selectedDifficulty, setSelectedDifficulty] = useState(initialDifficulty);
 
@@ -853,100 +864,111 @@ export default function QuietSudoku({ difficulty = 'medium' }) {
 
   return (
     <div className="mx-auto mt-12 w-full max-w-[1040px] pb-12">
-      <div className="rounded-[2rem] border border-sage-100 bg-gradient-to-br from-white via-slate-50/80 to-sand-50/80 p-5 shadow-soft lg:p-6">
-        <SudokuHeader
-          completedRounds={completedRounds}
-          config={config}
-          conflictCount={conflictSet.size}
-          elapsedLabel={elapsedLabel}
-          mistakesLeft={mistakesLeft}
-          notesMode={notesMode}
-          openCells={openCells}
-        />
-
-        <div className="mt-5 rounded-[1.5rem] border border-white/80 bg-white/88 p-4 shadow-sm">
-          <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-            <div>
-              <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-slate-600">Sudoku level</p>
-              <p className="mt-2 text-sm font-semibold text-slate-700">Choose from easy through extreme, inspired by the tougher web Sudoku ladder.</p>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {Object.entries(difficultySettings).map(([level, levelConfig]) => (
-                <button
-                  key={level}
-                  className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${selectedDifficulty === level ? 'bg-slate-900 text-white shadow-sm' : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}`}
-                  onClick={() => setSelectedDifficulty(level)}
-                  type="button"
-                >
-                  {levelConfig.label}
-                </button>
-              ))}
-            </div>
-          </div>
-          <p className="mt-3 text-sm leading-7 text-slate-600">{config.note}</p>
-        </div>
-
-        <div className="mt-6 grid gap-5 xl:grid-cols-[minmax(0,1fr)_280px]">
-          <div className="relative">
-            <SudokuBoard
-              activeValue={activeValue}
-              board={board}
-              checkedCells={checkedCells}
-              conflictSet={conflictSet}
-              isEditableCell={isEditableCell}
-              notesByCell={notesByCell}
-              selectedBoxCol={selectedBoxCol}
-              selectedBoxRow={selectedBoxRow}
-              selectedCell={selectedCell}
-              setSelectedCell={setSelectedCell}
-            />
-            {roundStatus === 'ready' && (
-              <div className="absolute inset-0 flex items-center justify-center rounded-[1.75rem] bg-white/76 p-4 backdrop-blur-[3px]">
-                <div className="w-full max-w-sm rounded-[1.5rem] border border-white/85 bg-white/92 p-5 text-center shadow-soft">
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-slate-500">Ready when you are</p>
-                  <h4 className="mt-3 text-3xl font-extrabold text-slate-950">Press start to begin</h4>
-                  <p className="mt-3 text-sm leading-7 text-slate-600">Pick a level, then start the board when you want the timer to begin.</p>
-                  <button
-                    className="mt-5 inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-3 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-800"
-                    onClick={startRound}
-                    type="button"
-                  >
-                    Start Sudoku
-                  </button>
-                </div>
-              </div>
-            )}
-            {roundStatus === 'over' && (
-              <div className="absolute inset-0 flex items-center justify-center rounded-[1.75rem] bg-white/82 p-4 backdrop-blur-[3px]">
-                <div className="w-full max-w-sm rounded-[1.5rem] border border-white/85 bg-white/92 p-5 text-center shadow-soft">
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-rose-500">Round over</p>
-                  <h4 className="mt-3 text-3xl font-extrabold text-slate-950">Three pen mistakes</h4>
-                  <p className="mt-3 text-sm leading-7 text-slate-600">You used all {MAX_PEN_MISTAKES} pen tries in {elapsedLabel}. Start a fresh board whenever you want another calm round.</p>
-                  <button
-                    className="mt-5 inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-3 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-800"
-                    onClick={startFreshPuzzle}
-                    type="button"
-                  >
-                    <RotateCcw size={16} /> New board
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-          <SudokuSidebar
-            activeValue={activeValue}
-            checkBoard={checkBoard}
-            clearSelectedCell={clearSelectedCell}
-            handleDigitInput={handleDigitInput}
-            message={message}
+      <div className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-amber-200/50 bg-[#fff7ec] shadow-[0_28px_90px_rgba(83,62,44,0.12)]' : 'border-sage-100 bg-gradient-to-br from-white via-slate-50/80 to-sand-50/80'}`}>
+        {isLofi && (
+          <>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.95),rgba(255,247,236,0.9)_45%,rgba(250,237,205,0.84)_100%)]" />
+            <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #7a6250 1px, transparent 0)', backgroundSize: '18px 18px' }} />
+          </>
+        )}
+        <div className="relative z-10">
+          <SudokuHeader
+            completedRounds={completedRounds}
+            config={config}
+            conflictCount={conflictSet.size}
+            elapsedLabel={elapsedLabel}
+            isLofi={isLofi}
             mistakesLeft={mistakesLeft}
             notesMode={notesMode}
-            revealSelectedCell={revealSelectedCell}
-            roundStatus={roundStatus}
-            setNotesMode={setNotesMode}
-            startFreshPuzzle={startFreshPuzzle}
-            startRound={startRound}
+            openCells={openCells}
           />
+
+          <div className={`mt-5 rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-white/70 bg-white/68 backdrop-blur-sm' : 'border-white/80 bg-white/88'}`}>
+            <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+              <div>
+                <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-slate-600'}`}>Sudoku level</p>
+                <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-700'}`}>Choose from easy through extreme, inspired by the tougher web Sudoku ladder.</p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {Object.entries(difficultySettings).map(([level, levelConfig]) => (
+                  <button
+                    key={level}
+                    className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${selectedDifficulty === level ? (isLofi ? 'bg-[#4a3a2d] text-white shadow-sm' : 'bg-slate-900 text-white shadow-sm') : (isLofi ? 'border border-amber-200 bg-white text-amber-900 hover:bg-[#fff8f0]' : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-50')}`}
+                    onClick={() => setSelectedDifficulty(level)}
+                    type="button"
+                  >
+                    {levelConfig.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <p className={`mt-3 text-sm leading-7 ${isLofi ? 'text-[#8c755f]' : 'text-slate-600'}`}>{config.note}</p>
+          </div>
+
+          <div className="mt-6 grid gap-5 xl:grid-cols-[minmax(0,1fr)_280px]">
+            <div className="relative">
+              <SudokuBoard
+                activeValue={activeValue}
+                board={board}
+                checkedCells={checkedCells}
+                conflictSet={conflictSet}
+                isEditableCell={isEditableCell}
+                isLofi={isLofi}
+                notesByCell={notesByCell}
+                selectedBoxCol={selectedBoxCol}
+                selectedBoxRow={selectedBoxRow}
+                selectedCell={selectedCell}
+                setSelectedCell={setSelectedCell}
+              />
+              {roundStatus === 'ready' && (
+                <div className={`absolute inset-0 flex items-center justify-center rounded-[1.75rem] p-4 backdrop-blur-[3px] ${isLofi ? 'bg-white/52' : 'bg-white/76'}`}>
+                  <div className={`w-full max-w-sm rounded-[1.5rem] border p-5 text-center shadow-soft ${isLofi ? 'border-white/80 bg-white/82 backdrop-blur-md' : 'border-white/85 bg-white/92'}`}>
+                    <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-slate-500'}`}>Ready when you are</p>
+                    <h4 className={`mt-3 text-3xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>Press start to begin</h4>
+                    <p className={`mt-3 text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-600'}`}>Pick a level, then start the board when you want the timer to begin.</p>
+                    <button
+                      className={`mt-5 inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#4a3a2d] hover:bg-[#3d3025]' : 'bg-slate-900 hover:bg-slate-800'}`}
+                      onClick={startRound}
+                      type="button"
+                    >
+                      Start Sudoku
+                    </button>
+                  </div>
+                </div>
+              )}
+              {roundStatus === 'over' && (
+                <div className={`absolute inset-0 flex items-center justify-center rounded-[1.75rem] p-4 backdrop-blur-[3px] ${isLofi ? 'bg-white/56' : 'bg-white/82'}`}>
+                  <div className={`w-full max-w-sm rounded-[1.5rem] border p-5 text-center shadow-soft ${isLofi ? 'border-white/80 bg-white/82 backdrop-blur-md' : 'border-white/85 bg-white/92'}`}>
+                    <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-[#8d4b45]' : 'text-rose-500'}`}>Round over</p>
+                    <h4 className={`mt-3 text-3xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>Three pen mistakes</h4>
+                    <p className={`mt-3 text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-600'}`}>You used all {MAX_PEN_MISTAKES} pen tries in {elapsedLabel}. Start a fresh board whenever you want another calm round.</p>
+                    <button
+                      className={`mt-5 inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#4a3a2d] hover:bg-[#3d3025]' : 'bg-slate-900 hover:bg-slate-800'}`}
+                      onClick={startFreshPuzzle}
+                      type="button"
+                    >
+                      <RotateCcw size={16} /> New board
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+            <SudokuSidebar
+              activeValue={activeValue}
+              checkBoard={checkBoard}
+              clearSelectedCell={clearSelectedCell}
+              handleDigitInput={handleDigitInput}
+              isLofi={isLofi}
+              message={message}
+              mistakesLeft={mistakesLeft}
+              notesMode={notesMode}
+              revealSelectedCell={revealSelectedCell}
+              roundStatus={roundStatus}
+              setNotesMode={setNotesMode}
+              startFreshPuzzle={startFreshPuzzle}
+              startRound={startRound}
+            />
+          </div>
         </div>
       </div>
     </div>

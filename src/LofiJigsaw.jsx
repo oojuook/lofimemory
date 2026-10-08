@@ -75,7 +75,7 @@ function formatTime(totalSeconds) {
   return `${minutes}:${String(seconds).padStart(2, '0')}`;
 }
 
-function TileArtwork({ tile, size, imageSrc }) {
+function TileArtwork({ tile, size, imageSrc, isLofi = false }) {
   if (tile === null) return null;
 
   const row = Math.floor(tile / size);
@@ -83,7 +83,7 @@ function TileArtwork({ tile, size, imageSrc }) {
   const total = size * size;
 
   return (
-    <div className="relative h-full w-full overflow-hidden rounded-[1rem] bg-sage-100">
+    <div className={`relative h-full w-full overflow-hidden rounded-[1rem] ${isLofi ? 'bg-[#f6ead9]' : 'bg-sage-100'}`}>
       <div
         className="absolute inset-0 scale-[1.02] bg-cover"
         style={{
@@ -92,13 +92,14 @@ function TileArtwork({ tile, size, imageSrc }) {
           backgroundPosition: `${size === 1 ? 0 : (col / (size - 1)) * 100}% ${size === 1 ? 0 : (row / (size - 1)) * 100}%`
         }}
       />
-      <div className="absolute inset-0 bg-gradient-to-br from-white/12 via-transparent to-sage-950/10" />
-      <div className="absolute right-2 top-2 rounded-full bg-white/70 px-2 py-0.5 text-[10px] font-black text-sage-800 shadow-sm">{tile + 1}/{total - 1}</div>
+      <div className={`absolute inset-0 ${isLofi ? 'bg-gradient-to-br from-white/22 via-transparent to-[#4a3a2d]/18' : 'bg-gradient-to-br from-white/12 via-transparent to-sage-950/10'}`} />
+      <div className={`absolute right-2 top-2 rounded-full px-2 py-0.5 text-[10px] font-black shadow-sm ${isLofi ? 'bg-white/78 text-[#4a3a2d]' : 'bg-white/70 text-sage-800'}`}>{tile + 1}/{total - 1}</div>
     </div>
   );
 }
 
-export default function LofiJigsaw({ difficulty = 'medium' }) {
+export default function LofiJigsaw({ difficulty = 'medium', theme = 'lofi' }) {
+  const isLofi = theme === 'lofi';
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const { size, shuffleMoves, label, note } = config;
   const totalTiles = size * size - 1;
@@ -218,46 +219,50 @@ export default function LofiJigsaw({ difficulty = 'medium' }) {
 
   return (
     <div className="mx-auto mt-12 w-full max-w-[980px] pb-12">
-      <div className="rounded-[2rem] border border-sage-100 bg-gradient-to-br from-white via-sage-50/82 to-sand-50/82 p-5 shadow-soft lg:p-6">
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+      <div className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-amber-200/50 bg-[#fff7ec] shadow-[0_30px_90px_rgba(83,62,44,0.12)]' : 'border-sage-100 bg-gradient-to-br from-white via-sage-50/82 to-sand-50/82'}`}>
+        {isLofi && (
+          <>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.95),rgba(255,247,236,0.9)_42%,rgba(250,237,205,0.84)_100%)]" />
+            <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #7a6250 1px, transparent 0)', backgroundSize: '18px 18px' }} />
+          </>
+        )}
+        <div className="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white/88 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-700 shadow-sm">
+            <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-sage-200 bg-white/88 text-sage-700'}`}>
               <ImagePlus size={14} /> {label} lofi jigsaw
             </div>
-            <h3 className="mt-4 text-3xl font-bold tracking-tight text-sage-950">Lofi Jigsaw Puzzle</h3>
-            <p className="mt-2 max-w-2xl text-sm leading-7 text-sage-700">Slide soft image pieces back into place and rebuild a tiny lofi landscape. It is a cozy puzzle for study breaks, relaxing browser play, and quiet journal moments.</p>
-            <p className="mt-2 text-sm font-semibold text-sage-600">{note}</p>
-            <p className="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-sage-500">{size}×{size} board • {totalTiles} picture pieces • relaxing sliding puzzle</p>
+            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>Lofi Jigsaw Puzzle</h3>
+            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>Slide soft image pieces back into place and rebuild a tiny lofi landscape. It is a cozy puzzle for study breaks, relaxing browser play, and quiet journal moments.</p>
+            <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-sage-600'}`}>{note}</p>
+            <p className={`mt-2 text-xs font-semibold uppercase tracking-[0.18em] ${isLofi ? 'text-amber-800/60' : 'text-sage-500'}`}>{size}×{size} board • {totalTiles} picture pieces • relaxing sliding puzzle</p>
           </div>
-          <div className="grid gap-2 rounded-[1.5rem] border border-white/85 bg-white/80 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[24rem]">
-            <div className="rounded-[1.15rem] bg-sage-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sage-500">Moves</p>
-              <p className="mt-2 text-xl font-extrabold text-sage-950">{moves}</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-sage-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sage-500 inline-flex items-center justify-center gap-1"><Timer size={11} /> Time</p>
-              <p className="mt-2 text-xl font-extrabold text-sage-950">{formatTime(time)}</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-sage-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sage-500">Best</p>
-              <p className="mt-2 text-xl font-extrabold text-sage-950">{bestScore || '—'}</p>
-            </div>
+          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[24rem] ${isLofi ? 'rounded-[1.35rem] border border-white/70 bg-white/65 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
+            {[
+              ['Moves', moves],
+              ['Time', formatTime(time)],
+              ['Best', bestScore || '—']
+            ].map(([statLabel, value]) => (
+              <div key={statLabel} className={`${isLofi ? 'rounded-[0.95rem] bg-amber-50/90 text-amber-900' : 'rounded-[1.15rem] bg-sage-50'} px-4 py-3 text-center`}>
+                <p className={`text-[10px] font-extrabold uppercase tracking-[0.2em] ${isLofi ? 'text-amber-800/60' : 'text-sage-500'} ${statLabel === 'Time' ? 'inline-flex items-center justify-center gap-1' : ''}`}>{statLabel === 'Time' ? <><Timer size={11} /> Time</> : statLabel}</p>
+                <p className={`mt-2 text-xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>{value}</p>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="mt-5 flex flex-col gap-3 rounded-[1.6rem] border border-white/80 bg-white/72 p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between">
+        <div className={`relative z-10 mt-5 flex flex-col gap-3 rounded-[1.6rem] border p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between ${isLofi ? 'border-white/70 bg-white/68 backdrop-blur-sm' : 'border-white/80 bg-white/72'}`}>
           <div className="flex items-center gap-3">
-             {solved && <div className="flex h-8 items-center gap-2 rounded-full bg-emerald-100 px-3 py-1 text-xs font-black uppercase tracking-widest text-emerald-800 shadow-sm animate-bounce">Done!</div>}
-             <p className="text-sm font-semibold text-sage-700">{solved ? 'The whole scene is back together — soft work.' : `Tap a piece beside the empty space to slide it. ${getMoveLabel(moves)} so far.`}</p>
+             {solved && <div className={`flex h-8 items-center gap-2 rounded-full px-3 py-1 text-xs font-black uppercase tracking-widest shadow-sm ${isLofi ? 'bg-[#d8eadf] text-[#2f4d3d]' : 'bg-emerald-100 text-emerald-800'} animate-bounce`}>Done!</div>}
+             <p className={`text-sm font-semibold ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>{solved ? 'The whole scene is back together — soft work.' : `Tap a piece beside the empty space to slide it. ${getMoveLabel(moves)} so far.`}</p>
           </div>
           <div className="flex flex-wrap items-center justify-end gap-2">
-            <label className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-sage-900 px-4 py-2 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-800">
+            <label className={`inline-flex cursor-pointer items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#4a3a2d] hover:bg-[#3d3025]' : 'bg-sage-900 hover:bg-sage-800'}`}>
               <ImagePlus size={16} /> Use your wallpaper
               <input accept="image/*" className="hidden" onChange={handleWallpaperUpload} type="file" />
             </label>
             {customWallpaper && (
               <button
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5"
+                className={`inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-extrabold shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'border border-amber-200 bg-white text-amber-900' : 'bg-white text-sage-900'}`}
                 onClick={restoreDefaultWallpaper}
                 type="button"
               >
@@ -265,7 +270,7 @@ export default function LofiJigsaw({ difficulty = 'medium' }) {
               </button>
             )}
             <button
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5"
+              className={`inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-extrabold shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'border border-white/70 bg-[#fdfaf5] text-[#4a3a2d]' : 'bg-white text-sage-900'}`}
               onClick={resetPuzzle}
               type="button"
             >
@@ -274,8 +279,8 @@ export default function LofiJigsaw({ difficulty = 'medium' }) {
           </div>
         </div>
 
-        <div className="mt-5 rounded-[1.8rem] border border-white/85 bg-white/72 p-3 shadow-soft sm:p-4">
-          <div className="mb-3 overflow-hidden rounded-[1.4rem] border border-white/80 bg-white/70 shadow-sm">
+        <div className={`relative z-10 mt-5 rounded-[1.8rem] border p-3 shadow-soft sm:p-4 ${isLofi ? 'border-white/70 bg-white/70 backdrop-blur-sm' : 'border-white/85 bg-white/72'}`}>
+          <div className={`mb-3 overflow-hidden rounded-[1.4rem] border shadow-sm ${isLofi ? 'border-white/70 bg-white/78 backdrop-blur-sm' : 'border-white/80 bg-white/70'}`}>
             <img src={puzzleImage} alt={customWallpaper ? 'Custom wallpaper reference for the jigsaw puzzle' : 'Lofi wallpaper reference for the jigsaw puzzle'} className="h-40 w-full object-cover sm:h-56" />
           </div>
           <div className="grid gap-2" style={{ gridTemplateColumns: `repeat(${size}, minmax(0, 1fr))` }}>
@@ -283,19 +288,19 @@ export default function LofiJigsaw({ difficulty = 'medium' }) {
               <button
                 key={`${tile ?? 'empty'}-${index}`}
                 aria-label={tile === null ? 'Empty jigsaw space' : `Move puzzle piece ${tile + 1}`}
-                className={`aspect-square rounded-[1.15rem] border text-left shadow-sm transition-all duration-300 ease-out ${tile === null ? 'border-dashed border-sage-200 bg-sage-50/60' : neighborSet.has(index) && !solved ? 'border-white/90 bg-white hover:-translate-y-0.5 hover:shadow-lift' : 'border-white/80 bg-white/86'} ${solved ? 'ring-2 ring-emerald-200' : ''}`}
+                className={`aspect-square rounded-[1.15rem] border text-left shadow-sm transition-all duration-300 ease-out ${tile === null ? (isLofi ? 'border-dashed border-amber-200/80 bg-amber-50/60' : 'border-dashed border-sage-200 bg-sage-50/60') : neighborSet.has(index) && !solved ? (isLofi ? 'border-white/90 bg-white hover:-translate-y-0.5 hover:shadow-lift' : 'border-white/90 bg-white hover:-translate-y-0.5 hover:shadow-lift') : (isLofi ? 'border-white/80 bg-white/86' : 'border-white/80 bg-white/86')} ${solved ? (isLofi ? 'ring-2 ring-amber-200' : 'ring-2 ring-emerald-200') : ''}`}
                 style={neighborSet.has(index) && !solved ? { animation: 'jigsawTileNudge 3.2s infinite ease-in-out' } : undefined}
                 disabled={tile === null || solved || !neighborSet.has(index)}
                 onClick={() => moveTile(index)}
                 type="button"
               >
-                <TileArtwork tile={tile} size={size} imageSrc={puzzleImage} />
+                <TileArtwork tile={tile} size={size} imageSrc={puzzleImage} isLofi={isLofi} />
               </button>
             ))}
           </div>
         </div>
 
-        <div className="mt-5 rounded-[1.4rem] border border-white/75 bg-white/76 px-4 py-4 text-sm font-semibold text-sage-700 shadow-sm">
+        <div className={`relative z-10 mt-5 rounded-[1.4rem] border px-4 py-4 text-sm font-semibold shadow-sm ${isLofi ? 'border-white/70 bg-white/68 text-[#6e5a4a] backdrop-blur-sm' : 'border-white/75 bg-white/76 text-sage-700'}`}>
           Lofi Jigsaw Puzzle is designed for people searching for relaxing puzzle games, cozy browser games, and simple online jigsaw-style play. Pair it with a quick journal note afterward to turn a small game break into a calm reflection.
         </div>
       </div>

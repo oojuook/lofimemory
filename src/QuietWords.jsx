@@ -113,7 +113,8 @@ function pickWord(pool, config, previousWord = '') {
   };
 }
 
-export default function QuietWords({ difficulty = 'medium' }) {
+export default function QuietWords({ difficulty = 'medium', theme = 'lofi' }) {
+  const isLofi = theme === 'lofi';
   const pool = difficultyPools[difficulty] || difficultyPools.medium;
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const bestStreakKey = `quiet-journal-quiet-words-best-${difficulty}`;
@@ -202,90 +203,91 @@ export default function QuietWords({ difficulty = 'medium' }) {
 
   return (
     <div className="mx-auto mt-12 w-full max-w-[920px] pb-12">
-      <div className="rounded-[2rem] border border-sage-100 bg-gradient-to-br from-white via-sage-50/82 to-sand-50/78 p-5 shadow-soft lg:p-6">
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+      <div className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-amber-200/50 bg-[#fff7ec] shadow-[0_26px_80px_rgba(83,62,44,0.12)]' : 'border-sage-100 bg-gradient-to-br from-white via-sage-50/82 to-sand-50/78'}`}>
+        {isLofi && (
+          <>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.95),rgba(255,247,236,0.9)_40%,rgba(250,237,205,0.82)_100%)]" />
+            <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #6e5a4a 1px, transparent 0)', backgroundSize: '18px 18px' }} />
+          </>
+        )}
+        <div className="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white/88 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-700 shadow-sm">
+            <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-sage-200 bg-white/88 text-sage-700'}`}>
               <Sparkles size={14} /> {config.label} word reset
             </div>
-            <h3 className="mt-4 text-3xl font-bold tracking-tight text-sage-950">Words</h3>
-            <p className="mt-2 max-w-2xl text-sm leading-7 text-sage-700">A cozy word scramble for visitors who want a softer kind of focus. It is simple, familiar, and easy to play for a few minutes when you want a calm word-game loop instead of a noisy challenge.</p>
-            <p className="mt-2 text-sm font-semibold text-sage-600">{config.note}</p>
+            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>Words</h3>
+            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>A cozy word scramble for visitors who want a softer kind of focus. It is simple, familiar, and easy to play for a few minutes when you want a calm word-game loop instead of a noisy challenge.</p>
+            <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-sage-600'}`}>{config.note}</p>
             <div className="mt-3 flex flex-wrap gap-2">
-              <span className="rounded-full bg-white px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700 shadow-sm">{config.complexityLabel}</span>
-              <span className="rounded-full bg-white px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700 shadow-sm">{config.hintLabel}</span>
+              <span className={`rounded-full px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] shadow-sm ${isLofi ? 'border border-white/70 bg-white/70 text-amber-900 backdrop-blur-sm' : 'bg-white text-sage-700'}`}>{config.complexityLabel}</span>
+              <span className={`rounded-full px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] shadow-sm ${isLofi ? 'border border-white/70 bg-white/70 text-amber-900 backdrop-blur-sm' : 'bg-white text-sage-700'}`}>{config.hintLabel}</span>
             </div>
           </div>
-          <div className="grid gap-2 rounded-[1.5rem] border border-white/85 bg-white/80 p-3 shadow-sm sm:grid-cols-4 lg:min-w-[28rem]">
-            <div className="rounded-[1.15rem] bg-sage-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sage-500">Streak</p>
-              <p className="mt-2 text-xl font-extrabold text-sage-950">{streak}</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-sage-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sage-500">Best</p>
-              <p className="mt-2 text-xl font-extrabold text-sage-950">{bestStreak}</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-sage-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sage-500">Clears</p>
-              <p className="mt-2 text-xl font-extrabold text-sage-950">{clears}</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-sage-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sage-500">Shuffle</p>
-              <p className="mt-2 text-xl font-extrabold text-sage-950">{scrambleIntensity}%</p>
-            </div>
+          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-4 lg:min-w-[28rem] ${isLofi ? 'rounded-[1.35rem] border border-white/70 bg-white/65 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
+            {[
+              ['Streak', streak],
+              ['Best', bestStreak],
+              ['Clears', clears],
+              ['Shuffle', `${scrambleIntensity}%`]
+            ].map(([label, value]) => (
+              <div key={label} className={`${isLofi ? 'rounded-[0.95rem] bg-amber-50/90 text-amber-900' : 'rounded-[1.15rem] bg-sage-50'} px-4 py-3 text-center`}>
+                <p className={`text-[10px] font-extrabold uppercase tracking-[0.2em] ${isLofi ? 'text-amber-800/60' : 'text-sage-500'}`}>{label}</p>
+                <p className={`mt-2 text-xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>{value}</p>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="mt-5 rounded-[1.8rem] border border-sage-100 bg-[#f7f1e7] p-5 shadow-inner lg:p-6">
+        <div className={`relative z-10 mt-5 rounded-[1.8rem] border p-5 shadow-inner lg:p-6 ${isLofi ? 'border-amber-200/60 bg-[linear-gradient(145deg,rgba(253,250,245,0.96),rgba(250,237,205,0.92))]' : 'border-sage-100 bg-[#f7f1e7]'}`}>
           <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_220px]">
             <div>
-              <div className="rounded-[1.5rem] border border-white/80 bg-white/78 px-4 py-4 text-sm font-semibold text-sage-700 shadow-sm">
+              <div className={`rounded-[1.5rem] border px-4 py-4 text-sm font-semibold shadow-sm ${isLofi ? 'border-white/70 bg-white/72 text-[#6e5a4a] backdrop-blur-sm' : 'border-white/80 bg-white/78 text-sage-700'}`}>
                 {hintVisible ? `Hint: ${currentWord.hint}` : 'Hint is still tucked away — look at the letter pattern first.'}
               </div>
 
               <div className="mt-5 flex flex-wrap gap-3">
                 {letterBlocks.map((item) => (
-                  <div key={item.id} className="flex h-14 w-14 items-center justify-center rounded-[1.2rem] border border-[#e7d8c7] bg-[#fbf7f1] text-xl font-extrabold text-sage-900 shadow-sm">
+                  <div key={item.id} className={`flex h-14 w-14 items-center justify-center rounded-[1.25rem] border text-xl font-extrabold shadow-sm transition ${isLofi ? 'border-[#eadfce] bg-white/82 text-[#4a3a2d] backdrop-blur-sm shadow-[0_12px_24px_rgba(83,62,44,0.1)]' : 'border-[#e7d8c7] bg-[#fbf7f1] text-sage-900'}`}>
                     {item.letter}
                   </div>
                 ))}
               </div>
 
               <form className="mt-5" onSubmit={handleSubmit}>
-                <label className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-500" htmlFor="quiet-words-guess">Your guess</label>
+                <label className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-sage-500'}`} htmlFor="quiet-words-guess">Your guess</label>
                 <div className="mt-3 flex flex-col gap-3 sm:flex-row">
                   <input
                     id="quiet-words-guess"
                     autoComplete="off"
-                    className="flex-1 rounded-full border border-sage-200 bg-white px-5 py-3 text-base font-semibold text-sage-950 outline-none transition focus:border-sage-400 focus:ring-2 focus:ring-sage-200"
+                    className={`flex-1 rounded-full border px-5 py-3 text-base font-semibold outline-none transition ${isLofi ? 'border-amber-200 bg-white/82 text-[#3d3025] shadow-sm focus:border-[#d4a373] focus:ring-2 focus:ring-amber-200' : 'border-sage-200 bg-white text-sage-950 focus:border-sage-400 focus:ring-2 focus:ring-sage-200'}`}
                     onChange={(event) => setGuess(event.target.value.toUpperCase())}
                     placeholder="Type the word"
                     value={guess}
                   />
-                  <button className="rounded-full bg-sage-900 px-6 py-3 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-800" type="submit">Check word</button>
+                  <button className={`rounded-full px-6 py-3 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#4a3a2d] hover:bg-[#3d3025]' : 'bg-sage-900 hover:bg-sage-800'}`} type="submit">Check word</button>
                 </div>
               </form>
             </div>
 
-            <div className="rounded-[1.5rem] border border-white/80 bg-white/76 p-4 shadow-sm">
-              <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-500">Why the difficulty changes</p>
-              <div className="mt-3 space-y-2.5 text-sm leading-7 text-sage-700">
+            <div className={`rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-white/70 bg-white/70 text-[#6e5a4a] backdrop-blur-sm' : 'border-white/80 bg-white/76'}`}>
+              <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-sage-500'}`}>Why the difficulty changes</p>
+              <div className={`mt-3 space-y-2.5 text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>
                 <p>Shorter words on easy are easier to hold in your head.</p>
                 <p>Medium mixes more letters, so patterns take longer to spot.</p>
                 <p>Hard uses longer words, heavier scrambles, and delayed hints.</p>
               </div>
-              <div className="mt-4 rounded-[1.15rem] bg-sage-50 px-4 py-3 text-sm font-semibold text-sage-700">
-                Word length: <span className="font-extrabold text-sage-950">{currentWord.word.length}</span>
+              <div className={`mt-4 rounded-[1.15rem] px-4 py-3 text-sm font-semibold ${isLofi ? 'bg-amber-50/90 text-[#6e5a4a]' : 'bg-sage-50 text-sage-700'}`}>
+                Word length: <span className={`font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>{currentWord.word.length}</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="mt-5 flex flex-col gap-3 rounded-[1.6rem] border border-white/80 bg-white/72 p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between">
-          <p className="text-sm font-semibold text-sage-700">{message}</p>
+        <div className={`relative z-10 mt-5 flex flex-col gap-3 rounded-[1.6rem] border p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between ${isLofi ? 'border-white/70 bg-white/68 backdrop-blur-sm' : 'border-white/80 bg-white/72'}`}>
+          <p className={`text-sm font-semibold ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>{message}</p>
           <div className="flex flex-wrap gap-2">
-            <button className="rounded-full border border-sage-200 bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5" onClick={loadNextWord} type="button">Next word</button>
-            <button className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5" onClick={resetRound} type="button">
+            <button className={`rounded-full px-4 py-2 text-sm font-extrabold shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'border border-amber-200 bg-white text-amber-900' : 'border border-sage-200 bg-white text-sage-900'}`} onClick={loadNextWord} type="button">Next word</button>
+            <button className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-extrabold shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#fdfaf5] text-[#4a3a2d] border border-white/70' : 'bg-white text-sage-900'}`} onClick={resetRound} type="button">
               <RotateCcw size={16} /> Reset round
             </button>
           </div>

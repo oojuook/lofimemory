@@ -67,7 +67,8 @@ function getClueQueue(pool, count) {
   return queue;
 }
 
-export default function QuietClues({ difficulty = 'medium' }) {
+export default function QuietClues({ difficulty = 'medium', theme = 'lofi' }) {
+  const isLofi = theme === 'lofi';
   const pool = cluePools[difficulty] || cluePools.medium;
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const bestRoundKey = `quiet-journal-quiet-clues-best-${difficulty}`;
@@ -151,73 +152,77 @@ export default function QuietClues({ difficulty = 'medium' }) {
 
   return (
     <div className="mx-auto mt-12 w-full max-w-[940px] pb-12">
-      <div className="rounded-[2rem] border border-stone-100 bg-gradient-to-br from-white via-stone-50/76 to-sand-50/78 p-5 shadow-soft lg:p-6">
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+      <div className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-amber-200/50 bg-[#fff7ec] shadow-[0_26px_80px_rgba(83,62,44,0.12)]' : 'border-stone-100 bg-gradient-to-br from-white via-stone-50/76 to-sand-50/78'}`}>
+        {isLofi && (
+          <>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.95),rgba(255,247,236,0.9)_45%,rgba(250,237,205,0.84)_100%)]" />
+            <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #7a6250 1px, transparent 0)', backgroundSize: '19px 19px' }} />
+          </>
+        )}
+        <div className="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white/88 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-stone-700 shadow-sm">
+            <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-stone-200 bg-white/88 text-stone-700'}`}>
               <Sparkles size={14} /> {config.label} clue flow
             </div>
-            <h3 className="mt-4 text-3xl font-bold tracking-tight text-stone-950">Clues</h3>
-            <p className="mt-2 max-w-2xl text-sm leading-7 text-stone-700">A beginner-friendly crossword-style game built around short clues and soft words. It keeps the crossword mood without the intimidation of a full puzzle grid, so it is easy to pick up even when your brain feels tired.</p>
-            <p className="mt-2 text-sm font-semibold text-stone-600">{config.note}</p>
-            <div className="mt-3 inline-flex rounded-full bg-white px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] text-stone-700 shadow-sm">{config.sessionLabel}</div>
+            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-stone-950'}`}>Clues</h3>
+            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-stone-700'}`}>A beginner-friendly crossword-style game built around short clues and soft words. It keeps the crossword mood without the intimidation of a full puzzle grid, so it is easy to pick up even when your brain feels tired.</p>
+            <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-stone-600'}`}>{config.note}</p>
+            <div className={`mt-3 inline-flex rounded-full px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] shadow-sm ${isLofi ? 'border border-white/70 bg-white/72 text-amber-900 backdrop-blur-sm' : 'bg-white text-stone-700'}`}>{config.sessionLabel}</div>
           </div>
-          <div className="grid gap-2 rounded-[1.5rem] border border-white/85 bg-white/80 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[23rem]">
-            <div className="rounded-[1.15rem] bg-stone-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-stone-500">Solved</p>
-              <p className="mt-2 text-xl font-extrabold text-stone-950">{solvedCount}/{config.targetClues}</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-stone-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-stone-500">Best run</p>
-              <p className="mt-2 text-xl font-extrabold text-stone-950">{bestRound}</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-stone-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-stone-500">Clears</p>
-              <p className="mt-2 text-xl font-extrabold text-stone-950">{clears}</p>
-            </div>
+          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[23rem] ${isLofi ? 'rounded-[1.35rem] border border-white/70 bg-white/65 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
+            {[
+              ['Solved', `${solvedCount}/${config.targetClues}`],
+              ['Best run', bestRound],
+              ['Clears', clears]
+            ].map(([label, value]) => (
+              <div key={label} className={`${isLofi ? 'rounded-[0.95rem] bg-amber-50/90 text-amber-900' : 'rounded-[1.15rem] bg-stone-50'} px-4 py-3 text-center`}>
+                <p className={`text-[10px] font-extrabold uppercase tracking-[0.2em] ${isLofi ? 'text-amber-800/60' : 'text-stone-500'}`}>{label}</p>
+                <p className={`mt-2 text-xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-stone-950'}`}>{value}</p>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="mt-5 rounded-[1.4rem] border border-white/80 bg-white/74 p-4 shadow-sm">
-          <div className="flex items-center justify-between gap-3 text-xs font-extrabold uppercase tracking-[0.18em] text-stone-500">
+        <div className={`relative z-10 mt-5 rounded-[1.4rem] border p-4 shadow-sm ${isLofi ? 'border-white/70 bg-white/68 backdrop-blur-sm' : 'border-white/80 bg-white/74'}`}>
+          <div className={`flex items-center justify-between gap-3 text-xs font-extrabold uppercase tracking-[0.18em] ${isLofi ? 'text-amber-800/70' : 'text-stone-500'}`}>
             <span>Round progress</span>
             <span>{solvedCount}/{config.targetClues}</span>
           </div>
           <div className="mt-3 grid gap-2" style={{ gridTemplateColumns: `repeat(${config.targetClues}, minmax(0, 1fr))` }}>
             {progressSegments.map((isDone, index) => (
-              <div key={`clue-segment-${index + 1}`} className={`h-3 rounded-full transition ${isDone ? 'bg-gradient-to-r from-stone-700 to-teal-600' : 'bg-stone-200'}`} />
+              <div key={`clue-segment-${index + 1}`} className={`h-3 rounded-full transition ${isDone ? (isLofi ? 'bg-gradient-to-r from-[#a98467] via-[#d4a373] to-[#84a59d]' : 'bg-gradient-to-r from-stone-700 to-teal-600') : (isLofi ? 'bg-amber-100/80' : 'bg-stone-200')}`} />
             ))}
           </div>
         </div>
 
-        <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_260px]">
-          <div className="rounded-[1.8rem] border border-stone-100 bg-[#f5ede1] p-5 shadow-inner lg:p-6">
-            <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-stone-500">Current clue</p>
-            <h2 className="mt-3 text-2xl font-extrabold text-stone-950">{activeClue.clue}</h2>
-            <p className="mt-2 text-sm font-semibold text-stone-600">Answer length: {activeClue.answer.length} letters</p>
+        <div className="relative z-10 mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_260px]">
+          <div className={`rounded-[1.8rem] border p-5 shadow-inner lg:p-6 ${isLofi ? 'border-amber-200/60 bg-[linear-gradient(145deg,rgba(253,250,245,0.98),rgba(250,237,205,0.92))]' : 'border-stone-100 bg-[#f5ede1]'}`}>
+            <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-stone-500'}`}>Current clue</p>
+            <h2 className={`mt-3 text-2xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-stone-950'}`}>{activeClue.clue}</h2>
+            <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-[#8c755f]' : 'text-stone-600'}`}>Answer length: {activeClue.answer.length} letters</p>
 
             <div className="mt-5 flex flex-wrap gap-3">
               {revealSlots.map((slot) => (
-                <div key={slot.id} className={`flex h-14 w-14 items-center justify-center rounded-[1.2rem] border text-xl font-extrabold shadow-sm ${slot.typed ? 'border-stone-300 bg-white text-stone-950' : 'border-[#e7d8c7] bg-[#fbf7f1] text-stone-300'}`}>
+                <div key={slot.id} className={`flex h-14 w-14 items-center justify-center rounded-[1.2rem] border text-xl font-extrabold shadow-sm ${slot.typed ? (isLofi ? 'border-amber-200 bg-white/90 text-[#3d3025]' : 'border-stone-300 bg-white text-stone-950') : (isLofi ? 'border-[#eadccf] bg-[#fdf7ef] text-[#c7ad92]' : 'border-[#e7d8c7] bg-[#fbf7f1] text-stone-300')}`}>
                   {slot.typed || '•'}
                 </div>
               ))}
             </div>
 
             <form className="mt-5" onSubmit={handleSubmit}>
-              <label className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-stone-500" htmlFor="quiet-clues-guess">Your answer</label>
+              <label className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-stone-500'}`} htmlFor="quiet-clues-guess">Your answer</label>
               <div className="mt-3 flex flex-col gap-3 sm:flex-row">
                 <input
                   id="quiet-clues-guess"
                   autoComplete="off"
-                  className="flex-1 rounded-full border border-stone-200 bg-white px-5 py-3 text-base font-semibold text-stone-950 outline-none transition focus:border-stone-400 focus:ring-2 focus:ring-stone-200"
+                  className={`flex-1 rounded-full border px-5 py-3 text-base font-semibold outline-none transition ${isLofi ? 'border-amber-200 bg-white/82 text-[#3d3025] shadow-sm focus:border-[#d4a373] focus:ring-2 focus:ring-amber-200' : 'border-stone-200 bg-white text-stone-950 focus:border-stone-400 focus:ring-2 focus:ring-stone-200'}`}
                   onChange={(event) => setGuess(event.target.value.toUpperCase())}
                   placeholder="Type the answer"
                   value={guess}
                 />
-                <button className="rounded-full bg-stone-900 px-6 py-3 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-stone-800" type="submit">Check clue</button>
+                <button className={`rounded-full px-6 py-3 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#4a3a2d] hover:bg-[#3d3025]' : 'bg-stone-900 hover:bg-stone-800'}`} type="submit">Check clue</button>
                 <button
-                  className="rounded-full border border-stone-200 bg-white px-6 py-3 text-sm font-extrabold text-stone-900 shadow-sm transition hover:-translate-y-0.5"
+                  className={`rounded-full border px-6 py-3 text-sm font-extrabold shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'border-amber-200 bg-white text-amber-900' : 'border-stone-200 bg-white text-stone-900'}`}
                   onClick={() => {
                     setGuess(activeClue.answer);
                     setMessage(`Answer shown — ${activeClue.answer}. Tap check clue if you want to move on.`);
@@ -230,28 +235,28 @@ export default function QuietClues({ difficulty = 'medium' }) {
             </form>
           </div>
 
-          <div className="rounded-[1.8rem] border border-white/80 bg-white/78 p-4 shadow-sm">
-            <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-stone-500">Why the difficulty changes</p>
-            <div className="mt-3 space-y-2.5 text-sm leading-7 text-stone-700">
+          <div className={`rounded-[1.8rem] border p-4 shadow-sm ${isLofi ? 'border-white/70 bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/78'}`}>
+            <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-stone-500'}`}>Why the difficulty changes</p>
+            <div className={`mt-3 space-y-2.5 text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-stone-700'}`}>
               <p>Easy keeps the session short with simple words.</p>
               <p>Medium asks you to stay with the clue flow longer.</p>
               <p>Hard turns it into a much longer clue run with bigger answers.</p>
             </div>
-            <div className="mt-5 rounded-[1.25rem] bg-stone-50 px-4 py-4 text-sm leading-7 text-stone-700">
+            <div className={`mt-5 rounded-[1.25rem] px-4 py-4 text-sm leading-7 ${isLofi ? 'bg-amber-50/90 text-[#6e5a4a]' : 'bg-stone-50 text-stone-700'}`}>
               Up next:
               <div className="mt-2 flex flex-wrap gap-2">
                 {upcomingClues.map((item) => (
-                  <span key={`${activeClue.answer}-${item.answer}`} className="rounded-full border border-stone-200 bg-white px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-stone-700">{item.answer.length} letters</span>
+                  <span key={`${activeClue.answer}-${item.answer}`} className={`rounded-full border px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] ${isLofi ? 'border-amber-200 bg-white text-amber-900' : 'border-stone-200 bg-white text-stone-700'}`}>{item.answer.length} letters</span>
                 ))}
               </div>
             </div>
-            <button className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-stone-900 shadow-sm transition hover:-translate-y-0.5" onClick={resetRound} type="button">
+            <button className={`mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-extrabold shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#fdfaf5] border border-amber-200 text-[#4a3a2d]' : 'bg-white text-stone-900'}`} onClick={resetRound} type="button">
               <RotateCcw size={16} /> Reset round
             </button>
           </div>
         </div>
 
-        <div className="mt-5 rounded-[1.6rem] border border-white/80 bg-white/76 px-4 py-4 text-sm font-semibold text-stone-700 shadow-sm">
+        <div className={`relative z-10 mt-5 rounded-[1.6rem] border px-4 py-4 text-sm font-semibold shadow-sm ${isLofi ? 'border-white/70 bg-white/68 text-[#6e5a4a] backdrop-blur-sm' : 'border-white/80 bg-white/76 text-stone-700'}`}>
           {message}
         </div>
       </div>

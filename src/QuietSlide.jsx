@@ -79,7 +79,8 @@ function getTargetIndex(blankIndex, direction, size) {
   return -1;
 }
 
-export default function QuietSlide({ difficulty = 'medium' }) {
+export default function QuietSlide({ difficulty = 'medium', theme = 'lofi' }) {
+  const isLofi = theme === 'lofi';
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const bestMovesKey = `quiet-journal-quiet-slide-best-${difficulty}`;
   const clearsKey = `quiet-journal-quiet-slide-clears-${difficulty}`;
@@ -179,40 +180,44 @@ export default function QuietSlide({ difficulty = 'medium' }) {
 
   return (
     <div className="mx-auto mt-12 w-full max-w-[920px] pb-12">
-      <div className="rounded-[2rem] border border-slate-100 bg-gradient-to-br from-white via-slate-50/80 to-sand-50/80 p-5 shadow-soft lg:p-6">
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+      <div className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-amber-200/50 bg-[#fff7ec] shadow-[0_26px_80px_rgba(83,62,44,0.12)]' : 'border-slate-100 bg-gradient-to-br from-white via-slate-50/80 to-sand-50/80'}`}>
+        {isLofi && (
+          <>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.94),rgba(255,247,236,0.9)_48%,rgba(250,237,205,0.86))]" />
+            <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #7f6450 1px, transparent 0)', backgroundSize: '20px 20px' }} />
+          </>
+        )}
+        <div className="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/88 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-slate-700 shadow-sm">
+            <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-slate-200 bg-white/88 text-slate-700'}`}>
               <Sparkles size={14} /> {config.label} slide loop
             </div>
-            <h3 className="mt-4 text-3xl font-bold tracking-tight text-slate-950">Slide</h3>
-            <p className="mt-2 max-w-2xl text-sm leading-7 text-slate-700">A cozy sliding puzzle inspired by the classic 15-puzzle style people search for when they want a quiet brain reset. Move each tile into place and let the simple sequence calm everything down.</p>
-            <p className="mt-2 text-sm font-semibold text-slate-600">{config.note}</p>
+            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>Slide</h3>
+            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-700'}`}>A cozy sliding puzzle inspired by the classic 15-puzzle style people search for when they want a quiet brain reset. Move each tile into place and let the simple sequence calm everything down.</p>
+            <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-slate-600'}`}>{config.note}</p>
           </div>
-          <div className="grid gap-2 rounded-[1.5rem] border border-white/85 bg-white/80 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[23rem]">
-            <div className="rounded-[1.15rem] bg-slate-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-500">Moves</p>
-              <p className="mt-2 text-xl font-extrabold text-slate-950">{moves}</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-slate-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-500">Best</p>
-              <p className="mt-2 text-xl font-extrabold text-slate-950">{bestMoves || '—'}</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-slate-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-500">Clears</p>
-              <p className="mt-2 text-xl font-extrabold text-slate-950">{clears}</p>
-            </div>
+          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[23rem] ${isLofi ? 'rounded-[1.35rem] border border-white/70 bg-white/65 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
+            {[
+              ['Moves', moves],
+              ['Best', bestMoves || '—'],
+              ['Clears', clears]
+            ].map(([label, value]) => (
+              <div key={label} className={`${isLofi ? 'rounded-[0.95rem] bg-amber-50/90 text-amber-900' : 'rounded-[1.15rem] bg-slate-50'} px-4 py-3 text-center`}>
+                <p className={`text-[10px] font-extrabold uppercase tracking-[0.2em] ${isLofi ? 'text-amber-800/60' : 'text-slate-500'}`}>{label}</p>
+                <p className={`mt-2 text-xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>{value}</p>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="mt-5 flex flex-col gap-3 rounded-[1.6rem] border border-white/80 bg-white/72 p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between">
-          <p className="text-sm font-semibold text-slate-700">
+        <div className={`relative z-10 mt-5 flex flex-col gap-3 rounded-[1.6rem] border p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between ${isLofi ? 'border-white/70 bg-white/68 backdrop-blur-sm' : 'border-white/80 bg-white/72'}`}>
+          <p className={`text-sm font-semibold ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-700'}`}>
             {gameState === 'won'
               ? 'You solved the board — a tidy little reset.'
               : 'Click a tile next to the empty space or use the arrow controls to slide the board into order.'}
           </p>
           <button
-            className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-slate-900 shadow-sm transition hover:-translate-y-0.5"
+            className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-extrabold shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#4a3a2d] text-white hover:bg-[#3d3025]' : 'bg-white text-slate-900'}`}
             onClick={resetGame}
             type="button"
           >
@@ -220,15 +225,15 @@ export default function QuietSlide({ difficulty = 'medium' }) {
           </button>
         </div>
 
-        <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_190px]">
-          <div className="rounded-[1.8rem] border border-slate-100 bg-[#ebe1d4] p-4 shadow-inner lg:p-5">
+        <div className="relative z-10 mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_190px]">
+          <div className={`rounded-[1.8rem] border p-4 shadow-inner lg:p-5 ${isLofi ? 'border-amber-200/60 bg-[linear-gradient(145deg,rgba(253,250,245,0.98),rgba(250,237,205,0.92))]' : 'border-slate-100 bg-[#ebe1d4]'}`}>
             <div className="grid gap-3" style={{ gridTemplateColumns: `repeat(${config.size}, minmax(0, 1fr))` }}>
               {board.map((value) => {
                 const isEmpty = value === 0;
                 return (
                   <button
                     key={`tile-${value}`}
-                    className={`aspect-square rounded-[1.2rem] text-xl font-extrabold shadow-sm transition sm:text-2xl ${isEmpty ? 'border border-dashed border-white/70 bg-white/35 text-transparent' : 'border border-[#e3d4c3] bg-gradient-to-br from-[#fbf5ec] to-[#f2e5d5] text-slate-900 hover:-translate-y-0.5 hover:from-white hover:to-[#f5ebdf]'}`}
+                    className={`aspect-square rounded-[1.2rem] text-xl font-extrabold shadow-sm transition sm:text-2xl ${isEmpty ? (isLofi ? 'border border-dashed border-amber-200/80 bg-white/35 text-transparent' : 'border border-dashed border-white/70 bg-white/35 text-transparent') : (isLofi ? 'border border-[#eadccf] bg-[linear-gradient(145deg,#fffaf4,#f0decb)] text-[#4a3a2d] hover:-translate-y-0.5 hover:bg-[linear-gradient(145deg,#ffffff,#f5e6d7)] shadow-[0_12px_24px_rgba(83,62,44,0.1)]' : 'border border-[#e3d4c3] bg-gradient-to-br from-[#fbf5ec] to-[#f2e5d5] text-slate-900 hover:-translate-y-0.5 hover:from-white hover:to-[#f5ebdf]' )}`}
                     onClick={() => handleTileClick(board.indexOf(value))}
                     type="button"
                   >
@@ -239,16 +244,16 @@ export default function QuietSlide({ difficulty = 'medium' }) {
             </div>
           </div>
 
-          <div className="rounded-[1.8rem] border border-white/80 bg-white/78 p-4 shadow-sm">
-            <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-slate-500">Tap controls</p>
+          <div className={`rounded-[1.8rem] border p-4 shadow-sm ${isLofi ? 'border-white/70 bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/78'}`}>
+            <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-slate-500'}`}>Tap controls</p>
             <div className="mt-4 grid grid-cols-3 gap-2">
               <div />
-              <button className="rounded-2xl border border-slate-200 bg-slate-50 p-3 text-slate-900 transition hover:bg-slate-100" onClick={() => handleDirectionMove('up')} type="button"><ArrowUp className="mx-auto" size={18} /></button>
+              <button className={`rounded-2xl border p-3 transition ${isLofi ? 'border-amber-200 bg-amber-50/90 text-amber-900 hover:bg-white' : 'border-slate-200 bg-slate-50 text-slate-900 hover:bg-slate-100'}`} onClick={() => handleDirectionMove('up')} type="button"><ArrowUp className="mx-auto" size={18} /></button>
               <div />
               {controls.slice(1).map((control) => (
                 <button
                   key={control.id}
-                  className="rounded-2xl border border-slate-200 bg-slate-50 p-3 text-slate-900 transition hover:bg-slate-100"
+                  className={`rounded-2xl border p-3 transition ${isLofi ? 'border-amber-200 bg-amber-50/90 text-amber-900 hover:bg-white' : 'border-slate-200 bg-slate-50 text-slate-900 hover:bg-slate-100'}`}
                   onClick={() => handleDirectionMove(control.id)}
                   type="button"
                 >
@@ -256,7 +261,7 @@ export default function QuietSlide({ difficulty = 'medium' }) {
                 </button>
               ))}
             </div>
-            <div className="mt-5 rounded-[1.25rem] bg-slate-50 px-4 py-4 text-sm leading-7 text-slate-700">
+            <div className={`mt-5 rounded-[1.25rem] px-4 py-4 text-sm leading-7 ${isLofi ? 'bg-amber-50/90 text-[#6e5a4a]' : 'bg-slate-50 text-slate-700'}`}>
               Search-friendly angle: sliding puzzle and 15-puzzle style games are familiar, low-pressure formats that fit cozy browser gaming really well.
             </div>
           </div>

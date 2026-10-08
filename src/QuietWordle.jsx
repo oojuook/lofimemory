@@ -136,36 +136,37 @@ function evaluateGuess(guess, target) {
   return result;
 }
 
-function getTileClass(status, filled) {
+function getTileClass(status, filled, isLofi = false) {
   if (status === 'correct') {
-    return 'border-emerald-300 bg-emerald-200/90 text-emerald-950';
+    return isLofi ? 'border-[#b6cfbe] bg-[#d8eadf] text-[#2f4d3d]' : 'border-emerald-300 bg-emerald-200/90 text-emerald-950';
   }
   if (status === 'present') {
-    return 'border-amber-300 bg-amber-100 text-amber-950';
+    return isLofi ? 'border-[#e6c18b] bg-[#f7e2b7] text-[#7a5227]' : 'border-amber-300 bg-amber-100 text-amber-950';
   }
   if (status === 'absent') {
-    return 'border-slate-200 bg-slate-200/85 text-slate-700';
+    return isLofi ? 'border-[#d8cbbd] bg-[#e8dfd5] text-[#7d6a58]' : 'border-slate-200 bg-slate-200/85 text-slate-700';
   }
   if (filled) {
-    return 'border-sage-300 bg-white text-sage-950';
+    return isLofi ? 'border-[#d9c8b6] bg-white text-[#4a3a2d]' : 'border-sage-300 bg-white text-sage-950';
   }
-  return 'border-sage-100 bg-[#fbf7f1] text-sage-300';
+  return isLofi ? 'border-[#eadccf] bg-[#fdf7ef] text-[#c7ad92]' : 'border-sage-100 bg-[#fbf7f1] text-sage-300';
 }
 
-function getKeyboardKeyClass(status) {
+function getKeyboardKeyClass(status, isLofi = false) {
   if (status === 'correct') {
-    return 'border-emerald-300 bg-emerald-200/90 text-emerald-950';
+    return isLofi ? 'border-[#b6cfbe] bg-[#d8eadf] text-[#2f4d3d]' : 'border-emerald-300 bg-emerald-200/90 text-emerald-950';
   }
   if (status === 'present') {
-    return 'border-amber-300 bg-amber-100 text-amber-950';
+    return isLofi ? 'border-[#e6c18b] bg-[#f7e2b7] text-[#7a5227]' : 'border-amber-300 bg-amber-100 text-amber-950';
   }
   if (status === 'absent') {
-    return 'border-slate-200 bg-slate-200/85 text-slate-700';
+    return isLofi ? 'border-[#d8cbbd] bg-[#e8dfd5] text-[#7d6a58]' : 'border-slate-200 bg-slate-200/85 text-slate-700';
   }
-  return 'border-sage-200 bg-white text-sage-900 hover:bg-sage-50';
+  return isLofi ? 'border-amber-200 bg-white text-amber-900 hover:bg-[#fffaf4]' : 'border-sage-200 bg-white text-sage-900 hover:bg-sage-50';
 }
 
-export default function QuietWordle({ difficulty = 'medium' }) {
+export default function QuietWordle({ difficulty = 'medium', theme = 'lofi' }) {
+  const isLofi = theme === 'lofi';
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const pool = difficultyPools[difficulty] || difficultyPools.medium;
   const bestKey = `quiet-journal-quiet-wordle-best-${difficulty}`;
@@ -348,35 +349,39 @@ export default function QuietWordle({ difficulty = 'medium' }) {
 
   return (
     <div className="mx-auto mt-12 w-full max-w-[980px] pb-12">
-      <div className="rounded-[2rem] border border-sage-100 bg-gradient-to-br from-white via-sage-50/82 to-sky-50/72 p-5 shadow-soft lg:p-6">
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+      <div className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-amber-200/50 bg-[#fff7ec] shadow-[0_28px_80px_rgba(83,62,44,0.12)]' : 'border-sage-100 bg-gradient-to-br from-white via-sage-50/82 to-sky-50/72'}`}>
+        {isLofi && (
+          <>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.95),rgba(255,247,236,0.9)_45%,rgba(250,237,205,0.84)_100%)]" />
+            <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #7a6250 1px, transparent 0)', backgroundSize: '18px 18px' }} />
+          </>
+        )}
+        <div className="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white/88 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-700 shadow-sm">
+            <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-sage-200 bg-white/88 text-sage-700'}`}>
               <Sparkles size={14} /> {config.label} word guess
             </div>
-            <h3 className="mt-4 text-3xl font-bold tracking-tight text-sage-950">Wordle</h3>
-            <p className="mt-2 max-w-2xl text-sm leading-7 text-sage-700">A cozy Wordle-style puzzle for when you want a familiar word-guessing game without losing the soft relaxed mood of the page. Type or tap letters, read the color hints, and keep playing through unlimited cozy rounds.</p>
-            <p className="mt-2 text-sm font-semibold text-sage-600">{config.note}</p>
+            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>Wordle</h3>
+            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>A cozy Wordle-style puzzle for when you want a familiar word-guessing game without losing the soft relaxed mood of the page. Type or tap letters, read the color hints, and keep playing through unlimited cozy rounds.</p>
+            <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-sage-600'}`}>{config.note}</p>
           </div>
-          <div className="grid gap-2 rounded-[1.5rem] border border-white/85 bg-white/80 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[23rem]">
-            <div className="rounded-[1.15rem] bg-sage-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sage-500">Streak</p>
-              <p className="mt-2 text-xl font-extrabold text-sage-950">{streak}</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-sage-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sage-500">Best</p>
-              <p className="mt-2 text-xl font-extrabold text-sage-950">{bestStreak}</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-sage-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sage-500">Wins</p>
-              <p className="mt-2 text-xl font-extrabold text-sage-950">{wins}</p>
-            </div>
+          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[23rem] ${isLofi ? 'rounded-[1.35rem] border border-white/70 bg-white/65 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
+            {[
+              ['Streak', streak],
+              ['Best', bestStreak],
+              ['Wins', wins]
+            ].map(([label, value]) => (
+              <div key={label} className={`${isLofi ? 'rounded-[0.95rem] bg-amber-50/90 text-amber-900' : 'rounded-[1.15rem] bg-sage-50'} px-4 py-3 text-center`}>
+                <p className={`text-[10px] font-extrabold uppercase tracking-[0.2em] ${isLofi ? 'text-amber-800/60' : 'text-sage-500'}`}>{label}</p>
+                <p className={`mt-2 text-xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>{value}</p>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(280px,0.92fr)]">
-          <div className="rounded-[1.8rem] border border-sage-100 bg-[#f7f1e7] p-5 shadow-inner lg:p-6">
-            <div className="rounded-[1.5rem] border border-white/80 bg-white/78 px-4 py-4 text-sm font-semibold text-sage-700 shadow-sm">
+        <div className="relative z-10 mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(280px,0.92fr)]">
+          <div className={`rounded-[1.8rem] border p-5 shadow-inner lg:p-6 ${isLofi ? 'border-amber-200/60 bg-[linear-gradient(145deg,rgba(253,250,245,0.98),rgba(250,237,205,0.92))]' : 'border-sage-100 bg-[#f7f1e7]'}`}>
+            <div className={`rounded-[1.5rem] border px-4 py-4 text-sm font-semibold shadow-sm ${isLofi ? 'border-white/70 bg-white/72 text-[#6e5a4a] backdrop-blur-sm' : 'border-white/80 bg-white/78 text-sage-700'}`}>
               Hint: {targetEntry.hint}
             </div>
 
@@ -388,7 +393,7 @@ export default function QuietWordle({ difficulty = 'medium' }) {
                     return (
                       <div
                         key={cell.id}
-                        className={`flex aspect-square items-center justify-center rounded-[1.1rem] border text-xl font-extrabold uppercase shadow-sm transition ${getTileClass(cell.status, filled)}`}
+                        className={`flex aspect-square items-center justify-center rounded-[1.1rem] border text-xl font-extrabold uppercase shadow-sm transition ${getTileClass(cell.status, filled, isLofi)} ${isLofi ? 'shadow-[0_10px_22px_rgba(83,62,44,0.08)]' : ''}`}
                       >
                         {cell.letter}
                       </div>
@@ -399,39 +404,39 @@ export default function QuietWordle({ difficulty = 'medium' }) {
             </div>
           </div>
 
-          <div className="flex flex-col gap-4 rounded-[1.8rem] border border-white/80 bg-white/74 p-4 shadow-sm lg:p-5">
-            <div className="rounded-[1.4rem] border border-sage-100 bg-sage-50/70 p-4">
-              <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-500">How the colors work</p>
-              <div className="mt-3 grid gap-2 text-sm font-semibold text-sage-700">
-                <p><span className="mr-2 inline-flex rounded-full bg-emerald-200 px-2 py-1 text-xs font-extrabold uppercase tracking-[0.18em] text-emerald-950">Exact</span> right letter, right spot</p>
-                <p><span className="mr-2 inline-flex rounded-full bg-amber-100 px-2 py-1 text-xs font-extrabold uppercase tracking-[0.18em] text-amber-950">Close</span> right letter, wrong spot</p>
-                <p><span className="mr-2 inline-flex rounded-full bg-slate-200 px-2 py-1 text-xs font-extrabold uppercase tracking-[0.18em] text-slate-700">Miss</span> not in the word</p>
+          <div className={`flex flex-col gap-4 rounded-[1.8rem] border p-4 shadow-sm lg:p-5 ${isLofi ? 'border-white/70 bg-white/68 backdrop-blur-sm' : 'border-white/80 bg-white/74'}`}>
+            <div className={`rounded-[1.4rem] border p-4 ${isLofi ? 'border-amber-200/60 bg-amber-50/75' : 'border-sage-100 bg-sage-50/70'}`}>
+              <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-sage-500'}`}>How the colors work</p>
+              <div className={`mt-3 grid gap-2 text-sm font-semibold ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>
+                <p><span className={`mr-2 inline-flex rounded-full px-2 py-1 text-xs font-extrabold uppercase tracking-[0.18em] ${isLofi ? 'bg-[#d8eadf] text-[#2f4d3d]' : 'bg-emerald-200 text-emerald-950'}`}>Exact</span> right letter, right spot</p>
+                <p><span className={`mr-2 inline-flex rounded-full px-2 py-1 text-xs font-extrabold uppercase tracking-[0.18em] ${isLofi ? 'bg-[#f7e2b7] text-[#7a5227]' : 'bg-amber-100 text-amber-950'}`}>Close</span> right letter, wrong spot</p>
+                <p><span className={`mr-2 inline-flex rounded-full px-2 py-1 text-xs font-extrabold uppercase tracking-[0.18em] ${isLofi ? 'bg-[#e8dfd5] text-[#7d6a58]' : 'bg-slate-200 text-slate-700'}`}>Miss</span> not in the word</p>
               </div>
             </div>
 
-            <div className="rounded-[1.4rem] border border-sage-100 bg-white p-4 shadow-sm">
-              <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-500">Round status</p>
-              <p className="mt-3 text-sm font-semibold leading-7 text-sage-700">{message}</p>
-              <p className="mt-3 text-xs font-bold uppercase tracking-[0.2em] text-sage-500">{config.wordLength} letters • {config.maxGuesses} tries</p>
+            <div className={`rounded-[1.4rem] border p-4 shadow-sm ${isLofi ? 'border-white/70 bg-white/78 backdrop-blur-sm' : 'border-sage-100 bg-white'}`}>
+              <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-sage-500'}`}>Round status</p>
+              <p className={`mt-3 text-sm font-semibold leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>{message}</p>
+              <p className={`mt-3 text-xs font-bold uppercase tracking-[0.2em] ${isLofi ? 'text-amber-800/60' : 'text-sage-500'}`}>{config.wordLength} letters • {config.maxGuesses} tries</p>
             </div>
 
             <div className="flex flex-wrap gap-2">
               <button
-                className="rounded-full bg-sage-900 px-5 py-3 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-800"
+                className={`rounded-full px-5 py-3 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#4a3a2d] hover:bg-[#3d3025]' : 'bg-sage-900 hover:bg-sage-800'}`}
                 onClick={submitGuess}
                 type="button"
               >
                 Check word
               </button>
               <button
-                className="rounded-full border border-sage-200 bg-white px-5 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5"
+                className={`rounded-full border px-5 py-3 text-sm font-extrabold shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'border-amber-200 bg-white text-amber-900' : 'border-sage-200 bg-white text-sage-900'}`}
                 onClick={() => loadNextWord(roundStatus !== 'won')}
                 type="button"
               >
                 New word
               </button>
               <button
-                className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5"
+                className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-extrabold shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'border border-white/70 bg-[#fdfaf5] text-[#4a3a2d]' : 'bg-white text-sage-900'}`}
                 onClick={() => {
                   setGuesses([]);
                   setCurrentGuess('');
@@ -447,8 +452,8 @@ export default function QuietWordle({ difficulty = 'medium' }) {
           </div>
         </div>
 
-        <div className="mt-5 rounded-[1.8rem] border border-white/80 bg-white/72 p-4 shadow-sm">
-          <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-500">Tap or type letters</p>
+        <div className={`relative z-10 mt-5 rounded-[1.8rem] border p-4 shadow-sm ${isLofi ? 'border-white/70 bg-white/68 backdrop-blur-sm' : 'border-white/80 bg-white/72'}`}>
+          <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-sage-500'}`}>Tap or type letters</p>
           <div className="mt-4 grid gap-2">
             {keyboardRows.map((row) => (
               <div key={`keyboard-row-${row.join('')}`} className="flex flex-wrap justify-center gap-2">
@@ -458,7 +463,7 @@ export default function QuietWordle({ difficulty = 'medium' }) {
                   return (
                     <button
                       key={keyLabel}
-                      className={`rounded-2xl border px-3 py-3 text-sm font-extrabold uppercase shadow-sm transition hover:-translate-y-0.5 ${isSpecialKey ? 'min-w-[4.5rem]' : 'min-w-[2.8rem]'} ${getKeyboardKeyClass(status)}`}
+                      className={`rounded-2xl border px-3 py-3 text-sm font-extrabold uppercase shadow-sm transition hover:-translate-y-0.5 ${isSpecialKey ? 'min-w-[4.5rem]' : 'min-w-[2.8rem]'} ${getKeyboardKeyClass(status, isLofi)}`}
                       onClick={() => {
                         if (keyLabel === 'ENTER') {
                           submitGuess();

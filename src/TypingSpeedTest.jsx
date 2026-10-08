@@ -168,7 +168,7 @@ function buildSentenceCharacters(targetText, typedText) {
   }));
 }
 
-function WordPrompt({ activeInput = '', isActive, isPast, prompt, promptRef, typedPrompt = '' }) {
+function WordPrompt({ activeInput = '', isActive, isLofi = false, isPast, prompt, promptRef, typedPrompt = '' }) {
   const maxLength = Math.max(prompt.length, (isActive ? activeInput : typedPrompt).length);
   const characters = Array.from({ length: maxLength }, (_, index) => ({
     id: `${prompt}-${index}`,
@@ -178,23 +178,25 @@ function WordPrompt({ activeInput = '', isActive, isPast, prompt, promptRef, typ
 
   return (
     <span
-      className={`inline-flex min-h-[2.75rem] items-center rounded-2xl px-2.5 py-2 text-lg font-bold transition sm:text-xl ${isActive ? 'bg-white text-stone-950 shadow-sm ring-2 ring-sky-200' : isPast ? 'bg-transparent' : 'text-stone-300'}`}
+      className={`inline-flex min-h-[2.75rem] items-center rounded-2xl px-2.5 py-2 text-lg font-bold transition sm:text-xl ${isActive ? (isLofi ? 'bg-white/82 text-[#3d3025] shadow-sm ring-2 ring-amber-200 backdrop-blur-sm' : 'bg-white text-stone-950 shadow-sm ring-2 ring-sky-200') : isPast ? 'bg-transparent' : (isLofi ? 'text-[#baa28c]' : 'text-stone-300')}`}
       ref={promptRef}
     >
       {characters.map(({ id, targetChar, typedChar }) => {
-        let className = 'text-stone-300';
+        let className = isLofi ? 'text-[#baa28c]' : 'text-stone-300';
         let content = targetChar;
 
         if (isPast) {
           content = typedChar || targetChar;
-          className = typedChar === targetChar ? 'text-emerald-700' : 'text-rose-600';
+          className = typedChar === targetChar ? (isLofi ? 'text-[#3d5d49]' : 'text-emerald-700') : (isLofi ? 'text-[#b15f55]' : 'text-rose-600');
         } else if (isActive) {
           if (!typedChar) {
-            className = 'text-stone-400';
+            className = isLofi ? 'text-[#8c755f]' : 'text-stone-400';
             content = targetChar;
           } else {
             content = typedChar;
-            className = typedChar === targetChar ? 'text-stone-950 bg-emerald-100/80' : 'text-rose-700 bg-rose-100/80';
+            className = typedChar === targetChar
+              ? (isLofi ? 'text-[#3d3025] bg-[#f5e6d3]' : 'text-stone-950 bg-emerald-100/80')
+              : (isLofi ? 'text-[#8d4b45] bg-[#f4d6cf]' : 'text-rose-700 bg-rose-100/80');
           }
         }
 
@@ -208,7 +210,8 @@ function WordPrompt({ activeInput = '', isActive, isPast, prompt, promptRef, typ
   );
 }
 
-export default function TypingSpeedTest({ difficulty = 'medium' }) {
+export default function TypingSpeedTest({ difficulty = 'medium', theme = 'lofi' }) {
+  const isLofi = theme === 'lofi';
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const [typingMode, setTypingMode] = useState('words');
   const modeConfig = typingModeSettings[typingMode] || typingModeSettings.words;
@@ -434,21 +437,27 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
 
   return (
     <div className="mx-auto mt-12 w-full max-w-[1040px] pb-12">
-      <div className="rounded-[2rem] border border-sky-100 bg-gradient-to-br from-white via-sky-50/70 to-slate-50/86 p-4 shadow-soft sm:p-5 lg:p-6">
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+      <div className={`relative overflow-hidden rounded-[2rem] border p-4 shadow-soft sm:p-5 lg:p-6 ${isLofi ? 'border-amber-200/50 bg-[#fff7ec] shadow-[0_28px_80px_rgba(83,62,44,0.12)]' : 'border-sky-100 bg-gradient-to-br from-white via-sky-50/70 to-slate-50/86'}`}>
+        {isLofi && (
+          <>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.95),rgba(255,247,236,0.9)_42%,rgba(250,237,205,0.84)_100%)]" />
+            <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #7a6250 1px, transparent 0)', backgroundSize: '18px 18px' }} />
+          </>
+        )}
+        <div className="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-white/88 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-sky-700 shadow-sm">
+            <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-sky-200 bg-white/88 text-sky-700'}`}>
               <Sparkles size={14} /> {config.label} typing pace
             </div>
-            <h3 className="mt-4 text-3xl font-bold tracking-tight text-slate-950">Typing Speed Test</h3>
-            <p className="mt-2 max-w-2xl text-sm leading-7 text-slate-700">{modeConfig.panelDescription}</p>
-            <p className="mt-2 text-sm font-semibold text-slate-600">{config.note}</p>
-            <p className="mt-2 text-sm font-semibold text-sky-700">{modeConfig.modeNote}</p>
+            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>Typing Speed Test</h3>
+            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-700'}`}>{modeConfig.panelDescription}</p>
+            <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-slate-600'}`}>{config.note}</p>
+            <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-[#8b5e34]' : 'text-sky-700'}`}>{modeConfig.modeNote}</p>
             <div className="mt-4 flex flex-wrap items-center gap-2.5">
               {Object.entries(typingModeSettings).map(([modeKey, modeValue]) => (
                 <button
                   key={modeKey}
-                  className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${typingMode === modeKey ? 'bg-slate-900 text-white shadow-sm' : 'border border-sky-200 bg-white text-sky-800 hover:bg-sky-50'}`}
+                  className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${typingMode === modeKey ? (isLofi ? 'bg-[#4a3a2d] text-white shadow-sm' : 'bg-slate-900 text-white shadow-sm') : (isLofi ? 'border border-amber-200 bg-white text-amber-900 hover:bg-[#fff8f0]' : 'border border-sky-200 bg-white text-sky-800 hover:bg-sky-50')}`}
                   onClick={() => setTypingMode(modeKey)}
                   type="button"
                 >
@@ -460,7 +469,7 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
               {timerPresets.map((preset) => (
                 <button
                   key={preset}
-                  className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${timerPreset === preset ? 'bg-slate-900 text-white shadow-sm' : 'border border-sky-200 bg-white text-sky-800 hover:bg-sky-50'}`}
+                  className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${timerPreset === preset ? (isLofi ? 'bg-[#a98467] text-white shadow-sm' : 'bg-slate-900 text-white shadow-sm') : (isLofi ? 'border border-amber-200 bg-white text-amber-900 hover:bg-[#fff8f0]' : 'border border-sky-200 bg-white text-sky-800 hover:bg-sky-50')}`}
                   onClick={() => {
                     setTimerPreset(preset);
                     resetRound(preset);
@@ -472,7 +481,7 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
               ))}
             </div>
           </div>
-          <div className="grid w-full gap-2 rounded-[1.6rem] border border-white/85 bg-white/84 p-3 shadow-sm sm:grid-cols-2 lg:w-[29rem] lg:grid-cols-3">
+          <div className={`grid w-full gap-2 p-3 shadow-sm sm:grid-cols-2 lg:w-[29rem] lg:grid-cols-3 ${isLofi ? 'rounded-[1.45rem] border border-white/70 bg-white/65 backdrop-blur-sm' : 'rounded-[1.6rem] border border-white/85 bg-white/84'}`}>
             {[
               { label: 'WPM', value: wpm },
               { label: 'Accuracy', value: `${accuracy}%` },
@@ -481,43 +490,45 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
               { label: 'Best WPM', value: bestWpm },
               { label: 'Rounds', value: rounds }
             ].map((stat) => (
-              <div key={stat.label} className="rounded-[1.15rem] bg-slate-50 px-4 py-3 text-center">
-                <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-500">{stat.label}</p>
-                <p className="mt-2 text-xl font-extrabold text-slate-950">{stat.value}</p>
+              <div key={stat.label} className={`${isLofi ? 'rounded-[0.95rem] bg-amber-50/90 text-amber-900' : 'rounded-[1.15rem] bg-slate-50'} px-4 py-3 text-center`}>
+                <p className={`text-[10px] font-extrabold uppercase tracking-[0.2em] ${isLofi ? 'text-amber-800/60' : 'text-slate-500'}`}>{stat.label}</p>
+                <p className={`mt-2 text-xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>{stat.value}</p>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="mt-6 grid gap-4 xl:grid-cols-[minmax(0,1fr)_260px]">
-          <div className="rounded-[1.8rem] border border-white/80 bg-white/92 p-4 shadow-sm sm:p-5">
+        <div className="relative z-10 mt-6 grid gap-4 xl:grid-cols-[minmax(0,1fr)_260px]">
+          <div className={`rounded-[1.8rem] border p-4 shadow-sm sm:p-5 ${isLofi ? 'border-white/70 bg-white/72 backdrop-blur-sm' : 'border-white/80 bg-white/92'}`}>
             <button
-              className={`block w-full overflow-y-auto rounded-[1.5rem] bg-slate-50/90 px-3 py-4 text-left shadow-inner outline-none ring-offset-0 transition focus-visible:ring-2 focus-visible:ring-sky-300 sm:px-4 ${typingMode === 'sentences' ? 'min-h-[15rem] sm:min-h-[17rem] lg:min-h-[18rem]' : 'h-[11.5rem] sm:h-[13rem]'}`}
+              className={`block w-full overflow-y-auto rounded-[1.5rem] px-3 py-4 text-left shadow-inner outline-none ring-offset-0 transition focus-visible:ring-2 sm:px-4 ${typingMode === 'sentences' ? 'min-h-[15rem] sm:min-h-[17rem] lg:min-h-[18rem]' : 'h-[11.5rem] sm:h-[13rem]'} ${isLofi ? 'bg-[linear-gradient(145deg,rgba(253,250,245,0.98),rgba(245,230,211,0.88))] focus-visible:ring-amber-300' : 'bg-slate-50/90 focus-visible:ring-sky-300'}`}
               onClick={() => inputRef.current?.focus()}
               type="button"
             >
               {typingMode === 'sentences' ? (
                 <div className="flex h-full flex-col">
-                  <div className="mb-3 flex items-center justify-between gap-3 rounded-[1rem] bg-white/88 px-3 py-2 shadow-sm">
+                  <div className={`mb-3 flex items-center justify-between gap-3 rounded-[1rem] px-3 py-2 shadow-sm ${isLofi ? 'bg-white/82 backdrop-blur-sm' : 'bg-white/88'}`}>
                     <div>
-                      <p className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-sky-700">Sentence test</p>
-                      <p className="mt-1 text-xs font-semibold text-slate-600">Tap here and type — progress {sentenceProgress}%</p>
+                      <p className={`text-[11px] font-extrabold uppercase tracking-[0.18em] ${isLofi ? 'text-amber-800' : 'text-sky-700'}`}>Sentence test</p>
+                      <p className={`mt-1 text-xs font-semibold ${isLofi ? 'text-[#7b6656]' : 'text-slate-600'}`}>Tap here and type — progress {sentenceProgress}%</p>
                     </div>
-                    <span className={`inline-flex rounded-full px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] ${timeLeft > 10 ? 'bg-emerald-100 text-emerald-800' : timeLeft > 0 ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-700'}`}>
+                    <span className={`inline-flex rounded-full px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] ${timeLeft > 10 ? (isLofi ? 'bg-[#d8eadf] text-[#2f4d3d]' : 'bg-emerald-100 text-emerald-800') : timeLeft > 0 ? (isLofi ? 'bg-[#f7e2b7] text-[#7a5227]' : 'bg-amber-100 text-amber-800') : (isLofi ? 'bg-[#f4d6cf] text-[#8d4b45]' : 'bg-rose-100 text-rose-700')}`}>
                       {timeLeft}s left
                     </span>
                   </div>
-                  <div className="flex-1 overflow-y-auto rounded-[1.3rem] bg-white px-4 py-4 shadow-inner">
-                    <p className="whitespace-pre-wrap break-words text-lg font-semibold leading-8 text-stone-400 sm:text-xl sm:leading-9">
+                  <div className={`flex-1 overflow-y-auto rounded-[1.3rem] px-4 py-4 shadow-inner ${isLofi ? 'bg-white/78 backdrop-blur-sm' : 'bg-white'}`}>
+                    <p className={`whitespace-pre-wrap break-words text-lg font-semibold leading-8 sm:text-xl sm:leading-9 ${isLofi ? 'text-[#baa28c]' : 'text-stone-400'}`}>
                       {sentenceCharacters.map(({ id, targetChar, typedChar }, index) => {
-                        let className = 'text-stone-400';
+                        let className = isLofi ? 'text-[#baa28c]' : 'text-stone-400';
                         let content = targetChar;
 
                         if (typedChar) {
-                          className = typedChar === targetChar ? 'text-slate-950' : 'rounded bg-rose-100 text-rose-700';
+                          className = typedChar === targetChar
+                            ? (isLofi ? 'text-[#3d3025]' : 'text-slate-950')
+                            : (isLofi ? 'rounded bg-[#f4d6cf] text-[#8d4b45]' : 'rounded bg-rose-100 text-rose-700');
                           content = typedChar;
                         } else if (index === activeSentenceIndex) {
-                          className = 'rounded bg-sky-100 text-slate-950 ring-1 ring-sky-200';
+                          className = isLofi ? 'rounded bg-[#f5e6d3] text-[#3d3025] ring-1 ring-amber-200' : 'rounded bg-sky-100 text-slate-950 ring-1 ring-sky-200';
                         }
 
                         return (
@@ -535,6 +546,7 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
                     <WordPrompt
                       activeInput={currentInput}
                       isActive={index === activeWordIndex}
+                      isLofi={isLofi}
                       isPast={index < activeWordIndex}
                       key={id}
                       prompt={prompt}
@@ -550,8 +562,8 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
               )}
             </button>
 
-            <div className="mt-4 rounded-[1.35rem] border border-sky-100 bg-sky-50/75 p-3 sm:p-4">
-              <p className="text-[11px] font-extrabold uppercase tracking-[0.2em] text-sky-700">{modeConfig.inputLabel}</p>
+            <div className={`mt-4 rounded-[1.35rem] border p-3 sm:p-4 ${isLofi ? 'border-amber-200/60 bg-amber-50/70' : 'border-sky-100 bg-sky-50/75'}`}>
+              <p className={`text-[11px] font-extrabold uppercase tracking-[0.2em] ${isLofi ? 'text-amber-800' : 'text-sky-700'}`}>{modeConfig.inputLabel}</p>
               {typingMode === 'sentences' ? (
                 <>
                   <textarea
@@ -568,7 +580,7 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
                     spellCheck={false}
                     value={currentInput}
                   />
-                  <div className="mt-3 rounded-[1rem] bg-white px-3 py-2 text-sm font-semibold leading-6 text-slate-600 shadow-sm">
+                  <div className={`mt-3 rounded-[1rem] px-3 py-2 text-sm font-semibold leading-6 shadow-sm ${isLofi ? 'bg-white/78 text-[#6e5a4a]' : 'bg-white text-slate-600'}`}>
                     Tap the passage above to focus, then type straight through the sentence. The timer starts on your first keystroke.
                   </div>
                 </>
@@ -577,7 +589,7 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
                   autoCapitalize="off"
                   autoComplete="off"
                   autoCorrect="off"
-                  className="mt-3 w-full rounded-2xl border border-white bg-white px-4 py-3 text-base font-semibold text-slate-900 outline-none transition focus:border-sky-300 focus:ring-2 focus:ring-sky-200"
+                  className={`mt-3 w-full rounded-2xl border px-4 py-3 text-base font-semibold outline-none transition ${isLofi ? 'border-amber-200 bg-white/82 text-[#3d3025] focus:border-[#d4a373] focus:ring-2 focus:ring-amber-200' : 'border-white bg-white text-slate-900 focus:border-sky-300 focus:ring-2 focus:ring-sky-200'}`}
                   disabled={roundStatus === 'finished'}
                   onChange={handleChange}
                   placeholder={roundStatus === 'finished' ? 'Round complete — restart for a fresh flow' : modeConfig.placeholder}
@@ -589,19 +601,19 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
               )}
               <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div className="space-y-2">
-                  <p className="text-sm font-semibold leading-6 text-slate-600">{helperMessage}</p>
+                  <p className={`text-sm font-semibold leading-6 ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-600'}`}>{helperMessage}</p>
                   {typingMode === 'sentences' ? (
-                    <span className="inline-flex rounded-full bg-white px-3 py-1 text-xs font-extrabold uppercase tracking-[0.16em] text-sky-700 shadow-sm">
+                    <span className={`inline-flex rounded-full px-3 py-1 text-xs font-extrabold uppercase tracking-[0.16em] shadow-sm ${isLofi ? 'bg-white text-amber-900' : 'bg-white text-sky-700'}`}>
                       {currentInput.length}/{sentenceTarget.length} characters
                     </span>
                   ) : (
-                    <span className="inline-flex rounded-full bg-white px-3 py-1 text-xs font-extrabold uppercase tracking-[0.16em] text-sky-700 shadow-sm">
+                    <span className={`inline-flex rounded-full px-3 py-1 text-xs font-extrabold uppercase tracking-[0.16em] shadow-sm ${isLofi ? 'bg-white text-amber-900' : 'bg-white text-sky-700'}`}>
                       Current word: {activeWord || 'done'}
                     </span>
                   )}
                 </div>
                 {typingMode === 'words' && (
-                  <span className={`inline-flex rounded-full px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] ${timeLeft > 10 ? 'bg-emerald-100 text-emerald-800' : timeLeft > 0 ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-700'}`}>
+                  <span className={`inline-flex rounded-full px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] ${timeLeft > 10 ? (isLofi ? 'bg-[#d8eadf] text-[#2f4d3d]' : 'bg-emerald-100 text-emerald-800') : timeLeft > 0 ? (isLofi ? 'bg-[#f7e2b7] text-[#7a5227]' : 'bg-amber-100 text-amber-800') : (isLofi ? 'bg-[#f4d6cf] text-[#8d4b45]' : 'bg-rose-100 text-rose-700')}`}>
                     {timeLeft}s left
                   </span>
                 )}
@@ -610,16 +622,16 @@ export default function TypingSpeedTest({ difficulty = 'medium' }) {
           </div>
 
           <div className="space-y-4">
-            <div className="rounded-[1.6rem] border border-white/80 bg-white/92 p-4 shadow-sm">
-              <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-slate-600">Flow tips</p>
-              <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-700">
+            <div className={`rounded-[1.6rem] border p-4 shadow-sm ${isLofi ? 'border-white/70 bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/92'}`}>
+              <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-slate-600'}`}>Flow tips</p>
+              <ul className={`mt-3 space-y-2 text-sm leading-6 ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-700'}`}>
                 {modeConfig.tips.map((tip) => (
                   <li key={tip}>- {tip}</li>
                 ))}
               </ul>
             </div>
             <button
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-slate-900 px-5 py-3.5 text-sm font-extrabold text-white transition hover:bg-slate-800"
+              className={`inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-extrabold text-white transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#4a3a2d] hover:bg-[#3d3025]' : 'bg-slate-900 hover:bg-slate-800'}`}
               onClick={() => resetRound(timerPreset)}
               type="button"
             >

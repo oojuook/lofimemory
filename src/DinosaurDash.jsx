@@ -152,7 +152,8 @@ function getObstacleHitbox(obstacle) {
   };
 }
 
-export default function DinosaurDash({ difficulty = 'medium' }) {
+export default function DinosaurDash({ difficulty = 'medium', theme = 'lofi' }) {
+  const isLofi = theme === 'lofi';
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const bestScoreKey = `quiet-journal-dinosaur-dash-best-${difficulty}`;
 
@@ -281,9 +282,16 @@ export default function DinosaurDash({ difficulty = 'medium' }) {
     const ctx = canvas.getContext('2d');
     ctx.imageSmoothingEnabled = false;
     let animationId;
+    const inkColor = isLofi ? '#6c584c' : '#535353';
+    const cloudColor = isLofi ? '#c4b3a5' : '#535353';
+    const eyeColor = isLofi ? '#fffaf4' : '#f7f7f7';
+    const scoreColor = isLofi ? '#4a3a2d' : '#4f4f4f';
+    const skyTop = isLofi ? '#fffaf3' : '#efefef';
+    const skyBottom = isLofi ? '#f4dfc8' : '#efefef';
+    const groundColor = isLofi ? '#8b6b52' : '#535353';
 
     const drawCloud = (x, y, width) => {
-      ctx.fillStyle = '#535353';
+      ctx.fillStyle = cloudColor;
       ctx.fillRect(x, y + 12, width, 3);
       ctx.fillRect(x + 6, y + 6, width - 12, 3);
       ctx.fillRect(x + 12, y, width - 24, 3);
@@ -291,7 +299,7 @@ export default function DinosaurDash({ difficulty = 'medium' }) {
     };
 
     const drawGround = (offset) => {
-      ctx.fillStyle = '#535353';
+      ctx.fillStyle = groundColor;
       ctx.fillRect(0, GROUND_LINE_Y, CANVAS_WIDTH, 2);
 
       for (let x = -offset; x < CANVAS_WIDTH + 60; x += 32) {
@@ -303,7 +311,7 @@ export default function DinosaurDash({ difficulty = 'medium' }) {
 
     const drawStandingDino = (x, y, frame) => {
       const stepFrame = Math.floor(frame / 6) % 2;
-      ctx.fillStyle = '#535353';
+      ctx.fillStyle = inkColor;
       ctx.fillRect(x + 10, y, 20, 18);
       ctx.fillRect(x + 4, y + 18, 28, 18);
       ctx.fillRect(x, y + 24, 10, 6);
@@ -314,9 +322,9 @@ export default function DinosaurDash({ difficulty = 'medium' }) {
       ctx.fillRect(x + 12, y + 34, 6, 14);
       ctx.fillRect(x + 26, y + 34, 6, 14);
       ctx.fillRect(x + 20, y + 20, 4, 8);
-      ctx.fillStyle = '#f7f7f7';
+      ctx.fillStyle = eyeColor;
       ctx.fillRect(x + 26, y + 6, 4, 4);
-      ctx.fillStyle = '#535353';
+      ctx.fillStyle = inkColor;
       if (stepFrame === 0) {
         ctx.fillRect(x + 12, y + 44, 10, 4);
         ctx.fillRect(x + 26, y + 40, 10, 4);
@@ -328,16 +336,16 @@ export default function DinosaurDash({ difficulty = 'medium' }) {
 
     const drawDuckingDino = (x, y, frame) => {
       const stepFrame = Math.floor(frame / 5) % 2;
-      ctx.fillStyle = '#535353';
+      ctx.fillStyle = inkColor;
       ctx.fillRect(x + 8, y + 6, 34, 16);
       ctx.fillRect(x + 18, y, 16, 12);
       ctx.fillRect(x + 34, y + 4, 16, 8);
       ctx.fillRect(x, y + 12, 12, 6);
       ctx.fillRect(x + 10, y + 20, 8, 10);
       ctx.fillRect(x + 36, y + 20, 8, 10);
-      ctx.fillStyle = '#f7f7f7';
+      ctx.fillStyle = eyeColor;
       ctx.fillRect(x + 28, y + 4, 4, 4);
-      ctx.fillStyle = '#535353';
+      ctx.fillStyle = inkColor;
       if (stepFrame === 0) {
         ctx.fillRect(x + 8, y + 26, 16, 4);
         ctx.fillRect(x + 30, y + 22, 16, 4);
@@ -349,7 +357,7 @@ export default function DinosaurDash({ difficulty = 'medium' }) {
 
     const drawCactus = (obstacle) => {
       const { x, y, type } = obstacle;
-      ctx.fillStyle = '#535353';
+      ctx.fillStyle = inkColor;
 
       if (type === 'small-cactus') {
         ctx.fillRect(x + 6, y, 8, 38);
@@ -380,7 +388,7 @@ export default function DinosaurDash({ difficulty = 'medium' }) {
     const drawPtero = (obstacle, frame) => {
       const wingFrame = Math.floor(frame / 8) % 2;
       const { x, y } = obstacle;
-      ctx.fillStyle = '#535353';
+      ctx.fillStyle = inkColor;
       ctx.fillRect(x + 16, y + 10, 18, 10);
       ctx.fillRect(x + 30, y + 6, 12, 6);
       ctx.fillRect(x + 6, y + 12, 12, 4);
@@ -396,7 +404,7 @@ export default function DinosaurDash({ difficulty = 'medium' }) {
     };
 
     const drawScoreboard = (currentScore, highScore) => {
-      ctx.fillStyle = '#4f4f4f';
+      ctx.fillStyle = scoreColor;
       ctx.font = '700 20px monospace';
       ctx.textAlign = 'center';
       ctx.fillText('DINO DASH', CANVAS_WIDTH / 2, 34);
@@ -410,7 +418,14 @@ export default function DinosaurDash({ difficulty = 'medium' }) {
       const state = stateRef.current;
 
       ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-      ctx.fillStyle = '#efefef';
+      if (isLofi) {
+        const skyGradient = ctx.createLinearGradient(0, 0, 0, CANVAS_HEIGHT);
+        skyGradient.addColorStop(0, skyTop);
+        skyGradient.addColorStop(1, skyBottom);
+        ctx.fillStyle = skyGradient;
+      } else {
+        ctx.fillStyle = skyTop;
+      }
       ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
       state.clouds.forEach((cloud) => {
@@ -519,7 +534,7 @@ export default function DinosaurDash({ difficulty = 'medium' }) {
 
     animationId = window.requestAnimationFrame(drawFrame);
     return () => window.cancelAnimationFrame(animationId);
-  }, [config.acceleration, config.fallBoost, config.gravity, config.maxSpeed, config.spawnMax, config.spawnMin, config.startSpeed]);
+  }, [config.acceleration, config.fallBoost, config.gravity, config.maxSpeed, config.spawnMax, config.spawnMin, config.startSpeed, isLofi]);
 
   useEffect(() => {
     if (gameState === 'over' && score > bestScore) {
@@ -531,64 +546,72 @@ export default function DinosaurDash({ difficulty = 'medium' }) {
 
   return (
     <div className="mx-auto mt-12 w-full max-w-4xl pb-12">
-      <div className="mb-4 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
-        <div>
-          <div className="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-stone-700 shadow-sm">
-            <Sparkles size={14} /> {config.label} runner pace
+      <div className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-amber-200/50 bg-[#fff7ec] shadow-[0_28px_80px_rgba(83,62,44,0.12)]' : 'border-stone-200 bg-gradient-to-br from-white via-stone-50/75 to-stone-100/85'}`}>
+        {isLofi && (
+          <>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.95),rgba(255,247,236,0.9)_45%,rgba(250,237,205,0.84)_100%)]" />
+            <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #7a6250 1px, transparent 0)', backgroundSize: '18px 18px' }} />
+          </>
+        )}
+        <div className="relative z-10 mb-4 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+          <div>
+            <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-stone-300 bg-white text-stone-700'}`}>
+              <Sparkles size={14} /> {config.label} runner pace
+            </div>
+            <h3 className={`mt-3 text-2xl font-bold ${isLofi ? 'text-[#3d3025]' : 'text-stone-900'}`}>Dinosaur Dash</h3>
+            <p className={`text-sm font-semibold ${isLofi ? 'text-[#6e5a4a]' : 'text-stone-700'}`}>{isLofi ? 'A lofi canyon runner with warm sky tones, paper-soft glass panels, and a calmer retro arcade mood.' : 'A much closer take on the classic no-internet dinosaur runner.'}</p>
+            <p className={`mt-1 text-sm ${isLofi ? 'text-[#8c755f]' : 'text-stone-600'}`}>{config.note}</p>
           </div>
-          <h3 className="mt-3 text-2xl font-bold text-stone-900">Dinosaur Dash</h3>
-          <p className="text-sm font-semibold text-stone-700">A much closer take on the classic no-internet dinosaur runner.</p>
-          <p className="mt-1 text-sm text-stone-600">{config.note}</p>
-        </div>
-        <div className="flex flex-wrap gap-3 text-sm font-extrabold uppercase tracking-[0.18em] text-stone-700">
-          <span className="rounded-full border border-stone-300 bg-white px-4 py-2 shadow-sm">Score {score}</span>
-          <span className="rounded-full border border-stone-300 bg-white px-4 py-2 shadow-sm">Best {bestScore}</span>
-        </div>
-      </div>
-
-      <div className="rounded-[1.8rem] border border-stone-300 bg-white p-3 shadow-sm sm:p-4">
-        <div className="mb-3 flex flex-wrap gap-2 text-xs font-bold uppercase tracking-[0.18em] text-stone-600">
-          <span className="rounded-full border border-stone-200 px-3 py-1">Space / ↑ jump</span>
-          <span className="rounded-full border border-stone-200 px-3 py-1">↓ duck</span>
-          <span className="rounded-full border border-stone-200 px-3 py-1">Tap to jump</span>
+          <div className={`flex flex-wrap gap-3 text-sm font-extrabold uppercase tracking-[0.18em] ${isLofi ? 'text-amber-900' : 'text-stone-700'}`}>
+            <span className={`rounded-full px-4 py-2 shadow-sm ${isLofi ? 'bg-amber-50 border border-white/70' : 'border border-stone-300 bg-white'}`}>Score {score}</span>
+            <span className={`rounded-full px-4 py-2 shadow-sm ${isLofi ? 'bg-white/82 border border-white/70 backdrop-blur-sm' : 'border border-stone-300 bg-white'}`}>Best {bestScore}</span>
+          </div>
         </div>
 
-        <div className="relative overflow-hidden rounded-[1.4rem] border border-stone-300 bg-[#f7f7f7]" style={{ aspectRatio: `${CANVAS_WIDTH} / ${CANVAS_HEIGHT}` }}>
-          <canvas
-            ref={canvasRef}
-            width={CANVAS_WIDTH}
-            height={CANVAS_HEIGHT}
-            className="block h-full w-full cursor-pointer touch-none"
-            onClick={jump}
-            style={{ imageRendering: 'pixelated' }}
-          />
+        <div className={`relative z-10 rounded-[1.8rem] border p-3 shadow-sm sm:p-4 ${isLofi ? 'border-white/70 bg-white/68 backdrop-blur-sm' : 'border-stone-300 bg-white'}`}>
+          <div className={`mb-3 flex flex-wrap gap-2 text-xs font-bold uppercase tracking-[0.18em] ${isLofi ? 'text-amber-800/70' : 'text-stone-600'}`}>
+            <span className={`rounded-full px-3 py-1 ${isLofi ? 'border border-amber-200 bg-amber-50/85' : 'border border-stone-200'}`}>Space / ↑ jump</span>
+            <span className={`rounded-full px-3 py-1 ${isLofi ? 'border border-amber-200 bg-amber-50/85' : 'border border-stone-200'}`}>↓ duck</span>
+            <span className={`rounded-full px-3 py-1 ${isLofi ? 'border border-amber-200 bg-amber-50/85' : 'border border-stone-200'}`}>Tap to jump</span>
+          </div>
 
-          {gameState === 'start' && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80">
-              <button
-                className="mb-4 flex items-center gap-3 rounded-full border border-stone-800 bg-stone-900 px-7 py-3 text-sm font-bold uppercase tracking-[0.18em] text-white transition hover:bg-stone-800"
-                onClick={() => startGame(true)}
-                type="button"
-              >
-                <Play size={16} /> Start run
-              </button>
-              <p className="rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-semibold text-stone-800">Jump over cacti, duck under low birds, and keep the run going.</p>
-            </div>
-          )}
+          <div className={`relative overflow-hidden rounded-[1.4rem] border ${isLofi ? 'border-[#e7d7c7] bg-[linear-gradient(180deg,#fffaf3_0%,#f4dfc8_100%)] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.45)]' : 'border-stone-300 bg-[#f7f7f7]'}`} style={{ aspectRatio: `${CANVAS_WIDTH} / ${CANVAS_HEIGHT}` }}>
+            <canvas
+              ref={canvasRef}
+              width={CANVAS_WIDTH}
+              height={CANVAS_HEIGHT}
+              className="block h-full w-full cursor-pointer touch-none"
+              onClick={jump}
+              style={{ imageRendering: 'pixelated' }}
+            />
 
-          {gameState === 'over' && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/86">
-              <p className="text-3xl font-extrabold uppercase tracking-[0.24em] text-stone-900">Game over</p>
-              <p className="mt-3 text-base font-bold text-stone-700">Final score: {score}</p>
-              <button
-                onClick={() => startGame(false)}
-                className="mt-6 flex items-center gap-3 rounded-full border border-stone-800 bg-stone-900 px-7 py-3 text-sm font-bold uppercase tracking-[0.18em] text-white transition hover:bg-stone-800"
-                type="button"
-              >
-                <RotateCcw size={16} /> Restart
-              </button>
-            </div>
-          )}
+            {gameState === 'start' && (
+              <div className={`absolute inset-0 flex flex-col items-center justify-center ${isLofi ? 'bg-white/38 backdrop-blur-[3px]' : 'bg-white/80'}`}>
+                <button
+                  className={`mb-4 flex items-center gap-3 rounded-full px-7 py-3 text-sm font-bold uppercase tracking-[0.18em] text-white transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#4a3a2d] shadow-sm hover:bg-[#3d3025]' : 'border border-stone-800 bg-stone-900 hover:bg-stone-800'}`}
+                  onClick={() => startGame(true)}
+                  type="button"
+                >
+                  <Play size={16} /> Start run
+                </button>
+                <p className={`rounded-full px-4 py-2 text-sm font-semibold ${isLofi ? 'border border-white/70 bg-white/72 text-[#4a3a2d]' : 'border border-stone-300 bg-white text-stone-800'}`}>Jump over cacti, duck under low birds, and keep the run going.</p>
+              </div>
+            )}
+
+            {gameState === 'over' && (
+              <div className={`absolute inset-0 flex flex-col items-center justify-center ${isLofi ? 'bg-white/46 backdrop-blur-[4px]' : 'bg-white/86'}`}>
+                <p className={`text-3xl font-extrabold uppercase tracking-[0.24em] ${isLofi ? 'text-[#3d3025]' : 'text-stone-900'}`}>Game over</p>
+                <p className={`mt-3 text-base font-bold ${isLofi ? 'text-[#6e5a4a]' : 'text-stone-700'}`}>Final score: {score}</p>
+                <button
+                  onClick={() => startGame(false)}
+                  className={`mt-6 flex items-center gap-3 rounded-full px-7 py-3 text-sm font-bold uppercase tracking-[0.18em] text-white transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#4a3a2d] shadow-sm hover:bg-[#3d3025]' : 'border border-stone-800 bg-stone-900 hover:bg-stone-800'}`}
+                  type="button"
+                >
+                  <RotateCcw size={16} /> Restart
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
