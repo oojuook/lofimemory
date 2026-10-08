@@ -18,6 +18,22 @@ import notesSectionPreviewImage from './assets/notes-section-preview.png';
 import musicSectionPreviewImage from './assets/music-section-preview.png';
 import memoriesSectionPreviewImage from './assets/memories-section-preview.png';
 import designSectionPreviewImage from './assets/design-section-preview.png';
+import gameSolitairePreview from './assets/game-solitaire-preview.png';
+import gameMindSweeperPreview from './assets/game-mind-sweeper-preview.png';
+import gameDriftingSeedPreview from './assets/game-drifting-seed-preview.png';
+import gameLilypadPreview from './assets/game-lilypad-preview.png';
+import gameJigsawPreview from './assets/game-jigsaw-preview.png';
+import gameLotusPreview from './assets/game-lotus-preview.png';
+import gameTilesPreview from './assets/game-tiles-preview.png';
+import gameTetrisPreview from './assets/game-tetris-preview.png';
+import gameSlidePreview from './assets/game-slide-preview.png';
+import gameSudokuPreview from './assets/game-sudoku-preview.png';
+import gameWordlePreview from './assets/game-wordle-preview.png';
+import gameWordsPreview from './assets/game-words-preview.png';
+import gameTypingPreview from './assets/game-typing-preview.png';
+import gameCluesPreview from './assets/game-clues-preview.png';
+import gameSnakePreview from './assets/game-snake-preview.png';
+import gameDinoPreview from './assets/game-dino-preview.png';
 import { onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
 import { collection, deleteDoc, doc, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore';
 import { getToken, onMessage } from 'firebase/messaging';
@@ -2165,6 +2181,7 @@ function App() {
       description: 'Play cozy Solitaire in a calm green-felt space while listening to lofi music, relaxing, and clearing your mind one move at a time.',
       icon: SolitaireImageIcon,
       tone: 'from-emerald-800 to-teal-900 text-white',
+      preview: gameSolitairePreview,
       playingSpace: 'max-w-[1180px]',
       component: <Solitaire difficulty={selectedGameDifficulty} />
     },
@@ -2175,6 +2192,7 @@ function App() {
       description: 'A cozy Minesweeper-style board for a relaxing logic break when you want to chill, focus, and clear your head tile by tile.',
       icon: MinesweeperImageIcon,
       tone: 'from-lime-100 to-emerald-50 text-emerald-700',
+      preview: gameMindSweeperPreview,
       playingSpace: 'max-w-[980px]',
       component: <MindSweeper difficulty={selectedGameDifficulty} />
     },
@@ -2185,6 +2203,7 @@ function App() {
       description: 'A slow, floaty game for clearing your head before you write.',
       icon: SeedIcon,
       tone: 'from-emerald-100 to-sage-50 text-emerald-700',
+      preview: gameDriftingSeedPreview,
       playingSpace: 'max-w-[900px]',
       component: <ZenGame difficulty={selectedGameDifficulty} />
     },
@@ -2195,6 +2214,7 @@ function App() {
       description: 'Hop through a calm lily-pad run when you want a little movement without the noise.',
       icon: FrogIcon,
       tone: 'from-sky-100 to-cyan-50 text-sky-700',
+      preview: gameLilypadPreview,
       playingSpace: 'max-w-[1120px]',
       component: <StreamSurfer difficulty={selectedGameDifficulty} />
     },
@@ -2205,6 +2225,7 @@ function App() {
       description: 'Slide a soft lofi scene back together for a relaxing puzzle break before journaling.',
       icon: ImagePlus,
       tone: 'from-emerald-100 via-amber-50 to-rose-50 text-emerald-700',
+      preview: gameJigsawPreview,
       playingSpace: 'max-w-[1080px]',
       component: <LofiJigsaw difficulty={selectedGameDifficulty} />
     },
@@ -2215,6 +2236,7 @@ function App() {
       description: 'Flip calm cards and settle in before journaling or just hanging out for a bit.',
       icon: Heart,
       tone: 'from-rose-100 to-orange-50 text-rose-700',
+      preview: gameLotusPreview,
       playingSpace: 'max-w-[1020px]',
       component: <LotusMatch difficulty={selectedGameDifficulty} />
     },
@@ -2225,6 +2247,7 @@ function App() {
       description: 'Slide matching numbers together for the kind of calm puzzle loop people love in relaxing tile games.',
       icon: Grid2x2,
       tone: 'from-violet-100 to-slate-50 text-violet-700',
+      preview: gameTilesPreview,
       playingSpace: 'max-w-[820px]',
       component: <QuietTiles difficulty={selectedGameDifficulty} />
     },
@@ -2235,6 +2258,7 @@ function App() {
       description: 'Stack colorful blocks, clear tidy rows, and watch the pace increase by level like classic Tetris while keeping the cozy lofi mood.',
       icon: TetrisIcon,
       tone: 'from-indigo-100 to-sky-50 text-indigo-700',
+      preview: gameTetrisPreview,
       playingSpace: 'max-w-[1120px]',
       component: <QuietTetris difficulty={selectedGameDifficulty} />
     },
@@ -2245,6 +2269,7 @@ function App() {
       description: 'Move tiles into place for the kind of familiar low-pressure sliding puzzle people love as a quick reset.',
       icon: Puzzle,
       tone: 'from-amber-100 to-stone-50 text-amber-700',
+      preview: gameSlidePreview,
       playingSpace: 'max-w-[860px]',
       component: <QuietSlide difficulty={selectedGameDifficulty} />
     },
@@ -2255,6 +2280,7 @@ function App() {
       description: 'Settle into a cozy Sudoku board with gentle checking, reveal help, and a familiar number puzzle rhythm.',
       icon: SudokuImageIcon,
       tone: 'from-cyan-100 to-blue-50 text-cyan-700',
+      preview: gameSudokuPreview,
       playingSpace: 'max-w-[980px]',
       component: <QuietSudoku difficulty={selectedGameDifficulty} />
     },
@@ -2265,6 +2291,7 @@ function App() {
       description: 'Guess a cozy word in a gentle Wordle-style round when you want something familiar, tidy, and easy to replay.',
       icon: WordleImageIcon,
       tone: 'from-teal-100 to-sky-50 text-teal-700',
+      preview: gameWordlePreview,
       playingSpace: 'max-w-[780px]',
       component: <QuietWordle difficulty={selectedGameDifficulty} />
     },
@@ -2275,6 +2302,7 @@ function App() {
       description: 'Unscramble soft words for a familiar word-game loop that keeps the focus light and relaxing.',
       icon: Type,
       tone: 'from-fuchsia-100 to-rose-50 text-fuchsia-700',
+      preview: gameWordsPreview,
       playingSpace: 'max-w-[860px]',
       component: <QuietWords difficulty={selectedGameDifficulty} />
     },
@@ -2285,6 +2313,7 @@ function App() {
       description: 'Practice typing with calm prompts and find your own comfortable rhythm.',
       icon: Keyboard,
       tone: 'from-sky-100 to-indigo-50 text-sky-700',
+      preview: gameTypingPreview,
       playingSpace: 'max-w-[960px]',
       component: <TypingSpeedTest difficulty={selectedGameDifficulty} />
     },
@@ -2295,6 +2324,7 @@ function App() {
       description: 'Solve one soft clue at a time for a beginner-friendly crossword mood without the stress of a full puzzle grid.',
       icon: Map,
       tone: 'from-amber-100 to-rose-50 text-amber-700',
+      preview: gameCluesPreview,
       playingSpace: 'max-w-[820px]',
       component: <QuietClues difficulty={selectedGameDifficulty} />
     },
@@ -2305,6 +2335,7 @@ function App() {
       description: 'A cozy snake run with clear turns, quick rounds, and a gentle retro feel.',
       icon: SnakeIcon,
       tone: 'from-emerald-100 to-lime-50 text-emerald-700',
+      preview: gameSnakePreview,
       playingSpace: 'max-w-[1040px]',
       component: <QuietSnake difficulty={selectedGameDifficulty} />
     },
@@ -2315,6 +2346,7 @@ function App() {
       description: 'Jump through a soft desert loop when you want a little rhythm and play.',
       icon: DinoDashImageIcon,
       tone: 'from-orange-100 to-yellow-50 text-orange-700',
+      preview: gameDinoPreview,
       playingSpace: 'max-w-[1060px]',
       component: <DinosaurDash difficulty={selectedGameDifficulty} />
     }
@@ -4944,10 +4976,10 @@ function App() {
                 type="button"
               >
                 <img src={card.preview} alt={`${card.title} preview`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-r from-white/42 via-white/12 to-transparent" />
-                <div className="relative z-10 rounded-2xl bg-white/92 px-4 py-3 shadow-sm backdrop-blur-sm">
-                  <p className="text-lg font-extrabold text-[#3d3025]">{card.title}</p>
-                  <p className="mt-0.5 text-xs font-bold text-[#7f6a58]">{card.description}</p>
+                <div className="absolute inset-0 bg-gradient-to-r from-white/45 via-white/12 to-transparent" />
+                <div className="relative z-10 rounded-2xl bg-white/96 px-5 py-4 shadow-md backdrop-blur-md">
+                  <p className="text-lg font-black tracking-tight text-sage-950">{card.title}</p>
+                  <p className="mt-1 text-xs font-extrabold uppercase tracking-widest text-sage-600">{card.description}</p>
                 </div>
               </button>
             ))}
@@ -5785,22 +5817,18 @@ function App() {
                 {unwindGames.map((game) => (
                   <button
                     key={game.id}
-                    className={`group rounded-[2rem] border px-5 py-5 text-left transition duration-300 hover:-translate-y-1 ${selectedUnwindGame === game.id ? 'border-sage-300 bg-white shadow-soft' : 'border-white/70 bg-white/78 hover:border-sage-200 hover:bg-white/92'}`}
+                    className={`group relative flex min-h-[14rem] flex-col items-start justify-start overflow-hidden rounded-[2rem] border px-5 py-5 text-left transition duration-300 hover:-translate-y-1 ${selectedUnwindGame === game.id ? 'border-sage-400 ring-2 ring-sage-100' : 'border-white/70 bg-white/78'}`}
                     onClick={() => selectUnwindGame(game.id)}
                     type="button"
                   >
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <p className="text-xs font-bold uppercase tracking-[0.24em] text-sage-600">{game.detail}</p>
-                        <h2 className="mt-2 font-display text-2xl font-bold text-sage-950">{game.title}</h2>
-                      </div>
-                      <span className={`inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br ${game.tone}`}>
-                        <game.icon size={18} />
-                      </span>
+                    <img src={game.preview} alt={`${game.title} preview`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/45 via-white/15 to-transparent" />
+                    <div className="relative z-10 rounded-2xl bg-white/95 px-4 py-3 shadow-md backdrop-blur-sm">
+                      <p className="text-xs font-black uppercase tracking-[0.24em] text-sage-600">{game.detail}</p>
+                      <h2 className="mt-1 font-display text-2xl font-bold text-sage-950">{game.title}</h2>
                     </div>
-                    <GamePreview gameId={game.id} />
-                    <div className="mt-5 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.2em] text-sage-600">
-                      Open game <span className="transition group-hover:translate-x-1">→</span>
+                    <div className="absolute bottom-5 left-5 z-10 rounded-full bg-white/90 px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-sage-700 shadow-sm backdrop-blur-sm transition opacity-0 group-hover:opacity-100">
+                      Open game →
                     </div>
                   </button>
                 ))}
