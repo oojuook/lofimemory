@@ -4976,10 +4976,10 @@ function App() {
                 type="button"
               >
                 <img src={card.preview} alt={`${card.title} preview`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-r from-white/45 via-white/12 to-transparent" />
-                <div className="relative z-10 rounded-2xl bg-white/96 px-5 py-4 shadow-md backdrop-blur-md">
-                  <p className="text-lg font-black tracking-tight text-sage-950">{card.title}</p>
-                  <p className="mt-1 text-xs font-extrabold uppercase tracking-widest text-sage-600">{card.description}</p>
+                <div className="absolute inset-0 bg-gradient-to-br from-black/45 via-black/5 to-transparent" />
+                <div className="relative z-10 p-2">
+                  <p className="text-lg font-black tracking-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">{card.title}</p>
+                  <p className="mt-0.5 text-xs font-bold uppercase tracking-widest text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">{card.description}</p>
                 </div>
               </button>
             ))}
@@ -5822,12 +5822,12 @@ function App() {
                     type="button"
                   >
                     <img src={game.preview} alt={`${game.title} preview`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/45 via-white/15 to-transparent" />
-                    <div className="relative z-10 rounded-2xl bg-white/95 px-4 py-3 shadow-md backdrop-blur-sm">
-                      <p className="text-xs font-black uppercase tracking-[0.24em] text-sage-600">{game.detail}</p>
-                      <h2 className="mt-1 font-display text-2xl font-bold text-sage-950">{game.title}</h2>
+                    <div className="absolute inset-0 bg-gradient-to-br from-black/48 via-black/10 to-transparent" />
+                    <div className="relative z-10 p-1">
+                      <p className="text-xs font-black uppercase tracking-[0.24em] text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]">{game.detail}</p>
+                      <h2 className="mt-1 font-display text-2xl font-bold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">{game.title}</h2>
                     </div>
-                    <div className="absolute bottom-5 left-5 z-10 rounded-full bg-white/90 px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-sage-700 shadow-sm backdrop-blur-sm transition opacity-0 group-hover:opacity-100">
+                    <div className="absolute bottom-5 left-5 z-10 text-[10px] font-black uppercase tracking-widest text-white/90 opacity-0 drop-shadow-[0_1px_2px_rgba(0,0,0,0.55)] transition group-hover:opacity-100">
                       Open game →
                     </div>
                   </button>
