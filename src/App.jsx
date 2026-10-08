@@ -13,6 +13,11 @@ import fireWallpaperImage from './assets/fire-wallpaper.png';
 import lofiRoomWallpaperImage from './assets/lofi-room-wallpaper.png';
 import lotusMatchPreviewImage from './assets/lotus-match-preview.png';
 import gamesSectionPreviewImage from './assets/games-section-preview.png';
+import diarySectionPreviewImage from './assets/diary-section-preview.png';
+import notesSectionPreviewImage from './assets/notes-section-preview.png';
+import musicSectionPreviewImage from './assets/music-section-preview.png';
+import memoriesSectionPreviewImage from './assets/memories-section-preview.png';
+import designSectionPreviewImage from './assets/design-section-preview.png';
 import { onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
 import { collection, deleteDoc, doc, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore';
 import { getToken, onMessage } from 'firebase/messaging';
@@ -2003,11 +2008,11 @@ function App() {
   const showMinimalHomeOverview = activeTab === 'home' && activeHomeSection === 'overview';
   const homeEntryCards = [
     { id: 'unwind', title: 'Games', description: 'Chill games', icon: Gamepad2, iconTone: 'bg-[#d8dbff] text-violet-700', onClick: () => navigateToTab('unwind'), preview: gamesSectionPreviewImage },
-    { id: 'write', title: 'Diary', description: 'Write only when it helps', icon: PenLine, iconTone: 'bg-[#dbead9] text-sage-700', onClick: () => navigateToTab('write') },
-    { id: 'notes', title: 'Notes', description: 'Keep important things nearby', icon: FileText, iconTone: 'bg-[#d8f0ec] text-teal-700', onClick: () => navigateToTab('notes') },
-    { id: 'breathe', title: 'Music Room', description: 'Sounds & Wallpapers', icon: Wind, iconTone: 'bg-[#dbe8f8] text-sky-700', onClick: () => navigateToTab('breathe') },
-    { id: 'memories', title: 'Memories', description: 'Save dates and local weather', icon: CalendarDays, iconTone: 'bg-[#efe6d8] text-sand-700', onClick: () => navigateToTab('memories') },
-    { id: 'design', title: 'Design', description: 'Customize your space', icon: Palette, iconTone: 'bg-[#f4dce7] text-rose-700', onClick: () => navigateToTab('design') }
+    { id: 'write', title: 'Diary', description: 'Write only when it helps', icon: PenLine, iconTone: 'bg-[#dbead9] text-sage-700', onClick: () => navigateToTab('write'), preview: diarySectionPreviewImage },
+    { id: 'notes', title: 'Notes', description: 'Keep important things nearby', icon: FileText, iconTone: 'bg-[#d8f0ec] text-teal-700', onClick: () => navigateToTab('notes'), preview: notesSectionPreviewImage },
+    { id: 'breathe', title: 'Music Room', description: 'Sounds & Wallpapers', icon: Wind, iconTone: 'bg-[#dbe8f8] text-sky-700', onClick: () => navigateToTab('breathe'), preview: musicSectionPreviewImage },
+    { id: 'memories', title: 'Memories', description: 'Save dates and local weather', icon: CalendarDays, iconTone: 'bg-[#efe6d8] text-sand-700', onClick: () => navigateToTab('memories'), preview: memoriesSectionPreviewImage },
+    { id: 'design', title: 'Design', description: 'Customize your space', icon: Palette, iconTone: 'bg-[#f4dce7] text-rose-700', onClick: () => navigateToTab('design'), preview: designSectionPreviewImage }
   ];
   const [selectedGameDifficulty, setSelectedGameDifficulty] = useState('medium');
   const selectedGameInterfaceRef = useRef(null);
@@ -4931,30 +4936,21 @@ function App() {
         </div>
         <div className="lofi-glass rounded-[2rem] border p-3 shadow-soft backdrop-blur-xl sm:p-4">
           <div className="grid gap-3 md:grid-cols-2">
-            {homeEntryCards.map((card) => {
-              const Icon = card.icon;
-              return (
-                <button
-                  key={card.id}
-                  className={`group lofi-glass relative flex w-full flex-col items-start overflow-hidden rounded-[1.75rem] border text-left shadow-[0_10px_26px_rgba(146,126,106,0.07)] transition duration-300 hover:-translate-y-1 hover:border-[#d8c6b2] hover:shadow-[0_16px_34px_rgba(146,126,106,0.1)] ${card.preview ? 'min-h-[11rem] justify-start px-5 py-5' : 'gap-4 px-5 py-5'}`}
-                  onClick={card.onClick}
-                  type="button"
-                >
-                  {card.preview && (
-                    <img src={card.preview} alt={`${card.title} preview`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" />
-                  )}
-                  {card.preview && <div className="absolute inset-0 bg-gradient-to-r from-white/30 via-white/5 to-transparent" />}
-                  <div className={`relative z-10 flex items-center gap-4 ${card.preview ? 'rounded-2xl bg-white/94 px-4 py-3 shadow-sm backdrop-blur-sm' : 'w-full'}`}>
-                    <div className={`flex h-[3.25rem] w-[3.25rem] shrink-0 items-center justify-center rounded-full shadow-inner transition group-hover:scale-105 ${card.iconTone}`}>
-                      <Icon size={22} />
-                    </div>
-                    <div>
-                      <p className="text-lg font-extrabold text-[#3d3025]">{card.title}</p>
-                    </div>
-                  </div>
-                </button>
-              );
-            })}
+            {homeEntryCards.map((card) => (
+              <button
+                key={card.id}
+                className="group lofi-glass relative flex min-h-[11rem] w-full flex-col items-start justify-start overflow-hidden rounded-[1.75rem] border px-5 py-5 text-left shadow-[0_10px_26px_rgba(146,126,106,0.07)] transition duration-300 hover:-translate-y-1 hover:border-[#d8c6b2] hover:shadow-[0_16px_34px_rgba(146,126,106,0.1)]"
+                onClick={card.onClick}
+                type="button"
+              >
+                <img src={card.preview} alt={`${card.title} preview`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-r from-white/42 via-white/12 to-transparent" />
+                <div className="relative z-10 rounded-2xl bg-white/92 px-4 py-3 shadow-sm backdrop-blur-sm">
+                  <p className="text-lg font-extrabold text-[#3d3025]">{card.title}</p>
+                  <p className="mt-0.5 text-xs font-bold text-[#7f6a58]">{card.description}</p>
+                </div>
+              </button>
+            ))}
           </div>
         </div>
       </section>
