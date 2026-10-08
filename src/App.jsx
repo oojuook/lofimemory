@@ -2191,7 +2191,7 @@ function App() {
       tone: 'from-emerald-800 to-teal-900 text-white',
       preview: gameSolitairePreview,
       playingSpace: 'max-w-[1180px]',
-      component: <Solitaire difficulty={selectedGameDifficulty} />
+      component: <Solitaire difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
     },
     {
       id: 'mind-sweeper',
@@ -2213,7 +2213,7 @@ function App() {
       tone: 'from-emerald-100 to-sage-50 text-emerald-700',
       preview: gameDriftingSeedPreview,
       playingSpace: 'max-w-[900px]',
-      component: <ZenGame difficulty={selectedGameDifficulty} />
+      component: <ZenGame difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
     },
     {
       id: 'stream-surfer',
@@ -2345,7 +2345,7 @@ function App() {
       tone: 'from-emerald-100 to-lime-50 text-emerald-700',
       preview: gameSnakePreview,
       playingSpace: 'max-w-[1040px]',
-      component: <QuietSnake difficulty={selectedGameDifficulty} />
+      component: <QuietSnake difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
     },
     {
       id: 'dinosaur-dash',

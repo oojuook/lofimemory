@@ -31,7 +31,8 @@ const difficultySettings = {
   }
 };
 
-export default function ZenGame({ difficulty = 'medium' }) {
+export default function ZenGame({ difficulty = 'medium', theme = 'lofi' }) {
+  const isLofi = theme === 'lofi';
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const bestScoreKey = `quiet-journal-highscore-${difficulty}`;
 
@@ -98,6 +99,35 @@ export default function ZenGame({ difficulty = 'medium' }) {
       ctx.save();
       ctx.translate(x, y);
       ctx.rotate(angle);
+
+      if (isLofi) {
+        ctx.fillStyle = '#d4a373';
+        ctx.beginPath();
+        ctx.ellipse(0, 2, 13, 19, 0.1, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#8b5e34';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.fillStyle = '#7f9f68';
+        ctx.beginPath();
+        ctx.ellipse(10, -11, 8, 15, 0.75, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#f5f0df';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(8, -18);
+        ctx.quadraticCurveTo(12, -10, 15, -2);
+        ctx.stroke();
+
+        ctx.fillStyle = '#f6e7c7';
+        ctx.beginPath();
+        ctx.arc(-4, -4, 3.2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+        return;
+      }
+
       ctx.fillStyle = '#587f49';
       ctx.beginPath();
       ctx.moveTo(0, -12);
@@ -119,16 +149,34 @@ export default function ZenGame({ difficulty = 'medium' }) {
     const draw = () => {
       const state = stateRef.current;
 
-      ctx.fillStyle = '#f7faf4';
+      ctx.fillStyle = isLofi ? '#fff9f0' : '#f7faf4';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = '#edf4e8';
+      if (isLofi) {
+        ctx.fillStyle = 'rgba(74, 58, 45, 0.04)';
+        for (let i = 0; i < canvas.width; i += 24) {
+          for (let j = 0; j < canvas.height; j += 24) {
+            ctx.fillRect(i, j, 1.5, 1.5);
+          }
+        }
+      }
+
+      ctx.fillStyle = isLofi ? '#fdfaf5' : '#edf4e8';
       ctx.beginPath();
       ctx.moveTo(0, canvas.height);
       ctx.lineTo(0, canvas.height - 80);
       ctx.quadraticCurveTo(canvas.width / 2, canvas.height - 200, canvas.width, canvas.height - 60);
       ctx.lineTo(canvas.width, canvas.height);
       ctx.fill();
+
+      if (isLofi) {
+        ctx.strokeStyle = '#e8dfd5';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(0, canvas.height - 80);
+        ctx.quadraticCurveTo(canvas.width / 2, canvas.height - 200, canvas.width, canvas.height - 60);
+        ctx.stroke();
+      }
 
       if (gameState === 'playing') {
         state.velocity += config.gravity;
@@ -142,16 +190,26 @@ export default function ZenGame({ difficulty = 'medium' }) {
         state.obstacles.forEach((obstacle) => {
           obstacle.x -= config.obstacleSpeed;
 
-          ctx.fillStyle = '#dcebd3';
+          ctx.fillStyle = isLofi ? '#faedcd' : '#dcebd3';
           const obstacleWidth = 45;
 
           ctx.beginPath();
           ctx.roundRect(obstacle.x, -20, obstacleWidth, obstacle.gapTop + 20, 12);
           ctx.fill();
 
+          if (isLofi) {
+            ctx.strokeStyle = '#e8dfd5';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+          }
+
           ctx.beginPath();
           ctx.roundRect(obstacle.x, obstacle.gapTop + config.gapSize, obstacleWidth, canvas.height - obstacle.gapTop - config.gapSize + 20, 12);
           ctx.fill();
+
+          if (isLofi) {
+            ctx.stroke();
+          }
 
           const leafRadius = 14;
           const leafX = 100;
@@ -187,7 +245,7 @@ export default function ZenGame({ difficulty = 'medium' }) {
 
     animationId = requestAnimationFrame(draw);
     return () => cancelAnimationFrame(animationId);
-  }, [config.gapSize, config.gravity, config.obstacleSpeed, config.spawnRate, gameState]);
+  }, [config.gapSize, config.gravity, config.obstacleSpeed, config.spawnRate, gameState, isLofi]);
 
   useEffect(() => {
     if (gameState === 'over' && score > highScore) {
@@ -202,19 +260,19 @@ export default function ZenGame({ difficulty = 'medium' }) {
     <div className="mx-auto mt-12 w-full max-w-2xl pb-12">
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <div className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white/88 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-700 shadow-sm">
+          <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-sage-200 bg-white/88 text-sage-700'}`}>
             <Sparkles size={14} /> {levelText} drift
           </div>
-          <h3 className="mt-3 text-2xl font-bold text-sage-900">Drifting Seed</h3>
-          <p className="text-sm font-semibold text-sage-700">A calming float-through game for restless thoughts.</p>
-          <p className="mt-1 text-sm text-sage-600">{config.note}</p>
+          <h3 className={`mt-3 text-2xl font-bold ${isLofi ? 'text-[#3d3025]' : 'text-sage-900'}`}>Drifting Seed</h3>
+          <p className={`text-sm font-semibold ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>A calming float-through game for restless thoughts.</p>
+          <p className={`mt-1 text-sm ${isLofi ? 'text-[#8c7a6a]' : 'text-sage-600'}`}>{config.note}</p>
         </div>
-        <div className="flex gap-4 text-sm font-extrabold uppercase tracking-widest text-sage-700">
-          <span className="rounded-full bg-sage-100 px-4 py-2 shadow-sm">Score: {score}</span>
-          <span className="rounded-full border border-sage-200 bg-white px-4 py-2 shadow-sm">Best: {highScore}</span>
+        <div className={`flex gap-4 text-sm font-extrabold uppercase tracking-widest ${isLofi ? 'text-amber-900' : 'text-sage-700'}`}>
+          <span className={`rounded-full px-4 py-2 shadow-sm ${isLofi ? 'bg-amber-50' : 'bg-sage-100'}`}>Score: {score}</span>
+          <span className={`rounded-full border bg-white px-4 py-2 shadow-sm ${isLofi ? 'border-amber-200' : 'border-sage-200'}`}>Best: {highScore}</span>
         </div>
       </div>
-      <div className="relative overflow-hidden rounded-[2rem] border border-sage-200 shadow-sm transition hover:shadow-soft" style={{ aspectRatio: '3/2' }}>
+      <div className={`relative overflow-hidden rounded-[2rem] border shadow-sm transition hover:shadow-soft ${isLofi ? 'border-amber-200/60' : 'border-sage-200'}`} style={{ aspectRatio: '3/2' }}>
         <canvas
           ref={canvasRef}
           width={600}
@@ -224,25 +282,25 @@ export default function ZenGame({ difficulty = 'medium' }) {
         />
 
         {gameState === 'start' && (
-          <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center bg-white/30 backdrop-blur-[3px]">
-            <button className="pointer-events-auto mb-4 flex items-center gap-3 rounded-full bg-sage-800 px-8 py-4 text-sm font-bold text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-700" onClick={jump} type="button">
+          <div className={`pointer-events-none absolute inset-0 flex flex-col items-center justify-center backdrop-blur-[3px] ${isLofi ? 'bg-white/20' : 'bg-white/30'}`}>
+            <button className={`pointer-events-auto mb-4 flex items-center gap-3 rounded-full px-8 py-4 text-sm font-bold text-white shadow-lift transition hover:-translate-y-1 ${isLofi ? 'bg-[#4a3a2d] hover:bg-[#3d3025]' : 'bg-sage-800 hover:bg-sage-700'}`} onClick={jump} type="button">
               <Play size={18} /> Tap to float
             </button>
-            <p className="rounded-full bg-white/70 px-4 py-1.5 text-sm font-semibold text-sage-900">Press Space or click to drift.</p>
+            <p className={`rounded-full px-4 py-1.5 text-sm font-semibold ${isLofi ? 'bg-white/60 text-[#3d3025]' : 'bg-white/70 text-sage-900'}`}>Press Space or click to drift.</p>
           </div>
         )}
 
         {gameState === 'over' && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/50 backdrop-blur-[5px]">
-            <p className="mb-2 font-display text-4xl font-extrabold text-sage-950">The leaf landed.</p>
-            <p className="mb-3 text-lg font-bold text-sage-800">Final Score: {score}</p>
-            <p className="mb-8 rounded-full bg-white/75 px-4 py-2 text-sm font-semibold text-sage-700">{config.note}</p>
+          <div className={`absolute inset-0 flex flex-col items-center justify-center backdrop-blur-[5px] ${isLofi ? 'bg-white/40' : 'bg-white/50'}`}>
+            <p className={`mb-2 font-display text-4xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>{isLofi ? 'The seed settled.' : 'The leaf landed.'}</p>
+            <p className={`mb-3 text-lg font-bold ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-800'}`}>Final Score: {score}</p>
+            <p className={`mb-8 rounded-full px-4 py-2 text-sm font-semibold ${isLofi ? 'bg-white/65 text-amber-900' : 'bg-white/75 text-sage-700'}`}>{config.note}</p>
             <button
               onClick={(event) => {
                 event.stopPropagation();
                 jump();
               }}
-              className="flex items-center gap-3 rounded-full bg-sage-800 px-8 py-4 text-sm font-bold text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-700"
+              className={`flex items-center gap-3 rounded-full px-8 py-4 text-sm font-bold text-white shadow-lift transition hover:-translate-y-1 ${isLofi ? 'bg-[#4a3a2d] hover:bg-[#3d3025]' : 'bg-sage-800 hover:bg-sage-700'}`}
               type="button"
             >
               <RotateCcw size={18} /> Drift again
