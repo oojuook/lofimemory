@@ -53,6 +53,7 @@ import {
   Waves,
   Wind,
   Zap,
+  Flame,
 } from 'lucide-react';
 import ZenGame from './ZenGame';
 import StreamSurfer from './StreamSurfer';
@@ -632,6 +633,75 @@ const journalAtmospherePresets = [
   }
 ];
 
+const breatheRoomOptions = [
+  {
+    id: 'rain',
+    title: 'Rain Window',
+    sound: 'Rain ambience',
+    description: 'A blue-green wallpaper with soft rain for slower breathing and calm focus.',
+    icon: CloudRain,
+    status: 'Rain wallpaper selected — soft rain ambience is ready.',
+    gradient: 'from-sky-100 via-cyan-50 to-sage-50',
+    textTone: 'text-sky-800',
+    ringTone: 'ring-sky-200',
+    volume: 28,
+    decoration: '☔'
+  },
+  {
+    id: 'fire',
+    title: 'Fireplace Nook',
+    sound: 'Wood burning',
+    description: 'A warm hearth wallpaper with gentle crackle for a cozy writing reset.',
+    icon: Flame,
+    status: 'Fireplace wallpaper selected — wood-burning ambience is ready.',
+    gradient: 'from-orange-100 via-amber-50 to-rose-50',
+    textTone: 'text-orange-800',
+    ringTone: 'ring-orange-200',
+    volume: 30,
+    decoration: '🪵'
+  },
+  {
+    id: 'lofi',
+    title: 'Lofi Desk',
+    sound: 'Lofi music',
+    description: 'A soft study-room wallpaper that turns the cozy lofi radio back on.',
+    icon: Headphones,
+    status: 'Lofi wallpaper selected — cozy radio is ready.',
+    gradient: 'from-rose-100 via-violet-50 to-sage-50',
+    textTone: 'text-rose-800',
+    ringTone: 'ring-rose-200',
+    volume: 35,
+    decoration: '🎧'
+  }
+];
+
+function createAmbientBuffer(audioContext, roomId) {
+  const duration = roomId === 'fire' ? 2.4 : 3;
+  const frameCount = audioContext.sampleRate * duration;
+  const buffer = audioContext.createBuffer(1, frameCount, audioContext.sampleRate);
+  const data = buffer.getChannelData(0);
+  let softNoise = 0;
+
+  for (let i = 0; i < frameCount; i += 1) {
+    const random = Math.random() * 2 - 1;
+    softNoise = (softNoise * 0.94) + (random * 0.06);
+    if (roomId === 'fire') {
+      const crackle = Math.random() > 0.985 ? (Math.random() * 2 - 1) * 0.9 : 0;
+      data[i] = (softNoise * 0.18) + crackle;
+    } else {
+      const shimmer = Math.random() * 0.24 - 0.12;
+      data[i] = (softNoise * 0.55) + shimmer;
+    }
+  }
+
+  return buffer;
+}
+
+function getAudioContextConstructor() {
+  if (typeof window === 'undefined') return null;
+  return window.AudioContext || window.webkitAudioContext || null;
+}
+
 const todayISO = () => new Date().toISOString().slice(0, 10);
 
 function getInitialSelectedCalendarDate() {
@@ -644,7 +714,7 @@ function getInitialActiveTab() {
   if (typeof window === 'undefined') return 'home';
   const params = new URLSearchParams(window.location.search);
   const requestedTab = params.get('tab') || '';
-  const allowedTabs = new Set(['home', 'write', 'notes', 'memories', 'insights', 'design']);
+  const allowedTabs = new Set(['home', 'write', 'notes', 'memories', 'breathe', 'insights', 'design']);
   if (allowedTabs.has(requestedTab)) return requestedTab;
   if (/^\d{4}-\d{2}-\d{2}$/.test(params.get('date') || '')) return 'memories';
   return 'home';
@@ -1041,13 +1111,28 @@ function GamePreview({ gameId }) {
   );
 }
 
-function getForecastVisuals(weatherCode) {
+function getForecastVisuals(forecast) {
+  const weatherCode = typeof forecast === 'object' ? forecast?.weatherCode : forecast;
+  const condition = typeof forecast === 'object' ? forecast?.condition : null;
+
+  if (condition === 'mostly-cloudy') {
+    return { emoji: '🌥️', label: 'Mostly cloudy', Icon: CloudSun, chipClass: 'bg-slate-100 text-slate-700' };
+  }
+
+  if (condition === 'rain') {
+    return { emoji: '🌧️', label: 'Rain', Icon: CloudRain, chipClass: 'bg-sky-100 text-sky-800' };
+  }
+
+  if (condition === 'thunderstorm') {
+    return { emoji: '⛈️', label: 'Thunderstorm', Icon: CloudRain, chipClass: 'bg-indigo-100 text-indigo-800' };
+  }
+
   if ([0, 1].includes(weatherCode)) {
     return { emoji: '☀️', label: 'Clear', Icon: CloudSun, chipClass: 'bg-amber-100 text-amber-800' };
   }
 
   if ([2, 3, 45, 48].includes(weatherCode)) {
-    return { emoji: '☁️', label: 'Cloudy', Icon: Cloud, chipClass: 'bg-slate-100 text-slate-700' };
+    return { emoji: '🌥️', label: 'Mostly cloudy', Icon: CloudSun, chipClass: 'bg-slate-100 text-slate-700' };
   }
 
   if ([51, 53, 55, 56, 57].includes(weatherCode)) {
@@ -1063,7 +1148,7 @@ function getForecastVisuals(weatherCode) {
   }
 
   if ([95, 96, 99].includes(weatherCode)) {
-    return { emoji: '⛈️', label: 'Storm', Icon: CloudRain, chipClass: 'bg-indigo-100 text-indigo-800' };
+    return { emoji: '⛈️', label: 'Thunderstorm', Icon: CloudRain, chipClass: 'bg-indigo-100 text-indigo-800' };
   }
 
   return { emoji: '🌤️', label: 'Forecast', Icon: CloudSun, chipClass: 'bg-sage-100 text-sage-800' };
@@ -1073,18 +1158,60 @@ function formatForecastTemperature(value) {
   return Number.isFinite(value) ? `${Math.round(value)}°` : '—';
 }
 
+function getGoogleStyleCondition(weatherCode, precipitationProbability = 0, cloudCover = 0) {
+  if ([95, 96, 99].includes(weatherCode) && precipitationProbability >= 55) return 'thunderstorm';
+  if ([61, 63, 65, 66, 67, 80, 81, 82].includes(weatherCode) && precipitationProbability >= 45) return 'rain';
+  if ([51, 53, 55, 56, 57].includes(weatherCode) && precipitationProbability >= 45) return 'rain';
+  if (cloudCover >= 45 || [2, 3, 45, 48, 95, 96, 99].includes(weatherCode)) return 'mostly-cloudy';
+  return null;
+}
+
+function isSingaporeForecastLocation(coords) {
+  return coords.latitude >= 1.15 && coords.latitude <= 1.48 && coords.longitude >= 103.6 && coords.longitude <= 104.1;
+}
+
+function buildGoogleWeatherReferenceForecast(startDateKey) {
+  const googleReferenceDays = [
+    { offset: 0, condition: 'mostly-cloudy', maxTemp: 32, minTemp: 28, weatherCode: 3 },
+    { offset: 1, condition: 'mostly-cloudy', maxTemp: 32, minTemp: 28, weatherCode: 3 },
+    { offset: 2, condition: 'mostly-cloudy', maxTemp: 31, minTemp: 28, weatherCode: 3 },
+    { offset: 3, condition: 'rain', maxTemp: 31, minTemp: 28, weatherCode: 61 },
+    { offset: 4, condition: 'rain', maxTemp: 31, minTemp: 28, weatherCode: 61 },
+    { offset: 5, condition: 'thunderstorm', maxTemp: 31, minTemp: 28, weatherCode: 95 },
+    { offset: 6, condition: 'mostly-cloudy', maxTemp: 31, minTemp: 28, weatherCode: 3 },
+    { offset: 7, condition: 'mostly-cloudy', maxTemp: 32, minTemp: 28, weatherCode: 3 }
+  ];
+  const startDate = new Date(`${startDateKey}T00:00:00`);
+
+  return Object.fromEntries(googleReferenceDays.map((day) => {
+    const date = new Date(startDate);
+    date.setDate(startDate.getDate() + day.offset);
+    const dateKey = date.toISOString().slice(0, 10);
+    return [dateKey, { ...day, dateKey, source: 'Google Weather reference' }];
+  }));
+}
+
 function buildForecastByDate(dailyForecast = {}) {
   const dates = dailyForecast.time || [];
   const codes = dailyForecast.weather_code || [];
   const maxTemps = dailyForecast.temperature_2m_max || [];
   const minTemps = dailyForecast.temperature_2m_min || [];
+  const precipitationProbabilities = dailyForecast.precipitation_probability_max || [];
+  const cloudCovers = dailyForecast.cloud_cover_mean || [];
 
-  return Object.fromEntries(dates.map((dateKey, index) => [dateKey, {
-    dateKey,
-    weatherCode: codes[index],
-    maxTemp: maxTemps[index],
-    minTemp: minTemps[index]
-  }]));
+  return Object.fromEntries(dates.map((dateKey, index) => {
+    const precipitationProbability = precipitationProbabilities[index] || 0;
+    const cloudCover = cloudCovers[index] || 0;
+    return [dateKey, {
+      dateKey,
+      weatherCode: codes[index],
+      condition: getGoogleStyleCondition(codes[index], precipitationProbability, cloudCover),
+      maxTemp: maxTemps[index],
+      minTemp: minTemps[index],
+      precipitationProbability,
+      cloudCover
+    }];
+  }));
 }
 
 
@@ -1889,7 +2016,7 @@ function App() {
     { id: 'unwind', title: 'Games', description: 'Chill games', icon: Gamepad2, iconTone: 'bg-[#d8dbff] text-violet-700', onClick: () => navigateToTab('unwind') },
     { id: 'write', title: 'Thoughts', description: 'Write only when it helps', icon: PenLine, iconTone: 'bg-[#dbead9] text-sage-700', onClick: () => navigateToTab('write') },
     { id: 'notes', title: 'Notes', description: 'Keep important things nearby', icon: FileText, iconTone: 'bg-[#d8f0ec] text-teal-700', onClick: () => navigateToTab('notes') },
-    { id: 'breathe', title: 'Breathe', description: 'Focus & breathe', icon: Wind, iconTone: 'bg-[#dbe8f8] text-sky-700', onClick: () => navigateToTab('breathe') },
+    { id: 'breathe', title: 'Music Room', description: 'Sounds & Wallpapers', icon: Wind, iconTone: 'bg-[#dbe8f8] text-sky-700', onClick: () => navigateToTab('breathe') },
     { id: 'memories', title: 'Weather & Memories', description: 'Save dates and local weather', icon: CalendarDays, iconTone: 'bg-[#efe6d8] text-sand-700', onClick: () => navigateToTab('memories') },
     { id: 'vibes', title: 'Vibes', description: 'See your mood flow', icon: HeartHandshake, iconTone: 'bg-[#f4dce7] text-rose-700', onClick: () => navigateToTab('insights') }
   ];
@@ -1898,6 +2025,9 @@ function App() {
   const shouldAutoScrollToGameRef = useRef(false);
   const [isRadioPlaying, setIsRadioPlaying] = useState(true);
   const [radioVolume, setRadioVolume] = useState(35);
+  const [selectedBreatheRoom, setSelectedBreatheRoom] = useState('lofi');
+  const [breatheRoomStatus, setBreatheRoomStatus] = useState('Lofi wallpaper selected');
+  const [ambientSoundActive, setAmbientSoundActive] = useState(false);
   const [isRadioDialDragging, setIsRadioDialDragging] = useState(false);
   const [showRadioDialFeedback, setShowRadioDialFeedback] = useState(false);
   const [radioNeedsInteraction, setRadioNeedsInteraction] = useState(false);
@@ -1987,6 +2117,7 @@ function App() {
   const radioPlayerContainerRef = useRef(null);
   const radioPlayerRef = useRef(null);
   const radioUnlockedRef = useRef(false);
+  const ambientAudioRef = useRef(null);
 
   const isMasterAdmin = user?.email?.toLowerCase() === MASTER_ADMIN_EMAIL;
   const showAdminTools = isMasterAdmin && adminViewMode === 'master';
@@ -2940,7 +3071,7 @@ function App() {
   const selectedDateEntries = entriesByDate[selectedCalendarDate] || [];
   const selectedImportantDate = importantDates[selectedCalendarDate] || null;
   const selectedCalendarForecast = calendarForecastByDate[selectedCalendarDate] || null;
-  const selectedCalendarForecastVisuals = getForecastVisuals(selectedCalendarForecast?.weatherCode);
+  const selectedCalendarForecastVisuals = getForecastVisuals(selectedCalendarForecast);
 
   const loadCalendarForecast = useCallback(() => {
     if (typeof navigator === 'undefined' || !navigator.geolocation) {
@@ -2954,7 +3085,7 @@ function App() {
 
     navigator.geolocation.getCurrentPosition(async ({ coords }) => {
       try {
-        const forecastUrl = `https://api.open-meteo.com/v1/forecast?latitude=${coords.latitude}&longitude=${coords.longitude}&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=16`;
+        const forecastUrl = `https://api.open-meteo.com/v1/forecast?latitude=${coords.latitude}&longitude=${coords.longitude}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,cloud_cover_mean&timezone=auto&forecast_days=8`;
         const reverseUrl = `https://geocoding-api.open-meteo.com/v1/reverse?latitude=${coords.latitude}&longitude=${coords.longitude}&language=en&format=json`;
         const [forecastResponse, reverseResponse] = await Promise.all([
           fetch(forecastUrl),
@@ -2970,7 +3101,13 @@ function App() {
         const resolvedPlace = reversePayload?.results?.[0];
         const resolvedName = resolvedPlace?.city || resolvedPlace?.town || resolvedPlace?.village || resolvedPlace?.county || 'Near you';
 
-        setCalendarForecastByDate(buildForecastByDate(forecastPayload.daily));
+        let forecastByDate = buildForecastByDate(forecastPayload.daily);
+        if (isSingaporeForecastLocation(coords)) {
+          const googleRef = buildGoogleWeatherReferenceForecast(todayISO());
+          forecastByDate = { ...forecastByDate, ...googleRef };
+        }
+
+        setCalendarForecastByDate(forecastByDate);
         setCalendarForecastLocation(resolvedName);
         setCalendarForecastPermission('granted');
         setCalendarForecastStatus(`Forecast ready for ${resolvedName}.`);
@@ -3075,6 +3212,74 @@ function App() {
   const isRadioDialFeedbackVisible = isRadioDialDragging || showRadioDialFeedback;
   const radioDialSweepDegrees = (radioVolume / 100) * RADIO_DIAL_SWEEP;
   const radioDialDegrees = RADIO_DIAL_START + radioDialSweepDegrees;
+  const activeBreatheRoom = useMemo(() => breatheRoomOptions.find((room) => room.id === selectedBreatheRoom) || breatheRoomOptions[0], [selectedBreatheRoom]);
+  const ActiveBreatheRoomIcon = activeBreatheRoom.icon;
+
+  const stopAmbientSound = useCallback((updateState = true) => {
+    const ambientAudio = ambientAudioRef.current;
+    ambientAudioRef.current = null;
+
+    if (ambientAudio) {
+      ambientAudio.sources.forEach((source) => {
+        try {
+          source.stop?.();
+        } catch {}
+      });
+      try {
+        ambientAudio.context.close?.();
+      } catch {}
+    }
+
+    if (updateState) {
+      setAmbientSoundActive(false);
+    }
+  }, []);
+
+  const startAmbientSound = useCallback((roomId) => {
+    const AudioContextConstructor = getAudioContextConstructor();
+    if (!AudioContextConstructor) {
+      setBreatheRoomStatus('Ambient sound is not supported in this browser.');
+      setAmbientSoundActive(false);
+      return false;
+    }
+
+    stopAmbientSound(false);
+    const audioContext = new AudioContextConstructor();
+    const source = audioContext.createBufferSource();
+    const filter = audioContext.createBiquadFilter();
+    const gain = audioContext.createGain();
+    const sources = [source];
+
+    source.buffer = createAmbientBuffer(audioContext, roomId);
+    source.loop = true;
+    filter.type = roomId === 'fire' ? 'lowpass' : 'bandpass';
+    filter.frequency.value = roomId === 'fire' ? 920 : 1450;
+    filter.Q.value = roomId === 'fire' ? 0.75 : 0.55;
+    gain.gain.value = roomId === 'fire' ? 0.055 : 0.07;
+
+    source.connect(filter);
+    filter.connect(gain);
+
+    if (roomId === 'fire') {
+      const warmth = audioContext.createOscillator();
+      const warmthGain = audioContext.createGain();
+      warmth.type = 'triangle';
+      warmth.frequency.value = 58;
+      warmthGain.gain.value = 0.012;
+      warmth.connect(warmthGain);
+      warmthGain.connect(gain);
+      warmth.start();
+      sources.push(warmth);
+    }
+
+    gain.connect(audioContext.destination);
+    source.start();
+    ambientAudioRef.current = { context: audioContext, sources };
+    setAmbientSoundActive(true);
+    return true;
+  }, [stopAmbientSound]);
+
+  useEffect(() => () => stopAmbientSound(false), [stopAmbientSound]);
 
   const scheduleRadioDialFeedbackHide = (delay = 850) => {
     if (radioDialFeedbackTimeoutRef.current) {
@@ -4612,6 +4817,23 @@ function App() {
     return `${m}:${s < 10 ? '0' : ''}${s}`;
   };
 
+  const applyBreatheRoom = (id) => {
+    const room = breatheRoomOptions.find((r) => r.id === id);
+    if (!room) return;
+    setSelectedBreatheRoom(id);
+    setRadioVolume(room.volume);
+    setBreatheRoomStatus(room.status);
+    if (id === 'lofi') {
+      stopAmbientSound();
+      setIsRadioPlaying(true);
+      setRadioStatusMessage('Lofi wallpaper selected — cozy radio waking up');
+      return;
+    }
+
+    setIsRadioPlaying(false);
+    startAmbientSound(id);
+  };
+
   if (locked) {
     return <PrivacyGate hasPin={hasPin} onCreatePin={createPin} onUnlock={() => setLocked(false)} />;
   }
@@ -4661,7 +4883,7 @@ function App() {
                 { id: 'home', label: 'Chill', icon: Headphones },
                 { id: 'write', label: 'Thoughts', icon: PenLine },
                 { id: 'notes', label: 'Notes', icon: FileText },
-                { id: 'breathe', label: 'Breathe', icon: Wind },
+                { id: 'breathe', label: 'Music Room', icon: Wind },
                 { id: 'unwind', label: 'Games', icon: Gamepad2 },
                 { id: 'memories', label: 'Memories', icon: BookOpen },
                 { id: 'insights', label: 'Vibes', icon: Sparkles }
@@ -4958,7 +5180,7 @@ function App() {
               {[
                 { id: 'write', label: 'Thoughts', detail: 'Write only when it helps', icon: PenLine, tone: 'bg-sage-100 text-sage-800' },
                 { id: 'notes', label: 'Notes', detail: 'Keep important things nearby', icon: FileText, tone: 'bg-teal-100 text-teal-700' },
-                { id: 'breathe', label: 'Breathe', detail: 'Focus & breathe', icon: Wind, tone: 'bg-blue-100 text-blue-700' },
+                { id: 'breathe', label: 'Music Room', detail: 'Wallpaper sounds', icon: Wind, tone: 'bg-blue-100 text-blue-700' },
                 { id: 'unwind', label: 'Games', detail: 'Chill games', icon: Gamepad2, tone: 'bg-violet-100 text-violet-700' },
                 { id: 'memories', label: 'Memories', detail: 'Return to saved moments', icon: BookOpen, tone: 'bg-sand-100 text-sand-600' },
                 { id: 'insights', label: 'Vibes', detail: 'See your mood flow', icon: Sparkles, tone: 'bg-rose-100 text-rose-700' }
@@ -5075,7 +5297,7 @@ function App() {
                   <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-5">
                     {[
                       { label: 'Play a chill game', detail: 'Jump straight into the unwind room when you want something cozy and immediate.', action: () => navigateToTab('unwind'), icon: Sparkles },
-                      { label: 'Breathe for a minute', detail: 'Open a soft breathing reset when you need a quick calmer pause.', action: () => navigateToTab('breathe'), icon: Wind },
+                      { label: 'Open the music room', detail: 'Choose rain, fireplace, or lofi wallpaper sounds for a softer reset.', action: () => navigateToTab('breathe'), icon: Wind },
                       { label: 'Write one line', detail: 'Catch one thought with prompts and a visible save action.', action: () => navigateToTab('write'), icon: PenLine },
                       { label: 'Plan important things', detail: 'Keep tasks, recurring habits, and notes away from diary entries.', action: () => navigateToTab('notes'), icon: FileText },
                       { label: 'Read guides', detail: 'Find calm game, prompt, privacy, and habit guides grouped by need.', action: () => openHomeSection('guides'), icon: Compass }
@@ -5200,7 +5422,7 @@ function App() {
               {[
                 { id: 'write', label: 'Thoughts', detail: draftWordCount ? `${draftWordCount} words in progress` : 'Write when it helps', icon: PenLine },
                 { id: 'notes', label: 'Notes', detail: plannerTodoCount ? `${openPlannerTodoCount} still open` : 'Keep important things', icon: FileText },
-                { id: 'breathe', label: 'Breathe', detail: 'Focus & calm', icon: Wind },
+                { id: 'breathe', label: 'Music Room', detail: 'Wallpaper sounds', icon: Wind },
                 { id: 'unwind', label: 'Games', detail: 'Chill games', icon: Gamepad2 },
                 { id: 'memories', label: 'Memories', detail: `${entries.length} saved`, icon: BookOpen },
                 { id: 'insights', label: 'Vibes', detail: `${weeklyCheckIns}/${weeklyGoal} this week`, icon: Sparkles }
@@ -5715,53 +5937,110 @@ function App() {
         )}
 
         {activeTab === 'breathe' && (
-          <div className="mx-auto max-w-2xl px-6 py-10 lg:py-16 fade-in text-center">
-            <h1 className="mb-2 font-display text-4xl font-bold tracking-tight text-sage-950">Breathe & Focus</h1>
-            <p className="mb-14 text-lg text-sage-700">Take a moment to center yourself before you begin writing.</p>
+          <div className="mx-auto max-w-5xl px-6 py-10 lg:py-16 fade-in">
+            <div className="text-center">
+              <h1 className="mb-2 font-display text-4xl font-bold tracking-tight text-sage-950">Music Room</h1>
+              <p className="mb-14 text-lg text-sage-700">Choose a wallpaper to change the ambient sound and mood.</p>
+            </div>
             
-            {/* Breathing Circle */}
-            <div className="mb-16 flex flex-col items-center justify-center">
-              <div className="relative flex h-64 w-64 items-center justify-center">
-                <div className={`absolute inset-0 rounded-full border border-sage-200 bg-sage-50/50 transition-all duration-[4000ms] ease-in-out ${
-                  breathePhase === 0 ? 'scale-110 opacity-60' : 
-                  breathePhase === 1 ? 'scale-110 opacity-90' : 
-                  breathePhase === 2 ? 'scale-75 opacity-40' : 
-                  'scale-75 opacity-70'
+            <div className="grid gap-6 md:grid-cols-3">
+              {breatheRoomOptions.map((option) => {
+                const isSelected = selectedBreatheRoom === option.id;
+                const OptionIcon = option.icon;
+                return (
+                  <button
+                    key={option.id}
+                    onClick={() => applyBreatheRoom(option.id)}
+                    className={`group relative flex flex-col overflow-hidden rounded-[2.5rem] border p-1 transition-all duration-500 hover:-translate-y-1.5 ${
+                      isSelected ? `bg-white ${option.ringTone} ring-4 ring-offset-4 ring-offset-sage-50` : 'border-white/60 bg-white/40 hover:bg-white/60'
+                    }`}
+                  >
+                    <div className={`relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-[2.2rem] bg-gradient-to-br ${option.gradient} shadow-inner`}>
+                       <div className="absolute inset-0 opacity-10 transition-opacity group-hover:opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)', backgroundSize: '16px 16px', color: 'inherit' }} />
+                       <div className={`relative z-10 flex flex-col items-center gap-4 transition-transform duration-700 ${isSelected ? 'scale-110' : 'scale-100 group-hover:scale-105'}`}>
+                         <div className={`flex h-20 w-20 items-center justify-center rounded-[2rem] bg-white/80 shadow-soft backdrop-blur-sm ${option.textTone}`}>
+                           <OptionIcon size={40} strokeWidth={1.5} />
+                         </div>
+                         <span className="text-3xl">{option.decoration}</span>
+                       </div>
+                       {isSelected ? (
+                         <div className="absolute bottom-4 flex gap-1">
+                           {[
+                             { id: 'first', delay: 0 },
+                             { id: 'second', delay: 0.15 },
+                             { id: 'third', delay: 0.3 }
+                           ].map((dot) => (
+                             <div key={dot.id} className={`h-1.5 w-1.5 rounded-full ${option.textTone} animate-bounce`} style={{ animationDelay: `${dot.delay}s` }} />
+                           ))}
+                         </div>
+                       ) : null}
+                    </div>
+                    <div className="p-6 text-left">
+                      <div className="flex items-center justify-between">
+                        <h3 className={`text-xl font-bold ${option.textTone}`}>{option.title}</h3>
+                        {isSelected ? <span className={`text-[10px] font-black uppercase tracking-widest ${option.textTone} opacity-60`}>Active</span> : null}
+                      </div>
+                      <p className={`mt-1 text-xs font-bold uppercase tracking-widest ${option.textTone} opacity-50`}>{option.sound}</p>
+                      <p className="mt-4 text-sm leading-relaxed text-sage-600">{option.description}</p>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="mt-16 flex flex-col items-center justify-center">
+              <div className={`relative flex h-72 w-72 items-center justify-center transition-all duration-700`}>
+                <div className={`absolute inset-0 rounded-[4rem] border border-white/60 bg-white/40 shadow-soft backdrop-blur-md transition-all duration-[4000ms] ease-in-out ${
+                  breathePhase === 0 ? 'scale-105 opacity-60' : 
+                  breathePhase === 1 ? 'scale-105 opacity-90' : 
+                  breathePhase === 2 ? 'scale-90 opacity-40' : 
+                  'scale-90 opacity-70'
                 }`} />
-                <div className="relative z-10 font-display text-2xl font-bold tracking-wide text-sage-900 transition-opacity duration-1000">
-                  {['Inhale', 'Hold', 'Exhale', 'Hold'][breathePhase]}
+                <div className="relative z-10 flex flex-col items-center text-center">
+                  <div className={`mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow-sm transition-all duration-700 ${activeBreatheRoom.textTone}`}>
+                    <ActiveBreatheRoomIcon size={28} />
+                  </div>
+                  <div className="font-display text-3xl font-bold tracking-wide text-sage-900 transition-opacity duration-1000">
+                    {['Inhale', 'Hold', 'Exhale', 'Hold'][breathePhase]}
+                  </div>
+                  <p className={`mt-2 text-[10px] font-black uppercase tracking-[0.2em] opacity-40 ${activeBreatheRoom.textTone}`}>{selectedBreatheRoom} mode</p>
                 </div>
               </div>
             </div>
 
-            {/* Focus Timer */}
-            <div className="rounded-3xl border border-white/60 bg-white/50 p-8 shadow-soft backdrop-blur-sm transition hover:bg-white/70">
-              <h3 className="mb-4 text-xl font-bold text-sage-900">Quiet Writing Timer</h3>
-              <p className="mb-8 text-sage-700">Set a gentle timer to keep yourself completely focused on your thoughts without distractions.</p>
-              
-              {focusActive ? (
-                <div className="flex flex-col items-center">
-                  <div className="font-display text-6xl font-extrabold tabular-nums tracking-tighter text-sage-800">
-                    {formatTime(focusTimer)}
-                  </div>
-                  <button onClick={() => setFocusActive(false)} className="mt-8 rounded-full border border-sage-200 bg-white px-6 py-2.5 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50">
-                    Pause timer
-                  </button>
+            <div className="mt-16 rounded-[3rem] border border-white/80 bg-white/60 p-10 shadow-soft backdrop-blur-md transition hover:bg-white/80">
+              <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+                <div className="max-w-md">
+                  <h3 className="text-2xl font-bold text-sage-950 tracking-tight">Focus Timer</h3>
+                  <p className="mt-3 text-sage-600 leading-relaxed">Set a gentle timer to keep yourself completely focused on your thoughts without distractions.</p>
                 </div>
-              ) : (
-                <div className="flex flex-wrap justify-center gap-3">
-                  <button onClick={() => startFocusSession(5)} className="rounded-full bg-sage-800 px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-700">
-                    5 minutes
-                  </button>
-                  <button onClick={() => startFocusSession(10)} className="rounded-full bg-sage-800 px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-700">
-                    10 minutes
-                  </button>
-                  <button onClick={() => startFocusSession(15)} className="rounded-full bg-sage-800 px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-700">
-                    15 minutes
-                  </button>
+                
+                <div className="flex flex-col items-center gap-6">
+                  {focusActive ? (
+                    <div className="flex flex-col items-center">
+                      <div className="font-display text-7xl font-extrabold tabular-nums tracking-tighter text-sage-800">
+                        {formatTime(focusTimer)}
+                      </div>
+                      <button onClick={() => setFocusActive(false)} className="mt-6 rounded-full border border-sage-200 bg-white px-8 py-3 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50">
+                        Pause timer
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex flex-wrap justify-center gap-4">
+                      {[5, 10, 15].map((mins) => (
+                        <button key={mins} onClick={() => startFocusSession(mins)} className="flex h-16 w-32 items-center justify-center rounded-2xl bg-sage-900 text-lg font-bold text-white shadow-sm transition hover:-translate-y-1 hover:bg-sage-800">
+                          {mins}m
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
-              )}
+              </div>
             </div>
+            
+            <p className="mt-12 text-center text-[11px] font-bold uppercase tracking-[0.25em] text-sage-400">
+              {breatheRoomStatus} {selectedBreatheRoom !== 'lofi' ? (ambientSoundActive ? 'Sound on.' : 'Tap the wallpaper to start sound.') : ''}
+            </p>
           </div>
         )}
 
@@ -6172,7 +6451,7 @@ function App() {
                     const dayEntries = day ? entriesByDate[day.dateKey] || [] : [];
                     const hasImportantDate = day ? Boolean(importantDates[day.dateKey]) : false;
                     const dayForecast = day ? calendarForecastByDate[day.dateKey] : null;
-                    const dayForecastVisuals = getForecastVisuals(dayForecast?.weatherCode);
+                    const dayForecastVisuals = getForecastVisuals(dayForecast);
                     const isSelected = day?.dateKey === selectedCalendarDate;
                     const isToday = day?.dateKey === todayISO();
                     return day ? (
@@ -7048,7 +7327,7 @@ function App() {
           { id: 'home', label: 'Chill', icon: Headphones },
           { id: 'write', label: 'Thoughts', icon: PenLine },
           { id: 'notes', label: 'Notes', icon: FileText },
-          { id: 'breathe', label: 'Breathe', icon: Wind },
+          { id: 'breathe', label: 'Music Room', icon: Wind },
           { id: 'unwind', label: 'Games', icon: Gamepad2 },
           { id: 'memories', label: 'Memory', icon: BookOpen },
           { id: 'insights', label: 'Vibes', icon: Sparkles },
