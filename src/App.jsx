@@ -1999,7 +1999,7 @@ function App() {
   const showMinimalHomeOverview = activeTab === 'home' && activeHomeSection === 'overview';
   const homeEntryCards = [
     { id: 'unwind', title: 'Games', description: 'Chill games', icon: Gamepad2, iconTone: 'bg-[#d8dbff] text-violet-700', onClick: () => navigateToTab('unwind') },
-    { id: 'write', title: 'Thoughts', description: 'Write only when it helps', icon: PenLine, iconTone: 'bg-[#dbead9] text-sage-700', onClick: () => navigateToTab('write') },
+    { id: 'write', title: 'Diary', description: 'Write only when it helps', icon: PenLine, iconTone: 'bg-[#dbead9] text-sage-700', onClick: () => navigateToTab('write') },
     { id: 'notes', title: 'Notes', description: 'Keep important things nearby', icon: FileText, iconTone: 'bg-[#d8f0ec] text-teal-700', onClick: () => navigateToTab('notes') },
     { id: 'breathe', title: 'Music Room', description: 'Sounds & Wallpapers', icon: Wind, iconTone: 'bg-[#dbe8f8] text-sky-700', onClick: () => navigateToTab('breathe') },
     { id: 'memories', title: 'Memories', description: 'Save dates and local weather', icon: CalendarDays, iconTone: 'bg-[#efe6d8] text-sand-700', onClick: () => navigateToTab('memories') },
@@ -4832,7 +4832,7 @@ function App() {
               {[
                 { id: 'unwind', label: 'Games', icon: Gamepad2 },
                 { id: 'home', label: 'Chill', icon: Headphones },
-                { id: 'write', label: 'Thoughts', icon: PenLine },
+                { id: 'write', label: 'Diary', icon: PenLine },
                 { id: 'notes', label: 'Notes', icon: FileText },
                 { id: 'breathe', label: 'Music Room', icon: Wind },
                 { id: 'memories', label: 'Memories', icon: CalendarDays },
@@ -5129,7 +5129,7 @@ function App() {
             <div className="mt-4 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:gap-4">
               {[
                 { id: 'unwind', label: 'Games', detail: 'Chill games', icon: Gamepad2, tone: 'bg-violet-100 text-violet-700' },
-                { id: 'write', label: 'Thoughts', detail: 'Write only when it helps', icon: PenLine, tone: 'bg-sage-100 text-sage-800' },
+                { id: 'write', label: 'Diary', detail: 'Write only when it helps', icon: PenLine, tone: 'bg-sage-100 text-sage-800' },
                 { id: 'notes', label: 'Notes', detail: 'Keep important things nearby', icon: FileText, tone: 'bg-teal-100 text-teal-700' },
                 { id: 'breathe', label: 'Music Room', detail: 'Wallpaper sounds', icon: Wind, tone: 'bg-blue-100 text-blue-700' },
                 { id: 'memories', label: 'Memories', detail: 'Return to saved moments', icon: BookOpen, tone: 'bg-sand-100 text-sand-600' },
@@ -5371,7 +5371,7 @@ function App() {
             <div className="grid gap-2 rounded-[1.5rem] bg-white/70 p-2 shadow-inner sm:grid-cols-3 lg:grid-cols-6">
               {[
                 { id: 'unwind', label: 'Games', detail: 'Chill games', icon: Gamepad2 },
-                { id: 'write', label: 'Thoughts', detail: draftWordCount ? `${draftWordCount} words in progress` : 'Write when it helps', icon: PenLine },
+                { id: 'write', label: 'Diary', detail: draftWordCount ? `${draftWordCount} words in progress` : 'Write when it helps', icon: PenLine },
                 { id: 'notes', label: 'Notes', detail: plannerTodoCount ? `${openPlannerTodoCount} still open` : 'Keep important things', icon: FileText },
                 { id: 'breathe', label: 'Music Room', detail: 'Wallpaper sounds', icon: Wind },
                 { id: 'memories', label: 'Memories', detail: `${entries.length} saved`, icon: BookOpen },
@@ -7281,7 +7281,7 @@ function App() {
         {[
           { id: 'unwind', label: 'Games', icon: Gamepad2 },
           { id: 'home', label: 'Chill', icon: Headphones },
-          { id: 'write', label: 'Thoughts', icon: PenLine },
+          { id: 'write', label: 'Diary', icon: PenLine },
           { id: 'notes', label: 'Notes', icon: FileText },
           { id: 'breathe', label: 'Music', icon: Wind },
           { id: 'memories', label: 'Memory', icon: CalendarDays },
