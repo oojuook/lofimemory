@@ -11,6 +11,7 @@ import dinoDashIconImage from './assets/dino-dash-icon.png';
 import rainWallpaperImage from './assets/rain-wallpaper.png';
 import fireWallpaperImage from './assets/fire-wallpaper.png';
 import lofiRoomWallpaperImage from './assets/lofi-room-wallpaper.png';
+import lofiMemoryHeaderImage from './assets/lofi-memory-header.png';
 import lotusMatchPreviewImage from './assets/lotus-match-preview.png';
 import gamesSectionPreviewImage from './assets/games-section-preview.png';
 import diarySectionPreviewImage from './assets/diary-section-preview.png';
@@ -4866,7 +4867,7 @@ function App() {
 
       <div className={`transition-opacity duration-500 ${showEntryTransition ? 'pointer-events-none select-none opacity-0' : 'opacity-100'}`}>
       <nav className="sticky top-0 z-20 px-5 pt-5 sm:px-7 xl:px-10">
-        <div className="site-nav-shell lofi-glass lofi-picture-border lofi-border-floral mx-auto max-w-[1280px] rounded-[3.2rem] border p-4 shadow-soft backdrop-blur-xl lg:p-5">
+        <div className="site-nav-shell lofi-glass lofi-picture-border lofi-border-memory mx-auto max-w-[1280px] rounded-[3.2rem] border p-4 shadow-soft backdrop-blur-xl lg:p-5">
           <div className="flex flex-col gap-2.5 lg:gap-3 xl:flex-row xl:items-center xl:justify-between">
             <a className="flex items-center gap-3.5" href="#home" onClick={() => openHomeSection('home')}>
               <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[1.35rem] border border-[#e8dfd5] bg-white/88 p-1.5 shadow-[0_12px_34px_rgba(117,127,119,0.14)] ring-1 ring-sage-100 overflow-hidden">
@@ -4974,7 +4975,7 @@ function App() {
           <p className="text-[11px] font-extrabold uppercase tracking-[0.34em] text-[#9a806a]">Choose your chill space</p>
             <p className="mt-3 text-sm font-semibold leading-7 text-[#7f6a58]">Pick a space.</p>
         </div>
-        <div className="lofi-glass lofi-picture-border lofi-border-watercolor rounded-[3rem] border p-3 shadow-soft backdrop-blur-xl sm:p-4">
+        <div className="lofi-glass lofi-picture-border lofi-border-memory rounded-[3rem] border p-3 shadow-soft backdrop-blur-xl sm:p-4">
           <div className="grid gap-3 md:grid-cols-2">
             {homeEntryCards.map((card) => (
               <button
@@ -4999,44 +5000,45 @@ function App() {
       {activeTab === 'home' && activeHomeSection === 'overview' && !showMinimalHomeOverview && (
       <section id="home" className="mx-auto grid max-w-[1280px] gap-8 px-5 pb-28 pt-10 sm:px-7 lg:grid-cols-12 lg:pb-12 xl:gap-12 xl:px-10">
         <div className="lg:col-span-8">
-          <div className="lofi-glass lofi-picture-border lofi-border-watercolor relative overflow-hidden rounded-[3.2rem] border p-8 shadow-soft backdrop-blur-xl lg:p-10 xl:p-11">
-            <div className="pointer-events-none absolute -left-10 top-12 h-28 w-28 rounded-full bg-[#efe4d8]/55 blur-3xl"></div>
-            <div className="pointer-events-none absolute right-4 top-4 h-32 w-32 rounded-full bg-[#f7eee3]/65 blur-3xl"></div>
-            <div className="relative">
-              <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#eadfce] bg-white/90 px-4 py-2 text-sm font-bold text-[#4a3a2d] shadow-sm">
+          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3.2rem] border border-[#8b5e3c]/25 p-8 shadow-[0_32px_90px_rgba(83,62,44,0.18)] lg:p-10 xl:p-11">
+            <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/58 via-black/28 to-black/10" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.20),transparent_20rem)]" />
+            <div className="relative z-10">
+              <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/15 px-4 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md">
                 <Headphones size={16} /> Lofi music & chill vibes
               </div>
-              <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.96] tracking-tight text-[#3d3025] md:text-6xl">Lofi Memory — a relaxing place to play games and listen to music.</h1>
-              <p className="mt-5 max-w-3xl text-[1.18rem] font-semibold leading-8 text-[#5d4c3e]">Listen to lofi music, play relaxing browser games, chill, keep a private online diary, and enjoy a cozy music room in one soft online space.</p>
+              <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.96] tracking-tight text-white drop-shadow-[0_4px_9px_rgba(0,0,0,0.48)] md:text-6xl">Lofi Memory — a relaxing place to play games and listen to music.</h1>
+              <p className="mt-5 max-w-3xl text-[1.18rem] font-bold leading-8 text-white/95 drop-shadow-[0_2px_5px_rgba(0,0,0,0.42)]">Listen to lofi music, play relaxing browser games, chill, keep a private online diary, and enjoy a cozy music room in one soft online space.</p>
 
-              <div className="lofi-now-playing lofi-glass mt-7 flex flex-col gap-4 rounded-[2.2rem] border p-4 shadow-sm backdrop-blur sm:flex-row sm:items-center sm:justify-between">
+              <div className="lofi-now-playing mt-7 flex flex-col gap-4 rounded-[2.2rem] border border-white/20 bg-black/15 p-4 shadow-sm backdrop-blur-md sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-4">
-                  <div className="lofi-mini-record flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-[#d8c5af] bg-[#3f342c] shadow-[0_14px_28px_rgba(80,61,47,0.14)]">
-                    <div className="h-5 w-5 rounded-full border border-[#d8c5af] bg-[#f3e7d8]" />
+                  <div className="lofi-mini-record flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-white/20 bg-[#3f342c] shadow-[0_14px_28px_rgba(0,0,0,0.18)]">
+                    <div className="h-5 w-5 rounded-full border border-white/25 bg-[#f3e7d8]" />
                   </div>
                   <div>
-                    <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-[#9a806a]">Now playing</p>
-                    <p className="mt-1 text-base font-extrabold text-[#3d3025]">Dusk room · rain window · soft study beats</p>
+                    <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-white/70">Now playing</p>
+                    <p className="mt-1 text-base font-extrabold text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.35)]">Dusk room · rain window · soft study beats</p>
                   </div>
                 </div>
                 <div className="lofi-equalizer" aria-hidden="true"><span /><span /><span /><span /><span /></div>
               </div>
 
               <div className="mt-9 flex flex-wrap gap-3">
-                <button className="inline-flex items-center gap-2 rounded-full bg-[#4f3f32] px-5 py-3 text-sm font-extrabold text-white shadow-[0_12px_28px_rgba(97,74,56,0.16)] transition hover:-translate-y-1 hover:bg-[#433528]" onClick={() => setIsRadioPlaying(true)} type="button">
+                <button className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-extrabold text-[#4f3f32] shadow-[0_12px_28px_rgba(0,0,0,0.16)] transition hover:-translate-y-1 hover:bg-[#fff9f0]" onClick={() => setIsRadioPlaying(true)} type="button">
                   <Headphones size={17} /> Start lofi music
                 </button>
-                <a className="inline-flex items-center gap-2 rounded-full border border-[#e2d3c2] bg-white/92 px-5 py-3 text-sm font-extrabold text-[#4f3f32] shadow-sm transition hover:-translate-y-1 hover:border-[#d3bea8] hover:bg-white" href="#unwind" onClick={() => navigateToTab('unwind')}>
+                <a className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/15 px-5 py-3 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/25" href="#unwind" onClick={() => navigateToTab('unwind')}>
                   <Leaf size={17} /> Play relaxing games
                 </a>
-                <a className="inline-flex items-center gap-2 rounded-full border border-[#e2d3c2] bg-white/92 px-5 py-3 text-sm font-extrabold text-[#4f3f32] shadow-sm transition hover:-translate-y-1 hover:border-[#d3bea8] hover:bg-white" href="#notes" onClick={() => navigateToTab('notes')}>
+                <a className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/15 px-5 py-3 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/25" href="#notes" onClick={() => navigateToTab('notes')}>
                   <FileText size={17} /> Open notes & to-dos
                 </a>
-                <button className="inline-flex items-center gap-2 rounded-full border border-[#e2d3c2] bg-white/92 px-5 py-3 text-sm font-extrabold text-[#4f3f32] shadow-sm transition hover:-translate-y-1 hover:border-[#d3bea8] hover:bg-white" onClick={() => setCustomizerOpen(true)} type="button">
+                <button className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/15 px-5 py-3 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/25" onClick={() => setCustomizerOpen(true)} type="button">
                   <Palette size={17} /> Choose your theme
                 </button>
                 {hasPin && (
-                  <button className="inline-flex items-center gap-2 rounded-full border border-[#e2d3c2] bg-white/92 px-5 py-3 text-sm font-extrabold text-[#4f3f32] shadow-sm transition hover:-translate-y-1 hover:border-[#d3bea8] hover:bg-white" onClick={() => setPinSettingsOpen(true)} type="button">
+                  <button className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/15 px-5 py-3 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/25" onClick={() => setPinSettingsOpen(true)} type="button">
                     <Shield size={17} /> Privacy settings
                   </button>
                 )}
@@ -5439,22 +5441,27 @@ function App() {
         </div>
 
         {activeTab === 'write' && (
-        <form className="lofi-picture-border lofi-border-watercolor rounded-[3rem] border border-[#e8dfd5]/80 bg-white/94 p-4 shadow-soft backdrop-blur sm:p-6 xl:p-8" onSubmit={saveEntry}>
-          <div className="mb-5 overflow-hidden rounded-[2.2rem] border border-[#e8dfd5]/90 bg-gradient-to-r from-white via-sage-50/35 to-white p-4 shadow-sm sm:p-5">
-            <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-              <div className="max-w-3xl">
-                <p className="text-sm font-extrabold uppercase tracking-[0.22em] text-sage-600">Your page for today</p>
-                <h2 className="mt-2 text-[2rem] font-extrabold leading-tight text-ink sm:text-3xl">Keep it simple. Write what feels true.</h2>
-                <p className="mt-2 text-sm leading-7 text-sage-700">This page does not need a polished story. A sentence, a fragment, or a few plain words are already enough.</p>
+        <form className="lofi-picture-border lofi-border-memory rounded-[3rem] border border-[#e8dfd5]/80 bg-white/94 p-4 shadow-soft backdrop-blur sm:p-6 xl:p-8" onSubmit={saveEntry}>
+          <div className="lofi-picture-border lofi-border-memory relative mb-6 overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/25 p-8 shadow-sm lg:p-10">
+            <img src={diarySectionPreviewImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
+            <div className="relative z-10">
+              <h1 className="font-display text-5xl font-bold tracking-tight text-white drop-shadow-md">Diary</h1>
+              <p className="mt-2 text-xs font-black uppercase tracking-[0.3em] text-white/90 drop-shadow-sm">Private Journal</p>
+              <div className="mt-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                <div className="max-w-xl">
+                  <p className="text-base font-bold text-white/95 drop-shadow-md">Keep it simple. Write what feels true. A sentence, a fragment, or a few plain words are already enough.</p>
+                </div>
+                <div className="inline-flex items-center gap-2 self-start rounded-full border border-white/25 bg-white/12 px-4 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md">
+                  <CalendarDays size={16} /> {formatDate(new Date().toISOString())}
+                </div>
               </div>
-              <div className="inline-flex items-center gap-2 self-start rounded-full border border-[#e8dfd5] bg-white/98 px-4 py-2 text-sm font-bold text-sage-700 shadow-sm">
-                <CalendarDays size={16} /> {formatDate(new Date().toISOString())}
+              <div className="mt-6 flex flex-wrap gap-2 text-[11px] font-black uppercase tracking-[0.2em] text-white/80 sm:text-xs">
+                <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-sm">{selectedMood} mood</span>
+                <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-sm">{draftWordCount} words</span>
+                <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-sm">{completedQuestCount}/{journalQuest.length} ritual steps</span>
               </div>
-            </div>
-            <div className="mt-4 flex flex-wrap gap-2 text-[11px] font-extrabold uppercase tracking-[0.2em] text-sage-600 sm:text-xs">
-              <span className="rounded-full border border-[#e8dfd5] bg-white/90 px-3 py-2 shadow-sm">{selectedMood} mood</span>
-              <span className="rounded-full border border-[#e8dfd5] bg-white/90 px-3 py-2 shadow-sm">{draftWordCount} words</span>
-              <span className="rounded-full border border-[#e8dfd5] bg-white/90 px-3 py-2 shadow-sm">{completedQuestCount}/{journalQuest.length} ritual steps</span>
             </div>
           </div>
 
@@ -5763,7 +5770,7 @@ function App() {
                 <button className="mb-5 inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white/88 px-4 py-2 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-x-0.5 hover:bg-white" onClick={returnToGameLibrary} type="button">
                   <span aria-hidden="true">←</span> Back to games
                 </button>
-                <div className={`lofi-glass lofi-picture-border lofi-border-watercolor relative overflow-hidden rounded-[3rem] border p-3 shadow-soft backdrop-blur sm:p-4 lg:p-5 ${gameVisualTheme === 'lofi' ? 'border-[#e8dfd5] bg-[#fffaf2]/85' : ''}`}>
+                <div className={`lofi-glass lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border p-3 shadow-soft backdrop-blur sm:p-4 lg:p-5 ${gameVisualTheme === 'lofi' ? 'border-[#e8dfd5] bg-[#fffaf2]/85' : ''}`}>
                   {gameVisualTheme === 'lofi' && (
                     <>
                       <img src={lofiRoomWallpaperImage} alt="" className="pointer-events-none absolute inset-0 h-full w-full scale-105 object-cover opacity-[0.07] blur-[1px]" aria-hidden="true" />
@@ -5835,13 +5842,18 @@ function App() {
                   <p className="mt-2 text-sage-600">Pick another one whenever you are ready.</p>
                 </div>
               )}
-              <div className="mb-10 text-center">
+              <div className="mb-14">
                 {unwindViewMode === 'grid' && (
-                  <>
-                    <p className="mb-2 text-sm font-bold uppercase tracking-widest text-sage-600">Games & Play</p>
-                    <h1 className="mb-3 font-display text-4xl font-bold tracking-tight text-sage-950">Pick a relaxing game</h1>
-                    <p className="mx-auto max-w-2xl text-base text-sage-700">Start with cozy Solitaire or Mind Sweeper, then explore more relaxing browser games while the lofi music keeps the page calm.</p>
-                  </>
+                  <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3.2rem] border border-[#8b5e3c]/25 p-8 shadow-[0_32px_90px_rgba(83,62,44,0.18)] lg:p-10 xl:p-12">
+                    <img src={gamesSectionPreviewImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
+                    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
+                    <div className="relative z-10">
+                      <h1 className="font-display text-5xl font-bold tracking-tight text-white drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)] md:text-7xl">Games</h1>
+                      <p className="mt-3 text-xs font-black uppercase tracking-[0.34em] text-white/90 drop-shadow-md">Chill games</p>
+                      <p className="mt-6 max-w-2xl text-base font-bold leading-7 text-white/95 drop-shadow-[0_2px_4px_rgba(0,0,0,0.35)]">Start with cozy Solitaire or Mind Sweeper, then explore more relaxing browser games while the lofi music keeps the page calm.</p>
+                    </div>
+                  </div>
                 )}
               </div>
               <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
@@ -5964,9 +5976,15 @@ function App() {
 
         {activeTab === 'breathe' && (
           <div className="mx-auto max-w-5xl px-6 py-10 lg:py-16 fade-in">
-            <div className="text-center">
-              <h1 className="mb-2 font-display text-4xl font-bold tracking-tight text-sage-950">Music Room</h1>
-              <p className="mb-14 text-lg text-sage-700">Choose a wallpaper to change the ambient sound and mood.</p>
+            <div className="lofi-picture-border lofi-border-memory relative mb-14 overflow-hidden rounded-[3.2rem] border border-[#8b5e3c]/25 p-8 shadow-soft lg:p-10 xl:p-12">
+              <img src={musicSectionPreviewImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+              <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
+              <div className="relative z-10">
+                <h1 className="font-display text-5xl font-bold tracking-tight text-white drop-shadow-md">Music Room</h1>
+                <p className="mt-2 text-xs font-black uppercase tracking-[0.3em] text-white/90 drop-shadow-sm">Sounds & Wallpapers</p>
+                <p className="mt-6 max-w-2xl text-base font-bold leading-7 text-white/95 drop-shadow-[0_2px_4px_rgba(0,0,0,0.35)]">Choose a wallpaper to change the ambient sound and mood. Each room brings its own calm energy to your space.</p>
+              </div>
             </div>
             
             <div className="grid gap-6 md:grid-cols-3">
@@ -6067,15 +6085,20 @@ function App() {
 
         {activeTab === 'notes' && (
         <div className="mt-6 grid gap-6 pb-28 xl:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)] xl:pb-0">
-          <div className="overflow-hidden rounded-[3rem] border border-[#e8dfd5] bg-white/84 p-6 shadow-soft backdrop-blur xl:p-8">
-            <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-              <div className="max-w-3xl">
-                <p className="text-xs font-bold uppercase tracking-[0.24em] text-sage-600 sm:text-sm sm:tracking-widest">Important things</p>
-                <h2 className="mt-2 text-3xl font-extrabold leading-tight text-ink sm:text-4xl">One cleaner page for reminders, practical notes, and the things you cannot afford to forget.</h2>
-                <p className="mt-3 max-w-2xl text-sm font-semibold leading-7 text-sage-700">Keep your diary reflective, and let this page hold the useful side of life: plans, deadlines, reminders, and little admin details.</p>
-              </div>
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-3xl bg-sage-50 text-sage-700 shadow-sm ring-1 ring-sage-100">
-                <FileText size={20} />
+          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-8 shadow-soft lg:p-10 xl:p-12">
+            <img src={notesSectionPreviewImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
+            <div className="relative z-10">
+              <h1 className="font-display text-5xl font-bold tracking-tight text-white drop-shadow-md">Notes</h1>
+              <p className="mt-2 text-xs font-black uppercase tracking-[0.3em] text-white/90 drop-shadow-sm">Important things</p>
+              <div className="mt-8 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+                <div className="max-w-xl">
+                  <p className="text-base font-bold leading-7 text-white/95 drop-shadow-md">One cleaner page for reminders, practical notes, and the things you cannot afford to forget.</p>
+                </div>
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-3xl border border-white/25 bg-white/15 text-white shadow-sm backdrop-blur-md">
+                  <FileText size={20} />
+                </div>
               </div>
             </div>
 
@@ -6445,20 +6468,24 @@ function App() {
           </div>
 
           {memoriesView === 'calendar' && (
-          <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/84 p-4 shadow-soft backdrop-blur sm:p-5 lg:p-6">
-            <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.22em] text-sage-600">Journal calendar</p>
-                <h2 className="mt-1 text-2xl font-extrabold text-ink sm:text-3xl">Memories</h2>
+          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-8 shadow-soft lg:p-10">
+            <img src={memoriesSectionPreviewImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
+            <div className="relative z-10">
+              <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <h1 className="font-display text-5xl font-bold tracking-tight text-white drop-shadow-md">Memories</h1>
+                  <p className="mt-2 text-xs font-black uppercase tracking-[0.3em] text-white/90 drop-shadow-sm">Journal calendar</p>
+                </div>
+                <div className="flex flex-wrap gap-2 text-[11px] font-black uppercase tracking-[0.16em] text-white/90">
+                  <span className="rounded-full border border-white/20 bg-black/20 px-3 py-2 backdrop-blur-sm">{importantDateCount} saved</span>
+                  <span className="rounded-full border border-white/20 bg-black/20 px-3 py-2 backdrop-blur-sm">{upcomingReminderCount} reminders</span>
+                </div>
               </div>
-              <div className="flex flex-wrap gap-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-sage-700">
-                <span className="rounded-full border border-[#e8dfd5] bg-sage-50 px-3 py-2">{importantDateCount} saved</span>
-                <span className="rounded-full border border-[#e8dfd5] bg-sage-50 px-3 py-2">{upcomingReminderCount} reminders</span>
-              </div>
-            </div>
 
-            <div className="grid gap-5 xl:grid-cols-[minmax(19rem,29rem)_minmax(0,1fr)] xl:items-start">
-              <div className="rounded-[1.6rem] border border-[#e8dfd5] bg-sage-50/72 p-3 shadow-inner sm:p-4">
+              <div className="mt-8 grid gap-5 xl:grid-cols-[minmax(19rem,29rem)_minmax(0,1fr)] xl:items-start">
+                <div className="rounded-[1.6rem] border border-white/20 bg-white/12 p-3 shadow-inner backdrop-blur-md sm:p-4">
                 <div className="mb-3 flex items-center justify-between gap-2 rounded-[1.2rem] bg-white px-2 py-2 shadow-sm">
                   <button className="rounded-full bg-sage-50 px-3 py-2 text-sm font-extrabold text-sage-800 transition hover:bg-sage-100" onClick={() => setCalendarMonth(shiftMonthKey(calendarMonth, -1))} type="button">‹</button>
                   <p className="text-center text-sm font-extrabold text-sage-950 sm:text-base">{formatMonthLabel(calendarMonth)}</p>
@@ -6639,7 +6666,8 @@ function App() {
               </div>
             </div>
           </div>
-          )}
+        </div>
+        )}
 
           {memoriesView === 'archive' && (
           <div className="flex h-full flex-col overflow-hidden rounded-[3rem] border border-[#e8dfd5] bg-gradient-to-br from-white/90 via-white/84 to-sand-50/72 p-4 shadow-soft backdrop-blur sm:p-6 lg:p-8">

@@ -839,6 +839,21 @@ input::placeholder {
   --lofi-border-image: url('./assets/lofi-border-watercolor.png');
 }
 
+.lofi-border-memory {
+  --lofi-border-image: url('./assets/lofi-memory-header.png');
+  --lofi-border-size: cover;
+  --lofi-border-opacity: 0.82;
+}
+
+.lofi-border-memory::before {
+  padding: 14px;
+}
+
+.lofi-border-memory::after {
+  border-width: 2px;
+  box-shadow: inset 0 0 0 14px rgba(139, 94, 60, 0.15), 0 0 0 2px rgba(255, 255, 255, 0.3);
+}
+
 .wallpaper-active .lofi-glass {
   background: linear-gradient(145deg, rgba(255, 250, 242, 0.82), rgba(244, 226, 201, 0.58)) !important;
   border-color: rgba(216, 192, 166, 0.56) !important;
