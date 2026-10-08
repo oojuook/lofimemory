@@ -2202,7 +2202,7 @@ function App() {
       tone: 'from-lime-100 to-emerald-50 text-emerald-700',
       preview: gameMindSweeperPreview,
       playingSpace: 'max-w-[980px]',
-      component: <MindSweeper difficulty={selectedGameDifficulty} />
+      component: <MindSweeper difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
     },
     {
       id: 'drifting-leaf',
@@ -2246,7 +2246,7 @@ function App() {
       tone: 'from-rose-100 to-orange-50 text-rose-700',
       preview: gameLotusPreview,
       playingSpace: 'max-w-[1020px]',
-      component: <LotusMatch difficulty={selectedGameDifficulty} />
+      component: <LotusMatch difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
     },
     {
       id: 'quiet-tiles',

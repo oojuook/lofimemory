@@ -72,13 +72,14 @@ function isRedSuit(suit) {
   return suit === '♥' || suit === '♦';
 }
 
-function MemoryCardFace({ icon, matched }) {
+function MemoryCardFace({ icon, matched, isLofi = false }) {
   const { rank, suit } = parsePlayingCard(icon);
   const redSuit = isRedSuit(suit);
+  const suitColor = redSuit ? (isLofi ? 'text-[#ff8fa3]' : 'text-rose-500') : (isLofi ? 'text-[#6e5a4a]' : 'text-slate-800');
 
   return (
-    <div className={`relative flex h-full flex-col justify-between overflow-hidden rounded-[1.05rem] border bg-[#fffdf8] p-2.5 text-left shadow-[0_12px_28px_rgba(71,85,105,0.14)] sm:p-3 ${redSuit ? 'border-rose-200 text-rose-500' : 'border-slate-200 text-slate-800'} ${matched ? 'ring-2 ring-emerald-200' : ''}`}>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.96),rgba(255,253,248,0.86)_58%,rgba(255,244,229,0.65))]" />
+    <div className={`relative flex h-full flex-col justify-between overflow-hidden rounded-[1.05rem] border p-2.5 text-left shadow-[0_12px_28px_rgba(71,85,105,0.14)] sm:p-3 ${isLofi ? 'bg-[#fdfaf5] border-[#e8dfd5]' : 'bg-[#fffdf8]'} ${suitColor} ${matched ? (isLofi ? 'ring-2 ring-amber-200' : 'ring-2 ring-emerald-200') : ''}`}>
+      <div className={`absolute inset-0 ${isLofi ? 'bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.82),rgba(253,250,245,0.8)_58%,rgba(250,237,205,0.55))]' : 'bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.96),rgba(255,253,248,0.86)_58%,rgba(255,244,229,0.65))]'}`} />
       <div className="relative flex flex-col leading-none">
         <span className="text-lg font-black sm:text-xl">{rank}</span>
         <span className="text-sm font-bold opacity-90 sm:text-base">{suit}</span>
@@ -94,9 +95,9 @@ function MemoryCardFace({ icon, matched }) {
   );
 }
 
-function MemoryCardBack() {
+function MemoryCardBack({ isLofi = false }) {
   return (
-    <div className="relative flex h-full items-center justify-center overflow-hidden rounded-[1.05rem] border border-[#ddd4c8] bg-[linear-gradient(180deg,#d8cfc2_0%,#cfc4b6_44%,#c4b8ab_100%)] shadow-[0_12px_28px_rgba(132,116,96,0.18)]">
+    <div className={`relative flex h-full items-center justify-center overflow-hidden rounded-[1.05rem] border shadow-[0_12px_28px_rgba(132,116,96,0.18)] ${isLofi ? 'border-[#e8dfd5] bg-[linear-gradient(180deg,#d4a373_0%,#a98467_52%,#6c584c_100%)]' : 'border-[#ddd4c8] bg-[linear-gradient(180deg,#d8cfc2_0%,#cfc4b6_44%,#c4b8ab_100%)]'}`}>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.35),transparent_55%),radial-gradient(circle_at_bottom,rgba(191,161,125,0.28),transparent_45%)]" />
       <div className="absolute inset-[10px] rounded-[0.9rem] border border-white/45" />
       <div className="absolute inset-[18px] rounded-[0.75rem] border border-white/25 bg-[linear-gradient(135deg,rgba(255,255,255,0.08),rgba(140,123,104,0.18))]" />
@@ -109,7 +110,8 @@ function MemoryCardBack() {
   );
 }
 
-export default function LotusMatch({ difficulty = 'medium' }) {
+export default function LotusMatch({ difficulty = 'medium', theme = 'lofi' }) {
+  const isLofi = theme === 'lofi';
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const { pairCount, previewMs, mismatchMs, label, note } = config;
   const bestScoreKey = `quiet-journal-lotus-best-${difficulty}`;
@@ -234,42 +236,37 @@ export default function LotusMatch({ difficulty = 'medium' }) {
 
   return (
     <div className="mx-auto mt-12 w-full max-w-[900px] pb-12">
-      <div className="rounded-[2rem] border border-sage-100 bg-gradient-to-br from-white via-sage-50/82 to-sand-50/82 p-5 shadow-soft lg:p-6">
+      <div className={`rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-amber-200/50 bg-[#fff7ec]' : 'border-sage-100 bg-gradient-to-br from-white via-sage-50/82 to-sand-50/82'}`}>
         <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white/88 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-700 shadow-sm">
+            <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-sage-200 bg-white/88 text-sage-700'}`}>
               <Sparkles size={14} /> {label} memory flow
             </div>
-            <h3 className="mt-4 text-3xl font-bold tracking-tight text-sage-950">Lotus Match</h3>
-            <p className="mt-2 max-w-2xl text-sm leading-7 text-sage-700">A soft memory game for quiet focus. Watch the poker cards flip, remember where they rest, and match the pairs at your own pace.</p>
-            <p className="mt-2 text-sm font-semibold text-sage-600">{note}</p>
-            <p className="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-sage-500">{pairCount} pairs • {previewLabel} preview • {mismatchLabel} reset</p>
+            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>Lotus Match</h3>
+            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>A soft memory game for quiet focus. Watch the poker cards flip, remember where they rest, and match the pairs at your own pace.</p>
+            <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-sage-600'}`}>{note}</p>
+            <p className={`mt-2 text-xs font-semibold uppercase tracking-[0.18em] ${isLofi ? 'text-amber-800/60' : 'text-sage-500'}`}>{pairCount} pairs • {previewLabel} preview • {mismatchLabel} reset</p>
           </div>
-          <div className="grid gap-2 rounded-[1.5rem] border border-white/85 bg-white/80 p-3 shadow-sm sm:grid-cols-4 lg:min-w-[29rem]">
-            <div className="rounded-[1.15rem] bg-sage-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sage-500">Pairs</p>
-              <p className="mt-2 text-xl font-extrabold text-sage-950">{matchedPairs}/{pairCount}</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-sage-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sage-500">Moves</p>
-              <p className="mt-2 text-xl font-extrabold text-sage-950">{moves}</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-sage-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sage-500">Preview</p>
-              <p className="mt-2 text-xl font-extrabold text-sage-950">{previewLabel}</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-sage-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-sage-500">Best</p>
-              <p className="mt-2 text-xl font-extrabold text-sage-950">{bestScore || '—'}</p>
-            </div>
+          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-4 lg:min-w-[29rem] ${isLofi ? 'rounded-[1.2rem] border border-white/70 bg-white/65' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
+            {[
+              ['Pairs', `${matchedPairs}/${pairCount}`],
+              ['Moves', moves],
+              ['Preview', previewLabel],
+              ['Best', bestScore || '—']
+            ].map(([statLabel, value]) => (
+              <div key={statLabel} className={`px-4 py-3 text-center ${isLofi ? 'rounded-[0.9rem] bg-amber-50 text-amber-900' : 'rounded-[1.15rem] bg-sage-50'}`}>
+                <p className={`text-[10px] font-extrabold uppercase tracking-[0.2em] ${isLofi ? 'text-amber-800/60' : 'text-sage-500'}`}>{statLabel}</p>
+                <p className={`mt-2 text-xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>{value}</p>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="mt-5 flex flex-col gap-3 rounded-[1.6rem] border border-white/80 bg-white/72 p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between">
-          <p className="text-sm font-semibold text-sage-700">{statusMessage}</p>
+        <div className={`mt-5 flex flex-col gap-3 rounded-[1.6rem] border p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between ${isLofi ? 'border-white/70 bg-white/65' : 'border-white/80 bg-white/72'}`}>
+          <p className={`text-sm font-semibold ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>{statusMessage}</p>
           <div className="flex flex-wrap gap-2">
             <button
-              className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5"
+              className={`inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'border border-amber-200 text-amber-900' : 'text-sage-900'}`}
               onClick={resetGame}
               type="button"
             >
@@ -277,7 +274,7 @@ export default function LotusMatch({ difficulty = 'medium' }) {
             </button>
             {status === 'ready' && (
               <button
-                className="inline-flex items-center gap-2 rounded-full bg-sage-900 px-4 py-2 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5"
+                className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#4a3a2d]' : 'bg-sage-900'}`}
                 onClick={startRound}
                 type="button"
               >
@@ -286,7 +283,7 @@ export default function LotusMatch({ difficulty = 'medium' }) {
             )}
             {status !== 'ready' && (
               <button
-                className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5"
+                className={`inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'border border-amber-200 text-amber-900' : 'border border-sage-200 text-sage-900'}`}
                 onClick={resetGame}
                 type="button"
               >
@@ -298,13 +295,13 @@ export default function LotusMatch({ difficulty = 'medium' }) {
 
         <div className="relative mt-5">
           {status === 'ready' && (
-            <div className="absolute inset-0 z-10 flex items-center justify-center rounded-[1.8rem] border border-white/70 bg-white/72 p-4 backdrop-blur-[2px]">
-              <div className="max-w-md rounded-[1.6rem] border border-white/90 bg-white/92 px-6 py-6 text-center shadow-soft">
-                <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-500">Ready when you are</p>
-                <h4 className="mt-3 text-2xl font-extrabold text-sage-950">Take a quick look, then match from memory.</h4>
-                <p className="mt-3 text-sm leading-7 text-sage-700">This {label.toLowerCase()} round gives you {previewLabel} to study {pairCount} pairs before the cards flip over.</p>
+            <div className={`absolute inset-0 z-10 flex items-center justify-center rounded-[1.8rem] border p-4 backdrop-blur-[2px] ${isLofi ? 'border-amber-200/50 bg-white/70' : 'border-white/70 bg-white/72'}`}>
+              <div className={`max-w-md rounded-[1.6rem] border px-6 py-6 text-center shadow-soft ${isLofi ? 'border-amber-200/40 bg-[#fffaf2]/90' : 'border-white/90 bg-white/92'}`}>
+                <p className={`text-[11px] font-extrabold uppercase tracking-[0.24em] ${isLofi ? 'text-amber-800' : 'text-sage-500'}`}>Ready when you are</p>
+                <h4 className={`mt-3 text-2xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>Take a quick look, then match from memory.</h4>
+                <p className={`mt-3 text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>This {label.toLowerCase()} round gives you {previewLabel} to study {pairCount} pairs before the cards flip over.</p>
                 <button
-                  className="mt-5 inline-flex items-center gap-2 rounded-full bg-sage-900 px-5 py-2.5 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5"
+                  className={`mt-5 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#4a3a2d]' : 'bg-sage-900'}`}
                   onClick={startRound}
                   type="button"
                 >
@@ -320,18 +317,18 @@ export default function LotusMatch({ difficulty = 'medium' }) {
               return (
                 <button
                   key={card.id}
-                  className={`aspect-[5/7] rounded-[1.25rem] border border-white/60 bg-transparent p-0 shadow-sm transition ${showFace ? 'hover:-translate-y-0.5' : 'hover:-translate-y-1 hover:scale-[1.01]'} ${status === 'ready' ? 'pointer-events-none opacity-75' : ''}`}
+                  className={`aspect-[5/7] rounded-[1.25rem] border bg-transparent p-0 shadow-sm transition ${isLofi ? 'border-amber-200/50' : 'border-white/60'} ${showFace ? 'hover:-translate-y-0.5' : 'hover:-translate-y-1 hover:scale-[1.01]'} ${status === 'ready' ? 'pointer-events-none opacity-75' : ''}`}
                   onClick={() => revealCard(card.id)}
                   type="button"
                 >
-                  {showFace ? <MemoryCardFace icon={card.icon} matched={card.matched} /> : <MemoryCardBack />}
+                  {showFace ? <MemoryCardFace icon={card.icon} isLofi={isLofi} matched={card.matched} /> : <MemoryCardBack isLofi={isLofi} />}
                 </button>
               );
             })}
           </div>
         </div>
 
-        <div className="mt-5 rounded-[1.4rem] border border-white/75 bg-white/76 px-4 py-4 text-sm font-semibold text-sage-700 shadow-sm">
+        <div className={`mt-5 rounded-[1.4rem] border px-4 py-4 text-sm font-semibold shadow-sm ${isLofi ? 'border-white/70 bg-white/65 text-[#6e5a4a]' : 'border-white/75 bg-white/76 text-sage-700'}`}>
           A lot of people reach for light puzzle and memory games when they want to relax without feeling pressured. This round keeps the interaction simple, calm, and satisfying while making each difficulty level easier to read at a glance.
         </div>
       </div>

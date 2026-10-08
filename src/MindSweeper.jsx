@@ -39,6 +39,17 @@ const numberTone = {
   8: 'text-stone-700'
 };
 
+const lofiNumberTone = {
+  1: 'text-blue-400',
+  2: 'text-emerald-400',
+  3: 'text-rose-400',
+  4: 'text-violet-400',
+  5: 'text-amber-500',
+  6: 'text-cyan-400',
+  7: 'text-stone-400',
+  8: 'text-stone-500'
+};
+
 function buildBoard(boardWidth, boardHeight, mineCount, safeCell) {
   const board = Array.from({ length: boardHeight }, (_, row) => Array.from({ length: boardWidth }, (_, col) => ({
     row,
@@ -147,7 +158,8 @@ function revealOpenArea(board, startRow, startCol) {
   }
 }
 
-export default function MindSweeper({ difficulty = 'medium' }) {
+export default function MindSweeper({ difficulty = 'medium', theme = 'lofi' }) {
+  const isLofi = theme === 'lofi';
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const { boardWidth, boardHeight, mineCount, label, densityLabel } = config;
   const safeTiles = boardWidth * boardHeight - mineCount;
@@ -236,48 +248,43 @@ export default function MindSweeper({ difficulty = 'medium' }) {
 
   return (
     <div className="mx-auto mt-12 w-full max-w-[980px] pb-12">
-      <div className="rounded-[1.2rem] border-[4px] border-[#16191b] bg-[#2b2f31] p-4 shadow-[0_18px_45px_rgba(18,22,20,0.22)] lg:p-5">
-        <div className="rounded-[0.8rem] border-t-[3px] border-l-[3px] border-[#50565a] border-r-[3px] border-b-[3px] border-r-[#111315] border-b-[#111315] bg-[#383d40] p-4 lg:p-5">
+      <div className={`rounded-[1.8rem] border p-4 lg:p-5 ${isLofi ? 'border-amber-200/60 bg-[#fff7ec] shadow-[0_26px_70px_rgba(83,62,44,0.13)]' : 'border-[4px] border-[#16191b] bg-[#2b2f31] shadow-[0_18px_45px_rgba(18,22,20,0.22)]'}`}>
+        <div className={`rounded-[1.25rem] border p-4 lg:p-5 ${isLofi ? 'border-white/65 bg-white/60 backdrop-blur-sm' : 'border-t-[3px] border-l-[3px] border-[#50565a] border-r-[3px] border-b-[3px] border-r-[#111315] border-b-[#111315] bg-[#383d40]'}`}>
           <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#5d6468] bg-[#2b2f31] px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#d9e0df] shadow-sm">
+              <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-[#5d6468] bg-[#2b2f31] text-[#d9e0df]'}`}>
                 <Sparkles size={14} /> {label} sweep
               </div>
-              <h3 className="mt-4 text-3xl font-bold tracking-tight text-[#f1f5f3]">Mind Sweeper</h3>
-              <p className="mt-2 max-w-2xl text-sm leading-7 text-[#c1cbc7]">Classic dark Minesweeper tiles with no spacing between squares.</p>
+              <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-[#f1f5f3]'}`}>Mind Sweeper</h3>
+              <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-[#c1cbc7]'}`}>{isLofi ? 'A cozy Minesweeper board with soft biscuit tiles, warm shadows, and quiet focus pacing.' : 'Classic dark Minesweeper tiles with no spacing between squares.'}</p>
               <div className="mt-3 flex flex-wrap gap-2">
-                <span className="rounded-full border border-[#5d6468] bg-[#2b2f31] px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] text-[#d9e0df] shadow-sm">{densityLabel}</span>
-                <span className="rounded-full border border-[#5d6468] bg-[#2b2f31] px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] text-[#d9e0df] shadow-sm">Safe first tap</span>
+                <span className={`rounded-full border px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-[#5d6468] bg-[#2b2f31] text-[#d9e0df]'}`}>{densityLabel}</span>
+                <span className={`rounded-full border px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-[#5d6468] bg-[#2b2f31] text-[#d9e0df]'}`}>Safe first tap</span>
               </div>
             </div>
-            <div className="grid gap-2 rounded-[0.8rem] border-t-[3px] border-l-[3px] border-[#50565a] border-r-[3px] border-b-[3px] border-r-[#111315] border-b-[#111315] bg-[#2b2f31] p-3 shadow-sm sm:grid-cols-4 lg:min-w-[31rem]">
-              <div className="rounded-[0.55rem] bg-[#1d2022] px-4 py-3 text-center">
-                <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#9fa9a5]">Grid</p>
-                <p className="mt-2 text-xl font-extrabold text-[#f1f5f3]">{boardWidth}×{boardHeight}</p>
-              </div>
-              <div className="rounded-[0.55rem] bg-[#1d2022] px-4 py-3 text-center">
-                <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#9fa9a5]">Mines</p>
-                <p className="mt-2 text-xl font-extrabold text-[#f1f5f3]">{mineCount}</p>
-              </div>
-              <div className="rounded-[0.55rem] bg-[#1d2022] px-4 py-3 text-center">
-                <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#9fa9a5]">Flags</p>
-                <p className="mt-2 text-xl font-extrabold text-[#f1f5f3]">{flagCount}</p>
-              </div>
-              <div className="rounded-[0.55rem] bg-[#1d2022] px-4 py-3 text-center">
-                <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#9fa9a5]">Wins</p>
-                <p className="mt-2 text-xl font-extrabold text-[#f1f5f3]">{wins}</p>
-              </div>
+            <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-4 lg:min-w-[31rem] ${isLofi ? 'rounded-[1.2rem] border border-white/70 bg-white/65' : 'rounded-[0.8rem] border-t-[3px] border-l-[3px] border-[#50565a] border-r-[3px] border-b-[3px] border-r-[#111315] border-b-[#111315] bg-[#2b2f31]'}`}>
+              {[
+                ['Grid', `${boardWidth}×${boardHeight}`],
+                ['Mines', mineCount],
+                ['Flags', flagCount],
+                ['Wins', wins]
+              ].map(([statLabel, value]) => (
+                <div key={statLabel} className={`px-4 py-3 text-center ${isLofi ? 'rounded-[0.9rem] bg-amber-50 text-amber-900' : 'rounded-[0.55rem] bg-[#1d2022]'}`}>
+                  <p className={`text-[10px] font-extrabold uppercase tracking-[0.2em] ${isLofi ? 'text-amber-800/60' : 'text-[#9fa9a5]'}`}>{statLabel}</p>
+                  <p className={`mt-2 text-xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-[#f1f5f3]'}`}>{value}</p>
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="mt-5 rounded-[0.7rem] border-t-[3px] border-l-[3px] border-[#50565a] border-r-[3px] border-b-[3px] border-r-[#111315] border-b-[#111315] bg-[#222629] p-3 shadow-sm">
+          <div className={`mt-5 p-3 shadow-sm ${isLofi ? 'rounded-[1.2rem] border border-white/70 bg-white/65' : 'rounded-[0.7rem] border-t-[3px] border-l-[3px] border-[#50565a] border-r-[3px] border-b-[3px] border-r-[#111315] border-b-[#111315] bg-[#222629]'}`}>
             <div className="grid gap-3 lg:grid-cols-[132px_minmax(0,1fr)_132px] lg:items-center">
-              <div className="rounded-[0.9rem] border-[3px] border-[#2a2a2a] bg-black px-3 py-2 text-center font-mono text-3xl font-extrabold tracking-[0.18em] text-[#ff3b30] shadow-inner">
+              <div className={`px-3 py-2 text-center font-mono text-3xl font-extrabold tracking-[0.18em] shadow-inner ${isLofi ? 'rounded-[0.9rem] border border-amber-200 bg-[#3d3025] text-amber-200' : 'rounded-[0.9rem] border-[3px] border-[#2a2a2a] bg-black text-[#ff3b30]'}`}>
                 {String(remainingMines).padStart(3, '0')}
               </div>
               <div className="flex items-center justify-center gap-3">
                 <button
-                  className="inline-flex h-14 w-14 items-center justify-center rounded-[1rem] border-t-[3px] border-l-[3px] border-white border-r-[3px] border-b-[3px] border-r-[#7b7b7b] border-b-[#7b7b7b] bg-[#efefef] text-2xl shadow-sm transition active:translate-y-[1px]"
+                  className={`inline-flex h-14 w-14 items-center justify-center text-2xl shadow-sm transition active:translate-y-[1px] ${isLofi ? 'rounded-full border border-amber-200 bg-[#fffaf2]' : 'rounded-[1rem] border-t-[3px] border-l-[3px] border-white border-r-[3px] border-b-[3px] border-r-[#7b7b7b] border-b-[#7b7b7b] bg-[#efefef]'}`}
                   onClick={resetBoard}
                   type="button"
                 >
@@ -285,14 +292,14 @@ export default function MindSweeper({ difficulty = 'medium' }) {
                 </button>
                 <div className="flex flex-wrap justify-center gap-2">
                   <button
-                    className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${actionMode === 'reveal' ? 'bg-[#3a3a3a] text-white' : 'border border-[#9d9d9d] bg-[#efefef] text-[#2b2b2b]'}`}
+                    className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${actionMode === 'reveal' ? (isLofi ? 'bg-[#4a3a2d] text-white' : 'bg-[#3a3a3a] text-white') : (isLofi ? 'border border-amber-200 bg-white text-amber-900' : 'border border-[#9d9d9d] bg-[#efefef] text-[#2b2b2b]')}`}
                     onClick={() => setActionMode('reveal')}
                     type="button"
                   >
                     Reveal
                   </button>
                   <button
-                    className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${actionMode === 'flag' ? 'bg-[#3a3a3a] text-white' : 'border border-[#9d9d9d] bg-[#efefef] text-[#2b2b2b]'}`}
+                    className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${actionMode === 'flag' ? (isLofi ? 'bg-[#4a3a2d] text-white' : 'bg-[#3a3a3a] text-white') : (isLofi ? 'border border-amber-200 bg-white text-amber-900' : 'border border-[#9d9d9d] bg-[#efefef] text-[#2b2b2b]')}`}
                     onClick={() => setActionMode('flag')}
                     type="button"
                   >
@@ -300,25 +307,32 @@ export default function MindSweeper({ difficulty = 'medium' }) {
                   </button>
                 </div>
               </div>
-              <div className="rounded-[0.9rem] border-[3px] border-[#2a2a2a] bg-black px-3 py-2 text-center font-mono text-3xl font-extrabold tracking-[0.18em] text-[#ff3b30] shadow-inner">
+              <div className={`px-3 py-2 text-center font-mono text-3xl font-extrabold tracking-[0.18em] shadow-inner ${isLofi ? 'rounded-[0.9rem] border border-amber-200 bg-[#3d3025] text-amber-200' : 'rounded-[0.9rem] border-[3px] border-[#2a2a2a] bg-black text-[#ff3b30]'}`}>
                 {String(boardProgress).padStart(3, '0')}
               </div>
             </div>
-            <div className="mt-3 flex flex-wrap items-center justify-between gap-3 text-xs font-extrabold uppercase tracking-[0.18em] text-[#b7c1bd]">
+            <div className={`mt-3 flex flex-wrap items-center justify-between gap-3 text-xs font-extrabold uppercase tracking-[0.18em] ${isLofi ? 'text-[#6e5a4a]' : 'text-[#b7c1bd]'}`}>
               <span>{gameState === 'won' ? 'Board cleared' : gameState === 'lost' ? 'Mine popped' : 'Keep sweeping'}</span>
               <span>{revealedCount}/{safeTiles} safe cells open</span>
             </div>
           </div>
 
-          <div className="mt-5 overflow-x-auto rounded-none border-t-[4px] border-l-[4px] border-[#50565a] border-r-[4px] border-b-[4px] border-r-[#111315] border-b-[#111315] bg-[#24282a] p-2 text-center shadow-inner sm:p-2.5">
-            <div className="inline-grid gap-0 border-2 border-[#151719] bg-[#151719]" style={{ gridTemplateColumns: `repeat(${boardWidth}, ${cellPixelSize}px)` }}>
+          <div className={`mt-5 overflow-x-auto p-2 text-center shadow-inner sm:p-2.5 ${isLofi ? 'rounded-[1.2rem] border border-white/70 bg-[#f8ead9]' : 'rounded-none border-t-[4px] border-l-[4px] border-[#50565a] border-r-[4px] border-b-[4px] border-r-[#111315] border-b-[#111315] bg-[#24282a]'}`}>
+            <div className={`inline-grid gap-0 border ${isLofi ? 'border-[#d8c6b2] bg-[#d8c6b2]' : 'border-2 border-[#151719] bg-[#151719]'}`} style={{ gridTemplateColumns: `repeat(${boardWidth}, ${cellPixelSize}px)` }}>
               {board.flat().map((cell) => {
                 const showMine = cell.revealed && cell.mine;
                 const isHidden = !cell.revealed;
+                const hiddenClass = isLofi
+                  ? 'border border-[#e8dfd5] bg-[#faedcd] shadow-[inset_0_1px_0_rgba(255,255,255,0.75),0_1px_0_rgba(139,94,52,0.08)] hover:bg-[#f6dfb8] active:bg-[#f2d8a9]'
+                  : 'border-t-[2px] border-l-[2px] border-r-[2px] border-b-[2px] border-t-[#7b8388] border-l-[#7b8388] border-r-[#16191b] border-b-[#16191b] bg-[#4f5559] active:border-t-[#16191b] active:border-l-[#16191b] active:border-r-[#7b8388] active:border-b-[#7b8388]';
+                const revealedClass = isLofi
+                  ? 'border border-[#e8dfd5] bg-[#fffaf2]'
+                  : 'border border-[#24282a] bg-[#303538]';
+                const mineClass = isLofi ? 'bg-[#ffafcc] text-[#7b2f44]' : 'bg-[#7b2424] text-[#ffd0d0]';
                 return (
                   <button
                     key={`${cell.row}-${cell.col}`}
-                    className={`box-border m-0 flex items-center justify-center rounded-none p-0 font-extrabold leading-none transition ${cellSizingClass} ${isHidden ? 'border-t-[2px] border-l-[2px] border-r-[2px] border-b-[2px] border-t-[#7b8388] border-l-[#7b8388] border-r-[#16191b] border-b-[#16191b] bg-[#4f5559] active:border-t-[#16191b] active:border-l-[#16191b] active:border-r-[#7b8388] active:border-b-[#7b8388]' : 'border border-[#24282a] bg-[#303538]'} ${showMine ? 'bg-[#7b2424] text-[#ffd0d0]' : ''} ${cell.flagged ? 'text-[#ff4a43]' : ''}`}
+                    className={`box-border m-0 flex items-center justify-center rounded-none p-0 font-extrabold leading-none transition ${cellSizingClass} ${isHidden ? hiddenClass : revealedClass} ${showMine ? mineClass : ''} ${cell.flagged ? (isLofi ? 'text-[#ff8fa3]' : 'text-[#ff4a43]') : ''}`}
                     style={{ width: `${cellPixelSize}px`, height: `${cellPixelSize}px` }}
                     onClick={() => handleCellAction(cell.row, cell.col)}
                     onContextMenu={(event) => {
@@ -330,7 +344,7 @@ export default function MindSweeper({ difficulty = 'medium' }) {
                     }}
                     type="button"
                   >
-                    {cell.flagged && !cell.revealed ? '⚑' : showMine ? '✹' : cell.revealed && cell.adjacent > 0 ? <span className={numberTone[cell.adjacent]}>{cell.adjacent}</span> : ''}
+                    {cell.flagged && !cell.revealed ? '⚑' : showMine ? '✹' : cell.revealed && cell.adjacent > 0 ? <span className={(isLofi ? lofiNumberTone : numberTone)[cell.adjacent]}>{cell.adjacent}</span> : ''}
                   </button>
                 );
               })}
