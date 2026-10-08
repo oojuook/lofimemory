@@ -2034,6 +2034,26 @@ function App() {
   ];
   const unwindGames = [
     {
+      id: 'solitaire',
+      title: 'Solitaire',
+      detail: 'Classic card reset',
+      description: 'Play cozy Solitaire in a calm green-felt space while listening to lofi music, relaxing, and clearing your mind one move at a time.',
+      icon: SolitaireImageIcon,
+      tone: 'from-emerald-800 to-teal-900 text-white',
+      playingSpace: 'max-w-[1180px]',
+      component: <Solitaire difficulty={selectedGameDifficulty} />
+    },
+    {
+      id: 'mind-sweeper',
+      title: 'Mind Sweeper',
+      detail: 'Soft Minesweeper logic',
+      description: 'A cozy Minesweeper-style board for a relaxing logic break when you want to chill, focus, and clear your head tile by tile.',
+      icon: MinesweeperImageIcon,
+      tone: 'from-lime-100 to-emerald-50 text-emerald-700',
+      playingSpace: 'max-w-[980px]',
+      component: <MindSweeper difficulty={selectedGameDifficulty} />
+    },
+    {
       id: 'drifting-leaf',
       title: 'Drifting Seed',
       detail: 'Soft endless glide',
@@ -2154,16 +2174,6 @@ function App() {
       component: <QuietClues difficulty={selectedGameDifficulty} />
     },
     {
-      id: 'mind-sweeper',
-      title: 'Mind Sweeper',
-      detail: 'Soft logic reset',
-      description: 'A cozy Minesweeper-style board for clearing your head one calm tile at a time.',
-      icon: MinesweeperImageIcon,
-      tone: 'from-lime-100 to-emerald-50 text-emerald-700',
-      playingSpace: 'max-w-[980px]',
-      component: <MindSweeper difficulty={selectedGameDifficulty} />
-    },
-    {
       id: 'quiet-snake',
       title: 'Snake',
       detail: 'Classic arcade loop',
@@ -2172,16 +2182,6 @@ function App() {
       tone: 'from-emerald-100 to-lime-50 text-emerald-700',
       playingSpace: 'max-w-[1040px]',
       component: <QuietSnake difficulty={selectedGameDifficulty} />
-    },
-    {
-      id: 'solitaire',
-      title: 'Solitaire',
-      detail: 'Classic card reset',
-      description: 'Stack cards in a cozy green-felt space, the perfect way to pause and reflect.',
-      icon: SolitaireImageIcon,
-      tone: 'from-emerald-800 to-teal-900 text-white',
-      playingSpace: 'max-w-[1180px]',
-      component: <Solitaire difficulty={selectedGameDifficulty} />
     },
     {
       id: 'dinosaur-dash',
@@ -2918,9 +2918,9 @@ function App() {
   const seoStudioContext = useMemo(() => ([
     'Brand: Lofi Memory',
     'Canonical: https://lofimemory.vercel.app/',
-    'Core positioning: a chill website for listening to lofi music, playing relaxing games, relaxing online, chill vibes, website to relax, clear your mind, private journal, notes, reminders, and calm online space.',
+    'Core positioning: a chill website for listening to lofi music, playing relaxing games such as cozy Solitaire and Minesweeper-style logic games, relaxing online, chill vibes, website to relax, clear your mind, private journal, notes, reminders, and calm online space.',
     'Hero title: A cozy website to listen to music, play games, and chill.',
-    'Hero summary: Lofi Memory helps visitors listen to lofi music, play relaxing games, chill, write down thoughts, and keep the day softly organized.',
+    'Hero summary: Lofi Memory helps visitors listen to lofi music, play relaxing games like Solitaire and Mind Sweeper, chill, write down thoughts, and keep the day softly organized.',
     'Hero support line: The main objective is a calm lofi website for listening to music, relaxing, playing cozy games, and clearing your mind.',
     'Current guide paths: /lofi-music-website.html, /listen-to-lofi-music-online.html, /chill-music-and-games.html, /lofi-radio-online.html, /relaxing-music-online.html, /chill-music-online.html, /lofi-study-music.html, /website-to-relax.html, /chill-place-online.html, /things-to-do-to-relax.html, /relaxing-study-break.html, /studying-with-lofi.html, /online-journal.html, /private-online-diary.html, /daily-journal-app.html, /relaxing-browser-games.html, /games-to-relax.html.',
     'Write view framing: A page for your diary. Write today\'s diary page in your own words.',
@@ -5586,8 +5586,8 @@ function App() {
                 {unwindViewMode === 'grid' && (
                   <>
                     <p className="mb-2 text-sm font-bold uppercase tracking-widest text-sage-600">Relax & Play</p>
-                    <h1 className="mb-3 font-display text-4xl font-bold tracking-tight text-sage-950">Pick a chill game</h1>
-                    <p className="mx-auto max-w-xl text-base text-sage-700">Choose a game, set a difficulty, and open it into its own calm play page.</p>
+                    <h1 className="mb-3 font-display text-4xl font-bold tracking-tight text-sage-950">Pick a relaxing game</h1>
+                    <p className="mx-auto max-w-2xl text-base text-sage-700">Start with cozy Solitaire or Mind Sweeper, then explore more relaxing browser games while the lofi music keeps the page calm.</p>
                   </>
                 )}
               </div>
@@ -5625,11 +5625,10 @@ function App() {
                 </div>
                 <div className="mt-4 flex flex-wrap gap-2.5">
                   {[
+                    { id: 'solitaire', label: 'Solitaire • classic' },
+                    { id: 'mind-sweeper', label: 'Mind Sweeper • logic' },
                     { id: 'lofi-jigsaw', label: 'Lofi Jigsaw • cozy puzzle' },
-                    { id: 'typing-speed-test', label: 'Typing Speed Test • WPM' },
-                    { id: 'quiet-words', label: 'Words • simple' },
                     { id: 'quiet-wordle', label: 'Wordle • guess the word' },
-                    { id: 'quiet-clues', label: 'Clues • clue-by-clue' },
                     { id: 'quiet-tiles', label: 'Tiles • tap and merge' }
                   ].map((item) => (
                     <button
@@ -5647,10 +5646,10 @@ function App() {
                 <div className="rounded-[1.8rem] border border-sage-100 bg-sage-50/55 p-5 shadow-sm backdrop-blur">
                   <div className="flex items-center gap-3">
                     <Sparkles className="text-sage-600" size={20} />
-                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">New game added</p>
+                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Featured relaxing games</p>
                   </div>
-                  <h2 className="mt-3 text-2xl font-extrabold text-sage-950">Lofi Jigsaw is now playable.</h2>
-                  <p className="mt-2 text-sm leading-7 text-sage-700">Slide a soft lofi scene back together for a relaxing puzzle break before journaling.</p>
+                  <h2 className="mt-3 text-2xl font-extrabold text-sage-950">Solitaire and Mind Sweeper are ready first.</h2>
+                  <p className="mt-2 text-sm leading-7 text-sage-700">Start with a familiar card game or a calm Minesweeper-style logic board, then keep the lofi music running while you unwind.</p>
                 </div>
                 <div className="rounded-[1.8rem] border border-sage-100 bg-white/78 p-5 shadow-sm backdrop-blur">
                   <div className="flex items-center gap-3">
@@ -5671,10 +5670,10 @@ function App() {
                 </div>
                 <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
                   {[
-                    { label: 'Play Wordle', detail: 'Switch to a familiar word-guessing round when you want one more easy win.', action: () => selectUnwindGame('quiet-wordle'), icon: Type },
+                    { label: 'Play Solitaire', detail: 'Open the classic card reset first when you want a familiar relaxing game with lofi music nearby.', action: () => selectUnwindGame('solitaire'), icon: Sparkles },
+                    { label: 'Try Mind Sweeper', detail: 'Clear calm logic tiles when you want a Minesweeper-style focus break.', action: () => selectUnwindGame('mind-sweeper'), icon: Grid2x2 },
                     { label: 'Breathe for a minute', detail: 'Open the breathing screen for a softer reset between rounds.', action: () => navigateToTab('breathe'), icon: Wind },
-                    { label: 'Write one line', detail: 'Catch a thought before it disappears, then come back to the games later.', action: () => navigateToTab('write'), icon: PenLine },
-                    { label: 'Open notes', detail: 'Drop a quick to-do or reminder without breaking the calm mood.', action: () => navigateToTab('notes'), icon: FileText }
+                    { label: 'Write one line', detail: 'Catch a thought before it disappears, then come back to the games later.', action: () => navigateToTab('write'), icon: PenLine }
                   ].map((item) => (
                     <button key={item.label} className="group rounded-[1.45rem] border border-white/85 bg-sage-50/55 p-4 text-left transition hover:-translate-y-1 hover:border-sage-200 hover:bg-white hover:shadow-lift" onClick={item.action} type="button">
                       <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-sage-800 shadow-sm transition group-hover:bg-sage-900 group-hover:text-white"><item.icon size={17} /></div>
@@ -5688,7 +5687,7 @@ function App() {
                 <article className="rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
                   <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Game-first comfort</p>
                   <h2 className="mt-3 text-2xl font-extrabold text-sage-950">The games are meant to be the easiest place to begin.</h2>
-                  <p className="mt-3 text-sm leading-7 text-sage-700">If you just want something light, start with <span className="font-extrabold text-sage-900">Typing Speed Test</span>, <span className="font-extrabold text-sage-900">Words</span>, <span className="font-extrabold text-sage-900">Wordle</span>, or <span className="font-extrabold text-sage-900">Tiles</span> on Easy. Prefer no-rush logic? <span className="font-extrabold text-sage-900">Sudoku</span>, <span className="font-extrabold text-sage-900">Clues</span>, <span className="font-extrabold text-sage-900">Slide</span>, <span className="font-extrabold text-sage-900">Mind Sweeper</span>, and <span className="font-extrabold text-sage-900">Lotus Match</span> are the gentlest puzzle picks.</p>
+                  <p className="mt-3 text-sm leading-7 text-sage-700">If you just want something familiar, start with <span className="font-extrabold text-sage-900">Solitaire</span> for a classic card reset or <span className="font-extrabold text-sage-900">Mind Sweeper</span> for calm Minesweeper-style logic. Prefer other cozy puzzles? <span className="font-extrabold text-sage-900">Lofi Jigsaw</span>, <span className="font-extrabold text-sage-900">Sudoku</span>, <span className="font-extrabold text-sage-900">Wordle</span>, and <span className="font-extrabold text-sage-900">Tiles</span> are easy relaxing games to play while the lofi music stays on.</p>
                 </article>
                 <article className="rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
                   <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Right now</p>
