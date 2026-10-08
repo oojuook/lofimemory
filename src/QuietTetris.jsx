@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowDown, ArrowLeft, RotateCcw, Sparkles } from 'lucide-react';
 
 const ROWS = 20;
@@ -90,9 +90,19 @@ function createEmptyBoard() {
   return Array.from({ length: ROWS }, () => Array.from({ length: COLS }, () => null));
 }
 
-function pickRandomType(previousType = '') {
-  const choices = pieceTypes.filter((type) => type !== previousType);
-  return choices[Math.floor(Math.random() * choices.length)] || pieceTypes[0];
+function shuffle(array) {
+  const next = [...array];
+  for (let i = next.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [next[i], next[j]] = [next[j], next[i]];
+  }
+  return next;
+}
+
+function drawFromBag(currentBag = []) {
+  const nextBag = currentBag.length ? [...currentBag] : shuffle([...pieceTypes]);
+  const type = nextBag.pop();
+  return { type, bag: nextBag };
 }
 
 function createPiece(type) {
@@ -179,8 +189,17 @@ export default function QuietTetris({ difficulty = 'medium' }) {
   const bestScoreKey = `quiet-journal-tetris-best-${difficulty}`;
 
   const [board, setBoard] = useState(createEmptyBoard);
-  const [currentPiece, setCurrentPiece] = useState(() => createPiece(pickRandomType()));
-  const [nextType, setNextType] = useState(() => pickRandomType());
+  const [bag, setBag] = useState(() => shuffle([...pieceTypes]));
+  const initialDrawRef = useRef(null);
+  if (!initialDrawRef.current) {
+    let initialBag = shuffle([...pieceTypes]);
+    const first = initialBag.pop();
+    if (initialBag.length === 0) initialBag = shuffle([...pieceTypes]);
+    const second = initialBag.pop();
+    initialDrawRef.current = { first, second, bag: initialBag };
+  }
+  const [currentPiece, setCurrentPiece] = useState(() => createPiece(initialDrawRef.current.first));
+  const [nextType, setNextType] = useState(() => initialDrawRef.current.second);
   const [heldType, setHeldType] = useState(null);
   const [holdUsed, setHoldUsed] = useState(false);
   const [score, setScore] = useState(0);
@@ -195,30 +214,34 @@ export default function QuietTetris({ difficulty = 'medium' }) {
   );
   const speedLabel = `${dropInterval}ms`;
 
+  const resetPiecesFromBag = useCallback(() => {
+    const firstDraw = drawFromBag([]);
+    const secondDraw = drawFromBag(firstDraw.bag);
+    setCurrentPiece(createPiece(firstDraw.type));
+    setNextType(secondDraw.type);
+    setBag(secondDraw.bag);
+  }, []);
+
   useEffect(() => {
     setBoard(createEmptyBoard());
-    setCurrentPiece(createPiece(pickRandomType()));
-    setNextType(pickRandomType());
+    resetPiecesFromBag();
     setHeldType(null);
     setHoldUsed(false);
     setScore(0);
     setLines(0);
     setGameState('start');
     setBestScore(parseInt(localStorage.getItem(bestScoreKey) || '0', 10));
-  }, [bestScoreKey]);
+  }, [bestScoreKey, resetPiecesFromBag]);
 
-  const startGame = () => {
-    const firstType = pickRandomType();
-    const upcoming = pickRandomType(firstType);
+  const startGame = useCallback(() => {
     setBoard(createEmptyBoard());
-    setCurrentPiece(createPiece(firstType));
-    setNextType(upcoming);
+    resetPiecesFromBag();
     setHeldType(null);
     setHoldUsed(false);
     setScore(0);
     setLines(0);
     setGameState('playing');
-  };
+  }, [resetPiecesFromBag]);
 
   const lockCurrentPiece = useCallback((pieceToLock = currentPiece) => {
     const mergedBoard = mergePiece(board, pieceToLock);
@@ -226,12 +249,13 @@ export default function QuietTetris({ difficulty = 'medium' }) {
     const nextScore = score + getLineScore(linesCleared, currentLevel);
     const nextLines = lines + linesCleared;
     const spawnedPiece = createPiece(nextType);
-    const upcomingType = pickRandomType(nextType);
+    const draw = drawFromBag(bag);
 
     setBoard(clearedBoard);
     setScore(nextScore);
     setLines(nextLines);
-    setNextType(upcomingType);
+    setNextType(draw.type);
+    setBag(draw.bag);
     setHoldUsed(false);
 
     if (hasCollision(clearedBoard, spawnedPiece, spawnedPiece.row, spawnedPiece.col, spawnedPiece.matrix)) {
@@ -241,7 +265,7 @@ export default function QuietTetris({ difficulty = 'medium' }) {
     }
 
     setCurrentPiece(spawnedPiece);
-  }, [board, currentLevel, currentPiece, lines, nextType, score]);
+  }, [bag, board, currentLevel, currentPiece, lines, nextType, score]);
 
   const movePiece = useCallback((rowDelta, colDelta) => {
     if (gameState !== 'playing') {
@@ -301,9 +325,10 @@ export default function QuietTetris({ difficulty = 'medium' }) {
 
     if (!heldType) {
       const spawnedPiece = createPiece(nextType);
-      const upcomingType = pickRandomType(nextType);
+      const draw = drawFromBag(bag);
       setHeldType(currentType);
-      setNextType(upcomingType);
+      setNextType(draw.type);
+      setBag(draw.bag);
       setHoldUsed(true);
       if (hasCollision(board, spawnedPiece, spawnedPiece.row, spawnedPiece.col, spawnedPiece.matrix)) {
         setCurrentPiece(spawnedPiece);
@@ -323,7 +348,7 @@ export default function QuietTetris({ difficulty = 'medium' }) {
       return;
     }
     setCurrentPiece(swappedPiece);
-  }, [board, currentPiece, gameState, heldType, holdUsed, nextType]);
+  }, [bag, board, currentPiece, gameState, heldType, holdUsed, nextType]);
 
   useEffect(() => {
     if (gameState !== 'playing') {
@@ -372,7 +397,7 @@ export default function QuietTetris({ difficulty = 'medium' }) {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [gameState, hardDrop, holdPiece, movePiece, rotatePiece]);
+  }, [gameState, hardDrop, holdPiece, movePiece, rotatePiece, startGame]);
 
   useEffect(() => {
     if (gameState === 'over' && score > bestScore) {
@@ -412,7 +437,7 @@ export default function QuietTetris({ difficulty = 'medium' }) {
               <Sparkles size={14} /> {config.label} stack flow
             </div>
             <h3 className="mt-4 text-3xl font-bold tracking-tight text-violet-950">Tetris</h3>
-            <p className="mt-2 max-w-2xl text-sm leading-7 text-violet-700">A cozy block-stacking game inspired by classic Tetris pacing: every 10 cleared lines raises the level, makes pieces fall faster, and gives higher line-clear points.</p>
+            <p className="mt-2 max-w-2xl text-sm leading-7 text-violet-700">A cozy block-stacking game inspired by classic Tetris pacing. Pieces now use the modern 7-bag system, so each shuffled bag contains I, J, L, O, S, T, and Z once before refilling for a fairer flow.</p>
             <p className="mt-2 text-sm font-semibold text-violet-600">{config.note}</p>
           </div>
           <div className="grid gap-2 rounded-[1.5rem] border border-white/85 bg-white/80 p-3 shadow-sm sm:grid-cols-2 xl:grid-cols-5 lg:min-w-[34rem]">

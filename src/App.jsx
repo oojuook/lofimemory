@@ -8,6 +8,10 @@ import sudokuIconImage from './assets/sudoku-icon.png';
 import wordleIconImage from './assets/wordle-icon.png';
 import dinoDashPreviewImage from './assets/dino-dash-preview.png';
 import dinoDashIconImage from './assets/dino-dash-icon.png';
+import rainWallpaperImage from './assets/rain-wallpaper.png';
+import fireWallpaperImage from './assets/fire-wallpaper.png';
+import lofiRoomWallpaperImage from './assets/lofi-room-wallpaper.png';
+import lotusMatchPreviewImage from './assets/lotus-match-preview.png';
 import { onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
 import { collection, deleteDoc, doc, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore';
 import { getToken, onMessage } from 'firebase/messaging';
@@ -504,7 +508,7 @@ const seoGuidePages = [
   { label: 'Trust page', title: 'Editorial policy', text: 'See how originality, accuracy, corrections, and wellbeing boundaries are handled across the site.', href: '/editorial-policy.html' },
   { label: 'Trust page', title: 'Privacy policy', text: 'Review how storage, sign-in, notifications, embedded media, and advertising-related technologies are described.', href: '/privacy.html' },
   { label: 'Trust page', title: 'Advertising policy', text: 'See how ads, Google AdSense, placement quality, editorial independence, and calm user experience are handled.', href: '/advertising-policy.html' },
-  { label: 'Trust page', title: 'Contact and corrections', text: 'Find the direct support route for privacy requests, content corrections, bug reports, and ad questions.', href: '/contact.html' },
+  { label: 'Trust page', title: 'Diary and corrections', text: 'Find the direct support route for privacy requests, content corrections, bug reports, and ad questions.', href: '/contact.html' },
   { label: 'Helpful read', title: 'How to protect your privacy when journaling online', text: 'A practical read on trust, storage expectations, and what to look for before you write online.', href: '/article-protect-privacy-journaling-online.html' },
   { label: 'Helpful read', title: 'The psychology of journaling', text: 'Understand why writing can reduce mental noise and make thoughts easier to process.', href: '/article-psychology-of-journaling.html' },
   { label: 'Helpful read', title: 'How to start a journaling habit', text: 'Learn how to build a writing routine that feels realistic enough to keep through busy weeks.', href: '/article-how-to-start-journaling-habit.html' },
@@ -524,7 +528,7 @@ const seoGuideGroups = [
   {
     title: 'Start with trust and product clarity',
     description: 'Best for visitors who want to understand what Lofi Memory is, how content is reviewed, and how privacy or support questions are handled.',
-    links: seoGuidePages.filter((page) => ['Lofi Memory blog', 'About Lofi Memory', 'Editorial policy', 'Privacy policy', 'Contact and corrections'].includes(page.title))
+    links: seoGuidePages.filter((page) => ['Lofi Memory blog', 'About Lofi Memory', 'Editorial policy', 'Privacy policy', 'Diary and corrections'].includes(page.title))
   },
   {
     title: 'Read the strongest journaling articles',
@@ -645,7 +649,9 @@ const breatheRoomOptions = [
     textTone: 'text-sky-800',
     ringTone: 'ring-sky-200',
     volume: 28,
-    decoration: '☔'
+    decoration: '☔',
+    videoId: 'mPZkdNFkNps',
+    wallpaper: rainWallpaperImage
   },
   {
     id: 'fire',
@@ -658,7 +664,9 @@ const breatheRoomOptions = [
     textTone: 'text-orange-800',
     ringTone: 'ring-orange-200',
     volume: 30,
-    decoration: '🪵'
+    decoration: '🪵',
+    videoId: 'UgHKb_7884o',
+    wallpaper: fireWallpaperImage
   },
   {
     id: 'lofi',
@@ -671,36 +679,11 @@ const breatheRoomOptions = [
     textTone: 'text-rose-800',
     ringTone: 'ring-rose-200',
     volume: 35,
-    decoration: '🎧'
+    decoration: '🎧',
+    videoId: 'rFZHOHl-L8A',
+    wallpaper: lofiRoomWallpaperImage
   }
 ];
-
-function createAmbientBuffer(audioContext, roomId) {
-  const duration = roomId === 'fire' ? 2.4 : 3;
-  const frameCount = audioContext.sampleRate * duration;
-  const buffer = audioContext.createBuffer(1, frameCount, audioContext.sampleRate);
-  const data = buffer.getChannelData(0);
-  let softNoise = 0;
-
-  for (let i = 0; i < frameCount; i += 1) {
-    const random = Math.random() * 2 - 1;
-    softNoise = (softNoise * 0.94) + (random * 0.06);
-    if (roomId === 'fire') {
-      const crackle = Math.random() > 0.985 ? (Math.random() * 2 - 1) * 0.9 : 0;
-      data[i] = (softNoise * 0.18) + crackle;
-    } else {
-      const shimmer = Math.random() * 0.24 - 0.12;
-      data[i] = (softNoise * 0.55) + shimmer;
-    }
-  }
-
-  return buffer;
-}
-
-function getAudioContextConstructor() {
-  if (typeof window === 'undefined') return null;
-  return window.AudioContext || window.webkitAudioContext || null;
-}
 
 const todayISO = () => new Date().toISOString().slice(0, 10);
 
@@ -723,7 +706,7 @@ function getInitialActiveTab() {
 function getInitialHomeSection() {
   if (typeof window === 'undefined') return 'overview';
   const hash = window.location.hash.replace('#', '');
-  const allowedSections = new Set(['home', 'overview', 'about', 'guides', 'seo-landing', 'resources', 'articles', 'faq', 'contact']);
+  const allowedSections = new Set(['home', 'overview', 'about', 'guides', 'seo-landing', 'resources', 'articles', 'faq', 'diary', 'privacy', 'terms']);
   if (!allowedSections.has(hash)) return 'overview';
   if (hash === 'home') return 'overview';
   if (hash === 'seo-landing') return 'guides';
@@ -918,12 +901,14 @@ function GamePreview({ gameId }) {
   if (gameId === 'lotus-match') {
     return (
       <div className={shellClass}>
-        <div className="flex h-20 items-center justify-center gap-2 rounded-[1rem] bg-gradient-to-br from-rose-100 to-orange-50 p-2">
-          {[0, 1, 2, 3].map((i) => (
-            <div key={i} className={`h-12 w-10 rounded-lg border-2 ${i % 2 === 0 ? 'bg-white border-rose-200' : 'bg-rose-50 border-rose-100 shadow-sm'} flex items-center justify-center text-lg`}>
-              {i === 1 ? '✨' : (i === 2 ? '🌸' : '')}
-            </div>
-          ))}
+        <div className="relative h-20 overflow-hidden rounded-[1rem] bg-rose-100">
+          <img src={lotusMatchPreviewImage} alt="Lotus Match preview" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-transparent to-black/10" />
+          <div className="absolute bottom-2 left-2 flex gap-1.5">
+            {['A♠', 'K♥', 'Q♦'].map((card) => (
+              <span key={card} className="flex h-8 w-6 items-center justify-center rounded-md border border-white/70 bg-white/86 text-[10px] font-black text-rose-800 shadow-sm">{card}</span>
+            ))}
+          </div>
         </div>
       </div>
     );
@@ -2017,8 +2002,8 @@ function App() {
     { id: 'write', title: 'Thoughts', description: 'Write only when it helps', icon: PenLine, iconTone: 'bg-[#dbead9] text-sage-700', onClick: () => navigateToTab('write') },
     { id: 'notes', title: 'Notes', description: 'Keep important things nearby', icon: FileText, iconTone: 'bg-[#d8f0ec] text-teal-700', onClick: () => navigateToTab('notes') },
     { id: 'breathe', title: 'Music Room', description: 'Sounds & Wallpapers', icon: Wind, iconTone: 'bg-[#dbe8f8] text-sky-700', onClick: () => navigateToTab('breathe') },
-    { id: 'memories', title: 'Weather & Memories', description: 'Save dates and local weather', icon: CalendarDays, iconTone: 'bg-[#efe6d8] text-sand-700', onClick: () => navigateToTab('memories') },
-    { id: 'vibes', title: 'Vibes', description: 'See your mood flow', icon: HeartHandshake, iconTone: 'bg-[#f4dce7] text-rose-700', onClick: () => navigateToTab('insights') }
+    { id: 'memories', title: 'Memories', description: 'Save dates and local weather', icon: CalendarDays, iconTone: 'bg-[#efe6d8] text-sand-700', onClick: () => navigateToTab('memories') },
+    { id: 'design', title: 'Design', description: 'Customize your space', icon: Palette, iconTone: 'bg-[#f4dce7] text-rose-700', onClick: () => navigateToTab('design') }
   ];
   const [selectedGameDifficulty, setSelectedGameDifficulty] = useState('medium');
   const selectedGameInterfaceRef = useRef(null);
@@ -2026,8 +2011,8 @@ function App() {
   const [isRadioPlaying, setIsRadioPlaying] = useState(true);
   const [radioVolume, setRadioVolume] = useState(35);
   const [selectedBreatheRoom, setSelectedBreatheRoom] = useState('lofi');
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const [breatheRoomStatus, setBreatheRoomStatus] = useState('Lofi wallpaper selected');
-  const [ambientSoundActive, setAmbientSoundActive] = useState(false);
   const [isRadioDialDragging, setIsRadioDialDragging] = useState(false);
   const [showRadioDialFeedback, setShowRadioDialFeedback] = useState(false);
   const [radioNeedsInteraction, setRadioNeedsInteraction] = useState(false);
@@ -2117,7 +2102,6 @@ function App() {
   const radioPlayerContainerRef = useRef(null);
   const radioPlayerRef = useRef(null);
   const radioUnlockedRef = useRef(false);
-  const ambientAudioRef = useRef(null);
 
   const isMasterAdmin = user?.email?.toLowerCase() === MASTER_ADMIN_EMAIL;
   const showAdminTools = isMasterAdmin && adminViewMode === 'master';
@@ -2134,7 +2118,7 @@ function App() {
       { id: 'tips', label: 'Tips', icon: Leaf, detail: 'Ways to begin' },
       { id: 'privacy', label: 'Privacy', icon: Shield, detail: 'What stays private' },
       { id: 'terms', label: 'Terms', icon: Scale, detail: 'Helpful notes' },
-      { id: 'contact', label: 'Contact', icon: Mail, detail: 'Reach the owner' }
+      { id: 'diary', label: 'Diary', icon: Mail, detail: 'Reach the owner' }
     ];
     if (showAdminTools) {
       sections.push({ id: 'seo-studio', label: 'SEO Studio', icon: ShieldCheck, detail: 'Admin-only AI tools' });
@@ -2142,7 +2126,7 @@ function App() {
     return sections;
   }, [showAdminTools]);
   const primaryHomeSections = useMemo(
-    () => homeSections.filter((section) => ['overview', 'about', 'guides', 'resources', 'faq', 'contact', 'seo-studio'].includes(section.id)),
+    () => homeSections.filter((section) => ['overview', 'about', 'guides', 'resources', 'faq', 'diary', 'seo-studio'].includes(section.id)),
     [homeSections]
   );
   const difficultyOptions = [
@@ -2396,7 +2380,7 @@ function App() {
     tips: 'tips',
     privacy: 'privacy',
     terms: 'terms',
-    contact: 'contact',
+    diary: 'diary',
     'seo-studio': 'seo-studio'
   };
 
@@ -2467,10 +2451,35 @@ function App() {
     '--quote-bg': quoteBg
   };
 
+  const toggleFullscreen = useCallback(async () => {
+    if (!selectedGameInterfaceRef.current) return;
+    try {
+      if (document.fullscreenElement) {
+        await document.exitFullscreen();
+      } else {
+        await selectedGameInterfaceRef.current.requestFullscreen();
+      }
+    } catch (err) {
+      console.error('Fullscreen failed:', err);
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleFsChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', handleFsChange);
+    return () => document.removeEventListener('fullscreenchange', handleFsChange);
+  }, []);
+
   function navigateToTab(tabId) {
-    setActiveTab(tabId);
     setShowEntryTransition(false);
     setEntryTransitionClosing(false);
+    if (tabId === 'design') {
+      setCustomizerOpen(true);
+      return;
+    }
+    setActiveTab(tabId);
     if (tabId === 'home') {
       setActiveHomeSection('overview');
     }
@@ -3214,72 +3223,6 @@ function App() {
   const radioDialDegrees = RADIO_DIAL_START + radioDialSweepDegrees;
   const activeBreatheRoom = useMemo(() => breatheRoomOptions.find((room) => room.id === selectedBreatheRoom) || breatheRoomOptions[0], [selectedBreatheRoom]);
   const ActiveBreatheRoomIcon = activeBreatheRoom.icon;
-
-  const stopAmbientSound = useCallback((updateState = true) => {
-    const ambientAudio = ambientAudioRef.current;
-    ambientAudioRef.current = null;
-
-    if (ambientAudio) {
-      ambientAudio.sources.forEach((source) => {
-        try {
-          source.stop?.();
-        } catch {}
-      });
-      try {
-        ambientAudio.context.close?.();
-      } catch {}
-    }
-
-    if (updateState) {
-      setAmbientSoundActive(false);
-    }
-  }, []);
-
-  const startAmbientSound = useCallback((roomId) => {
-    const AudioContextConstructor = getAudioContextConstructor();
-    if (!AudioContextConstructor) {
-      setBreatheRoomStatus('Ambient sound is not supported in this browser.');
-      setAmbientSoundActive(false);
-      return false;
-    }
-
-    stopAmbientSound(false);
-    const audioContext = new AudioContextConstructor();
-    const source = audioContext.createBufferSource();
-    const filter = audioContext.createBiquadFilter();
-    const gain = audioContext.createGain();
-    const sources = [source];
-
-    source.buffer = createAmbientBuffer(audioContext, roomId);
-    source.loop = true;
-    filter.type = roomId === 'fire' ? 'lowpass' : 'bandpass';
-    filter.frequency.value = roomId === 'fire' ? 920 : 1450;
-    filter.Q.value = roomId === 'fire' ? 0.75 : 0.55;
-    gain.gain.value = roomId === 'fire' ? 0.055 : 0.07;
-
-    source.connect(filter);
-    filter.connect(gain);
-
-    if (roomId === 'fire') {
-      const warmth = audioContext.createOscillator();
-      const warmthGain = audioContext.createGain();
-      warmth.type = 'triangle';
-      warmth.frequency.value = 58;
-      warmthGain.gain.value = 0.012;
-      warmth.connect(warmthGain);
-      warmthGain.connect(gain);
-      warmth.start();
-      sources.push(warmth);
-    }
-
-    gain.connect(audioContext.destination);
-    source.start();
-    ambientAudioRef.current = { context: audioContext, sources };
-    setAmbientSoundActive(true);
-    return true;
-  }, [stopAmbientSound]);
-
-  useEffect(() => () => stopAmbientSound(false), [stopAmbientSound]);
 
   const scheduleRadioDialFeedbackHide = (delay = 850) => {
     if (radioDialFeedbackTimeoutRef.current) {
@@ -4823,15 +4766,23 @@ function App() {
     setSelectedBreatheRoom(id);
     setRadioVolume(room.volume);
     setBreatheRoomStatus(room.status);
-    if (id === 'lofi') {
-      stopAmbientSound();
-      setIsRadioPlaying(true);
-      setRadioStatusMessage('Lofi wallpaper selected — cozy radio waking up');
-      return;
-    }
 
-    setIsRadioPlaying(false);
-    startAmbientSound(id);
+    if (radioPlayerRef.current?.loadVideoById) {
+      radioUnlockedRef.current = true;
+      radioPlayerRef.current.loadVideoById({
+        videoId: room.videoId,
+        startSeconds: 0,
+        suggestedQuality: 'small'
+      });
+      radioPlayerRef.current.unMute?.();
+      radioPlayerRef.current.setVolume?.(room.volume);
+      radioPlayerRef.current.playVideo?.();
+      setIsRadioPlaying(true);
+      setRadioNeedsInteraction(false);
+      setRadioStatusMessage(`${room.title} selected — audio is playing`);
+    } else {
+      setRadioStatusMessage('Connecting to radio player...');
+    }
   };
 
   if (locked) {
@@ -4880,13 +4831,13 @@ function App() {
             </a>
             <div className="site-nav-links hidden flex-1 items-center justify-center gap-7 xl:gap-9">
               {[
+                { id: 'unwind', label: 'Games', icon: Gamepad2 },
                 { id: 'home', label: 'Chill', icon: Headphones },
                 { id: 'write', label: 'Thoughts', icon: PenLine },
                 { id: 'notes', label: 'Notes', icon: FileText },
                 { id: 'breathe', label: 'Music Room', icon: Wind },
-                { id: 'unwind', label: 'Games', icon: Gamepad2 },
-                { id: 'memories', label: 'Memories', icon: BookOpen },
-                { id: 'insights', label: 'Vibes', icon: Sparkles }
+                { id: 'memories', label: 'Memories', icon: CalendarDays },
+                { id: 'design', label: 'Design', icon: Palette }
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -4959,12 +4910,12 @@ function App() {
             </div>
           </div>
           <div className="site-nav-links mt-2 hidden flex-wrap items-center justify-center gap-2 rounded-[1.5rem] border border-sage-100 bg-white/88 p-1.5 2xl:flex">
-            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#home" onClick={() => navigateToTab('home')}>Chill</a>
-            <button className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" onClick={() => setCustomizerOpen(true)} type="button">Vibes</button>
             <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#unwind" onClick={() => navigateToTab('unwind')}>Games</a>
-            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#resources" onClick={() => openHomeSection('resources')}>Relax</a>
-            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#faq" onClick={() => openHomeSection('faq')}>Help</a>
-            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#contact" onClick={() => openHomeSection('contact')}>Contact</a>
+            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#home" onClick={() => navigateToTab('home')}>Chill</a>
+            <button className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
+            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#memories" onClick={() => navigateToTab('memories')}>Memories</a>
+            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#breathe" onClick={() => navigateToTab('breathe')}>Music</a>
+            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#diary" onClick={() => openHomeSection('diary')}>Diary</a>
           </div>
         </div>
       </nav>
@@ -5178,12 +5129,12 @@ function App() {
             </div>
             <div className="mt-4 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:gap-4">
               {[
+                { id: 'unwind', label: 'Games', detail: 'Chill games', icon: Gamepad2, tone: 'bg-violet-100 text-violet-700' },
                 { id: 'write', label: 'Thoughts', detail: 'Write only when it helps', icon: PenLine, tone: 'bg-sage-100 text-sage-800' },
                 { id: 'notes', label: 'Notes', detail: 'Keep important things nearby', icon: FileText, tone: 'bg-teal-100 text-teal-700' },
                 { id: 'breathe', label: 'Music Room', detail: 'Wallpaper sounds', icon: Wind, tone: 'bg-blue-100 text-blue-700' },
-                { id: 'unwind', label: 'Games', detail: 'Chill games', icon: Gamepad2, tone: 'bg-violet-100 text-violet-700' },
                 { id: 'memories', label: 'Memories', detail: 'Return to saved moments', icon: BookOpen, tone: 'bg-sand-100 text-sand-600' },
-                { id: 'insights', label: 'Vibes', detail: 'See your mood flow', icon: Sparkles, tone: 'bg-rose-100 text-rose-700' }
+                { id: 'design', label: 'Design', detail: 'Customize your space', icon: Palette, tone: 'bg-rose-100 text-rose-700' }
               ].map((tab) => (
                 <button key={tab.id} className="group flex items-center gap-3 rounded-2xl border border-sage-100 bg-white/92 px-4 py-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-200 hover:bg-white hover:shadow-lift" onClick={() => navigateToTab(tab.id)} type="button">
                   <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl shadow-sm transition group-hover:scale-105 ${tab.tone}`}>
@@ -5420,12 +5371,12 @@ function App() {
             </div>
             <div className="grid gap-2 rounded-[1.5rem] bg-white/70 p-2 shadow-inner sm:grid-cols-3 lg:grid-cols-6">
               {[
+                { id: 'unwind', label: 'Games', detail: 'Chill games', icon: Gamepad2 },
                 { id: 'write', label: 'Thoughts', detail: draftWordCount ? `${draftWordCount} words in progress` : 'Write when it helps', icon: PenLine },
                 { id: 'notes', label: 'Notes', detail: plannerTodoCount ? `${openPlannerTodoCount} still open` : 'Keep important things', icon: FileText },
                 { id: 'breathe', label: 'Music Room', detail: 'Wallpaper sounds', icon: Wind },
-                { id: 'unwind', label: 'Games', detail: 'Chill games', icon: Gamepad2 },
                 { id: 'memories', label: 'Memories', detail: `${entries.length} saved`, icon: BookOpen },
-                { id: 'insights', label: 'Vibes', detail: `${weeklyCheckIns}/${weeklyGoal} this week`, icon: Sparkles }
+                { id: 'design', label: 'Design', detail: 'Customize space', icon: Palette }
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -5774,7 +5725,17 @@ function App() {
                         <h1 className="mt-2 font-display text-4xl font-bold tracking-tight text-sage-950">{selectedUnwindGameConfig.title}</h1>
                         <p className="mt-2 max-w-2xl text-sm leading-7 text-sage-700">{selectedUnwindGameConfig.description}</p>
                       </div>
-                      <div className="flex w-full flex-col gap-2 xl:max-w-[28rem] xl:items-end">
+                      <div className="flex w-full flex-col gap-2 xl:max-w-[32rem] xl:items-end">
+                        <div className="flex flex-wrap gap-2 xl:justify-end">
+                          <button onClick={toggleFullscreen} className="flex h-11 items-center gap-2 rounded-2xl border border-sage-200 bg-white px-5 text-sm font-bold text-sage-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50" type="button">
+                            {isFullscreen ? <ArrowUp size={16} className="rotate-180" /> : <ArrowUp size={16} />}
+                            {isFullscreen ? 'Exit full' : 'Full screen'}
+                          </button>
+                          <button onClick={returnToGameLibrary} className="flex h-11 items-center gap-2 rounded-2xl border border-sage-200 bg-white px-5 text-sm font-bold text-sage-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50" type="button">
+                            <Gamepad2 size={16} />
+                            Back to games
+                          </button>
+                        </div>
                         <p className="text-[11px] font-extrabold uppercase tracking-[0.2em] text-sage-600">Difficulty in-game</p>
                         <div className="flex flex-wrap gap-2 xl:justify-end">
                           {difficultyOptions.map((difficulty) => (
@@ -5793,7 +5754,7 @@ function App() {
                       </div>
                     </div>
                   </div>
-                  <div className={`mx-auto mt-5 w-full ${selectedUnwindGameConfig.playingSpace || 'max-w-[980px]'}`}>{selectedUnwindGameConfig.component}</div>
+                  <div className={`mx-auto mt-5 w-full ${isFullscreen ? 'max-w-none' : (selectedUnwindGameConfig.playingSpace || 'max-w-[980px]')}`}>{selectedUnwindGameConfig.component}</div>
                 </div>
               </div>
             )}
@@ -5808,7 +5769,7 @@ function App() {
               <div className="mb-10 text-center">
                 {unwindViewMode === 'grid' && (
                   <>
-                    <p className="mb-2 text-sm font-bold uppercase tracking-widest text-sage-600">Relax & Play</p>
+                    <p className="mb-2 text-sm font-bold uppercase tracking-widest text-sage-600">Games & Play</p>
                     <h1 className="mb-3 font-display text-4xl font-bold tracking-tight text-sage-950">Pick a relaxing game</h1>
                     <p className="mx-auto max-w-2xl text-base text-sage-700">Start with cozy Solitaire or Mind Sweeper, then explore more relaxing browser games while the lofi music keeps the page calm.</p>
                   </>
@@ -5956,12 +5917,14 @@ function App() {
                     }`}
                   >
                     <div className={`relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-[2.2rem] bg-gradient-to-br ${option.gradient} shadow-inner`}>
-                       <div className="absolute inset-0 opacity-10 transition-opacity group-hover:opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)', backgroundSize: '16px 16px', color: 'inherit' }} />
+                       {option.wallpaper ? <img src={option.wallpaper} alt={`${option.title} wallpaper`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" /> : null}
+                       <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-white/10" />
+                       <div className="absolute inset-0 opacity-20 transition-opacity group-hover:opacity-30" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)', backgroundSize: '16px 16px', color: 'white' }} />
                        <div className={`relative z-10 flex flex-col items-center gap-4 transition-transform duration-700 ${isSelected ? 'scale-110' : 'scale-100 group-hover:scale-105'}`}>
-                         <div className={`flex h-20 w-20 items-center justify-center rounded-[2rem] bg-white/80 shadow-soft backdrop-blur-sm ${option.textTone}`}>
+                         <div className="flex h-20 w-20 items-center justify-center rounded-[2rem] bg-white/80 text-sage-900 shadow-soft backdrop-blur-sm">
                            <OptionIcon size={40} strokeWidth={1.5} />
                          </div>
-                         <span className="text-3xl">{option.decoration}</span>
+                         <span className="text-3xl drop-shadow">{option.decoration}</span>
                        </div>
                        {isSelected ? (
                          <div className="absolute bottom-4 flex gap-1">
@@ -6039,7 +6002,7 @@ function App() {
             </div>
             
             <p className="mt-12 text-center text-[11px] font-bold uppercase tracking-[0.25em] text-sage-400">
-              {breatheRoomStatus} {selectedBreatheRoom !== 'lofi' ? (ambientSoundActive ? 'Sound on.' : 'Tap the wallpaper to start sound.') : ''}
+              {breatheRoomStatus}
             </p>
           </div>
         )}
@@ -6973,14 +6936,14 @@ function App() {
       </section>
       )}
 
-      {activeHomeSection === 'contact' && (
+      {activeHomeSection === 'diary' && (
       <>
-      <section id="contact" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
+      <section id="diary" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
         <div className="overflow-hidden rounded-3xl border border-white/70 bg-sage-900 text-white shadow-soft">
           <div className="grid lg:grid-cols-2">
             <div className="p-8 lg:p-10">
               <Mail className="mb-7 text-sage-100" size={36} />
-              <p className="text-sm font-bold uppercase tracking-widest text-sage-200">Contact</p>
+              <p className="text-sm font-bold uppercase tracking-widest text-sage-200">Diary support</p>
               <h2 className="mt-3 font-display text-5xl font-bold leading-tight">Questions, feedback, or partnership ideas?</h2>
               <p className="mt-5 leading-8 text-sage-100">Send questions, feedback, collaboration ideas, or privacy requests to the site owner. This helps visitors, advertisers, and review teams understand who runs the site.</p>
             </div>
@@ -7175,7 +7138,7 @@ function App() {
             <a href="/terms.html">Terms</a>
             <a href="/cookie-policy.html">Cookies</a>
             <a href="/disclaimer.html">Disclaimer</a>
-            <a href="/contact.html">Contact</a>
+            <a href="#diary" onClick={() => openHomeSection('diary')}>Diary</a>
           </div>
           Lofi Memory is a soft browser space to listen to lofi music, relax, journal, breathe, and play chill games whenever you want a calmer moment online.
         </div>
@@ -7322,16 +7285,15 @@ function App() {
       )}
 
       <div className="fixed inset-x-3 bottom-3 z-30 mx-auto max-w-lg rounded-[1.7rem] border lofi-glass p-1.5 shadow-soft backdrop-blur-xl lg:hidden">
-        <div className="grid grid-cols-6 gap-1">
+        <div className="grid grid-cols-7 gap-1">
         {[
+          { id: 'unwind', label: 'Games', icon: Gamepad2 },
           { id: 'home', label: 'Chill', icon: Headphones },
           { id: 'write', label: 'Thoughts', icon: PenLine },
           { id: 'notes', label: 'Notes', icon: FileText },
-          { id: 'breathe', label: 'Music Room', icon: Wind },
-          { id: 'unwind', label: 'Games', icon: Gamepad2 },
-          { id: 'memories', label: 'Memory', icon: BookOpen },
-          { id: 'insights', label: 'Vibes', icon: Sparkles },
-          { id: 'design', label: 'Vibes', icon: Palette }
+          { id: 'breathe', label: 'Music', icon: Wind },
+          { id: 'memories', label: 'Memory', icon: CalendarDays },
+          { id: 'design', label: 'Design', icon: Palette }
         ].map((tab) => {
           const isActive = activeTab === tab.id;
           const isWrite = tab.id === 'write';

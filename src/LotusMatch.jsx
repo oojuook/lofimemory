@@ -268,6 +268,13 @@ export default function LotusMatch({ difficulty = 'medium' }) {
         <div className="mt-5 flex flex-col gap-3 rounded-[1.6rem] border border-white/80 bg-white/72 p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between">
           <p className="text-sm font-semibold text-sage-700">{statusMessage}</p>
           <div className="flex flex-wrap gap-2">
+            <button
+              className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5"
+              onClick={resetGame}
+              type="button"
+            >
+              <RotateCcw size={16} /> Restart
+            </button>
             {status === 'ready' && (
               <button
                 className="inline-flex items-center gap-2 rounded-full bg-sage-900 px-4 py-2 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5"
@@ -279,7 +286,7 @@ export default function LotusMatch({ difficulty = 'medium' }) {
             )}
             {status !== 'ready' && (
               <button
-                className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5"
                 onClick={resetGame}
                 type="button"
               >
