@@ -695,6 +695,8 @@ function getInitialSelectedCalendarDate() {
 
 function getInitialActiveTab() {
   if (typeof window === 'undefined') return 'home';
+  const hash = window.location.hash.replace('#', '');
+  if (hash === 'diary') return 'write';
   const params = new URLSearchParams(window.location.search);
   const requestedTab = params.get('tab') || '';
   const allowedTabs = new Set(['home', 'write', 'notes', 'memories', 'breathe', 'insights', 'design']);
@@ -706,7 +708,8 @@ function getInitialActiveTab() {
 function getInitialHomeSection() {
   if (typeof window === 'undefined') return 'overview';
   const hash = window.location.hash.replace('#', '');
-  const allowedSections = new Set(['home', 'overview', 'about', 'guides', 'seo-landing', 'resources', 'articles', 'faq', 'diary', 'privacy', 'terms']);
+  const allowedSections = new Set(['home', 'overview', 'about', 'guides', 'seo-landing', 'resources', 'articles', 'faq', 'contact', 'privacy', 'terms']);
+  if (hash === 'diary') return 'overview';
   if (!allowedSections.has(hash)) return 'overview';
   if (hash === 'home') return 'overview';
   if (hash === 'seo-landing') return 'guides';
@@ -2118,7 +2121,7 @@ function App() {
       { id: 'tips', label: 'Tips', icon: Leaf, detail: 'Ways to begin' },
       { id: 'privacy', label: 'Privacy', icon: Shield, detail: 'What stays private' },
       { id: 'terms', label: 'Terms', icon: Scale, detail: 'Helpful notes' },
-      { id: 'diary', label: 'Diary', icon: Mail, detail: 'Reach the owner' }
+      { id: 'contact', label: 'Contact', icon: Mail, detail: 'Reach the owner' }
     ];
     if (showAdminTools) {
       sections.push({ id: 'seo-studio', label: 'SEO Studio', icon: ShieldCheck, detail: 'Admin-only AI tools' });
@@ -2126,7 +2129,7 @@ function App() {
     return sections;
   }, [showAdminTools]);
   const primaryHomeSections = useMemo(
-    () => homeSections.filter((section) => ['overview', 'about', 'guides', 'resources', 'faq', 'diary', 'seo-studio'].includes(section.id)),
+    () => homeSections.filter((section) => ['overview', 'about', 'guides', 'resources', 'faq', 'contact', 'seo-studio'].includes(section.id)),
     [homeSections]
   );
   const difficultyOptions = [
@@ -2380,7 +2383,7 @@ function App() {
     tips: 'tips',
     privacy: 'privacy',
     terms: 'terms',
-    diary: 'diary',
+    contact: 'contact',
     'seo-studio': 'seo-studio'
   };
 
@@ -3060,8 +3063,8 @@ function App() {
     'Brand: Lofi Memory',
     'Canonical: https://lofimemory.vercel.app/',
     'Core positioning: a chill website for listening to lofi music, playing relaxing games such as cozy Solitaire and Minesweeper-style logic games, relaxing online, chill vibes, website to relax, clear your mind, private journal, notes, reminders, and calm online space.',
-    'Hero title: A cozy website to listen to music, play games, and chill.',
-    'Hero summary: Lofi Memory helps visitors listen to lofi music, play relaxing games like Solitaire and Mind Sweeper, chill, write down thoughts, and keep the day softly organized.',
+    'Hero title: Lofi Memory — A relaxing place to play games and listen to music.',
+    'Hero summary: Lofi Memory helps visitors listen to lofi music, play relaxing games like Solitaire and Tetris, keep a private online diary, and enjoy a peaceful music room.',
     'Hero support line: The main objective is a calm lofi website for listening to music, relaxing, playing cozy games, and clearing your mind.',
     'Current guide paths: /lofi-music-website.html, /listen-to-lofi-music-online.html, /chill-music-and-games.html, /lofi-radio-online.html, /relaxing-music-online.html, /chill-music-online.html, /lofi-study-music.html, /website-to-relax.html, /chill-place-online.html, /things-to-do-to-relax.html, /relaxing-study-break.html, /studying-with-lofi.html, /online-journal.html, /private-online-diary.html, /daily-journal-app.html, /relaxing-browser-games.html, /games-to-relax.html, /solitaire-online.html, /minesweeper-online.html, /browser-tetris-game.html.',
     'Write view framing: A page for your diary. Write today\'s diary page in your own words.',
@@ -4914,7 +4917,7 @@ function App() {
             <button className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
             <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#memories" onClick={() => navigateToTab('memories')}>Memories</a>
             <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#breathe" onClick={() => navigateToTab('breathe')}>Music</a>
-            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#diary" onClick={() => openHomeSection('diary')}>Diary</a>
+            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
           </div>
         </div>
       </nav>
@@ -4960,8 +4963,8 @@ function App() {
               <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#eadfce] bg-white/90 px-4 py-2 text-sm font-bold text-[#4a3a2d] shadow-sm">
                 <Headphones size={16} /> Lofi music & chill vibes
               </div>
-              <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.96] tracking-tight text-[#3d3025] md:text-6xl">A cozy website to listen to music, play games, and chill.</h1>
-              <p className="mt-5 max-w-3xl text-[1.18rem] font-semibold leading-8 text-[#5d4c3e]">Listen to lofi music, play relaxing games, chill, write down your thoughts, and keep your day gently organized in one soft online space.</p>
+              <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.96] tracking-tight text-[#3d3025] md:text-6xl">Lofi Memory — a relaxing place to play games and listen to music.</h1>
+              <p className="mt-5 max-w-3xl text-[1.18rem] font-semibold leading-8 text-[#5d4c3e]">Listen to lofi music, play relaxing browser games, chill, keep a private online diary, and enjoy a cozy music room in one soft online space.</p>
 
               <div className="lofi-now-playing lofi-glass mt-7 flex flex-col gap-4 rounded-[1.65rem] border p-4 shadow-sm backdrop-blur sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-4">
@@ -5022,6 +5025,7 @@ function App() {
 
               <div className="mt-8 flex flex-wrap items-center gap-3 text-sm">
                 <span className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Popular guides</span>
+                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-music-room.html">Lofi music room</a>
                 <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-music-website.html">Lofi music website</a>
                 <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/listen-to-lofi-music-online.html">Listen to lofi</a>
                 <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-radio-online.html">Lofi radio</a>
@@ -6928,14 +6932,14 @@ function App() {
       </section>
       )}
 
-      {activeHomeSection === 'diary' && (
+      {activeHomeSection === 'contact' && (
       <>
-      <section id="diary" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
+      <section id="contact" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
         <div className="overflow-hidden rounded-3xl border border-white/70 bg-sage-900 text-white shadow-soft">
           <div className="grid lg:grid-cols-2">
             <div className="p-8 lg:p-10">
               <Mail className="mb-7 text-sage-100" size={36} />
-              <p className="text-sm font-bold uppercase tracking-widest text-sage-200">Diary support</p>
+              <p className="text-sm font-bold uppercase tracking-widest text-sage-200">Contact</p>
               <h2 className="mt-3 font-display text-5xl font-bold leading-tight">Questions, feedback, or partnership ideas?</h2>
               <p className="mt-5 leading-8 text-sage-100">Send questions, feedback, collaboration ideas, or privacy requests to the site owner. This helps visitors, advertisers, and review teams understand who runs the site.</p>
             </div>
@@ -7130,7 +7134,7 @@ function App() {
             <a href="/terms.html">Terms</a>
             <a href="/cookie-policy.html">Cookies</a>
             <a href="/disclaimer.html">Disclaimer</a>
-            <a href="#diary" onClick={() => openHomeSection('diary')}>Diary</a>
+            <a href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
           </div>
           Lofi Memory is a soft browser space to listen to lofi music, relax, journal, breathe, and play chill games whenever you want a calmer moment online.
         </div>
