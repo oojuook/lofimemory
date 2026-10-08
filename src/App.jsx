@@ -12,6 +12,7 @@ import rainWallpaperImage from './assets/rain-wallpaper.png';
 import fireWallpaperImage from './assets/fire-wallpaper.png';
 import lofiRoomWallpaperImage from './assets/lofi-room-wallpaper.png';
 import lotusMatchPreviewImage from './assets/lotus-match-preview.png';
+import gamesSectionPreviewImage from './assets/games-section-preview.png';
 import { onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
 import { collection, deleteDoc, doc, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore';
 import { getToken, onMessage } from 'firebase/messaging';
@@ -2001,7 +2002,7 @@ function App() {
   const [memoriesView, setMemoriesView] = useState('calendar');
   const showMinimalHomeOverview = activeTab === 'home' && activeHomeSection === 'overview';
   const homeEntryCards = [
-    { id: 'unwind', title: 'Games', description: 'Chill games', icon: Gamepad2, iconTone: 'bg-[#d8dbff] text-violet-700', onClick: () => navigateToTab('unwind') },
+    { id: 'unwind', title: 'Games', description: 'Chill games', icon: Gamepad2, iconTone: 'bg-[#d8dbff] text-violet-700', onClick: () => navigateToTab('unwind'), preview: gamesSectionPreviewImage },
     { id: 'write', title: 'Diary', description: 'Write only when it helps', icon: PenLine, iconTone: 'bg-[#dbead9] text-sage-700', onClick: () => navigateToTab('write') },
     { id: 'notes', title: 'Notes', description: 'Keep important things nearby', icon: FileText, iconTone: 'bg-[#d8f0ec] text-teal-700', onClick: () => navigateToTab('notes') },
     { id: 'breathe', title: 'Music Room', description: 'Sounds & Wallpapers', icon: Wind, iconTone: 'bg-[#dbe8f8] text-sky-700', onClick: () => navigateToTab('breathe') },
@@ -4935,15 +4936,21 @@ function App() {
               return (
                 <button
                   key={card.id}
-                  className="group lofi-glass flex w-full items-center gap-4 rounded-[1.75rem] border px-5 py-5 text-left shadow-[0_10px_26px_rgba(146,126,106,0.07)] transition duration-300 hover:-translate-y-1 hover:border-[#d8c6b2] hover:shadow-[0_16px_34px_rgba(146,126,106,0.1)]"
+                  className={`group lofi-glass relative flex w-full flex-col items-start overflow-hidden rounded-[1.75rem] border text-left shadow-[0_10px_26px_rgba(146,126,106,0.07)] transition duration-300 hover:-translate-y-1 hover:border-[#d8c6b2] hover:shadow-[0_16px_34px_rgba(146,126,106,0.1)] ${card.preview ? 'min-h-[11rem] justify-start px-5 py-5' : 'gap-4 px-5 py-5'}`}
                   onClick={card.onClick}
                   type="button"
                 >
-                  <div className={`flex h-[3.25rem] w-[3.25rem] items-center justify-center rounded-full shadow-inner transition group-hover:scale-105 ${card.iconTone}`}>
-                    <Icon size={22} />
-                  </div>
-                  <div>
-                    <p className="text-lg font-extrabold text-[#3d3025]">{card.title}</p>
+                  {card.preview && (
+                    <img src={card.preview} alt={`${card.title} preview`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+                  )}
+                  {card.preview && <div className="absolute inset-0 bg-gradient-to-r from-white/30 via-white/5 to-transparent" />}
+                  <div className={`relative z-10 flex items-center gap-4 ${card.preview ? 'rounded-2xl bg-white/94 px-4 py-3 shadow-sm backdrop-blur-sm' : 'w-full'}`}>
+                    <div className={`flex h-[3.25rem] w-[3.25rem] shrink-0 items-center justify-center rounded-full shadow-inner transition group-hover:scale-105 ${card.iconTone}`}>
+                      <Icon size={22} />
+                    </div>
+                    <div>
+                      <p className="text-lg font-extrabold text-[#3d3025]">{card.title}</p>
+                    </div>
                   </div>
                 </button>
               );
