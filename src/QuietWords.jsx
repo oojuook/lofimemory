@@ -223,7 +223,7 @@ export default function QuietWords({ difficulty = 'medium', theme = 'lofi' }) {
               <span className={`rounded-full px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] shadow-sm ${isLofi ? 'border border-white/70 bg-white/70 text-amber-900 backdrop-blur-sm' : 'bg-white text-sage-700'}`}>{config.hintLabel}</span>
             </div>
           </div>
-          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-4 lg:min-w-[28rem] ${isLofi ? 'rounded-[1.35rem] border border-white/70 bg-white/65 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
+          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-4 lg:min-w-[28rem] ${isLofi ? 'rounded-[1.35rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
             {[
               ['Streak', streak],
               ['Best', bestStreak],
@@ -238,7 +238,7 @@ export default function QuietWords({ difficulty = 'medium', theme = 'lofi' }) {
           </div>
         </div>
 
-        <div className={`relative z-10 mt-5 rounded-[1.8rem] border p-5 shadow-inner lg:p-6 ${isLofi ? 'border-amber-200/60 bg-[linear-gradient(145deg,rgba(253,250,245,0.96),rgba(250,237,205,0.92))]' : 'border-sage-100 bg-[#f7f1e7]'}`}>
+        <div className={`relative z-10 mt-5 rounded-[1.5rem] border p-5 shadow-inner lg:p-6 ${isLofi ? 'border-amber-200/60 bg-[linear-gradient(145deg,rgba(253,250,245,0.96),rgba(250,237,205,0.92))]' : 'border-sage-100 bg-[#f7f1e7]'}`}>
           <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_220px]">
             <div>
               <div className={`rounded-[1.5rem] border px-4 py-4 text-sm font-semibold shadow-sm ${isLofi ? 'border-white/70 bg-white/72 text-[#6e5a4a] backdrop-blur-sm' : 'border-white/80 bg-white/78 text-sage-700'}`}>
@@ -283,7 +283,7 @@ export default function QuietWords({ difficulty = 'medium', theme = 'lofi' }) {
           </div>
         </div>
 
-        <div className={`relative z-10 mt-5 flex flex-col gap-3 rounded-[1.6rem] border p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between ${isLofi ? 'border-white/70 bg-white/68 backdrop-blur-sm' : 'border-white/80 bg-white/72'}`}>
+        <div className={`relative z-10 mt-5 flex flex-col gap-3 rounded-[1.5rem] border p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/72'}`}>
           <p className={`text-sm font-semibold ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>{message}</p>
           <div className="flex flex-wrap gap-2">
             <button className={`rounded-full px-4 py-2 text-sm font-extrabold shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'border border-amber-200 bg-white text-amber-900' : 'border border-sage-200 bg-white text-sage-900'}`} onClick={loadNextWord} type="button">Next word</button>

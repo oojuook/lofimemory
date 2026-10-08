@@ -271,7 +271,7 @@ export default function QuietTiles({ difficulty = 'medium', theme = 'lofi' }) {
             <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-700'}`}>A cozy number-merge puzzle inspired by the satisfying rhythm people love in 2048-style games. Slide the board, combine matching tiles, and let the repetition do the relaxing.</p>
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-slate-600'}`}>{config.note}</p>
           </div>
-          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[23rem] ${isLofi ? 'rounded-[1.35rem] border border-white/70 bg-white/65 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
+          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[23rem] ${isLofi ? 'rounded-[1.35rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
             {[
               ['Score', score],
               ['Best', bestScore],
@@ -285,7 +285,7 @@ export default function QuietTiles({ difficulty = 'medium', theme = 'lofi' }) {
           </div>
         </div>
 
-        <div className={`relative z-10 mt-5 flex flex-col gap-3 rounded-[1.6rem] border p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between ${isLofi ? 'border-white/70 bg-white/68 backdrop-blur-sm' : 'border-white/80 bg-white/72'}`}>
+        <div className={`relative z-10 mt-5 flex flex-col gap-3 rounded-[1.5rem] border p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/72'}`}>
           <p className={`text-sm font-semibold ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-700'}`}>
             {gameState === 'won'
               ? 'You reached the target tile — soft focus unlocked.'
@@ -303,7 +303,7 @@ export default function QuietTiles({ difficulty = 'medium', theme = 'lofi' }) {
         </div>
 
         <div className="relative z-10 mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_180px]">
-          <div className={`relative rounded-[1.8rem] border p-4 shadow-inner lg:p-5 ${isLofi ? 'border-amber-200/60 bg-[linear-gradient(145deg,rgba(253,250,245,0.98),rgba(250,237,205,0.92))]' : 'border-slate-100 bg-[#efe4d8]'}`}>
+          <div className={`relative rounded-[1.5rem] border p-4 shadow-inner lg:p-5 ${isLofi ? 'border-amber-200/60 bg-[linear-gradient(145deg,rgba(253,250,245,0.98),rgba(250,237,205,0.92))]' : 'border-slate-100 bg-[#efe4d8]'}`}>
             {isLofi && <div className="pointer-events-none absolute inset-0 rounded-[1.8rem] bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.35),transparent_60%)]" />}
             <div className="relative z-10 grid gap-3" style={{ gridTemplateColumns: `repeat(${BOARD_SIZE}, minmax(0, 1fr))` }}>
               {boardCoordinates.map(({ row, col }) => {
@@ -320,7 +320,7 @@ export default function QuietTiles({ difficulty = 'medium', theme = 'lofi' }) {
             </div>
             {gameState === 'lost' && (
               <div className={`absolute inset-0 flex items-center justify-center rounded-[1.8rem] p-4 backdrop-blur-[3px] ${isLofi ? 'bg-white/54' : 'bg-white/82'}`}>
-                <div className={`w-full max-w-sm rounded-[1.5rem] border p-5 text-center shadow-soft ${isLofi ? 'border-white/80 bg-white/80 backdrop-blur-md' : 'border-white/85 bg-white/92'}`}>
+                <div className={`w-full max-w-sm rounded-[1.5rem] border p-5 text-center shadow-soft ${isLofi ? 'border-[#e8dfd5]/80 bg-white/82 backdrop-blur-md' : 'border-white/85 bg-white/92'}`}>
                   <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-slate-500'}`}>Round over</p>
                   <h4 className={`mt-3 text-3xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>No moves left</h4>
                   <div className="mt-4 grid gap-2 sm:grid-cols-3">
@@ -348,7 +348,7 @@ export default function QuietTiles({ difficulty = 'medium', theme = 'lofi' }) {
             )}
           </div>
 
-          <div className={`rounded-[1.8rem] border p-4 shadow-sm ${isLofi ? 'border-white/70 bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/78'}`}>
+          <div className={`rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/78'}`}>
             <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-slate-500'}`}>Tap controls</p>
             <div className="mt-4 grid grid-cols-3 gap-2">
               <div />

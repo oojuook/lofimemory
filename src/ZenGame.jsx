@@ -257,56 +257,76 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi' }) {
   const levelText = useMemo(() => config.label, [config.label]);
 
   return (
-    <div className="mx-auto mt-12 w-full max-w-2xl pb-12">
-      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-sage-200 bg-white/88 text-sage-700'}`}>
-            <Sparkles size={14} /> {levelText} drift
-          </div>
-          <h3 className={`mt-3 text-2xl font-bold ${isLofi ? 'text-[#3d3025]' : 'text-sage-900'}`}>Drifting Seed</h3>
-          <p className={`text-sm font-semibold ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>A calming float-through game for restless thoughts.</p>
-          <p className={`mt-1 text-sm ${isLofi ? 'text-[#8c7a6a]' : 'text-sage-600'}`}>{config.note}</p>
-        </div>
-        <div className={`flex gap-4 text-sm font-extrabold uppercase tracking-widest ${isLofi ? 'text-amber-900' : 'text-sage-700'}`}>
-          <span className={`rounded-full px-4 py-2 shadow-sm ${isLofi ? 'bg-amber-50' : 'bg-sage-100'}`}>Score: {score}</span>
-          <span className={`rounded-full border bg-white px-4 py-2 shadow-sm ${isLofi ? 'border-amber-200' : 'border-sage-200'}`}>Best: {highScore}</span>
-        </div>
-      </div>
-      <div className={`relative overflow-hidden rounded-[2rem] border shadow-sm transition hover:shadow-soft ${isLofi ? 'border-amber-200/60' : 'border-sage-200'}`} style={{ aspectRatio: '3/2' }}>
-        <canvas
-          ref={canvasRef}
-          width={600}
-          height={400}
-          className="block h-full w-full cursor-pointer touch-none"
-          onClick={jump}
-        />
-
-        {gameState === 'start' && (
-          <div className={`pointer-events-none absolute inset-0 flex flex-col items-center justify-center backdrop-blur-[3px] ${isLofi ? 'bg-white/20' : 'bg-white/30'}`}>
-            <button className={`pointer-events-auto mb-4 flex items-center gap-3 rounded-full px-8 py-4 text-sm font-bold text-white shadow-lift transition hover:-translate-y-1 ${isLofi ? 'bg-[#4a3a2d] hover:bg-[#3d3025]' : 'bg-sage-800 hover:bg-sage-700'}`} onClick={jump} type="button">
-              <Play size={18} /> Tap to float
-            </button>
-            <p className={`rounded-full px-4 py-1.5 text-sm font-semibold ${isLofi ? 'bg-white/60 text-[#3d3025]' : 'bg-white/70 text-sage-900'}`}>Press Space or click to drift.</p>
-          </div>
+    <div className="mx-auto mt-12 w-full max-w-3xl pb-12">
+      <div className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-[#e8dfd5]/80 bg-[#fff9f0] shadow-[0_28px_80px_rgba(83,62,44,0.12)]' : 'border-sage-100 bg-gradient-to-br from-white via-sage-50/82 to-sky-50/74'}`}>
+        {isLofi && (
+          <>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.96),rgba(255,249,240,0.92)_45%,rgba(189,224,254,0.45)_100%)]" />
+            <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #6e5a4a 1px, transparent 0)', backgroundSize: '18px 18px' }} />
+          </>
         )}
 
-        {gameState === 'over' && (
-          <div className={`absolute inset-0 flex flex-col items-center justify-center backdrop-blur-[5px] ${isLofi ? 'bg-white/40' : 'bg-white/50'}`}>
-            <p className={`mb-2 font-display text-4xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>{isLofi ? 'The seed settled.' : 'The leaf landed.'}</p>
-            <p className={`mb-3 text-lg font-bold ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-800'}`}>Final Score: {score}</p>
-            <p className={`mb-8 rounded-full px-4 py-2 text-sm font-semibold ${isLofi ? 'bg-white/65 text-amber-900' : 'bg-white/75 text-sage-700'}`}>{config.note}</p>
-            <button
-              onClick={(event) => {
-                event.stopPropagation();
-                jump();
-              }}
-              className={`flex items-center gap-3 rounded-full px-8 py-4 text-sm font-bold text-white shadow-lift transition hover:-translate-y-1 ${isLofi ? 'bg-[#4a3a2d] hover:bg-[#3d3025]' : 'bg-sage-800 hover:bg-sage-700'}`}
-              type="button"
-            >
-              <RotateCcw size={18} /> Drift again
-            </button>
+        <div className="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+          <div>
+            <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/85 text-amber-800' : 'border-sage-200 bg-white/88 text-sage-700'}`}>
+              <Sparkles size={14} /> {levelText} drift
+            </div>
+            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-sage-900'}`}>Drifting Seed</h3>
+            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>A calming float-through game with warm cream skies, pastel obstacles, and quieter feedback for restless thoughts.</p>
+            <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-600'}`}>{config.note}</p>
           </div>
-        )}
+          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-3 ${isLofi ? 'rounded-[1.5rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
+            {[
+              ['Score', score],
+              ['Best', highScore],
+              ['Pace', levelText]
+            ].map(([label, value]) => (
+              <div key={label} className={`${isLofi ? 'rounded-[1.2rem] bg-[#faedcd] text-[#3d3025]' : 'rounded-[1.15rem] bg-sage-50'} px-4 py-3 text-center`}>
+                <p className={`text-[10px] font-extrabold uppercase tracking-[0.2em] ${isLofi ? 'text-[#6e5a4a]/70' : 'text-sage-500'}`}>{label}</p>
+                <p className={`mt-2 text-xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>{value}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className={`relative z-10 mt-5 rounded-[1.5rem] border p-3 shadow-sm sm:p-4 ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-sage-200 bg-white'}`}>
+          <div className={`relative overflow-hidden rounded-[1.5rem] border ${isLofi ? 'border-[#e8dfd5] bg-[#fff9f0]' : 'border-sage-200'}`} style={{ aspectRatio: '3/2' }}>
+            <canvas
+              ref={canvasRef}
+              width={600}
+              height={400}
+              className="block h-full w-full cursor-pointer touch-none"
+              onClick={jump}
+            />
+
+            {gameState === 'start' && (
+              <div className={`pointer-events-none absolute inset-0 flex flex-col items-center justify-center px-4 text-center backdrop-blur-[3px] ${isLofi ? 'bg-white/28' : 'bg-white/30'}`}>
+                <button className={`pointer-events-auto mb-4 flex items-center gap-3 rounded-full px-8 py-4 text-sm font-bold text-white shadow-lift transition hover:-translate-y-1 ${isLofi ? 'bg-[#4a3a2d] hover:bg-[#3d3025]' : 'bg-sage-800 hover:bg-sage-700'}`} onClick={jump} type="button">
+                  <Play size={18} /> Tap to float
+                </button>
+                <p className={`rounded-full border px-4 py-2 text-sm font-semibold ${isLofi ? 'border-[#e8dfd5] bg-white/78 text-[#4a3a2d]' : 'bg-white/70 text-sage-900'}`}>Press Space or click to drift.</p>
+              </div>
+            )}
+
+            {gameState === 'over' && (
+              <div className={`absolute inset-0 flex flex-col items-center justify-center px-4 text-center backdrop-blur-[5px] ${isLofi ? 'bg-white/46' : 'bg-white/50'}`}>
+                <p className={`mb-2 font-display text-4xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>{isLofi ? 'The seed settled.' : 'The leaf landed.'}</p>
+                <p className={`mb-3 text-lg font-bold ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-800'}`}>Final Score: {score}</p>
+                <p className={`mb-8 rounded-full border px-4 py-2 text-sm font-semibold ${isLofi ? 'border-[#e8dfd5] bg-white/78 text-[#4a3a2d]' : 'bg-white/75 text-sage-700'}`}>{config.note}</p>
+                <button
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    jump();
+                  }}
+                  className={`flex items-center gap-3 rounded-full px-8 py-4 text-sm font-bold text-white shadow-lift transition hover:-translate-y-1 ${isLofi ? 'bg-[#4a3a2d] hover:bg-[#3d3025]' : 'bg-sage-800 hover:bg-sage-700'}`}
+                  type="button"
+                >
+                  <RotateCcw size={18} /> Drift again
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -97,14 +97,14 @@ function MemoryCardFace({ icon, matched, isLofi = false }) {
 
 function MemoryCardBack({ isLofi = false }) {
   return (
-    <div className={`relative flex h-full items-center justify-center overflow-hidden rounded-[1.05rem] border shadow-[0_12px_28px_rgba(132,116,96,0.18)] ${isLofi ? 'border-[#e8dfd5] bg-[linear-gradient(180deg,#d4a373_0%,#a98467_52%,#6c584c_100%)]' : 'border-[#ddd4c8] bg-[linear-gradient(180deg,#d8cfc2_0%,#cfc4b6_44%,#c4b8ab_100%)]'}`}>
+    <div className={`relative flex h-full items-center justify-center overflow-hidden rounded-[1.05rem] border shadow-[0_12px_28px_rgba(132,116,96,0.18)] ${isLofi ? 'border-[#e8dfd5] bg-[linear-gradient(180deg,#fff9f0_0%,#faedcd_58%,#cdb4db_100%)]' : 'border-[#ddd4c8] bg-[linear-gradient(180deg,#d8cfc2_0%,#cfc4b6_44%,#c4b8ab_100%)]'}`}>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.35),transparent_55%),radial-gradient(circle_at_bottom,rgba(191,161,125,0.28),transparent_45%)]" />
       <div className="absolute inset-[10px] rounded-[0.9rem] border border-white/45" />
       <div className="absolute inset-[18px] rounded-[0.75rem] border border-white/25 bg-[linear-gradient(135deg,rgba(255,255,255,0.08),rgba(140,123,104,0.18))]" />
       <div className="absolute inset-0 opacity-35" style={{ backgroundImage: 'repeating-linear-gradient(45deg, rgba(255,255,255,0.18) 0 2px, transparent 2px 18px), repeating-linear-gradient(-45deg, rgba(255,255,255,0.12) 0 2px, transparent 2px 18px)' }} />
-      <div className="relative z-10 flex flex-col items-center gap-2 text-white/88">
-        <div className="grid h-12 w-12 place-items-center rounded-full border border-white/35 bg-white/10 text-xl shadow-inner">♣</div>
-        <span className="text-[10px] font-extrabold uppercase tracking-[0.28em]">Lofi deck</span>
+      <div className="relative z-10 flex flex-col items-center gap-2 text-[#4a3a2d]">
+        <div className="grid h-12 w-12 place-items-center rounded-full border border-white/35 bg-white/60 text-xl shadow-inner">♣</div>
+        <span className="text-[10px] font-extrabold uppercase tracking-[0.28em]">Warm deck</span>
       </div>
     </div>
   );
@@ -247,14 +247,14 @@ export default function LotusMatch({ difficulty = 'medium', theme = 'lofi' }) {
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-sage-600'}`}>{note}</p>
             <p className={`mt-2 text-xs font-semibold uppercase tracking-[0.18em] ${isLofi ? 'text-amber-800/60' : 'text-sage-500'}`}>{pairCount} pairs • {previewLabel} preview • {mismatchLabel} reset</p>
           </div>
-          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-4 lg:min-w-[29rem] ${isLofi ? 'rounded-[1.2rem] border border-white/70 bg-white/65' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
+          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-4 lg:min-w-[29rem] ${isLofi ? 'rounded-[1.5rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
             {[
               ['Pairs', `${matchedPairs}/${pairCount}`],
               ['Moves', moves],
               ['Preview', previewLabel],
               ['Best', bestScore || '—']
             ].map(([statLabel, value]) => (
-              <div key={statLabel} className={`px-4 py-3 text-center ${isLofi ? 'rounded-[0.9rem] bg-amber-50 text-amber-900' : 'rounded-[1.15rem] bg-sage-50'}`}>
+              <div key={statLabel} className={`px-4 py-3 text-center ${isLofi ? 'rounded-[1.2rem] bg-[#faedcd] text-[#3d3025]' : 'rounded-[1.15rem] bg-sage-50'}`}>
                 <p className={`text-[10px] font-extrabold uppercase tracking-[0.2em] ${isLofi ? 'text-amber-800/60' : 'text-sage-500'}`}>{statLabel}</p>
                 <p className={`mt-2 text-xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>{value}</p>
               </div>
@@ -262,7 +262,7 @@ export default function LotusMatch({ difficulty = 'medium', theme = 'lofi' }) {
           </div>
         </div>
 
-        <div className={`mt-5 flex flex-col gap-3 rounded-[1.6rem] border p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between ${isLofi ? 'border-white/70 bg-white/65' : 'border-white/80 bg-white/72'}`}>
+        <div className={`mt-5 flex flex-col gap-3 rounded-[1.5rem] border p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between ${isLofi ? 'border-white/70 bg-white/65' : 'border-white/80 bg-white/72'}`}>
           <p className={`text-sm font-semibold ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>{statusMessage}</p>
           <div className="flex flex-wrap gap-2">
             <button

@@ -138,31 +138,31 @@ function evaluateGuess(guess, target) {
 
 function getTileClass(status, filled, isLofi = false) {
   if (status === 'correct') {
-    return isLofi ? 'border-[#b6cfbe] bg-[#d8eadf] text-[#2f4d3d]' : 'border-emerald-300 bg-emerald-200/90 text-emerald-950';
+    return isLofi ? 'border-[#ccd5ae] bg-[#ccd5ae] text-[#3d3025]' : 'border-emerald-300 bg-emerald-200/90 text-emerald-950';
   }
   if (status === 'present') {
-    return isLofi ? 'border-[#e6c18b] bg-[#f7e2b7] text-[#7a5227]' : 'border-amber-300 bg-amber-100 text-amber-950';
+    return isLofi ? 'border-[#faedcd] bg-[#faedcd] text-[#3d3025]' : 'border-amber-300 bg-amber-100 text-amber-950';
   }
   if (status === 'absent') {
-    return isLofi ? 'border-[#d8cbbd] bg-[#e8dfd5] text-[#7d6a58]' : 'border-slate-200 bg-slate-200/85 text-slate-700';
+    return isLofi ? 'border-[#ffc8dd] bg-[#fff3f7] text-[#6e5a4a]' : 'border-slate-200 bg-slate-200/85 text-slate-700';
   }
   if (filled) {
-    return isLofi ? 'border-[#d9c8b6] bg-white text-[#4a3a2d]' : 'border-sage-300 bg-white text-sage-950';
+    return isLofi ? 'border-[#e8dfd5] bg-white text-[#4a3a2d]' : 'border-sage-300 bg-white text-sage-950';
   }
-  return isLofi ? 'border-[#eadccf] bg-[#fdf7ef] text-[#c7ad92]' : 'border-sage-100 bg-[#fbf7f1] text-sage-300';
+  return isLofi ? 'border-[#e8dfd5] bg-[#fff9f0] text-[#c7ad92]' : 'border-sage-100 bg-[#fbf7f1] text-sage-300';
 }
 
 function getKeyboardKeyClass(status, isLofi = false) {
   if (status === 'correct') {
-    return isLofi ? 'border-[#b6cfbe] bg-[#d8eadf] text-[#2f4d3d]' : 'border-emerald-300 bg-emerald-200/90 text-emerald-950';
+    return isLofi ? 'border-[#ccd5ae] bg-[#ccd5ae] text-[#3d3025]' : 'border-emerald-300 bg-emerald-200/90 text-emerald-950';
   }
   if (status === 'present') {
-    return isLofi ? 'border-[#e6c18b] bg-[#f7e2b7] text-[#7a5227]' : 'border-amber-300 bg-amber-100 text-amber-950';
+    return isLofi ? 'border-[#faedcd] bg-[#faedcd] text-[#3d3025]' : 'border-amber-300 bg-amber-100 text-amber-950';
   }
   if (status === 'absent') {
-    return isLofi ? 'border-[#d8cbbd] bg-[#e8dfd5] text-[#7d6a58]' : 'border-slate-200 bg-slate-200/85 text-slate-700';
+    return isLofi ? 'border-[#ffc8dd] bg-[#fff3f7] text-[#6e5a4a]' : 'border-slate-200 bg-slate-200/85 text-slate-700';
   }
-  return isLofi ? 'border-amber-200 bg-white text-amber-900 hover:bg-[#fffaf4]' : 'border-sage-200 bg-white text-sage-900 hover:bg-sage-50';
+  return isLofi ? 'border-[#e8dfd5] bg-white text-[#4a3a2d] hover:bg-[#fff9f0]' : 'border-sage-200 bg-white text-sage-900 hover:bg-sage-50';
 }
 
 export default function QuietWordle({ difficulty = 'medium', theme = 'lofi' }) {
@@ -365,7 +365,7 @@ export default function QuietWordle({ difficulty = 'medium', theme = 'lofi' }) {
             <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>A cozy Wordle-style puzzle for when you want a familiar word-guessing game without losing the soft relaxed mood of the page. Type or tap letters, read the color hints, and keep playing through unlimited cozy rounds.</p>
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-sage-600'}`}>{config.note}</p>
           </div>
-          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[23rem] ${isLofi ? 'rounded-[1.35rem] border border-white/70 bg-white/65 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
+          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[23rem] ${isLofi ? 'rounded-[1.35rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
             {[
               ['Streak', streak],
               ['Best', bestStreak],
@@ -380,7 +380,7 @@ export default function QuietWordle({ difficulty = 'medium', theme = 'lofi' }) {
         </div>
 
         <div className="relative z-10 mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(280px,0.92fr)]">
-          <div className={`rounded-[1.8rem] border p-5 shadow-inner lg:p-6 ${isLofi ? 'border-amber-200/60 bg-[linear-gradient(145deg,rgba(253,250,245,0.98),rgba(250,237,205,0.92))]' : 'border-sage-100 bg-[#f7f1e7]'}`}>
+          <div className={`rounded-[1.5rem] border p-5 shadow-inner lg:p-6 ${isLofi ? 'border-amber-200/60 bg-[linear-gradient(145deg,rgba(253,250,245,0.98),rgba(250,237,205,0.92))]' : 'border-sage-100 bg-[#f7f1e7]'}`}>
             <div className={`rounded-[1.5rem] border px-4 py-4 text-sm font-semibold shadow-sm ${isLofi ? 'border-white/70 bg-white/72 text-[#6e5a4a] backdrop-blur-sm' : 'border-white/80 bg-white/78 text-sage-700'}`}>
               Hint: {targetEntry.hint}
             </div>
@@ -404,17 +404,17 @@ export default function QuietWordle({ difficulty = 'medium', theme = 'lofi' }) {
             </div>
           </div>
 
-          <div className={`flex flex-col gap-4 rounded-[1.8rem] border p-4 shadow-sm lg:p-5 ${isLofi ? 'border-white/70 bg-white/68 backdrop-blur-sm' : 'border-white/80 bg-white/74'}`}>
+          <div className={`flex flex-col gap-4 rounded-[1.5rem] border p-4 shadow-sm lg:p-5 ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/74'}`}>
             <div className={`rounded-[1.4rem] border p-4 ${isLofi ? 'border-amber-200/60 bg-amber-50/75' : 'border-sage-100 bg-sage-50/70'}`}>
               <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-sage-500'}`}>How the colors work</p>
               <div className={`mt-3 grid gap-2 text-sm font-semibold ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>
-                <p><span className={`mr-2 inline-flex rounded-full px-2 py-1 text-xs font-extrabold uppercase tracking-[0.18em] ${isLofi ? 'bg-[#d8eadf] text-[#2f4d3d]' : 'bg-emerald-200 text-emerald-950'}`}>Exact</span> right letter, right spot</p>
-                <p><span className={`mr-2 inline-flex rounded-full px-2 py-1 text-xs font-extrabold uppercase tracking-[0.18em] ${isLofi ? 'bg-[#f7e2b7] text-[#7a5227]' : 'bg-amber-100 text-amber-950'}`}>Close</span> right letter, wrong spot</p>
-                <p><span className={`mr-2 inline-flex rounded-full px-2 py-1 text-xs font-extrabold uppercase tracking-[0.18em] ${isLofi ? 'bg-[#e8dfd5] text-[#7d6a58]' : 'bg-slate-200 text-slate-700'}`}>Miss</span> not in the word</p>
+                <p><span className={`mr-2 inline-flex rounded-full px-2 py-1 text-xs font-extrabold uppercase tracking-[0.18em] ${isLofi ? 'bg-[#ccd5ae] text-[#3d3025]' : 'bg-emerald-200 text-emerald-950'}`}>Exact</span> right letter, right spot</p>
+                <p><span className={`mr-2 inline-flex rounded-full px-2 py-1 text-xs font-extrabold uppercase tracking-[0.18em] ${isLofi ? 'bg-[#faedcd] text-[#3d3025]' : 'bg-amber-100 text-amber-950'}`}>Close</span> right letter, wrong spot</p>
+                <p><span className={`mr-2 inline-flex rounded-full px-2 py-1 text-xs font-extrabold uppercase tracking-[0.18em] ${isLofi ? 'bg-[#fff3f7] text-[#6e5a4a]' : 'bg-slate-200 text-slate-700'}`}>Miss</span> not in the word</p>
               </div>
             </div>
 
-            <div className={`rounded-[1.4rem] border p-4 shadow-sm ${isLofi ? 'border-white/70 bg-white/78 backdrop-blur-sm' : 'border-sage-100 bg-white'}`}>
+            <div className={`rounded-[1.4rem] border p-4 shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/78 backdrop-blur-sm' : 'border-sage-100 bg-white'}`}>
               <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-sage-500'}`}>Round status</p>
               <p className={`mt-3 text-sm font-semibold leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>{message}</p>
               <p className={`mt-3 text-xs font-bold uppercase tracking-[0.2em] ${isLofi ? 'text-amber-800/60' : 'text-sage-500'}`}>{config.wordLength} letters • {config.maxGuesses} tries</p>
@@ -452,7 +452,7 @@ export default function QuietWordle({ difficulty = 'medium', theme = 'lofi' }) {
           </div>
         </div>
 
-        <div className={`relative z-10 mt-5 rounded-[1.8rem] border p-4 shadow-sm ${isLofi ? 'border-white/70 bg-white/68 backdrop-blur-sm' : 'border-white/80 bg-white/72'}`}>
+        <div className={`relative z-10 mt-5 rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/72'}`}>
           <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-sage-500'}`}>Tap or type letters</p>
           <div className="mt-4 grid gap-2">
             {keyboardRows.map((row) => (

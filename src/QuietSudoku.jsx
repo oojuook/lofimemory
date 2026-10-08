@@ -367,7 +367,7 @@ function SudokuBoard({
   setSelectedCell,
 }) {
   return (
-    <div className={`rounded-[1.75rem] border p-4 shadow-sm ${isLofi ? 'border-white/70 bg-white/72 backdrop-blur-sm' : 'border-white/80 bg-white/92'}`}>
+    <div className={`rounded-[1.75rem] border p-4 shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/72 backdrop-blur-sm' : 'border-white/80 bg-white/92'}`}>
       <div className={`grid grid-cols-9 gap-1 rounded-[1.6rem] p-[7px] sm:p-3 ${isLofi ? 'bg-[#e2cfbb]/90' : 'bg-[#c7d2ca]'}`}>
         {board.map((row, rowIndex) => row.map((value, colIndex) => {
           const cellId = getCellId(rowIndex, colIndex);
@@ -429,7 +429,7 @@ function SudokuHeader({ completedRounds, config, conflictCount, elapsedLabel, is
         </p>
         <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-slate-600'}`}>{config.note}</p>
       </div>
-      <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-2 xl:grid-cols-5 lg:min-w-[34rem] ${isLofi ? 'rounded-[1.35rem] border border-white/70 bg-white/65 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
+      <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-2 xl:grid-cols-5 lg:min-w-[34rem] ${isLofi ? 'rounded-[1.35rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
         {[
           ['Solved', completedRounds, null],
           ['Open cells', openCells, null],
@@ -465,7 +465,7 @@ function SudokuSidebar({
 }) {
   return (
     <div className="space-y-4">
-      <div className={`rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-white/70 bg-white/72 backdrop-blur-sm' : 'border-white/80 bg-white/92'}`}>
+      <div className={`rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/72 backdrop-blur-sm' : 'border-white/80 bg-white/92'}`}>
         <div className="flex items-center justify-between gap-3">
           <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-slate-600'}`}>Soft guidance</p>
           <button
@@ -526,7 +526,7 @@ function SudokuSidebar({
         </div>
       </div>
 
-      <div className={`rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-white/70 bg-white/72 backdrop-blur-sm' : 'border-white/80 bg-white/92'}`}>
+      <div className={`rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/72 backdrop-blur-sm' : 'border-white/80 bg-white/92'}`}>
         <div className="flex items-center justify-between gap-3">
           <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-slate-600'}`}>Number pad</p>
           <span className={`rounded-full px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.16em] ${notesMode ? (isLofi ? 'bg-[#f5e6d3] text-[#4a3a2d]' : 'bg-sky-100 text-sky-900') : (isLofi ? 'bg-amber-50 text-amber-700' : 'bg-slate-100 text-slate-600')}`}>
@@ -883,7 +883,7 @@ export default function QuietSudoku({ difficulty = 'medium', theme = 'lofi' }) {
             openCells={openCells}
           />
 
-          <div className={`mt-5 rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-white/70 bg-white/68 backdrop-blur-sm' : 'border-white/80 bg-white/88'}`}>
+          <div className={`mt-5 rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/88'}`}>
             <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
               <div>
                 <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-slate-600'}`}>Sudoku level</p>
@@ -922,7 +922,7 @@ export default function QuietSudoku({ difficulty = 'medium', theme = 'lofi' }) {
               />
               {roundStatus === 'ready' && (
                 <div className={`absolute inset-0 flex items-center justify-center rounded-[1.75rem] p-4 backdrop-blur-[3px] ${isLofi ? 'bg-white/52' : 'bg-white/76'}`}>
-                  <div className={`w-full max-w-sm rounded-[1.5rem] border p-5 text-center shadow-soft ${isLofi ? 'border-white/80 bg-white/82 backdrop-blur-md' : 'border-white/85 bg-white/92'}`}>
+                  <div className={`w-full max-w-sm rounded-[1.5rem] border p-5 text-center shadow-soft ${isLofi ? 'border-[#e8dfd5]/80 bg-white/82 backdrop-blur-md' : 'border-white/85 bg-white/92'}`}>
                     <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-slate-500'}`}>Ready when you are</p>
                     <h4 className={`mt-3 text-3xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>Press start to begin</h4>
                     <p className={`mt-3 text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-600'}`}>Pick a level, then start the board when you want the timer to begin.</p>
@@ -938,7 +938,7 @@ export default function QuietSudoku({ difficulty = 'medium', theme = 'lofi' }) {
               )}
               {roundStatus === 'over' && (
                 <div className={`absolute inset-0 flex items-center justify-center rounded-[1.75rem] p-4 backdrop-blur-[3px] ${isLofi ? 'bg-white/56' : 'bg-white/82'}`}>
-                  <div className={`w-full max-w-sm rounded-[1.5rem] border p-5 text-center shadow-soft ${isLofi ? 'border-white/80 bg-white/82 backdrop-blur-md' : 'border-white/85 bg-white/92'}`}>
+                  <div className={`w-full max-w-sm rounded-[1.5rem] border p-5 text-center shadow-soft ${isLofi ? 'border-[#e8dfd5]/80 bg-white/82 backdrop-blur-md' : 'border-white/85 bg-white/92'}`}>
                     <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-[#8d4b45]' : 'text-rose-500'}`}>Round over</p>
                     <h4 className={`mt-3 text-3xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>Three pen mistakes</h4>
                     <p className={`mt-3 text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-600'}`}>You used all {MAX_PEN_MISTAKES} pen tries in {elapsedLabel}. Start a fresh board whenever you want another calm round.</p>

@@ -568,14 +568,14 @@ export default function DinosaurDash({ difficulty = 'medium', theme = 'lofi' }) 
           </div>
         </div>
 
-        <div className={`relative z-10 rounded-[1.8rem] border p-3 shadow-sm sm:p-4 ${isLofi ? 'border-white/70 bg-white/68 backdrop-blur-sm' : 'border-stone-300 bg-white'}`}>
+        <div className={`relative z-10 rounded-[1.5rem] border p-3 shadow-sm sm:p-4 ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-stone-300 bg-white'}`}>
           <div className={`mb-3 flex flex-wrap gap-2 text-xs font-bold uppercase tracking-[0.18em] ${isLofi ? 'text-amber-800/70' : 'text-stone-600'}`}>
             <span className={`rounded-full px-3 py-1 ${isLofi ? 'border border-amber-200 bg-amber-50/85' : 'border border-stone-200'}`}>Space / ↑ jump</span>
             <span className={`rounded-full px-3 py-1 ${isLofi ? 'border border-amber-200 bg-amber-50/85' : 'border border-stone-200'}`}>↓ duck</span>
             <span className={`rounded-full px-3 py-1 ${isLofi ? 'border border-amber-200 bg-amber-50/85' : 'border border-stone-200'}`}>Tap to jump</span>
           </div>
 
-          <div className={`relative overflow-hidden rounded-[1.4rem] border ${isLofi ? 'border-[#e7d7c7] bg-[linear-gradient(180deg,#fffaf3_0%,#f4dfc8_100%)] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.45)]' : 'border-stone-300 bg-[#f7f7f7]'}`} style={{ aspectRatio: `${CANVAS_WIDTH} / ${CANVAS_HEIGHT}` }}>
+          <div className={`relative overflow-hidden rounded-[1.5rem] border ${isLofi ? 'border-[#e7d7c7] bg-[linear-gradient(180deg,#fffaf3_0%,#f4dfc8_100%)] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.45)]' : 'border-stone-300 bg-[#f7f7f7]'}`} style={{ aspectRatio: `${CANVAS_WIDTH} / ${CANVAS_HEIGHT}` }}>
             <canvas
               ref={canvasRef}
               width={CANVAS_WIDTH}

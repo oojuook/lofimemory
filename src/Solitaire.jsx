@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Maximize2, Minimize2, Play, RotateCcw } from 'lucide-react';
+import { Maximize2, Minimize2, Play, RotateCcw, Sparkles } from 'lucide-react';
 
 const SUITS = ['♠', '♥', '♦', '♣'];
 const RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
@@ -805,29 +805,41 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi' }) {
 
   return (
     <div ref={containerRef} className={`mx-auto w-full ${isFullscreen ? `${isLofi ? 'bg-[#fff7ec]' : 'bg-[#07542f]'} min-h-screen p-3 sm:p-5` : 'pb-6 sm:pb-8'}`}>
-      <div className={`overflow-hidden rounded-[1.8rem] border shadow-[0_22px_50px_rgba(8,69,38,0.18)] ${isLofi ? 'border-amber-200/50 bg-[#f8ead9]' : 'border-emerald-950/25 bg-[#0b6f3c]'} ${isFullscreen ? 'flex min-h-[calc(100vh-1.5rem)] flex-col sm:min-h-[calc(100vh-2.5rem)]' : ''}`}>
-        <div className={`flex flex-wrap items-center justify-between gap-3 border-b px-4 py-3 sm:px-6 ${isLofi ? 'border-amber-200/45 bg-[#4a3a2d] text-amber-50' : 'border-white/10 bg-[#086133] text-white'}`}>
+      <div className={`overflow-hidden rounded-[2rem] border shadow-[0_22px_50px_rgba(83,62,44,0.12)] ${isLofi ? 'border-[#e8dfd5]/80 bg-[#fff7ec]' : 'border-emerald-950/25 bg-[#0b6f3c]'} ${isFullscreen ? 'flex min-h-[calc(100vh-1.5rem)] flex-col sm:min-h-[calc(100vh-2.5rem)]' : ''}`}>
+        <div className={`flex flex-wrap items-center justify-between gap-4 border-b px-4 py-4 sm:px-6 ${isLofi ? 'border-[#e8dfd5]/80 bg-white/72 text-[#3d3025] backdrop-blur-sm' : 'border-white/10 bg-[#086133] text-white'}`}>
           <div className="flex items-center gap-3">
-            <div className="grid h-9 w-9 place-items-center rounded-full bg-white/14 text-lg shadow-inner">♣</div>
-            <div>
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.22em] text-emerald-100/80">Clean card table</p>
-              <h3 className="font-display text-2xl font-black tracking-tight">Solitaire</h3>
-            </div>
+            {isLofi ? (
+              <div>
+                <div className="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-white/85 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-amber-800 shadow-sm">
+                  <Sparkles size={14} /> {config.label} card flow
+                </div>
+                <h3 className="mt-3 font-display text-2xl font-black tracking-tight text-[#3d3025]">Solitaire</h3>
+                <p className="mt-1 text-sm font-semibold text-[#6e5a4a]">{config.note}</p>
+              </div>
+            ) : (
+              <>
+                <div className="grid h-9 w-9 place-items-center rounded-full bg-white/14 text-lg shadow-inner">♣</div>
+                <div>
+                  <p className="text-[10px] font-extrabold uppercase tracking-[0.22em] text-emerald-100/80">Clean card table</p>
+                  <h3 className="font-display text-2xl font-black tracking-tight">Solitaire</h3>
+                </div>
+              </>
+            )}
           </div>
-          <div className="flex flex-wrap items-center gap-2 text-[11px] font-black uppercase tracking-[0.16em]">
-            <button className={`rounded-full px-4 py-2 shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#fffaf2] text-[#4a3a2d] hover:bg-white' : 'bg-white text-emerald-900 hover:bg-emerald-50'}`} onClick={resetGame} type="button">New</button>
-            <button className={`inline-flex items-center gap-2 rounded-full px-4 py-2 transition hover:-translate-y-0.5 ${isLofi ? 'bg-amber-100/15 text-white hover:bg-amber-100/25' : 'bg-white/13 text-white hover:bg-white/20'}`} onClick={toggleFullscreen} type="button">
+          <div className={`flex flex-wrap items-center gap-2 text-[11px] font-black uppercase tracking-[0.16em] ${isLofi ? 'text-[#6e5a4a]' : ''}`}>
+            <button className={`rounded-full px-4 py-2 shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#4a3a2d] text-white hover:bg-[#3d3025]' : 'bg-white text-emerald-900 hover:bg-emerald-50'}`} onClick={resetGame} type="button">New</button>
+            <button className={`inline-flex items-center gap-2 rounded-full px-4 py-2 transition hover:-translate-y-0.5 ${isLofi ? 'border border-[#e8dfd5] bg-white text-[#4a3a2d] hover:bg-[#fff9f0]' : 'bg-white/13 text-white hover:bg-white/20'}`} onClick={toggleFullscreen} type="button">
               {isFullscreen ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
               {isFullscreen ? 'Exit full' : 'Full screen'}
             </button>
             {canAutoFinish ? (
-              <button className={`rounded-full px-4 py-2 shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-orange-300 text-[#4a3a2d] hover:bg-orange-200' : 'bg-amber-300 text-emerald-950 hover:bg-amber-200'}`} onClick={triggerAutoFinish} type="button">
+              <button className={`rounded-full px-4 py-2 shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#faedcd] text-[#4a3a2d] hover:bg-[#f7e4b7]' : 'bg-amber-300 text-emerald-950 hover:bg-amber-200'}`} onClick={triggerAutoFinish} type="button">
                 {isAutoFinishing ? 'Finishing…' : 'Auto finish · F'}
               </button>
             ) : null}
-            <span className={`rounded-full px-4 py-2 ${isLofi ? 'bg-amber-100/15' : 'bg-white/13'}`}>{config.label}</span>
-            <span className={`rounded-full px-4 py-2 ${isLofi ? 'bg-amber-100/15' : 'bg-white/13'}`}>Moves {game.moves}</span>
-            <span className={`rounded-full px-4 py-2 ${isLofi ? 'bg-amber-100/15' : 'bg-white/13'}`}>Home {foundationCount}/52</span>
+            <span className={`rounded-full px-4 py-2 ${isLofi ? 'border border-[#e8dfd5] bg-white/80 text-[#4a3a2d]' : 'bg-white/13'}`}>{config.label}</span>
+            <span className={`rounded-full px-4 py-2 ${isLofi ? 'border border-[#e8dfd5] bg-white/80 text-[#4a3a2d]' : 'bg-white/13'}`}>Moves {game.moves}</span>
+            <span className={`rounded-full px-4 py-2 ${isLofi ? 'border border-[#e8dfd5] bg-white/80 text-[#4a3a2d]' : 'bg-white/13'}`}>Home {foundationCount}/52</span>
           </div>
         </div>
 
@@ -996,9 +1008,9 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi' }) {
           </div>
         </div>
 
-        <div className={`flex flex-col gap-3 px-4 py-4 text-sm font-semibold sm:flex-row sm:items-center sm:justify-between sm:px-6 ${isLofi ? 'bg-[#4a3a2d] text-amber-50' : 'bg-[#07542f] text-emerald-50'}`}>
+        <div className={`flex flex-col gap-3 border-t px-4 py-4 text-sm font-semibold sm:flex-row sm:items-center sm:justify-between sm:px-6 ${isLofi ? 'border-[#e8dfd5]/80 bg-white/72 text-[#6e5a4a] backdrop-blur-sm' : 'bg-[#07542f] text-emerald-50'}`}>
           <p>{hasWon ? 'Done — you cleared the full table beautifully.' : canAutoFinish ? 'Everything is revealed — press F or tap Auto finish to sweep the cards home.' : game.message}</p>
-          <button className={`inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-extrabold shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#fffaf2] text-[#4a3a2d]' : 'bg-white text-emerald-900'}`} onClick={resetGame} type="button">
+          <button className={`inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-extrabold shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#4a3a2d] text-white' : 'bg-white text-emerald-900'}`} onClick={resetGame} type="button">
             {hasWon ? <Play size={16} /> : <RotateCcw size={16} />} {hasWon ? 'Play again' : 'Reset deck'}
           </button>
         </div>

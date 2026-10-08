@@ -169,7 +169,7 @@ export default function QuietClues({ difficulty = 'medium', theme = 'lofi' }) {
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-stone-600'}`}>{config.note}</p>
             <div className={`mt-3 inline-flex rounded-full px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] shadow-sm ${isLofi ? 'border border-white/70 bg-white/72 text-amber-900 backdrop-blur-sm' : 'bg-white text-stone-700'}`}>{config.sessionLabel}</div>
           </div>
-          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[23rem] ${isLofi ? 'rounded-[1.35rem] border border-white/70 bg-white/65 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
+          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[23rem] ${isLofi ? 'rounded-[1.35rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
             {[
               ['Solved', `${solvedCount}/${config.targetClues}`],
               ['Best run', bestRound],
@@ -183,7 +183,7 @@ export default function QuietClues({ difficulty = 'medium', theme = 'lofi' }) {
           </div>
         </div>
 
-        <div className={`relative z-10 mt-5 rounded-[1.4rem] border p-4 shadow-sm ${isLofi ? 'border-white/70 bg-white/68 backdrop-blur-sm' : 'border-white/80 bg-white/74'}`}>
+        <div className={`relative z-10 mt-5 rounded-[1.4rem] border p-4 shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/74'}`}>
           <div className={`flex items-center justify-between gap-3 text-xs font-extrabold uppercase tracking-[0.18em] ${isLofi ? 'text-amber-800/70' : 'text-stone-500'}`}>
             <span>Round progress</span>
             <span>{solvedCount}/{config.targetClues}</span>
@@ -196,7 +196,7 @@ export default function QuietClues({ difficulty = 'medium', theme = 'lofi' }) {
         </div>
 
         <div className="relative z-10 mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_260px]">
-          <div className={`rounded-[1.8rem] border p-5 shadow-inner lg:p-6 ${isLofi ? 'border-amber-200/60 bg-[linear-gradient(145deg,rgba(253,250,245,0.98),rgba(250,237,205,0.92))]' : 'border-stone-100 bg-[#f5ede1]'}`}>
+          <div className={`rounded-[1.5rem] border p-5 shadow-inner lg:p-6 ${isLofi ? 'border-amber-200/60 bg-[linear-gradient(145deg,rgba(253,250,245,0.98),rgba(250,237,205,0.92))]' : 'border-stone-100 bg-[#f5ede1]'}`}>
             <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-stone-500'}`}>Current clue</p>
             <h2 className={`mt-3 text-2xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-stone-950'}`}>{activeClue.clue}</h2>
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-[#8c755f]' : 'text-stone-600'}`}>Answer length: {activeClue.answer.length} letters</p>
@@ -235,7 +235,7 @@ export default function QuietClues({ difficulty = 'medium', theme = 'lofi' }) {
             </form>
           </div>
 
-          <div className={`rounded-[1.8rem] border p-4 shadow-sm ${isLofi ? 'border-white/70 bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/78'}`}>
+          <div className={`rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/78'}`}>
             <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-stone-500'}`}>Why the difficulty changes</p>
             <div className={`mt-3 space-y-2.5 text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-stone-700'}`}>
               <p>Easy keeps the session short with simple words.</p>

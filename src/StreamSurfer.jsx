@@ -409,7 +409,7 @@ export default function StreamSurfer({ difficulty = 'medium', theme = 'lofi' }) 
             <span className={`rounded-full px-4 py-2 shadow-sm ${isLofi ? 'border border-white/70 bg-white/82 backdrop-blur-sm' : 'border border-teal-200 bg-white'}`}>Best: {highScore}</span>
           </div>
         </div>
-        <div className={`relative overflow-hidden rounded-[2rem] border shadow-sm transition hover:shadow-soft ${isLofi ? 'border-white/70 bg-white/60 backdrop-blur-sm' : 'border-teal-200'}`} style={{ aspectRatio: '3/2' }}>
+        <div className={`relative overflow-hidden rounded-[2rem] border shadow-sm transition hover:shadow-soft ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-teal-200'}`} style={{ aspectRatio: '3/2' }}>
           <canvas ref={canvasRef} width={600} height={400} className="block h-full w-full touch-none" />
 
           {gameState === 'playing' && (

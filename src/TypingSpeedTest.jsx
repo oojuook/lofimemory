@@ -481,7 +481,7 @@ export default function TypingSpeedTest({ difficulty = 'medium', theme = 'lofi' 
               ))}
             </div>
           </div>
-          <div className={`grid w-full gap-2 p-3 shadow-sm sm:grid-cols-2 lg:w-[29rem] lg:grid-cols-3 ${isLofi ? 'rounded-[1.45rem] border border-white/70 bg-white/65 backdrop-blur-sm' : 'rounded-[1.6rem] border border-white/85 bg-white/84'}`}>
+          <div className={`grid w-full gap-2 p-3 shadow-sm sm:grid-cols-2 lg:w-[29rem] lg:grid-cols-3 ${isLofi ? 'rounded-[1.45rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.6rem] border border-white/85 bg-white/84'}`}>
             {[
               { label: 'WPM', value: wpm },
               { label: 'Accuracy', value: `${accuracy}%` },
@@ -499,7 +499,7 @@ export default function TypingSpeedTest({ difficulty = 'medium', theme = 'lofi' 
         </div>
 
         <div className="relative z-10 mt-6 grid gap-4 xl:grid-cols-[minmax(0,1fr)_260px]">
-          <div className={`rounded-[1.8rem] border p-4 shadow-sm sm:p-5 ${isLofi ? 'border-white/70 bg-white/72 backdrop-blur-sm' : 'border-white/80 bg-white/92'}`}>
+          <div className={`rounded-[1.5rem] border p-4 shadow-sm sm:p-5 ${isLofi ? 'border-[#e8dfd5]/80 bg-white/72 backdrop-blur-sm' : 'border-white/80 bg-white/92'}`}>
             <button
               className={`block w-full overflow-y-auto rounded-[1.5rem] px-3 py-4 text-left shadow-inner outline-none ring-offset-0 transition focus-visible:ring-2 sm:px-4 ${typingMode === 'sentences' ? 'min-h-[15rem] sm:min-h-[17rem] lg:min-h-[18rem]' : 'h-[11.5rem] sm:h-[13rem]'} ${isLofi ? 'bg-[linear-gradient(145deg,rgba(253,250,245,0.98),rgba(245,230,211,0.88))] focus-visible:ring-amber-300' : 'bg-slate-50/90 focus-visible:ring-sky-300'}`}
               onClick={() => inputRef.current?.focus()}
@@ -622,7 +622,7 @@ export default function TypingSpeedTest({ difficulty = 'medium', theme = 'lofi' 
           </div>
 
           <div className="space-y-4">
-            <div className={`rounded-[1.6rem] border p-4 shadow-sm ${isLofi ? 'border-white/70 bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/92'}`}>
+            <div className={`rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/92'}`}>
               <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-slate-600'}`}>Flow tips</p>
               <ul className={`mt-3 space-y-2 text-sm leading-6 ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-700'}`}>
                 {modeConfig.tips.map((tip) => (

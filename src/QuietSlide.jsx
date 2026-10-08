@@ -196,7 +196,7 @@ export default function QuietSlide({ difficulty = 'medium', theme = 'lofi' }) {
             <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-700'}`}>A cozy sliding puzzle inspired by the classic 15-puzzle style people search for when they want a quiet brain reset. Move each tile into place and let the simple sequence calm everything down.</p>
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-slate-600'}`}>{config.note}</p>
           </div>
-          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[23rem] ${isLofi ? 'rounded-[1.35rem] border border-white/70 bg-white/65 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
+          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[23rem] ${isLofi ? 'rounded-[1.35rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
             {[
               ['Moves', moves],
               ['Best', bestMoves || '—'],
@@ -210,7 +210,7 @@ export default function QuietSlide({ difficulty = 'medium', theme = 'lofi' }) {
           </div>
         </div>
 
-        <div className={`relative z-10 mt-5 flex flex-col gap-3 rounded-[1.6rem] border p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between ${isLofi ? 'border-white/70 bg-white/68 backdrop-blur-sm' : 'border-white/80 bg-white/72'}`}>
+        <div className={`relative z-10 mt-5 flex flex-col gap-3 rounded-[1.5rem] border p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/72'}`}>
           <p className={`text-sm font-semibold ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-700'}`}>
             {gameState === 'won'
               ? 'You solved the board — a tidy little reset.'
@@ -226,7 +226,7 @@ export default function QuietSlide({ difficulty = 'medium', theme = 'lofi' }) {
         </div>
 
         <div className="relative z-10 mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_190px]">
-          <div className={`rounded-[1.8rem] border p-4 shadow-inner lg:p-5 ${isLofi ? 'border-amber-200/60 bg-[linear-gradient(145deg,rgba(253,250,245,0.98),rgba(250,237,205,0.92))]' : 'border-slate-100 bg-[#ebe1d4]'}`}>
+          <div className={`rounded-[1.5rem] border p-4 shadow-inner lg:p-5 ${isLofi ? 'border-amber-200/60 bg-[linear-gradient(145deg,rgba(253,250,245,0.98),rgba(250,237,205,0.92))]' : 'border-slate-100 bg-[#ebe1d4]'}`}>
             <div className="grid gap-3" style={{ gridTemplateColumns: `repeat(${config.size}, minmax(0, 1fr))` }}>
               {board.map((value) => {
                 const isEmpty = value === 0;
@@ -244,7 +244,7 @@ export default function QuietSlide({ difficulty = 'medium', theme = 'lofi' }) {
             </div>
           </div>
 
-          <div className={`rounded-[1.8rem] border p-4 shadow-sm ${isLofi ? 'border-white/70 bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/78'}`}>
+          <div className={`rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/78'}`}>
             <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-slate-500'}`}>Tap controls</p>
             <div className="mt-4 grid grid-cols-3 gap-2">
               <div />

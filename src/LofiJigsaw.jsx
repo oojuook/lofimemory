@@ -229,14 +229,14 @@ export default function LofiJigsaw({ difficulty = 'medium', theme = 'lofi' }) {
         <div className="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-sage-200 bg-white/88 text-sage-700'}`}>
-              <ImagePlus size={14} /> {label} lofi jigsaw
+              <Sparkles size={14} /> {label} lofi jigsaw
             </div>
             <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>Lofi Jigsaw Puzzle</h3>
             <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>Slide soft image pieces back into place and rebuild a tiny lofi landscape. It is a cozy puzzle for study breaks, relaxing browser play, and quiet journal moments.</p>
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-sage-600'}`}>{note}</p>
             <p className={`mt-2 text-xs font-semibold uppercase tracking-[0.18em] ${isLofi ? 'text-amber-800/60' : 'text-sage-500'}`}>{size}×{size} board • {totalTiles} picture pieces • relaxing sliding puzzle</p>
           </div>
-          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[24rem] ${isLofi ? 'rounded-[1.35rem] border border-white/70 bg-white/65 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
+          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[24rem] ${isLofi ? 'rounded-[1.35rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
             {[
               ['Moves', moves],
               ['Time', formatTime(time)],
@@ -250,9 +250,9 @@ export default function LofiJigsaw({ difficulty = 'medium', theme = 'lofi' }) {
           </div>
         </div>
 
-        <div className={`relative z-10 mt-5 flex flex-col gap-3 rounded-[1.6rem] border p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between ${isLofi ? 'border-white/70 bg-white/68 backdrop-blur-sm' : 'border-white/80 bg-white/72'}`}>
+        <div className={`relative z-10 mt-5 flex flex-col gap-3 rounded-[1.5rem] border p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/72'}`}>
           <div className="flex items-center gap-3">
-             {solved && <div className={`flex h-8 items-center gap-2 rounded-full px-3 py-1 text-xs font-black uppercase tracking-widest shadow-sm ${isLofi ? 'bg-[#d8eadf] text-[#2f4d3d]' : 'bg-emerald-100 text-emerald-800'} animate-bounce`}>Done!</div>}
+             {solved && <div className={`flex h-8 items-center gap-2 rounded-full px-3 py-1 text-xs font-black uppercase tracking-widest shadow-sm ${isLofi ? 'bg-[#ccd5ae] text-[#3d3025]' : 'bg-emerald-100 text-emerald-800'} animate-bounce`}>Done!</div>}
              <p className={`text-sm font-semibold ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>{solved ? 'The whole scene is back together — soft work.' : `Tap a piece beside the empty space to slide it. ${getMoveLabel(moves)} so far.`}</p>
           </div>
           <div className="flex flex-wrap items-center justify-end gap-2">
@@ -262,7 +262,7 @@ export default function LofiJigsaw({ difficulty = 'medium', theme = 'lofi' }) {
             </label>
             {customWallpaper && (
               <button
-                className={`inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-extrabold shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'border border-amber-200 bg-white text-amber-900' : 'bg-white text-sage-900'}`}
+                className={`inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-extrabold shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'border border-[#e8dfd5] bg-white text-[#4a3a2d]' : 'bg-white text-sage-900'}`}
                 onClick={restoreDefaultWallpaper}
                 type="button"
               >
@@ -270,7 +270,7 @@ export default function LofiJigsaw({ difficulty = 'medium', theme = 'lofi' }) {
               </button>
             )}
             <button
-              className={`inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-extrabold shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'border border-white/70 bg-[#fdfaf5] text-[#4a3a2d]' : 'bg-white text-sage-900'}`}
+              className={`inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-extrabold shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'border border-[#e8dfd5] bg-white text-[#4a3a2d]' : 'bg-white text-sage-900'}`}
               onClick={resetPuzzle}
               type="button"
             >
@@ -279,8 +279,8 @@ export default function LofiJigsaw({ difficulty = 'medium', theme = 'lofi' }) {
           </div>
         </div>
 
-        <div className={`relative z-10 mt-5 rounded-[1.8rem] border p-3 shadow-soft sm:p-4 ${isLofi ? 'border-white/70 bg-white/70 backdrop-blur-sm' : 'border-white/85 bg-white/72'}`}>
-          <div className={`mb-3 overflow-hidden rounded-[1.4rem] border shadow-sm ${isLofi ? 'border-white/70 bg-white/78 backdrop-blur-sm' : 'border-white/80 bg-white/70'}`}>
+        <div className={`relative z-10 mt-5 rounded-[1.5rem] border p-3 shadow-soft sm:p-4 ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-white/85 bg-white/72'}`}>
+          <div className={`mb-3 overflow-hidden rounded-[1.4rem] border shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/78 backdrop-blur-sm' : 'border-white/80 bg-white/70'}`}>
             <img src={puzzleImage} alt={customWallpaper ? 'Custom wallpaper reference for the jigsaw puzzle' : 'Lofi wallpaper reference for the jigsaw puzzle'} className="h-40 w-full object-cover sm:h-56" />
           </div>
           <div className="grid gap-2" style={{ gridTemplateColumns: `repeat(${size}, minmax(0, 1fr))` }}>
@@ -300,7 +300,7 @@ export default function LofiJigsaw({ difficulty = 'medium', theme = 'lofi' }) {
           </div>
         </div>
 
-        <div className={`relative z-10 mt-5 rounded-[1.4rem] border px-4 py-4 text-sm font-semibold shadow-sm ${isLofi ? 'border-white/70 bg-white/68 text-[#6e5a4a] backdrop-blur-sm' : 'border-white/75 bg-white/76 text-sage-700'}`}>
+        <div className={`relative z-10 mt-5 rounded-[1.5rem] border px-4 py-4 text-sm font-semibold shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 text-[#6e5a4a] backdrop-blur-sm' : 'border-white/75 bg-white/76 text-sage-700'}`}>
           Lofi Jigsaw Puzzle is designed for people searching for relaxing puzzle games, cozy browser games, and simple online jigsaw-style play. Pair it with a quick journal note afterward to turn a small game break into a calm reflection.
         </div>
       </div>

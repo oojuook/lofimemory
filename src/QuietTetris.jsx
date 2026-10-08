@@ -438,7 +438,7 @@ export default function QuietTetris({ difficulty = 'medium', theme = 'lofi' }) {
 
   return (
     <div className="mx-auto mt-12 w-full max-w-[980px] pb-12">
-      <div className={`relative overflow-hidden rounded-[2.4rem] border p-5 shadow-soft lg:p-8 ${isLofi ? 'border-white/50 shadow-[0_32px_90px_rgba(83,62,44,0.12)]' : 'border-violet-100 bg-gradient-to-br from-white via-violet-50/82 to-sky-50/76'}`}>
+      <div className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-8 ${isLofi ? 'border-[#e8dfd5]/80 bg-[#fff9f0] shadow-[0_32px_90px_rgba(83,62,44,0.12)]' : 'border-violet-100 bg-gradient-to-br from-white via-violet-50/82 to-sky-50/76'}`}>
         {isLofi && (
           <>
             <div className="absolute inset-0 bg-[#fff9f0]/92" />
@@ -454,7 +454,7 @@ export default function QuietTetris({ difficulty = 'medium', theme = 'lofi' }) {
             <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-violet-700'}`}>A cozy block-stacking game inspired by classic Tetris pacing. Pieces now use the modern 7-bag system, so each shuffled bag contains I, J, L, O, S, T, and Z once before refilling for a fairer flow.</p>
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-violet-600'}`}>{config.note}</p>
           </div>
-          <div className={`grid gap-2 rounded-[1.5rem] border p-3 shadow-sm sm:grid-cols-2 xl:grid-cols-5 lg:min-w-[34rem] ${isLofi ? 'border-white/60 bg-white/70 backdrop-blur-sm' : 'border-white/85 bg-white/80'}`}>
+          <div className={`grid gap-2 rounded-[1.5rem] border p-3 shadow-sm sm:grid-cols-2 xl:grid-cols-5 lg:min-w-[34rem] ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-white/85 bg-white/80'}`}>
             {[
               { label: 'Score', value: score, tone: isLofi ? 'bg-amber-50 text-amber-900' : 'bg-violet-50 text-violet-950' },
               { label: 'Lines', value: lines, tone: isLofi ? 'bg-amber-50 text-amber-900' : 'bg-violet-50 text-violet-950' },
@@ -472,8 +472,8 @@ export default function QuietTetris({ difficulty = 'medium', theme = 'lofi' }) {
 
         <div className="relative z-10 mt-6 grid gap-5 xl:grid-cols-[minmax(0,1fr)_220px]">
           <div>
-            <div className={`relative mx-auto w-full max-w-[22rem] rounded-[2.2rem] border p-4 shadow-inner sm:max-w-[24rem] sm:p-5 ${isLofi ? 'border-[#e8dfd5] bg-[#fdfaf5]' : 'border-violet-100 bg-[#f6f2ff]'}`}>
-              <div className={`mb-4 rounded-[1.4rem] border p-3.5 ${isLofi ? 'border-white bg-white/60 backdrop-blur-sm' : 'border-white/75 bg-white/72'}`}>
+            <div className={`relative mx-auto w-full max-w-[22rem] rounded-[2rem] border p-4 shadow-inner sm:max-w-[24rem] sm:p-5 ${isLofi ? 'border-[#e8dfd5] bg-[#fdfaf5]' : 'border-violet-100 bg-[#f6f2ff]'}`}>
+              <div className={`mb-4 rounded-[1.4rem] border p-3.5 ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-white/75 bg-white/72'}`}>
                 <div className={`flex items-center justify-between text-[11px] font-extrabold uppercase tracking-[0.18em] ${isLofi ? 'text-amber-800' : 'text-violet-500'}`}>
                   <span>Level {currentLevel}</span>
                   <span>{10 - levelProgress} line{levelProgress === 9 ? '' : 's'} to next speed</span>
@@ -486,7 +486,7 @@ export default function QuietTetris({ difficulty = 'medium', theme = 'lofi' }) {
                 {displayBoard.flat().map((cell, index) => (
                   <div
                     key={`tetris-cell-${index + 1}`}
-                    className={`aspect-square rounded-[0.45rem] border ${isLofi ? 'border-white/40' : 'border-white/70 bg-white/75'}`}
+                    className={`aspect-square rounded-[0.45rem] border ${isLofi ? 'border-[#e8dfd5]/70' : 'border-white/70 bg-white/75'}`}
                     style={{ backgroundColor: cell ? (isLofi ? SHAPES[cell].lofiColor : SHAPES[cell].color) : (isLofi ? 'transparent' : '#fbf9ff') }}
                   >
                     {isLofi && cell && (
@@ -497,7 +497,7 @@ export default function QuietTetris({ difficulty = 'medium', theme = 'lofi' }) {
               </div>
 
               {gameState !== 'playing' && (
-                <div className="absolute inset-0 flex flex-col items-center justify-center rounded-[2.2rem] px-4 text-center backdrop-blur-[6px] bg-white/75">
+                <div className="absolute inset-0 flex flex-col items-center justify-center rounded-[2rem] px-4 text-center backdrop-blur-[6px] bg-white/75">
                   <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800' : 'text-violet-500'}`}>{gameState === 'start' ? 'Ready to stack' : 'Round over'}</p>
                   <h4 className={`mt-3 text-3xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-violet-950'}`}>{gameState === 'start' ? 'Settle the blocks and clear neat rows.' : 'The stack reached the top.'}</h4>
                   <button
@@ -521,13 +521,13 @@ export default function QuietTetris({ difficulty = 'medium', theme = 'lofi' }) {
           </div>
 
           <div className="space-y-4 text-center xl:text-left">
-            <div className={`rounded-[1.6rem] border p-4 shadow-sm ${isLofi ? 'border-white bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/88'}`}>
+            <div className={`rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/72 backdrop-blur-sm' : 'border-white/80 bg-white/88'}`}>
               <div className="flex items-center justify-between gap-3">
                 <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800' : 'text-violet-500'}`}>Hold block</p>
                 <span className={`rounded-full px-2 py-1 text-[10px] font-extrabold uppercase tracking-[0.14em] ${holdUsed ? (isLofi ? 'bg-amber-100 text-amber-400' : 'bg-violet-100 text-violet-400') : (isLofi ? 'bg-amber-800 text-white' : 'bg-violet-900 text-white')}`}>{holdUsed ? 'Used' : 'Ready'}</span>
               </div>
               <button
-                className={`mt-4 inline-grid gap-1 rounded-[1.1rem] p-3 text-left ${isLofi ? 'bg-amber-50/50' : 'bg-violet-50'}`}
+                className={`mt-4 inline-grid gap-1 rounded-[1.1rem] p-3 text-left ${isLofi ? 'bg-[#faedcd]/65' : 'bg-violet-50'}`}
                 onClick={holdPiece}
                 style={{ gridTemplateColumns: 'repeat(4, minmax(0, 1fr))' }}
                 type="button"
@@ -539,7 +539,7 @@ export default function QuietTetris({ difficulty = 'medium', theme = 'lofi' }) {
                   return (
                     <div
                       key={`held-block-${index + 1}`}
-                      className={`h-6 w-6 rounded-[0.45rem] border ${isLofi ? 'border-white/30' : 'border-white/70 sm:h-7 sm:w-7'}`}
+                      className={`h-6 w-6 rounded-[0.45rem] border ${isLofi ? 'border-[#e8dfd5]/70' : 'border-white/70 sm:h-7 sm:w-7'}`}
                       style={{ backgroundColor: hasBlock ? (isLofi ? SHAPES[heldType].lofiColor : SHAPES[heldType].color) : (isLofi ? 'transparent' : '#ffffff') }}
                     />
                   );
@@ -547,9 +547,9 @@ export default function QuietTetris({ difficulty = 'medium', theme = 'lofi' }) {
               </button>
               <p className={`mt-3 text-xs font-semibold ${isLofi ? 'text-amber-800/70' : 'text-violet-600'}`}>Press C or Shift to store/swap once per falling piece.</p>
             </div>
-            <div className={`rounded-[1.6rem] border p-4 shadow-sm ${isLofi ? 'border-white bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/88'}`}>
+            <div className={`rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/72 backdrop-blur-sm' : 'border-white/80 bg-white/88'}`}>
               <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800' : 'text-violet-500'}`}>Next block</p>
-              <div className={`mt-4 inline-grid gap-1 rounded-[1.1rem] p-3 ${isLofi ? 'bg-amber-50/50' : 'bg-violet-50'}`} style={{ gridTemplateColumns: 'repeat(4, minmax(0, 1fr))' }}>
+              <div className={`mt-4 inline-grid gap-1 rounded-[1.1rem] p-3 ${isLofi ? 'bg-[#faedcd]/65' : 'bg-violet-50'}`} style={{ gridTemplateColumns: 'repeat(4, minmax(0, 1fr))' }}>
                 {Array.from({ length: 16 }, (_, index) => {
                   const row = Math.floor(index / 4);
                   const col = index % 4;
@@ -557,14 +557,14 @@ export default function QuietTetris({ difficulty = 'medium', theme = 'lofi' }) {
                   return (
                     <div
                       key={`next-block-${index + 1}`}
-                      className={`h-6 w-6 rounded-[0.45rem] border ${isLofi ? 'border-white/30' : 'border-white/70 sm:h-7 sm:w-7'}`}
+                      className={`h-6 w-6 rounded-[0.45rem] border ${isLofi ? 'border-[#e8dfd5]/70' : 'border-white/70 sm:h-7 sm:w-7'}`}
                       style={{ backgroundColor: hasBlock ? (isLofi ? SHAPES[nextType].lofiColor : SHAPES[nextType].color) : (isLofi ? 'transparent' : '#ffffff') }}
                     />
                   );
                 })}
               </div>
             </div>
-            <div className={`rounded-[1.6rem] border p-4 shadow-sm ${isLofi ? 'border-white bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/88'}`}>
+            <div className={`rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/72 backdrop-blur-sm' : 'border-white/80 bg-white/88'}`}>
               <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800' : 'text-violet-500'}`}>Controls</p>
               <ul className={`mt-3 space-y-2 text-sm leading-6 ${isLofi ? 'text-[#6e5a4a]' : 'text-violet-700'}`}>
                 <li>- Left / right to slide</li>
