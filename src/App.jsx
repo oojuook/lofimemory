@@ -874,7 +874,7 @@ function GameSplash({ game, isClosing = false }) {
 }
 
 function GamePreview({ gameId }) {
-  const shellClass = 'mt-4 overflow-hidden rounded-[1.35rem] border border-sage-100 bg-sage-50/80 p-3 shadow-inner';
+  const shellClass = 'mt-4 overflow-hidden rounded-[1.35rem] border border-[#e8dfd5] bg-sage-50/80 p-3 shadow-inner';
 
   if (gameId === 'drifting-leaf') {
     return (
@@ -915,7 +915,7 @@ function GamePreview({ gameId }) {
             return (
               <div
                 key={i}
-                className={`rounded-md border ${tile === '' ? 'border-dashed border-sage-200 bg-white/30' : 'border-white/70 bg-cover shadow-sm'} flex items-center justify-center text-[8px] font-black text-white transition-transform duration-1000 ease-in-out`}
+                className={`rounded-md border ${tile === '' ? 'border-dashed border-amber-200/50 bg-white/30' : 'border-amber-200/50 bg-cover shadow-sm'} flex items-center justify-center text-[8px] font-black text-white transition-transform duration-1000 ease-in-out`}
                 style={tile === '' ? {} : {
                   backgroundImage: 'url(/lofi-jigsaw-wallpaper.png)',
                   backgroundSize: '400% 300%',
@@ -938,7 +938,7 @@ function GamePreview({ gameId }) {
           <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-transparent to-black/10" />
           <div className="absolute bottom-2 left-2 flex gap-1.5">
             {['A♠', 'K♥', 'Q♦'].map((card) => (
-              <span key={card} className="flex h-8 w-6 items-center justify-center rounded-md border border-white/70 bg-white/86 text-[10px] font-black text-rose-800 shadow-sm">{card}</span>
+              <span key={card} className="flex h-8 w-6 items-center justify-center rounded-md border border-amber-200/50 bg-white/86 text-[10px] font-black text-rose-800 shadow-sm">{card}</span>
             ))}
           </div>
         </div>
@@ -1507,7 +1507,7 @@ function clampCompanionPosition(size, x, y, containerWidth, containerHeight, isV
 
 function StatCard({ icon: Icon, label, value, tone }) {
   return (
-    <div className="group rounded-[1.75rem] border border-white/80 bg-gradient-to-br from-white/95 to-white/75 p-5 text-center shadow-lift backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-soft">
+    <div className="group rounded-[2.2rem] border border-[#e8dfd5] bg-gradient-to-br from-white/95 to-white/75 p-5 text-center shadow-lift backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-soft">
       <div className="flex flex-col items-center gap-3">
         <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl shadow-sm ${tone}`}>
           <Icon size={21} />
@@ -1538,7 +1538,7 @@ function SectionHeader({ eyebrow, title, text }) {
 
 function InfoCard({ icon: Icon, title, children }) {
   return (
-    <article className="customizable-card rounded-3xl border border-white/70 bg-white/75 p-6 shadow-lift backdrop-blur transition hover:-translate-y-1 hover:bg-white/90">
+    <article className="customizable-card rounded-3xl border border-amber-200/50 bg-white/75 p-6 shadow-lift backdrop-blur transition hover:-translate-y-1 hover:bg-white/90">
       <div className="theme-icon mb-5 flex h-12 w-12 items-center justify-center rounded-3xl bg-sage-100 text-sage-800">
         <Icon size={22} />
       </div>
@@ -1579,7 +1579,7 @@ function ThemeStudio({
   return (
     <div className={`customizer-shell fixed inset-y-0 right-0 z-30 flex transition ${isOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}>
       <div className={`fixed inset-0 bg-ink/20 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`} onClick={onClose} />
-      <aside id="design" className={`relative h-full w-screen max-w-5xl overflow-y-auto bg-white/95 shadow-soft backdrop-blur-xl transition duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      <aside id="design" className={`relative h-full w-screen max-w-5xl overflow-y-auto bg-[#fffaf2]/95 shadow-soft backdrop-blur-xl transition duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="grid min-h-full lg:grid-cols-12">
           <div className="theme-panel p-7 text-white lg:col-span-4 lg:p-8">
             <div className="flex items-start justify-between gap-4">
@@ -1596,7 +1596,7 @@ function ThemeStudio({
               <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-5">
                 {colorThemes.map((theme) => (
                   <button
-                    className={`custom-option rounded-3xl border p-4 text-left transition hover:-translate-y-1 ${selectedTheme === theme.id ? 'is-selected border-sage-500 bg-sage-50 shadow-lift' : 'border-sage-100 bg-white'}`}
+                    className={`custom-option rounded-3xl border p-4 text-left transition hover:-translate-y-1 ${selectedTheme === theme.id ? 'is-selected border-sage-500 bg-sage-50 shadow-lift' : 'border-[#e8dfd5] bg-white'}`}
                     key={theme.id}
                     onClick={() => {
                       onThemeChange(theme.id);
@@ -1611,11 +1611,11 @@ function ThemeStudio({
             </div>
 
             <div className="grid gap-5 lg:grid-cols-3">
-              <label className="custom-option rounded-3xl border border-sage-100 bg-white p-5 shadow-sm lg:col-span-1">
+              <label className="custom-option rounded-3xl border border-[#e8dfd5] bg-white p-5 shadow-sm lg:col-span-1">
                 <span className="mb-3 block text-sm font-bold uppercase tracking-widest text-sage-700">Custom color</span>
                 <input
                   aria-label="Choose a custom accent color"
-                  className="h-12 w-full cursor-pointer rounded-2xl border border-sage-100 bg-white p-1"
+                  className="h-12 w-full cursor-pointer rounded-2xl border border-[#e8dfd5] bg-white p-1"
                   onChange={(event) => {
                     onCustomColorChange(event.target.value);
                     onThemeChange('custom');
@@ -1628,7 +1628,7 @@ function ThemeStudio({
               <div className="grid gap-3 lg:col-span-2">
                 {designStyles.map((style) => (
                   <button
-                    className={`custom-option flex items-center justify-between rounded-3xl border bg-white p-4 text-left transition hover:-translate-y-1 ${selectedDesign === style.id ? 'is-selected border-sage-500 shadow-lift' : 'border-sage-100'}`}
+                    className={`custom-option flex items-center justify-between rounded-3xl border bg-white p-4 text-left transition hover:-translate-y-1 ${selectedDesign === style.id ? 'is-selected border-sage-500 shadow-lift' : 'border-[#e8dfd5]'}`}
                     key={style.id}
                     onClick={() => {
                       onDesignChange(style.id);
@@ -1645,7 +1645,7 @@ function ThemeStudio({
               </div>
             </div>
 
-            <div className="rounded-3xl border border-sage-100 bg-white p-5 shadow-sm">
+            <div className="rounded-3xl border border-[#e8dfd5] bg-white p-5 shadow-sm">
               <div className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-sage-700"><ImagePlus size={16} /> Wallpaper</div>
               <p className="text-sm leading-6 text-sage-700">Import your own calm wallpaper. It stays soft behind the app with a blur overlay so the page still feels minimal and easy to read.</p>
               <div className="mt-4 grid gap-4 md:grid-cols-[minmax(0,1fr)_14rem] md:items-center">
@@ -1653,19 +1653,19 @@ function ThemeStudio({
                   <ImagePlus size={18} /> Import wallpaper
                   <input accept="image/*" className="hidden" onChange={onWallpaperImageUpload} type="file" />
                 </label>
-                <button className="rounded-2xl border border-sage-200 bg-white px-4 py-4 text-sm font-extrabold text-sage-700 transition hover:bg-sage-50 disabled:cursor-not-allowed disabled:opacity-50" disabled={!wallpaperImage} onClick={onWallpaperRemove} type="button">
+                <button className="rounded-2xl border border-amber-200/50 bg-white px-4 py-4 text-sm font-extrabold text-sage-700 transition hover:bg-sage-50 disabled:cursor-not-allowed disabled:opacity-50" disabled={!wallpaperImage} onClick={onWallpaperRemove} type="button">
                   Remove wallpaper
                 </button>
               </div>
               {wallpaperImage && (
-                <div className="mt-4 overflow-hidden rounded-3xl border border-sage-100 bg-sage-50 p-3">
+                <div className="mt-4 overflow-hidden rounded-3xl border border-[#e8dfd5] bg-sage-50 p-3">
                   <div className="h-36 rounded-2xl bg-cover bg-center shadow-inner" style={{ backgroundImage: `url(${wallpaperImage})` }} />
                   <p className="mt-3 text-sm font-semibold leading-6 text-sage-700">Wallpaper applied. The app automatically keeps it muted so it does not clutter the interface.</p>
                 </div>
               )}
             </div>
 
-            <div className="rounded-3xl border border-sage-100 bg-white p-5 shadow-sm">
+            <div className="rounded-3xl border border-[#e8dfd5] bg-white p-5 shadow-sm">
               <div className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-sage-700"><Sparkles size={16} /> Atmosphere presets</div>
               <p className="text-sm leading-6 text-sage-700">Pick a ready-made mood and let the design drawer handle the look for you instead of crowding the writing area.</p>
               <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
@@ -1673,7 +1673,7 @@ function ThemeStudio({
                   const isPresetActive = selectedTheme === preset.themeId && selectedDesign === preset.designId && journalStyle.fontId === preset.journalFontId && quoteStyle.fontId === preset.quoteFontId;
                   return (
                     <button
-                      className={`rounded-[1.4rem] border p-4 text-left transition hover:-translate-y-0.5 ${isPresetActive ? 'border-sage-500 bg-sage-50 shadow-lift' : 'border-sage-100 bg-white hover:bg-sage-50'}`}
+                      className={`rounded-[1.4rem] border p-4 text-left transition hover:-translate-y-0.5 ${isPresetActive ? 'border-sage-500 bg-sage-50 shadow-lift' : 'border-[#e8dfd5] bg-white hover:bg-sage-50'}`}
                       key={preset.id}
                       onClick={() => onAtmosphereApply(preset)}
                       type="button"
@@ -1686,12 +1686,12 @@ function ThemeStudio({
               </div>
             </div>
 
-            <div className="rounded-3xl border border-sage-100 bg-white p-5 shadow-sm">
+            <div className="rounded-3xl border border-[#e8dfd5] bg-white p-5 shadow-sm">
               <div className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-sage-700"><Quote size={16} /> Quote card color</div>
               <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6">
                 {quoteCardColors.map((color) => (
                   <button
-                    className={`custom-option rounded-2xl border p-3 text-left transition hover:-translate-y-1 ${quoteBg.toLowerCase() === color.value.toLowerCase() ? 'is-selected border-sage-500 shadow-lift' : 'border-sage-100'}`}
+                    className={`custom-option rounded-2xl border p-3 text-left transition hover:-translate-y-1 ${quoteBg.toLowerCase() === color.value.toLowerCase() ? 'is-selected border-sage-500 shadow-lift' : 'border-[#e8dfd5]'}`}
                     key={color.value}
                     onClick={() => {
                       onQuoteBgChange(color.value);
@@ -1705,22 +1705,22 @@ function ThemeStudio({
               </div>
               <label className="mt-4 block rounded-2xl bg-sage-50 p-4">
                 <span className="mb-3 block text-sm font-bold text-sage-800">Or pick any quote card color</span>
-                <input className="h-11 w-full cursor-pointer rounded-xl border border-sage-100 bg-white p-1" onChange={(event) => onQuoteBgChange(event.target.value)} type="color" value={quoteBg} />
+                <input className="h-11 w-full cursor-pointer rounded-xl border border-[#e8dfd5] bg-white p-1" onChange={(event) => onQuoteBgChange(event.target.value)} type="color" value={quoteBg} />
               </label>
             </div>
 
-            <div className="rounded-3xl border border-sage-100 bg-white p-5 shadow-sm">
+            <div className="rounded-3xl border border-[#e8dfd5] bg-white p-5 shadow-sm">
               <div className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-sage-700"><ImagePlus size={16} /> Custom emotion</div>
               <p className="text-sm leading-6 text-sage-700">Keep personal moods in the design drawer instead of the writing page. They still appear in your mood picker after you save them.</p>
               <div className="mt-5 grid gap-3 md:grid-cols-5">
                 <input
-                  className="rounded-2xl border border-sage-100 bg-sage-50/80 px-4 py-3 font-semibold outline-none transition focus:border-sage-400 focus:bg-white"
+                  className="rounded-2xl border border-[#e8dfd5] bg-sage-50/80 px-4 py-3 font-semibold outline-none transition focus:border-sage-400 focus:bg-white"
                   onChange={(event) => onCustomWeatherNameChange(event.target.value)}
                   placeholder="Name"
                   value={customWeatherName}
                 />
                 <input
-                  className="rounded-2xl border border-sage-100 bg-sage-50/80 px-4 py-3 font-semibold outline-none transition focus:border-sage-400 focus:bg-white"
+                  className="rounded-2xl border border-[#e8dfd5] bg-sage-50/80 px-4 py-3 font-semibold outline-none transition focus:border-sage-400 focus:bg-white"
                   maxLength={4}
                   onChange={(event) => onCustomWeatherEmojiChange(event.target.value)}
                   placeholder="Emoji"
@@ -1745,7 +1745,7 @@ function ThemeStudio({
                   <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-sage-500">Saved custom moods</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {customWeathers.map((weather) => (
-                      <div key={weather.id} className="inline-flex items-center gap-2 rounded-full border border-sage-100 bg-sage-50 px-3 py-2 text-sm font-semibold text-sage-700">
+                      <div key={weather.id} className="inline-flex items-center gap-2 rounded-full border border-[#e8dfd5] bg-sage-50 px-3 py-2 text-sm font-semibold text-sage-700">
                         {weather.image ? <img alt={weather.label} className="h-6 w-6 rounded-full object-cover" src={weather.image} /> : <span>{weather.emoji}</span>}
                         <span>{weather.label}</span>
                         <button className="text-sage-400 transition hover:text-rose-500" onClick={() => onDeleteCustomWeather(weather.label)} type="button">×</button>
@@ -1774,7 +1774,7 @@ function MoodChart({ entries, weatherOptions }) {
 
   if (!recent.length) {
     return (
-      <div className="flex min-h-56 items-center justify-center rounded-3xl border border-dashed border-sage-200 bg-sage-50/70 p-8 text-center text-sage-700">
+      <div className="flex min-h-56 items-center justify-center rounded-3xl border border-dashed border-amber-200/50 bg-sage-50/70 p-8 text-center text-sage-700">
         Your mood garden is waiting for its first check-in.
       </div>
     );
@@ -1828,7 +1828,7 @@ function PrivacyGate({ hasPin, onUnlock, onCreatePin }) {
       <div className="absolute left-10 top-10 h-64 w-64 rounded-full bg-sage-200/60 blur-3xl" />
       <div className="absolute bottom-10 right-10 h-80 w-80 rounded-full bg-sand-200/70 blur-3xl" />
       <section className="relative mx-auto flex min-h-screen max-w-5xl items-center justify-center px-6 py-16">
-        <div className="grid overflow-hidden rounded-3xl border border-white/80 bg-white/75 shadow-soft backdrop-blur md:grid-cols-2">
+        <div className="grid overflow-hidden rounded-3xl border border-[#e8dfd5] bg-white/75 shadow-soft backdrop-blur md:grid-cols-2">
           <div className="flex flex-col justify-between bg-gradient-to-br from-sage-100 via-mist to-sand-100 p-10">
             <div>
               <div className="mb-8 inline-flex items-center gap-2 rounded-full bg-white/70 px-4 py-2 text-sm font-bold text-sage-800 shadow-lift">
@@ -1849,7 +1849,7 @@ function PrivacyGate({ hasPin, onUnlock, onCreatePin }) {
             <p className="mt-3 leading-7 text-sage-700">{hasPin ? 'Enter your private PIN to open your journal.' : 'Set a simple PIN for this browser. It is a light privacy step for your personal writing space.'}</p>
             <div className="relative mt-8">
               <input
-                className="w-full rounded-2xl border border-sage-200 bg-white px-5 py-4 pr-16 text-lg font-semibold tracking-widest outline-none transition focus:border-sage-500 focus:ring-4 focus:ring-sage-100"
+                className="w-full rounded-2xl border border-amber-200/50 bg-white px-5 py-4 pr-16 text-lg font-semibold tracking-widest outline-none transition focus:border-sage-500 focus:ring-4 focus:ring-sage-100"
                 maxLength={12}
                 onChange={(event) => setPin(event.target.value)}
                 placeholder="Your PIN"
@@ -1925,14 +1925,14 @@ function PinSettingsDialog({ isOpen, onClose, onChangePin, onRemovePin }) {
 
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-ink/25 px-6 backdrop-blur-sm">
-      <div className="w-full max-w-2xl rounded-[2rem] border border-white/80 bg-white/95 p-8 shadow-soft">
+      <div className="w-full max-w-2xl rounded-[3rem] border border-[#e8dfd5] bg-[#fffaf2]/95 p-8 shadow-soft">
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-sm font-bold uppercase tracking-widest text-sage-600">Privacy</p>
             <h3 className="mt-2 text-3xl font-extrabold text-ink">Manage your lock PIN</h3>
             <p className="mt-3 max-w-xl leading-7 text-sage-700">Change the current PIN for this browser or remove the lock completely if you no longer want the journal gated.</p>
           </div>
-          <button className="rounded-full border border-sage-200 bg-white px-4 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50" onClick={onClose} type="button">
+          <button className="rounded-full border border-amber-200/50 bg-white px-4 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50" onClick={onClose} type="button">
             Done
           </button>
         </div>
@@ -1942,7 +1942,7 @@ function PinSettingsDialog({ isOpen, onClose, onChangePin, onRemovePin }) {
             Current PIN
             <div className="relative mt-2">
               <input
-                className="w-full rounded-2xl border border-sage-200 bg-white px-4 py-3 pr-14 text-base outline-none transition focus:border-sage-500 focus:ring-4 focus:ring-sage-100"
+                className="w-full rounded-2xl border border-amber-200/50 bg-white px-4 py-3 pr-14 text-base outline-none transition focus:border-sage-500 focus:ring-4 focus:ring-sage-100"
                 maxLength={12}
                 onChange={(event) => setCurrentPin(event.target.value)}
                 placeholder="Enter current PIN"
@@ -1964,7 +1964,7 @@ function PinSettingsDialog({ isOpen, onClose, onChangePin, onRemovePin }) {
             New PIN
             <div className="relative mt-2">
               <input
-                className="w-full rounded-2xl border border-sage-200 bg-white px-4 py-3 pr-14 text-base outline-none transition focus:border-sage-500 focus:ring-4 focus:ring-sage-100"
+                className="w-full rounded-2xl border border-amber-200/50 bg-white px-4 py-3 pr-14 text-base outline-none transition focus:border-sage-500 focus:ring-4 focus:ring-sage-100"
                 maxLength={12}
                 onChange={(event) => setNewPin(event.target.value)}
                 placeholder="Choose a new PIN"
@@ -2472,9 +2472,9 @@ function App() {
       title: 'A quick mood marker for today',
       detail: 'A simple mood label helps you return later and remember what the day actually felt like.',
       summary: 'Mood check-ins keep the writing flow softer and easier to revisit over time.',
-      shellClass: 'border-sage-100 bg-white/88',
+      shellClass: 'border-[#e8dfd5] bg-[#fffaf2]/88',
       panelClass: 'bg-sage-50/85 ring-sage-100/80',
-      chipClass: 'border-sage-100 bg-white/95 text-sage-700'
+      chipClass: 'border-[#e8dfd5] bg-white/95 text-sage-700'
     };
   }, [selectedMood]);
   const moodStarterPrompts = useMemo(() => {
@@ -2495,7 +2495,7 @@ function App() {
     '--accent': selectedTheme === 'custom' ? customColor : activeTheme.accent,
     '--accent-soft': selectedTheme === 'custom' ? '#f4f1ec' : activeTheme.soft,
     '--accent-glow': selectedTheme === 'custom' ? customColor : activeTheme.glow,
-    '--shape-radius': activeDesign.radius,
+    '--shape-radius': '3rem',
     '--theme-texture': activeDesign.texture,
     '--quote-bg': quoteBg
   };
@@ -4854,7 +4854,7 @@ function App() {
       {showEntryTransition && (
         <div className={`fixed inset-0 z-40 flex items-center justify-center bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.42),transparent_30%),linear-gradient(180deg,rgba(248,243,235,0.98)_0%,rgba(242,234,224,0.97)_100%)] backdrop-blur-[10px] transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${entryTransitionClosing ? 'opacity-0' : 'opacity-100'}`}>
           <div className={`px-6 text-center transition-all duration-[1050ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${entryTransitionClosing ? 'translate-y-3 scale-[1.02] opacity-0' : 'translate-y-0 scale-100 opacity-100'}`}>
-            <div className="mx-auto flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border border-white/90 bg-white/88 p-2 shadow-[0_18px_50px_rgba(158,136,114,0.12)] ring-8 ring-white/30">
+            <div className="mx-auto flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border border-[#e8dfd5] bg-white/88 p-2 shadow-[0_18px_50px_rgba(158,136,114,0.12)] ring-8 ring-white/30">
               <img src={headerLogoIcon} alt="Lofi Memory logo" className="h-full w-full rounded-full object-cover" />
             </div>
             <p className="mt-6 text-[11px] font-extrabold uppercase tracking-[0.42em] text-[#8d7763]">Lofi Memory</p>
@@ -4866,10 +4866,10 @@ function App() {
 
       <div className={`transition-opacity duration-500 ${showEntryTransition ? 'pointer-events-none select-none opacity-0' : 'opacity-100'}`}>
       <nav className="sticky top-0 z-20 px-5 pt-5 sm:px-7 xl:px-10">
-        <div className="site-nav-shell lofi-glass mx-auto max-w-[1280px] rounded-[2.2rem] border p-4 shadow-soft backdrop-blur-xl lg:p-5">
+        <div className="site-nav-shell lofi-glass mx-auto max-w-[1280px] rounded-[3.2rem] border p-4 shadow-soft backdrop-blur-xl lg:p-5">
           <div className="flex flex-col gap-2.5 lg:gap-3 xl:flex-row xl:items-center xl:justify-between">
             <a className="flex items-center gap-3.5" href="#home" onClick={() => openHomeSection('home')}>
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[1.35rem] border border-white/80 bg-white/88 p-1.5 shadow-[0_12px_34px_rgba(117,127,119,0.14)] ring-1 ring-sage-100 overflow-hidden">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[1.35rem] border border-[#e8dfd5] bg-white/88 p-1.5 shadow-[0_12px_34px_rgba(117,127,119,0.14)] ring-1 ring-sage-100 overflow-hidden">
                 <img src={headerLogoIcon} alt="Lofi Memory Logo" className="h-full w-full rounded-[1rem] object-cover" />
               </div>
               <div>
@@ -4899,7 +4899,7 @@ function App() {
 
             <div className="site-nav-actions flex w-full flex-wrap items-center gap-2 lg:justify-end xl:w-auto xl:max-w-[34rem] xl:flex-none xl:flex-nowrap">
               {user ? (
-                <div className="flex min-w-[210px] flex-1 items-center justify-between gap-3 rounded-full border border-sage-200 bg-white/92 px-4 py-2.5 shadow-lift xl:flex-none">
+                <div className="flex min-w-[210px] flex-1 items-center justify-between gap-3 rounded-full border border-amber-200/50 bg-white/92 px-4 py-2.5 shadow-lift xl:flex-none">
                   <div className="min-w-0">
                     <p className="truncate text-sm font-extrabold text-sage-950">{user.displayName || user.email}</p>
                     <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-sage-600">{cloudStatus}</p>
@@ -4909,7 +4909,7 @@ function App() {
                   </div>
                 </div>
               ) : (
-                <button className="flex min-w-[208px] flex-1 items-center justify-between gap-3 rounded-full border border-sage-200 bg-white/92 px-4 py-2.5 text-left shadow-lift transition hover:-translate-y-0.5 hover:bg-white xl:flex-none" onClick={signInWithGoogle} disabled={authLoading} type="button">
+                <button className="flex min-w-[208px] flex-1 items-center justify-between gap-3 rounded-full border border-amber-200/50 bg-white/92 px-4 py-2.5 text-left shadow-lift transition hover:-translate-y-0.5 hover:bg-white xl:flex-none" onClick={signInWithGoogle} disabled={authLoading} type="button">
                   <div>
                     <p className="text-sm font-extrabold text-sage-950">{authLoading ? 'Checking login...' : 'Sign in with Google'}</p>
                     <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-sage-600">Sync across devices</p>
@@ -4919,14 +4919,14 @@ function App() {
                   </div>
                 </button>
               )}
-              <div className="flex flex-wrap items-center gap-2 rounded-full border border-sage-100 bg-white/82 p-1.5 shadow-sm xl:flex-nowrap">
+              <div className="flex flex-wrap items-center gap-2 rounded-full border border-[#e8dfd5] bg-white/82 p-1.5 shadow-sm xl:flex-nowrap">
                 {user && (
-                  <button className="rounded-full border border-sage-200 bg-white/90 px-3.5 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:bg-white" onClick={handleSignOut} type="button">
+                  <button className="rounded-full border border-amber-200/50 bg-white/90 px-3.5 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:bg-white" onClick={handleSignOut} type="button">
                     Sign out
                   </button>
                 )}
                 {isMasterAdmin && (
-                  <div className="flex overflow-hidden rounded-full border border-sage-200 bg-white/90 p-1">
+                  <div className="flex overflow-hidden rounded-full border border-amber-200/50 bg-white/90 p-1">
                     <button
                       className={`rounded-full px-3.5 py-2 text-sm font-extrabold transition ${adminViewMode === 'master' ? 'bg-sage-900 text-white shadow-sm' : 'text-sage-700 hover:bg-sage-50'}`}
                       onClick={() => setAdminViewMode('master')}
@@ -4948,22 +4948,22 @@ function App() {
                     SEO studio
                   </button>
                 )}
-                <button className={`rounded-full border px-3.5 py-2 text-sm font-bold transition hover:-translate-y-0.5 ${comfortMode ? 'border-sage-800 bg-sage-900 text-white' : 'border-sage-200 bg-white/90 text-sage-800 hover:bg-white'}`} onClick={() => setComfortMode(!comfortMode)} type="button">
+                <button className={`rounded-full border px-3.5 py-2 text-sm font-bold transition hover:-translate-y-0.5 ${comfortMode ? 'border-sage-800 bg-sage-900 text-white' : 'border-amber-200/50 bg-white/90 text-sage-800 hover:bg-white'}`} onClick={() => setComfortMode(!comfortMode)} type="button">
                   Comfort
                 </button>
-                <button className="rounded-full border border-sage-200 bg-white/90 px-3.5 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:bg-white" onClick={() => (hasPin ? setPinSettingsOpen(true) : setLocked(true))} type="button">
+                <button className="rounded-full border border-amber-200/50 bg-white/90 px-3.5 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:bg-white" onClick={() => (hasPin ? setPinSettingsOpen(true) : setLocked(true))} type="button">
                   {hasPin ? 'Privacy' : 'Set lock'}
                 </button>
               </div>
             </div>
           </div>
-          <div className="site-nav-links mt-2 hidden flex-wrap items-center justify-center gap-2 rounded-[1.5rem] border border-sage-100 bg-white/88 p-1.5 2xl:flex">
-            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#unwind" onClick={() => navigateToTab('unwind')}>Games</a>
-            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#home" onClick={() => navigateToTab('home')}>Chill</a>
-            <button className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
-            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#memories" onClick={() => navigateToTab('memories')}>Memories</a>
-            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#breathe" onClick={() => navigateToTab('breathe')}>Music</a>
-            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
+          <div className="site-nav-links mt-2 hidden flex-wrap items-center justify-center gap-2 rounded-[1.5rem] border border-[#e8dfd5] bg-white/88 p-1.5 2xl:flex">
+            <a className="rounded-full border border-amber-200/50 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#unwind" onClick={() => navigateToTab('unwind')}>Games</a>
+            <a className="rounded-full border border-amber-200/50 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#home" onClick={() => navigateToTab('home')}>Chill</a>
+            <button className="rounded-full border border-amber-200/50 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
+            <a className="rounded-full border border-amber-200/50 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#memories" onClick={() => navigateToTab('memories')}>Memories</a>
+            <a className="rounded-full border border-amber-200/50 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#breathe" onClick={() => navigateToTab('breathe')}>Music</a>
+            <a className="rounded-full border border-amber-200/50 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
           </div>
         </div>
       </nav>
@@ -4974,12 +4974,12 @@ function App() {
           <p className="text-[11px] font-extrabold uppercase tracking-[0.34em] text-[#9a806a]">Choose your chill space</p>
             <p className="mt-3 text-sm font-semibold leading-7 text-[#7f6a58]">Pick a space.</p>
         </div>
-        <div className="lofi-glass rounded-[2rem] border p-3 shadow-soft backdrop-blur-xl sm:p-4">
+        <div className="lofi-glass rounded-[3rem] border p-3 shadow-soft backdrop-blur-xl sm:p-4">
           <div className="grid gap-3 md:grid-cols-2">
             {homeEntryCards.map((card) => (
               <button
                 key={card.id}
-                className="group lofi-glass relative flex min-h-[11rem] w-full flex-col items-start justify-start overflow-hidden rounded-[1.75rem] border px-5 py-5 text-left shadow-[0_10px_26px_rgba(146,126,106,0.07)] transition duration-300 hover:-translate-y-1 hover:border-[#d8c6b2] hover:shadow-[0_16px_34px_rgba(146,126,106,0.1)]"
+                className="group lofi-glass relative flex min-h-[11rem] w-full flex-col items-start justify-start overflow-hidden rounded-[2.2rem] border px-5 py-5 text-left shadow-[0_10px_26px_rgba(146,126,106,0.07)] transition duration-300 hover:-translate-y-1 hover:border-[#d8c6b2] hover:shadow-[0_16px_34px_rgba(146,126,106,0.1)]"
                 onClick={card.onClick}
                 type="button"
               >
@@ -4999,7 +4999,7 @@ function App() {
       {activeTab === 'home' && activeHomeSection === 'overview' && !showMinimalHomeOverview && (
       <section id="home" className="mx-auto grid max-w-[1280px] gap-8 px-5 pb-28 pt-10 sm:px-7 lg:grid-cols-12 lg:pb-12 xl:gap-12 xl:px-10">
         <div className="lg:col-span-8">
-          <div className="lofi-glass relative overflow-hidden rounded-[2.35rem] border p-8 shadow-soft backdrop-blur-xl lg:p-10 xl:p-11">
+          <div className="lofi-glass relative overflow-hidden rounded-[3.2rem] border p-8 shadow-soft backdrop-blur-xl lg:p-10 xl:p-11">
             <div className="pointer-events-none absolute -left-10 top-12 h-28 w-28 rounded-full bg-[#efe4d8]/55 blur-3xl"></div>
             <div className="pointer-events-none absolute right-4 top-4 h-32 w-32 rounded-full bg-[#f7eee3]/65 blur-3xl"></div>
             <div className="relative">
@@ -5009,7 +5009,7 @@ function App() {
               <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.96] tracking-tight text-[#3d3025] md:text-6xl">Lofi Memory — a relaxing place to play games and listen to music.</h1>
               <p className="mt-5 max-w-3xl text-[1.18rem] font-semibold leading-8 text-[#5d4c3e]">Listen to lofi music, play relaxing browser games, chill, keep a private online diary, and enjoy a cozy music room in one soft online space.</p>
 
-              <div className="lofi-now-playing lofi-glass mt-7 flex flex-col gap-4 rounded-[1.65rem] border p-4 shadow-sm backdrop-blur sm:flex-row sm:items-center sm:justify-between">
+              <div className="lofi-now-playing lofi-glass mt-7 flex flex-col gap-4 rounded-[2.2rem] border p-4 shadow-sm backdrop-blur sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-4">
                   <div className="lofi-mini-record flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-[#d8c5af] bg-[#3f342c] shadow-[0_14px_28px_rgba(80,61,47,0.14)]">
                     <div className="h-5 w-5 rounded-full border border-[#d8c5af] bg-[#f3e7d8]" />
@@ -5058,30 +5058,30 @@ function App() {
               </div>
 
               <div className="mt-7 flex flex-wrap gap-3 text-sm font-semibold text-sage-900">
-                <div className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white/92 px-4 py-2.5 shadow-sm">
+                <div className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white/92 px-4 py-2.5 shadow-sm">
                   <ShieldCheck size={16} /> {hasPin ? 'Private when you want it' : 'Add privacy any time'}
                 </div>
-                <div className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white/92 px-4 py-2.5 shadow-sm">
+                <div className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white/92 px-4 py-2.5 shadow-sm">
                   <Sparkles size={16} /> {user ? `${entries.length} saved moments · ${cloudStatus}` : `${entries.length} saved moments · Local-first chill space`}
                 </div>
               </div>
 
               <div className="mt-8 flex flex-wrap items-center gap-3 text-sm">
                 <span className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Popular guides</span>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-music-room.html">Lofi music room</a>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-music-website.html">Lofi music website</a>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/listen-to-lofi-music-online.html">Listen to lofi</a>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-radio-online.html">Lofi radio</a>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/relaxing-music-online.html">Relaxing music</a>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-music-online.html">Chill music</a>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-music-and-games.html">Music + games</a>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-study-music.html">Study music</a>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-vibes.html">Lofi vibes</a>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-vibes.html">Chill vibes</a>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/website-to-relax.html">Website to relax</a>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-place-online.html">Chill place online</a>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-games.html">Chill games</a>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/relaxing-browser-games.html">Relaxing browser games</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-music-room.html">Lofi music room</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-music-website.html">Lofi music website</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/listen-to-lofi-music-online.html">Listen to lofi</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-radio-online.html">Lofi radio</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/relaxing-music-online.html">Relaxing music</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-music-online.html">Chill music</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-music-and-games.html">Music + games</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-study-music.html">Study music</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-vibes.html">Lofi vibes</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-vibes.html">Chill vibes</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/website-to-relax.html">Website to relax</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-place-online.html">Chill place online</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-games.html">Chill games</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/relaxing-browser-games.html">Relaxing browser games</a>
               </div>
 
               <div className="mt-8 grid gap-4 sm:grid-cols-3 xl:grid-cols-3">
@@ -5091,14 +5091,14 @@ function App() {
               </div>
 
               <div className="mt-8 space-y-5">
-                <div className="flex min-h-[290px] flex-col justify-between rounded-[1.8rem] border border-white/80 bg-gradient-to-br from-white/90 to-sage-50/70 p-5 shadow-lift backdrop-blur">
+                <div className="flex min-h-[290px] flex-col justify-between rounded-[2.2rem] border border-[#e8dfd5] bg-gradient-to-br from-white/90 to-sage-50/70 p-5 shadow-lift backdrop-blur">
                   <div>
                     <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">All-in-one soft corner</p>
                     <h3 className="mt-3 text-2xl font-extrabold leading-tight text-ink">Listen, relax, plan, and write without jumping between tabs.</h3>
                     <p className="mt-3 max-w-2xl text-sm leading-7 text-sage-800">Lofi Memory is meant to feel like a calm browser hangout. You can let the lofi stream roll, play a chill game, keep your to-do list nearby, breathe for a minute, or write something down whenever you feel like it.</p>
                   </div>
                   <div className="mt-6 space-y-3.5">
-                    <button className="group flex w-full items-start gap-4 rounded-[1.5rem] border border-sage-200 bg-white/96 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50 hover:shadow-lift" onClick={() => setIsRadioPlaying(true)} type="button">
+                    <button className="group flex w-full items-start gap-4 rounded-[1.5rem] border border-amber-200/50 bg-white/96 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50 hover:shadow-lift" onClick={() => setIsRadioPlaying(true)} type="button">
                       <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700 shadow-sm transition group-hover:scale-105">
                         <Headphones size={18} />
                       </div>
@@ -5108,7 +5108,7 @@ function App() {
                         <span className="mt-2 block text-sm leading-6 text-sage-700">Start the soft radio and let the page settle into a calmer room for relaxing, focus, or writing.</span>
                       </div>
                     </button>
-                    <button className="group flex w-full items-start gap-4 rounded-[1.5rem] border border-sage-200 bg-white/96 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50 hover:shadow-lift" onClick={() => navigateToTab('notes')} type="button">
+                    <button className="group flex w-full items-start gap-4 rounded-[1.5rem] border border-amber-200/50 bg-white/96 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50 hover:shadow-lift" onClick={() => navigateToTab('notes')} type="button">
                       <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-teal-100 text-teal-700 shadow-sm transition group-hover:scale-105">
                         <FileText size={18} />
                       </div>
@@ -5118,7 +5118,7 @@ function App() {
                         <span className="mt-2 block text-sm leading-6 text-sage-700">Keep errands, reminders, and important bits close in a calmer, easier-to-scan space.</span>
                       </div>
                     </button>
-                    <button className="group flex w-full items-start gap-4 rounded-[1.5rem] border border-sage-200 bg-white/96 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50 hover:shadow-lift" onClick={() => navigateToTab('write')} type="button">
+                    <button className="group flex w-full items-start gap-4 rounded-[1.5rem] border border-amber-200/50 bg-white/96 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50 hover:shadow-lift" onClick={() => navigateToTab('write')} type="button">
                       <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-sage-100 text-sage-800 shadow-sm transition group-hover:scale-105">
                         <PenLine size={18} />
                       </div>
@@ -5131,7 +5131,7 @@ function App() {
                   </div>
                   <p className="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-sage-700">One place to listen to lofi music, relax, plan your day, and save your thoughts.</p>
                 </div>
-                <div className={`flex min-h-[290px] flex-col justify-between rounded-[1.8rem] border p-5 shadow-sm backdrop-blur ${selectedMoodGuide.shellClass}`}>
+                <div className={`flex min-h-[290px] flex-col justify-between rounded-[2.2rem] border p-5 shadow-sm backdrop-blur ${selectedMoodGuide.shellClass}`}>
                   <div>
                     <div className="flex items-center justify-between gap-3">
                       <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">Mood check-in</p>
@@ -5168,10 +5168,10 @@ function App() {
         </div>
 
         <aside className="flex flex-col gap-5 lg:col-span-4">
-          <div className="rounded-[1.9rem] border border-white/80 bg-white/72 p-5 shadow-soft backdrop-blur-xl">
+          <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/72 p-5 shadow-soft backdrop-blur-xl">
             <div className="flex items-center justify-between gap-3">
               <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">Start where it helps most</p>
-              <span className="rounded-full border border-sage-100 bg-sage-50 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-800">Core spaces</span>
+              <span className="rounded-full border border-[#e8dfd5] bg-sage-50 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-800">Core spaces</span>
             </div>
             <div className="mt-4 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:gap-4">
               {[
@@ -5182,7 +5182,7 @@ function App() {
                 { id: 'memories', label: 'Memories', detail: 'Return to saved moments', icon: BookOpen, tone: 'bg-sand-100 text-sand-600' },
                 { id: 'design', label: 'Design', detail: 'Customize your space', icon: Palette, tone: 'bg-rose-100 text-rose-700' }
               ].map((tab) => (
-                <button key={tab.id} className="group flex items-center gap-3 rounded-2xl border border-sage-100 bg-white/92 px-4 py-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-200 hover:bg-white hover:shadow-lift" onClick={() => navigateToTab(tab.id)} type="button">
+                <button key={tab.id} className="group flex items-center gap-3 rounded-2xl border border-[#e8dfd5] bg-white/92 px-4 py-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-white hover:shadow-lift" onClick={() => navigateToTab(tab.id)} type="button">
                   <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl shadow-sm transition group-hover:scale-105 ${tab.tone}`}>
                     <tab.icon size={18} />
                   </div>
@@ -5195,27 +5195,27 @@ function App() {
             </div>
           </div>
 
-          <div className="rounded-[1.9rem] border border-white/80 bg-gradient-to-br from-white/84 to-sand-50/70 p-6 shadow-soft backdrop-blur-xl">
+          <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-gradient-to-br from-white/84 to-sand-50/70 p-6 shadow-soft backdrop-blur-xl">
             <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-800">Why it feels good to stay here</p>
             <h3 className="mt-3 text-2xl font-extrabold leading-tight text-ink">The page feels like a chill place first, so writing can arrive naturally.</h3>
             <p className="mt-3 max-w-sm text-sm leading-7 text-sage-800">There is a clear place to begin, soft privacy cues, cozy game breaks, and just enough support to help a first sentence feel easy instead of exposed.</p>
             <div className="mt-6 grid gap-3.5 text-sm font-semibold text-sage-900">
-              <div className="flex items-center gap-3 rounded-2xl border border-sage-200 bg-white/96 px-4 py-3.5 shadow-sm">
+              <div className="flex items-center gap-3 rounded-2xl border border-amber-200/50 bg-white/96 px-4 py-3.5 shadow-sm">
                 <Sparkles size={15} className="text-sage-700" />
                 <span>Starter lines help you begin without filling the page with noise</span>
               </div>
-              <div className="flex items-center gap-3 rounded-2xl border border-sage-200 bg-white/96 px-4 py-3.5 shadow-sm">
+              <div className="flex items-center gap-3 rounded-2xl border border-amber-200/50 bg-white/96 px-4 py-3.5 shadow-sm">
                 <ShieldCheck size={15} className="text-sage-700" />
                 <span>Privacy cues keep the space personal before you write a word</span>
               </div>
-              <div className="flex items-center gap-3 rounded-2xl border border-sage-200 bg-white/96 px-4 py-3.5 shadow-sm">
+              <div className="flex items-center gap-3 rounded-2xl border border-amber-200/50 bg-white/96 px-4 py-3.5 shadow-sm">
                 <BookOpen size={15} className="text-sage-700" />
                 <span>Saved pages stay easy to revisit when you want perspective later</span>
               </div>
             </div>
           </div>
 
-          <div className="quote-card quote-card-premium quote-card-compact flex flex-col rounded-3xl border border-white/70 p-6 shadow-soft lg:p-7">
+          <div className="quote-card quote-card-premium quote-card-compact flex flex-col rounded-3xl border border-amber-200/50 p-6 shadow-soft lg:p-7">
             <Quote className="mb-6 opacity-80" size={30} />
             <p className="quote-main-text font-bold leading-tight" style={{ fontFamily: activeQuoteFont, fontSize: Math.max(activeQuoteSize - 4, 28), color: quoteStyle.textColor, lineHeight: 1.4 }}>“{quoteLibrary[quoteIndex % quoteLibrary.length]}”</p>
             <button className="quote-button mt-6 rounded-full bg-white px-5 py-3 text-sm font-extrabold shadow-lift transition hover:-translate-y-1 hover:bg-sage-50" onClick={() => setQuoteIndex((quoteIndex + 1) % quoteLibrary.length)}>
@@ -5243,7 +5243,7 @@ function App() {
       <section className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-4">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="flex-1">
-            <div className="rounded-[2.5rem] border border-sage-100/90 bg-white/96 p-7 shadow-soft backdrop-blur lg:p-10">
+            <div className="rounded-[2.5rem] border border-[#e8dfd5]/90 bg-white/96 p-7 shadow-soft backdrop-blur lg:p-10">
               <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
                 <div>
                   <h2 className="font-display text-4xl font-bold leading-tight text-ink lg:text-5xl">{homeSections.find((s) => s.id === activeHomeSection)?.label || 'Overview'}</h2>
@@ -5254,7 +5254,7 @@ function App() {
                 </a>
               </div>
 
-              <div className="mt-10 grid gap-2.5 rounded-[2rem] border border-sage-100/70 bg-sage-50/45 p-2.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+              <div className="mt-10 grid gap-2.5 rounded-[3rem] border border-[#e8dfd5]/70 bg-sage-50/45 p-2.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
                 {primaryHomeSections.map((section) => (
                   <button
                     key={section.id}
@@ -5283,7 +5283,7 @@ function App() {
                     <p className="mt-2 text-3xl font-extrabold text-ink">{rewardLevel.emoji}</p>
                   </div>
                 </div>
-                <div className="rounded-[2rem] border border-sage-100 bg-gradient-to-r from-sage-50/85 via-white to-sand-50/80 p-5 shadow-inner">
+                <div className="rounded-[3rem] border border-[#e8dfd5] bg-gradient-to-r from-sage-50/85 via-white to-sand-50/80 p-5 shadow-inner">
                   <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                     <div>
                       <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-600">Stay here a while</p>
@@ -5299,7 +5299,7 @@ function App() {
                       { label: 'Plan important things', detail: 'Keep tasks, recurring habits, and notes away from diary entries.', action: () => navigateToTab('notes'), icon: FileText },
                       { label: 'Read guides', detail: 'Find calm game, prompt, privacy, and habit guides grouped by need.', action: () => openHomeSection('guides'), icon: Compass }
                     ].map((item) => (
-                      <button key={item.label} className="group rounded-[1.5rem] border border-white/85 bg-white/90 p-4 text-left shadow-sm transition hover:-translate-y-1 hover:border-sage-200 hover:bg-white hover:shadow-lift" onClick={item.action} type="button">
+                      <button key={item.label} className="group rounded-[1.5rem] border border-white/85 bg-white/90 p-4 text-left shadow-sm transition hover:-translate-y-1 hover:border-amber-200/50 hover:bg-white hover:shadow-lift" onClick={item.action} type="button">
                         <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-sage-100 text-sage-800 transition group-hover:bg-sage-900 group-hover:text-white"><item.icon size={17} /></div>
                         <h4 className="mt-3 text-base font-extrabold text-ink">{item.label}</h4>
                         <p className="mt-2 text-sm leading-6 text-sage-700">{item.detail}</p>
@@ -5307,7 +5307,7 @@ function App() {
                     ))}
                   </div>
                 </div>
-                <div className="rounded-[1.8rem] border border-sage-100/80 bg-white/85 p-5 shadow-sm">
+                <div className="rounded-[2.2rem] border border-[#e8dfd5]/80 bg-white/85 p-5 shadow-sm">
                   <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
                     <div>
                       <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-600">Popular calm searches</p>
@@ -5317,12 +5317,12 @@ function App() {
                   </div>
                   <div className="mt-4 flex flex-wrap gap-2.5">
                     {(showAllSearches ? seoPopularSearches : seoPopularSearches.slice(0, 12)).map((item) => (
-                      <a className="rounded-full border border-sage-200 bg-sage-50/70 px-4 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href={item.href} key={item.href}>{item.label}</a>
+                      <a className="rounded-full border border-amber-200/50 bg-sage-50/70 px-4 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href={item.href} key={item.href}>{item.label}</a>
                     ))}
                     {!showAllSearches && seoPopularSearches.length > 12 && (
                       <button 
                         onClick={() => setShowAllSearches(true)}
-                        className="rounded-full border border-sage-200 border-dashed bg-white/50 px-4 py-2 text-sm font-bold text-sage-600 transition hover:bg-white hover:text-sage-900"
+                        className="rounded-full border border-amber-200/50 border-dashed bg-white/50 px-4 py-2 text-sm font-bold text-sage-600 transition hover:bg-white hover:text-sage-900"
                         type="button"
                       >
                         + {seoPopularSearches.length - 12} more
@@ -5336,8 +5336,8 @@ function App() {
           </div>
 
           <aside className="lg:w-[320px] xl:w-[360px] lg:sticky lg:top-28">
-            <div className="rounded-[2.5rem] border border-white/80 bg-white/70 p-6 shadow-soft backdrop-blur-xl">
-              <div className="flex items-center gap-4 border-b border-sage-100 pb-5">
+            <div className="rounded-[2.5rem] border border-[#e8dfd5] bg-white/70 p-6 shadow-soft backdrop-blur-xl">
+              <div className="flex items-center gap-4 border-b border-[#e8dfd5] pb-5">
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sage-100 text-sage-800 shadow-sm">
                   <BookOpen size={20} />
                 </div>
@@ -5352,7 +5352,7 @@ function App() {
                 <p className="mt-4 text-sm leading-7 text-sage-800">Write the detail, feeling, or unfinished thought that is easiest to name first. A short diary page is still enough to hold the day.</p>
               </div>
 
-              <div className="grid gap-2 border-t border-sage-100 pt-5">
+              <div className="grid gap-2 border-t border-[#e8dfd5] pt-5">
                 <button className="flex items-center justify-between rounded-2xl bg-white/80 px-5 py-4 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-white" onClick={() => navigateToTab('notes')} type="button">
                   <span className="inline-flex items-center gap-2"><FileText size={16} /> Notes</span>
                   <span className="opacity-50">{openPlannerTodoCount}</span>
@@ -5408,7 +5408,7 @@ function App() {
       />
 
       <section id="journal" className="relative z-10 mx-auto -mt-1 max-w-[1280px] px-5 py-9 pb-28 sm:px-7 lg:-mt-4 lg:pb-10 xl:px-10">
-        <div className="mb-6 overflow-hidden rounded-[2rem] border border-white/85 bg-gradient-to-r from-white/88 via-sage-50/78 to-sand-50/75 p-3 shadow-soft backdrop-blur xl:p-4">
+        <div className="mb-6 overflow-hidden rounded-[3rem] border border-white/85 bg-gradient-to-r from-white/88 via-sage-50/78 to-sand-50/75 p-3 shadow-soft backdrop-blur xl:p-4">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-2xl">
               <p className="text-xs font-bold uppercase tracking-[0.22em] text-sage-600">Choose your chill space</p>
@@ -5439,22 +5439,22 @@ function App() {
         </div>
 
         {activeTab === 'write' && (
-        <form className="rounded-[2rem] border border-sage-100/80 bg-white/94 p-4 shadow-soft backdrop-blur sm:p-6 xl:p-8" onSubmit={saveEntry}>
-          <div className="mb-5 overflow-hidden rounded-[1.75rem] border border-sage-100/90 bg-gradient-to-r from-white via-sage-50/35 to-white p-4 shadow-sm sm:p-5">
+        <form className="rounded-[3rem] border border-[#e8dfd5]/80 bg-white/94 p-4 shadow-soft backdrop-blur sm:p-6 xl:p-8" onSubmit={saveEntry}>
+          <div className="mb-5 overflow-hidden rounded-[2.2rem] border border-[#e8dfd5]/90 bg-gradient-to-r from-white via-sage-50/35 to-white p-4 shadow-sm sm:p-5">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div className="max-w-3xl">
                 <p className="text-sm font-extrabold uppercase tracking-[0.22em] text-sage-600">Your page for today</p>
                 <h2 className="mt-2 text-[2rem] font-extrabold leading-tight text-ink sm:text-3xl">Keep it simple. Write what feels true.</h2>
                 <p className="mt-2 text-sm leading-7 text-sage-700">This page does not need a polished story. A sentence, a fragment, or a few plain words are already enough.</p>
               </div>
-              <div className="inline-flex items-center gap-2 self-start rounded-full border border-sage-100 bg-white/98 px-4 py-2 text-sm font-bold text-sage-700 shadow-sm">
+              <div className="inline-flex items-center gap-2 self-start rounded-full border border-[#e8dfd5] bg-white/98 px-4 py-2 text-sm font-bold text-sage-700 shadow-sm">
                 <CalendarDays size={16} /> {formatDate(new Date().toISOString())}
               </div>
             </div>
             <div className="mt-4 flex flex-wrap gap-2 text-[11px] font-extrabold uppercase tracking-[0.2em] text-sage-600 sm:text-xs">
-              <span className="rounded-full border border-white/80 bg-white/90 px-3 py-2 shadow-sm">{selectedMood} mood</span>
-              <span className="rounded-full border border-white/80 bg-white/90 px-3 py-2 shadow-sm">{draftWordCount} words</span>
-              <span className="rounded-full border border-white/80 bg-white/90 px-3 py-2 shadow-sm">{completedQuestCount}/{journalQuest.length} ritual steps</span>
+              <span className="rounded-full border border-[#e8dfd5] bg-white/90 px-3 py-2 shadow-sm">{selectedMood} mood</span>
+              <span className="rounded-full border border-[#e8dfd5] bg-white/90 px-3 py-2 shadow-sm">{draftWordCount} words</span>
+              <span className="rounded-full border border-[#e8dfd5] bg-white/90 px-3 py-2 shadow-sm">{completedQuestCount}/{journalQuest.length} ritual steps</span>
             </div>
           </div>
 
@@ -5463,14 +5463,14 @@ function App() {
             <p className="text-sm font-semibold text-sage-500">It can stay short, plain, or even blank.</p>
           </div>
           <input
-            className="journal-title-input mb-5 w-full rounded-[1.75rem] px-5 py-4 text-lg font-semibold outline-none"
+            className="journal-title-input mb-5 w-full rounded-[2.2rem] px-5 py-4 text-lg font-semibold outline-none"
             id="entry-title"
             onChange={(event) => setTitle(event.target.value)}
             placeholder="e.g. The part of today I want to keep"
             value={title}
           />
 
-          <div className="mb-4 rounded-[1.6rem] border border-sage-100/90 bg-gradient-to-r from-white via-sage-50/45 to-white p-3.5 shadow-sm backdrop-blur-sm sm:p-4">
+          <div className="mb-4 rounded-[1.6rem] border border-[#e8dfd5]/90 bg-gradient-to-r from-white via-sage-50/45 to-white p-3.5 shadow-sm backdrop-blur-sm sm:p-4">
             <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
               <div className="space-y-3">
                 <div>
@@ -5480,7 +5480,7 @@ function App() {
                 <div className="grid gap-3 sm:grid-cols-2 xl:min-w-[31rem] xl:grid-cols-3">
                   <label className="block text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-500">
                     Mood
-                    <select className="mt-2 w-full rounded-[1.15rem] border border-sage-100 bg-white/95 px-3.5 py-3 text-sm font-semibold text-ink outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70" onChange={(event) => setSelectedMood(event.target.value)} value={selectedMood}>
+                    <select className="mt-2 w-full rounded-[1.15rem] border border-[#e8dfd5] bg-white/95 px-3.5 py-3 text-sm font-semibold text-ink outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70" onChange={(event) => setSelectedMood(event.target.value)} value={selectedMood}>
                       {weatherOptions.map((mood) => (
                         <option key={mood.label} value={mood.label}>{mood.label}</option>
                       ))}
@@ -5488,7 +5488,7 @@ function App() {
                   </label>
                   <label className="block text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-500">
                     Font
-                    <select className="mt-2 w-full rounded-[1.15rem] border border-sage-100 bg-white/95 px-3.5 py-3 text-sm font-semibold text-ink outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70" onChange={(event) => setJournalStyle({ ...journalStyle, fontId: event.target.value })} value={journalStyle.fontId}>
+                    <select className="mt-2 w-full rounded-[1.15rem] border border-[#e8dfd5] bg-white/95 px-3.5 py-3 text-sm font-semibold text-ink outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70" onChange={(event) => setJournalStyle({ ...journalStyle, fontId: event.target.value })} value={journalStyle.fontId}>
                       {journalFontOptions.map((font) => (
                         <option key={font.id} value={font.id}>{font.label}</option>
                       ))}
@@ -5496,7 +5496,7 @@ function App() {
                   </label>
                   <label className="block text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-500">
                     Size
-                    <select className="mt-2 w-full rounded-[1.15rem] border border-sage-100 bg-white/95 px-3.5 py-3 text-sm font-semibold text-ink outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70" onChange={(event) => setJournalStyle({ ...journalStyle, sizeId: event.target.value })} value={journalStyle.sizeId}>
+                    <select className="mt-2 w-full rounded-[1.15rem] border border-[#e8dfd5] bg-white/95 px-3.5 py-3 text-sm font-semibold text-ink outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70" onChange={(event) => setJournalStyle({ ...journalStyle, sizeId: event.target.value })} value={journalStyle.sizeId}>
                       {journalSizeOptions.map((size) => (
                         <option key={size.id} value={size.id}>{size.label}</option>
                       ))}
@@ -5505,15 +5505,15 @@ function App() {
                 </div>
               </div>
               <div className="flex flex-wrap items-center gap-2 xl:max-w-[22rem] xl:justify-end">
-                <button className="rounded-full border border-sage-100 bg-white px-3.5 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-200 hover:bg-sage-50" onClick={() => toggleBoldText(entryBodyRef, setBody)} title="Bold selected text" type="button">Bold</button>
-                <button className="rounded-full border border-sage-100 bg-white px-3.5 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-200 hover:bg-sage-50" onClick={() => toggleUnderlineText(entryBodyRef, setBody)} title="Underline selected text" type="button">Underline</button>
-                <button className="rounded-full border border-sage-100 bg-white px-3.5 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-200 hover:bg-sage-50" onClick={() => toggleBulletList(entryBodyRef, setBody)} title="Bullet points" type="button">List</button>
+                <button className="rounded-full border border-[#e8dfd5] bg-white px-3.5 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-sage-50" onClick={() => toggleBoldText(entryBodyRef, setBody)} title="Bold selected text" type="button">Bold</button>
+                <button className="rounded-full border border-[#e8dfd5] bg-white px-3.5 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-sage-50" onClick={() => toggleUnderlineText(entryBodyRef, setBody)} title="Underline selected text" type="button">Underline</button>
+                <button className="rounded-full border border-[#e8dfd5] bg-white px-3.5 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-sage-50" onClick={() => toggleBulletList(entryBodyRef, setBody)} title="Bullet points" type="button">List</button>
                 {quickEmojis.slice(0, 4).map((emoji) => (
-                  <button key={emoji} className="rounded-full border border-sage-100 bg-white px-3 py-1.5 text-base shadow-sm transition hover:-translate-y-0.5 hover:border-sage-200 hover:bg-sage-50" onClick={() => insertQuickEmoji(emoji)} type="button">
+                  <button key={emoji} className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1.5 text-base shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-sage-50" onClick={() => insertQuickEmoji(emoji)} type="button">
                     {emoji}
                   </button>
                 ))}
-                <label className="flex cursor-pointer items-center gap-2 rounded-full border border-sage-100 bg-white px-3.5 py-2 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-200 hover:bg-sage-50">
+                <label className="flex cursor-pointer items-center gap-2 rounded-full border border-[#e8dfd5] bg-white px-3.5 py-2 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-sage-50">
                   <ImagePlus size={14} /> Photo
                   <input accept="image/*" className="hidden" onChange={handleEntryImageUpload} type="file" />
                 </label>
@@ -5522,7 +5522,7 @@ function App() {
             </div>
           </div>
 
-          <div className="journal-editor-shell mt-2 rounded-[2rem] p-3 md:p-4">
+          <div className="journal-editor-shell mt-2 rounded-[3rem] p-3 md:p-4">
             <div className="journal-editor-ribbon">quiet page</div>
             <div className="journal-editor-meta journal-editor-top mb-3 flex flex-wrap items-center justify-between gap-2 px-3 text-[11px] font-bold uppercase tracking-[0.22em] text-sage-500 sm:text-xs sm:tracking-[0.24em]">
               <span>{selectedMood} mood · today</span>
@@ -5530,7 +5530,7 @@ function App() {
             </div>
             <div
               ref={entryBodyRef}
-              className="journal-editor journal-editor-soft min-h-[24rem] w-full overflow-auto rounded-[1.75rem] px-6 py-6 outline-none sm:min-h-[30rem]"
+              className="journal-editor journal-editor-soft min-h-[24rem] w-full overflow-auto rounded-[2.2rem] px-6 py-6 outline-none sm:min-h-[30rem]"
               contentEditable
               suppressContentEditableWarning
               style={{ fontFamily: activeJournalFont, fontSize: activeJournalSize, lineHeight: 1.95, color: '#24312e', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
@@ -5543,7 +5543,7 @@ function App() {
             </div>
           </div>
           <div className="mt-5 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-            <div className="rounded-[1.2rem] border border-sage-100 bg-white/85 px-4 py-3 text-sm font-semibold leading-6 text-sage-700 shadow-sm">
+            <div className="rounded-[1.2rem] border border-[#e8dfd5] bg-white/85 px-4 py-3 text-sm font-semibold leading-6 text-sage-700 shadow-sm">
               {journalNudge}
             </div>
             <button className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-7 py-4 font-bold text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800 sm:w-auto" type="submit">
@@ -5551,13 +5551,13 @@ function App() {
             </button>
           </div>
 
-          <div className="mt-6 rounded-[1.75rem] border border-white/80 bg-gradient-to-r from-sage-50/60 via-white to-sand-50/40 p-4 shadow-inner ring-1 ring-white/70 sm:p-6">
+          <div className="mt-6 rounded-[2.2rem] border border-[#e8dfd5] bg-gradient-to-r from-sage-50/60 via-white to-sand-50/40 p-4 shadow-inner ring-1 ring-white/70 sm:p-6">
             <div className="grid gap-6 lg:grid-cols-12">
               <div className="lg:col-span-7">
                 <div className="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-sage-700"><Feather size={16} /> If you want a starting line</div>
                 <p className="max-w-2xl font-display text-2xl font-bold leading-relaxed text-sage-950">{activePrompt}</p>
                 <p className="mt-3 text-sm font-semibold text-sage-700">Use the prompt if it helps, or leave it and begin exactly where your mind already is.</p>
-                <button className="mt-5 inline-flex items-center gap-2 rounded-full border border-sage-100 bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-1 hover:border-sage-200 hover:bg-sage-50" onClick={() => setActivePrompt(prompts[(prompts.indexOf(activePrompt) + 1) % prompts.length])} type="button">
+                <button className="mt-5 inline-flex items-center gap-2 rounded-full border border-[#e8dfd5] bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-1 hover:border-amber-200/50 hover:bg-sage-50" onClick={() => setActivePrompt(prompts[(prompts.indexOf(activePrompt) + 1) % prompts.length])} type="button">
                   <Sparkles size={15} /> New prompt
                 </button>
               </div>
@@ -5582,7 +5582,7 @@ function App() {
                     {quickEmojis.slice(0, 8).map((emoji) => (
                       <button
                         key={emoji}
-                        className="flex h-10 w-10 items-center justify-center rounded-2xl border border-sage-100 bg-white text-xl shadow-sm transition hover:-translate-y-0.5 hover:border-sage-200 hover:shadow-md"
+                        className="flex h-10 w-10 items-center justify-center rounded-2xl border border-[#e8dfd5] bg-white text-xl shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:shadow-md"
                         onClick={() => addStarterLine(emoji)}
                         type="button"
                       >
@@ -5597,14 +5597,14 @@ function App() {
                   <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">Small ways to begin</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {moodStarterPrompts.map((starter) => (
-                      <button key={starter} className="rounded-full border border-sage-100 bg-white px-3.5 py-2 text-sm font-bold text-sage-700 transition hover:-translate-y-0.5 hover:border-sage-200 hover:bg-sage-50" onClick={() => addStarterLine(starter)} type="button">
+                      <button key={starter} className="rounded-full border border-[#e8dfd5] bg-white px-3.5 py-2 text-sm font-bold text-sage-700 transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-sage-50" onClick={() => addStarterLine(starter)} type="button">
                         {starter}
                       </button>
                     ))}
                   </div>
                 </div>
 
-                <div className="rounded-[1.75rem] border border-sage-100 bg-white/88 p-5 shadow-sm ring-1 ring-sage-100/70">
+                <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/88 p-5 shadow-sm ring-1 ring-sage-100/70">
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">Kept gently</p>
@@ -5613,19 +5613,19 @@ function App() {
                     <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sage-50 text-2xl text-sage-800 shadow-sm">{rewardLevel.emoji}</div>
                   </div>
                   <div className="mt-5 grid grid-cols-2 gap-3">
-                    <div className="rounded-2xl border border-sage-100 bg-sage-50/60 p-3">
+                    <div className="rounded-2xl border border-[#e8dfd5] bg-sage-50/60 p-3">
                       <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-sage-600">Pages saved</p>
                       <p className="mt-2 text-2xl font-extrabold text-sage-950">{entries.length}</p>
                     </div>
-                    <div className="rounded-2xl border border-sage-100 bg-sage-50/60 p-3">
+                    <div className="rounded-2xl border border-[#e8dfd5] bg-sage-50/60 p-3">
                       <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-sage-600">Current rhythm</p>
                       <p className="mt-2 text-2xl font-extrabold text-sage-950">{streak}</p>
                     </div>
                   </div>
-                  <div className="mt-4 rounded-2xl border border-sage-100 bg-sage-50/55 px-4 py-3 text-sm leading-7 text-sage-700">
+                  <div className="mt-4 rounded-2xl border border-[#e8dfd5] bg-sage-50/55 px-4 py-3 text-sm leading-7 text-sage-700">
                     {weeklyCheckIns >= weeklyGoal ? 'This week already has enough gentle attention in it.' : `${weeklyGoal - weeklyCheckIns} more check-in${weeklyGoal - weeklyCheckIns === 1 ? '' : 's'} if you want to fill this week softly.`}
                   </div>
-                  <button className="mt-4 inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50" onClick={() => navigateToTab('memories')} type="button">
+                  <button className="mt-4 inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50" onClick={() => navigateToTab('memories')} type="button">
                     <BookOpen size={15} /> Visit your memories
                   </button>
                 </div>
@@ -5635,7 +5635,7 @@ function App() {
 
           <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1.25fr)_minmax(260px,0.85fr)] xl:grid-cols-[1.3fr_0.9fr]">
             <div className="grid gap-4 lg:grid-cols-3">
-              <div className="rounded-3xl border border-sage-100 bg-white p-5 shadow-sm lg:col-span-3">
+              <div className="rounded-3xl border border-[#e8dfd5] bg-white p-5 shadow-sm lg:col-span-3">
                 <div className="flex items-center justify-between gap-3">
                   <div>
                     <p className="text-xs font-extrabold uppercase tracking-widest text-sage-600">Soft landing</p>
@@ -5645,31 +5645,31 @@ function App() {
                 </div>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {journalQuest.map((step) => (
-                    <div key={step.label} className={`rounded-full px-4 py-2 text-sm font-bold transition ${step.done ? 'bg-sage-900 text-white shadow-lift' : 'border border-sage-100 bg-sage-50 text-sage-700'}`}>
+                    <div key={step.label} className={`rounded-full px-4 py-2 text-sm font-bold transition ${step.done ? 'bg-sage-900 text-white shadow-lift' : 'border border-[#e8dfd5] bg-sage-50 text-sage-700'}`}>
                       {step.done ? '✓' : '○'} {step.label}
                     </div>
                   ))}
                 </div>
                 <p className="mt-4 text-sm font-semibold leading-7 text-sage-800">{journalNudge}</p>
               </div>
-              <div className="rounded-3xl border border-sage-100 bg-gradient-to-br from-sand-50 to-white p-5 shadow-sm">
+              <div className="rounded-3xl border border-[#e8dfd5] bg-gradient-to-br from-sand-50 to-white p-5 shadow-sm">
                 <p className="text-xs font-extrabold uppercase tracking-widest text-sand-500">This week so far</p>
                 <p className="mt-2 text-3xl font-extrabold text-sage-950">{weeklyCheckIns}/{weeklyGoal}</p>
                 <p className="mt-2 text-sm font-semibold leading-6 text-sage-700">{weeklyCheckIns >= weeklyGoal ? 'You already gave yourself enough room this week.' : `${weeklyGoal - weeklyCheckIns} more soft check-in${weeklyGoal - weeklyCheckIns === 1 ? '' : 's'} if you want to fill this week.`}</p>
               </div>
-              <div className="rounded-3xl border border-sage-100 bg-gradient-to-br from-rose-50 to-white p-5 shadow-sm">
+              <div className="rounded-3xl border border-[#e8dfd5] bg-gradient-to-br from-rose-50 to-white p-5 shadow-sm">
                 <p className="text-xs font-extrabold uppercase tracking-widest text-rose-500">Keepsake path</p>
                 <p className="mt-2 text-3xl font-extrabold text-sage-950">{rewardLevel.emoji}</p>
                 <p className="mt-2 text-base font-extrabold text-sage-900">{entriesToNextReward === 0 ? 'Your next bloom is already here.' : `${entriesToNextReward} more ${entriesToNextReward === 1 ? 'page' : 'pages'} until the next bloom.`}</p>
                 <p className="mt-2 text-sm font-semibold leading-6 text-sage-700">A few honest pages slowly turn into a quiet little collection.</p>
               </div>
-              <div className="rounded-3xl border border-sage-100 bg-gradient-to-br from-sage-50 to-white p-5 shadow-sm">
+              <div className="rounded-3xl border border-[#e8dfd5] bg-gradient-to-br from-sage-50 to-white p-5 shadow-sm">
                 <p className="text-xs font-extrabold uppercase tracking-widest text-sage-500">{returnRitual.eyebrow}</p>
                 <p className="mt-2 text-xl font-extrabold text-sage-950">{returnRitual.title}</p>
                 <p className="mt-3 text-sm leading-7 text-sage-700">{returnRitual.text}</p>
                 <p className="mt-3 text-xs font-bold uppercase tracking-[0.24em] text-sage-500">{latestEntry ? `${latestEntry.mood} mood kept nearby` : 'A gentle habit can start today'}</p>
               </div>
-              <div className="rounded-3xl border border-sage-100 bg-white p-5 shadow-sm lg:col-span-3">
+              <div className="rounded-3xl border border-[#e8dfd5] bg-white p-5 shadow-sm lg:col-span-3">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <div>
                     <p className="text-xs font-extrabold uppercase tracking-widest text-sage-600">Keepsake shelf</p>
@@ -5680,7 +5680,7 @@ function App() {
                 </div>
                 <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
                   {achievementBadges.map((badge) => (
-                    <div key={badge.id} className={`rounded-[1.5rem] border p-4 transition ${badge.unlocked ? 'border-sage-200 bg-sage-50 shadow-sm' : 'border-sage-100 bg-white'}`}>
+                    <div key={badge.id} className={`rounded-[1.5rem] border p-4 transition ${badge.unlocked ? 'border-amber-200/50 bg-sage-50 shadow-sm' : 'border-[#e8dfd5] bg-white'}`}>
                       <div className="flex items-start gap-3">
                         <div className={`flex h-12 w-12 items-center justify-center rounded-2xl text-2xl ${badge.unlocked ? 'bg-white shadow-sm' : 'bg-sage-50 opacity-70'}`}>{badge.emoji}</div>
                         <div>
@@ -5695,7 +5695,7 @@ function App() {
             </div>
 
             <aside className="flex flex-col gap-6 lg:sticky lg:top-28 lg:self-start">
-              <div className={`group relative overflow-hidden rounded-[2rem] border p-6 shadow-lift backdrop-blur transition duration-300 hover:shadow-soft ${selectedMoodGuide.shellClass}`}>
+              <div className={`group relative overflow-hidden rounded-[3rem] border p-6 shadow-lift backdrop-blur transition duration-300 hover:shadow-soft ${selectedMoodGuide.shellClass}`}>
                 <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-sage-50/50 blur-2xl group-hover:bg-sage-100/60"></div>
                 <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Atmosphere</p>
                 <div className="mt-5 flex items-center gap-4">
@@ -5710,7 +5710,7 @@ function App() {
                 <p className="mt-5 text-sm leading-7 text-sage-700">{latestEntry ? `Continuing "${latestEntry.title}".` : selectedMoodGuide.detail}</p>
               </div>
 
-              <div className="rounded-[2rem] border border-white/80 bg-white/78 p-6 shadow-soft backdrop-blur-xl">
+              <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/78 p-6 shadow-soft backdrop-blur-xl">
                 <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-rose-600">Journey progress</p>
                 <div className="mt-5 flex items-start gap-4">
                   <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-[1.5rem] bg-rose-50 text-3xl shadow-sm ring-4 ring-rose-50/50">{nextAchievement.emoji}</div>
@@ -5725,7 +5725,7 @@ function App() {
                 <p className="mt-4 text-[13px] font-bold text-rose-800">{rewardLevel.next}</p>
               </div>
 
-              <div className="rounded-[2rem] border border-white/80 bg-white/95 p-6 shadow-soft">
+              <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/95 p-6 shadow-soft">
                 <div className="mb-5 flex items-center justify-between">
                   <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Soft actions</p>
                   <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-sage-50 text-sage-600 shadow-inner">
@@ -5744,12 +5744,12 @@ function App() {
                     </button>
                   ))}
                 </div>
-                <p className="mt-5 border-t border-sage-100 pt-5 text-sm leading-relaxed text-sage-700 italic">&ldquo;You do not need to finish the whole story today.&rdquo;</p>
+                <p className="mt-5 border-t border-[#e8dfd5] pt-5 text-sm leading-relaxed text-sage-700 italic">&ldquo;You do not need to finish the whole story today.&rdquo;</p>
               </div>
             </aside>
           </div>
           {saveReward && (
-            <div className="reward-toast mt-5 rounded-3xl border border-sage-100 bg-sage-900 p-5 font-extrabold leading-7 text-white shadow-soft">
+            <div className="reward-toast mt-5 rounded-3xl border border-[#e8dfd5] bg-sage-900 p-5 font-extrabold leading-7 text-white shadow-soft">
               {saveReward}
             </div>
           )}
@@ -5760,17 +5760,17 @@ function App() {
           <div id="game-library" className="mx-auto max-w-[1280px] px-4 py-8 lg:px-6 lg:py-14 fade-in">
             {unwindViewMode === 'detail' && (
               <div ref={selectedGameInterfaceRef} className="game-detail-reveal mb-16 scroll-mt-24">
-                <button className="mb-5 inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white/88 px-4 py-2 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-x-0.5 hover:bg-white" onClick={returnToGameLibrary} type="button">
+                <button className="mb-5 inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white/88 px-4 py-2 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-x-0.5 hover:bg-white" onClick={returnToGameLibrary} type="button">
                   <span aria-hidden="true">←</span> Back to games
                 </button>
-                <div className={`lofi-glass relative overflow-hidden rounded-[2.2rem] border p-3 shadow-soft backdrop-blur sm:p-4 lg:p-5 ${gameVisualTheme === 'lofi' ? 'border-[#e8dfd5] bg-[#fffaf2]/85' : ''}`}>
+                <div className={`lofi-glass relative overflow-hidden rounded-[3rem] border p-3 shadow-soft backdrop-blur sm:p-4 lg:p-5 ${gameVisualTheme === 'lofi' ? 'border-[#e8dfd5] bg-[#fffaf2]/85' : ''}`}>
                   {gameVisualTheme === 'lofi' && (
                     <>
                       <img src={lofiRoomWallpaperImage} alt="" className="pointer-events-none absolute inset-0 h-full w-full scale-105 object-cover opacity-[0.07] blur-[1px]" aria-hidden="true" />
                       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.82),transparent_38%),linear-gradient(135deg,rgba(255,250,242,0.92),rgba(250,237,205,0.7),rgba(255,200,221,0.38))]" />
                     </>
                   )}
-                  <div className={`relative z-10 rounded-[1.7rem] border p-4 shadow-sm ${gameVisualTheme === 'lofi' ? 'border-amber-200/40 bg-white/60' : 'border-sage-100 bg-sage-50/55'}`}>
+                  <div className={`relative z-10 rounded-[1.7rem] border p-4 shadow-sm ${gameVisualTheme === 'lofi' ? 'border-amber-200/40 bg-white/60' : 'border-[#e8dfd5] bg-sage-50/55'}`}>
                     <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
                       <div>
                         <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${gameVisualTheme === 'lofi' ? 'text-amber-800/80' : 'text-sage-600'}`}>Now playing</p>
@@ -5779,7 +5779,7 @@ function App() {
                       </div>
                       <div className="flex w-full flex-col gap-2 xl:max-w-[32rem] xl:items-end">
                         <div className="flex flex-wrap gap-2 xl:justify-end">
-                          <div className={`flex h-11 items-center gap-1 rounded-2xl border bg-white p-1 shadow-sm ${gameVisualTheme === 'lofi' ? 'border-amber-200' : 'border-sage-200'}`}>
+                          <div className={`flex h-11 items-center gap-1 rounded-2xl border bg-white p-1 shadow-sm ${gameVisualTheme === 'lofi' ? 'border-amber-200' : 'border-amber-200/50'}`}>
                             {[
                               { id: 'original', label: 'Original', icon: Sparkles },
                               { id: 'lofi', label: 'Lofi', icon: Moon }
@@ -5794,11 +5794,11 @@ function App() {
                               </button>
                             ))}
                           </div>
-                          <button onClick={toggleFullscreen} className={`flex h-11 items-center gap-2 rounded-2xl border bg-white px-5 text-sm font-bold shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50 ${gameVisualTheme === 'lofi' ? 'border-amber-200 text-[#4a3a2d]' : 'border-sage-200 text-sage-700'}`} type="button">
+                          <button onClick={toggleFullscreen} className={`flex h-11 items-center gap-2 rounded-2xl border bg-white px-5 text-sm font-bold shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50 ${gameVisualTheme === 'lofi' ? 'border-amber-200 text-[#4a3a2d]' : 'border-amber-200/50 text-sage-700'}`} type="button">
                             {isFullscreen ? <ArrowUp size={16} className="rotate-180" /> : <ArrowUp size={16} />}
                             {isFullscreen ? 'Exit full' : 'Full screen'}
                           </button>
-                          <button onClick={returnToGameLibrary} className={`flex h-11 items-center gap-2 rounded-2xl border bg-white px-5 text-sm font-bold shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50 ${gameVisualTheme === 'lofi' ? 'border-amber-200 text-[#4a3a2d]' : 'border-sage-200 text-sage-700'}`} type="button">
+                          <button onClick={returnToGameLibrary} className={`flex h-11 items-center gap-2 rounded-2xl border bg-white px-5 text-sm font-bold shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50 ${gameVisualTheme === 'lofi' ? 'border-amber-200 text-[#4a3a2d]' : 'border-amber-200/50 text-sage-700'}`} type="button">
                             <Gamepad2 size={16} />
                             Back to games
                           </button>
@@ -5808,7 +5808,7 @@ function App() {
                           {difficultyOptions.map((difficulty) => (
                             <button
                               key={difficulty.id}
-                              className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${selectedGameDifficulty === difficulty.id ? (gameVisualTheme === 'lofi' ? 'bg-[#4a3a2d] text-white shadow-sm' : 'bg-sage-900 text-white shadow-sm') : `border bg-white hover:bg-sage-50 ${gameVisualTheme === 'lofi' ? 'border-amber-200 text-[#4a3a2d]' : 'border-sage-200 text-sage-800'}`}`}
+                              className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${selectedGameDifficulty === difficulty.id ? (gameVisualTheme === 'lofi' ? 'bg-[#4a3a2d] text-white shadow-sm' : 'bg-sage-900 text-white shadow-sm') : `border bg-white hover:bg-sage-50 ${gameVisualTheme === 'lofi' ? 'border-amber-200 text-[#4a3a2d]' : 'border-amber-200/50 text-sage-800'}`}`}
                               onClick={() => setSelectedGameDifficulty(difficulty.id)}
                               type="button"
                             >
@@ -5828,7 +5828,7 @@ function App() {
               </div>
             )}
 
-            <div className={unwindViewMode === 'detail' ? 'mt-24 opacity-80 pt-16 border-t border-sage-100 site-ui-fade-in' : 'game-library-enter'}>
+            <div className={unwindViewMode === 'detail' ? 'mt-24 opacity-80 pt-16 border-t border-[#e8dfd5] site-ui-fade-in' : 'game-library-enter'}>
               {unwindViewMode === 'detail' && (
                 <div className="mb-10 text-center">
                   <h2 className="font-display text-3xl font-bold tracking-tight text-sage-950">Discover more games</h2>
@@ -5848,7 +5848,7 @@ function App() {
                 {unwindGames.map((game) => (
                   <button
                     key={game.id}
-                    className={`group relative flex min-h-[14rem] flex-col items-start justify-start overflow-hidden rounded-[2rem] border px-5 py-5 text-left transition duration-300 hover:-translate-y-1 ${selectedUnwindGame === game.id ? 'border-sage-400 ring-2 ring-sage-100' : 'border-white/70 bg-white/78'}`}
+                    className={`group relative flex min-h-[14rem] flex-col items-start justify-start overflow-hidden rounded-[3rem] border px-5 py-5 text-left transition duration-300 hover:-translate-y-1 ${selectedUnwindGame === game.id ? 'border-sage-400 ring-2 ring-sage-100' : 'border-amber-200/50 bg-white/78'}`}
                     onClick={() => selectUnwindGame(game.id)}
                     type="button"
                   >
@@ -5864,7 +5864,7 @@ function App() {
                   </button>
                 ))}
               </div>
-              <div className="mt-6 rounded-[1.8rem] border border-white/80 bg-white/82 p-5 shadow-sm backdrop-blur">
+              <div className="mt-6 rounded-[2.2rem] border border-[#e8dfd5] bg-white/82 p-5 shadow-sm backdrop-blur">
                 <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                   <div>
                     <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Quick start picks</p>
@@ -5882,7 +5882,7 @@ function App() {
                   ].map((item) => (
                     <button
                       key={item.id}
-                      className="rounded-full border border-sage-200 bg-sage-50/80 px-4 py-2 text-sm font-extrabold text-sage-800 transition hover:bg-white"
+                      className="rounded-full border border-amber-200/50 bg-sage-50/80 px-4 py-2 text-sm font-extrabold text-sage-800 transition hover:bg-white"
                       onClick={() => selectUnwindGame(item.id)}
                       type="button"
                     >
@@ -5892,7 +5892,7 @@ function App() {
                 </div>
               </div>
               <div className="mt-6 grid gap-5 lg:grid-cols-2">
-                <div className="rounded-[1.8rem] border border-sage-100 bg-sage-50/55 p-5 shadow-sm backdrop-blur">
+                <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-sage-50/55 p-5 shadow-sm backdrop-blur">
                   <div className="flex items-center gap-3">
                     <Sparkles className="text-sage-600" size={20} />
                     <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Featured relaxing games</p>
@@ -5900,7 +5900,7 @@ function App() {
                   <h2 className="mt-3 text-2xl font-extrabold text-sage-950">Solitaire and Mind Sweeper are ready first.</h2>
                   <p className="mt-2 text-sm leading-7 text-sage-700">Start with a familiar card game or a calm Minesweeper-style logic board, then keep the lofi music running while you unwind.</p>
                 </div>
-                <div className="rounded-[1.8rem] border border-sage-100 bg-white/78 p-5 shadow-sm backdrop-blur">
+                <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/78 p-5 shadow-sm backdrop-blur">
                   <div className="flex items-center gap-3">
                     <PenLine className="text-sage-600" size={20} />
                     <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Chill game journal</p>
@@ -5909,7 +5909,7 @@ function App() {
                   <p className="mt-2 text-sm leading-7 text-sage-700">A calm game can become a journaling prompt: what felt relaxing, what color or sound stayed with you, and what thought became easier to let go.</p>
                 </div>
               </div>
-              <div className="mt-6 rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
+              <div className="mt-6 rounded-[2.2rem] border border-[#e8dfd5] bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
                 <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                   <div>
                     <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Stay in the vibe</p>
@@ -5924,7 +5924,7 @@ function App() {
                     { label: 'Breathe for a minute', detail: 'Open the breathing screen for a softer reset between rounds.', action: () => navigateToTab('breathe'), icon: Wind },
                     { label: 'Write one line', detail: 'Catch a thought before it disappears, then come back to the games later.', action: () => navigateToTab('write'), icon: PenLine }
                   ].map((item) => (
-                    <button key={item.label} className="group rounded-[1.45rem] border border-white/85 bg-sage-50/55 p-4 text-left transition hover:-translate-y-1 hover:border-sage-200 hover:bg-white hover:shadow-lift" onClick={item.action} type="button">
+                    <button key={item.label} className="group rounded-[1.45rem] border border-white/85 bg-sage-50/55 p-4 text-left transition hover:-translate-y-1 hover:border-amber-200/50 hover:bg-white hover:shadow-lift" onClick={item.action} type="button">
                       <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-sage-800 shadow-sm transition group-hover:bg-sage-900 group-hover:text-white"><item.icon size={17} /></div>
                       <h3 className="mt-3 text-base font-extrabold text-sage-950">{item.label}</h3>
                       <p className="mt-2 text-sm leading-6 text-sage-700">{item.detail}</p>
@@ -5933,25 +5933,25 @@ function App() {
                 </div>
               </div>
               <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)]">
-                <article className="rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
+                <article className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
                   <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Game-first comfort</p>
                   <h2 className="mt-3 text-2xl font-extrabold text-sage-950">The games are meant to be the easiest place to begin.</h2>
                   <p className="mt-3 text-sm leading-7 text-sage-700">If you just want something familiar, start with <span className="font-extrabold text-sage-900">Solitaire</span> for a classic card reset or <span className="font-extrabold text-sage-900">Mind Sweeper</span> for calm Minesweeper-style logic. Prefer other cozy puzzles? <span className="font-extrabold text-sage-900">Lofi Jigsaw</span>, <span className="font-extrabold text-sage-900">Sudoku</span>, <span className="font-extrabold text-sage-900">Wordle</span>, and <span className="font-extrabold text-sage-900">Tiles</span> are easy relaxing games to play while the lofi music stays on.</p>
                 </article>
-                <article className="rounded-[1.9rem] border border-white/80 bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
+                <article className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
                   <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Right now</p>
                   <h2 className="mt-3 text-2xl font-extrabold text-sage-950">{selectedUnwindGameConfig.title} • {selectedDifficultyConfig.label}</h2>
                   <p className="mt-3 text-sm leading-7 text-sage-700">{selectedUnwindGameConfig.description}</p>
                   <div className="mt-4 flex flex-wrap gap-2">
-                    <span className="rounded-full border border-sage-200 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Switch anytime</span>
-                    <span className="rounded-full border border-sage-200 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Best in short sessions</span>
-                    <span className="rounded-full border border-sage-200 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Made for quick resets</span>
+                    <span className="rounded-full border border-amber-200/50 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Switch anytime</span>
+                    <span className="rounded-full border border-amber-200/50 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Best in short sessions</span>
+                    <span className="rounded-full border border-amber-200/50 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Made for quick resets</span>
                   </div>
                 </article>
               </div>
               <div className="mt-6 grid gap-4 xl:grid-cols-3">
                 {chillResearchHighlights.map((item) => (
-                  <article key={item.title} className="rounded-[1.8rem] border border-white/80 bg-white/82 p-5 shadow-sm backdrop-blur">
+                  <article key={item.title} className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/82 p-5 shadow-sm backdrop-blur">
                     <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Chill research</p>
                     <h2 className="mt-3 text-lg font-extrabold text-sage-950">{item.title}</h2>
                     <p className="mt-3 text-sm leading-7 text-sage-700">{item.text}</p>
@@ -5980,7 +5980,7 @@ function App() {
                       isSelected ? `bg-white ${option.ringTone} ring-4 ring-offset-4 ring-offset-sage-50` : 'border-white/60 bg-white/40 hover:bg-white/60'
                     }`}
                   >
-                    <div className={`relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-[2.2rem] bg-gradient-to-br ${option.gradient} shadow-inner`}>
+                    <div className={`relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-[3rem] bg-gradient-to-br ${option.gradient} shadow-inner`}>
                        {option.wallpaper ? <img src={option.wallpaper} alt={`${option.title} wallpaper`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" /> : null}
                        <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-white/10" />
                        <div className="absolute inset-0 opacity-20 transition-opacity group-hover:opacity-30" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)', backgroundSize: '16px 16px', color: 'white' }} />
@@ -6029,7 +6029,7 @@ function App() {
               </div>
             </div>
 
-            <div className="mt-16 rounded-[3rem] border border-white/80 bg-white/60 p-10 shadow-soft backdrop-blur-md transition hover:bg-white/80">
+            <div className="mt-16 rounded-[3rem] border border-[#e8dfd5] bg-white/60 p-10 shadow-soft backdrop-blur-md transition hover:bg-white/80">
               <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
                 <div className="max-w-md">
                   <h3 className="text-2xl font-bold text-sage-950 tracking-tight">Focus Timer</h3>
@@ -6042,7 +6042,7 @@ function App() {
                       <div className="font-display text-7xl font-extrabold tabular-nums tracking-tighter text-sage-800">
                         {formatTime(focusTimer)}
                       </div>
-                      <button onClick={() => setFocusActive(false)} className="mt-6 rounded-full border border-sage-200 bg-white px-8 py-3 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50">
+                      <button onClick={() => setFocusActive(false)} className="mt-6 rounded-full border border-amber-200/50 bg-white px-8 py-3 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50">
                         Pause timer
                       </button>
                     </div>
@@ -6067,7 +6067,7 @@ function App() {
 
         {activeTab === 'notes' && (
         <div className="mt-6 grid gap-6 pb-28 xl:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)] xl:pb-0">
-          <div className="overflow-hidden rounded-[2rem] border border-white/80 bg-white/84 p-6 shadow-soft backdrop-blur xl:p-8">
+          <div className="overflow-hidden rounded-[3rem] border border-[#e8dfd5] bg-white/84 p-6 shadow-soft backdrop-blur xl:p-8">
             <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
               <div className="max-w-3xl">
                 <p className="text-xs font-bold uppercase tracking-[0.24em] text-sage-600 sm:text-sm sm:tracking-widest">Important things</p>
@@ -6086,23 +6086,23 @@ function App() {
                 { label: 'Completed', value: completedPlannerTodoCount },
                 { label: 'Overdue', value: overduePlannerTodoCount }
               ].map((stat) => (
-                <div key={stat.label} className="rounded-[1.4rem] border border-sage-100 bg-sage-50/55 px-4 py-4 shadow-sm">
+                <div key={stat.label} className="rounded-[1.4rem] border border-[#e8dfd5] bg-sage-50/55 px-4 py-4 shadow-sm">
                   <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-500">{stat.label}</p>
                   <p className="mt-2 text-2xl font-extrabold text-sage-950">{stat.value}</p>
                 </div>
               ))}
             </div>
 
-            <div className="mt-6 rounded-[1.8rem] border border-sage-100/80 bg-sage-50/45 p-5 shadow-sm">
+            <div className="mt-6 rounded-[2.2rem] border border-[#e8dfd5]/80 bg-sage-50/45 p-5 shadow-sm">
               <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
                 <div>
                   <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-500">Important notes</p>
                   <p className="mt-1 text-sm font-semibold text-sage-600">Keep deadlines, reminders, shopping needs, travel details, or anything else you want in one calmer place.</p>
                 </div>
                 <div className="flex flex-wrap items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-700">
-                  <span className="rounded-full border border-sage-100 bg-white px-3 py-1">{plannerNoteWordCount} words</span>
-                  <span className="rounded-full border border-sage-100 bg-white px-3 py-1">{plannerNoteLineCount} lines</span>
-                  <span className="rounded-full border border-sage-100 bg-white px-3 py-1">{plannerStorageLabel}</span>
+                  <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1">{plannerNoteWordCount} words</span>
+                  <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1">{plannerNoteLineCount} lines</span>
+                  <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1">{plannerStorageLabel}</span>
                 </div>
               </div>
               <div className="mt-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
@@ -6110,7 +6110,7 @@ function App() {
                   {plannerQuickTemplates.map((template) => (
                     <button
                       key={template}
-                      className="rounded-full border border-sage-100 bg-white px-3 py-2 text-xs font-extrabold text-sage-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-100"
+                      className="rounded-full border border-[#e8dfd5] bg-white px-3 py-2 text-xs font-extrabold text-sage-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-100"
                       onClick={() => setPlannerBoard((current) => ({ ...current, text: current.text.trim() ? `${current.text.trim()}\n\n${template}` : template }))}
                       type="button"
                     >
@@ -6118,7 +6118,7 @@ function App() {
                     </button>
                   ))}
                 </div>
-                <div className="flex items-center gap-2 rounded-full border border-sage-100 bg-white px-3 py-2 shadow-sm">
+                <div className="flex items-center gap-2 rounded-full border border-[#e8dfd5] bg-white px-3 py-2 shadow-sm">
                   <input
                     className="w-40 bg-transparent text-sm font-semibold text-sage-800 outline-none placeholder:text-sage-400"
                     onChange={(event) => setPlannerNoteSearch(event.target.value)}
@@ -6131,7 +6131,7 @@ function App() {
                 </div>
               </div>
               <textarea
-                className="mt-4 min-h-[22rem] w-full rounded-[1.5rem] border border-sage-100 bg-white px-5 py-4 text-sm leading-7 text-sage-900 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
+                className="mt-4 min-h-[22rem] w-full rounded-[1.5rem] border border-[#e8dfd5] bg-white px-5 py-4 text-sm leading-7 text-sage-900 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
                 onChange={(event) => setPlannerBoard((current) => ({ ...current, text: event.target.value }))}
                 placeholder="Keep important things here: dates, calls, shopping needs, ideas, and practical details you want nearby."
                 value={plannerBoard.text}
@@ -6141,31 +6141,31 @@ function App() {
           </div>
 
           <aside className="flex flex-col gap-5">
-            <div className="rounded-[1.9rem] border border-white/80 bg-white/78 p-5 shadow-soft backdrop-blur-xl">
+            <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/78 p-5 shadow-soft backdrop-blur-xl">
               <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                 <div>
                   <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">Task board</p>
                   <p className="mt-1 text-sm font-semibold text-sage-600">Small, clear tasks with priority, status, and optional due dates so the page stays useful without feeling noisy.</p>
                 </div>
                 <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-700">
-                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'all' ? 'border-sage-900 bg-sage-900 text-white' : 'border-sage-100 bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('all')} type="button">All {plannerTodoCount}</button>
-                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'open' ? 'border-sage-900 bg-sage-900 text-white' : 'border-sage-100 bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('open')} type="button">Open {openPlannerTodoCount}</button>
-                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'doing' ? 'border-sage-900 bg-sage-900 text-white' : 'border-sage-100 bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('doing')} type="button">Doing {inProgressPlannerTodoCount}</button>
-                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'done' ? 'border-sage-900 bg-sage-900 text-white' : 'border-sage-100 bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('done')} type="button">Done {completedPlannerTodoCount}</button>
-                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'high' ? 'border-sage-900 bg-sage-900 text-white' : 'border-sage-100 bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('high')} type="button">High {plannerBoard.todos.filter((todo) => todo.priority === 'high').length}</button>
-                  <span className="rounded-full border border-sage-100 bg-white px-3 py-1">{plannerStorageLabel}</span>
+                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'all' ? 'border-sage-900 bg-sage-900 text-white' : 'border-[#e8dfd5] bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('all')} type="button">All {plannerTodoCount}</button>
+                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'open' ? 'border-sage-900 bg-sage-900 text-white' : 'border-[#e8dfd5] bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('open')} type="button">Open {openPlannerTodoCount}</button>
+                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'doing' ? 'border-sage-900 bg-sage-900 text-white' : 'border-[#e8dfd5] bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('doing')} type="button">Doing {inProgressPlannerTodoCount}</button>
+                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'done' ? 'border-sage-900 bg-sage-900 text-white' : 'border-[#e8dfd5] bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('done')} type="button">Done {completedPlannerTodoCount}</button>
+                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'high' ? 'border-sage-900 bg-sage-900 text-white' : 'border-[#e8dfd5] bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('high')} type="button">High {plannerBoard.todos.filter((todo) => todo.priority === 'high').length}</button>
+                  <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1">{plannerStorageLabel}</span>
                 </div>
               </div>
 
               <form className="mt-4 grid gap-3 sm:grid-cols-2" onSubmit={addPlannerTodo}>
                 <input
-                  className="flex-1 rounded-[1.15rem] border border-sage-100 bg-white px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70 sm:col-span-2"
+                  className="flex-1 rounded-[1.15rem] border border-[#e8dfd5] bg-white px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70 sm:col-span-2"
                   onChange={(event) => setPlannerTodoDraft(event.target.value)}
                   placeholder="Add a task"
                   value={plannerTodoDraft}
                 />
                 <select
-                  className="rounded-[1.15rem] border border-sage-100 bg-white px-4 py-3 text-sm font-semibold text-sage-800 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
+                  className="rounded-[1.15rem] border border-[#e8dfd5] bg-white px-4 py-3 text-sm font-semibold text-sage-800 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
                   onChange={(event) => setPlannerTodoPriorityDraft(event.target.value)}
                   value={plannerTodoPriorityDraft}
                 >
@@ -6174,14 +6174,14 @@ function App() {
                   <option value="high">High priority</option>
                 </select>
                 <input
-                  className="rounded-[1.15rem] border border-sage-100 bg-white px-4 py-3 text-sm font-semibold text-sage-800 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
+                  className="rounded-[1.15rem] border border-[#e8dfd5] bg-white px-4 py-3 text-sm font-semibold text-sage-800 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
                   min={todayISO()}
                   onChange={(event) => setPlannerTodoDueDateDraft(event.target.value)}
                   type="date"
                   value={plannerTodoDueDateDraft}
                 />
                 <select
-                  className="rounded-[1.15rem] border border-sage-100 bg-white px-4 py-3 text-sm font-semibold text-sage-800 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
+                  className="rounded-[1.15rem] border border-[#e8dfd5] bg-white px-4 py-3 text-sm font-semibold text-sage-800 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
                   onChange={(event) => setPlannerTodoRecurrenceDraft(event.target.value)}
                   value={plannerTodoRecurrenceDraft}
                 >
@@ -6198,7 +6198,7 @@ function App() {
               <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-500">
                 <span>{filteredPlannerTodos.length} shown · {overduePlannerTodoCount} overdue</span>
                 {completedPlannerTodoCount > 0 && (
-                  <button className="rounded-full border border-sage-100 bg-white px-3 py-2 text-sage-700 transition hover:bg-sage-50" onClick={clearCompletedPlannerTodos} type="button">
+                  <button className="rounded-full border border-[#e8dfd5] bg-white px-3 py-2 text-sage-700 transition hover:bg-sage-50" onClick={clearCompletedPlannerTodos} type="button">
                     Clear done tasks
                   </button>
                 )}
@@ -6210,17 +6210,17 @@ function App() {
                     ? 'border-sage-700 bg-sage-700 text-white'
                     : todo.status === 'doing'
                       ? 'border-teal-200 bg-teal-50 text-teal-700'
-                      : 'border-sage-200 bg-white text-sage-500 hover:border-sage-300 hover:text-sage-600';
+                      : 'border-amber-200/50 bg-white text-sage-500 hover:border-sage-300 hover:text-sage-600';
                   const priorityTone = todo.priority === 'high'
                     ? 'border-rose-200 bg-rose-50 text-rose-700'
                     : todo.priority === 'low'
-                      ? 'border-sage-100 bg-sage-50 text-sage-600'
+                      ? 'border-[#e8dfd5] bg-sage-50 text-sage-600'
                       : 'border-amber-200 bg-amber-50 text-amber-700';
                   const isEditingTodo = editingPlannerTodoId === todo.id;
                   return (
                     <div
                       key={todo.id}
-                      className={`rounded-[1.4rem] border bg-white px-4 py-3 shadow-sm transition ${draggedPlannerTodoId === todo.id ? 'border-teal-200 opacity-60' : 'border-sage-100'}`}
+                      className={`rounded-[1.4rem] border bg-white px-4 py-3 shadow-sm transition ${draggedPlannerTodoId === todo.id ? 'border-teal-200 opacity-60' : 'border-[#e8dfd5]'}`}
                       draggable={!isEditingTodo}
                       onDragEnd={() => setDraggedPlannerTodoId(null)}
                       onDragOver={(event) => event.preventDefault()}
@@ -6239,18 +6239,18 @@ function App() {
                           {isEditingTodo ? (
                             <div className="space-y-3">
                               <input
-                                className="w-full rounded-2xl border border-sage-100 bg-sage-50/60 px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
+                                className="w-full rounded-2xl border border-[#e8dfd5] bg-sage-50/60 px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
                                 onChange={(event) => setEditingPlannerTodoText(event.target.value)}
                                 value={editingPlannerTodoText}
                               />
                               <div className="grid gap-2 sm:grid-cols-3">
-                                <select className="rounded-2xl border border-sage-100 bg-white px-3 py-2 text-xs font-bold text-sage-700 outline-none" onChange={(event) => setEditingPlannerTodoPriority(event.target.value)} value={editingPlannerTodoPriority}>
+                                <select className="rounded-2xl border border-[#e8dfd5] bg-white px-3 py-2 text-xs font-bold text-sage-700 outline-none" onChange={(event) => setEditingPlannerTodoPriority(event.target.value)} value={editingPlannerTodoPriority}>
                                   <option value="low">Low priority</option>
                                   <option value="medium">Medium priority</option>
                                   <option value="high">High priority</option>
                                 </select>
-                                <input className="rounded-2xl border border-sage-100 bg-white px-3 py-2 text-xs font-bold text-sage-700 outline-none" min={todayISO()} onChange={(event) => setEditingPlannerTodoDueDate(event.target.value)} type="date" value={editingPlannerTodoDueDate} />
-                                <select className="rounded-2xl border border-sage-100 bg-white px-3 py-2 text-xs font-bold text-sage-700 outline-none" onChange={(event) => setEditingPlannerTodoRecurrence(event.target.value)} value={editingPlannerTodoRecurrence}>
+                                <input className="rounded-2xl border border-[#e8dfd5] bg-white px-3 py-2 text-xs font-bold text-sage-700 outline-none" min={todayISO()} onChange={(event) => setEditingPlannerTodoDueDate(event.target.value)} type="date" value={editingPlannerTodoDueDate} />
+                                <select className="rounded-2xl border border-[#e8dfd5] bg-white px-3 py-2 text-xs font-bold text-sage-700 outline-none" onChange={(event) => setEditingPlannerTodoRecurrence(event.target.value)} value={editingPlannerTodoRecurrence}>
                                   <option value="none">One-time</option>
                                   <option value="daily">Daily</option>
                                   <option value="weekly">Weekly</option>
@@ -6259,7 +6259,7 @@ function App() {
                               </div>
                               <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em]">
                                 <button className="rounded-full bg-sage-900 px-3 py-2 text-white transition hover:bg-sage-800" onClick={() => savePlannerTodoEdit(todo.id)} type="button">Save edit</button>
-                                <button className="rounded-full border border-sage-100 bg-white px-3 py-2 text-sage-600 transition hover:bg-sage-50" onClick={cancelEditingPlannerTodo} type="button">Cancel</button>
+                                <button className="rounded-full border border-[#e8dfd5] bg-white px-3 py-2 text-sage-600 transition hover:bg-sage-50" onClick={cancelEditingPlannerTodo} type="button">Cancel</button>
                               </div>
                             </div>
                           ) : (
@@ -6267,25 +6267,25 @@ function App() {
                               <div>
                                 <p className={`text-sm font-semibold leading-6 ${todo.status === 'done' ? 'text-sage-400 line-through' : 'text-sage-800'}`}>{todo.text}</p>
                                 <div className="mt-2 flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.16em]">
-                                  <span className={`rounded-full border px-2.5 py-1 ${todo.status === 'done' ? 'border-sage-200 bg-white text-sage-500' : 'border-sage-100 bg-white text-sage-600'}`}>{getPlannerStatusLabel(todo.status)}</span>
+                                  <span className={`rounded-full border px-2.5 py-1 ${todo.status === 'done' ? 'border-amber-200/50 bg-white text-sage-500' : 'border-[#e8dfd5] bg-white text-sage-600'}`}>{getPlannerStatusLabel(todo.status)}</span>
                                   <button className={`rounded-full border px-2.5 py-1 transition ${priorityTone}`} onClick={() => cyclePlannerTodoPriority(todo.id)} type="button">
                                     {getPlannerPriorityLabel(todo.priority)} priority
                                   </button>
-                                  {todo.dueDate ? <span className={`rounded-full border px-2.5 py-1 ${isPlannerTodoOverdue(todo) ? 'border-rose-200 bg-rose-50 text-rose-700' : 'border-sage-100 bg-white text-sage-600'}`}>{isPlannerTodoOverdue(todo) ? 'Overdue' : 'Due'} {formatShortDate(todo.dueDate)}</span> : null}
+                                  {todo.dueDate ? <span className={`rounded-full border px-2.5 py-1 ${isPlannerTodoOverdue(todo) ? 'border-rose-200 bg-rose-50 text-rose-700' : 'border-[#e8dfd5] bg-white text-sage-600'}`}>{isPlannerTodoOverdue(todo) ? 'Overdue' : 'Due'} {formatShortDate(todo.dueDate)}</span> : null}
                                   <span className="rounded-full border border-teal-100 bg-teal-50 px-2.5 py-1 text-teal-700">{getPlannerRecurrenceLabel(todo.recurrence)}</span>
                                 </div>
                               </div>
                               <div className="flex shrink-0 flex-col gap-2 text-sage-400">
-                                <button className="rounded-full border border-sage-100 bg-white p-1.5 transition hover:text-sage-700" onClick={() => startEditingPlannerTodo(todo)} type="button" aria-label="Edit task">
+                                <button className="rounded-full border border-[#e8dfd5] bg-white p-1.5 transition hover:text-sage-700" onClick={() => startEditingPlannerTodo(todo)} type="button" aria-label="Edit task">
                                   <PenLine size={15} />
                                 </button>
-                                <button className="rounded-full border border-sage-100 bg-white p-1.5 transition hover:text-sage-700" onClick={() => movePlannerTodo(todo.id, -1)} type="button" aria-label="Move task up">
+                                <button className="rounded-full border border-[#e8dfd5] bg-white p-1.5 transition hover:text-sage-700" onClick={() => movePlannerTodo(todo.id, -1)} type="button" aria-label="Move task up">
                                   <ArrowUp size={15} />
                                 </button>
-                                <button className="rounded-full border border-sage-100 bg-white p-1.5 text-xs font-black transition hover:text-sage-700" onClick={() => movePlannerTodo(todo.id, 1)} type="button" aria-label="Move task down">
+                                <button className="rounded-full border border-[#e8dfd5] bg-white p-1.5 text-xs font-black transition hover:text-sage-700" onClick={() => movePlannerTodo(todo.id, 1)} type="button" aria-label="Move task down">
                                   ↓
                                 </button>
-                                <button className="rounded-full border border-sage-100 bg-white p-1.5 transition hover:text-rose-500" onClick={() => deletePlannerTodo(todo.id)} type="button" aria-label="Delete task">
+                                <button className="rounded-full border border-[#e8dfd5] bg-white p-1.5 transition hover:text-rose-500" onClick={() => deletePlannerTodo(todo.id)} type="button" aria-label="Delete task">
                                   <Trash2 size={15} />
                                 </button>
                               </div>
@@ -6296,44 +6296,44 @@ function App() {
                     </div>
                   );
                 }) : (
-                  <div className="rounded-[1.4rem] border border-dashed border-sage-200 bg-sage-50/45 px-4 py-5 text-sm font-semibold leading-6 text-sage-500">
+                  <div className="rounded-[1.4rem] border border-dashed border-amber-200/50 bg-sage-50/45 px-4 py-5 text-sm font-semibold leading-6 text-sage-500">
                     No tasks match this view yet. Try another filter or add a new task with a priority, due date, or recurring rhythm.
                   </div>
                 )}
               </div>
             </div>
 
-            <div className="rounded-[1.9rem] border border-white/80 bg-white/78 p-5 shadow-soft backdrop-blur-xl">
+            <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/78 p-5 shadow-soft backdrop-blur-xl">
               <div className="flex items-center justify-between gap-3">
                 <div>
                   <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">Upcoming reminders</p>
                   <p className="mt-1 text-sm font-semibold text-sage-600">A calm shortlist of the dates that are coming up next.</p>
                 </div>
                 <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-700">
-                  <span className="rounded-full border border-sage-100 bg-sage-50 px-3 py-1">{upcomingReminderCount} upcoming</span>
-                  <span className="rounded-full border border-sage-100 bg-white px-3 py-1">{reminderStorageLabel}</span>
+                  <span className="rounded-full border border-[#e8dfd5] bg-sage-50 px-3 py-1">{upcomingReminderCount} upcoming</span>
+                  <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1">{reminderStorageLabel}</span>
                 </div>
               </div>
               <div className="mt-4 space-y-3">
                 {upcomingReminderPreview.length ? upcomingReminderPreview.map((item) => (
-                  <button className="w-full rounded-[1.4rem] border border-sage-100 bg-sage-50/45 px-4 py-3 text-left transition hover:-translate-y-0.5 hover:bg-white hover:shadow-sm" key={item.dateKey} onClick={() => { setSelectedCalendarDate(item.dateKey); navigateToTab('memories'); }} type="button">
+                  <button className="w-full rounded-[1.4rem] border border-[#e8dfd5] bg-sage-50/45 px-4 py-3 text-left transition hover:-translate-y-0.5 hover:bg-white hover:shadow-sm" key={item.dateKey} onClick={() => { setSelectedCalendarDate(item.dateKey); navigateToTab('memories'); }} type="button">
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <div className="min-w-0 flex-1">
                         <p className="text-sm font-extrabold leading-6 text-sage-900">{item.note}</p>
                         <p className="mt-1 text-xs font-bold uppercase tracking-[0.16em] text-sage-500">{formatDate(item.dateKey)}{item.time ? ` · ${formatReminderTime(item.time)}` : ''}</p>
                       </div>
-                      <span className="rounded-full border border-sage-100 bg-white px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-700">{item.relativeLabel}</span>
+                      <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-700">{item.relativeLabel}</span>
                     </div>
                   </button>
                 )) : (
-                  <div className="rounded-[1.4rem] border border-dashed border-sage-200 bg-sage-50/45 px-4 py-5 text-sm font-semibold leading-6 text-sage-500">
+                  <div className="rounded-[1.4rem] border border-dashed border-amber-200/50 bg-sage-50/45 px-4 py-5 text-sm font-semibold leading-6 text-sage-500">
                     No upcoming reminders yet. Mark an important date in the calendar and it will show up here.
                   </div>
                 )}
               </div>
             </div>
 
-            <div className="rounded-[1.9rem] border border-white/80 bg-white/78 p-5 shadow-soft backdrop-blur-xl">
+            <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/78 p-5 shadow-soft backdrop-blur-xl">
               <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">Keep it simple</p>
               <div className="mt-4 space-y-3 text-sm font-semibold leading-7 text-sage-700">
                 <p>Use this page for practical life details, not emotional journaling.</p>
@@ -6344,7 +6344,7 @@ function App() {
                 <button className="inline-flex items-center gap-2 rounded-full bg-sage-900 px-4 py-2 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-800" onClick={() => navigateToTab('write')} type="button">
                   <PenLine size={15} /> Go back to writing
                 </button>
-                <button className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white px-4 py-2 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50" onClick={() => navigateToTab('insights')} type="button">
+                <button className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white px-4 py-2 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50" onClick={() => navigateToTab('insights')} type="button">
                   <CalendarDays size={15} /> Open calendar
                 </button>
               </div>
@@ -6355,7 +6355,7 @@ function App() {
 
         {activeTab === 'insights' && (
         <div className="mt-6 grid gap-6 pb-28 xl:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] xl:pb-0">
-          <div className="overflow-hidden rounded-[2rem] border border-white/80 bg-gradient-to-br from-white/88 via-sage-50/68 to-sand-50/72 p-4 shadow-soft backdrop-blur sm:p-6 xl:p-8">
+          <div className="overflow-hidden rounded-[3rem] border border-[#e8dfd5] bg-gradient-to-br from-white/88 via-sage-50/68 to-sand-50/72 p-4 shadow-soft backdrop-blur sm:p-6 xl:p-8">
             <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
               <div className="max-w-3xl">
                 <p className="text-xs font-bold uppercase tracking-[0.24em] text-sage-600 sm:text-sm sm:tracking-widest">Reflection pattern</p>
@@ -6367,20 +6367,20 @@ function App() {
               </div>
             </div>
             <div className="mt-5 flex flex-wrap gap-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">
-              <span className="rounded-full border border-white/90 bg-white/88 px-3 py-2 shadow-sm">{weeklyCheckIns}/{weeklyGoal} check-ins this week</span>
-              <span className="rounded-full border border-white/90 bg-white/88 px-3 py-2 shadow-sm">{entries.length} pages in your archive</span>
-              <span className="rounded-full border border-white/90 bg-white/88 px-3 py-2 shadow-sm">{unlockedAchievementCount}/{achievementBadges.length} keepsakes lit</span>
+              <span className="rounded-full border border-[#e8dfd5] bg-white/88 px-3 py-2 shadow-sm">{weeklyCheckIns}/{weeklyGoal} check-ins this week</span>
+              <span className="rounded-full border border-[#e8dfd5] bg-white/88 px-3 py-2 shadow-sm">{entries.length} pages in your archive</span>
+              <span className="rounded-full border border-[#e8dfd5] bg-white/88 px-3 py-2 shadow-sm">{unlockedAchievementCount}/{achievementBadges.length} keepsakes lit</span>
             </div>
           </div>
 
-          <div className="rounded-[2rem] border border-white/80 bg-white/80 p-6 shadow-soft backdrop-blur xl:p-8">
+          <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/80 p-6 shadow-soft backdrop-blur xl:p-8">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-sand-500 sm:text-sm sm:tracking-widest">This week so far</p>
             <p className="mt-3 text-4xl font-extrabold text-sage-950">{weeklyCheckIns}/{weeklyGoal}</p>
             <p className="mt-3 text-sm font-semibold leading-7 text-sage-700">{weeklyCheckIns >= weeklyGoal ? 'You already gave yourself enough room this week.' : `${weeklyGoal - weeklyCheckIns} more soft check-ins if you want to fill this week.`}</p>
             <div className="mt-5 h-2.5 w-full overflow-hidden rounded-full bg-sage-100">
               <div className="h-full rounded-full bg-gradient-to-r from-sage-500 to-teal-500 transition-all duration-700" style={{ width: `${Math.min((weeklyCheckIns / weeklyGoal) * 100, 100)}%` }}></div>
             </div>
-            <div className="mt-6 rounded-[1.75rem] bg-gradient-to-br from-rose-50 to-white p-5 shadow-inner">
+            <div className="mt-6 rounded-[2.2rem] bg-gradient-to-br from-rose-50 to-white p-5 shadow-inner">
               <p className="text-xs font-bold uppercase tracking-[0.22em] text-rose-500 sm:text-sm sm:tracking-widest">Keepsake path</p>
               <div className="mt-3 flex items-center gap-4">
                 <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-white text-3xl shadow-sm">{rewardLevel.emoji}</div>
@@ -6392,7 +6392,7 @@ function App() {
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-[2rem] border border-white/80 bg-white/82 p-6 shadow-soft backdrop-blur xl:p-8">
+          <div className="overflow-hidden rounded-[3rem] border border-[#e8dfd5] bg-white/82 p-6 shadow-soft backdrop-blur xl:p-8">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.22em] text-sage-600 sm:text-sm sm:tracking-widest">Mood garden</p>
@@ -6403,13 +6403,13 @@ function App() {
             <div className="mt-5">
               <MoodChart entries={entries} weatherOptions={weatherOptions} />
             </div>
-            <div className="mt-5 rounded-[1.75rem] bg-white p-5 text-sm font-bold leading-7 text-sage-900 shadow-inner">
+            <div className="mt-5 rounded-[2.2rem] bg-white p-5 text-sm font-bold leading-7 text-sage-900 shadow-inner">
               {weeklySummary}
             </div>
           </div>
 
           <div className="grid gap-6">
-            <div className="rounded-[2rem] border border-white/80 bg-white/82 p-6 shadow-soft backdrop-blur xl:p-8">
+            <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/82 p-6 shadow-soft backdrop-blur xl:p-8">
               <p className="text-xs font-bold uppercase tracking-[0.22em] text-teal-600 sm:text-sm sm:tracking-widest">{returnRitual.eyebrow}</p>
               <p className="mt-2 text-2xl font-extrabold leading-tight text-sage-950">{returnRitual.title}</p>
               <p className="mt-3 text-sm font-semibold leading-7 text-sage-700">{returnRitual.text}</p>
@@ -6418,7 +6418,7 @@ function App() {
               </button>
             </div>
 
-            <div className="rounded-[2rem] border border-white/80 bg-white/82 p-6 shadow-soft backdrop-blur xl:p-8">
+            <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/82 p-6 shadow-soft backdrop-blur xl:p-8">
               <div className="flex items-center justify-between gap-3">
                 <p className="text-xs font-bold uppercase tracking-[0.22em] text-sage-600">Keepsake shelf</p>
                 <div className="rounded-full bg-sage-100 px-3 py-1 text-[10px] font-extrabold text-sage-800">{unlockedAchievementCount}/{achievementBadges.length}</div>
@@ -6439,26 +6439,26 @@ function App() {
         {activeTab === 'memories' && (
         <div className="mt-6 grid gap-6 pb-24 lg:pb-0">
 
-          <div className="flex flex-wrap items-center justify-center gap-2 rounded-[1.6rem] border border-white/80 bg-white/78 p-2 shadow-sm backdrop-blur">
+          <div className="flex flex-wrap items-center justify-center gap-2 rounded-[1.6rem] border border-[#e8dfd5] bg-white/78 p-2 shadow-sm backdrop-blur">
             <button className={`rounded-full px-5 py-2.5 text-sm font-extrabold transition ${memoriesView === 'calendar' ? 'bg-sage-900 text-white shadow-sm' : 'text-sage-700 hover:bg-sage-50'}`} onClick={() => setMemoriesView('calendar')} type="button">Calendar</button>
             <button className={`rounded-full px-5 py-2.5 text-sm font-extrabold transition ${memoriesView === 'archive' ? 'bg-sage-900 text-white shadow-sm' : 'text-sage-700 hover:bg-sage-50'}`} onClick={() => setMemoriesView('archive')} type="button">Positivity archive</button>
           </div>
 
           {memoriesView === 'calendar' && (
-          <div className="rounded-[2rem] border border-white/80 bg-white/84 p-4 shadow-soft backdrop-blur sm:p-5 lg:p-6">
+          <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/84 p-4 shadow-soft backdrop-blur sm:p-5 lg:p-6">
             <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.22em] text-sage-600">Journal calendar</p>
                 <h2 className="mt-1 text-2xl font-extrabold text-ink sm:text-3xl">Memories</h2>
               </div>
               <div className="flex flex-wrap gap-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-sage-700">
-                <span className="rounded-full border border-sage-100 bg-sage-50 px-3 py-2">{importantDateCount} saved</span>
-                <span className="rounded-full border border-sage-100 bg-sage-50 px-3 py-2">{upcomingReminderCount} reminders</span>
+                <span className="rounded-full border border-[#e8dfd5] bg-sage-50 px-3 py-2">{importantDateCount} saved</span>
+                <span className="rounded-full border border-[#e8dfd5] bg-sage-50 px-3 py-2">{upcomingReminderCount} reminders</span>
               </div>
             </div>
 
             <div className="grid gap-5 xl:grid-cols-[minmax(19rem,29rem)_minmax(0,1fr)] xl:items-start">
-              <div className="rounded-[1.6rem] border border-sage-100 bg-sage-50/72 p-3 shadow-inner sm:p-4">
+              <div className="rounded-[1.6rem] border border-[#e8dfd5] bg-sage-50/72 p-3 shadow-inner sm:p-4">
                 <div className="mb-3 flex items-center justify-between gap-2 rounded-[1.2rem] bg-white px-2 py-2 shadow-sm">
                   <button className="rounded-full bg-sage-50 px-3 py-2 text-sm font-extrabold text-sage-800 transition hover:bg-sage-100" onClick={() => setCalendarMonth(shiftMonthKey(calendarMonth, -1))} type="button">‹</button>
                   <p className="text-center text-sm font-extrabold text-sage-950 sm:text-base">{formatMonthLabel(calendarMonth)}</p>
@@ -6477,7 +6477,7 @@ function App() {
                     const isToday = day?.dateKey === todayISO();
                     return day ? (
                       <button
-                        className={`relative flex h-11 items-center justify-center rounded-xl border text-xs font-extrabold transition hover:-translate-y-0.5 sm:h-12 sm:text-sm ${isSelected ? 'border-sage-800 bg-sage-900 text-white shadow-lift' : isToday ? 'border-sage-300 bg-white text-sage-900' : 'border-sage-100 bg-white/92 text-sage-800 hover:bg-white'}`}
+                        className={`relative flex h-11 items-center justify-center rounded-xl border text-xs font-extrabold transition hover:-translate-y-0.5 sm:h-12 sm:text-sm ${isSelected ? 'border-sage-800 bg-sage-900 text-white shadow-lift' : isToday ? 'border-sage-300 bg-white text-sage-900' : 'border-[#e8dfd5] bg-white/92 text-sage-800 hover:bg-white'}`}
                         key={day.dateKey}
                         onClick={() => {
                           setSelectedCalendarDate(day.dateKey);
@@ -6493,12 +6493,12 @@ function App() {
                     ) : <div key={`blank-${index}`} />;
                   })}
                 </div>
-                <button className="mt-3 inline-flex w-full items-center justify-center rounded-full border border-sage-100 bg-white px-3 py-2 text-xs font-extrabold uppercase tracking-[0.16em] text-sage-700 shadow-sm transition hover:bg-sage-50" onClick={() => { const today = todayISO(); setCalendarMonth(today.slice(0, 7)); setSelectedCalendarDate(today); openImportantDateEditor(today); }} type="button">
+                <button className="mt-3 inline-flex w-full items-center justify-center rounded-full border border-[#e8dfd5] bg-white px-3 py-2 text-xs font-extrabold uppercase tracking-[0.16em] text-sage-700 shadow-sm transition hover:bg-sage-50" onClick={() => { const today = todayISO(); setCalendarMonth(today.slice(0, 7)); setSelectedCalendarDate(today); openImportantDateEditor(today); }} type="button">
                   Jump to today
                 </button>
               </div>
 
-              <div className="rounded-[1.75rem] border border-sage-100 bg-white/94 p-4 shadow-inner sm:p-5">
+              <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/94 p-4 shadow-inner sm:p-5">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div>
                     <p className="text-xs font-extrabold uppercase tracking-widest text-sage-600">Selected date</p>
@@ -6517,7 +6517,7 @@ function App() {
                   </div>
                 </div>
 
-                <div className="mt-4 rounded-2xl border border-sage-100 bg-gradient-to-br from-sage-50/90 to-white p-4 shadow-sm">
+                <div className="mt-4 rounded-2xl border border-[#e8dfd5] bg-gradient-to-br from-sage-50/90 to-white p-4 shadow-sm">
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <div className="flex items-center gap-3">
                       <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-xl shadow-sm">
@@ -6536,17 +6536,17 @@ function App() {
                       </div>
                     </div>
                     {calendarForecastPermission !== 'loading' && (
-                      <button className="rounded-full border border-sage-200 bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.14em] text-sage-700 transition hover:bg-sage-50" onClick={loadCalendarForecast} type="button">
+                      <button className="rounded-full border border-amber-200/50 bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.14em] text-sage-700 transition hover:bg-sage-50" onClick={loadCalendarForecast} type="button">
                         {calendarForecastPermission === 'granted' ? 'Refresh' : 'Use location'}
                       </button>
                     )}
-                    {calendarForecastPermission === 'loading' && <span className="rounded-full border border-sage-100 bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.14em] text-sage-600">Loading</span>}
+                    {calendarForecastPermission === 'loading' && <span className="rounded-full border border-[#e8dfd5] bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.14em] text-sage-600">Loading</span>}
                   </div>
                   {selectedCalendarForecast && <p className="mt-3 text-xs font-semibold leading-5 text-sage-600">Forecast uses your browser location and is available for nearby upcoming dates.</p>}
                 </div>
 
                 {selectedImportantDate && (
-                  <div className="mt-4 rounded-2xl border border-sage-100 bg-sage-50/76 p-4">
+                  <div className="mt-4 rounded-2xl border border-[#e8dfd5] bg-sage-50/76 p-4">
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <div className="min-w-0 flex-1">
                         <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-sage-600">Saved note or reminder</p>
@@ -6554,21 +6554,21 @@ function App() {
                         {selectedImportantDate.details && <p className="mt-2 whitespace-pre-wrap text-sm font-semibold leading-6 text-sage-700">{selectedImportantDate.details}</p>}
                       </div>
                       <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.16em] text-sage-700">
-                        {selectedImportantDate.time && <span className="rounded-full border border-sage-100 bg-white px-3 py-1.5">{formatReminderTime(selectedImportantDate.time)}</span>}
-                        <span className="rounded-full border border-sage-100 bg-white px-3 py-1.5">{selectedImportantDate.remindersEnabled ? 'Reminder on' : 'Note only'}</span>
+                        {selectedImportantDate.time && <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1.5">{formatReminderTime(selectedImportantDate.time)}</span>}
+                        <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1.5">{selectedImportantDate.remindersEnabled ? 'Reminder on' : 'Note only'}</span>
                       </div>
                     </div>
                   </div>
                 )}
 
                 {importanceModalOpen && (
-                  <div className="mt-4 rounded-[1.6rem] border border-sage-200 bg-white p-4 shadow-sm sm:p-5">
+                  <div className="mt-4 rounded-[1.6rem] border border-amber-200/50 bg-white p-4 shadow-sm sm:p-5">
                     <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-700">Add to this date</p>
                     <div className="mt-4 grid gap-3">
                       <label className="block">
                         <span className="text-sm font-extrabold text-sage-900">Title</span>
                         <input
-                          className="mt-2 w-full rounded-2xl border border-sage-200 bg-sage-50/70 px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
+                          className="mt-2 w-full rounded-2xl border border-amber-200/50 bg-sage-50/70 px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
                           maxLength={80}
                           onChange={(event) => setImportanceDraft(event.target.value)}
                           placeholder="Exam, birthday, deadline..."
@@ -6578,7 +6578,7 @@ function App() {
                       <label className="block">
                         <span className="text-sm font-extrabold text-sage-900">Notes</span>
                         <textarea
-                          className="mt-2 min-h-[150px] w-full rounded-2xl border border-sage-200 bg-sage-50/70 px-4 py-3 text-sm font-semibold leading-6 text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
+                          className="mt-2 min-h-[150px] w-full rounded-2xl border border-amber-200/50 bg-sage-50/70 px-4 py-3 text-sm font-semibold leading-6 text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
                           maxLength={320}
                           onChange={(event) => setImportanceDetailsDraft(event.target.value)}
                           placeholder="Write what you want to remember on this date."
@@ -6590,21 +6590,21 @@ function App() {
                       <label className="block">
                         <span className="text-sm font-extrabold text-sage-900">Time</span>
                         <input
-                          className="mt-2 w-full rounded-2xl border border-sage-200 bg-sage-50/70 px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
+                          className="mt-2 w-full rounded-2xl border border-amber-200/50 bg-sage-50/70 px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
                           onChange={(event) => setImportanceTimeDraft(event.target.value)}
                           type="time"
                           value={importanceTimeDraft}
                         />
                       </label>
-                      <label className="flex items-center gap-3 rounded-2xl border border-sage-100 bg-sage-50/70 px-4 py-3 text-sm font-semibold leading-6 text-sage-800">
+                      <label className="flex items-center gap-3 rounded-2xl border border-[#e8dfd5] bg-sage-50/70 px-4 py-3 text-sm font-semibold leading-6 text-sage-800">
                         <input checked={importanceReminderEnabled} className="h-4 w-4 rounded border-sage-300 text-sage-700 focus:ring-sage-300" onChange={(event) => setImportanceReminderEnabled(event.target.checked)} type="checkbox" />
                         Remind me if browser notifications are allowed
                       </label>
                     </div>
                     <div className="mt-4 flex flex-wrap gap-3">
                       <button className="rounded-full bg-sage-900 px-5 py-3 text-sm font-extrabold text-white transition hover:bg-sage-800" onClick={saveImportantDate} type="button">Save</button>
-                      <button className="rounded-full border border-sage-200 bg-white px-5 py-3 text-sm font-extrabold text-sage-700 transition hover:bg-sage-50" onClick={() => setImportanceModalOpen(false)} type="button">Cancel</button>
-                      <button className={`rounded-full border px-5 py-3 text-sm font-extrabold transition ${notificationPermission === 'granted' ? 'border-sage-200 bg-white text-sage-700 hover:bg-sage-50' : 'border-sage-900 bg-white text-sage-900 hover:bg-sage-50'}`} onClick={requestNotificationPermission} type="button">
+                      <button className="rounded-full border border-amber-200/50 bg-white px-5 py-3 text-sm font-extrabold text-sage-700 transition hover:bg-sage-50" onClick={() => setImportanceModalOpen(false)} type="button">Cancel</button>
+                      <button className={`rounded-full border px-5 py-3 text-sm font-extrabold transition ${notificationPermission === 'granted' ? 'border-amber-200/50 bg-white text-sage-700 hover:bg-sage-50' : 'border-sage-900 bg-white text-sage-900 hover:bg-sage-50'}`} onClick={requestNotificationPermission} type="button">
                         {notificationPermission === 'granted' ? 'Notifications on' : 'Allow notifications'}
                       </button>
                     </div>
@@ -6616,20 +6616,20 @@ function App() {
                   <div className="mt-4 space-y-3">
                     <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Journal entries on this day</p>
                     {selectedDateEntries.map((entry) => (
-                      <button className="w-full rounded-2xl border border-sage-100 bg-white p-3 text-left transition hover:-translate-y-0.5 hover:bg-sage-50 hover:shadow-sm" key={entry.id} onClick={() => setSelectedEntry(entry)} type="button">
+                      <button className="w-full rounded-2xl border border-[#e8dfd5] bg-white p-3 text-left transition hover:-translate-y-0.5 hover:bg-sage-50 hover:shadow-sm" key={entry.id} onClick={() => setSelectedEntry(entry)} type="button">
                         <p className="font-extrabold text-sage-950">{entry.title}</p>
                         <p className="mt-1 line-clamp-2 text-sm font-semibold leading-6 text-sage-700">{getPlainTextFromHtml(entry.body || entry.prompt || '') || 'Photo entry'}</p>
                       </button>
                     ))}
                   </div>
-                ) : <p className="mt-4 rounded-2xl border border-dashed border-sage-200 bg-sage-50/50 px-4 py-4 text-sm font-semibold leading-6 text-sage-500">No diary entry for this date yet.</p>}
+                ) : <p className="mt-4 rounded-2xl border border-dashed border-amber-200/50 bg-sage-50/50 px-4 py-4 text-sm font-semibold leading-6 text-sage-500">No diary entry for this date yet.</p>}
 
                 {upcomingReminderPreview.length > 0 && (
-                  <div className="mt-4 rounded-2xl border border-sage-100 bg-white p-4">
+                  <div className="mt-4 rounded-2xl border border-[#e8dfd5] bg-white p-4">
                     <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Upcoming</p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       {upcomingReminderPreview.slice(0, 3).map((item) => (
-                        <button className={`rounded-full border px-3 py-2 text-xs font-extrabold transition hover:bg-sage-50 ${item.dateKey === selectedCalendarDate ? 'border-sage-300 bg-sage-50 text-sage-900' : 'border-sage-100 bg-white text-sage-700'}`} key={item.dateKey} onClick={() => { setSelectedCalendarDate(item.dateKey); openImportantDateEditor(item.dateKey); }} type="button">
+                        <button className={`rounded-full border px-3 py-2 text-xs font-extrabold transition hover:bg-sage-50 ${item.dateKey === selectedCalendarDate ? 'border-sage-300 bg-sage-50 text-sage-900' : 'border-[#e8dfd5] bg-white text-sage-700'}`} key={item.dateKey} onClick={() => { setSelectedCalendarDate(item.dateKey); openImportantDateEditor(item.dateKey); }} type="button">
                           {formatDate(item.dateKey)} · {item.note}
                         </button>
                       ))}
@@ -6642,7 +6642,7 @@ function App() {
           )}
 
           {memoriesView === 'archive' && (
-          <div className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-white/80 bg-gradient-to-br from-white/90 via-white/84 to-sand-50/72 p-4 shadow-soft backdrop-blur sm:p-6 lg:p-8">
+          <div className="flex h-full flex-col overflow-hidden rounded-[3rem] border border-[#e8dfd5] bg-gradient-to-br from-white/90 via-white/84 to-sand-50/72 p-4 shadow-soft backdrop-blur sm:p-6 lg:p-8">
             <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div className="flex items-center gap-3">
                 <CalendarDays className="text-sage-700" size={18} />
@@ -6662,7 +6662,7 @@ function App() {
                 const mood = weatherOptions.find((item) => item.label === effectiveMoodLabel) || weatherOptions.find(m => m.label === entry.mood) || moods[2];
                 return (
                   <article
-                    className="group w-full cursor-pointer rounded-3xl border border-sage-100 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-lift sm:p-5"
+                    className="group w-full cursor-pointer rounded-3xl border border-[#e8dfd5] bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-lift sm:p-5"
                     key={entry.id}
                     onClick={() => setSelectedEntry(entry)}
                   >
@@ -6708,7 +6708,7 @@ function App() {
       <>
       {activeHomeSection === 'overview' && !showMinimalHomeOverview && (
       <section className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-4">
-        <div className="quote-card quote-card-premium rounded-3xl border border-white/70 p-8 shadow-soft">
+        <div className="quote-card quote-card-premium rounded-3xl border border-amber-200/50 p-8 shadow-soft">
           <Quote className="mb-8 opacity-80" size={34} />
           <p className="quote-main-text font-bold leading-tight" style={{ fontFamily: activeQuoteFont, fontSize: activeQuoteSize, color: quoteStyle.textColor, lineHeight: 1.45 }}>“{quoteLibrary[quoteIndex % quoteLibrary.length]}”</p>
           <button className="quote-button mt-8 rounded-full bg-white px-5 py-3 text-sm font-extrabold shadow-lift transition hover:-translate-y-1 hover:bg-sage-50" onClick={() => setQuoteIndex((quoteIndex + 1) % quoteLibrary.length)}>
@@ -6755,7 +6755,7 @@ function App() {
           title="Find the kind of game, reset, or journaling support that fits what you need today."
           text="Some people want a private diary, some want an online journal, and some are simply looking for cozy browser games or easy ways to relax after a long day. These pages help readers find the calmest place to begin."
         />
-        <div className="mb-6 rounded-[1.8rem] border border-white/80 bg-white/82 p-5 shadow-lift backdrop-blur">
+        <div className="mb-6 rounded-[2.2rem] border border-[#e8dfd5] bg-white/82 p-5 shadow-lift backdrop-blur">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-sage-700">Most searched topics</p>
@@ -6765,13 +6765,13 @@ function App() {
           </div>
           <div className="mt-4 flex flex-wrap gap-2.5">
             {seoPopularSearches.map((item) => (
-              <a className="rounded-full border border-sage-200 bg-sage-50/70 px-4 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href={item.href} key={item.href}>{item.label}</a>
+              <a className="rounded-full border border-amber-200/50 bg-sage-50/70 px-4 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href={item.href} key={item.href}>{item.label}</a>
             ))}
           </div>
         </div>
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {seoLandingBlocks.slice(0, 8).map((item) => (
-            <article className="customizable-card rounded-3xl border border-white/70 bg-white/80 p-6 shadow-lift backdrop-blur transition hover:-translate-y-1 hover:bg-white/95" key={item.title}>
+            <article className="customizable-card rounded-3xl border border-amber-200/50 bg-white/80 p-6 shadow-lift backdrop-blur transition hover:-translate-y-1 hover:bg-white/95" key={item.title}>
               <div className="rounded-full bg-sage-100 px-3 py-1 text-xs font-extrabold uppercase tracking-widest text-sage-800">Reader guide</div>
               <h3 className="mt-4 text-2xl font-extrabold leading-tight text-ink">{item.title}</h3>
               <p className="mt-4 leading-8 text-sage-800">{item.text}</p>
@@ -6779,7 +6779,7 @@ function App() {
             </article>
           ))}
         </div>
-        <div className="mt-8 rounded-[2rem] border border-white/75 bg-white/80 p-6 shadow-lift backdrop-blur lg:p-8">
+        <div className="mt-8 rounded-[3rem] border border-white/75 bg-white/80 p-6 shadow-lift backdrop-blur lg:p-8">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <p className="text-sm font-extrabold uppercase tracking-[0.3em] text-sage-700">Keep exploring</p>
@@ -6792,13 +6792,13 @@ function App() {
           </div>
           <div className="mt-6 grid gap-5 lg:grid-cols-2">
             {seoGuideGroups.map((group) => (
-              <article className="rounded-[1.8rem] border border-sage-100/80 bg-sand-50/70 p-5 shadow-sm" key={group.title}>
+              <article className="rounded-[2.2rem] border border-[#e8dfd5]/80 bg-sand-50/70 p-5 shadow-sm" key={group.title}>
                 <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-sage-700">Guide collection</p>
                 <h4 className="mt-3 text-2xl font-extrabold leading-tight text-ink">{group.title}</h4>
                 <p className="mt-3 text-sm leading-7 text-sage-800">{group.description}</p>
                 <div className="mt-5 grid gap-2">
                   {group.links.map((page) => (
-                    <a className="group flex items-start justify-between gap-3 rounded-2xl border border-white/80 bg-white/82 px-4 py-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-200 hover:bg-white" href={page.href} key={page.href}>
+                    <a className="group flex items-start justify-between gap-3 rounded-2xl border border-[#e8dfd5] bg-white/82 px-4 py-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-white" href={page.href} key={page.href}>
                       <span>
                         <span className="block text-sm font-extrabold text-sage-950 group-hover:text-sage-800">{page.title}</span>
                         <span className="mt-1 block text-xs font-semibold leading-5 text-sage-600">{page.text}</span>
@@ -6811,16 +6811,16 @@ function App() {
             ))}
           </div>
           <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1.2fr)_minmax(280px,0.8fr)]">
-            <div className="rounded-3xl border border-white/80 bg-gradient-to-br from-white/95 to-sand-50/85 p-6 shadow-lift backdrop-blur">
+            <div className="rounded-3xl border border-[#e8dfd5] bg-gradient-to-br from-white/95 to-sand-50/85 p-6 shadow-lift backdrop-blur">
               <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-sage-700">Quiet reader space</p>
               <h4 className="mt-3 text-2xl font-extrabold leading-tight text-ink">A stable place for future recommendations, without interrupting the journal.</h4>
               <p className="mt-3 max-w-2xl leading-8 text-sage-800">This area sits outside the main writing flow, so future recommendations can live here without covering prompts, shifting the editor, or making the journaling experience feel crowded on mobile or desktop.</p>
               <div className="mt-5 flex flex-wrap gap-3">
                 <a className="inline-flex items-center justify-center rounded-full bg-sage-900 px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-sage-800" href="/private-online-diary.html">Open private diary guide</a>
-                <a className="inline-flex items-center justify-center rounded-full border border-sage-200 bg-white px-5 py-3 text-sm font-bold text-sage-900 transition hover:-translate-y-0.5 hover:border-sage-300" href="/journal-prompts.html">Browse prompts</a>
+                <a className="inline-flex items-center justify-center rounded-full border border-amber-200/50 bg-white px-5 py-3 text-sm font-bold text-sage-900 transition hover:-translate-y-0.5 hover:border-sage-300" href="/journal-prompts.html">Browse prompts</a>
               </div>
             </div>
-            <div className="rounded-3xl border border-sage-100/80 bg-white/85 p-6 shadow-lift backdrop-blur">
+            <div className="rounded-3xl border border-[#e8dfd5]/80 bg-white/85 p-6 shadow-lift backdrop-blur">
               <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-sage-700">Why this reader area stays separate</p>
               <ul className="mt-4 space-y-3 text-sm leading-7 text-sage-800">
                 <li>• Future recommendations can live here without interrupting the writing screen.</li>
@@ -6868,7 +6868,7 @@ function App() {
         <div className="grid gap-5 md:grid-cols-2">
           {wellnessArticles.map((article, index) => (
             article.href ? (
-              <a href={article.href} className="customizable-card rounded-3xl border border-white/70 bg-white/80 p-6 shadow-lift backdrop-blur transition hover:-translate-y-1 hover:bg-white/95 text-left block" key={article.title}>
+              <a href={article.href} className="customizable-card rounded-3xl border border-amber-200/50 bg-white/80 p-6 shadow-lift backdrop-blur transition hover:-translate-y-1 hover:bg-white/95 text-left block" key={article.title}>
                 <div className="mb-4 flex items-center justify-between gap-4">
                   <span className="rounded-full bg-sage-900 px-3 py-1 text-xs font-extrabold uppercase tracking-widest text-white">{article.read.split('•')[0]}</span>
                   <span className="text-sm font-bold text-sage-600">{article.read.split('•')[1] || ''}</span>
@@ -6880,7 +6880,7 @@ function App() {
                 </div>
               </a>
             ) : (
-              <article className="customizable-card rounded-3xl border border-white/70 bg-white/80 p-6 shadow-lift backdrop-blur transition hover:-translate-y-1 hover:bg-white/95" key={article.title}>
+              <article className="customizable-card rounded-3xl border border-amber-200/50 bg-white/80 p-6 shadow-lift backdrop-blur transition hover:-translate-y-1 hover:bg-white/95" key={article.title}>
                 <div className="mb-4 flex items-center justify-between gap-4">
                   <span className="rounded-full bg-sage-100 px-3 py-1 text-xs font-extrabold uppercase tracking-widest text-sage-800">Note</span>
                   <span className="text-sm font-bold text-sage-600">{article.read}</span>
@@ -6892,7 +6892,7 @@ function App() {
           ))}
         </div>
         <div className="mt-10 text-center">
-          <a href="/blog.html" className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white/70 px-6 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white backdrop-blur">
+          <a href="/blog.html" className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white/70 px-6 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white backdrop-blur">
             Visit the full Blog & Wellness Library &rarr;
           </a>
         </div>
@@ -6908,7 +6908,7 @@ function App() {
         />
         <div className="grid gap-4 lg:grid-cols-2">
           {seoFaqs.map((item) => (
-            <article className="rounded-3xl border border-white/80 bg-white/80 p-6 shadow-lift backdrop-blur" key={item.question}>
+            <article className="rounded-3xl border border-[#e8dfd5] bg-white/80 p-6 shadow-lift backdrop-blur" key={item.question}>
               <h3 className="text-xl font-extrabold text-ink">{item.question}</h3>
               <p className="mt-3 leading-7 text-sage-800">{item.answer}</p>
             </article>
@@ -6919,7 +6919,7 @@ function App() {
 
       {activeHomeSection === 'tips' && (
       <section id="tips" className="mx-auto grid max-w-[1280px] gap-8 px-5 py-14 sm:px-7 xl:px-10 lg:grid-cols-12">
-        <div className="rounded-3xl border border-white/70 bg-gradient-to-br from-sand-100 to-sage-100 p-8 shadow-soft lg:col-span-5 lg:p-10">
+        <div className="rounded-3xl border border-amber-200/50 bg-gradient-to-br from-sand-100 to-sage-100 p-8 shadow-soft lg:col-span-5 lg:p-10">
           <Newspaper className="mb-7 text-sage-700" size={36} />
           <p className="text-sm font-bold uppercase tracking-widest text-sage-700">Journaling tips</p>
           <h2 className="mt-3 font-display text-5xl font-bold leading-tight text-sage-950">A softer way to start writing.</h2>
@@ -6927,7 +6927,7 @@ function App() {
         </div>
         <div className="grid gap-4 lg:col-span-7">
           {tips.map((tip, index) => (
-            <div className="flex items-start gap-4 rounded-3xl border border-white/70 bg-white/75 p-5 shadow-lift backdrop-blur" key={tip}>
+            <div className="flex items-start gap-4 rounded-3xl border border-amber-200/50 bg-white/75 p-5 shadow-lift backdrop-blur" key={tip}>
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-sage-700 font-bold text-white">{index + 1}</div>
               <p className="pt-2 text-lg font-semibold leading-7 text-sage-900">{tip}</p>
             </div>
@@ -6965,7 +6965,7 @@ function App() {
       {activeHomeSection === 'terms' && (
       <section id="terms" className="mx-auto grid max-w-[1280px] gap-8 px-5 py-14 sm:px-7 xl:px-10 lg:grid-cols-12">
         <div className="lg:col-span-5">
-          <div className="sticky top-28 rounded-3xl border border-white/70 bg-white/75 p-8 shadow-soft backdrop-blur">
+          <div className="sticky top-28 rounded-3xl border border-amber-200/50 bg-white/75 p-8 shadow-soft backdrop-blur">
             <Scale className="mb-7 text-sage-700" size={36} />
             <p className="text-sm font-bold uppercase tracking-widest text-sage-600">Helpful notes</p>
             <h2 className="mt-3 font-display text-5xl font-bold leading-tight text-sage-950">A simple space for personal writing.</h2>
@@ -6997,7 +6997,7 @@ function App() {
       {activeHomeSection === 'contact' && (
       <>
       <section id="contact" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
-        <div className="overflow-hidden rounded-3xl border border-white/70 bg-sage-900 text-white shadow-soft">
+        <div className="overflow-hidden rounded-3xl border border-amber-200/50 bg-sage-900 text-white shadow-soft">
           <div className="grid lg:grid-cols-2">
             <div className="p-8 lg:p-10">
               <Mail className="mb-7 text-sage-100" size={36} />
@@ -7047,7 +7047,7 @@ function App() {
           text="This panel is only visible when the master email is signed in. It lets you run an AI SEO review from inside the website, keep the API key in your own browser, and work on ideas without exposing admin tools to normal visitors."
         />
         <div className="grid gap-6 xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-          <div className="rounded-[2rem] border border-white/80 bg-white/78 p-6 shadow-soft backdrop-blur-xl">
+          <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/78 p-6 shadow-soft backdrop-blur-xl">
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-sm font-bold uppercase tracking-widest text-sage-600">Master access</p>
@@ -7059,9 +7059,9 @@ function App() {
               </div>
             </div>
 
-            <div className="mt-6 rounded-[1.5rem] border border-sage-100 bg-white px-4 py-4 shadow-sm">
+            <div className="mt-6 rounded-[1.5rem] border border-[#e8dfd5] bg-white px-4 py-4 shadow-sm">
               <p className="text-sm font-extrabold uppercase tracking-[0.22em] text-sage-600">Preview mode</p>
-              <div className="mt-3 flex overflow-hidden rounded-full border border-sage-200 bg-sage-50 p-1">
+              <div className="mt-3 flex overflow-hidden rounded-full border border-amber-200/50 bg-sage-50 p-1">
                 <button
                   className={`flex-1 rounded-full px-4 py-2.5 text-sm font-extrabold transition ${adminViewMode === 'master' ? 'bg-sage-900 text-white shadow-sm' : 'text-sage-700 hover:bg-white'}`}
                   onClick={() => setAdminViewMode('master')}
@@ -7081,17 +7081,17 @@ function App() {
             </div>
 
             <div className="mt-6 grid gap-3 text-sm leading-7 text-sage-700">
-              <div className="rounded-2xl border border-sage-100 bg-sage-50/80 px-4 py-4">
+              <div className="rounded-2xl border border-[#e8dfd5] bg-sage-50/80 px-4 py-4">
                 <p className="font-extrabold text-sage-900">What this first version can do</p>
                 <p className="mt-2">Run an AI SEO review of the current diary site, suggest safer homepage and guide-page improvements, and draft ideas you can later implement without disrupting users.</p>
               </div>
-              <div className="rounded-2xl border border-sage-100 bg-white px-4 py-4">
+              <div className="rounded-2xl border border-[#e8dfd5] bg-white px-4 py-4">
                 <p className="font-extrabold text-sage-900">What it does not auto-publish yet</p>
                 <p className="mt-2">This version does not silently rewrite the live site on its own. It gives you admin-only guidance and drafts first, which is safer for SEO and much better for preserving tone.</p>
               </div>
             </div>
 
-            <div className="mt-6 rounded-[1.75rem] border border-sage-100 bg-gradient-to-br from-sage-900 via-sage-800 to-sage-700 p-5 text-white shadow-soft">
+            <div className="mt-6 rounded-[2.2rem] border border-[#e8dfd5] bg-gradient-to-br from-sage-900 via-sage-800 to-sage-700 p-5 text-white shadow-soft">
               <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-white/80">Suggested routine</p>
               <div className="mt-4 grid gap-3 text-sm leading-7 text-white/90">
                 <div>1. Run a fresh AI review when you want new SEO ideas.</div>
@@ -7102,15 +7102,15 @@ function App() {
             </div>
           </div>
 
-          <div className="rounded-[2rem] border border-white/80 bg-white/82 p-6 shadow-soft backdrop-blur-xl">
+          <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/82 p-6 shadow-soft backdrop-blur-xl">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
                 <p className="text-sm font-bold uppercase tracking-widest text-sage-600">Run AI review</p>
                 <h3 className="mt-2 text-2xl font-extrabold text-ink">SEO drafts that stay inside your admin view</h3>
               </div>
               <div className="flex flex-wrap items-center justify-end gap-2">
-                {seoStudioModelUsed && <span className="rounded-full border border-sage-200 bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.2em] text-sage-700">Model · {seoStudioModelUsed}</span>}
-                {seoStudioLastRun && <span className="rounded-full border border-sage-200 bg-sage-50 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.2em] text-sage-800">Last run · {seoStudioLastRun}</span>}
+                {seoStudioModelUsed && <span className="rounded-full border border-amber-200/50 bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.2em] text-sage-700">Model · {seoStudioModelUsed}</span>}
+                {seoStudioLastRun && <span className="rounded-full border border-amber-200/50 bg-sage-50 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.2em] text-sage-800">Last run · {seoStudioLastRun}</span>}
               </div>
             </div>
 
@@ -7119,13 +7119,13 @@ function App() {
                 Gemini API key
                 <div className="flex gap-2">
                   <input
-                    className="w-full rounded-2xl border border-sage-200 bg-white px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-400"
+                    className="w-full rounded-2xl border border-amber-200/50 bg-white px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-400"
                     onChange={(event) => setSeoStudioApiKey(event.target.value)}
                     placeholder="Paste your Gemini API key"
                     type={showSeoStudioKey ? 'text' : 'password'}
                     value={seoStudioApiKey}
                   />
-                  <button className="rounded-2xl border border-sage-200 bg-white px-4 text-sage-800 shadow-sm transition hover:bg-sage-50" onClick={() => setShowSeoStudioKey(!showSeoStudioKey)} type="button">
+                  <button className="rounded-2xl border border-amber-200/50 bg-white px-4 text-sage-800 shadow-sm transition hover:bg-sage-50" onClick={() => setShowSeoStudioKey(!showSeoStudioKey)} type="button">
                     {showSeoStudioKey ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
@@ -7135,7 +7135,7 @@ function App() {
               <label className="grid gap-2 text-sm font-bold text-sage-900">
                 What should the AI focus on?
                 <textarea
-                  className="min-h-[128px] rounded-2xl border border-sage-200 bg-white px-4 py-3 text-sm leading-7 text-sage-900 outline-none transition focus:border-sage-400"
+                  className="min-h-[128px] rounded-2xl border border-amber-200/50 bg-white px-4 py-3 text-sm leading-7 text-sage-900 outline-none transition focus:border-sage-400"
                   onChange={(event) => setSeoStudioPrompt(event.target.value)}
                   placeholder="Ask for homepage suggestions, new guide ideas, schema improvements, or calmer SEO fixes."
                   value={seoStudioPrompt}
@@ -7146,10 +7146,10 @@ function App() {
                 <button className="inline-flex items-center gap-2 rounded-full bg-sage-900 px-5 py-3 text-sm font-extrabold text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800 disabled:cursor-not-allowed disabled:opacity-60" disabled={seoStudioLoading} onClick={runSeoStudioReview} type="button">
                   <Sparkles size={16} /> {seoStudioLoading ? 'Running review...' : 'Run AI SEO review'}
                 </button>
-                <button className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white px-5 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-1 hover:border-sage-300 hover:bg-sage-50 disabled:cursor-not-allowed disabled:opacity-50" disabled={!seoStudioReport.trim()} onClick={copySeoStudioReport} type="button">
+                <button className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white px-5 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-1 hover:border-sage-300 hover:bg-sage-50 disabled:cursor-not-allowed disabled:opacity-50" disabled={!seoStudioReport.trim()} onClick={copySeoStudioReport} type="button">
                   <FileText size={16} /> {seoStudioCopied ? 'Copied' : 'Copy report'}
                 </button>
-                <button className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white px-5 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-1 hover:border-sage-300 hover:bg-sage-50" onClick={clearSeoStudioReport} type="button">
+                <button className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white px-5 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-1 hover:border-sage-300 hover:bg-sage-50" onClick={clearSeoStudioReport} type="button">
                   Clear
                 </button>
               </div>
@@ -7160,7 +7160,7 @@ function App() {
                 </div>
               )}
 
-              <div className="rounded-[1.75rem] border border-sage-100 bg-sand-50/80 p-4 shadow-inner">
+              <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-sand-50/80 p-4 shadow-inner">
                 <div className="flex items-center justify-between gap-3">
                   <p className="text-sm font-extrabold uppercase tracking-[0.22em] text-sage-600">AI report</p>
                   <span className="text-xs font-bold uppercase tracking-[0.18em] text-sage-500">Admin draft only</span>
@@ -7248,8 +7248,8 @@ function App() {
             tabIndex={0}
             title="Drag the knob to adjust the lofi radio volume"
           >
-            <div className={`relative h-full w-full rounded-full border backdrop-blur-xl transition duration-300 ${isRadioPlaying ? 'border-white/80 bg-white/76' : 'border-white/70 bg-white/62'}`}>
-              <div className="pointer-events-none absolute inset-[4px] rounded-full border border-sage-100/70" />
+            <div className={`relative h-full w-full rounded-full border backdrop-blur-xl transition duration-300 ${isRadioPlaying ? 'border-[#e8dfd5] bg-white/76' : 'border-amber-200/50 bg-white/62'}`}>
+              <div className="pointer-events-none absolute inset-[4px] rounded-full border border-[#e8dfd5]/70" />
               <div className="absolute inset-[3px] rounded-full" style={{ transform: `rotate(${radioDialDegrees}deg)` }}>
                 <div
                   className={`absolute left-1/2 top-0 flex h-7 w-7 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full ${isRadioDialDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
@@ -7305,13 +7305,13 @@ function App() {
                 src={radioVinylIcon}
               />
               <span className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle_at_32%_24%,rgba(255,255,255,0.42),transparent_28%),radial-gradient(circle_at_70%_72%,rgba(0,0,0,0.18),transparent_34%)]" />
-              <span className="pointer-events-none absolute flex h-4 w-4 items-center justify-center rounded-full border border-white/70 bg-sage-950/85 shadow-[0_0_0_3px_rgba(255,255,255,0.35)]">
+              <span className="pointer-events-none absolute flex h-4 w-4 items-center justify-center rounded-full border border-amber-200/50 bg-sage-950/85 shadow-[0_0_0_3px_rgba(255,255,255,0.35)]">
                 <span className="h-2 w-2 rounded-full bg-[radial-gradient(circle_at_35%_35%,#fff7d6,#d5b67f_58%,#6f4f2a)] shadow-[0_0_8px_rgba(255,244,212,0.45)]" />
               </span>
             </span>
           </button>
           {radioNeedsInteraction && (
-            <div className="pointer-events-none absolute -top-10 left-0 w-max max-w-[10rem] rounded-2xl border border-white/80 bg-white/92 px-3 py-1.5 text-center text-[10px] font-extrabold uppercase tracking-[0.14em] text-sage-700 shadow-sm backdrop-blur-xl">
+            <div className="pointer-events-none absolute -top-10 left-0 w-max max-w-[10rem] rounded-2xl border border-[#e8dfd5] bg-white/92 px-3 py-1.5 text-center text-[10px] font-extrabold uppercase tracking-[0.14em] text-sage-700 shadow-sm backdrop-blur-xl">
               Tap once for sound
             </div>
           )}
@@ -7323,7 +7323,7 @@ function App() {
 
       {!cookieConsentAccepted && (
         <div className="pointer-events-none fixed bottom-24 right-3 z-40 flex justify-end sm:bottom-6 sm:right-6">
-          <div className="pointer-events-auto w-[min(22rem,calc(100vw-1.5rem))] rounded-[1.4rem] border border-sage-200/90 bg-white/94 p-4 shadow-soft backdrop-blur-xl">
+          <div className="pointer-events-auto w-[min(22rem,calc(100vw-1.5rem))] rounded-[1.4rem] border border-amber-200/50/90 bg-white/94 p-4 shadow-soft backdrop-blur-xl">
             <p className="text-sm font-medium leading-relaxed text-sage-800">
               We use cookies and browser storage to keep Lofi Memory smooth and support ads. <span className="font-extrabold text-sage-900">We do not have access to your private diary entries; they are stored securely for you alone.</span> By staying here, you agree to our <a href="/privacy.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Privacy Policy</a>, <a href="/terms.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Terms</a>, and <a href="/cookie-policy.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Cookie Policy</a>.
             </p>
@@ -7404,7 +7404,7 @@ function App() {
                 )}
                 {isEditingEntry ? (
                   <input
-                    className="w-full rounded-2xl border border-sage-100 bg-sage-50/80 px-4 py-3 text-2xl font-extrabold text-ink outline-none focus:border-sage-400"
+                    className="w-full rounded-2xl border border-[#e8dfd5] bg-sage-50/80 px-4 py-3 text-2xl font-extrabold text-ink outline-none focus:border-sage-400"
                     onChange={(event) => setEditTitle(event.target.value)}
                     value={editTitle}
                   />
@@ -7445,14 +7445,14 @@ function App() {
                     <input accept="image/*" className="hidden" onChange={handleEditEntryImageUpload} type="file" />
                   </label>
                 </div>
-                <div className="journal-editor-shell rounded-[2rem] p-3 md:p-4">
+                <div className="journal-editor-shell rounded-[3rem] p-3 md:p-4">
                   <div className="journal-editor-ribbon">quiet diary</div>
                   <div className="journal-editor-meta mb-3 flex flex-wrap items-center justify-end gap-2 px-3 text-xs font-bold uppercase tracking-[0.24em] text-sage-500">
                     <span>{editMood} mood · revisit gently</span>
                   </div>
                   <div
                     ref={editBodyRef}
-                    className="journal-editor journal-editor-soft min-h-72 w-full overflow-auto rounded-[1.75rem] px-6 py-6 outline-none"
+                    className="journal-editor journal-editor-soft min-h-72 w-full overflow-auto rounded-[2.2rem] px-6 py-6 outline-none"
                     contentEditable
                     suppressContentEditableWarning
                     style={{ fontFamily: activeJournalFont, fontSize: activeJournalSize, lineHeight: 1.95, color: '#24312e', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}

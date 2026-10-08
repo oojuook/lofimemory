@@ -5,6 +5,12 @@
 :root {
   color: #24312e;
   background: #fffaf2;
+  --lofi-surface: rgba(255, 250, 242, 0.88);
+  --lofi-surface-strong: rgba(255, 247, 236, 0.94);
+  --lofi-surface-soft: rgba(255, 252, 247, 0.78);
+  --lofi-border: rgba(232, 223, 213, 0.94);
+  --lofi-border-subtle: rgba(251, 191, 36, 0.22);
+  --lofi-shadow: 0 24px 70px rgba(86, 62, 47, 0.10);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -89,6 +95,10 @@ input::placeholder {
 .personalized-site aside > div,
 .personalized-site footer > div {
   border-radius: var(--shape-radius);
+}
+
+.personalized-site .site-nav-shell {
+  border-radius: 3.2rem;
 }
 
 .personalized-site .theme-panel {
@@ -189,7 +199,7 @@ input::placeholder {
   }
 
   .personalized-site .site-nav-shell {
-    border-radius: 1.5rem;
+    border-radius: 3rem;
     padding: 1rem;
   }
 
@@ -765,17 +775,17 @@ input::placeholder {
 }
 
 .lofi-glass {
-  background: rgba(255, 255, 255, 0.62) !important;
-  backdrop-filter: blur(24px) saturate(110%) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(110%) !important;
-  border-color: rgba(255, 255, 255, 0.45) !important;
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.04) !important;
+  background: linear-gradient(145deg, rgba(255, 250, 242, 0.9), rgba(250, 237, 205, 0.72)) !important;
+  backdrop-filter: blur(24px) saturate(112%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(112%) !important;
+  border-color: rgba(232, 223, 213, 0.88) !important;
+  box-shadow: 0 20px 60px rgba(83, 62, 44, 0.08) !important;
 }
 
 .wallpaper-active .lofi-glass {
-  background: rgba(255, 255, 255, 0.48) !important;
-  border-color: rgba(255, 255, 255, 0.32) !important;
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.08) !important;
+  background: linear-gradient(145deg, rgba(255, 250, 242, 0.82), rgba(244, 226, 201, 0.58)) !important;
+  border-color: rgba(216, 192, 166, 0.56) !important;
+  box-shadow: 0 18px 52px rgba(83, 62, 44, 0.12) !important;
 }
 
 /* Minimal lofi atmosphere: soft texture, tiny music hints, no busy overlays. */
@@ -819,8 +829,8 @@ input::placeholder {
   position: absolute;
   inset: 10px;
   pointer-events: none;
-  border-radius: 1.25rem;
-  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 1.75rem;
+  border: 1px solid rgba(232, 223, 213, 0.72);
 }
 
 .lofi-mini-record {
@@ -909,8 +919,8 @@ input::placeholder {
 .personalized-site.wallpaper-active form,
 .personalized-site.wallpaper-active aside > div,
 .personalized-site.wallpaper-active footer > div {
-  background-color: rgba(255, 252, 247, 0.82) !important;
-  border-color: rgba(255, 255, 255, 0.72) !important;
+  background-color: rgba(255, 248, 238, 0.84) !important;
+  border-color: rgba(232, 223, 213, 0.82) !important;
   box-shadow: 0 22px 60px rgba(72, 58, 45, 0.12);
   backdrop-filter: blur(18px) saturate(1.05);
 }
@@ -922,8 +932,10 @@ input::placeholder {
 .personalized-site.wallpaper-active [class*="bg-white/80"],
 .personalized-site.wallpaper-active [class*="bg-white/84"],
 .personalized-site.wallpaper-active [class*="bg-white/88"],
-.personalized-site.wallpaper-active [class*="bg-white/90"] {
-  background-color: rgba(255, 252, 247, 0.78) !important;
+.personalized-site.wallpaper-active [class*="bg-white/90"],
+.personalized-site.wallpaper-active [class*="bg-white/94"],
+.personalized-site.wallpaper-active [class*="bg-white/95"] {
+  background-color: rgba(255, 248, 238, 0.8) !important;
   backdrop-filter: blur(16px) saturate(1.04);
 }
 
@@ -989,15 +1001,26 @@ input::placeholder {
 .lofi-vibe form,
 .lofi-vibe aside > div,
 .lofi-vibe footer > div {
-  border-color: rgba(255, 255, 255, 0.76) !important;
-  box-shadow: 0 24px 70px rgba(86, 62, 47, 0.10);
+  background-color: var(--lofi-surface) !important;
+  border-color: var(--lofi-border) !important;
+  box-shadow: var(--lofi-shadow);
+}
+
+.lofi-vibe .site-nav-shell {
+  border-radius: 3.2rem !important;
+  background: linear-gradient(145deg, rgba(255, 250, 242, 0.94), rgba(252, 245, 235, 0.82)) !important;
+}
+
+.lofi-vibe .site-nav-links {
+  background-color: rgba(255, 250, 242, 0.88) !important;
+  border-color: rgba(232, 223, 213, 0.82) !important;
 }
 
 .lofi-vibe .lofi-now-playing {
-  border-color: rgba(230, 204, 177, 0.8) !important;
+  border-color: rgba(232, 223, 213, 0.84) !important;
   background:
-    linear-gradient(135deg, rgba(255, 253, 248, 0.9), rgba(245, 225, 205, 0.72)),
-    radial-gradient(circle at 88% 22%, rgba(162, 122, 170, 0.18), transparent 8rem) !important;
+    linear-gradient(135deg, rgba(255, 251, 245, 0.94), rgba(246, 231, 209, 0.76)),
+    radial-gradient(circle at 88% 22%, rgba(162, 122, 170, 0.14), transparent 8rem) !important;
 }
 
 .lofi-vibe .lofi-equalizer span {
