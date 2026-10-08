@@ -1507,7 +1507,7 @@ function clampCompanionPosition(size, x, y, containerWidth, containerHeight, isV
 
 function StatCard({ icon: Icon, label, value, tone }) {
   return (
-    <div className="group rounded-[2.2rem] border border-[#e8dfd5] bg-gradient-to-br from-white/95 to-white/75 p-5 text-center shadow-lift backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-soft">
+    <div className="group lofi-glass rounded-[2.2rem] border border-[#e8dfd5] bg-gradient-to-br from-white/95 to-white/75 p-5 text-center shadow-lift backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-soft">
       <div className="flex flex-col items-center gap-3">
         <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl shadow-sm ${tone}`}>
           <Icon size={21} />
@@ -4866,7 +4866,7 @@ function App() {
 
       <div className={`transition-opacity duration-500 ${showEntryTransition ? 'pointer-events-none select-none opacity-0' : 'opacity-100'}`}>
       <nav className="sticky top-0 z-20 px-5 pt-5 sm:px-7 xl:px-10">
-        <div className="site-nav-shell lofi-glass mx-auto max-w-[1280px] rounded-[3.2rem] border p-4 shadow-soft backdrop-blur-xl lg:p-5">
+        <div className="site-nav-shell lofi-glass lofi-picture-border lofi-border-floral mx-auto max-w-[1280px] rounded-[3.2rem] border p-4 shadow-soft backdrop-blur-xl lg:p-5">
           <div className="flex flex-col gap-2.5 lg:gap-3 xl:flex-row xl:items-center xl:justify-between">
             <a className="flex items-center gap-3.5" href="#home" onClick={() => openHomeSection('home')}>
               <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[1.35rem] border border-[#e8dfd5] bg-white/88 p-1.5 shadow-[0_12px_34px_rgba(117,127,119,0.14)] ring-1 ring-sage-100 overflow-hidden">
@@ -4974,12 +4974,12 @@ function App() {
           <p className="text-[11px] font-extrabold uppercase tracking-[0.34em] text-[#9a806a]">Choose your chill space</p>
             <p className="mt-3 text-sm font-semibold leading-7 text-[#7f6a58]">Pick a space.</p>
         </div>
-        <div className="lofi-glass rounded-[3rem] border p-3 shadow-soft backdrop-blur-xl sm:p-4">
+        <div className="lofi-glass lofi-picture-border lofi-border-watercolor rounded-[3rem] border p-3 shadow-soft backdrop-blur-xl sm:p-4">
           <div className="grid gap-3 md:grid-cols-2">
             {homeEntryCards.map((card) => (
               <button
                 key={card.id}
-                className="group lofi-glass relative flex min-h-[11rem] w-full flex-col items-start justify-start overflow-hidden rounded-[2.2rem] border px-5 py-5 text-left shadow-[0_10px_26px_rgba(146,126,106,0.07)] transition duration-300 hover:-translate-y-1 hover:border-[#d8c6b2] hover:shadow-[0_16px_34px_rgba(146,126,106,0.1)]"
+                className="group lofi-glass lofi-picture-border lofi-border-watercolor relative flex min-h-[11rem] w-full flex-col items-start justify-start overflow-hidden rounded-[2.2rem] border px-5 py-5 text-left shadow-[0_10px_26px_rgba(146,126,106,0.07)] transition duration-300 hover:-translate-y-1 hover:border-[#d8c6b2] hover:shadow-[0_16px_34px_rgba(146,126,106,0.1)]"
                 onClick={card.onClick}
                 type="button"
               >
@@ -4999,7 +4999,7 @@ function App() {
       {activeTab === 'home' && activeHomeSection === 'overview' && !showMinimalHomeOverview && (
       <section id="home" className="mx-auto grid max-w-[1280px] gap-8 px-5 pb-28 pt-10 sm:px-7 lg:grid-cols-12 lg:pb-12 xl:gap-12 xl:px-10">
         <div className="lg:col-span-8">
-          <div className="lofi-glass relative overflow-hidden rounded-[3.2rem] border p-8 shadow-soft backdrop-blur-xl lg:p-10 xl:p-11">
+          <div className="lofi-glass lofi-picture-border lofi-border-watercolor relative overflow-hidden rounded-[3.2rem] border p-8 shadow-soft backdrop-blur-xl lg:p-10 xl:p-11">
             <div className="pointer-events-none absolute -left-10 top-12 h-28 w-28 rounded-full bg-[#efe4d8]/55 blur-3xl"></div>
             <div className="pointer-events-none absolute right-4 top-4 h-32 w-32 rounded-full bg-[#f7eee3]/65 blur-3xl"></div>
             <div className="relative">
@@ -5408,7 +5408,7 @@ function App() {
       />
 
       <section id="journal" className="relative z-10 mx-auto -mt-1 max-w-[1280px] px-5 py-9 pb-28 sm:px-7 lg:-mt-4 lg:pb-10 xl:px-10">
-        <div className="mb-6 overflow-hidden rounded-[3rem] border border-white/85 bg-gradient-to-r from-white/88 via-sage-50/78 to-sand-50/75 p-3 shadow-soft backdrop-blur xl:p-4">
+        <div className="lofi-picture-border lofi-border-watercolor mb-6 overflow-hidden rounded-[3rem] border border-white/85 bg-gradient-to-r from-white/88 via-sage-50/78 to-sand-50/75 p-3 shadow-soft backdrop-blur xl:p-4">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-2xl">
               <p className="text-xs font-bold uppercase tracking-[0.22em] text-sage-600">Choose your chill space</p>
@@ -5439,7 +5439,7 @@ function App() {
         </div>
 
         {activeTab === 'write' && (
-        <form className="rounded-[3rem] border border-[#e8dfd5]/80 bg-white/94 p-4 shadow-soft backdrop-blur sm:p-6 xl:p-8" onSubmit={saveEntry}>
+        <form className="lofi-picture-border lofi-border-watercolor rounded-[3rem] border border-[#e8dfd5]/80 bg-white/94 p-4 shadow-soft backdrop-blur sm:p-6 xl:p-8" onSubmit={saveEntry}>
           <div className="mb-5 overflow-hidden rounded-[2.2rem] border border-[#e8dfd5]/90 bg-gradient-to-r from-white via-sage-50/35 to-white p-4 shadow-sm sm:p-5">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div className="max-w-3xl">
@@ -5763,7 +5763,7 @@ function App() {
                 <button className="mb-5 inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white/88 px-4 py-2 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-x-0.5 hover:bg-white" onClick={returnToGameLibrary} type="button">
                   <span aria-hidden="true">←</span> Back to games
                 </button>
-                <div className={`lofi-glass relative overflow-hidden rounded-[3rem] border p-3 shadow-soft backdrop-blur sm:p-4 lg:p-5 ${gameVisualTheme === 'lofi' ? 'border-[#e8dfd5] bg-[#fffaf2]/85' : ''}`}>
+                <div className={`lofi-glass lofi-picture-border lofi-border-watercolor relative overflow-hidden rounded-[3rem] border p-3 shadow-soft backdrop-blur sm:p-4 lg:p-5 ${gameVisualTheme === 'lofi' ? 'border-[#e8dfd5] bg-[#fffaf2]/85' : ''}`}>
                   {gameVisualTheme === 'lofi' && (
                     <>
                       <img src={lofiRoomWallpaperImage} alt="" className="pointer-events-none absolute inset-0 h-full w-full scale-105 object-cover opacity-[0.07] blur-[1px]" aria-hidden="true" />
