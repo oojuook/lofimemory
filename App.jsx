@@ -1,29 +1,73 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import radioVinylIcon from './assets/lofi-radio-vinyl.png';
+import headerLogoIcon from './assets/lofi-header-logo.png';
+import minesweeperIconImage from './assets/minesweeper-icon.png';
+import solitaireIconImage from './assets/solitaire-icon.png';
+import solitairePreviewImage from './assets/solitaire-preview.png';
+import sudokuIconImage from './assets/sudoku-icon.png';
+import wordleIconImage from './assets/wordle-icon.png';
+import dinoDashPreviewImage from './assets/dino-dash-preview.png';
+import dinoDashIconImage from './assets/dino-dash-icon.png';
+import rainWallpaperImage from './assets/rain-wallpaper.png';
+import fireWallpaperImage from './assets/fire-wallpaper.png';
+import lofiRoomWallpaperImage from './assets/lofi-room-wallpaper.png';
+import lotusMatchPreviewImage from './assets/lotus-match-preview.png';
+import gamesSectionPreviewImage from './assets/games-section-preview.png';
+import diarySectionPreviewImage from './assets/diary-section-preview.png';
+import notesSectionPreviewImage from './assets/notes-section-preview.png';
+import musicSectionPreviewImage from './assets/music-section-preview.png';
+import memoriesSectionPreviewImage from './assets/memories-section-preview.png';
+import designSectionPreviewImage from './assets/design-section-preview.png';
+import gameSolitairePreview from './assets/game-solitaire-preview.png';
+import gameMindSweeperPreview from './assets/game-mind-sweeper-preview.png';
+import gameDriftingSeedPreview from './assets/game-drifting-seed-preview.png';
+import gameLilypadPreview from './assets/game-lilypad-preview.png';
+import gameJigsawPreview from './assets/game-jigsaw-preview.png';
+import gameLotusPreview from './assets/game-lotus-preview.png';
+import gameTilesPreview from './assets/game-tiles-preview.png';
+import gameTetrisPreview from './assets/game-tetris-preview.png';
+import gameSlidePreview from './assets/game-slide-preview.png';
+import gameSudokuPreview from './assets/game-sudoku-preview.png';
+import gameWordlePreview from './assets/game-wordle-preview.png';
+import gameWordsPreview from './assets/game-words-preview.png';
+import gameTypingPreview from './assets/game-typing-preview.png';
+import gameCluesPreview from './assets/game-clues-preview.png';
+import gameSnakePreview from './assets/game-snake-preview.png';
+import gameDinoPreview from './assets/game-dino-preview.png';
 import { onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
 import { collection, deleteDoc, doc, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore';
 import { getToken, onMessage } from 'firebase/messaging';
 import {
   Headphones,
-  Music,
   ArrowUp,
   BookOpen,
   CalendarDays,
+  Cloud,
+  CloudRain,
+  CloudSun,
   Compass,
   Feather,
   Eye,
   EyeOff,
   FileText,
+  Gamepad2,
+  Grid2x2,
+  Heart,
   HeartHandshake,
   ImagePlus,
+  Layers,
   Leaf,
   Lock,
   Mail,
+  Map,
+  Keyboard,
   Moon,
   Newspaper,
   Paintbrush,
   Palette,
   PenLine,
   Plus,
+  Puzzle,
   Quote,
   Scale,
   Shield,
@@ -31,12 +75,28 @@ import {
   Sparkles,
   Sunrise,
   Trash2,
+  Type,
   Waves,
-  Wind
+  Wind,
+  Zap,
+  Flame,
 } from 'lucide-react';
 import ZenGame from './ZenGame';
 import StreamSurfer from './StreamSurfer';
 import LotusMatch from './LotusMatch';
+import DinosaurDash from './DinosaurDash';
+import MindSweeper from './MindSweeper';
+import QuietTiles from './QuietTiles';
+import QuietTetris from './QuietTetris';
+import QuietSlide from './QuietSlide';
+import QuietWords from './QuietWords';
+import TypingSpeedTest from './TypingSpeedTest';
+import QuietClues from './QuietClues';
+import QuietWordle from './QuietWordle';
+import QuietSudoku from './QuietSudoku';
+import QuietSnake from './QuietSnake';
+import Solitaire from './Solitaire';
+import LofiJigsaw from './LofiJigsaw';
 import { auth, db, getMessagingIfSupported, googleProvider } from './firebase';
 
 const STORAGE_KEY = 'quiet-harbor-journal-v1';
@@ -122,29 +182,35 @@ const prompts = [
   'How are you really feeling in this moment?',
   'What do you need to hear from yourself today?',
   'What is one thing you can let go of?',
+  'Describe a cozy game moment that felt relaxing.',
+  'What games have helped you clear your mind lately?',
+  'If you were in a lofi world right now, what would it look like?',
   'What small win did you have today?',
   'How would you describe your mood to a friend?',
   'If anger is here, what is it trying to protect?'
 ];
 
-const writingInvitations = [
+const hangoutInvitations = [
   {
-    title: 'What stayed with me today',
-    mood: 'Calm',
-    opener: 'Today stayed with me because',
-    detail: 'Begin with the moment you keep replaying, even if it seems small.'
+    title: 'Listen and settle in',
+    eyebrow: 'Lofi music',
+    detail: 'Start the soft radio, relax, and let the page feel like a calm digital room.',
+    tab: 'home',
+    icon: Headphones
   },
   {
-    title: 'The honest version',
-    mood: 'Neutral',
-    opener: 'The honest version is',
-    detail: 'No polished story needed — just what happened, what it meant, or what it changed.'
+    title: 'Keep today together',
+    eyebrow: 'Notes',
+    detail: 'Drop reminders, errands, and small to-dos into one calm spot.',
+    tab: 'notes',
+    icon: FileText
   },
   {
-    title: 'Something I want to remember',
-    mood: 'Happy',
-    opener: 'I want to remember',
-    detail: 'Save a tiny scene, a sentence someone said, or one ordinary detail future you may love.'
+    title: 'Play relaxing games',
+    eyebrow: 'Chill games',
+    detail: 'Open a gentle game while the music plays when you want a small reset.',
+    tab: 'unwind',
+    icon: Leaf
   }
 ];
 
@@ -250,7 +316,11 @@ const tips = [
 ];
 
 const wellnessArticles = [
-  { title: 'How gentle memory games provide cognitive relief before writing', read: 'Article • 5 min read', body: 'Understand why playing a simple memory match game can help organize your thoughts and reduce brain fog before journaling.', href: '/article-memory-games-cognitive-relief.html' },
+  { title: 'Why daily word puzzles make relaxing breaks easier', read: 'Article • 4 min read', body: 'See why daily word puzzles feel so satisfying during short breaks and how a calm Wordle-style game can fit naturally into a relaxing online routine.', href: '/article-daily-word-puzzles-relax.html' },
+
+  { title: 'Why word guessing games feel good when your mind is busy', read: 'Article • 4 min read', body: 'Understand why guess-the-word games feel grounding when your mind is overloaded and how a calm Wordle-style round can become a simple reset.', href: '/article-word-guessing-games-busy-mind.html' },
+
+  { title: 'How gentle memory games provide cognitive relief before writing', read: 'Article • 4 min read', body: 'Understand why playing a simple memory match game can help organize your thoughts and reduce brain fog before journaling.', href: '/article-memory-games-cognitive-relief.html' },
 
   { title: 'Why mindless gaming helps relieve stress before journaling', read: 'Article • 4 min read', body: 'Discover how simple, repetitive browser games act as a palate cleanser for your brain, reducing anxiety before you start writing.', href: '/article-why-gaming-helps-anxiety.html' },
 
@@ -262,13 +332,13 @@ const wellnessArticles = [
   },
   {
     title: 'How to keep a digital journal without getting distracted',
-    read: 'Article • 5 min read',
+    read: 'Article • 4 min read',
     body: 'Practical tips for maintaining focus while journaling online, choosing the right tools, and creating a calm digital space.',
     href: '/article-digital-journal-distractions.html'
   },
   {
     title: 'The psychology behind writing your feelings down',
-    read: 'Article • 6 min read',
+    read: 'Article • 4 min read',
     body: 'Explore the psychological benefits of expressive writing and why putting emotions into words helps us heal.',
     href: '/article-psychology-of-journaling.html'
   },
@@ -281,25 +351,25 @@ const wellnessArticles = [
 
   {
     title: 'How to start a journaling habit for anxiety',
-    read: 'Article • 4 min read',
+    read: 'Article • 7 min read',
     body: 'Writing down your thoughts can be a powerful tool for managing anxiety. However, starting a journaling habit often feels overwhelming. This comprehensive guide will help you build a journaling routine that feels gentle, sustainable, and truly helpful for your mental health.',
     href: '/article-how-to-start-journaling-habit.html'
   },
   {
     title: 'The unexpected benefits of a private online diary',
-    read: 'Article • 4 min read',
+    read: 'Article • 6 min read',
     body: 'For centuries, people have kept written records of their lives. Today, transitioning that practice to a private online diary offers profound psychological benefits. From enhanced emotional regulation to unparalleled convenience, digital journaling is a modern tool for mindfulness.',
     href: '/article-benefits-of-private-online-diary.html'
   },
   {
     title: 'Why daily reflection is essential for mental health',
-    read: 'Article • 5 min read',
+    read: 'Article • 6 min read',
     body: 'We live in a culture that prioritizes forward momentum. In this relentless pace, taking time for daily reflection is not just a luxury; it is a fundamental requirement for maintaining long-term mental health and building deep self-awareness.',
     href: '/article-daily-reflection-mental-health.html'
   },
   {
     title: 'Journaling prompts for deep self-discovery',
-    read: 'Article • 4 min read',
+    read: 'Article • 5 min read',
     body: 'Staring at a blank page can be intimidating. When you want to journal but don\'t know where to start, these carefully curated journaling prompts act as a gentle guide, leading you toward profound self-discovery and emotional clarity without the pressure.',
     href: '/article-journaling-prompts-self-discovery.html'
   },
@@ -357,271 +427,56 @@ const wellnessArticles = [
 
 const seoLandingBlocks = [
   {
-    title: 'Private online diary',
-    text: 'Use Lofi Memory as a private online diary when you want a calm place to write daily thoughts, check in with yourself, and keep reflections personal.',
-    href: '/private-online-diary.html'
+    title: 'Read the Lofi Memory blog',
+    text: 'Start with a curated reading hub that explains the product more clearly and links to the strongest original articles first.',
+    href: '/blog.html'
   },
   {
-    title: 'Online diary',
-    text: 'Explore an online diary that feels gentle, private, and easy to return to when you want a softer daily writing habit.',
-    href: '/online-diary.html'
+    title: 'Editorial policy',
+    text: 'Review how Lofi Memory handles accuracy, originality, corrections, and the boundary between wellbeing language and medical claims.',
+    href: '/editorial-policy.html'
   },
   {
-    title: 'Diary app',
-    text: 'See how a diary app can stay calm, beginner-friendly, and private enough for quick check-ins or longer reflection.',
-    href: '/diary-app.html'
+    title: 'Privacy policy',
+    text: 'See how journal storage, browser data, sign-in, notifications, embeds, and advertising-related technologies are explained to visitors.',
+    href: '/privacy.html'
   },
   {
-    title: 'Best diary app',
-    text: 'Compare what makes the best diary app feel quieter, easier to keep, and more supportive of honest daily reflection.',
-    href: '/best-diary-app.html'
+    title: 'About Lofi Memory',
+    text: 'Learn what the product includes, why the experience is intentionally calm, and how journaling, music, and games fit together.',
+    href: '/about.html'
   },
   {
-    title: 'Where to write a diary online',
-    text: 'A practical guide for people comparing where to write a diary online, what to look for, and how to choose a softer digital diary space.',
-    href: '/where-to-write-a-diary-online.html'
+    title: 'Protect privacy when journaling online',
+    text: 'Read a practical article on trust signals, storage expectations, and how to choose a calmer place to write online.',
+    href: '/article-protect-privacy-journaling-online.html'
   },
   {
-    title: 'Online journal',
-    text: 'Explore a calmer online journal flow for daily writing, emotional clarity, and private reflection that feels lighter to return to.',
-    href: '/online-journal.html'
+    title: 'Why journaling helps',
+    text: 'Understand the psychology of journaling and why writing things down can make thoughts easier to process and revisit.',
+    href: '/article-psychology-of-journaling.html'
   },
   {
-    title: 'Journal app',
-    text: 'Find a journal app that feels calmer to use, easier to revisit, and more supportive of real daily reflection.',
-    href: '/journal-app.html'
+    title: 'How to start a journaling habit',
+    text: 'Use a simple article on building a realistic writing rhythm that feels gentle enough to keep during busy weeks.',
+    href: '/article-how-to-start-journaling-habit.html'
   },
   {
-    title: 'Digital diary',
-    text: 'See how a digital diary can feel lighter to keep, easier to revisit, and more natural to use for honest everyday reflection.',
-    href: '/digital-diary.html'
+    title: 'Games before writing',
+    text: 'See why a short memory or cozy puzzle break can help your attention settle before you start reflecting.',
+    href: '/article-memory-games-cognitive-relief.html'
   },
   {
-    title: 'Mood journal',
-    text: 'Track feelings over time with a mood journal flow that makes it easier to notice patterns, save gentle notes, and reflect without turning the process into pressure.',
-    href: '/mood-journal.html'
-  },
-  {
-    title: 'Online diary with lock',
-    text: 'If you want an online diary with lock protection, you can add a soft PIN for the browser while still keeping the journaling experience simple and welcoming.',
-    href: '/online-diary-with-lock.html'
-  },
-  {
-    title: 'How to write a diary',
-    text: 'Read a calmer beginner guide for how to write a diary when you want simple steps, softer prompts, and an easier way to start.',
-    href: '/how-to-write-a-diary.html'
-  },
-  {
-    title: 'Journal prompts',
-    text: 'Use prompt-based journaling when the blank page feels too open and you want softer ways to begin writing.',
-    href: '/journal-prompts.html'
-  },
-  {
-    title: 'Daily reflection journal',
-    text: 'Build a calmer evening journaling habit with short check-ins, gentle review questions, and quieter end-of-day notes.',
-    href: '/daily-reflection-journal.html'
-  },
-  {
-    title: 'Free online diary',
-    text: 'Explore a free online diary option that still feels calm, personal, and supportive enough for everyday writing.',
-    href: '/free-online-diary.html'
-  },
-  {
-    title: 'Daily journal app',
-    text: 'Find a daily journal app that helps you come back to one honest check-in, short note, or reflection at a time.',
-    href: '/daily-journal-app.html'
-  },
-  {
-    title: 'Gratitude journal',
-    text: 'Use gratitude journaling in a softer way, with room for small wins, ordinary moments, and grounded daily appreciation.',
-    href: '/gratitude-journal.html'
-  },
-  {
-    title: 'Private journal app',
-    text: 'Find a private journal app that feels personal, uncluttered, and easier to trust with honest everyday writing.',
-    href: '/private-journal-app.html'
-  },
-  {
-    title: 'Secure online journal',
-    text: 'Explore a secure online journal approach that keeps privacy cues clear while still feeling calm and welcoming to use.',
-    href: '/secure-online-journal.html'
-  },
-  {
-    title: 'Self care journal',
-    text: 'Use a self care journal for gentler check-ins, steadier reflection, and small daily ways to notice what helps.',
-    href: '/self-care-journal.html'
-  },
-  {
-    title: 'Personal diary online',
-    text: 'Keep a personal diary online when you want a softer place for private thoughts, everyday life notes, and honest reflection.',
-    href: '/personal-diary-online.html'
-  },
-  {
-    title: 'Online diary for adults',
-    text: 'Find an online diary for adults that feels calm, personal, and realistic enough for busy everyday life.',
-    href: '/online-diary-for-adults.html'
-  },
-  {
-    title: 'Daily check in journal',
-    text: 'Use a daily check in journal for short emotional check-ins, small reminders, and steadier self-awareness over time.',
-    href: '/daily-check-in-journal.html'
-  },
-  {
-    title: 'Morning journal prompts',
-    text: 'Start the day with morning journal prompts that feel soft, useful, and realistic before life gets noisy.',
-    href: '/morning-journal-prompts.html'
-  },
-  {
-    title: 'Evening journal prompts',
-    text: 'Use evening journal prompts to slow the day down, clear your head, and keep a calmer end-of-day habit.',
-    href: '/evening-journal-prompts.html'
-  },
-  {
-    title: 'Reflection prompts for adults',
-    text: 'Explore reflection prompts for adults that feel grounded, private, and helpful for real everyday life.',
-    href: '/reflection-prompts-for-adults.html'
-  },
-  {
-    title: 'Journaling routine',
-    text: 'Build a journaling routine that feels realistic, calm, and easy to repeat even during busy weeks.',
-    href: '/journaling-routine.html'
-  },
-  {
-    title: 'Daily writing habit',
-    text: 'Create a daily writing habit with small check-ins, flexible prompts, and a private place to return to.',
-    href: '/daily-writing-habit.html'
-  },
-  {
-    title: 'Habit tracker journal',
-    text: 'Use a habit tracker journal to connect practical routines with gentle reflection and personal notes.',
-    href: '/habit-tracker-journal.html'
-  },
-  {
-    title: 'Online journal with lock',
-    text: 'Choose an online journal with lock when you want private writing, calmer reflection, and clearer browser-based protection.',
-    href: '/online-journal-with-lock.html'
-  },
-  {
-    title: 'Daily journaling app',
-    text: 'Find a daily journaling app that makes quick check-ins, prompts, and repeatable writing habits easier to keep.',
-    href: '/daily-journaling-app.html'
-  },
-  {
-    title: 'Journal for overthinking',
-    text: 'Use a journal for overthinking to slow spirals down, name what feels loud, and return to calmer thoughts.',
-    href: '/journal-for-overthinking.html'
-  },
-  {
-    title: 'Self reflection journal',
-    text: 'Keep a self reflection journal for private questions, calmer self-awareness, and grounded end-of-day insight.',
-    href: '/self-reflection-journal.html'
-  },
-  {
-    title: 'Best online diary',
-    text: 'Compare what makes the best online diary feel private, easy to keep, and gentle enough for honest daily writing.',
-    href: '/best-online-diary.html'
-  },
-  {
-    title: 'Private diary app for adults',
-    text: 'Choose a private diary app for adults when you want calmer writing, privacy, and a more grown-up journaling rhythm.',
-    href: '/private-diary-app-for-adults.html'
-  },
-  {
-    title: 'Digital journal with prompts',
-    text: 'Use a digital journal with prompts when you want help starting, reflecting, and keeping a steadier writing habit.',
-    href: '/digital-journal-with-prompts.html'
-  },
-  {
-    title: 'Daily mental health journal',
-    text: 'Keep a daily mental health journal for mood check-ins, reflection, and softer emotional awareness through everyday writing.',
-    href: '/daily-mental-health-journal.html'
-  },
-  {
-    title: 'Online diary app',
-    text: 'Find an online diary app that makes private writing, quick check-ins, and calmer daily journaling easier to keep.',
-    href: '/online-diary-app.html'
-  },
-  {
-    title: 'Diary website',
-    text: 'Choose a diary website when you want a simple online place for personal writing, prompts, and gentle reflection.',
-    href: '/diary-website.html'
-  },
-  {
-    title: 'Personal diary app',
-    text: 'Use a personal diary app for private thoughts, mood tracking, and small honest daily writing moments.',
-    href: '/personal-diary-app.html'
-  },
-  {
-    title: 'Secure diary app',
-    text: 'Pick a secure diary app when you want calmer private journaling with clearer protection and personal boundaries.',
-    href: '/secure-diary-app.html'
-  },
-  {
-    title: 'Write diary online',
-    text: 'Write diary online when you want a simple private place to keep daily thoughts, small memories, and honest reflection in one browser-based space.',
-    href: '/write-diary-online.html'
-  },
-  {
-    title: 'Diary with password',
-    text: 'Choose a diary with password protection when you want private writing, a calmer sense of safety, and easier day-to-day journaling.',
-    href: '/diary-with-password.html'
-  },
-  {
-    title: 'My online diary',
-    text: 'Use my online diary style writing when you want a personal digital space that feels like your own corner of the day.',
-    href: '/my-online-diary.html'
-  },
-  {
-    title: 'Journal app for anxiety',
-    text: 'Find a journal app for anxiety that helps slow racing thoughts, name feelings gently, and keep private check-ins simple.',
-    href: '/journal-app-for-anxiety.html'
-  },
-  {
-    title: 'Online diary for students',
-    text: 'Explore an online diary for students that makes private writing, stress check-ins, and daily reflection feel simple and manageable.',
-    href: '/online-diary-for-students.html'
-  },
-  {
-    title: 'Private diary online free',
-    text: 'Choose a private diary online free option when you want personal writing space, calm design, and easy daily access without extra friction.',
-    href: '/private-diary-online-free.html'
-  },
-  {
-    title: 'Daily self care journal',
-    text: 'Use a daily self care journal to notice what you need, reflect gently, and keep supportive habits in a calmer writing space.',
-    href: '/daily-self-care-journal.html'
-  },
-  {
-    title: 'Online diary with password',
-    text: 'Pick an online diary with password protection when you want a private digital diary that feels both safe and easy to return to.',
-    href: '/online-diary-with-password.html'
-  },
-  {
-    title: 'Diary app for teens',
-    text: 'Explore a diary app for teens that offers a private place for feelings, school stress, identity, and daily reflection without extra pressure.',
-    href: '/diary-app-for-teens.html'
-  },
-  {
-    title: 'Free online journal with lock',
-    text: 'Choose a free online journal with lock support when you want privacy, simple writing, and a calmer digital journal you can return to easily.',
-    href: '/free-online-journal-with-lock.html'
-  },
-  {
-    title: 'Private journal for stress',
-    text: 'Use a private journal for stress to unload pressure, name what feels heavy, and keep personal reflection in a quiet writing space.',
-    href: '/private-journal-for-stress.html'
-  },
-  {
-    title: 'Daily reflection app',
-    text: 'Find a daily reflection app that helps you slow down, notice patterns, and keep honest check-ins simple enough to sustain.',
-    href: '/daily-reflection-app.html'
+    title: 'Brain dumping for sleep',
+    text: 'Read how a short end-of-day writing habit can lower mental clutter and make nighttime feel calmer.',
+    href: '/article-brain-dumping-sleep.html'
   }
 ];
 
 const seoFaqs = [
   {
     question: 'What is Lofi Memory?',
-    answer: 'Lofi Memory is an online diary, private online diary, diary app, and journal app for daily reflection, guided prompts, customizable journaling, and optional lock protection.'
+    answer: 'Lofi Memory is a calm online space for journaling, breathing, private reflection, and chill browser games when you want to relax for a while.'
   },
   {
     question: 'Can I use Lofi Memory as a private online diary?',
@@ -641,7 +496,7 @@ const seoFaqs = [
   },
   {
     question: 'Where can I write a diary online?',
-    answer: 'Lofi Memory gives you a calm place to write a diary online, save private entries, track moods, and return to your thoughts gently from any browser.'
+    answer: 'Lofi Memory gives you a calm browser space to write, unwind, track moods, and jump into a chill game before coming back to your thoughts.'
   },
   {
     question: 'How do I start writing a diary?',
@@ -657,7 +512,7 @@ const seoFaqs = [
   },
   {
     question: 'Does Lofi Memory also have guides for prompts and daily reflection?',
-    answer: 'Yes. There are dedicated reading pages for digital diary use, journal prompts, daily reflection, free online diary use, gratitude journaling, secure online journaling, self care journaling, personal diary online use, online diary for adults, daily check-in journaling, morning prompts, evening prompts, habit journaling, privacy-focused journaling, journaling through overthinking, self reflection, prompt-based journaling, adult diary use, and mental health check-ins.'
+    answer: 'Yes. The blog now points to the strongest articles first, including privacy-focused journaling, daily reflection, journaling habits, sleep-friendly brain dumping, and calmer game-break reads.'
   },
   {
     question: 'Can I use Lofi Memory for notes, reminders, and recurring tasks too?',
@@ -670,503 +525,61 @@ const seoFaqs = [
 ];
 
 const seoGuidePages = [
-  { label: 'Popular guide', title: 'Memory games for anxiety', text: 'Play calm memory games for anxiety to clear your mind before writing.', href: '/memory-games-for-anxiety.html' },
-  { label: 'Helpful read', title: 'Mindful gaming app', text: 'Play mindful games like Drifting Leaf and Lotus Match to relax your mind.', href: '/mindful-gaming-app.html' },
-
-  { label: 'Popular guide', title: 'Relaxing fidget games', text: 'Play relaxing fidget games online to clear your mind before writing.', href: '/relaxing-fidget-games.html' },
-  { label: 'Helpful read', title: 'Calming games for anxiety', text: 'Quiet your racing thoughts with simple, repetitive games designed to soothe your mind.', href: '/calming-games-for-anxiety.html' },
-
-  {
-    label: 'Popular guide',
-    title: 'Web based diary',
-    text: 'Access your personal writing from anywhere, requiring no downloads.',
-    href: '/web-based-diary.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Browser based journal',
-    text: 'A fast, beautiful journal for writing thoughts instantly without installing apps.',
-    href: '/browser-based-journal.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Cozy journal app',
-    text: 'A warm, comforting space designed to feel like a safe haven for your thoughts.',
-    href: '/cozy-journal-app.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Calm diary app',
-    text: 'A quiet, distraction-free environment to reflect and find peace.',
-    href: '/calm-diary-app.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Self discovery journal',
-    text: 'Explore your inner thoughts with online prompts and reflection guides.',
-    href: '/self-discovery-journal.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Morning pages app',
-    text: 'Start your day with clarity through stream-of-consciousness writing.',
-    href: '/morning-pages-app.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'CBT journal app',
-    text: 'Track moods and reframe thoughts to support your mental health journey.',
-    href: '/cbt-journal-app.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Therapy journal online',
-    text: 'Keep track of breakthroughs, session notes, and emotional patterns securely.',
-    href: '/therapy-journal-online.html'
-  },
-
-  {
-    label: 'Helpful read',
-    title: 'Aesthetic journal app',
-    text: 'For writers who appreciate a beautiful, calming space with elegant typography and minimalistic design.',
-    href: '/aesthetic-journal-app.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Mood tracker diary',
-    text: 'Combine your daily feelings and thoughts in a private online space to track emotions.',
-    href: '/mood-tracker-diary.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Gratitude journal online',
-    text: 'A positive journaling practice for quiet reflection, appreciation, and stress relief.',
-    href: '/gratitude-journal-online.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Minimalist diary app',
-    text: 'A clutter-free, minimalist diary app for those who want a focused, distraction-free environment.',
-    href: '/minimalist-diary-app.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Private diary for overthinkers',
-    text: 'Clear your mind safely in a secure diary that helps process anxiety and organize racing thoughts.',
-    href: '/private-diary-for-overthinkers.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Online diary for mental health',
-    text: 'A gentle, private, and secure space for daily therapeutic journaling.',
-    href: '/online-diary-for-mental-health.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Digital bullet journal',
-    text: 'A flexible way to organize thoughts, tasks, and daily reflections in a clean format.',
-    href: '/digital-bullet-journal.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Secure online journal',
-    text: 'Keep your personal writing completely private with encrypted login and a safe environment.',
-    href: '/secure-online-journal.html'
-  },
-
-  {
-    label: 'Popular guide',
-    title: 'Private online diary guide',
-    text: 'A calm starting page for people who want a private place to journal online.',
-    href: '/private-online-diary.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Online diary guide',
-    text: 'A direct page for people searching for an online diary that feels soft, personal, and easy to keep.',
-    href: '/online-diary.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Diary app guide',
-    text: 'A softer guide for people comparing diary apps and looking for a calmer writing experience.',
-    href: '/diary-app.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Best diary app guide',
-    text: 'A practical comparison page for people trying to decide what makes the best diary app worth returning to.',
-    href: '/best-diary-app.html'
-  },
-  {
-    label: 'Search guide',
-    title: 'Where to write a diary online',
-    text: 'A reader-friendly page for people choosing where to write a diary online without adding noise or pressure.',
-    href: '/where-to-write-a-diary-online.html'
-  },
-  {
-    label: 'Search guide',
-    title: 'Online journal guide',
-    text: 'A broader guide for people who want an online journal for gentle writing and reflection.',
-    href: '/online-journal.html'
-  },
-  {
-    label: 'Search guide',
-    title: 'Journal app guide',
-    text: 'A clearer guide for people searching for a journal app that supports reflection without pressure.',
-    href: '/journal-app.html'
-  },
-  {
-    label: 'Search guide',
-    title: 'Digital diary guide',
-    text: 'A gentle overview of what makes a digital diary easier to keep, revisit, and trust day after day.',
-    href: '/digital-diary.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Mood journal guide',
-    text: 'A focused page for people who want mood tracking and gentle reflection in one space.',
-    href: '/mood-journal.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Online diary with lock guide',
-    text: 'A privacy-focused page for people who want a journal with optional browser lock protection.',
-    href: '/online-diary-with-lock.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'How to write a diary',
-    text: 'A beginner-friendly guide for starting a diary with softer prompts, simple structure, and less pressure.',
-    href: '/how-to-write-a-diary.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Journal prompts',
-    text: 'A prompt collection for days when starting feels harder than writing.',
-    href: '/journal-prompts.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Daily reflection journal',
-    text: 'A softer evening reading page for daily reflection and end-of-day journaling.',
-    href: '/daily-reflection-journal.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Free online diary guide',
-    text: 'A calm guide for people who want a free online diary without losing privacy, softness, or daily writing ease.',
-    href: '/free-online-diary.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Daily journal app guide',
-    text: 'A steady guide for people searching for a daily journal app that supports short returns and consistent reflection.',
-    href: '/daily-journal-app.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Gratitude journal guide',
-    text: 'A gentle gratitude journaling page for noticing small wins, grounded moments, and everyday appreciation.',
-    href: '/gratitude-journal.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Private journal app guide',
-    text: 'A privacy-first page for people searching for a journal app that feels personal, calm, and easier to trust.',
-    href: '/private-journal-app.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Secure online journal guide',
-    text: 'A calmer guide for people comparing secure online journal options and wanting privacy without a cold experience.',
-    href: '/secure-online-journal.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Self care journal guide',
-    text: 'A softer self care journaling page for steady check-ins, gentle reflection, and realistic daily support.',
-    href: '/self-care-journal.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Personal diary online guide',
-    text: 'A calm page for people who want a personal diary online that feels private, gentle, and easy to return to.',
-    href: '/personal-diary-online.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Online diary for adults guide',
-    text: 'A more grown-up online diary page for adults who want a calmer writing space for real everyday life.',
-    href: '/online-diary-for-adults.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Daily check in journal guide',
-    text: 'A gentle daily check-in page for short reflections, emotional clarity, and steadier self-awareness.',
-    href: '/daily-check-in-journal.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Morning journal prompts',
-    text: 'A softer prompt page for starting the day with a little clarity, intention, and self-kindness.',
-    href: '/morning-journal-prompts.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Evening journal prompts',
-    text: 'A calmer end-of-day prompt page for reflection, release, and small notes before rest.',
-    href: '/evening-journal-prompts.html'
-  },
-  {
-    label: 'Helpful read',
-    title: 'Reflection prompts for adults',
-    text: 'A grounded prompt page for adults who want private reflection that fits real life.',
-    href: '/reflection-prompts-for-adults.html'
-  },
-  {
-    label: 'Habit guide',
-    title: 'Journaling routine',
-    text: 'A calm routine-building page for people who want journaling to feel repeatable instead of demanding.',
-    href: '/journaling-routine.html'
-  },
-  {
-    label: 'Habit guide',
-    title: 'Daily writing habit',
-    text: 'A small-step guide for building a daily writing habit with lower pressure and more consistency.',
-    href: '/daily-writing-habit.html'
-  },
-  {
-    label: 'Habit guide',
-    title: 'Habit tracker journal',
-    text: 'A practical guide to combining habit tracking, private notes, and reflective journaling in one calm place.',
-    href: '/habit-tracker-journal.html'
-  },
-  {
-    label: 'Privacy guide',
-    title: 'Online journal with lock',
-    text: 'A reassuring guide for people who want an online journal with lock-style privacy and calmer digital writing.',
-    href: '/online-journal-with-lock.html'
-  },
-  {
-    label: 'Habit guide',
-    title: 'Daily journaling app',
-    text: 'A softer guide for people comparing daily journaling apps and looking for an easier repeatable writing rhythm.',
-    href: '/daily-journaling-app.html'
-  },
-  {
-    label: 'Mindset guide',
-    title: 'Journal for overthinking',
-    text: 'A supportive guide for people who want to journal through spirals, racing thoughts, and mental clutter.',
-    href: '/journal-for-overthinking.html'
-  },
-  {
-    label: 'Reflection guide',
-    title: 'Self reflection journal',
-    text: 'A grounded guide for keeping a self reflection journal with prompts, calmer check-ins, and end-of-day perspective.',
-    href: '/self-reflection-journal.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Best online diary',
-    text: 'A calmer comparison page for people looking for the best online diary for privacy, ease, and repeatable daily use.',
-    href: '/best-online-diary.html'
-  },
-  {
-    label: 'Adults guide',
-    title: 'Private diary app for adults',
-    text: 'A grown-up diary guide for adults who want privacy, calmer design, and a softer place to keep personal writing.',
-    href: '/private-diary-app-for-adults.html'
-  },
-  {
-    label: 'Prompt guide',
-    title: 'Digital journal with prompts',
-    text: 'A helpful guide for people who want a digital journal with prompts that make blank pages feel less intimidating.',
-    href: '/digital-journal-with-prompts.html'
-  },
-  {
-    label: 'Wellbeing guide',
-    title: 'Daily mental health journal',
-    text: 'A gentle daily journaling guide for mood awareness, emotional check-ins, and steadier mental wellbeing support.',
-    href: '/daily-mental-health-journal.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Online diary app',
-    text: 'A direct guide for people searching for an online diary app that feels private, calm, and easy to keep using.',
-    href: '/online-diary-app.html'
-  },
-  {
-    label: 'Popular guide',
-    title: 'Diary website',
-    text: 'A straightforward guide for choosing a diary website with personal writing space, prompts, and a gentler layout.',
-    href: '/diary-website.html'
-  },
-  {
-    label: 'Personal guide',
-    title: 'Personal diary app',
-    text: 'A softer guide for people who want a personal diary app for private notes, moods, and reflective daily writing.',
-    href: '/personal-diary-app.html'
-  },
-  {
-    label: 'Privacy guide',
-    title: 'Secure diary app',
-    text: 'A practical privacy guide for people comparing secure diary apps and calmer ways to protect personal writing.',
-    href: '/secure-diary-app.html'
-  },
-  {
-    label: 'Search guide',
-    title: 'Write diary online',
-    text: 'A direct guide for people searching where and how to write diary online without losing privacy or calm.',
-    href: '/write-diary-online.html'
-  },
-  {
-    label: 'Privacy guide',
-    title: 'Diary with password',
-    text: 'A reassuring guide for people who want a diary with password protection and a softer private writing flow.',
-    href: '/diary-with-password.html'
-  },
-  {
-    label: 'Personal guide',
-    title: 'My online diary',
-    text: 'A personal writing guide for people looking for an online diary that feels like their own quiet everyday space.',
-    href: '/my-online-diary.html'
-  },
-  {
-    label: 'Wellbeing guide',
-    title: 'Journal app for anxiety',
-    text: 'A supportive guide for people comparing journal apps for anxiety, calmer reflection, and steady private check-ins.',
-    href: '/journal-app-for-anxiety.html'
-  },
-  {
-    label: 'Student guide',
-    title: 'Online diary for students',
-    text: 'A practical guide for students who want a quiet online diary for stress, study life, and private daily reflection.',
-    href: '/online-diary-for-students.html'
-  },
-  {
-    label: 'Free guide',
-    title: 'Private diary online free',
-    text: 'A simple guide for people looking for a private diary online free option that still feels calm and personal.',
-    href: '/private-diary-online-free.html'
-  },
-  {
-    label: 'Wellbeing guide',
-    title: 'Daily self care journal',
-    text: 'A gentle guide for building a daily self care journal around feelings, needs, small rituals, and easier reflection.',
-    href: '/daily-self-care-journal.html'
-  },
-  {
-    label: 'Privacy guide',
-    title: 'Online diary with password',
-    text: 'A privacy guide for people comparing online diary options with password protection and calmer personal writing space.',
-    href: '/online-diary-with-password.html'
-  },
-  {
-    label: 'Teen guide',
-    title: 'Diary app for teens',
-    text: 'A supportive guide for teens who want a private diary app for stress, feelings, and everyday life without making writing feel formal.',
-    href: '/diary-app-for-teens.html'
-  },
-  {
-    label: 'Free guide',
-    title: 'Free online journal with lock',
-    text: 'A practical guide for people looking for a free online journal with lock support and a calmer private writing flow.',
-    href: '/free-online-journal-with-lock.html'
-  },
-  {
-    label: 'Stress guide',
-    title: 'Private journal for stress',
-    text: 'A gentle guide for using a private journal to process stress, reduce mental clutter, and reflect without being watched.',
-    href: '/private-journal-for-stress.html'
-  },
-  {
-    label: 'Reflection guide',
-    title: 'Daily reflection app',
-    text: 'A clear guide for people comparing daily reflection apps that help turn small check-ins into a meaningful habit.',
-    href: '/daily-reflection-app.html'
-  }
+  { label: 'Featured hub', title: 'Lofi Memory blog', text: 'Browse the strongest original articles, trust pages, and calmer reading paths in one curated place.', href: '/blog.html' },
+  { label: 'Trust page', title: 'About Lofi Memory', text: 'Understand what the product includes, how it fits together, and why the design stays intentionally calm.', href: '/about.html' },
+  { label: 'Trust page', title: 'Editorial policy', text: 'See how originality, accuracy, corrections, and wellbeing boundaries are handled across the site.', href: '/editorial-policy.html' },
+  { label: 'Trust page', title: 'Privacy policy', text: 'Review how storage, sign-in, notifications, embedded media, and advertising-related technologies are described.', href: '/privacy.html' },
+  { label: 'Trust page', title: 'Advertising policy', text: 'See how ads, Google AdSense, placement quality, editorial independence, and calm user experience are handled.', href: '/advertising-policy.html' },
+  { label: 'Trust page', title: 'Diary and corrections', text: 'Find the direct support route for privacy requests, content corrections, bug reports, and ad questions.', href: '/contact.html' },
+  { label: 'Helpful read', title: 'How to protect your privacy when journaling online', text: 'A practical read on trust, storage expectations, and what to look for before you write online.', href: '/article-protect-privacy-journaling-online.html' },
+  { label: 'Helpful read', title: 'The psychology of journaling', text: 'Understand why writing can reduce mental noise and make thoughts easier to process.', href: '/article-psychology-of-journaling.html' },
+  { label: 'Helpful read', title: 'How to start a journaling habit', text: 'Learn how to build a writing routine that feels realistic enough to keep through busy weeks.', href: '/article-how-to-start-journaling-habit.html' },
+  { label: 'Helpful read', title: 'Benefits of a private online diary', text: 'See when a browser-based diary can feel more flexible, organized, and sustainable than scattered notes.', href: '/article-benefits-of-private-online-diary.html' },
+  { label: 'Helpful read', title: 'Daily reflection and mental health', text: 'Read why short, honest check-ins are often easier to sustain than heavier self-improvement systems.', href: '/article-daily-reflection-mental-health.html' },
+  { label: 'Helpful read', title: 'Brain dumping before sleep', text: 'See how a short writing habit can reduce bedtime mental clutter and support calmer evenings.', href: '/article-brain-dumping-sleep.html' },
+  { label: 'Helpful read', title: 'How a digital journal can reduce distractions', text: 'Explore why the right online setup can feel simpler, not noisier, when your goal is focus.', href: '/article-digital-journal-distractions.html' },
+  { label: 'Helpful read', title: 'Journaling prompts for self-discovery', text: 'Use gentler prompts that help you begin without turning the page into a performance.', href: '/article-journaling-prompts-self-discovery.html' },
+  { label: 'Helpful read', title: 'Memory games before writing', text: 'Read why a short puzzle break can help your attention settle before reflection.', href: '/article-memory-games-cognitive-relief.html' },
+  { label: 'Helpful read', title: 'Why gaming helps anxiety for some people', text: 'Understand what repetitive, low-stakes play can offer as a small buffer between stress and the next task.', href: '/article-why-gaming-helps-anxiety.html' },
+  { label: 'Helpful read', title: 'Daily word puzzles for relaxing breaks', text: 'See why familiar word loops can feel grounding when you want a tidy reset.', href: '/article-daily-word-puzzles-relax.html' },
+  { label: 'Helpful read', title: 'Word guessing games when your mind is busy', text: 'Learn how small pattern-recognition wins can provide relief without demanding too much energy.', href: '/article-word-guessing-games-busy-mind.html' },
+  { label: 'Helpful read', title: 'Benefits of lofi gaming for focus', text: 'Explore how music, visual softness, and low-pressure play can work together as a gentler online break.', href: '/article-benefits-lofi-gaming-mental-health.html' }
 ];
 
 const seoGuideGroups = [
   {
-    title: 'Start a private diary',
-    description: 'Best for visitors comparing private diary, online diary, and secure journal options.',
-    links: seoGuidePages.filter((page) => ['Private online diary guide', 'Online diary guide', 'Best online diary', 'Online diary app', 'Diary website', 'Write diary online', 'My online diary', 'Online diary for students', 'Online diary with lock guide', 'Online diary with password', 'Free online journal with lock', 'Online journal with lock', 'Private journal app guide', 'Private diary app for adults', 'Private diary online free', 'Personal diary app', 'Secure diary app', 'Diary with password', 'Secure online journal guide', 'Personal diary online guide', 'Online diary for adults guide', 'Diary app for teens', 'Secure online journal', 'Cozy journal app', 'Therapy journal online'].includes(page.title))
+    title: 'Start with trust and product clarity',
+    description: 'Best for visitors who want to understand what Lofi Memory is, how content is reviewed, and how privacy or support questions are handled.',
+    links: seoGuidePages.filter((page) => ['Lofi Memory blog', 'About Lofi Memory', 'Editorial policy', 'Privacy policy', 'Diary and corrections'].includes(page.title))
   },
   {
-    title: 'Build a writing habit',
-    description: 'Best for people who want a repeatable routine, daily check-ins, and a softer habit tracker.',
-    links: seoGuidePages.filter((page) => ['Daily journal app guide', 'Daily check in journal guide', 'Daily journaling app', 'Journaling routine', 'Daily writing habit', 'Habit tracker journal', 'Daily mental health journal', 'Online diary for mental health', 'Digital bullet journal', 'Morning pages app', 'CBT journal app'].includes(page.title))
+    title: 'Read the strongest journaling articles',
+    description: 'Best for people exploring private writing, calmer routines, sleep-friendly reflection, and digital focus habits.',
+    links: seoGuidePages.filter((page) => ['How to protect your privacy when journaling online', 'The psychology of journaling', 'How to start a journaling habit', 'Benefits of a private online diary', 'Daily reflection and mental health', 'Brain dumping before sleep', 'How a digital journal can reduce distractions', 'Journaling prompts for self-discovery'].includes(page.title))
   },
   {
-    title: 'Find prompts and reflection ideas',
-    description: 'Best for visitors who need help starting, reflecting, or writing without pressure.',
-    links: seoGuidePages.filter((page) => ['How to write a diary', 'Journal prompts', 'Digital journal with prompts', 'Daily reflection journal', 'Self reflection journal', 'Morning journal prompts', 'Evening journal prompts', 'Reflection prompts for adults', 'Gratitude journal guide', 'Self care journal guide', 'Daily self care journal', 'Journal app for anxiety', 'Private journal for stress', 'Daily reflection app', 'Gratitude journal online', 'Private diary for overthinkers', 'Calm diary app', 'Self discovery journal'].includes(page.title))
-  },
-  {
-    title: 'Compare diary and journal tools',
-    description: 'Best for searchers evaluating apps, online journals, digital diaries, mood journals, and calmer writing support.',
-    links: seoGuidePages.filter((page) => ['Diary app guide', 'Best diary app guide', 'Best online diary', 'Online diary app', 'Diary website', 'Write diary online', 'Diary with password', 'Online diary for students', 'Private diary online free', 'My online diary', 'Online diary with password', 'Diary app for teens', 'Free online journal with lock', 'Where to write a diary online', 'Online journal guide', 'Journal app guide', 'Journal app for anxiety', 'Private journal for stress', 'Daily reflection app', 'Journal for overthinking', 'Digital diary guide', 'Mood journal guide', 'Free online diary guide', 'Aesthetic journal app', 'Mood tracker diary', 'Minimalist diary app', 'Web based diary', 'Browser based journal'].includes(page.title))
+    title: 'Explore calmer game-break reads',
+    description: 'Best for visitors who like the music-and-games side of Lofi Memory but still want article-level value before they click around.',
+    links: seoGuidePages.filter((page) => ['Memory games before writing', 'Why gaming helps anxiety for some people', 'Daily word puzzles for relaxing breaks', 'Word guessing games when your mind is busy', 'Benefits of lofi gaming for focus'].includes(page.title))
   }
 ];
 
 const seoPopularSearches = [
-  { label: 'Memory games for anxiety', href: '/memory-games-for-anxiety.html' },
-  { label: 'Mindful gaming app', href: '/mindful-gaming-app.html' },
-
-  { label: 'Relaxing fidget games', href: '/relaxing-fidget-games.html' },
-  { label: 'Calming games for anxiety', href: '/calming-games-for-anxiety.html' },
-
-  { label: 'Web based diary', href: '/web-based-diary.html' },
-  { label: 'Browser based journal', href: '/browser-based-journal.html' },
-  { label: 'Cozy journal app', href: '/cozy-journal-app.html' },
-  { label: 'Calm diary app', href: '/calm-diary-app.html' },
-  { label: 'Self discovery journal', href: '/self-discovery-journal.html' },
-  { label: 'Morning pages app', href: '/morning-pages-app.html' },
-  { label: 'CBT journal app', href: '/cbt-journal-app.html' },
-  { label: 'Therapy journal online', href: '/therapy-journal-online.html' },
-
-  { label: 'Aesthetic journal app', href: '/aesthetic-journal-app.html' },
-  { label: 'Mood tracker diary', href: '/mood-tracker-diary.html' },
-  { label: 'Gratitude journal online', href: '/gratitude-journal-online.html' },
-  { label: 'Minimalist diary app', href: '/minimalist-diary-app.html' },
-  { label: 'Private diary for overthinkers', href: '/private-diary-for-overthinkers.html' },
-  { label: 'Online diary for mental health', href: '/online-diary-for-mental-health.html' },
-  { label: 'Digital bullet journal', href: '/digital-bullet-journal.html' },
-  { label: 'Secure online journal', href: '/secure-online-journal.html' },
-
-  { label: 'Private online diary', href: '/private-online-diary.html' },
-  { label: 'Best online diary', href: '/best-online-diary.html' },
-  { label: 'Online diary app', href: '/online-diary-app.html' },
-  { label: 'Diary website', href: '/diary-website.html' },
-  { label: 'Private diary app for adults', href: '/private-diary-app-for-adults.html' },
-  { label: 'Personal diary app', href: '/personal-diary-app.html' },
-  { label: 'Secure diary app', href: '/secure-diary-app.html' },
-  { label: 'Write diary online', href: '/write-diary-online.html' },
-  { label: 'Diary with password', href: '/diary-with-password.html' },
-  { label: 'My online diary', href: '/my-online-diary.html' },
-  { label: 'Journal app for anxiety', href: '/journal-app-for-anxiety.html' },
-  { label: 'Online diary for students', href: '/online-diary-for-students.html' },
-  { label: 'Private diary online free', href: '/private-diary-online-free.html' },
-  { label: 'Daily self care journal', href: '/daily-self-care-journal.html' },
-  { label: 'Online diary with password', href: '/online-diary-with-password.html' },
-  { label: 'Diary app for teens', href: '/diary-app-for-teens.html' },
-  { label: 'Free online journal with lock', href: '/free-online-journal-with-lock.html' },
-  { label: 'Private journal for stress', href: '/private-journal-for-stress.html' },
-  { label: 'Daily reflection app', href: '/daily-reflection-app.html' },
-  { label: 'Journal app for adults', href: '/journal-app-for-adults.html' },
-  { label: 'Private online notebook', href: '/private-online-notebook.html' },
-  { label: 'Mental wellness journal app', href: '/mental-wellness-journal-app.html' },
-  { label: 'Simple online diary', href: '/simple-online-diary.html' },
-  { label: 'Journal prompts', href: '/journal-prompts.html' },
-  { label: 'Digital journal with prompts', href: '/digital-journal-with-prompts.html' },
-  { label: 'Daily reflection journal', href: '/daily-reflection-journal.html' },
-  { label: 'Daily mental health journal', href: '/daily-mental-health-journal.html' },
-  { label: 'Online journal with lock', href: '/online-journal-with-lock.html' },
-  { label: 'Daily journaling app', href: '/daily-journaling-app.html' },
-  { label: 'Journal for overthinking', href: '/journal-for-overthinking.html' },
-  { label: 'Self reflection journal', href: '/self-reflection-journal.html' }
+  { label: 'Lofi Memory blog', href: '/blog.html' },
+  { label: 'About Lofi Memory', href: '/about.html' },
+  { label: 'Editorial policy', href: '/editorial-policy.html' },
+  { label: 'Privacy policy', href: '/privacy.html' },
+  { label: 'How journaling helps', href: '/article-psychology-of-journaling.html' },
+  { label: 'Protect privacy when journaling online', href: '/article-protect-privacy-journaling-online.html' },
+  { label: 'How to start a journaling habit', href: '/article-how-to-start-journaling-habit.html' },
+  { label: 'Benefits of a private online diary', href: '/article-benefits-of-private-online-diary.html' },
+  { label: 'Daily reflection and mental health', href: '/article-daily-reflection-mental-health.html' },
+  { label: 'Brain dumping before sleep', href: '/article-brain-dumping-sleep.html' },
+  { label: 'Memory games before writing', href: '/article-memory-games-cognitive-relief.html' },
+  { label: 'Why gaming helps anxiety', href: '/article-why-gaming-helps-anxiety.html' },
+  { label: 'Word puzzles for relaxing breaks', href: '/article-daily-word-puzzles-relax.html' },
+  { label: 'Word guessing games and busy minds', href: '/article-word-guessing-games-busy-mind.html' },
+  { label: 'Benefits of lofi gaming for focus', href: '/article-benefits-lofi-gaming-mental-health.html' }
 ];
 
 const THEME_STORAGE_KEY = 'quiet-journal-theme-v1';
@@ -1174,6 +587,7 @@ const DESIGN_STORAGE_KEY = 'quiet-journal-design-v1';
 const CUSTOM_COLOR_STORAGE_KEY = 'quiet-journal-custom-color-v1';
 const QUOTE_BG_STORAGE_KEY = 'quiet-journal-quote-bg-v1';
 const COMFORT_MODE_STORAGE_KEY = 'quiet-journal-comfort-mode-v1';
+const WALLPAPER_STORAGE_KEY = 'quiet-journal-wallpaper-v1';
 
 const colorThemes = [
   { id: 'sage', name: 'Sage Calm', accent: '#587f49', soft: '#edf4e8', glow: '#bfd8b0' },
@@ -1245,6 +659,54 @@ const journalAtmospherePresets = [
   }
 ];
 
+const breatheRoomOptions = [
+  {
+    id: 'rain',
+    title: 'Rain Window',
+    sound: 'Rain ambience',
+    description: 'A blue-green wallpaper with soft rain for slower breathing and calm focus.',
+    icon: CloudRain,
+    status: 'Rain wallpaper selected — soft rain ambience is ready.',
+    gradient: 'from-sky-100 via-cyan-50 to-sage-50',
+    textTone: 'text-sky-800',
+    ringTone: 'ring-sky-200',
+    volume: 28,
+    decoration: '☔',
+    videoId: 'mPZkdNFkNps',
+    wallpaper: rainWallpaperImage
+  },
+  {
+    id: 'fire',
+    title: 'Fireplace Nook',
+    sound: 'Wood burning',
+    description: 'A warm hearth wallpaper with gentle crackle for a cozy writing reset.',
+    icon: Flame,
+    status: 'Fireplace wallpaper selected — wood-burning ambience is ready.',
+    gradient: 'from-orange-100 via-amber-50 to-rose-50',
+    textTone: 'text-orange-800',
+    ringTone: 'ring-orange-200',
+    volume: 30,
+    decoration: '🪵',
+    videoId: 'UgHKb_7884o',
+    wallpaper: fireWallpaperImage
+  },
+  {
+    id: 'lofi',
+    title: 'Lofi Desk',
+    sound: 'Lofi music',
+    description: 'A soft study-room wallpaper that turns the cozy lofi radio back on.',
+    icon: Headphones,
+    status: 'Lofi wallpaper selected — cozy radio is ready.',
+    gradient: 'from-rose-100 via-violet-50 to-sage-50',
+    textTone: 'text-rose-800',
+    ringTone: 'ring-rose-200',
+    volume: 35,
+    decoration: '🎧',
+    videoId: 'rFZHOHl-L8A',
+    wallpaper: lofiRoomWallpaperImage
+  }
+];
+
 const todayISO = () => new Date().toISOString().slice(0, 10);
 
 function getInitialSelectedCalendarDate() {
@@ -1255,9 +717,11 @@ function getInitialSelectedCalendarDate() {
 
 function getInitialActiveTab() {
   if (typeof window === 'undefined') return 'home';
+  const hash = window.location.hash.replace('#', '');
+  if (hash === 'diary') return 'write';
   const params = new URLSearchParams(window.location.search);
   const requestedTab = params.get('tab') || '';
-  const allowedTabs = new Set(['home', 'write', 'notes', 'memories', 'insights', 'design']);
+  const allowedTabs = new Set(['home', 'write', 'notes', 'memories', 'breathe', 'insights', 'design']);
   if (allowedTabs.has(requestedTab)) return requestedTab;
   if (/^\d{4}-\d{2}-\d{2}$/.test(params.get('date') || '')) return 'memories';
   return 'home';
@@ -1266,7 +730,8 @@ function getInitialActiveTab() {
 function getInitialHomeSection() {
   if (typeof window === 'undefined') return 'overview';
   const hash = window.location.hash.replace('#', '');
-  const allowedSections = new Set(['home', 'overview', 'about', 'guides', 'seo-landing', 'resources', 'articles', 'faq', 'contact']);
+  const allowedSections = new Set(['home', 'overview', 'about', 'guides', 'seo-landing', 'resources', 'articles', 'faq', 'contact', 'privacy', 'terms']);
+  if (hash === 'diary') return 'overview';
   if (!allowedSections.has(hash)) return 'overview';
   if (hash === 'home') return 'overview';
   if (hash === 'seo-landing') return 'guides';
@@ -1301,6 +766,472 @@ function buildCalendarDays(monthKey) {
   ];
 }
 
+function SeedIcon({ size = 18, className = '' }) {
+  return (
+    <svg aria-hidden="true" className={className} width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <path d="M12 3.4c4.6 0 7.6 3.1 7.6 7.3 0 5-4 9.9-7.6 9.9s-7.6-4.9-7.6-9.9c0-4.2 3-7.3 7.6-7.3Z" fill="currentColor" opacity="0.92" />
+      <path d="M12 5.2c1.7 3.2 1.9 7.7 0 13" stroke="#f5fbef" strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M12 10.2c1.8-.4 3.3-1.2 4.4-2.4" stroke="#f5fbef" strokeWidth="1.1" strokeLinecap="round" opacity="0.85" />
+    </svg>
+  );
+}
+
+function FrogIcon({ size = 18 }) {
+  return <span aria-hidden="true" style={{ fontSize: `${size + 6}px`, lineHeight: 1 }}>🐸</span>;
+}
+
+function TetrisIcon({ size = 18, className = '' }) {
+  const block = 'h-[0.32em] w-[0.32em] rounded-[0.08em] bg-current shadow-[inset_0_0_0_1px_rgba(255,255,255,0.45)]';
+  return (
+    <span aria-hidden="true" className={`grid grid-cols-3 gap-[0.07em] ${className}`} style={{ fontSize: `${size * 1.45}px`, lineHeight: 1 }}>
+      <span className={block} /><span className={block} /><span className={block} />
+      <span className="h-[0.32em] w-[0.32em]" /><span className={block} /><span className="h-[0.32em] w-[0.32em]" />
+      <span className="h-[0.32em] w-[0.32em]" /><span className={block} /><span className={block} />
+    </span>
+  );
+}
+
+function SnakeIcon({ size = 18 }) {
+  return (
+    <span aria-hidden="true" className="inline-flex items-center justify-center" style={{ width: size + 8, height: size + 8 }}>
+      <span className="grid grid-cols-3 gap-[2px] rotate-12">
+        {[0, 1, 2, 3, 4].map((segment) => (
+          <span key={segment} className={`h-[6px] w-[6px] rounded-[2px] bg-current ${segment === 0 ? 'col-start-2' : ''}`} />
+        ))}
+      </span>
+    </span>
+  );
+}
+
+function ImageGameIcon({ src, alt, size = 18, className = '' }) {
+  return (
+    <span aria-hidden="true" className={`inline-flex items-center justify-center overflow-hidden rounded-xl ${className}`} style={{ width: size + 14, height: size + 14 }}>
+      <img alt={alt} className="h-full w-full object-cover" src={src} />
+    </span>
+  );
+}
+
+function MinesweeperImageIcon(props) {
+  return <ImageGameIcon {...props} alt="Minesweeper icon" src={minesweeperIconImage} />;
+}
+
+function SolitaireImageIcon(props) {
+  return <ImageGameIcon {...props} alt="Solitaire icon" src={solitaireIconImage} />;
+}
+
+function SudokuImageIcon(props) {
+  return <ImageGameIcon {...props} alt="Sudoku icon" src={sudokuIconImage} />;
+}
+
+function WordleImageIcon(props) {
+  return <ImageGameIcon {...props} alt="Wordle icon" src={wordleIconImage} />;
+}
+
+function DinoDashImageIcon(props) {
+  return <ImageGameIcon {...props} alt="Dino Dash icon" src={dinoDashIconImage} />;
+}
+
+function DinosaurIcon({ size = 18 }) {
+  return (
+    <span aria-hidden="true" className="relative inline-block" style={{ width: size + 10, height: size + 6 }}>
+      <span className="absolute left-[0.42em] top-[0.16em] h-[0.62em] w-[0.72em] rounded-[0.12em] bg-current" />
+      <span className="absolute left-[0.9em] top-[0.02em] h-[0.18em] w-[0.18em] rounded-full bg-white" />
+      <span className="absolute left-[0.08em] top-[0.7em] h-[0.52em] w-[1.05em] rounded-[0.18em] bg-current" />
+      <span className="absolute left-0 top-[0.82em] h-[0.18em] w-[0.5em] -rotate-12 rounded-full bg-current" />
+      <span className="absolute left-[0.42em] top-[1.15em] h-[0.46em] w-[0.16em] rounded-full bg-current" />
+      <span className="absolute left-[0.78em] top-[1.15em] h-[0.38em] w-[0.16em] rounded-full bg-current" />
+    </span>
+  );
+}
+
+function GameSplash({ game, isClosing = false }) {
+  const Icon = game?.icon || Gamepad2;
+  return (
+    <div className={`fixed inset-0 z-[100] flex items-center justify-center bg-[#fffaf2] transition-all duration-[800ms] ease-in-out ${isClosing ? 'scale-110 opacity-0 pointer-events-none' : 'scale-100 opacity-100'}`}>
+      {game?.preview && (
+        <img src={game.preview} alt="" className="absolute inset-0 h-full w-full object-cover opacity-[0.08] blur-[2px]" aria-hidden="true" />
+      )}
+      <div className="absolute inset-0 opacity-[0.03] grayscale pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/pinstriped-suit.png")' }}></div>
+      <div className="relative text-center">
+        <div className={`mx-auto mb-10 flex h-36 w-44 items-center justify-center rounded-[3rem] bg-gradient-to-br shadow-soft overflow-hidden relative ${game?.tone || 'from-sage-100 to-white'}`}>
+          {game?.preview ? (
+            <img src={game.preview} alt={`${game.title} preview`} className="absolute inset-0 h-full w-full object-cover transition duration-700" />
+          ) : (
+            <Icon size={56} className="animate-pulse" />
+          )}
+        </div>
+        <p className="text-[11px] font-extrabold uppercase tracking-[0.45em] text-sage-500">Launching your space</p>
+        <h2 className="mt-4 font-display text-6xl font-bold tracking-tight text-sage-950">{game?.title}</h2>
+        <div className="mt-12 flex flex-col items-center gap-4">
+          <div className="h-1 w-48 overflow-hidden rounded-full bg-sage-100">
+            <div className="h-full bg-sage-600 transition-all duration-[1200ms] ease-out w-full" style={{ animation: 'gameSplashProgress 1.4s ease-in-out infinite' }} />
+          </div>
+          <p className="text-xs font-semibold italic text-sage-400">Arriving softly...</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function GamePreview({ gameId }) {
+  const shellClass = 'mt-4 overflow-hidden rounded-[1.35rem] border border-[#e8dfd5] bg-sage-50/80 p-3 shadow-inner';
+
+  if (gameId === 'drifting-leaf') {
+    return (
+      <div className={shellClass}>
+        <div className="flex h-20 items-center justify-center rounded-[1rem] bg-gradient-to-br from-emerald-100 via-lime-50 to-white overflow-hidden relative">
+          <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #3a5a48 1px, transparent 0)', backgroundSize: '12px 12px' }}></div>
+          <div className="flex items-center gap-5 text-2xl text-emerald-700 relative animate-bounce" style={{ animationDuration: '3.5s' }}>
+            <span>🍃</span><span className="opacity-40 text-sm">•</span><span>🌰</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'stream-surfer') {
+    return (
+      <div className={shellClass}>
+        <div className="grid h-20 gap-2 rounded-[1rem] bg-gradient-to-b from-sky-100 to-cyan-50 p-2 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1 bg-white/40 animate-pulse"></div>
+          {[0, 1, 2].map((lane) => (
+            <div key={lane} className="relative rounded-full bg-white/40 border border-white/20 h-4">
+              {lane === 1 && <span className="absolute left-4 top-1/2 -translate-y-1/2 text-lg">🐸</span>}
+              {lane !== 1 && <span className={`absolute ${lane === 0 ? 'right-6' : 'left-8'} top-1/2 -translate-y-1/2 text-sm opacity-60`}>🪷</span>}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'lofi-jigsaw') {
+    return (
+      <div className={shellClass}>
+        <div className="grid h-20 grid-cols-4 gap-1 rounded-[1rem] bg-sage-100 p-2 overflow-hidden relative">
+          {[0, 1, 2, 3, 4, '', 5, 6, 7, 8, 9, 10].map((tile, i) => {
+            const row = tile === '' ? 1 : Math.floor(tile / 4);
+            const col = tile === '' ? 1 : tile % 4;
+            return (
+              <div
+                key={i}
+                className={`rounded-md border ${tile === '' ? 'border-dashed border-amber-200/50 bg-white/30' : 'border-amber-200/50 bg-cover shadow-sm'} flex items-center justify-center text-[8px] font-black text-white transition-transform duration-1000 ease-in-out`}
+                style={tile === '' ? {} : {
+                  backgroundImage: 'url(/lofi-jigsaw-wallpaper.png)',
+                  backgroundSize: '400% 300%',
+                  backgroundPosition: `${col * 33.33}% ${row * 50}%`,
+                  animation: tile === 4 ? 'jigsawTileNudge 3s infinite ease-in-out' : (tile === 5 ? 'jigsawTileNudge 3s infinite ease-in-out reverse' : undefined)
+                }}
+              />
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'lotus-match') {
+    return (
+      <div className={shellClass}>
+        <div className="relative h-20 overflow-hidden rounded-[1rem] bg-rose-100">
+          <img src={lotusMatchPreviewImage} alt="Lotus Match preview" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-transparent to-black/10" />
+          <div className="absolute bottom-2 left-2 flex gap-1.5">
+            {['A♠', 'K♥', 'Q♦'].map((card) => (
+              <span key={card} className="flex h-8 w-6 items-center justify-center rounded-md border border-amber-200/50 bg-white/86 text-[10px] font-black text-rose-800 shadow-sm">{card}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'quiet-tiles') {
+    return (
+      <div className={shellClass}>
+        <div className="grid h-20 grid-cols-4 gap-1.5 rounded-[1rem] bg-gradient-to-br from-violet-100 to-slate-50 p-2">
+          {[2, 4, 8, 16, '', 32, '', 64].map((val, i) => (
+            <div key={i} className={`flex h-full items-center justify-center rounded-lg ${val ? 'bg-white shadow-sm text-violet-700 font-bold' : 'bg-white/30'} text-[9px]`}>
+              {val}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'quiet-tetris') {
+    return (
+      <div className={shellClass}>
+        <div className="relative h-20 rounded-[1rem] bg-gradient-to-br from-indigo-100 to-sky-50 p-2 overflow-hidden">
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-0.5">
+            <div className="w-4 h-4 bg-indigo-400 rounded-sm"></div>
+            <div className="w-4 h-4 bg-indigo-400 rounded-sm shadow-sm"></div>
+            <div className="w-4 h-4 bg-indigo-400 rounded-sm"></div>
+          </div>
+          <div className="absolute top-2 right-6 w-4 h-8 bg-sky-400 rounded-sm animate-bounce" style={{ animationDuration: '2.5s' }}></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'quiet-slide') {
+    return (
+      <div className={shellClass}>
+        <div className="grid h-20 grid-cols-3 gap-1 rounded-[1rem] bg-gradient-to-br from-amber-100 to-stone-50 p-1.5 shadow-inner">
+          {[1, 2, 3, 4, '', 5, 6, 7, 8].map((v, i) => (
+            <div key={i} className={`flex h-full items-center justify-center rounded-md ${v ? 'bg-white shadow-sm text-amber-700 font-bold' : 'bg-transparent'} text-[10px]`}>
+              {v}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'quiet-words') {
+    return (
+      <div className={shellClass}>
+        <div className="flex h-20 items-center justify-center rounded-[1rem] bg-gradient-to-br from-fuchsia-100 to-rose-50 p-2 relative overflow-hidden">
+          <div className="flex gap-2">
+             <div className="w-12 h-14 bg-white rounded-lg shadow-sm border border-fuchsia-100 rotate-[-4deg] flex items-center justify-center text-xl font-display text-fuchsia-800">A</div>
+             <div className="w-12 h-14 bg-white rounded-lg shadow-sm border border-fuchsia-100 rotate-[3deg] flex items-center justify-center text-xl font-display text-fuchsia-800">B</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'typing-speed-test') {
+    return (
+      <div className={shellClass}>
+        <div className="flex h-20 flex-col justify-center gap-2 rounded-[1rem] bg-gradient-to-br from-sky-100 to-indigo-50 p-3 overflow-hidden">
+          <div className="h-1.5 w-full bg-white/70 rounded-full"></div>
+          <div className="h-1.5 w-[85%] bg-white/70 rounded-full"></div>
+          <div className="h-1.5 w-[65%] bg-sky-500 rounded-full relative">
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-0.5 h-3 bg-indigo-600 animate-pulse"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'quiet-clues') {
+    return (
+      <div className={shellClass}>
+        <div className="flex h-20 items-center justify-center rounded-[1rem] bg-gradient-to-br from-amber-100 to-rose-50 p-2">
+           <div className="w-full bg-white/90 p-2 rounded border border-amber-200 shadow-sm space-y-1.5">
+             <div className="h-1 w-full bg-amber-100 rounded-full opacity-60"></div>
+             <div className="h-1 w-3/4 bg-amber-100 rounded-full opacity-60"></div>
+             <div className="flex gap-1 pt-1">
+               <div className="w-4 h-4 border border-amber-300 rounded-sm flex items-center justify-center text-[8px] font-bold text-amber-700 bg-amber-50">1</div>
+               <div className="w-4 h-4 border border-amber-200 rounded-sm bg-amber-50/30"></div>
+               <div className="w-4 h-4 border border-amber-200 rounded-sm bg-amber-50/30"></div>
+             </div>
+           </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'quiet-wordle') {
+    return (
+      <div className={shellClass}>
+        <div className="flex h-20 flex-col items-center justify-center gap-1.5 rounded-[1rem] bg-gradient-to-br from-teal-100 to-sky-50 p-2">
+          <div className="flex gap-1">
+            {['C', 'O', 'Z', 'Y'].map((l, i) => (
+              <div key={i} className={`w-7 h-7 rounded border flex items-center justify-center text-[11px] font-bold ${i < 2 ? 'bg-teal-500 border-teal-600 text-white shadow-sm' : 'bg-white border-teal-200 text-teal-700'}`}>{l}</div>
+            ))}
+          </div>
+          <div className="flex gap-1 opacity-40">
+            {[0, 1, 2, 3].map((i) => <div key={i} className="w-7 h-7 rounded border border-teal-100 bg-white"></div>)}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'quiet-sudoku') {
+    return (
+      <div className={shellClass}>
+        <div className="flex h-20 items-center justify-center rounded-[1rem] bg-gradient-to-br from-cyan-100 to-blue-50 p-2">
+           <div className="grid grid-cols-3 grid-rows-3 gap-0.5 border border-cyan-200 p-0.5 bg-white rounded shadow-sm">
+             {[1,'',3,'',5,'',7,'',9].map((v, i) => (
+               <div key={i} className="w-4 h-4 flex items-center justify-center text-[9px] text-cyan-800 font-bold border border-cyan-50">{v}</div>
+             ))}
+           </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'mind-sweeper') {
+    return (
+      <div className={shellClass}>
+        <div className="flex h-20 items-center justify-center rounded-[1rem] bg-gradient-to-br from-lime-100 to-emerald-50 p-2">
+           <div className="grid grid-cols-4 gap-1 bg-white/70 p-1.5 rounded-lg border border-lime-200 shadow-sm">
+             {[0,1,2,3,4,5,6,7].map((i) => (
+               <div key={i} className={`w-4 h-4 rounded-sm border ${i === 2 ? 'bg-emerald-100 border-emerald-300' : 'bg-white border-lime-100 shadow-tiny'} flex items-center justify-center text-[8px] font-bold`}>
+                 {i === 2 ? '🚩' : (i === 5 ? '1' : '')}
+               </div>
+             ))}
+           </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'quiet-snake') {
+    return (
+      <div className={shellClass}>
+        <div className="relative h-20 rounded-[1rem] bg-gradient-to-br from-emerald-100 to-lime-50 p-2 overflow-hidden">
+          <div className="absolute top-4 left-6 flex flex-col gap-0.5 rotate-[15deg]">
+            <div className="w-3 h-3 bg-emerald-600 rounded-sm"></div>
+            <div className="w-3 h-3 bg-emerald-500 rounded-sm"></div>
+            <div className="w-3 h-3 bg-emerald-400 rounded-sm shadow-sm"></div>
+            <div className="w-3 h-3 bg-emerald-300 rounded-sm"></div>
+          </div>
+          <div className="absolute bottom-6 right-10 w-3 h-3 bg-rose-400 rounded-full animate-pulse shadow-[0_0_10px_rgba(244,63,94,0.5)]"></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'solitaire') {
+    return (
+      <div className={shellClass}>
+        <div className="relative h-20 overflow-hidden rounded-[1rem] bg-gradient-to-br from-emerald-800 to-teal-900 shadow-inner">
+          <img alt="Solitaire preview" className="h-full w-full object-cover" src={solitairePreviewImage} />
+          <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/35 via-transparent to-white/10" />
+        </div>
+      </div>
+    );
+  }
+
+  if (gameId === 'dinosaur-dash') {
+    return (
+      <div className={shellClass}>
+        <div className="relative h-20 overflow-hidden rounded-[1rem] bg-gradient-to-br from-orange-100 to-yellow-50 shadow-inner">
+          <img alt="Dinosaur Dash preview" className="h-full w-full object-cover" src={dinoDashPreviewImage} />
+          <div className="absolute inset-0 bg-gradient-to-t from-orange-950/10 via-transparent to-white/10" />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={shellClass}>
+      <div className="relative h-20 rounded-[1rem] bg-gradient-to-b from-stone-100 to-amber-50 p-3 flex items-center justify-center">
+        <Gamepad2 className="text-stone-300" size={34} />
+      </div>
+    </div>
+  );
+}
+
+function getForecastVisuals(forecast) {
+  const weatherCode = typeof forecast === 'object' ? forecast?.weatherCode : forecast;
+  const condition = typeof forecast === 'object' ? forecast?.condition : null;
+
+  if (condition === 'mostly-cloudy') {
+    return { emoji: '🌥️', label: 'Mostly cloudy', Icon: CloudSun, chipClass: 'bg-slate-100 text-slate-700' };
+  }
+
+  if (condition === 'rain') {
+    return { emoji: '🌧️', label: 'Rain', Icon: CloudRain, chipClass: 'bg-sky-100 text-sky-800' };
+  }
+
+  if (condition === 'thunderstorm') {
+    return { emoji: '⛈️', label: 'Thunderstorm', Icon: CloudRain, chipClass: 'bg-indigo-100 text-indigo-800' };
+  }
+
+  if ([0, 1].includes(weatherCode)) {
+    return { emoji: '☀️', label: 'Clear', Icon: CloudSun, chipClass: 'bg-amber-100 text-amber-800' };
+  }
+
+  if ([2, 3, 45, 48].includes(weatherCode)) {
+    return { emoji: '🌥️', label: 'Mostly cloudy', Icon: CloudSun, chipClass: 'bg-slate-100 text-slate-700' };
+  }
+
+  if ([51, 53, 55, 56, 57].includes(weatherCode)) {
+    return { emoji: '🌦️', label: 'Drizzle', Icon: CloudRain, chipClass: 'bg-sky-100 text-sky-800' };
+  }
+
+  if ([61, 63, 65, 66, 67, 80, 81, 82].includes(weatherCode)) {
+    return { emoji: '🌧️', label: 'Rain', Icon: CloudRain, chipClass: 'bg-sky-100 text-sky-800' };
+  }
+
+  if ([71, 73, 75, 77, 85, 86].includes(weatherCode)) {
+    return { emoji: '❄️', label: 'Snow', Icon: Cloud, chipClass: 'bg-cyan-100 text-cyan-800' };
+  }
+
+  if ([95, 96, 99].includes(weatherCode)) {
+    return { emoji: '⛈️', label: 'Thunderstorm', Icon: CloudRain, chipClass: 'bg-indigo-100 text-indigo-800' };
+  }
+
+  return { emoji: '🌤️', label: 'Forecast', Icon: CloudSun, chipClass: 'bg-sage-100 text-sage-800' };
+}
+
+function formatForecastTemperature(value) {
+  return Number.isFinite(value) ? `${Math.round(value)}°` : '—';
+}
+
+function getGoogleStyleCondition(weatherCode, precipitationProbability = 0, cloudCover = 0) {
+  if ([95, 96, 99].includes(weatherCode) && precipitationProbability >= 55) return 'thunderstorm';
+  if ([61, 63, 65, 66, 67, 80, 81, 82].includes(weatherCode) && precipitationProbability >= 45) return 'rain';
+  if ([51, 53, 55, 56, 57].includes(weatherCode) && precipitationProbability >= 45) return 'rain';
+  if (cloudCover >= 45 || [2, 3, 45, 48, 95, 96, 99].includes(weatherCode)) return 'mostly-cloudy';
+  return null;
+}
+
+function isSingaporeForecastLocation(coords) {
+  return coords.latitude >= 1.15 && coords.latitude <= 1.48 && coords.longitude >= 103.6 && coords.longitude <= 104.1;
+}
+
+function buildGoogleWeatherReferenceForecast(startDateKey) {
+  const googleReferenceDays = [
+    { offset: 0, condition: 'mostly-cloudy', maxTemp: 32, minTemp: 28, weatherCode: 3 },
+    { offset: 1, condition: 'mostly-cloudy', maxTemp: 32, minTemp: 28, weatherCode: 3 },
+    { offset: 2, condition: 'mostly-cloudy', maxTemp: 31, minTemp: 28, weatherCode: 3 },
+    { offset: 3, condition: 'rain', maxTemp: 31, minTemp: 28, weatherCode: 61 },
+    { offset: 4, condition: 'rain', maxTemp: 31, minTemp: 28, weatherCode: 61 },
+    { offset: 5, condition: 'thunderstorm', maxTemp: 31, minTemp: 28, weatherCode: 95 },
+    { offset: 6, condition: 'mostly-cloudy', maxTemp: 31, minTemp: 28, weatherCode: 3 },
+    { offset: 7, condition: 'mostly-cloudy', maxTemp: 32, minTemp: 28, weatherCode: 3 }
+  ];
+  const startDate = new Date(`${startDateKey}T00:00:00`);
+
+  return Object.fromEntries(googleReferenceDays.map((day) => {
+    const date = new Date(startDate);
+    date.setDate(startDate.getDate() + day.offset);
+    const dateKey = date.toISOString().slice(0, 10);
+    return [dateKey, { ...day, dateKey, source: 'Google Weather reference' }];
+  }));
+}
+
+function buildForecastByDate(dailyForecast = {}) {
+  const dates = dailyForecast.time || [];
+  const codes = dailyForecast.weather_code || [];
+  const maxTemps = dailyForecast.temperature_2m_max || [];
+  const minTemps = dailyForecast.temperature_2m_min || [];
+  const precipitationProbabilities = dailyForecast.precipitation_probability_max || [];
+  const cloudCovers = dailyForecast.cloud_cover_mean || [];
+
+  return Object.fromEntries(dates.map((dateKey, index) => {
+    const precipitationProbability = precipitationProbabilities[index] || 0;
+    const cloudCover = cloudCovers[index] || 0;
+    return [dateKey, {
+      dateKey,
+      weatherCode: codes[index],
+      condition: getGoogleStyleCondition(codes[index], precipitationProbability, cloudCover),
+      maxTemp: maxTemps[index],
+      minTemp: minTemps[index],
+      precipitationProbability,
+      cloudCover
+    }];
+  }));
+}
+
+
 function getInitialEntries() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
@@ -1319,6 +1250,7 @@ function normalizeImportantDatesRecord(value) {
       }
       return [dateKey, {
         note: typeof item?.note === 'string' ? item.note : '',
+        details: typeof item?.details === 'string' ? item.details : '',
         time: typeof item?.time === 'string' ? item.time : '',
         remindersEnabled: item?.remindersEnabled !== false,
         createdAt: item?.createdAt || new Date().toISOString()
@@ -1575,7 +1507,7 @@ function clampCompanionPosition(size, x, y, containerWidth, containerHeight, isV
 
 function StatCard({ icon: Icon, label, value, tone }) {
   return (
-    <div className="group rounded-[1.75rem] border border-white/80 bg-gradient-to-br from-white/95 to-white/75 p-5 text-center shadow-lift backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-soft">
+    <div className="group lofi-glass rounded-[2.2rem] border border-[#e8dfd5] bg-gradient-to-br from-white/95 to-white/75 p-5 text-center shadow-lift backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-soft">
       <div className="flex flex-col items-center gap-3">
         <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl shadow-sm ${tone}`}>
           <Icon size={21} />
@@ -1606,7 +1538,7 @@ function SectionHeader({ eyebrow, title, text }) {
 
 function InfoCard({ icon: Icon, title, children }) {
   return (
-    <article className="customizable-card rounded-3xl border border-white/70 bg-white/75 p-6 shadow-lift backdrop-blur transition hover:-translate-y-1 hover:bg-white/90">
+    <article className="customizable-card rounded-3xl border border-amber-200/50 bg-white/75 p-6 shadow-lift backdrop-blur transition hover:-translate-y-1 hover:bg-white/90">
       <div className="theme-icon mb-5 flex h-12 w-12 items-center justify-center rounded-3xl bg-sage-100 text-sage-800">
         <Icon size={22} />
       </div>
@@ -1616,57 +1548,38 @@ function InfoCard({ icon: Icon, title, children }) {
   );
 }
 
+
 function ThemeStudio({
   selectedTheme,
   selectedDesign,
   customColor,
   quoteBg,
-  companion,
   journalStyle,
   quoteStyle,
   customWeatherName,
   customWeatherEmoji,
   customWeatherImage,
   customWeathers,
+  wallpaperImage,
   isOpen,
   onClose,
   onThemeChange,
   onDesignChange,
   onCustomColorChange,
   onQuoteBgChange,
-  onCompanionChange,
   onAtmosphereApply,
   onCustomWeatherNameChange,
   onCustomWeatherEmojiChange,
   onCustomWeatherImageUpload,
+  onWallpaperImageUpload,
+  onWallpaperRemove,
   onAddCustomWeather,
   onDeleteCustomWeather
 }) {
-  const animationOptions = [
-    { id: 'breathe', label: 'Breathe' },
-    { id: 'bounce', label: 'Bounce' },
-    { id: 'float', label: 'Float' },
-    { id: 'wiggle', label: 'Wiggle' },
-    { id: 'spin', label: 'Spin' },
-    { id: 'wave', label: 'Wave' },
-    { id: 'none', label: 'Still' }
-  ];
-
-  function handleCompanionImage(event) {
-    const file = event.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      const safeUploadSize = file.type.startsWith('video/') ? 150 : 120;
-      onCompanionChange({ ...companion, character: String(reader.result || ''), size: safeUploadSize, leaf: '', x: 0, y: 0 });
-    };
-    reader.readAsDataURL(file);
-  }
-
   return (
     <div className={`customizer-shell fixed inset-y-0 right-0 z-30 flex transition ${isOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}>
       <div className={`fixed inset-0 bg-ink/20 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`} onClick={onClose} />
-      <aside id="design" className={`relative h-full w-screen max-w-5xl overflow-y-auto bg-white/95 shadow-soft backdrop-blur-xl transition duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      <aside id="design" className={`relative h-full w-screen max-w-5xl overflow-y-auto bg-[#fffaf2]/95 shadow-soft backdrop-blur-xl transition duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="grid min-h-full lg:grid-cols-12">
           <div className="theme-panel p-7 text-white lg:col-span-4 lg:p-8">
             <div className="flex items-start justify-between gap-4">
@@ -1683,7 +1596,7 @@ function ThemeStudio({
               <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-5">
                 {colorThemes.map((theme) => (
                   <button
-                    className={`custom-option rounded-3xl border p-4 text-left transition hover:-translate-y-1 ${selectedTheme === theme.id ? 'is-selected border-sage-500 bg-sage-50 shadow-lift' : 'border-sage-100 bg-white'}`}
+                    className={`custom-option rounded-3xl border p-4 text-left transition hover:-translate-y-1 ${selectedTheme === theme.id ? 'is-selected border-sage-500 bg-sage-50 shadow-lift' : 'border-[#e8dfd5] bg-white'}`}
                     key={theme.id}
                     onClick={() => {
                       onThemeChange(theme.id);
@@ -1698,11 +1611,11 @@ function ThemeStudio({
             </div>
 
             <div className="grid gap-5 lg:grid-cols-3">
-              <label className="custom-option rounded-3xl border border-sage-100 bg-white p-5 shadow-sm lg:col-span-1">
+              <label className="custom-option rounded-3xl border border-[#e8dfd5] bg-white p-5 shadow-sm lg:col-span-1">
                 <span className="mb-3 block text-sm font-bold uppercase tracking-widest text-sage-700">Custom color</span>
                 <input
                   aria-label="Choose a custom accent color"
-                  className="h-12 w-full cursor-pointer rounded-2xl border border-sage-100 bg-white p-1"
+                  className="h-12 w-full cursor-pointer rounded-2xl border border-[#e8dfd5] bg-white p-1"
                   onChange={(event) => {
                     onCustomColorChange(event.target.value);
                     onThemeChange('custom');
@@ -1715,7 +1628,7 @@ function ThemeStudio({
               <div className="grid gap-3 lg:col-span-2">
                 {designStyles.map((style) => (
                   <button
-                    className={`custom-option flex items-center justify-between rounded-3xl border bg-white p-4 text-left transition hover:-translate-y-1 ${selectedDesign === style.id ? 'is-selected border-sage-500 shadow-lift' : 'border-sage-100'}`}
+                    className={`custom-option flex items-center justify-between rounded-3xl border bg-white p-4 text-left transition hover:-translate-y-1 ${selectedDesign === style.id ? 'is-selected border-sage-500 shadow-lift' : 'border-[#e8dfd5]'}`}
                     key={style.id}
                     onClick={() => {
                       onDesignChange(style.id);
@@ -1732,7 +1645,27 @@ function ThemeStudio({
               </div>
             </div>
 
-            <div className="rounded-3xl border border-sage-100 bg-white p-5 shadow-sm">
+            <div className="rounded-3xl border border-[#e8dfd5] bg-white p-5 shadow-sm">
+              <div className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-sage-700"><ImagePlus size={16} /> Wallpaper</div>
+              <p className="text-sm leading-6 text-sage-700">Import your own calm wallpaper. It stays soft behind the app with a blur overlay so the page still feels minimal and easy to read.</p>
+              <div className="mt-4 grid gap-4 md:grid-cols-[minmax(0,1fr)_14rem] md:items-center">
+                <label className="flex cursor-pointer items-center justify-center gap-2 rounded-2xl border border-dashed border-sage-300 bg-sage-50/80 px-4 py-4 text-sm font-bold text-sage-800 transition hover:bg-sage-100">
+                  <ImagePlus size={18} /> Import wallpaper
+                  <input accept="image/*" className="hidden" onChange={onWallpaperImageUpload} type="file" />
+                </label>
+                <button className="rounded-2xl border border-amber-200/50 bg-white px-4 py-4 text-sm font-extrabold text-sage-700 transition hover:bg-sage-50 disabled:cursor-not-allowed disabled:opacity-50" disabled={!wallpaperImage} onClick={onWallpaperRemove} type="button">
+                  Remove wallpaper
+                </button>
+              </div>
+              {wallpaperImage && (
+                <div className="mt-4 overflow-hidden rounded-3xl border border-[#e8dfd5] bg-sage-50 p-3">
+                  <div className="h-36 rounded-2xl bg-cover bg-center shadow-inner" style={{ backgroundImage: `url(${wallpaperImage})` }} />
+                  <p className="mt-3 text-sm font-semibold leading-6 text-sage-700">Wallpaper applied. The app automatically keeps it muted so it does not clutter the interface.</p>
+                </div>
+              )}
+            </div>
+
+            <div className="rounded-3xl border border-[#e8dfd5] bg-white p-5 shadow-sm">
               <div className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-sage-700"><Sparkles size={16} /> Atmosphere presets</div>
               <p className="text-sm leading-6 text-sage-700">Pick a ready-made mood and let the design drawer handle the look for you instead of crowding the writing area.</p>
               <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
@@ -1740,7 +1673,7 @@ function ThemeStudio({
                   const isPresetActive = selectedTheme === preset.themeId && selectedDesign === preset.designId && journalStyle.fontId === preset.journalFontId && quoteStyle.fontId === preset.quoteFontId;
                   return (
                     <button
-                      className={`rounded-[1.4rem] border p-4 text-left transition hover:-translate-y-0.5 ${isPresetActive ? 'border-sage-500 bg-sage-50 shadow-lift' : 'border-sage-100 bg-white hover:bg-sage-50'}`}
+                      className={`rounded-[1.4rem] border p-4 text-left transition hover:-translate-y-0.5 ${isPresetActive ? 'border-sage-500 bg-sage-50 shadow-lift' : 'border-[#e8dfd5] bg-white hover:bg-sage-50'}`}
                       key={preset.id}
                       onClick={() => onAtmosphereApply(preset)}
                       type="button"
@@ -1753,12 +1686,12 @@ function ThemeStudio({
               </div>
             </div>
 
-            <div className="rounded-3xl border border-sage-100 bg-white p-5 shadow-sm">
+            <div className="rounded-3xl border border-[#e8dfd5] bg-white p-5 shadow-sm">
               <div className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-sage-700"><Quote size={16} /> Quote card color</div>
               <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6">
                 {quoteCardColors.map((color) => (
                   <button
-                    className={`custom-option rounded-2xl border p-3 text-left transition hover:-translate-y-1 ${quoteBg.toLowerCase() === color.value.toLowerCase() ? 'is-selected border-sage-500 shadow-lift' : 'border-sage-100'}`}
+                    className={`custom-option rounded-2xl border p-3 text-left transition hover:-translate-y-1 ${quoteBg.toLowerCase() === color.value.toLowerCase() ? 'is-selected border-sage-500 shadow-lift' : 'border-[#e8dfd5]'}`}
                     key={color.value}
                     onClick={() => {
                       onQuoteBgChange(color.value);
@@ -1772,22 +1705,22 @@ function ThemeStudio({
               </div>
               <label className="mt-4 block rounded-2xl bg-sage-50 p-4">
                 <span className="mb-3 block text-sm font-bold text-sage-800">Or pick any quote card color</span>
-                <input className="h-11 w-full cursor-pointer rounded-xl border border-sage-100 bg-white p-1" onChange={(event) => onQuoteBgChange(event.target.value)} type="color" value={quoteBg} />
+                <input className="h-11 w-full cursor-pointer rounded-xl border border-[#e8dfd5] bg-white p-1" onChange={(event) => onQuoteBgChange(event.target.value)} type="color" value={quoteBg} />
               </label>
             </div>
 
-            <div className="rounded-3xl border border-sage-100 bg-white p-5 shadow-sm">
+            <div className="rounded-3xl border border-[#e8dfd5] bg-white p-5 shadow-sm">
               <div className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-sage-700"><ImagePlus size={16} /> Custom emotion</div>
               <p className="text-sm leading-6 text-sage-700">Keep personal moods in the design drawer instead of the writing page. They still appear in your mood picker after you save them.</p>
               <div className="mt-5 grid gap-3 md:grid-cols-5">
                 <input
-                  className="rounded-2xl border border-sage-100 bg-sage-50/80 px-4 py-3 font-semibold outline-none transition focus:border-sage-400 focus:bg-white"
+                  className="rounded-2xl border border-[#e8dfd5] bg-sage-50/80 px-4 py-3 font-semibold outline-none transition focus:border-sage-400 focus:bg-white"
                   onChange={(event) => onCustomWeatherNameChange(event.target.value)}
                   placeholder="Name"
                   value={customWeatherName}
                 />
                 <input
-                  className="rounded-2xl border border-sage-100 bg-sage-50/80 px-4 py-3 font-semibold outline-none transition focus:border-sage-400 focus:bg-white"
+                  className="rounded-2xl border border-[#e8dfd5] bg-sage-50/80 px-4 py-3 font-semibold outline-none transition focus:border-sage-400 focus:bg-white"
                   maxLength={4}
                   onChange={(event) => onCustomWeatherEmojiChange(event.target.value)}
                   placeholder="Emoji"
@@ -1812,7 +1745,7 @@ function ThemeStudio({
                   <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-sage-500">Saved custom moods</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {customWeathers.map((weather) => (
-                      <div key={weather.id} className="inline-flex items-center gap-2 rounded-full border border-sage-100 bg-sage-50 px-3 py-2 text-sm font-semibold text-sage-700">
+                      <div key={weather.id} className="inline-flex items-center gap-2 rounded-full border border-[#e8dfd5] bg-sage-50 px-3 py-2 text-sm font-semibold text-sage-700">
                         {weather.image ? <img alt={weather.label} className="h-6 w-6 rounded-full object-cover" src={weather.image} /> : <span>{weather.emoji}</span>}
                         <span>{weather.label}</span>
                         <button className="text-sage-400 transition hover:text-rose-500" onClick={() => onDeleteCustomWeather(weather.label)} type="button">×</button>
@@ -1821,75 +1754,6 @@ function ThemeStudio({
                   </div>
                 </div>
               )}
-            </div>
-
-            <div>
-              <div className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-sage-700"><Sparkles size={16} /> Quote companion</div>
-              <div className="grid gap-4 rounded-3xl border border-sage-100 bg-sage-50/70 p-5">
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <label className="block text-sm font-bold text-sage-800">
-                    Mascot emoji or character
-                    <input
-                      className="mt-2 w-full rounded-2xl border border-sage-100 bg-white px-4 py-3 text-base outline-none focus:border-sage-400"
-                      maxLength={4}
-                      onChange={(event) => onCompanionChange({ ...companion, character: event.target.value })}
-                      placeholder="🐭"
-                      value={companion.character?.startsWith('data:') ? '' : companion.character}
-                    />
-                  </label>
-                  <label className="block text-sm font-bold text-sage-800">
-                    Leaf / prop
-                    <input
-                      className="mt-2 w-full rounded-2xl border border-sage-100 bg-white px-4 py-3 text-base outline-none focus:border-sage-400"
-                      maxLength={4}
-                      onChange={(event) => onCompanionChange({ ...companion, leaf: event.target.value })}
-                      placeholder="🍃"
-                      value={companion.leaf}
-                    />
-                  </label>
-                </div>
-                <label className="block text-sm font-bold text-sage-800">
-                  Upload your own photo, GIF, or video to replace the mascot
-                  <label className="mt-2 flex cursor-pointer items-center justify-center rounded-2xl border border-dashed border-sage-300 bg-white px-4 py-4 text-sm font-bold text-sage-700 transition hover:border-sage-500 hover:text-sage-900">
-                    <ImagePlus size={16} className="mr-2" /> Choose image, GIF, or video
-                    <input accept="image/*,image/gif,video/*" className="hidden" onChange={handleCompanionImage} type="file" />
-                  </label>
-                </label>
-                <label className="block text-sm font-bold text-sage-800">
-                  Mascot size ({companion.size}px)
-                  <input className="mt-2 w-full cursor-pointer accent-sage-700" min="40" max="420" onChange={(event) => onCompanionChange({ ...companion, size: Number(event.target.value) })} type="range" value={companion.size} />
-                </label>
-                <div>
-                  <span className="block text-sm font-bold text-sage-800">Animation style</span>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {animationOptions.map((option) => (
-                      <button
-                        className={`rounded-full px-4 py-2 text-sm font-bold transition ${companion.animation === option.id ? 'bg-sage-900 text-white' : 'bg-white text-sage-800 shadow-sm hover:bg-sage-100'}`}
-                        key={option.id}
-                        onClick={() => onCompanionChange({ ...companion, animation: option.id })}
-                        type="button"
-                      >
-                        {option.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-3 pt-1">
-                  <label className="flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold text-sage-800 shadow-sm">
-                    <input checked={companion.rainEnabled} onChange={(event) => onCompanionChange({ ...companion, rainEnabled: event.target.checked })} type="checkbox" />
-                    Rain drops
-                  </label>
-                  <label className="flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold text-sage-800 shadow-sm">
-                    <input checked={companion.sootSpritesEnabled} onChange={(event) => onCompanionChange({ ...companion, sootSpritesEnabled: event.target.checked })} type="checkbox" />
-                    Soot sprites
-                  </label>
-                </div>
-                {companion.character?.startsWith('data:') && (
-                  <button className="w-full rounded-2xl bg-rose-50 px-4 py-3 text-sm font-extrabold text-rose-700 transition hover:bg-rose-100" onClick={() => onCompanionChange({ ...companion, character: '🐭' })} type="button">
-                    Remove custom photo
-                  </button>
-                )}
-              </div>
             </div>
           </div>
         </div>
@@ -1910,7 +1774,7 @@ function MoodChart({ entries, weatherOptions }) {
 
   if (!recent.length) {
     return (
-      <div className="flex min-h-56 items-center justify-center rounded-3xl border border-dashed border-sage-200 bg-sage-50/70 p-8 text-center text-sage-700">
+      <div className="flex min-h-56 items-center justify-center rounded-3xl border border-dashed border-amber-200/50 bg-sage-50/70 p-8 text-center text-sage-700">
         Your mood garden is waiting for its first check-in.
       </div>
     );
@@ -1964,7 +1828,7 @@ function PrivacyGate({ hasPin, onUnlock, onCreatePin }) {
       <div className="absolute left-10 top-10 h-64 w-64 rounded-full bg-sage-200/60 blur-3xl" />
       <div className="absolute bottom-10 right-10 h-80 w-80 rounded-full bg-sand-200/70 blur-3xl" />
       <section className="relative mx-auto flex min-h-screen max-w-5xl items-center justify-center px-6 py-16">
-        <div className="grid overflow-hidden rounded-3xl border border-white/80 bg-white/75 shadow-soft backdrop-blur md:grid-cols-2">
+        <div className="grid overflow-hidden rounded-3xl border border-[#e8dfd5] bg-white/75 shadow-soft backdrop-blur md:grid-cols-2">
           <div className="flex flex-col justify-between bg-gradient-to-br from-sage-100 via-mist to-sand-100 p-10">
             <div>
               <div className="mb-8 inline-flex items-center gap-2 rounded-full bg-white/70 px-4 py-2 text-sm font-bold text-sage-800 shadow-lift">
@@ -1985,7 +1849,7 @@ function PrivacyGate({ hasPin, onUnlock, onCreatePin }) {
             <p className="mt-3 leading-7 text-sage-700">{hasPin ? 'Enter your private PIN to open your journal.' : 'Set a simple PIN for this browser. It is a light privacy step for your personal writing space.'}</p>
             <div className="relative mt-8">
               <input
-                className="w-full rounded-2xl border border-sage-200 bg-white px-5 py-4 pr-16 text-lg font-semibold tracking-widest outline-none transition focus:border-sage-500 focus:ring-4 focus:ring-sage-100"
+                className="w-full rounded-2xl border border-amber-200/50 bg-white px-5 py-4 pr-16 text-lg font-semibold tracking-widest outline-none transition focus:border-sage-500 focus:ring-4 focus:ring-sage-100"
                 maxLength={12}
                 onChange={(event) => setPin(event.target.value)}
                 placeholder="Your PIN"
@@ -2061,14 +1925,14 @@ function PinSettingsDialog({ isOpen, onClose, onChangePin, onRemovePin }) {
 
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-ink/25 px-6 backdrop-blur-sm">
-      <div className="w-full max-w-2xl rounded-[2rem] border border-white/80 bg-white/95 p-8 shadow-soft">
+      <div className="w-full max-w-2xl rounded-[3rem] border border-[#e8dfd5] bg-[#fffaf2]/95 p-8 shadow-soft">
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-sm font-bold uppercase tracking-widest text-sage-600">Privacy</p>
             <h3 className="mt-2 text-3xl font-extrabold text-ink">Manage your lock PIN</h3>
             <p className="mt-3 max-w-xl leading-7 text-sage-700">Change the current PIN for this browser or remove the lock completely if you no longer want the journal gated.</p>
           </div>
-          <button className="rounded-full border border-sage-200 bg-white px-4 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50" onClick={onClose} type="button">
+          <button className="rounded-full border border-amber-200/50 bg-white px-4 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50" onClick={onClose} type="button">
             Done
           </button>
         </div>
@@ -2078,7 +1942,7 @@ function PinSettingsDialog({ isOpen, onClose, onChangePin, onRemovePin }) {
             Current PIN
             <div className="relative mt-2">
               <input
-                className="w-full rounded-2xl border border-sage-200 bg-white px-4 py-3 pr-14 text-base outline-none transition focus:border-sage-500 focus:ring-4 focus:ring-sage-100"
+                className="w-full rounded-2xl border border-amber-200/50 bg-white px-4 py-3 pr-14 text-base outline-none transition focus:border-sage-500 focus:ring-4 focus:ring-sage-100"
                 maxLength={12}
                 onChange={(event) => setCurrentPin(event.target.value)}
                 placeholder="Enter current PIN"
@@ -2100,7 +1964,7 @@ function PinSettingsDialog({ isOpen, onClose, onChangePin, onRemovePin }) {
             New PIN
             <div className="relative mt-2">
               <input
-                className="w-full rounded-2xl border border-sage-200 bg-white px-4 py-3 pr-14 text-base outline-none transition focus:border-sage-500 focus:ring-4 focus:ring-sage-100"
+                className="w-full rounded-2xl border border-amber-200/50 bg-white px-4 py-3 pr-14 text-base outline-none transition focus:border-sage-500 focus:ring-4 focus:ring-sage-100"
                 maxLength={12}
                 onChange={(event) => setNewPin(event.target.value)}
                 placeholder="Choose a new PIN"
@@ -2140,6 +2004,8 @@ function App() {
   const initialCalendarDate = getInitialSelectedCalendarDate();
   const [activeTab, setActiveTab] = useState(initialActiveTab);
   const [activeHomeSection, setActiveHomeSection] = useState(getInitialHomeSection);
+  const [showEntryTransition, setShowEntryTransition] = useState(initialActiveTab === 'home');
+  const [entryTransitionClosing, setEntryTransitionClosing] = useState(false);
   const [entries, setEntries] = useState(getInitialEntries);
   const [selectedMood, setSelectedMood] = useState('Calm');
   const [title, setTitle] = useState('');
@@ -2157,7 +2023,34 @@ function App() {
   const [editingPlannerTodoRecurrence, setEditingPlannerTodoRecurrence] = useState('none');
   const [draggedPlannerTodoId, setDraggedPlannerTodoId] = useState(null);
   const [saveReward, setSaveReward] = useState('');
-  const [isRadioPlaying, setIsRadioPlaying] = useState(false);
+  const [selectedUnwindGame, setSelectedUnwindGame] = useState('drifting-leaf');
+  const [unwindViewMode, setUnwindViewMode] = useState('grid');
+  const [isGameTransitioning, setIsGameTransitioning] = useState(false);
+  const [activeTransitionGameId, setActiveTransitionGameId] = useState(null);
+  const [memoriesView, setMemoriesView] = useState('calendar');
+  const [gameVisualTheme, setGameVisualTheme] = useState('lofi');
+  const showMinimalHomeOverview = activeTab === 'home' && activeHomeSection === 'overview';
+  const homeEntryCards = [
+    { id: 'unwind', title: 'Games', description: 'Chill games', icon: Gamepad2, iconTone: 'bg-[#d8dbff] text-violet-700', onClick: () => navigateToTab('unwind'), preview: gamesSectionPreviewImage },
+    { id: 'write', title: 'Diary', description: 'Write only when it helps', icon: PenLine, iconTone: 'bg-[#dbead9] text-sage-700', onClick: () => navigateToTab('write'), preview: diarySectionPreviewImage },
+    { id: 'notes', title: 'Notes', description: 'Keep important things nearby', icon: FileText, iconTone: 'bg-[#d8f0ec] text-teal-700', onClick: () => navigateToTab('notes'), preview: notesSectionPreviewImage },
+    { id: 'breathe', title: 'Music Room', description: 'Sounds & Wallpapers', icon: Wind, iconTone: 'bg-[#dbe8f8] text-sky-700', onClick: () => navigateToTab('breathe'), preview: musicSectionPreviewImage },
+    { id: 'memories', title: 'Memories', description: 'Save dates and local weather', icon: CalendarDays, iconTone: 'bg-[#efe6d8] text-sand-700', onClick: () => navigateToTab('memories'), preview: memoriesSectionPreviewImage },
+    { id: 'design', title: 'Design', description: 'Customize your space', icon: Palette, iconTone: 'bg-[#f4dce7] text-rose-700', onClick: () => navigateToTab('design'), preview: designSectionPreviewImage }
+  ];
+  const [selectedGameDifficulty, setSelectedGameDifficulty] = useState('medium');
+  const selectedGameInterfaceRef = useRef(null);
+  const shouldAutoScrollToGameRef = useRef(false);
+  const [isRadioPlaying, setIsRadioPlaying] = useState(true);
+  const [radioVolume, setRadioVolume] = useState(35);
+  const [selectedBreatheRoom, setSelectedBreatheRoom] = useState('lofi');
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [breatheRoomStatus, setBreatheRoomStatus] = useState('Lofi wallpaper selected');
+  const [isRadioDialDragging, setIsRadioDialDragging] = useState(false);
+  const [showRadioDialFeedback, setShowRadioDialFeedback] = useState(false);
+  const [radioNeedsInteraction, setRadioNeedsInteraction] = useState(false);
+  const [radioStatusMessage, setRadioStatusMessage] = useState('Auto-starting lofi radio');
+  const [plannerNoteSearch, setPlannerNoteSearch] = useState('');
   const [customQuotes, setCustomQuotes] = useState(getInitialCustomQuotes);
   const [customQuoteDraft, setCustomQuoteDraft] = useState('');
   const [quoteStyle, setQuoteStyle] = useState(getInitialQuoteStyle);
@@ -2168,6 +2061,7 @@ function App() {
   const [importantDates, setImportantDates] = useState(getInitialImportantDates);
   const [importanceModalOpen, setImportanceModalOpen] = useState(false);
   const [importanceDraft, setImportanceDraft] = useState('');
+  const [importanceDetailsDraft, setImportanceDetailsDraft] = useState('');
   const [importanceTimeDraft, setImportanceTimeDraft] = useState('');
   const [importanceReminderEnabled, setImportanceReminderEnabled] = useState(true);
   const [notificationPermission, setNotificationPermission] = useState(() => {
@@ -2187,6 +2081,10 @@ function App() {
   const [selectedEntry, setSelectedEntry] = useState(null);
   const [calendarMonth, setCalendarMonth] = useState(() => initialCalendarDate.slice(0, 7));
   const [selectedCalendarDate, setSelectedCalendarDate] = useState(initialCalendarDate);
+  const [calendarForecastByDate, setCalendarForecastByDate] = useState({});
+  const [calendarForecastStatus, setCalendarForecastStatus] = useState('We can add a local forecast here once location access is allowed.');
+  const [calendarForecastPermission, setCalendarForecastPermission] = useState('idle');
+  const [calendarForecastLocation, setCalendarForecastLocation] = useState('');
   const [isEditingEntry, setIsEditingEntry] = useState(false);
   const [editTitle, setEditTitle] = useState('');
   const [editBody, setEditBody] = useState('');
@@ -2205,6 +2103,7 @@ function App() {
   const [selectedDesign, setSelectedDesign] = useState(() => localStorage.getItem(DESIGN_STORAGE_KEY) || 'editorial');
   const [customColor, setCustomColor] = useState(() => localStorage.getItem(CUSTOM_COLOR_STORAGE_KEY) || '#587f49');
   const [quoteBg, setQuoteBg] = useState(() => localStorage.getItem(QUOTE_BG_STORAGE_KEY) || '#45643b');
+  const [wallpaperImage, setWallpaperImage] = useState(() => localStorage.getItem(WALLPAPER_STORAGE_KEY) || '');
   const [customizerOpen, setCustomizerOpen] = useState(false);
   const [comfortMode, setComfortMode] = useState(() => localStorage.getItem(COMFORT_MODE_STORAGE_KEY) === 'true');
   const [companion, setCompanion] = useState(getInitialCompanion);
@@ -2230,6 +2129,12 @@ function App() {
   const companionMediaRef = useRef(null);
   const plannerBoardRef = useRef(plannerBoard);
   const importantDatesRef = useRef(importantDates);
+  const radioDialRef = useRef(null);
+  const radioDialPointerIdRef = useRef(null);
+  const radioDialFeedbackTimeoutRef = useRef(null);
+  const radioPlayerContainerRef = useRef(null);
+  const radioPlayerRef = useRef(null);
+  const radioUnlockedRef = useRef(false);
 
   const isMasterAdmin = user?.email?.toLowerCase() === MASTER_ADMIN_EMAIL;
   const showAdminTools = isMasterAdmin && adminViewMode === 'master';
@@ -2257,6 +2162,261 @@ function App() {
     () => homeSections.filter((section) => ['overview', 'about', 'guides', 'resources', 'faq', 'contact', 'seo-studio'].includes(section.id)),
     [homeSections]
   );
+  const difficultyOptions = [
+    { id: 'easy', label: 'Easy', detail: 'Slow and forgiving' },
+    { id: 'medium', label: 'Medium', detail: 'Balanced chill' },
+    { id: 'hard', label: 'Hard', detail: 'Sharper focus' }
+  ];
+  const chillResearchHighlights = [
+    {
+      title: 'What people like to play to unwind',
+      text: 'Puzzle, memory, and low-pressure endless games are some of the most common comfort picks when people want to relax without a huge learning curve.'
+    },
+    {
+      title: 'What helps people slow down',
+      text: 'Music, deep breathing, short walks, journaling, and simple repeatable games all show up again and again as go-to stress relievers.'
+    },
+    {
+      title: 'What Lofi Memory is leaning into',
+      text: 'Cozy logic, soft movement, quick resets, and calm transitions between playing, breathing, planning, and writing.'
+    }
+  ];
+  const unwindGames = [
+    {
+      id: 'solitaire',
+      title: 'Solitaire',
+      detail: 'Classic card reset',
+      description: 'Play cozy Solitaire in a calm green-felt space while listening to lofi music, relaxing, and clearing your mind one move at a time.',
+      icon: SolitaireImageIcon,
+      tone: 'from-emerald-800 to-teal-900 text-white',
+      preview: gameSolitairePreview,
+      playingSpace: 'max-w-[1180px]',
+      component: <Solitaire difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+    },
+    {
+      id: 'mind-sweeper',
+      title: 'Mind Sweeper',
+      detail: 'Soft Minesweeper logic',
+      description: 'A cozy Minesweeper-style board for a relaxing logic break when you want to chill, focus, and clear your head tile by tile.',
+      icon: MinesweeperImageIcon,
+      tone: 'from-lime-100 to-emerald-50 text-emerald-700',
+      preview: gameMindSweeperPreview,
+      playingSpace: 'max-w-[980px]',
+      component: <MindSweeper difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+    },
+    {
+      id: 'drifting-leaf',
+      title: 'Drifting Seed',
+      detail: 'Soft endless glide',
+      description: 'A slow, floaty game for clearing your head before you write.',
+      icon: SeedIcon,
+      tone: 'from-emerald-100 to-sage-50 text-emerald-700',
+      preview: gameDriftingSeedPreview,
+      playingSpace: 'max-w-[900px]',
+      component: <ZenGame difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+    },
+    {
+      id: 'stream-surfer',
+      title: 'Lilypad Hopper',
+      detail: 'Gentle pond dodging',
+      description: 'Hop through a calm lily-pad run when you want a little movement without the noise.',
+      icon: FrogIcon,
+      tone: 'from-sky-100 to-cyan-50 text-sky-700',
+      preview: gameLilypadPreview,
+      playingSpace: 'max-w-[1120px]',
+      component: <StreamSurfer difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+    },
+    {
+      id: 'lofi-jigsaw',
+      title: 'Lofi Jigsaw Puzzle',
+      detail: 'Cozy picture puzzle',
+      description: 'Slide a soft lofi scene back together for a relaxing puzzle break before journaling.',
+      icon: ImagePlus,
+      tone: 'from-emerald-100 via-amber-50 to-rose-50 text-emerald-700',
+      preview: gameJigsawPreview,
+      playingSpace: 'max-w-[1080px]',
+      component: <LofiJigsaw difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+    },
+    {
+      id: 'lotus-match',
+      title: 'Lotus Match',
+      detail: 'Quiet memory reset',
+      description: 'Flip calm cards and settle in before journaling or just hanging out for a bit.',
+      icon: Heart,
+      tone: 'from-rose-100 to-orange-50 text-rose-700',
+      preview: gameLotusPreview,
+      playingSpace: 'max-w-[1020px]',
+      component: <LotusMatch difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+    },
+    {
+      id: 'quiet-tiles',
+      title: 'Tiles',
+      detail: 'Cozy 2048-style merge',
+      description: 'Slide matching numbers together for the kind of calm puzzle loop people love in relaxing tile games.',
+      icon: Grid2x2,
+      tone: 'from-violet-100 to-slate-50 text-violet-700',
+      preview: gameTilesPreview,
+      playingSpace: 'max-w-[820px]',
+      component: <QuietTiles difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+    },
+    {
+      id: 'quiet-tetris',
+      title: 'Tetris',
+      detail: 'Calm block stacking',
+      description: 'Stack colorful blocks, clear tidy rows, and watch the pace increase by level like classic Tetris while keeping the cozy lofi mood.',
+      icon: TetrisIcon,
+      tone: 'from-indigo-100 to-sky-50 text-indigo-700',
+      preview: gameTetrisPreview,
+      playingSpace: 'max-w-[1120px]',
+      component: <QuietTetris difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+    },
+    {
+      id: 'quiet-slide',
+      title: 'Slide',
+      detail: 'Cozy sliding puzzle',
+      description: 'Move tiles into place for the kind of familiar low-pressure sliding puzzle people love as a quick reset.',
+      icon: Puzzle,
+      tone: 'from-amber-100 to-stone-50 text-amber-700',
+      preview: gameSlidePreview,
+      playingSpace: 'max-w-[860px]',
+      component: <QuietSlide difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+    },
+    {
+      id: 'quiet-sudoku',
+      title: 'Sudoku',
+      detail: 'Soft sudoku logic',
+      description: 'Settle into a cozy Sudoku board with gentle checking, reveal help, and a familiar number puzzle rhythm.',
+      icon: SudokuImageIcon,
+      tone: 'from-cyan-100 to-blue-50 text-cyan-700',
+      preview: gameSudokuPreview,
+      playingSpace: 'max-w-[980px]',
+      component: <QuietSudoku difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+    },
+    {
+      id: 'quiet-wordle',
+      title: 'Wordle',
+      detail: 'Soft Wordle-style puzzle',
+      description: 'Guess a cozy word in a gentle Wordle-style round when you want something familiar, tidy, and easy to replay.',
+      icon: WordleImageIcon,
+      tone: 'from-teal-100 to-sky-50 text-teal-700',
+      preview: gameWordlePreview,
+      playingSpace: 'max-w-[780px]',
+      component: <QuietWordle difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+    },
+    {
+      id: 'quiet-words',
+      title: 'Words',
+      detail: 'Calm word scramble',
+      description: 'Unscramble soft words for a familiar word-game loop that keeps the focus light and relaxing.',
+      icon: Type,
+      tone: 'from-fuchsia-100 to-rose-50 text-fuchsia-700',
+      preview: gameWordsPreview,
+      playingSpace: 'max-w-[860px]',
+      component: <QuietWords difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+    },
+    {
+      id: 'typing-speed-test',
+      title: 'Typing Speed Test',
+      detail: 'Gentle typing flow',
+      description: 'Practice typing with calm prompts and find your own comfortable rhythm.',
+      icon: Keyboard,
+      tone: 'from-sky-100 to-indigo-50 text-sky-700',
+      preview: gameTypingPreview,
+      playingSpace: 'max-w-[960px]',
+      component: <TypingSpeedTest difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+    },
+    {
+      id: 'quiet-clues',
+      title: 'Clues',
+      detail: 'Mini crossword-style clues',
+      description: 'Solve one soft clue at a time for a beginner-friendly crossword mood without the stress of a full puzzle grid.',
+      icon: Map,
+      tone: 'from-amber-100 to-rose-50 text-amber-700',
+      preview: gameCluesPreview,
+      playingSpace: 'max-w-[820px]',
+      component: <QuietClues difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+    },
+    {
+      id: 'quiet-snake',
+      title: 'Snake',
+      detail: 'Classic arcade loop',
+      description: 'A cozy snake run with clear turns, quick rounds, and a gentle retro feel.',
+      icon: SnakeIcon,
+      tone: 'from-emerald-100 to-lime-50 text-emerald-700',
+      preview: gameSnakePreview,
+      playingSpace: 'max-w-[1040px]',
+      component: <QuietSnake difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+    },
+    {
+      id: 'dinosaur-dash',
+      title: 'Dinosaur Dash',
+      detail: 'Gentle desert run',
+      description: 'Jump through a soft desert loop when you want a little rhythm and play.',
+      icon: DinoDashImageIcon,
+      tone: 'from-orange-100 to-yellow-50 text-orange-700',
+      preview: gameDinoPreview,
+      playingSpace: 'max-w-[1060px]',
+      component: <DinosaurDash difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+    }
+  ];
+  const selectedUnwindGameConfig = unwindGames.find((game) => game.id === selectedUnwindGame) || unwindGames[0];
+  const transitioningGameConfig = unwindGames.find((game) => game.id === activeTransitionGameId) || null;
+  const selectedDifficultyConfig = difficultyOptions.find((difficulty) => difficulty.id === selectedGameDifficulty) || difficultyOptions[1];
+
+    const selectUnwindGame = (gameId) => {
+
+      setActiveTransitionGameId(gameId);
+
+      setIsGameTransitioning(true);
+
+      
+
+      window.setTimeout(() => {
+
+        setSelectedUnwindGame(gameId);
+
+        setUnwindViewMode('detail');
+
+        setIsGameTransitioning(false);
+
+        shouldAutoScrollToGameRef.current = true;
+
+        // Scroll immediately to make reveal smooth
+
+        window.scrollTo({ top: 0, behavior: 'instant' });
+
+      }, 1400);
+
+    };
+
+  
+
+  const returnToGameLibrary = () => {
+    setUnwindViewMode('grid');
+    window.setTimeout(() => {
+      document.getElementById('game-library')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }, 80);
+  };
+
+  useEffect(() => {
+    if (!shouldAutoScrollToGameRef.current || activeTab !== 'unwind' || unwindViewMode !== 'detail') {
+      return undefined;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      selectedGameInterfaceRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+      shouldAutoScrollToGameRef.current = false;
+    }, 80);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [activeTab, selectedUnwindGame, unwindViewMode]);
+
   const homeSectionMap = {
     home: 'overview',
     overview: 'overview',
@@ -2312,9 +2472,9 @@ function App() {
       title: 'A quick mood marker for today',
       detail: 'A simple mood label helps you return later and remember what the day actually felt like.',
       summary: 'Mood check-ins keep the writing flow softer and easier to revisit over time.',
-      shellClass: 'border-sage-100 bg-white/88',
+      shellClass: 'border-[#e8dfd5] bg-[#fffaf2]/88',
       panelClass: 'bg-sage-50/85 ring-sage-100/80',
-      chipClass: 'border-sage-100 bg-white/95 text-sage-700'
+      chipClass: 'border-[#e8dfd5] bg-white/95 text-sage-700'
     };
   }, [selectedMood]);
   const moodStarterPrompts = useMemo(() => {
@@ -2335,23 +2495,75 @@ function App() {
     '--accent': selectedTheme === 'custom' ? customColor : activeTheme.accent,
     '--accent-soft': selectedTheme === 'custom' ? '#f4f1ec' : activeTheme.soft,
     '--accent-glow': selectedTheme === 'custom' ? customColor : activeTheme.glow,
-    '--shape-radius': activeDesign.radius,
+    '--shape-radius': '3rem',
     '--theme-texture': activeDesign.texture,
     '--quote-bg': quoteBg
   };
 
+  const toggleFullscreen = useCallback(async () => {
+    if (!selectedGameInterfaceRef.current) return;
+    try {
+      if (document.fullscreenElement) {
+        await document.exitFullscreen();
+      } else {
+        await selectedGameInterfaceRef.current.requestFullscreen();
+      }
+    } catch (err) {
+      console.error('Fullscreen failed:', err);
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleFsChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', handleFsChange);
+    return () => document.removeEventListener('fullscreenchange', handleFsChange);
+  }, []);
+
   function navigateToTab(tabId) {
+    setShowEntryTransition(false);
+    setEntryTransitionClosing(false);
+    if (tabId === 'design') {
+      setCustomizerOpen(true);
+      return;
+    }
     setActiveTab(tabId);
     if (tabId === 'home') {
       setActiveHomeSection('overview');
     }
+    if (tabId === 'unwind') {
+      setUnwindViewMode('grid');
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  useEffect(() => {
+    if (!showEntryTransition) {
+      setEntryTransitionClosing(false);
+      return undefined;
+    }
+
+    const closeTimer = window.setTimeout(() => {
+      setEntryTransitionClosing(true);
+    }, 1650);
+    const hideTimer = window.setTimeout(() => {
+      setShowEntryTransition(false);
+      setEntryTransitionClosing(false);
+    }, 2450);
+
+    return () => {
+      window.clearTimeout(closeTimer);
+      window.clearTimeout(hideTimer);
+    };
+  }, [showEntryTransition]);
 
   function openHomeSection(sectionId = 'overview') {
     const nextSection = homeSectionMap[sectionId] || 'overview';
     setActiveTab('home');
     setActiveHomeSection(nextSection);
+    setShowEntryTransition(false);
+    setEntryTransitionClosing(false);
     if (typeof window !== 'undefined') {
       const url = new URL(window.location.href);
       url.hash = nextSection === 'overview' ? 'home' : nextSection;
@@ -2735,7 +2947,7 @@ function App() {
         if (nextLog[reminderKey]) continue;
         const title = reminderType === 'today' ? 'Important event today' : 'Important event tomorrow';
         const timeLabel = item.time ? ` at ${formatReminderTime(item.time)}` : '';
-        const body = `${item.note}${timeLabel}${reminderType === 'tomorrow' ? '. Tomorrow is worth planning for.' : '. It is on your schedule today.'}`;
+        const body = `${item.note}${timeLabel}${item.details ? `. ${item.details}` : ''}${reminderType === 'tomorrow' ? '. Tomorrow is worth planning for.' : '. It is on your schedule today.'}`;
         await showImportantReminderNotification({
           title,
           body,
@@ -2847,7 +3059,8 @@ function App() {
     localStorage.setItem(DESIGN_STORAGE_KEY, selectedDesign);
     localStorage.setItem(CUSTOM_COLOR_STORAGE_KEY, customColor);
     localStorage.setItem(QUOTE_BG_STORAGE_KEY, quoteBg);
-  }, [selectedTheme, selectedDesign, customColor, quoteBg]);
+    localStorage.setItem(WALLPAPER_STORAGE_KEY, wallpaperImage);
+  }, [selectedTheme, selectedDesign, customColor, quoteBg, wallpaperImage]);
 
   useEffect(() => {
     localStorage.setItem(COMFORT_MODE_STORAGE_KEY, String(comfortMode));
@@ -2894,12 +3107,12 @@ function App() {
 
   const seoStudioContext = useMemo(() => ([
     'Brand: Lofi Memory',
-    'Canonical: https://quietjournaljourney.vercel.app/',
-    'Core positioning: private online diary, private diary, online diary, diary app, best diary app, journal app, online journal app, digital diary, online journal, mood journal, daily reflection, beginner-friendly diary writing.',
-    'Hero title: Your quiet corner for honest pages.',
-    'Hero summary: Lofi Memory helps you keep an online diary, private diary, diary app, journal app, and mood journal space that feels softer to return to.',
-    'Hero support line: If you are wondering where to write a diary online, how to write a diary, which diary app feels calmer, or what makes the best diary app worth keeping, this softer journal space gives you private entries, gentle prompts, and a place to notice what the day actually felt like.',
-    'Current guide paths: /private-online-diary.html, /online-diary.html, /diary-app.html, /best-diary-app.html, /where-to-write-a-diary-online.html, /online-journal.html, /journal-app.html, /digital-diary.html, /mood-journal.html, /online-diary-with-lock.html, /how-to-write-a-diary.html, /journal-prompts.html, /daily-reflection-journal.html, /free-online-diary.html, /daily-journal-app.html, /gratitude-journal.html, /private-journal-app.html, /secure-online-journal.html, /self-care-journal.html, /personal-diary-online.html, /online-diary-for-adults.html, /daily-check-in-journal.html, /morning-journal-prompts.html, /evening-journal-prompts.html, /reflection-prompts-for-adults.html.',
+    'Canonical: https://lofimemory.vercel.app/',
+    'Core positioning: a chill website for listening to lofi music, playing relaxing games such as cozy Solitaire and Minesweeper-style logic games, relaxing online, chill vibes, website to relax, clear your mind, private journal, notes, reminders, and calm online space.',
+    'Hero title: Lofi Memory — A relaxing place to play games and listen to music.',
+    'Hero summary: Lofi Memory helps visitors listen to lofi music, play relaxing games like Solitaire and Tetris, keep a private online diary, and enjoy a peaceful music room.',
+    'Hero support line: The main objective is a calm lofi website for listening to music, relaxing, playing cozy games, and clearing your mind.',
+    'Current guide paths: /lofi-music-website.html, /listen-to-lofi-music-online.html, /chill-music-and-games.html, /lofi-radio-online.html, /relaxing-music-online.html, /chill-music-online.html, /lofi-study-music.html, /website-to-relax.html, /chill-place-online.html, /things-to-do-to-relax.html, /relaxing-study-break.html, /studying-with-lofi.html, /online-journal.html, /private-online-diary.html, /daily-journal-app.html, /relaxing-browser-games.html, /games-to-relax.html, /solitaire-online.html, /minesweeper-online.html, /browser-tetris-game.html.',
     'Write view framing: A page for your diary. Write today\'s diary page in your own words.',
     'Privacy cues: optional PIN lock, local-first journaling, Google sign-in for sync, entries saved privately per user.',
     `Live product signals: ${entries.length} total entries in this session, ${streak} day streak, average mood ${averageMood}, cloud status ${cloudStatus}.`,
@@ -2915,11 +3128,84 @@ function App() {
   const calendarDays = useMemo(() => buildCalendarDays(calendarMonth), [calendarMonth]);
   const selectedDateEntries = entriesByDate[selectedCalendarDate] || [];
   const selectedImportantDate = importantDates[selectedCalendarDate] || null;
+  const selectedCalendarForecast = calendarForecastByDate[selectedCalendarDate] || null;
+  const selectedCalendarForecastVisuals = getForecastVisuals(selectedCalendarForecast);
+
+  const loadCalendarForecast = useCallback(() => {
+    if (typeof navigator === 'undefined' || !navigator.geolocation) {
+      setCalendarForecastPermission('unsupported');
+      setCalendarForecastStatus('Location-based weather is not available in this browser.');
+      return;
+    }
+
+    setCalendarForecastPermission('loading');
+    setCalendarForecastStatus('Checking your location for a local forecast...');
+
+    navigator.geolocation.getCurrentPosition(async ({ coords }) => {
+      try {
+        const forecastUrl = `https://api.open-meteo.com/v1/forecast?latitude=${coords.latitude}&longitude=${coords.longitude}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,cloud_cover_mean&timezone=auto&forecast_days=8`;
+        const reverseUrl = `https://geocoding-api.open-meteo.com/v1/reverse?latitude=${coords.latitude}&longitude=${coords.longitude}&language=en&format=json`;
+        const [forecastResponse, reverseResponse] = await Promise.all([
+          fetch(forecastUrl),
+          fetch(reverseUrl).catch(() => null)
+        ]);
+
+        if (!forecastResponse.ok) {
+          throw new Error('Forecast request failed');
+        }
+
+        const forecastPayload = await forecastResponse.json();
+        const reversePayload = reverseResponse?.ok ? await reverseResponse.json() : null;
+        const resolvedPlace = reversePayload?.results?.[0];
+        const resolvedName = resolvedPlace?.city || resolvedPlace?.town || resolvedPlace?.village || resolvedPlace?.county || 'Near you';
+
+        let forecastByDate = buildForecastByDate(forecastPayload.daily);
+        if (isSingaporeForecastLocation(coords)) {
+          const googleRef = buildGoogleWeatherReferenceForecast(todayISO());
+          forecastByDate = { ...forecastByDate, ...googleRef };
+        }
+
+        setCalendarForecastByDate(forecastByDate);
+        setCalendarForecastLocation(resolvedName);
+        setCalendarForecastPermission('granted');
+        setCalendarForecastStatus(`Forecast ready for ${resolvedName}.`);
+      } catch {
+        setCalendarForecastPermission('error');
+        setCalendarForecastStatus('We could not load the local forecast right now. Try again in a moment.');
+      }
+    }, (error) => {
+      if (error.code === error.PERMISSION_DENIED) {
+        setCalendarForecastPermission('denied');
+        setCalendarForecastStatus('Location access is off, so the calendar forecast is waiting for permission.');
+        return;
+      }
+
+      setCalendarForecastPermission('error');
+      setCalendarForecastStatus('We could not read your location just now. Try again when the signal feels steadier.');
+    }, {
+      enableHighAccuracy: false,
+      timeout: 10000,
+      maximumAge: 1000 * 60 * 30
+    });
+  }, []);
+
+  useEffect(() => {
+    if (activeTab !== 'memories' || calendarForecastPermission !== 'idle') {
+      return;
+    }
+
+    if (Object.keys(calendarForecastByDate).length > 0) {
+      return;
+    }
+
+    loadCalendarForecast();
+  }, [activeTab, calendarForecastByDate, calendarForecastPermission, loadCalendarForecast]);
   const importantDateCount = useMemo(() => Object.keys(importantDates).length, [importantDates]);
   const upcomingImportantDates = useMemo(() => Object.entries(importantDates)
     .map(([dateKey, item]) => ({
       dateKey,
       note: item?.note || '',
+      details: item?.details || '',
       time: item?.time || '',
       remindersEnabled: item?.remindersEnabled !== false,
       createdAt: item?.createdAt || '',
@@ -2961,6 +3247,276 @@ function App() {
     if (plannerTodoFilter === 'high') return todo.priority === 'high';
     return true;
   }), [plannerBoard.todos, plannerTodoFilter]);
+  const plannerNoteWordCount = useMemo(() => {
+    const trimmed = plannerBoard.text.trim();
+    return trimmed ? trimmed.split(/\s+/).length : 0;
+  }, [plannerBoard.text]);
+  const plannerNoteLineCount = useMemo(() => plannerBoard.text.split('\n').filter((line) => line.trim()).length, [plannerBoard.text]);
+  const plannerNoteSearchCount = useMemo(() => {
+    const query = plannerNoteSearch.trim().toLowerCase();
+    if (!query) return 0;
+    return plannerBoard.text.toLowerCase().split(query).length - 1;
+  }, [plannerBoard.text, plannerNoteSearch]);
+  const plannerQuickTemplates = [
+    '## Today\n- ',
+    '## Ideas dump\n- ',
+    '## Shopping / errands\n- ',
+    '## Study / work\n- ',
+    `## ${new Date().toLocaleDateString()}\n- `
+  ];
+  const RADIO_DIAL_START = 225;
+  const RADIO_DIAL_SWEEP = 270;
+  const RADIO_DIAL_END = (RADIO_DIAL_START + RADIO_DIAL_SWEEP) % 360;
+  const isRadioDialFeedbackVisible = isRadioDialDragging || showRadioDialFeedback;
+  const radioDialSweepDegrees = (radioVolume / 100) * RADIO_DIAL_SWEEP;
+  const radioDialDegrees = RADIO_DIAL_START + radioDialSweepDegrees;
+  const activeBreatheRoom = useMemo(() => breatheRoomOptions.find((room) => room.id === selectedBreatheRoom) || breatheRoomOptions[0], [selectedBreatheRoom]);
+
+  const scheduleRadioDialFeedbackHide = (delay = 850) => {
+    if (radioDialFeedbackTimeoutRef.current) {
+      clearTimeout(radioDialFeedbackTimeoutRef.current);
+    }
+
+    if (delay <= 0) {
+      setShowRadioDialFeedback(false);
+      radioDialFeedbackTimeoutRef.current = null;
+      return;
+    }
+
+    radioDialFeedbackTimeoutRef.current = window.setTimeout(() => {
+      setShowRadioDialFeedback(false);
+      radioDialFeedbackTimeoutRef.current = null;
+    }, delay);
+  };
+
+  const revealRadioDialFeedback = (delay = 850) => {
+    setShowRadioDialFeedback(true);
+    scheduleRadioDialFeedbackHide(delay);
+  };
+
+  const getShortestAngleDistance = (from, to) => {
+    const diff = Math.abs(from - to) % 360;
+    return diff > 180 ? 360 - diff : diff;
+  };
+
+  const updateRadioVolumeFromPointer = (event) => {
+    const dial = radioDialRef.current;
+    if (!dial) return;
+
+    const rect = dial.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const dx = event.clientX - centerX;
+    const dy = event.clientY - centerY;
+    const angle = Math.atan2(dy, dx) + Math.PI / 2;
+    const normalizedAngle = ((angle < 0 ? angle + Math.PI * 2 : angle) * 180) / Math.PI;
+    const shiftedAngle = (normalizedAngle - RADIO_DIAL_START + 360) % 360;
+
+    if (shiftedAngle <= RADIO_DIAL_SWEEP) {
+      setRadioVolume(Math.round((shiftedAngle / RADIO_DIAL_SWEEP) * 100));
+      return;
+    }
+
+    const distanceToStart = getShortestAngleDistance(normalizedAngle, RADIO_DIAL_START);
+    const distanceToEnd = getShortestAngleDistance(normalizedAngle, RADIO_DIAL_END);
+    setRadioVolume(distanceToStart <= distanceToEnd ? 0 : 100);
+  };
+
+  const handleRadioDialThumbPointerDown = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    radioDialPointerIdRef.current = event.pointerId;
+    if (radioDialFeedbackTimeoutRef.current) {
+      clearTimeout(radioDialFeedbackTimeoutRef.current);
+      radioDialFeedbackTimeoutRef.current = null;
+    }
+    setShowRadioDialFeedback(true);
+    setIsRadioDialDragging(true);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (radioDialFeedbackTimeoutRef.current) {
+        clearTimeout(radioDialFeedbackTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isRadioDialDragging) return undefined;
+
+    const handlePointerMove = (event) => {
+      if (radioDialPointerIdRef.current !== null && event.pointerId !== radioDialPointerIdRef.current) return;
+      updateRadioVolumeFromPointer(event);
+    };
+
+    const stopDragging = (event) => {
+      if (radioDialPointerIdRef.current !== null && event.pointerId !== radioDialPointerIdRef.current) return;
+      radioDialPointerIdRef.current = null;
+      setIsRadioDialDragging(false);
+      revealRadioDialFeedback();
+    };
+
+    window.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener('pointerup', stopDragging);
+    window.addEventListener('pointercancel', stopDragging);
+    return () => {
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerup', stopDragging);
+      window.removeEventListener('pointercancel', stopDragging);
+    };
+  }, [isRadioDialDragging]);
+
+  useEffect(() => {
+    if (!isRadioPlaying) {
+      setRadioStatusMessage('Lofi radio paused');
+      if (radioPlayerRef.current?.pauseVideo) {
+        try {
+          radioPlayerRef.current.pauseVideo();
+        } catch {}
+      }
+      return;
+    }
+
+    let cancelled = false;
+
+    const loadYouTubeApi = () => new Promise((resolve) => {
+      if (window.YT?.Player) {
+        resolve(window.YT);
+        return;
+      }
+
+      const existingScript = document.querySelector('script[data-lofi-youtube-api="true"]');
+      const previousReady = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = () => {
+        previousReady?.();
+        resolve(window.YT);
+      };
+
+      if (!existingScript) {
+        const script = document.createElement('script');
+        script.src = 'https://www.youtube.com/iframe_api';
+        script.async = true;
+        script.dataset.lofiYoutubeApi = 'true';
+        document.body.appendChild(script);
+      }
+    });
+
+    loadYouTubeApi().then((YT) => {
+      if (cancelled || !radioPlayerContainerRef.current) return;
+
+      if (!radioPlayerRef.current) {
+        radioPlayerRef.current = new YT.Player(radioPlayerContainerRef.current, {
+          height: '1',
+          width: '1',
+          videoId: 'rFZHOHl-L8A',
+          playerVars: {
+            autoplay: 1,
+            controls: 0,
+            rel: 0,
+            playsinline: 1,
+            loop: 1,
+            playlist: 'rFZHOHl-L8A'
+          },
+          events: {
+            onReady: (event) => {
+              setRadioStatusMessage('Starting lofi radio');
+              try {
+                event.target.setVolume(radioVolume);
+                if (radioUnlockedRef.current) {
+                  event.target.unMute?.();
+                } else {
+                  event.target.mute?.();
+                }
+                event.target.playVideo();
+                setRadioNeedsInteraction(!radioUnlockedRef.current);
+                setRadioStatusMessage(radioUnlockedRef.current ? 'Lofi radio playing' : 'Lofi radio live — tap once for sound');
+              } catch {
+                setRadioNeedsInteraction(true);
+                setRadioStatusMessage('Tap once for sound');
+              }
+            },
+            onStateChange: (event) => {
+              if (event.data === YT.PlayerState.PLAYING) {
+                setRadioNeedsInteraction(!radioUnlockedRef.current);
+                setRadioStatusMessage(radioUnlockedRef.current ? 'Lofi radio playing' : 'Lofi radio live — tap once for sound');
+              }
+            },
+            onAutoplayBlocked: () => {
+              setRadioNeedsInteraction(true);
+              setRadioStatusMessage('Tap once to turn on the lofi radio');
+              try {
+                radioPlayerRef.current?.mute?.();
+                radioPlayerRef.current?.playVideo?.();
+              } catch {}
+            }
+          }
+        });
+        return;
+      }
+
+      try {
+        if (radioUnlockedRef.current) {
+          radioPlayerRef.current.unMute?.();
+        } else {
+          radioPlayerRef.current.mute?.();
+        }
+        radioPlayerRef.current.setVolume?.(radioVolume);
+        radioPlayerRef.current.playVideo?.();
+        setRadioNeedsInteraction(!radioUnlockedRef.current);
+        setRadioStatusMessage(radioUnlockedRef.current ? 'Lofi radio playing' : 'Lofi radio live — tap once for sound');
+      } catch {
+        setRadioNeedsInteraction(true);
+        setRadioStatusMessage('Tap once for sound');
+      }
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isRadioPlaying, radioVolume]);
+
+  useEffect(() => {
+    if (!isRadioPlaying) {
+      return undefined;
+    }
+
+    const unlockRadio = () => {
+      radioUnlockedRef.current = true;
+      setRadioNeedsInteraction(false);
+      if (!radioPlayerRef.current) {
+        setRadioStatusMessage('Lofi radio waking up');
+        return;
+      }
+
+      try {
+        radioPlayerRef.current.unMute?.();
+        radioPlayerRef.current.setVolume?.(radioVolume);
+        radioPlayerRef.current.playVideo?.();
+        setRadioStatusMessage('Lofi radio playing');
+      } catch {}
+    };
+
+    window.addEventListener('pointerdown', unlockRadio, { once: true });
+    window.addEventListener('touchstart', unlockRadio, { once: true });
+    window.addEventListener('keydown', unlockRadio, { once: true });
+    window.addEventListener('focus', unlockRadio, { once: true });
+
+    return () => {
+      window.removeEventListener('pointerdown', unlockRadio);
+      window.removeEventListener('touchstart', unlockRadio);
+      window.removeEventListener('keydown', unlockRadio);
+      window.removeEventListener('focus', unlockRadio);
+    };
+  }, [isRadioPlaying, radioVolume]);
+
+  useEffect(() => {
+    if (radioPlayerRef.current?.setVolume) {
+      try {
+        radioPlayerRef.current.setVolume(radioVolume);
+      } catch {}
+    }
+  }, [radioVolume]);
   const weeklyGoal = 5;
   const weeklyCheckIns = useMemo(() => {
     const sevenDaysAgo = new Date();
@@ -3423,6 +3979,42 @@ function App() {
     const reader = new FileReader();
     reader.onload = () => setCustomWeatherImage(String(reader.result || ''));
     reader.readAsDataURL(file);
+  }
+
+  function handleWallpaperImageUpload(event) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const rawImage = String(reader.result || '');
+      if (!rawImage || file.type === 'image/gif') {
+        setWallpaperImage(rawImage);
+        return;
+      }
+      const image = new Image();
+      image.onload = () => {
+        const maxSide = 1800;
+        const scale = Math.min(1, maxSide / Math.max(image.width, image.height));
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.max(1, Math.round(image.width * scale));
+        canvas.height = Math.max(1, Math.round(image.height * scale));
+        const context = canvas.getContext('2d');
+        if (!context) {
+          setWallpaperImage(rawImage);
+          return;
+        }
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        setWallpaperImage(canvas.toDataURL('image/jpeg', 0.86));
+      };
+      image.onerror = () => setWallpaperImage(rawImage);
+      image.src = rawImage;
+    };
+    reader.readAsDataURL(file);
+    event.target.value = '';
+  }
+
+  function removeWallpaperImage() {
+    setWallpaperImage('');
   }
 
   function insertTextAtCursor(text) {
@@ -4042,6 +4634,7 @@ function App() {
     setSelectedCalendarDate(dateKey);
     const existing = importantDates[dateKey];
     setImportanceDraft(existing?.note || '');
+    setImportanceDetailsDraft(existing?.details || '');
     setImportanceTimeDraft(existing?.time || '');
     setImportanceReminderEnabled(existing ? existing.remindersEnabled !== false : true);
     setImportanceModalOpen(true);
@@ -4052,6 +4645,7 @@ function App() {
     setImportantDates(rest);
     setImportanceModalOpen(false);
     setImportanceDraft('');
+    setImportanceDetailsDraft('');
     setImportanceTimeDraft('');
     setImportanceReminderEnabled(true);
   }
@@ -4079,14 +4673,18 @@ function App() {
   }
 
   function saveImportantDate() {
-    if (!importanceDraft.trim()) {
+    const trimmedTitle = importanceDraft.trim();
+    const trimmedDetails = importanceDetailsDraft.trim();
+    const reminderTitle = trimmedTitle || trimmedDetails.split('\n').find(Boolean)?.trim().slice(0, 80) || '';
+    if (!reminderTitle) {
       setImportanceModalOpen(false);
       return;
     }
     setImportantDates({
       ...importantDates,
       [selectedCalendarDate]: {
-        note: importanceDraft.trim(),
+        note: reminderTitle,
+        details: trimmedDetails,
         time: importanceTimeDraft,
         remindersEnabled: importanceReminderEnabled,
         createdAt: new Date().toISOString()
@@ -4094,6 +4692,7 @@ function App() {
     });
     setImportanceModalOpen(false);
     setImportanceDraft('');
+    setImportanceDetailsDraft('');
     setImportanceTimeDraft('');
     setImportanceReminderEnabled(true);
   }
@@ -4209,40 +4808,84 @@ function App() {
     return `${m}:${s < 10 ? '0' : ''}${s}`;
   };
 
+  const applyBreatheRoom = (id) => {
+    const room = breatheRoomOptions.find((r) => r.id === id);
+    if (!room) return;
+    setSelectedBreatheRoom(id);
+    setRadioVolume(room.volume);
+    setBreatheRoomStatus(room.status);
+
+    if (radioPlayerRef.current?.loadVideoById) {
+      radioUnlockedRef.current = true;
+      radioPlayerRef.current.loadVideoById({
+        videoId: room.videoId,
+        startSeconds: 0,
+        suggestedQuality: 'small'
+      });
+      radioPlayerRef.current.unMute?.();
+      radioPlayerRef.current.setVolume?.(room.volume);
+      radioPlayerRef.current.playVideo?.();
+      setIsRadioPlaying(true);
+      setRadioNeedsInteraction(false);
+      setRadioStatusMessage(`${room.title} selected — audio is playing`);
+    } else {
+      setRadioStatusMessage('Connecting to radio player...');
+    }
+  };
+
   if (locked) {
     return <PrivacyGate hasPin={hasPin} onCreatePin={createPin} onUnlock={() => setLocked(false)} />;
   }
 
   return (
-    <main className={`personalized-site design-${selectedDesign} ${comfortMode ? 'comfort-mode' : ''} min-h-screen overflow-hidden bg-sand-50 pb-24 text-ink lg:pb-0`} style={themeStyle}>
-      <div className="pointer-events-none fixed inset-0 -z-10">
-        <div className="absolute left-0 top-0 h-96 w-96 rounded-full bg-sage-200/70 blur-3xl" />
-        <div className="absolute right-0 top-56 h-96 w-96 rounded-full bg-sand-200/80 blur-3xl" />
-        <div className="absolute bottom-0 left-1/3 h-80 w-80 rounded-full bg-teal-100/70 blur-3xl" />
+    <main className={`personalized-site lofi-vibe ${wallpaperImage ? 'wallpaper-active' : ''} design-${selectedDesign} ${comfortMode ? 'comfort-mode' : ''} isolate min-h-screen overflow-hidden bg-sand-50 pb-24 text-ink lg:pb-0`} style={themeStyle}>
+      {isGameTransitioning && <GameSplash game={transitioningGameConfig} />}
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+        {wallpaperImage && <div className="lofi-user-wallpaper absolute inset-0" style={{ backgroundImage: `url(${wallpaperImage})` }} />}
+        <div className="lofi-ambient-grid absolute inset-0" />
+        <div className="absolute left-[-2rem] top-0 h-[28rem] w-[28rem] rounded-full bg-[#efe4d7]/80 blur-3xl" />
+        <div className="absolute right-[-3rem] top-44 h-[26rem] w-[26rem] rounded-full bg-[#f8efe5]/85 blur-3xl" />
+        <div className="absolute bottom-[-4rem] left-1/3 h-[22rem] w-[22rem] rounded-full bg-[#f2e8dc]/78 blur-3xl" />
+        <div className="lofi-record-glow absolute -right-20 top-[22rem] hidden h-72 w-72 rounded-full lg:block" />
+        <div className="lofi-moon-glow absolute left-[6%] top-[34rem] hidden h-28 w-28 rounded-full md:block" />
       </div>
 
 
-      <nav className="sticky top-0 z-20 px-4 pt-4">
-        <div className="site-nav-shell mx-auto max-w-7xl rounded-[2rem] border border-white/80 bg-white/78 p-3 shadow-soft backdrop-blur-xl lg:p-4">
+      {showEntryTransition && (
+        <div className={`fixed inset-0 z-40 flex items-center justify-center bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.42),transparent_30%),linear-gradient(180deg,rgba(248,243,235,0.98)_0%,rgba(242,234,224,0.97)_100%)] backdrop-blur-[10px] transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${entryTransitionClosing ? 'opacity-0' : 'opacity-100'}`}>
+          <div className={`px-6 text-center transition-all duration-[1050ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${entryTransitionClosing ? 'translate-y-3 scale-[1.02] opacity-0' : 'translate-y-0 scale-100 opacity-100'}`}>
+            <div className="mx-auto flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border border-[#e8dfd5] bg-white/88 p-2 shadow-[0_18px_50px_rgba(158,136,114,0.12)] ring-8 ring-white/30">
+              <img src={headerLogoIcon} alt="Lofi Memory logo" className="h-full w-full rounded-full object-cover" />
+            </div>
+            <p className="mt-6 text-[11px] font-extrabold uppercase tracking-[0.42em] text-[#8d7763]">Lofi Memory</p>
+            <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-[#3d3025] sm:text-5xl">Clear your mind.</h1>
+            <p className="mt-3 text-sm font-semibold tracking-[0.08em] text-[#8c7967]">A calm little pause before you relax.</p>
+          </div>
+        </div>
+      )}
+
+      <div className={`transition-opacity duration-500 ${showEntryTransition ? 'pointer-events-none select-none opacity-0' : 'opacity-100'}`}>
+      <nav className="sticky top-0 z-20 px-5 pt-5 sm:px-7 xl:px-10">
+        <div className="site-nav-shell lofi-glass lofi-picture-border lofi-border-memory mx-auto max-w-[1280px] rounded-[3.2rem] border p-4 shadow-soft backdrop-blur-xl lg:p-5">
           <div className="flex flex-col gap-2.5 lg:gap-3 xl:flex-row xl:items-center xl:justify-between">
-            <a className="flex items-center gap-3" href="#home" onClick={() => openHomeSection('home')}>
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-3xl bg-white shadow-lift ring-1 ring-sage-100 overflow-hidden">
-                <img src="/logo-transparent.png" alt="Lofi Memory Logo" className="h-10 w-10 object-contain" />
+            <a className="flex items-center gap-3.5" href="#home" onClick={() => openHomeSection('home')}>
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[1.35rem] border border-[#e8dfd5] bg-white/88 p-1.5 shadow-[0_12px_34px_rgba(117,127,119,0.14)] ring-1 ring-sage-100 overflow-hidden">
+                <img src={headerLogoIcon} alt="Lofi Memory Logo" className="h-full w-full rounded-[1rem] object-cover" />
               </div>
               <div>
                 <p className="font-display text-2xl font-bold text-sage-900">Lofi Memory</p>
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-sage-700">Chill beats & private thoughts</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-sage-700">Chill music, lofi games & journal</p>
               </div>
             </a>
             <div className="site-nav-links hidden flex-1 items-center justify-center gap-7 xl:gap-9">
               {[
-                { id: 'home', label: 'Home', icon: Waves },
-                { id: 'write', label: 'Write', icon: PenLine },
+                { id: 'unwind', label: 'Games', icon: Gamepad2 },
+                { id: 'home', label: 'Chill', icon: Headphones },
+                { id: 'write', label: 'Diary', icon: PenLine },
                 { id: 'notes', label: 'Notes', icon: FileText },
-                { id: 'breathe', label: 'Breathe', icon: Wind },
-                { id: 'unwind', label: 'Unwind', icon: Leaf },
-                { id: 'memories', label: 'Memories', icon: BookOpen },
-                { id: 'insights', label: 'Insights', icon: Sparkles }
+                { id: 'breathe', label: 'Music Room', icon: Wind },
+                { id: 'memories', label: 'Memories', icon: CalendarDays },
+                { id: 'design', label: 'Design', icon: Palette }
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -4256,7 +4899,7 @@ function App() {
 
             <div className="site-nav-actions flex w-full flex-wrap items-center gap-2 lg:justify-end xl:w-auto xl:max-w-[34rem] xl:flex-none xl:flex-nowrap">
               {user ? (
-                <div className="flex min-w-[210px] flex-1 items-center justify-between gap-3 rounded-full border border-sage-200 bg-white/92 px-4 py-2.5 shadow-lift xl:flex-none">
+                <div className="flex min-w-[210px] flex-1 items-center justify-between gap-3 rounded-full border border-amber-200/50 bg-white/92 px-4 py-2.5 shadow-lift xl:flex-none">
                   <div className="min-w-0">
                     <p className="truncate text-sm font-extrabold text-sage-950">{user.displayName || user.email}</p>
                     <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-sage-600">{cloudStatus}</p>
@@ -4266,7 +4909,7 @@ function App() {
                   </div>
                 </div>
               ) : (
-                <button className="flex min-w-[208px] flex-1 items-center justify-between gap-3 rounded-full border border-sage-200 bg-white/92 px-4 py-2.5 text-left shadow-lift transition hover:-translate-y-0.5 hover:bg-white xl:flex-none" onClick={signInWithGoogle} disabled={authLoading} type="button">
+                <button className="flex min-w-[208px] flex-1 items-center justify-between gap-3 rounded-full border border-amber-200/50 bg-white/92 px-4 py-2.5 text-left shadow-lift transition hover:-translate-y-0.5 hover:bg-white xl:flex-none" onClick={signInWithGoogle} disabled={authLoading} type="button">
                   <div>
                     <p className="text-sm font-extrabold text-sage-950">{authLoading ? 'Checking login...' : 'Sign in with Google'}</p>
                     <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-sage-600">Sync across devices</p>
@@ -4276,14 +4919,14 @@ function App() {
                   </div>
                 </button>
               )}
-              <div className="flex flex-wrap items-center gap-2 rounded-full border border-sage-100 bg-white/82 p-1.5 shadow-sm xl:flex-nowrap">
+              <div className="flex flex-wrap items-center gap-2 rounded-full border border-[#e8dfd5] bg-white/82 p-1.5 shadow-sm xl:flex-nowrap">
                 {user && (
-                  <button className="rounded-full border border-sage-200 bg-white/90 px-3.5 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:bg-white" onClick={handleSignOut} type="button">
+                  <button className="rounded-full border border-amber-200/50 bg-white/90 px-3.5 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:bg-white" onClick={handleSignOut} type="button">
                     Sign out
                   </button>
                 )}
                 {isMasterAdmin && (
-                  <div className="flex overflow-hidden rounded-full border border-sage-200 bg-white/90 p-1">
+                  <div className="flex overflow-hidden rounded-full border border-amber-200/50 bg-white/90 p-1">
                     <button
                       className={`rounded-full px-3.5 py-2 text-sm font-extrabold transition ${adminViewMode === 'master' ? 'bg-sage-900 text-white shadow-sm' : 'text-sage-700 hover:bg-sage-50'}`}
                       onClick={() => setAdminViewMode('master')}
@@ -4305,86 +4948,140 @@ function App() {
                     SEO studio
                   </button>
                 )}
-                <button className={`rounded-full border px-3.5 py-2 text-sm font-bold transition hover:-translate-y-0.5 ${comfortMode ? 'border-sage-800 bg-sage-900 text-white' : 'border-sage-200 bg-white/90 text-sage-800 hover:bg-white'}`} onClick={() => setComfortMode(!comfortMode)} type="button">
+                <button className={`rounded-full border px-3.5 py-2 text-sm font-bold transition hover:-translate-y-0.5 ${comfortMode ? 'border-sage-800 bg-sage-900 text-white' : 'border-amber-200/50 bg-white/90 text-sage-800 hover:bg-white'}`} onClick={() => setComfortMode(!comfortMode)} type="button">
                   Comfort
                 </button>
-                <button className="rounded-full border border-sage-200 bg-white/90 px-3.5 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:bg-white" onClick={() => (hasPin ? setPinSettingsOpen(true) : setLocked(true))} type="button">
+                <button className="rounded-full border border-amber-200/50 bg-white/90 px-3.5 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:bg-white" onClick={() => (hasPin ? setPinSettingsOpen(true) : setLocked(true))} type="button">
                   {hasPin ? 'Privacy' : 'Set lock'}
                 </button>
               </div>
             </div>
           </div>
-          <div className="site-nav-links mt-2 hidden flex-wrap items-center justify-center gap-2 rounded-[1.5rem] border border-sage-100 bg-white/88 p-1.5 lg:flex">
-            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#journal" onClick={() => navigateToTab('write')}>Journal</a>
-            <button className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
-            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#guides" onClick={() => openHomeSection('guides')}>Guides</a>
-            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#resources" onClick={() => openHomeSection('resources')}>Resources</a>
-            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#faq" onClick={() => openHomeSection('faq')}>FAQ</a>
-            <a className="rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#contact" onClick={() => openHomeSection('contact')}>Contact</a>
+          <div className="site-nav-links mt-2 hidden flex-wrap items-center justify-center gap-2 rounded-[1.5rem] border border-[#e8dfd5] bg-white/88 p-1.5 2xl:flex">
+            <a className="rounded-full border border-amber-200/50 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#unwind" onClick={() => navigateToTab('unwind')}>Games</a>
+            <a className="rounded-full border border-amber-200/50 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#home" onClick={() => navigateToTab('home')}>Chill</a>
+            <button className="rounded-full border border-amber-200/50 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
+            <a className="rounded-full border border-amber-200/50 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#memories" onClick={() => navigateToTab('memories')}>Memories</a>
+            <a className="rounded-full border border-amber-200/50 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#breathe" onClick={() => navigateToTab('breathe')}>Music</a>
+            <a className="rounded-full border border-amber-200/50 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
           </div>
         </div>
       </nav>
 
-      {activeTab === 'home' && activeHomeSection === 'overview' && (
-      <section id="home" className="mx-auto grid max-w-7xl gap-8 px-6 pb-28 pt-8 lg:grid-cols-12 lg:pb-10 lg:pt-10 xl:gap-10">
+      {showMinimalHomeOverview && (
+      <section id="home" className="mx-auto max-w-[1040px] px-5 pb-20 pt-10 sm:px-7 xl:px-10">
+        <div className="mb-6 text-center">
+          <p className="text-[11px] font-extrabold uppercase tracking-[0.34em] text-[#9a806a]">Choose your chill space</p>
+            <p className="mt-3 text-sm font-semibold leading-7 text-[#7f6a58]">Pick a space.</p>
+        </div>
+        <div className="lofi-glass lofi-picture-border lofi-border-memory rounded-[3rem] border p-3 shadow-soft backdrop-blur-xl sm:p-4">
+          <div className="grid gap-3 md:grid-cols-2">
+            {homeEntryCards.map((card) => (
+              <button
+                key={card.id}
+                className="group lofi-glass lofi-picture-border lofi-border-watercolor relative flex min-h-[11rem] w-full flex-col items-start justify-start overflow-hidden rounded-[2.2rem] border px-5 py-5 text-left shadow-[0_10px_26px_rgba(146,126,106,0.07)] transition duration-300 hover:-translate-y-1 hover:border-[#d8c6b2] hover:shadow-[0_16px_34px_rgba(146,126,106,0.1)]"
+                onClick={card.onClick}
+                type="button"
+              >
+                <img src={card.preview} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" aria-hidden="true" />
+                <div className="absolute inset-0 bg-gradient-to-br from-black/45 via-black/5 to-transparent" />
+                <div className="relative z-10 p-2">
+                  <p className="text-lg font-black tracking-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">{card.title}</p>
+                  <p className="mt-0.5 text-xs font-bold uppercase tracking-widest text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">{card.description}</p>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+      )}
+
+      {activeTab === 'home' && activeHomeSection === 'overview' && !showMinimalHomeOverview && (
+      <section id="home" className="mx-auto grid max-w-[1280px] gap-8 px-5 pb-28 pt-10 sm:px-7 lg:grid-cols-12 lg:pb-12 xl:gap-12 xl:px-10">
         <div className="lg:col-span-8">
-          <div className="relative overflow-hidden rounded-[2rem] border border-sage-100/80 bg-white/92 p-8 shadow-soft backdrop-blur-xl lg:p-10 xl:p-11">
-            <div className="pointer-events-none absolute -left-10 top-12 h-28 w-28 rounded-full bg-sage-100/45 blur-3xl"></div>
-            <div className="pointer-events-none absolute right-4 top-4 h-32 w-32 rounded-full bg-sand-100/40 blur-3xl"></div>
+          <div className="lofi-glass lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3.2rem] border p-8 shadow-soft backdrop-blur-xl lg:p-10 xl:p-11">
+            <div className="pointer-events-none absolute -left-10 top-12 h-28 w-28 rounded-full bg-[#efe4d8]/55 blur-3xl"></div>
+            <div className="pointer-events-none absolute right-4 top-4 h-32 w-32 rounded-full bg-[#f7eee3]/65 blur-3xl"></div>
             <div className="relative">
-              <div className="mb-8 flex flex-wrap items-center gap-3">
-                <div className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white/95 px-4 py-2 text-sm font-bold text-sage-950 shadow-sm">
-                  <Sparkles size={16} /> Quiet online diary
-                </div>
-                <div className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-sage-50/75 px-4 py-2 text-sm font-bold text-sage-800 shadow-sm">
-                  <Quote size={14} /> Private · minimal · gentle
-                </div>
+              <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#eadfce] bg-white/90 px-4 py-2 text-sm font-bold text-[#4a3a2d] shadow-sm">
+                <Headphones size={16} /> Lofi music & chill vibes
               </div>
-              <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.96] tracking-tight text-sage-950 md:text-6xl">A quiet place for honest writing.</h1>
-              <p className="mt-5 max-w-3xl text-[1.28rem] font-semibold leading-9 text-sage-900">Lofi Memory keeps the page light — enough guidance to begin, enough privacy to be real, and enough calm to return tomorrow.</p>
-              <p className="mt-4 max-w-[42rem] text-lg leading-8 text-sage-700">Write one sentence, keep a feeling, or leave a small note for yourself. Nothing here needs to be polished before it matters.</p>
+              <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.96] tracking-tight text-[#3d3025] md:text-6xl">Lofi Memory — a relaxing place to play games and listen to music.</h1>
+              <p className="mt-5 max-w-3xl text-[1.18rem] font-semibold leading-8 text-[#5d4c3e]">Listen to lofi music, play relaxing browser games, chill, keep a private online diary, and enjoy a cozy music room in one soft online space.</p>
+
+              <div className="lofi-now-playing lofi-glass mt-7 flex flex-col gap-4 rounded-[2.2rem] border p-4 shadow-sm backdrop-blur sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="lofi-mini-record flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-[#d8c5af] bg-[#3f342c] shadow-[0_14px_28px_rgba(80,61,47,0.14)]">
+                    <div className="h-5 w-5 rounded-full border border-[#d8c5af] bg-[#f3e7d8]" />
+                  </div>
+                  <div>
+                    <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-[#9a806a]">Now playing</p>
+                    <p className="mt-1 text-base font-extrabold text-[#3d3025]">Dusk room · rain window · soft study beats</p>
+                  </div>
+                </div>
+                <div className="lofi-equalizer" aria-hidden="true"><span /><span /><span /><span /><span /></div>
+              </div>
 
               <div className="mt-9 flex flex-wrap gap-3">
-                <a className="inline-flex items-center gap-2 rounded-full bg-sage-900 px-5 py-3 text-sm font-extrabold text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800" href="#journal" onClick={() => navigateToTab('write')}>
-                  <PenLine size={17} /> Write today’s entry
+                <button className="inline-flex items-center gap-2 rounded-full bg-[#4f3f32] px-5 py-3 text-sm font-extrabold text-white shadow-[0_12px_28px_rgba(97,74,56,0.16)] transition hover:-translate-y-1 hover:bg-[#433528]" onClick={() => setIsRadioPlaying(true)} type="button">
+                  <Headphones size={17} /> Start lofi music
+                </button>
+                <a className="inline-flex items-center gap-2 rounded-full border border-[#e2d3c2] bg-white/92 px-5 py-3 text-sm font-extrabold text-[#4f3f32] shadow-sm transition hover:-translate-y-1 hover:border-[#d3bea8] hover:bg-white" href="#unwind" onClick={() => navigateToTab('unwind')}>
+                  <Leaf size={17} /> Play relaxing games
                 </a>
-                <button className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white px-5 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-1 hover:border-sage-300 hover:bg-sage-50" onClick={() => setCustomizerOpen(true)} type="button">
+                <a className="inline-flex items-center gap-2 rounded-full border border-[#e2d3c2] bg-white/92 px-5 py-3 text-sm font-extrabold text-[#4f3f32] shadow-sm transition hover:-translate-y-1 hover:border-[#d3bea8] hover:bg-white" href="#notes" onClick={() => navigateToTab('notes')}>
+                  <FileText size={17} /> Open notes & to-dos
+                </a>
+                <button className="inline-flex items-center gap-2 rounded-full border border-[#e2d3c2] bg-white/92 px-5 py-3 text-sm font-extrabold text-[#4f3f32] shadow-sm transition hover:-translate-y-1 hover:border-[#d3bea8] hover:bg-white" onClick={() => setCustomizerOpen(true)} type="button">
                   <Palette size={17} /> Choose your theme
                 </button>
                 {hasPin && (
-                  <button className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white px-5 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-1 hover:border-sage-300 hover:bg-sage-50" onClick={() => setPinSettingsOpen(true)} type="button">
+                  <button className="inline-flex items-center gap-2 rounded-full border border-[#e2d3c2] bg-white/92 px-5 py-3 text-sm font-extrabold text-[#4f3f32] shadow-sm transition hover:-translate-y-1 hover:border-[#d3bea8] hover:bg-white" onClick={() => setPinSettingsOpen(true)} type="button">
                     <Shield size={17} /> Privacy settings
                   </button>
                 )}
               </div>
 
               <div className="mt-7 grid gap-3 lg:grid-cols-3">
-                {writingInvitations.map((invitation) => (
-                  <button key={invitation.title} className="group rounded-[1.55rem] border border-sage-100 bg-white/88 p-4 text-left shadow-sm transition hover:-translate-y-1 hover:border-sage-200 hover:bg-white hover:shadow-lift" onClick={() => startWritingFromInvitation(invitation)} type="button">
-                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-500">Start with</p>
-                    <h3 className="mt-2 text-lg font-extrabold leading-tight text-sage-950 group-hover:text-sage-800">{invitation.opener}...</h3>
-                    <p className="mt-2 text-sm leading-6 text-sage-700">{invitation.detail}</p>
+                {hangoutInvitations.map((invitation) => (
+                  <button key={invitation.title} className="group lofi-glass rounded-[1.55rem] border p-4 text-left shadow-sm transition hover:-translate-y-1 hover:border-[#d9c7b3] hover:shadow-[0_14px_30px_rgba(146,126,106,0.08)]" onClick={() => navigateToTab(invitation.tab)} type="button">
+                    <div className="flex items-start justify-between gap-3">
+                      <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#9a806a]">{invitation.eyebrow}</p>
+                      <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-[#efe4d8] text-[#7b6552]">
+                        <invitation.icon size={16} />
+                      </span>
+                    </div>
+                    <h3 className="mt-3 text-lg font-extrabold leading-tight text-[#3d3025] group-hover:text-[#4f3f32]">{invitation.title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-[#7c6957]">{invitation.detail}</p>
                   </button>
                 ))}
               </div>
 
               <div className="mt-7 flex flex-wrap gap-3 text-sm font-semibold text-sage-900">
-                <div className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white/92 px-4 py-2.5 shadow-sm">
-                  <ShieldCheck size={16} /> {hasPin ? 'Protected with a private PIN' : 'Add a soft lock any time'}
+                <div className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white/92 px-4 py-2.5 shadow-sm">
+                  <ShieldCheck size={16} /> {hasPin ? 'Private when you want it' : 'Add privacy any time'}
                 </div>
-                <div className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white/92 px-4 py-2.5 shadow-sm">
-                  <Sparkles size={16} /> {user ? `${entries.length} entries saved · ${cloudStatus}` : `${entries.length} entries saved · Local-first journaling`}
+                <div className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white/92 px-4 py-2.5 shadow-sm">
+                  <Sparkles size={16} /> {user ? `${entries.length} saved moments · ${cloudStatus}` : `${entries.length} saved moments · Local-first chill space`}
                 </div>
               </div>
 
               <div className="mt-8 flex flex-wrap items-center gap-3 text-sm">
                 <span className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Popular guides</span>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/private-online-diary.html">Private online diary</a>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/online-diary.html">Online diary</a>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/diary-app.html">Diary app</a>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/journal-app.html">Journal app</a>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/best-diary-app.html">Best diary app</a>
-                <a className="rounded-full border border-sage-200 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/how-to-write-a-diary.html">How to write a diary</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-music-room.html">Lofi music room</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-music-website.html">Lofi music website</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/listen-to-lofi-music-online.html">Listen to lofi</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-radio-online.html">Lofi radio</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/relaxing-music-online.html">Relaxing music</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-music-online.html">Chill music</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-music-and-games.html">Music + games</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-study-music.html">Study music</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-vibes.html">Lofi vibes</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-vibes.html">Chill vibes</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/website-to-relax.html">Website to relax</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-place-online.html">Chill place online</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-games.html">Chill games</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/relaxing-browser-games.html">Relaxing browser games</a>
               </div>
 
               <div className="mt-8 grid gap-4 sm:grid-cols-3 xl:grid-cols-3">
@@ -4393,30 +5090,48 @@ function App() {
                 <StatCard icon={HeartHandshake} label="Average mood" value={averageMood} tone="bg-teal-100 text-teal-700" />
               </div>
 
-              <div className="mt-8 grid gap-4 lg:grid-cols-[minmax(0,1.28fr)_minmax(280px,0.72fr)]">
-                <div className="flex min-h-[290px] flex-col justify-between rounded-[1.8rem] border border-white/80 bg-gradient-to-br from-white/90 to-sage-50/70 p-5 shadow-lift backdrop-blur">
+              <div className="mt-8 space-y-5">
+                <div className="flex min-h-[290px] flex-col justify-between rounded-[2.2rem] border border-[#e8dfd5] bg-gradient-to-br from-white/90 to-sage-50/70 p-5 shadow-lift backdrop-blur">
                   <div>
-                    <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">How people use it</p>
-                    <h3 className="mt-3 text-2xl font-extrabold leading-tight text-ink">Start with the page that matches what you were actually searching for.</h3>
-                    <p className="mt-3 max-w-2xl text-sm leading-7 text-sage-800">Some visitors want a private online diary, some want an online journal, and some are simply looking for the easiest place to begin. These guide pages help them land in the right mood without making the homepage feel crowded.</p>
+                    <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">All-in-one soft corner</p>
+                    <h3 className="mt-3 text-2xl font-extrabold leading-tight text-ink">Listen, relax, plan, and write without jumping between tabs.</h3>
+                    <p className="mt-3 max-w-2xl text-sm leading-7 text-sage-800">Lofi Memory is meant to feel like a calm browser hangout. You can let the lofi stream roll, play a chill game, keep your to-do list nearby, breathe for a minute, or write something down whenever you feel like it.</p>
                   </div>
-                  <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-                    <a className="rounded-[1.35rem] border border-sage-200 bg-white/95 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50" href="/private-online-diary.html">
-                      <span className="block text-sm font-extrabold text-sage-900">Private online diary</span>
-                      <span className="mt-2 block text-[13px] leading-5 text-sage-700">Private entries, mood tracking, and a diary that stays personal.</span>
-                    </a>
-                    <a className="rounded-[1.35rem] border border-sage-200 bg-white/95 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50" href="/where-to-write-a-diary-online.html">
-                      <span className="block text-sm font-extrabold text-sage-900">Where to write online diary</span>
-                      <span className="mt-2 block text-[13px] leading-5 text-sage-700">A beginner-friendly path if you are still deciding where to start.</span>
-                    </a>
-                    <a className="rounded-[1.35rem] border border-sage-200 bg-white/95 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50" href="/online-journal.html">
-                      <span className="block text-sm font-extrabold text-sage-900">Online journal</span>
-                      <span className="mt-2 block text-[13px] leading-5 text-sage-700">Reflection writing with gentle structure and a softer rhythm.</span>
-                    </a>
+                  <div className="mt-6 space-y-3.5">
+                    <button className="group flex w-full items-start gap-4 rounded-[1.5rem] border border-amber-200/50 bg-white/96 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50 hover:shadow-lift" onClick={() => setIsRadioPlaying(true)} type="button">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700 shadow-sm transition group-hover:scale-105">
+                        <Headphones size={18} />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <span className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-emerald-700">Listen</span>
+                        <span className="mt-1 block text-base font-extrabold text-sage-950">Lofi music</span>
+                        <span className="mt-2 block text-sm leading-6 text-sage-700">Start the soft radio and let the page settle into a calmer room for relaxing, focus, or writing.</span>
+                      </div>
+                    </button>
+                    <button className="group flex w-full items-start gap-4 rounded-[1.5rem] border border-amber-200/50 bg-white/96 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50 hover:shadow-lift" onClick={() => navigateToTab('notes')} type="button">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-teal-100 text-teal-700 shadow-sm transition group-hover:scale-105">
+                        <FileText size={18} />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <span className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-teal-700">Plan</span>
+                        <span className="mt-1 block text-base font-extrabold text-sage-950">Notes & to-dos</span>
+                        <span className="mt-2 block text-sm leading-6 text-sage-700">Keep errands, reminders, and important bits close in a calmer, easier-to-scan space.</span>
+                      </div>
+                    </button>
+                    <button className="group flex w-full items-start gap-4 rounded-[1.5rem] border border-amber-200/50 bg-white/96 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50 hover:shadow-lift" onClick={() => navigateToTab('write')} type="button">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-sage-100 text-sage-800 shadow-sm transition group-hover:scale-105">
+                        <PenLine size={18} />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <span className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-700">Write</span>
+                        <span className="mt-1 block text-base font-extrabold text-sage-950">Thought drop</span>
+                        <span className="mt-2 block text-sm leading-6 text-sage-700">Write down whatever is on your mind only when you want to keep it, with more room to breathe.</span>
+                      </div>
+                    </button>
                   </div>
-                  <p className="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-sage-700">Useful starting points for diary, journal, and reflection searches.</p>
+                  <p className="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-sage-700">One place to listen to lofi music, relax, plan your day, and save your thoughts.</p>
                 </div>
-                <div className={`flex min-h-[290px] flex-col justify-between rounded-[1.8rem] border p-5 shadow-sm backdrop-blur ${selectedMoodGuide.shellClass}`}>
+                <div className={`flex min-h-[290px] flex-col justify-between rounded-[2.2rem] border p-5 shadow-sm backdrop-blur ${selectedMoodGuide.shellClass}`}>
                   <div>
                     <div className="flex items-center justify-between gap-3">
                       <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">Mood check-in</p>
@@ -4453,21 +5168,21 @@ function App() {
         </div>
 
         <aside className="flex flex-col gap-5 lg:col-span-4">
-          <div className="rounded-[1.9rem] border border-white/80 bg-white/72 p-5 shadow-soft backdrop-blur-xl">
+          <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/72 p-5 shadow-soft backdrop-blur-xl">
             <div className="flex items-center justify-between gap-3">
               <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">Start where it helps most</p>
-              <span className="rounded-full border border-sage-100 bg-sage-50 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-800">Core spaces</span>
+              <span className="rounded-full border border-[#e8dfd5] bg-sage-50 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-800">Core spaces</span>
             </div>
             <div className="mt-4 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:gap-4">
               {[
-                { id: 'write', label: 'Write', detail: 'Begin with one honest line', icon: PenLine, tone: 'bg-sage-100 text-sage-800' },
+                { id: 'unwind', label: 'Games', detail: 'Chill games', icon: Gamepad2, tone: 'bg-violet-100 text-violet-700' },
+                { id: 'write', label: 'Diary', detail: 'Write only when it helps', icon: PenLine, tone: 'bg-sage-100 text-sage-800' },
                 { id: 'notes', label: 'Notes', detail: 'Keep important things nearby', icon: FileText, tone: 'bg-teal-100 text-teal-700' },
-                { id: 'breathe', label: 'Breathe', detail: 'Focus & breathe', icon: Wind, tone: 'bg-blue-100 text-blue-700' },
-                { id: 'unwind', label: 'Unwind', detail: 'Fidget & relax', icon: Leaf, tone: 'bg-emerald-100 text-emerald-700' },
-                { id: 'memories', label: 'Memories', detail: 'Return to saved pages', icon: BookOpen, tone: 'bg-sand-100 text-sand-600' },
-                { id: 'insights', label: 'Insights', detail: 'See moods over time', icon: Sparkles, tone: 'bg-rose-100 text-rose-700' }
+                { id: 'breathe', label: 'Music Room', detail: 'Wallpaper sounds', icon: Wind, tone: 'bg-blue-100 text-blue-700' },
+                { id: 'memories', label: 'Memories', detail: 'Return to saved moments', icon: BookOpen, tone: 'bg-sand-100 text-sand-600' },
+                { id: 'design', label: 'Design', detail: 'Customize your space', icon: Palette, tone: 'bg-rose-100 text-rose-700' }
               ].map((tab) => (
-                <button key={tab.id} className="group flex items-center gap-3 rounded-2xl border border-sage-100 bg-white/92 px-4 py-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-200 hover:bg-white hover:shadow-lift" onClick={() => navigateToTab(tab.id)} type="button">
+                <button key={tab.id} className="group flex items-center gap-3 rounded-2xl border border-[#e8dfd5] bg-white/92 px-4 py-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-white hover:shadow-lift" onClick={() => navigateToTab(tab.id)} type="button">
                   <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl shadow-sm transition group-hover:scale-105 ${tab.tone}`}>
                     <tab.icon size={18} />
                   </div>
@@ -4480,27 +5195,27 @@ function App() {
             </div>
           </div>
 
-          <div className="rounded-[1.9rem] border border-white/80 bg-gradient-to-br from-white/84 to-sand-50/70 p-6 shadow-soft backdrop-blur-xl">
-            <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-800">Why it feels good to write here</p>
-            <h3 className="mt-3 text-2xl font-extrabold leading-tight text-ink">The page stays quiet enough for real thoughts to arrive.</h3>
-            <p className="mt-3 max-w-sm text-sm leading-7 text-sage-800">There is a clear place to begin, soft privacy cues, and just enough support to help a first sentence feel easy instead of exposed.</p>
+          <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-gradient-to-br from-white/84 to-sand-50/70 p-6 shadow-soft backdrop-blur-xl">
+            <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-800">Why it feels good to stay here</p>
+            <h3 className="mt-3 text-2xl font-extrabold leading-tight text-ink">The page feels like a chill place first, so writing can arrive naturally.</h3>
+            <p className="mt-3 max-w-sm text-sm leading-7 text-sage-800">There is a clear place to begin, soft privacy cues, cozy game breaks, and just enough support to help a first sentence feel easy instead of exposed.</p>
             <div className="mt-6 grid gap-3.5 text-sm font-semibold text-sage-900">
-              <div className="flex items-center gap-3 rounded-2xl border border-sage-200 bg-white/96 px-4 py-3.5 shadow-sm">
+              <div className="flex items-center gap-3 rounded-2xl border border-amber-200/50 bg-white/96 px-4 py-3.5 shadow-sm">
                 <Sparkles size={15} className="text-sage-700" />
                 <span>Starter lines help you begin without filling the page with noise</span>
               </div>
-              <div className="flex items-center gap-3 rounded-2xl border border-sage-200 bg-white/96 px-4 py-3.5 shadow-sm">
+              <div className="flex items-center gap-3 rounded-2xl border border-amber-200/50 bg-white/96 px-4 py-3.5 shadow-sm">
                 <ShieldCheck size={15} className="text-sage-700" />
                 <span>Privacy cues keep the space personal before you write a word</span>
               </div>
-              <div className="flex items-center gap-3 rounded-2xl border border-sage-200 bg-white/96 px-4 py-3.5 shadow-sm">
+              <div className="flex items-center gap-3 rounded-2xl border border-amber-200/50 bg-white/96 px-4 py-3.5 shadow-sm">
                 <BookOpen size={15} className="text-sage-700" />
                 <span>Saved pages stay easy to revisit when you want perspective later</span>
               </div>
             </div>
           </div>
 
-          <div className="quote-card quote-card-premium quote-card-compact flex flex-col rounded-3xl border border-white/70 p-6 shadow-soft lg:p-7">
+          <div className="quote-card quote-card-premium quote-card-compact flex flex-col rounded-3xl border border-amber-200/50 p-6 shadow-soft lg:p-7">
             <Quote className="mb-6 opacity-80" size={30} />
             <p className="quote-main-text font-bold leading-tight" style={{ fontFamily: activeQuoteFont, fontSize: Math.max(activeQuoteSize - 4, 28), color: quoteStyle.textColor, lineHeight: 1.4 }}>“{quoteLibrary[quoteIndex % quoteLibrary.length]}”</p>
             <button className="quote-button mt-6 rounded-full bg-white px-5 py-3 text-sm font-extrabold shadow-lift transition hover:-translate-y-1 hover:bg-sage-50" onClick={() => setQuoteIndex((quoteIndex + 1) % quoteLibrary.length)}>
@@ -4524,22 +5239,22 @@ function App() {
       </section>
       )}
 
-      {activeTab === 'home' && (
-      <section className="mx-auto max-w-7xl px-6 py-4">
+      {activeTab === 'home' && !showMinimalHomeOverview && (
+      <section className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-4">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="flex-1">
-            <div className="rounded-[2.5rem] border border-sage-100/90 bg-white/96 p-7 shadow-soft backdrop-blur lg:p-10">
+            <div className="rounded-[2.5rem] border border-[#e8dfd5]/90 bg-white/96 p-7 shadow-soft backdrop-blur lg:p-10">
               <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
                 <div>
                   <h2 className="font-display text-4xl font-bold leading-tight text-ink lg:text-5xl">{homeSections.find((s) => s.id === activeHomeSection)?.label || 'Overview'}</h2>
-                  <p className="mt-4 max-w-2xl text-lg leading-relaxed text-sage-800">{activeHomeSection === 'overview' ? (latestEntry ? `Your last page is still here. ${rewardLevel.next}` : 'Start with the smallest true thing. This space is built to make writing feel safe, simple, and worth returning to.') : 'Browse gently. The layout stays simple so each section feels easier to read.'}</p>
+                  <p className="mt-4 max-w-2xl text-lg leading-relaxed text-sage-800">{activeHomeSection === 'overview' ? (latestEntry ? `Your last page is still here. ${rewardLevel.next}` : 'Come here to relax, hang out in a chill corner, and start with a game first when you want the easiest, softest reset.') : 'Browse gently. The layout stays simple so each section feels easier to read.'}</p>
                 </div>
-                <a className="inline-flex shrink-0 items-center gap-2 rounded-full bg-sage-900 px-6 py-4 text-sm font-extrabold text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800" href="#journal" onClick={() => navigateToTab('write')}>
-                  <PenLine size={18} /> Open today’s page
+                <a className="inline-flex shrink-0 items-center gap-2 rounded-full bg-sage-900 px-6 py-4 text-sm font-extrabold text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800" href="#unwind" onClick={() => navigateToTab('unwind')}>
+                  <Leaf size={18} /> Play a chill game
                 </a>
               </div>
 
-              <div className="mt-10 grid gap-2.5 rounded-[2rem] border border-sage-100/70 bg-sage-50/45 p-2.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+              <div className="mt-10 grid gap-2.5 rounded-[3rem] border border-[#e8dfd5]/70 bg-sage-50/45 p-2.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
                 {primaryHomeSections.map((section) => (
                   <button
                     key={section.id}
@@ -4568,22 +5283,23 @@ function App() {
                     <p className="mt-2 text-3xl font-extrabold text-ink">{rewardLevel.emoji}</p>
                   </div>
                 </div>
-                <div className="rounded-[2rem] border border-sage-100 bg-gradient-to-r from-sage-50/85 via-white to-sand-50/80 p-5 shadow-inner">
+                <div className="rounded-[3rem] border border-[#e8dfd5] bg-gradient-to-r from-sage-50/85 via-white to-sand-50/80 p-5 shadow-inner">
                   <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                     <div>
-                      <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-600">Most useful paths</p>
-                      <h3 className="mt-2 text-2xl font-extrabold leading-tight text-ink">Pick what you came here to do.</h3>
+                      <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-600">Stay here a while</p>
+                      <h3 className="mt-2 text-2xl font-extrabold leading-tight text-ink">Move between games, notes, breathing, and writing without leaving the calm.</h3>
                     </div>
-                    <p className="max-w-md text-sm font-semibold leading-6 text-sage-700">The homepage now gives first-time visitors a clearer route into writing, notes, memories, or practical guide pages.</p>
+                    <p className="max-w-lg text-sm font-semibold leading-6 text-sage-700">The homepage now gives first-time visitors a clearer route into play, focus, notes, reflection, and helpful reading so the site feels more like a place to hang out than a one-click tool.</p>
                   </div>
-                  <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+                  <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-5">
                     {[
-                      { label: 'Write one line', detail: 'Open a calm page with prompts and a visible save action.', action: () => navigateToTab('write'), icon: PenLine },
+                      { label: 'Play a chill game', detail: 'Jump straight into the unwind room when you want something cozy and immediate.', action: () => navigateToTab('unwind'), icon: Sparkles },
+                      { label: 'Open the music room', detail: 'Choose rain, fireplace, or lofi wallpaper sounds for a softer reset.', action: () => navigateToTab('breathe'), icon: Wind },
+                      { label: 'Write one line', detail: 'Catch one thought with prompts and a visible save action.', action: () => navigateToTab('write'), icon: PenLine },
                       { label: 'Plan important things', detail: 'Keep tasks, recurring habits, and notes away from diary entries.', action: () => navigateToTab('notes'), icon: FileText },
-                      { label: 'Revisit memories', detail: 'Browse saved diary pages when you want to reflect.', action: () => navigateToTab('memories'), icon: BookOpen },
-                      { label: 'Read guides', detail: 'Find diary, prompt, privacy, and habit guides grouped by need.', action: () => openHomeSection('guides'), icon: Compass }
+                      { label: 'Read guides', detail: 'Find calm game, prompt, privacy, and habit guides grouped by need.', action: () => openHomeSection('guides'), icon: Compass }
                     ].map((item) => (
-                      <button key={item.label} className="group rounded-[1.5rem] border border-white/85 bg-white/90 p-4 text-left shadow-sm transition hover:-translate-y-1 hover:border-sage-200 hover:bg-white hover:shadow-lift" onClick={item.action} type="button">
+                      <button key={item.label} className="group rounded-[1.5rem] border border-white/85 bg-white/90 p-4 text-left shadow-sm transition hover:-translate-y-1 hover:border-amber-200/50 hover:bg-white hover:shadow-lift" onClick={item.action} type="button">
                         <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-sage-100 text-sage-800 transition group-hover:bg-sage-900 group-hover:text-white"><item.icon size={17} /></div>
                         <h4 className="mt-3 text-base font-extrabold text-ink">{item.label}</h4>
                         <p className="mt-2 text-sm leading-6 text-sage-700">{item.detail}</p>
@@ -4591,25 +5307,25 @@ function App() {
                     ))}
                   </div>
                 </div>
-                <div className="rounded-[1.8rem] border border-sage-100/80 bg-white/85 p-5 shadow-sm">
+                <div className="rounded-[2.2rem] border border-[#e8dfd5]/80 bg-white/85 p-5 shadow-sm">
                   <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
                     <div>
-                      <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-600">Popular diary searches</p>
-                      <h3 className="mt-2 text-xl font-extrabold text-ink">Quick links for the most common journaling questions.</h3>
+                      <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-600">Popular calm searches</p>
+                      <h3 className="mt-2 text-xl font-extrabold text-ink">Quick links for lofi music, chill vibes, relaxing routines, and cozy games.</h3>
                     </div>
                     <button className="text-sm font-extrabold text-sage-800 underline decoration-sage-300 underline-offset-4" onClick={() => openHomeSection('guides')} type="button">View all guide collections</button>
                   </div>
                   <div className="mt-4 flex flex-wrap gap-2.5">
-                    {(showAllSearches ? seoPopularSearches : seoPopularSearches.slice(0, 8)).map((item) => (
-                      <a className="rounded-full border border-sage-200 bg-sage-50/70 px-4 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href={item.href} key={item.href}>{item.label}</a>
+                    {(showAllSearches ? seoPopularSearches : seoPopularSearches.slice(0, 12)).map((item) => (
+                      <a className="rounded-full border border-amber-200/50 bg-sage-50/70 px-4 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href={item.href} key={item.href}>{item.label}</a>
                     ))}
-                    {!showAllSearches && seoPopularSearches.length > 8 && (
+                    {!showAllSearches && seoPopularSearches.length > 12 && (
                       <button 
                         onClick={() => setShowAllSearches(true)}
-                        className="rounded-full border border-sage-200 border-dashed bg-white/50 px-4 py-2 text-sm font-bold text-sage-600 transition hover:bg-white hover:text-sage-900"
+                        className="rounded-full border border-amber-200/50 border-dashed bg-white/50 px-4 py-2 text-sm font-bold text-sage-600 transition hover:bg-white hover:text-sage-900"
                         type="button"
                       >
-                        + {seoPopularSearches.length - 8} more
+                        + {seoPopularSearches.length - 12} more
                       </button>
                     )}
                   </div>
@@ -4620,8 +5336,8 @@ function App() {
           </div>
 
           <aside className="lg:w-[320px] xl:w-[360px] lg:sticky lg:top-28">
-            <div className="rounded-[2.5rem] border border-white/80 bg-white/70 p-6 shadow-soft backdrop-blur-xl">
-              <div className="flex items-center gap-4 border-b border-sage-100 pb-5">
+            <div className="rounded-[2.5rem] border border-[#e8dfd5] bg-white/70 p-6 shadow-soft backdrop-blur-xl">
+              <div className="flex items-center gap-4 border-b border-[#e8dfd5] pb-5">
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sage-100 text-sage-800 shadow-sm">
                   <BookOpen size={20} />
                 </div>
@@ -4636,7 +5352,7 @@ function App() {
                 <p className="mt-4 text-sm leading-7 text-sage-800">Write the detail, feeling, or unfinished thought that is easiest to name first. A short diary page is still enough to hold the day.</p>
               </div>
 
-              <div className="grid gap-2 border-t border-sage-100 pt-5">
+              <div className="grid gap-2 border-t border-[#e8dfd5] pt-5">
                 <button className="flex items-center justify-between rounded-2xl bg-white/80 px-5 py-4 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-white" onClick={() => navigateToTab('notes')} type="button">
                   <span className="inline-flex items-center gap-2"><FileText size={16} /> Notes</span>
                   <span className="opacity-50">{openPlannerTodoCount}</span>
@@ -4657,7 +5373,6 @@ function App() {
       )}
 
       <ThemeStudio
-        companion={companion}
         customColor={customColor}
         customWeatherEmoji={customWeatherEmoji}
         customWeatherImage={customWeatherImage}
@@ -4668,7 +5383,6 @@ function App() {
         onAtmosphereApply={applyJournalAtmosphere}
         onAddCustomWeather={addCustomWeather}
         onClose={() => setCustomizerOpen(false)}
-        onCompanionChange={setCompanion}
         onCustomColorChange={setCustomColor}
         onCustomWeatherEmojiChange={setCustomWeatherEmoji}
         onCustomWeatherImageUpload={handleWeatherImageUpload}
@@ -4677,10 +5391,13 @@ function App() {
         onDesignChange={setSelectedDesign}
         onQuoteBgChange={setQuoteBg}
         onThemeChange={setSelectedTheme}
+        onWallpaperImageUpload={handleWallpaperImageUpload}
+        onWallpaperRemove={removeWallpaperImage}
         quoteBg={quoteBg}
         quoteStyle={quoteStyle}
         selectedDesign={selectedDesign}
         selectedTheme={selectedTheme}
+        wallpaperImage={wallpaperImage}
       />
 
       <PinSettingsDialog
@@ -4690,22 +5407,22 @@ function App() {
         onRemovePin={removePin}
       />
 
-      <section id="journal" className="relative z-10 mx-auto -mt-2 max-w-7xl px-6 py-8 pb-28 lg:-mt-6 lg:pb-8">
-        <div className="mb-6 overflow-hidden rounded-[2rem] border border-white/85 bg-gradient-to-r from-white/88 via-sage-50/78 to-sand-50/75 p-3 shadow-soft backdrop-blur xl:p-4">
+      <section id="journal" className="relative z-10 mx-auto -mt-1 max-w-[1280px] px-5 py-9 pb-28 sm:px-7 lg:-mt-4 lg:pb-10 xl:px-10">
+        <div className="lofi-picture-border lofi-border-watercolor mb-6 overflow-hidden rounded-[3rem] border border-white/85 bg-gradient-to-r from-white/88 via-sage-50/78 to-sand-50/75 p-3 shadow-soft backdrop-blur xl:p-4">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-2xl">
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-sage-600">Choose your diary space</p>
-              <h2 className="mt-2 text-2xl font-extrabold text-ink">Writing stays central, with notes, memories, and insights waiting nearby.</h2>
-              <p className="mt-2 text-sm font-semibold leading-6 text-sage-700">The journal is easy to enter, easy to return to, and now has a separate place for important things and to-dos too.</p>
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-sage-600">Choose your chill space</p>
+              <h2 className="mt-2 text-2xl font-extrabold text-ink">Everything you need for a softer online reset and a little place to chill is waiting here.</h2>
+              <p className="mt-2 text-sm font-semibold leading-6 text-sage-700">Jump into games, notes, breathing, saved moments, or thoughts whenever they fit your mood — not because the page tells you to write first.</p>
             </div>
             <div className="grid gap-2 rounded-[1.5rem] bg-white/70 p-2 shadow-inner sm:grid-cols-3 lg:grid-cols-6">
               {[
-                { id: 'write', label: 'Write', detail: draftWordCount ? `${draftWordCount} words in progress` : 'Start here', icon: PenLine },
+                { id: 'unwind', label: 'Games', detail: 'Chill games', icon: Gamepad2 },
+                { id: 'write', label: 'Diary', detail: draftWordCount ? `${draftWordCount} words in progress` : 'Write when it helps', icon: PenLine },
                 { id: 'notes', label: 'Notes', detail: plannerTodoCount ? `${openPlannerTodoCount} still open` : 'Keep important things', icon: FileText },
-                { id: 'breathe', label: 'Breathe', detail: 'Focus & calm', icon: Wind },
-                { id: 'unwind', label: 'Unwind', detail: 'Fidget & relax', icon: Leaf },
+                { id: 'breathe', label: 'Music Room', detail: 'Wallpaper sounds', icon: Wind },
                 { id: 'memories', label: 'Memories', detail: `${entries.length} saved`, icon: BookOpen },
-                { id: 'insights', label: 'Insights', detail: `${weeklyCheckIns}/${weeklyGoal} this week`, icon: Sparkles }
+                { id: 'design', label: 'Design', detail: 'Customize space', icon: Palette }
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -4722,22 +5439,22 @@ function App() {
         </div>
 
         {activeTab === 'write' && (
-        <form className="rounded-[2rem] border border-sage-100/80 bg-white/94 p-4 shadow-soft backdrop-blur sm:p-6 xl:p-8" onSubmit={saveEntry}>
-          <div className="mb-5 overflow-hidden rounded-[1.75rem] border border-sage-100/90 bg-gradient-to-r from-white via-sage-50/35 to-white p-4 shadow-sm sm:p-5">
+        <form className="lofi-picture-border lofi-border-memory rounded-[3rem] border border-[#e8dfd5]/80 bg-white/94 p-4 shadow-soft backdrop-blur sm:p-6 xl:p-8" onSubmit={saveEntry}>
+          <div className="mb-5 overflow-hidden rounded-[2.2rem] border border-[#e8dfd5]/90 bg-gradient-to-r from-white via-sage-50/35 to-white p-4 shadow-sm sm:p-5">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div className="max-w-3xl">
                 <p className="text-sm font-extrabold uppercase tracking-[0.22em] text-sage-600">Your page for today</p>
                 <h2 className="mt-2 text-[2rem] font-extrabold leading-tight text-ink sm:text-3xl">Keep it simple. Write what feels true.</h2>
                 <p className="mt-2 text-sm leading-7 text-sage-700">This page does not need a polished story. A sentence, a fragment, or a few plain words are already enough.</p>
               </div>
-              <div className="inline-flex items-center gap-2 self-start rounded-full border border-sage-100 bg-white/98 px-4 py-2 text-sm font-bold text-sage-700 shadow-sm">
+              <div className="inline-flex items-center gap-2 self-start rounded-full border border-[#e8dfd5] bg-white/98 px-4 py-2 text-sm font-bold text-sage-700 shadow-sm">
                 <CalendarDays size={16} /> {formatDate(new Date().toISOString())}
               </div>
             </div>
             <div className="mt-4 flex flex-wrap gap-2 text-[11px] font-extrabold uppercase tracking-[0.2em] text-sage-600 sm:text-xs">
-              <span className="rounded-full border border-white/80 bg-white/90 px-3 py-2 shadow-sm">{selectedMood} mood</span>
-              <span className="rounded-full border border-white/80 bg-white/90 px-3 py-2 shadow-sm">{draftWordCount} words</span>
-              <span className="rounded-full border border-white/80 bg-white/90 px-3 py-2 shadow-sm">{completedQuestCount}/{journalQuest.length} ritual steps</span>
+              <span className="rounded-full border border-[#e8dfd5] bg-white/90 px-3 py-2 shadow-sm">{selectedMood} mood</span>
+              <span className="rounded-full border border-[#e8dfd5] bg-white/90 px-3 py-2 shadow-sm">{draftWordCount} words</span>
+              <span className="rounded-full border border-[#e8dfd5] bg-white/90 px-3 py-2 shadow-sm">{completedQuestCount}/{journalQuest.length} ritual steps</span>
             </div>
           </div>
 
@@ -4746,14 +5463,14 @@ function App() {
             <p className="text-sm font-semibold text-sage-500">It can stay short, plain, or even blank.</p>
           </div>
           <input
-            className="journal-title-input mb-5 w-full rounded-[1.75rem] px-5 py-4 text-lg font-semibold outline-none"
+            className="journal-title-input mb-5 w-full rounded-[2.2rem] px-5 py-4 text-lg font-semibold outline-none"
             id="entry-title"
             onChange={(event) => setTitle(event.target.value)}
             placeholder="e.g. The part of today I want to keep"
             value={title}
           />
 
-          <div className="mb-4 rounded-[1.6rem] border border-sage-100/90 bg-gradient-to-r from-white via-sage-50/45 to-white p-3.5 shadow-sm backdrop-blur-sm sm:p-4">
+          <div className="mb-4 rounded-[1.6rem] border border-[#e8dfd5]/90 bg-gradient-to-r from-white via-sage-50/45 to-white p-3.5 shadow-sm backdrop-blur-sm sm:p-4">
             <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
               <div className="space-y-3">
                 <div>
@@ -4763,7 +5480,7 @@ function App() {
                 <div className="grid gap-3 sm:grid-cols-2 xl:min-w-[31rem] xl:grid-cols-3">
                   <label className="block text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-500">
                     Mood
-                    <select className="mt-2 w-full rounded-[1.15rem] border border-sage-100 bg-white/95 px-3.5 py-3 text-sm font-semibold text-ink outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70" onChange={(event) => setSelectedMood(event.target.value)} value={selectedMood}>
+                    <select className="mt-2 w-full rounded-[1.15rem] border border-[#e8dfd5] bg-white/95 px-3.5 py-3 text-sm font-semibold text-ink outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70" onChange={(event) => setSelectedMood(event.target.value)} value={selectedMood}>
                       {weatherOptions.map((mood) => (
                         <option key={mood.label} value={mood.label}>{mood.label}</option>
                       ))}
@@ -4771,7 +5488,7 @@ function App() {
                   </label>
                   <label className="block text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-500">
                     Font
-                    <select className="mt-2 w-full rounded-[1.15rem] border border-sage-100 bg-white/95 px-3.5 py-3 text-sm font-semibold text-ink outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70" onChange={(event) => setJournalStyle({ ...journalStyle, fontId: event.target.value })} value={journalStyle.fontId}>
+                    <select className="mt-2 w-full rounded-[1.15rem] border border-[#e8dfd5] bg-white/95 px-3.5 py-3 text-sm font-semibold text-ink outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70" onChange={(event) => setJournalStyle({ ...journalStyle, fontId: event.target.value })} value={journalStyle.fontId}>
                       {journalFontOptions.map((font) => (
                         <option key={font.id} value={font.id}>{font.label}</option>
                       ))}
@@ -4779,7 +5496,7 @@ function App() {
                   </label>
                   <label className="block text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-500">
                     Size
-                    <select className="mt-2 w-full rounded-[1.15rem] border border-sage-100 bg-white/95 px-3.5 py-3 text-sm font-semibold text-ink outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70" onChange={(event) => setJournalStyle({ ...journalStyle, sizeId: event.target.value })} value={journalStyle.sizeId}>
+                    <select className="mt-2 w-full rounded-[1.15rem] border border-[#e8dfd5] bg-white/95 px-3.5 py-3 text-sm font-semibold text-ink outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70" onChange={(event) => setJournalStyle({ ...journalStyle, sizeId: event.target.value })} value={journalStyle.sizeId}>
                       {journalSizeOptions.map((size) => (
                         <option key={size.id} value={size.id}>{size.label}</option>
                       ))}
@@ -4788,15 +5505,15 @@ function App() {
                 </div>
               </div>
               <div className="flex flex-wrap items-center gap-2 xl:max-w-[22rem] xl:justify-end">
-                <button className="rounded-full border border-sage-100 bg-white px-3.5 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-200 hover:bg-sage-50" onClick={() => toggleBoldText(entryBodyRef, setBody)} title="Bold selected text" type="button">Bold</button>
-                <button className="rounded-full border border-sage-100 bg-white px-3.5 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-200 hover:bg-sage-50" onClick={() => toggleUnderlineText(entryBodyRef, setBody)} title="Underline selected text" type="button">Underline</button>
-                <button className="rounded-full border border-sage-100 bg-white px-3.5 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-200 hover:bg-sage-50" onClick={() => toggleBulletList(entryBodyRef, setBody)} title="Bullet points" type="button">List</button>
+                <button className="rounded-full border border-[#e8dfd5] bg-white px-3.5 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-sage-50" onClick={() => toggleBoldText(entryBodyRef, setBody)} title="Bold selected text" type="button">Bold</button>
+                <button className="rounded-full border border-[#e8dfd5] bg-white px-3.5 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-sage-50" onClick={() => toggleUnderlineText(entryBodyRef, setBody)} title="Underline selected text" type="button">Underline</button>
+                <button className="rounded-full border border-[#e8dfd5] bg-white px-3.5 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-sage-50" onClick={() => toggleBulletList(entryBodyRef, setBody)} title="Bullet points" type="button">List</button>
                 {quickEmojis.slice(0, 4).map((emoji) => (
-                  <button key={emoji} className="rounded-full border border-sage-100 bg-white px-3 py-1.5 text-base shadow-sm transition hover:-translate-y-0.5 hover:border-sage-200 hover:bg-sage-50" onClick={() => insertQuickEmoji(emoji)} type="button">
+                  <button key={emoji} className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1.5 text-base shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-sage-50" onClick={() => insertQuickEmoji(emoji)} type="button">
                     {emoji}
                   </button>
                 ))}
-                <label className="flex cursor-pointer items-center gap-2 rounded-full border border-sage-100 bg-white px-3.5 py-2 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-200 hover:bg-sage-50">
+                <label className="flex cursor-pointer items-center gap-2 rounded-full border border-[#e8dfd5] bg-white px-3.5 py-2 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-sage-50">
                   <ImagePlus size={14} /> Photo
                   <input accept="image/*" className="hidden" onChange={handleEntryImageUpload} type="file" />
                 </label>
@@ -4805,7 +5522,7 @@ function App() {
             </div>
           </div>
 
-          <div className="journal-editor-shell mt-2 rounded-[2rem] p-3 md:p-4">
+          <div className="journal-editor-shell mt-2 rounded-[3rem] p-3 md:p-4">
             <div className="journal-editor-ribbon">quiet page</div>
             <div className="journal-editor-meta journal-editor-top mb-3 flex flex-wrap items-center justify-between gap-2 px-3 text-[11px] font-bold uppercase tracking-[0.22em] text-sage-500 sm:text-xs sm:tracking-[0.24em]">
               <span>{selectedMood} mood · today</span>
@@ -4813,7 +5530,7 @@ function App() {
             </div>
             <div
               ref={entryBodyRef}
-              className="journal-editor journal-editor-soft min-h-[24rem] w-full overflow-auto rounded-[1.75rem] px-6 py-6 outline-none sm:min-h-[30rem]"
+              className="journal-editor journal-editor-soft min-h-[24rem] w-full overflow-auto rounded-[2.2rem] px-6 py-6 outline-none sm:min-h-[30rem]"
               contentEditable
               suppressContentEditableWarning
               style={{ fontFamily: activeJournalFont, fontSize: activeJournalSize, lineHeight: 1.95, color: '#24312e', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
@@ -4826,7 +5543,7 @@ function App() {
             </div>
           </div>
           <div className="mt-5 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-            <div className="rounded-[1.2rem] border border-sage-100 bg-white/85 px-4 py-3 text-sm font-semibold leading-6 text-sage-700 shadow-sm">
+            <div className="rounded-[1.2rem] border border-[#e8dfd5] bg-white/85 px-4 py-3 text-sm font-semibold leading-6 text-sage-700 shadow-sm">
               {journalNudge}
             </div>
             <button className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-7 py-4 font-bold text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800 sm:w-auto" type="submit">
@@ -4834,13 +5551,13 @@ function App() {
             </button>
           </div>
 
-          <div className="mt-6 rounded-[1.75rem] border border-white/80 bg-gradient-to-r from-sage-50/60 via-white to-sand-50/40 p-4 shadow-inner ring-1 ring-white/70 sm:p-6">
+          <div className="mt-6 rounded-[2.2rem] border border-[#e8dfd5] bg-gradient-to-r from-sage-50/60 via-white to-sand-50/40 p-4 shadow-inner ring-1 ring-white/70 sm:p-6">
             <div className="grid gap-6 lg:grid-cols-12">
               <div className="lg:col-span-7">
                 <div className="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-sage-700"><Feather size={16} /> If you want a starting line</div>
                 <p className="max-w-2xl font-display text-2xl font-bold leading-relaxed text-sage-950">{activePrompt}</p>
                 <p className="mt-3 text-sm font-semibold text-sage-700">Use the prompt if it helps, or leave it and begin exactly where your mind already is.</p>
-                <button className="mt-5 inline-flex items-center gap-2 rounded-full border border-sage-100 bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-1 hover:border-sage-200 hover:bg-sage-50" onClick={() => setActivePrompt(prompts[(prompts.indexOf(activePrompt) + 1) % prompts.length])} type="button">
+                <button className="mt-5 inline-flex items-center gap-2 rounded-full border border-[#e8dfd5] bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-1 hover:border-amber-200/50 hover:bg-sage-50" onClick={() => setActivePrompt(prompts[(prompts.indexOf(activePrompt) + 1) % prompts.length])} type="button">
                   <Sparkles size={15} /> New prompt
                 </button>
               </div>
@@ -4865,7 +5582,7 @@ function App() {
                     {quickEmojis.slice(0, 8).map((emoji) => (
                       <button
                         key={emoji}
-                        className="flex h-10 w-10 items-center justify-center rounded-2xl border border-sage-100 bg-white text-xl shadow-sm transition hover:-translate-y-0.5 hover:border-sage-200 hover:shadow-md"
+                        className="flex h-10 w-10 items-center justify-center rounded-2xl border border-[#e8dfd5] bg-white text-xl shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:shadow-md"
                         onClick={() => addStarterLine(emoji)}
                         type="button"
                       >
@@ -4880,14 +5597,14 @@ function App() {
                   <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">Small ways to begin</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {moodStarterPrompts.map((starter) => (
-                      <button key={starter} className="rounded-full border border-sage-100 bg-white px-3.5 py-2 text-sm font-bold text-sage-700 transition hover:-translate-y-0.5 hover:border-sage-200 hover:bg-sage-50" onClick={() => addStarterLine(starter)} type="button">
+                      <button key={starter} className="rounded-full border border-[#e8dfd5] bg-white px-3.5 py-2 text-sm font-bold text-sage-700 transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-sage-50" onClick={() => addStarterLine(starter)} type="button">
                         {starter}
                       </button>
                     ))}
                   </div>
                 </div>
 
-                <div className="rounded-[1.75rem] border border-sage-100 bg-white/88 p-5 shadow-sm ring-1 ring-sage-100/70">
+                <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/88 p-5 shadow-sm ring-1 ring-sage-100/70">
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">Kept gently</p>
@@ -4896,19 +5613,19 @@ function App() {
                     <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sage-50 text-2xl text-sage-800 shadow-sm">{rewardLevel.emoji}</div>
                   </div>
                   <div className="mt-5 grid grid-cols-2 gap-3">
-                    <div className="rounded-2xl border border-sage-100 bg-sage-50/60 p-3">
+                    <div className="rounded-2xl border border-[#e8dfd5] bg-sage-50/60 p-3">
                       <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-sage-600">Pages saved</p>
                       <p className="mt-2 text-2xl font-extrabold text-sage-950">{entries.length}</p>
                     </div>
-                    <div className="rounded-2xl border border-sage-100 bg-sage-50/60 p-3">
+                    <div className="rounded-2xl border border-[#e8dfd5] bg-sage-50/60 p-3">
                       <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-sage-600">Current rhythm</p>
                       <p className="mt-2 text-2xl font-extrabold text-sage-950">{streak}</p>
                     </div>
                   </div>
-                  <div className="mt-4 rounded-2xl border border-sage-100 bg-sage-50/55 px-4 py-3 text-sm leading-7 text-sage-700">
+                  <div className="mt-4 rounded-2xl border border-[#e8dfd5] bg-sage-50/55 px-4 py-3 text-sm leading-7 text-sage-700">
                     {weeklyCheckIns >= weeklyGoal ? 'This week already has enough gentle attention in it.' : `${weeklyGoal - weeklyCheckIns} more check-in${weeklyGoal - weeklyCheckIns === 1 ? '' : 's'} if you want to fill this week softly.`}
                   </div>
-                  <button className="mt-4 inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50" onClick={() => navigateToTab('memories')} type="button">
+                  <button className="mt-4 inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50" onClick={() => navigateToTab('memories')} type="button">
                     <BookOpen size={15} /> Visit your memories
                   </button>
                 </div>
@@ -4918,7 +5635,7 @@ function App() {
 
           <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1.25fr)_minmax(260px,0.85fr)] xl:grid-cols-[1.3fr_0.9fr]">
             <div className="grid gap-4 lg:grid-cols-3">
-              <div className="rounded-3xl border border-sage-100 bg-white p-5 shadow-sm lg:col-span-3">
+              <div className="rounded-3xl border border-[#e8dfd5] bg-white p-5 shadow-sm lg:col-span-3">
                 <div className="flex items-center justify-between gap-3">
                   <div>
                     <p className="text-xs font-extrabold uppercase tracking-widest text-sage-600">Soft landing</p>
@@ -4928,31 +5645,31 @@ function App() {
                 </div>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {journalQuest.map((step) => (
-                    <div key={step.label} className={`rounded-full px-4 py-2 text-sm font-bold transition ${step.done ? 'bg-sage-900 text-white shadow-lift' : 'border border-sage-100 bg-sage-50 text-sage-700'}`}>
+                    <div key={step.label} className={`rounded-full px-4 py-2 text-sm font-bold transition ${step.done ? 'bg-sage-900 text-white shadow-lift' : 'border border-[#e8dfd5] bg-sage-50 text-sage-700'}`}>
                       {step.done ? '✓' : '○'} {step.label}
                     </div>
                   ))}
                 </div>
                 <p className="mt-4 text-sm font-semibold leading-7 text-sage-800">{journalNudge}</p>
               </div>
-              <div className="rounded-3xl border border-sage-100 bg-gradient-to-br from-sand-50 to-white p-5 shadow-sm">
+              <div className="rounded-3xl border border-[#e8dfd5] bg-gradient-to-br from-sand-50 to-white p-5 shadow-sm">
                 <p className="text-xs font-extrabold uppercase tracking-widest text-sand-500">This week so far</p>
                 <p className="mt-2 text-3xl font-extrabold text-sage-950">{weeklyCheckIns}/{weeklyGoal}</p>
                 <p className="mt-2 text-sm font-semibold leading-6 text-sage-700">{weeklyCheckIns >= weeklyGoal ? 'You already gave yourself enough room this week.' : `${weeklyGoal - weeklyCheckIns} more soft check-in${weeklyGoal - weeklyCheckIns === 1 ? '' : 's'} if you want to fill this week.`}</p>
               </div>
-              <div className="rounded-3xl border border-sage-100 bg-gradient-to-br from-rose-50 to-white p-5 shadow-sm">
+              <div className="rounded-3xl border border-[#e8dfd5] bg-gradient-to-br from-rose-50 to-white p-5 shadow-sm">
                 <p className="text-xs font-extrabold uppercase tracking-widest text-rose-500">Keepsake path</p>
                 <p className="mt-2 text-3xl font-extrabold text-sage-950">{rewardLevel.emoji}</p>
                 <p className="mt-2 text-base font-extrabold text-sage-900">{entriesToNextReward === 0 ? 'Your next bloom is already here.' : `${entriesToNextReward} more ${entriesToNextReward === 1 ? 'page' : 'pages'} until the next bloom.`}</p>
                 <p className="mt-2 text-sm font-semibold leading-6 text-sage-700">A few honest pages slowly turn into a quiet little collection.</p>
               </div>
-              <div className="rounded-3xl border border-sage-100 bg-gradient-to-br from-sage-50 to-white p-5 shadow-sm">
+              <div className="rounded-3xl border border-[#e8dfd5] bg-gradient-to-br from-sage-50 to-white p-5 shadow-sm">
                 <p className="text-xs font-extrabold uppercase tracking-widest text-sage-500">{returnRitual.eyebrow}</p>
                 <p className="mt-2 text-xl font-extrabold text-sage-950">{returnRitual.title}</p>
                 <p className="mt-3 text-sm leading-7 text-sage-700">{returnRitual.text}</p>
                 <p className="mt-3 text-xs font-bold uppercase tracking-[0.24em] text-sage-500">{latestEntry ? `${latestEntry.mood} mood kept nearby` : 'A gentle habit can start today'}</p>
               </div>
-              <div className="rounded-3xl border border-sage-100 bg-white p-5 shadow-sm lg:col-span-3">
+              <div className="rounded-3xl border border-[#e8dfd5] bg-white p-5 shadow-sm lg:col-span-3">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <div>
                     <p className="text-xs font-extrabold uppercase tracking-widest text-sage-600">Keepsake shelf</p>
@@ -4963,7 +5680,7 @@ function App() {
                 </div>
                 <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
                   {achievementBadges.map((badge) => (
-                    <div key={badge.id} className={`rounded-[1.5rem] border p-4 transition ${badge.unlocked ? 'border-sage-200 bg-sage-50 shadow-sm' : 'border-sage-100 bg-white'}`}>
+                    <div key={badge.id} className={`rounded-[1.5rem] border p-4 transition ${badge.unlocked ? 'border-amber-200/50 bg-sage-50 shadow-sm' : 'border-[#e8dfd5] bg-white'}`}>
                       <div className="flex items-start gap-3">
                         <div className={`flex h-12 w-12 items-center justify-center rounded-2xl text-2xl ${badge.unlocked ? 'bg-white shadow-sm' : 'bg-sage-50 opacity-70'}`}>{badge.emoji}</div>
                         <div>
@@ -4978,7 +5695,7 @@ function App() {
             </div>
 
             <aside className="flex flex-col gap-6 lg:sticky lg:top-28 lg:self-start">
-              <div className={`group relative overflow-hidden rounded-[2rem] border p-6 shadow-lift backdrop-blur transition duration-300 hover:shadow-soft ${selectedMoodGuide.shellClass}`}>
+              <div className={`group relative overflow-hidden rounded-[3rem] border p-6 shadow-lift backdrop-blur transition duration-300 hover:shadow-soft ${selectedMoodGuide.shellClass}`}>
                 <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-sage-50/50 blur-2xl group-hover:bg-sage-100/60"></div>
                 <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Atmosphere</p>
                 <div className="mt-5 flex items-center gap-4">
@@ -4993,7 +5710,7 @@ function App() {
                 <p className="mt-5 text-sm leading-7 text-sage-700">{latestEntry ? `Continuing "${latestEntry.title}".` : selectedMoodGuide.detail}</p>
               </div>
 
-              <div className="rounded-[2rem] border border-white/80 bg-white/78 p-6 shadow-soft backdrop-blur-xl">
+              <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/78 p-6 shadow-soft backdrop-blur-xl">
                 <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-rose-600">Journey progress</p>
                 <div className="mt-5 flex items-start gap-4">
                   <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-[1.5rem] bg-rose-50 text-3xl shadow-sm ring-4 ring-rose-50/50">{nextAchievement.emoji}</div>
@@ -5008,7 +5725,7 @@ function App() {
                 <p className="mt-4 text-[13px] font-bold text-rose-800">{rewardLevel.next}</p>
               </div>
 
-              <div className="rounded-[2rem] border border-white/80 bg-white/95 p-6 shadow-soft">
+              <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/95 p-6 shadow-soft">
                 <div className="mb-5 flex items-center justify-between">
                   <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Soft actions</p>
                   <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-sage-50 text-sage-600 shadow-inner">
@@ -5027,12 +5744,12 @@ function App() {
                     </button>
                   ))}
                 </div>
-                <p className="mt-5 border-t border-sage-100 pt-5 text-sm leading-relaxed text-sage-700 italic">&ldquo;You do not need to finish the whole story today.&rdquo;</p>
+                <p className="mt-5 border-t border-[#e8dfd5] pt-5 text-sm leading-relaxed text-sage-700 italic">&ldquo;You do not need to finish the whole story today.&rdquo;</p>
               </div>
             </aside>
           </div>
           {saveReward && (
-            <div className="reward-toast mt-5 rounded-3xl border border-sage-100 bg-sage-900 p-5 font-extrabold leading-7 text-white shadow-soft">
+            <div className="reward-toast mt-5 rounded-3xl border border-[#e8dfd5] bg-sage-900 p-5 font-extrabold leading-7 text-white shadow-soft">
               {saveReward}
             </div>
           )}
@@ -5040,72 +5757,317 @@ function App() {
         )}
 
                         {activeTab === 'unwind' && (
-          <div className="mx-auto max-w-4xl px-4 py-8 lg:px-6 lg:py-14 fade-in">
-            <div className="text-center mb-10">
-              <p className="mb-2 text-sm font-bold uppercase tracking-widest text-sage-600">Fidget & Relax</p>
-              <h1 className="mb-3 font-display text-4xl font-bold tracking-tight text-sage-950">A Moment of Play</h1>
-              <p className="text-lg text-sage-700 max-w-xl mx-auto">Sometimes the best way to clear your head before writing is to do something entirely mindless.</p>
+          <div id="game-library" className="mx-auto max-w-[1280px] px-4 py-8 lg:px-6 lg:py-14 fade-in">
+            {unwindViewMode === 'detail' && (
+              <div ref={selectedGameInterfaceRef} className="game-detail-reveal mb-16 scroll-mt-24">
+                <button className="mb-5 inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white/88 px-4 py-2 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-x-0.5 hover:bg-white" onClick={returnToGameLibrary} type="button">
+                  <span aria-hidden="true">←</span> Back to games
+                </button>
+                <div className={`lofi-glass lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border p-3 shadow-soft backdrop-blur sm:p-4 lg:p-5 ${gameVisualTheme === 'lofi' ? 'border-[#e8dfd5] bg-[#fffaf2]/85' : ''}`}>
+                  {gameVisualTheme === 'lofi' && (
+                    <>
+                      <img src={lofiRoomWallpaperImage} alt="" className="pointer-events-none absolute inset-0 h-full w-full scale-105 object-cover opacity-[0.07] blur-[1px]" aria-hidden="true" />
+                      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.82),transparent_38%),linear-gradient(135deg,rgba(255,250,242,0.92),rgba(250,237,205,0.7),rgba(255,200,221,0.38))]" />
+                    </>
+                  )}
+                  <div className={`relative z-10 rounded-[1.7rem] border p-4 shadow-sm ${gameVisualTheme === 'lofi' ? 'border-amber-200/40 bg-white/60' : 'border-[#e8dfd5] bg-sage-50/55'}`}>
+                    <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+                      <div>
+                        <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${gameVisualTheme === 'lofi' ? 'text-amber-800/80' : 'text-sage-600'}`}>Now playing</p>
+                        <h1 className={`mt-2 font-display text-4xl font-bold tracking-tight ${gameVisualTheme === 'lofi' ? 'text-[#3d3025]' : 'text-sage-950'}`}>{selectedUnwindGameConfig.title}</h1>
+                        <p className={`mt-2 max-w-2xl text-sm leading-7 ${gameVisualTheme === 'lofi' ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>{selectedUnwindGameConfig.description}</p>
+                      </div>
+                      <div className="flex w-full flex-col gap-2 xl:max-w-[32rem] xl:items-end">
+                        <div className="flex flex-wrap gap-2 xl:justify-end">
+                          <div className={`flex h-11 items-center gap-1 rounded-2xl border bg-white p-1 shadow-sm ${gameVisualTheme === 'lofi' ? 'border-amber-200' : 'border-amber-200/50'}`}>
+                            {[
+                              { id: 'original', label: 'Original', icon: Sparkles },
+                              { id: 'lofi', label: 'Lofi', icon: Moon }
+                            ].map((t) => (
+                              <button
+                                key={t.id}
+                                onClick={() => setGameVisualTheme(t.id)}
+                                className={`flex items-center gap-2 rounded-xl px-3 py-1.5 text-xs font-black uppercase tracking-widest transition ${gameVisualTheme === t.id ? (t.id === 'lofi' ? 'bg-[#4a3a2d] text-white shadow-sm' : 'bg-sage-900 text-white shadow-sm') : 'text-sage-500 hover:bg-sage-50'}`}
+                                type="button"
+                              >
+                                <t.icon size={13} /> {t.label}
+                              </button>
+                            ))}
+                          </div>
+                          <button onClick={toggleFullscreen} className={`flex h-11 items-center gap-2 rounded-2xl border bg-white px-5 text-sm font-bold shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50 ${gameVisualTheme === 'lofi' ? 'border-amber-200 text-[#4a3a2d]' : 'border-amber-200/50 text-sage-700'}`} type="button">
+                            {isFullscreen ? <ArrowUp size={16} className="rotate-180" /> : <ArrowUp size={16} />}
+                            {isFullscreen ? 'Exit full' : 'Full screen'}
+                          </button>
+                          <button onClick={returnToGameLibrary} className={`flex h-11 items-center gap-2 rounded-2xl border bg-white px-5 text-sm font-bold shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50 ${gameVisualTheme === 'lofi' ? 'border-amber-200 text-[#4a3a2d]' : 'border-amber-200/50 text-sage-700'}`} type="button">
+                            <Gamepad2 size={16} />
+                            Back to games
+                          </button>
+                        </div>
+                        <p className={`text-[11px] font-extrabold uppercase tracking-[0.2em] ${gameVisualTheme === 'lofi' ? 'text-amber-800/80' : 'text-sage-600'}`}>Difficulty in-game</p>
+                        <div className="flex flex-wrap gap-2 xl:justify-end">
+                          {difficultyOptions.map((difficulty) => (
+                            <button
+                              key={difficulty.id}
+                              className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${selectedGameDifficulty === difficulty.id ? (gameVisualTheme === 'lofi' ? 'bg-[#4a3a2d] text-white shadow-sm' : 'bg-sage-900 text-white shadow-sm') : `border bg-white hover:bg-sage-50 ${gameVisualTheme === 'lofi' ? 'border-amber-200 text-[#4a3a2d]' : 'border-amber-200/50 text-sage-800'}`}`}
+                              onClick={() => setSelectedGameDifficulty(difficulty.id)}
+                              type="button"
+                            >
+                              {difficulty.label}
+                              <span className={`ml-2 text-[10px] uppercase tracking-[0.18em] ${selectedGameDifficulty === difficulty.id ? 'text-white/75' : (gameVisualTheme === 'lofi' ? 'text-amber-800/60' : 'text-sage-500')}`}>{difficulty.detail}</span>
+                            </button>
+                          ))}
+                        </div>
+                        <p className={`text-xs font-semibold ${gameVisualTheme === 'lofi' ? 'text-[#6e5a4a]' : 'text-sage-600'}`}>Current setting: {selectedDifficultyConfig.label} — {selectedDifficultyConfig.detail}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={`relative z-10 mx-auto mt-5 w-full ${isFullscreen ? 'max-w-none' : (selectedUnwindGameConfig.playingSpace || 'max-w-[980px]')}`}>
+                    {selectedUnwindGameConfig.component}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div className={unwindViewMode === 'detail' ? 'mt-24 opacity-80 pt-16 border-t border-[#e8dfd5] site-ui-fade-in' : 'game-library-enter'}>
+              {unwindViewMode === 'detail' && (
+                <div className="mb-10 text-center">
+                  <h2 className="font-display text-3xl font-bold tracking-tight text-sage-950">Discover more games</h2>
+                  <p className="mt-2 text-sage-600">Pick another one whenever you are ready.</p>
+                </div>
+              )}
+              <div className="mb-10 text-center">
+                {unwindViewMode === 'grid' && (
+                  <>
+                    <p className="mb-2 text-sm font-bold uppercase tracking-widest text-sage-600">Games & Play</p>
+                    <h1 className="mb-3 font-display text-4xl font-bold tracking-tight text-sage-950">Pick a relaxing game</h1>
+                    <p className="mx-auto max-w-2xl text-base text-sage-700">Start with cozy Solitaire or Mind Sweeper, then explore more relaxing browser games while the lofi music keeps the page calm.</p>
+                  </>
+                )}
+              </div>
+              <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+                {unwindGames.map((game) => (
+                  <button
+                    key={game.id}
+                    className={`group relative flex min-h-[14rem] flex-col items-start justify-start overflow-hidden rounded-[3rem] border px-5 py-5 text-left transition duration-300 hover:-translate-y-1 ${selectedUnwindGame === game.id ? 'border-sage-400 ring-2 ring-sage-100' : 'border-amber-200/50 bg-white/78'}`}
+                    onClick={() => selectUnwindGame(game.id)}
+                    type="button"
+                  >
+                    <img src={game.preview} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" aria-hidden="true" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-black/48 via-black/10 to-transparent" />
+                    <div className="relative z-10 p-1">
+                      <p className="text-xs font-black uppercase tracking-[0.24em] text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]">{game.detail}</p>
+                      <h2 className="mt-1 font-display text-2xl font-bold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">{game.title}</h2>
+                    </div>
+                    <div className="absolute bottom-5 left-5 z-10 text-[10px] font-black uppercase tracking-widest text-white/90 opacity-0 drop-shadow-[0_1px_2px_rgba(0,0,0,0.55)] transition group-hover:opacity-100">
+                      Open game →
+                    </div>
+                  </button>
+                ))}
+              </div>
+              <div className="mt-6 rounded-[2.2rem] border border-[#e8dfd5] bg-white/82 p-5 shadow-sm backdrop-blur">
+                <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+                  <div>
+                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Quick start picks</p>
+                    <h2 className="mt-2 text-2xl font-extrabold text-sage-950">Start with the easiest game for your mood.</h2>
+                  </div>
+                  <p className="max-w-xl text-sm leading-7 text-sage-700">These are the friendliest entry points if you want something that feels simple right away.</p>
+                </div>
+                <div className="mt-4 flex flex-wrap gap-2.5">
+                  {[
+                    { id: 'solitaire', label: 'Solitaire • classic' },
+                    { id: 'mind-sweeper', label: 'Mind Sweeper • logic' },
+                    { id: 'lofi-jigsaw', label: 'Lofi Jigsaw • cozy puzzle' },
+                    { id: 'quiet-wordle', label: 'Wordle • guess the word' },
+                    { id: 'quiet-tiles', label: 'Tiles • tap and merge' }
+                  ].map((item) => (
+                    <button
+                      key={item.id}
+                      className="rounded-full border border-amber-200/50 bg-sage-50/80 px-4 py-2 text-sm font-extrabold text-sage-800 transition hover:bg-white"
+                      onClick={() => selectUnwindGame(item.id)}
+                      type="button"
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="mt-6 grid gap-5 lg:grid-cols-2">
+                <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-sage-50/55 p-5 shadow-sm backdrop-blur">
+                  <div className="flex items-center gap-3">
+                    <Sparkles className="text-sage-600" size={20} />
+                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Featured relaxing games</p>
+                  </div>
+                  <h2 className="mt-3 text-2xl font-extrabold text-sage-950">Solitaire and Mind Sweeper are ready first.</h2>
+                  <p className="mt-2 text-sm leading-7 text-sage-700">Start with a familiar card game or a calm Minesweeper-style logic board, then keep the lofi music running while you unwind.</p>
+                </div>
+                <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/78 p-5 shadow-sm backdrop-blur">
+                  <div className="flex items-center gap-3">
+                    <PenLine className="text-sage-600" size={20} />
+                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Chill game journal</p>
+                  </div>
+                  <h2 className="mt-3 text-2xl font-extrabold text-sage-950">Play, then write one soft reflection.</h2>
+                  <p className="mt-2 text-sm leading-7 text-sage-700">A calm game can become a journaling prompt: what felt relaxing, what color or sound stayed with you, and what thought became easier to let go.</p>
+                </div>
+              </div>
+              <div className="mt-6 rounded-[2.2rem] border border-[#e8dfd5] bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
+                <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+                  <div>
+                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Stay in the vibe</p>
+                    <h2 className="mt-2 text-2xl font-extrabold text-sage-950">Finish a round, then keep hanging out here.</h2>
+                  </div>
+                  <p className="max-w-2xl text-sm leading-7 text-sage-700">Lofi Memory works best when you can bounce from one calm thing to another — a game, a breath, a quick note, or one sentence of journaling — without needing to leave the same soft space.</p>
+                </div>
+                <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+                  {[
+                    { label: 'Play Solitaire', detail: 'Open the classic card reset first when you want a familiar relaxing game with lofi music nearby.', action: () => selectUnwindGame('solitaire'), icon: Sparkles },
+                    { label: 'Try Mind Sweeper', detail: 'Clear calm logic tiles when you want a Minesweeper-style focus break.', action: () => selectUnwindGame('mind-sweeper'), icon: Grid2x2 },
+                    { label: 'Breathe for a minute', detail: 'Open the breathing screen for a softer reset between rounds.', action: () => navigateToTab('breathe'), icon: Wind },
+                    { label: 'Write one line', detail: 'Catch a thought before it disappears, then come back to the games later.', action: () => navigateToTab('write'), icon: PenLine }
+                  ].map((item) => (
+                    <button key={item.label} className="group rounded-[1.45rem] border border-white/85 bg-sage-50/55 p-4 text-left transition hover:-translate-y-1 hover:border-amber-200/50 hover:bg-white hover:shadow-lift" onClick={item.action} type="button">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-sage-800 shadow-sm transition group-hover:bg-sage-900 group-hover:text-white"><item.icon size={17} /></div>
+                      <h3 className="mt-3 text-base font-extrabold text-sage-950">{item.label}</h3>
+                      <p className="mt-2 text-sm leading-6 text-sage-700">{item.detail}</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)]">
+                <article className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
+                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Game-first comfort</p>
+                  <h2 className="mt-3 text-2xl font-extrabold text-sage-950">The games are meant to be the easiest place to begin.</h2>
+                  <p className="mt-3 text-sm leading-7 text-sage-700">If you just want something familiar, start with <span className="font-extrabold text-sage-900">Solitaire</span> for a classic card reset or <span className="font-extrabold text-sage-900">Mind Sweeper</span> for calm Minesweeper-style logic. Prefer other cozy puzzles? <span className="font-extrabold text-sage-900">Lofi Jigsaw</span>, <span className="font-extrabold text-sage-900">Sudoku</span>, <span className="font-extrabold text-sage-900">Wordle</span>, and <span className="font-extrabold text-sage-900">Tiles</span> are easy relaxing games to play while the lofi music stays on.</p>
+                </article>
+                <article className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
+                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Right now</p>
+                  <h2 className="mt-3 text-2xl font-extrabold text-sage-950">{selectedUnwindGameConfig.title} • {selectedDifficultyConfig.label}</h2>
+                  <p className="mt-3 text-sm leading-7 text-sage-700">{selectedUnwindGameConfig.description}</p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <span className="rounded-full border border-amber-200/50 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Switch anytime</span>
+                    <span className="rounded-full border border-amber-200/50 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Best in short sessions</span>
+                    <span className="rounded-full border border-amber-200/50 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Made for quick resets</span>
+                  </div>
+                </article>
+              </div>
+              <div className="mt-6 grid gap-4 xl:grid-cols-3">
+                {chillResearchHighlights.map((item) => (
+                  <article key={item.title} className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/82 p-5 shadow-sm backdrop-blur">
+                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Chill research</p>
+                    <h2 className="mt-3 text-lg font-extrabold text-sage-950">{item.title}</h2>
+                    <p className="mt-3 text-sm leading-7 text-sage-700">{item.text}</p>
+                  </article>
+                ))}
+              </div>
             </div>
-            <ZenGame />
-            <StreamSurfer />
-            <LotusMatch />
           </div>
         )}
 
         {activeTab === 'breathe' && (
-          <div className="mx-auto max-w-2xl px-6 py-10 lg:py-16 fade-in text-center">
-            <h1 className="mb-2 font-display text-4xl font-bold tracking-tight text-sage-950">Breathe & Focus</h1>
-            <p className="mb-14 text-lg text-sage-700">Take a moment to center yourself before you begin writing.</p>
+          <div className="mx-auto max-w-5xl px-6 py-10 lg:py-16 fade-in">
+            <div className="text-center">
+              <h1 className="mb-2 font-display text-4xl font-bold tracking-tight text-sage-950">Music Room</h1>
+              <p className="mb-14 text-lg text-sage-700">Choose a wallpaper to change the ambient sound and mood.</p>
+            </div>
             
-            {/* Breathing Circle */}
-            <div className="mb-16 flex flex-col items-center justify-center">
-              <div className="relative flex h-64 w-64 items-center justify-center">
-                <div className={`absolute inset-0 rounded-full border border-sage-200 bg-sage-50/50 transition-all duration-[4000ms] ease-in-out ${
-                  breathePhase === 0 ? 'scale-110 opacity-60' : 
-                  breathePhase === 1 ? 'scale-110 opacity-90' : 
-                  breathePhase === 2 ? 'scale-75 opacity-40' : 
-                  'scale-75 opacity-70'
+            <div className="grid gap-6 md:grid-cols-3">
+              {breatheRoomOptions.map((option) => {
+                const isSelected = selectedBreatheRoom === option.id;
+                return (
+                  <button
+                    key={option.id}
+                    onClick={() => applyBreatheRoom(option.id)}
+                    className={`group relative flex flex-col overflow-hidden rounded-[2.5rem] border p-1 transition-all duration-500 hover:-translate-y-1.5 ${
+                      isSelected ? `bg-white ${option.ringTone} ring-4 ring-offset-4 ring-offset-sage-50` : 'border-white/60 bg-white/40 hover:bg-white/60'
+                    }`}
+                  >
+                    <div className={`relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-[3rem] bg-gradient-to-br ${option.gradient} shadow-inner`}>
+                       {option.wallpaper ? <img src={option.wallpaper} alt={`${option.title} wallpaper`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" /> : null}
+                       <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-white/10" />
+                       <div className="absolute inset-0 opacity-20 transition-opacity group-hover:opacity-30" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)', backgroundSize: '16px 16px', color: 'white' }} />
+                       <div className={`relative z-10 flex flex-col items-center gap-4 transition-transform duration-700 ${isSelected ? 'scale-110' : 'scale-100 group-hover:scale-105'}`}>
+                         <span className="text-4xl drop-shadow">{option.decoration}</span>
+                       </div>
+                       {isSelected ? (
+                         <div className="absolute bottom-4 flex gap-1">
+                           {[
+                             { id: 'first', delay: 0 },
+                             { id: 'second', delay: 0.15 },
+                             { id: 'third', delay: 0.3 }
+                           ].map((dot) => (
+                             <div key={dot.id} className={`h-1.5 w-1.5 rounded-full ${option.textTone} animate-bounce`} style={{ animationDelay: `${dot.delay}s` }} />
+                           ))}
+                         </div>
+                       ) : null}
+                    </div>
+                    <div className="p-6 text-left">
+                      <div className="flex items-center justify-between">
+                        <h3 className={`text-xl font-bold ${option.textTone}`}>{option.title}</h3>
+                        {isSelected ? <span className={`text-[10px] font-black uppercase tracking-widest ${option.textTone} opacity-60`}>Active</span> : null}
+                      </div>
+                      <p className={`mt-1 text-xs font-bold uppercase tracking-widest ${option.textTone} opacity-50`}>{option.sound}</p>
+                      <p className="mt-4 text-sm leading-relaxed text-sage-600">{option.description}</p>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="mt-16 flex flex-col items-center justify-center">
+              <div className={`relative flex h-72 w-72 items-center justify-center transition-all duration-700`}>
+                <div className={`absolute inset-0 rounded-[4rem] border border-white/60 bg-white/40 shadow-soft backdrop-blur-md transition-all duration-[4000ms] ease-in-out ${
+                  breathePhase === 0 ? 'scale-105 opacity-60' : 
+                  breathePhase === 1 ? 'scale-105 opacity-90' : 
+                  breathePhase === 2 ? 'scale-90 opacity-40' : 
+                  'scale-90 opacity-70'
                 }`} />
-                <div className="relative z-10 font-display text-2xl font-bold tracking-wide text-sage-900 transition-opacity duration-1000">
-                  {['Inhale', 'Hold', 'Exhale', 'Hold'][breathePhase]}
+                <div className="relative z-10 flex flex-col items-center text-center">
+                  <div className="font-display text-3xl font-bold tracking-wide text-sage-900 transition-opacity duration-1000">
+                    {['Inhale', 'Hold', 'Exhale', 'Hold'][breathePhase]}
+                  </div>
+                  <p className={`mt-2 text-[10px] font-black uppercase tracking-[0.2em] opacity-40 ${activeBreatheRoom.textTone}`}>{selectedBreatheRoom} mode</p>
                 </div>
               </div>
             </div>
 
-            {/* Focus Timer */}
-            <div className="rounded-3xl border border-white/60 bg-white/50 p-8 shadow-soft backdrop-blur-sm transition hover:bg-white/70">
-              <h3 className="mb-4 text-xl font-bold text-sage-900">Quiet Writing Timer</h3>
-              <p className="mb-8 text-sage-700">Set a gentle timer to keep yourself completely focused on your thoughts without distractions.</p>
-              
-              {focusActive ? (
-                <div className="flex flex-col items-center">
-                  <div className="font-display text-6xl font-extrabold tabular-nums tracking-tighter text-sage-800">
-                    {formatTime(focusTimer)}
-                  </div>
-                  <button onClick={() => setFocusActive(false)} className="mt-8 rounded-full border border-sage-200 bg-white px-6 py-2.5 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50">
-                    Pause timer
-                  </button>
+            <div className="mt-16 rounded-[3rem] border border-[#e8dfd5] bg-white/60 p-10 shadow-soft backdrop-blur-md transition hover:bg-white/80">
+              <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+                <div className="max-w-md">
+                  <h3 className="text-2xl font-bold text-sage-950 tracking-tight">Focus Timer</h3>
+                  <p className="mt-3 text-sage-600 leading-relaxed">Set a gentle timer to keep yourself completely focused on your thoughts without distractions.</p>
                 </div>
-              ) : (
-                <div className="flex flex-wrap justify-center gap-3">
-                  <button onClick={() => startFocusSession(5)} className="rounded-full bg-sage-800 px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-700">
-                    5 minutes
-                  </button>
-                  <button onClick={() => startFocusSession(10)} className="rounded-full bg-sage-800 px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-700">
-                    10 minutes
-                  </button>
-                  <button onClick={() => startFocusSession(15)} className="rounded-full bg-sage-800 px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-700">
-                    15 minutes
-                  </button>
+                
+                <div className="flex flex-col items-center gap-6">
+                  {focusActive ? (
+                    <div className="flex flex-col items-center">
+                      <div className="font-display text-7xl font-extrabold tabular-nums tracking-tighter text-sage-800">
+                        {formatTime(focusTimer)}
+                      </div>
+                      <button onClick={() => setFocusActive(false)} className="mt-6 rounded-full border border-amber-200/50 bg-white px-8 py-3 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50">
+                        Pause timer
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex flex-wrap justify-center gap-4">
+                      {[5, 10, 15].map((mins) => (
+                        <button key={mins} onClick={() => startFocusSession(mins)} className="flex h-16 w-32 items-center justify-center rounded-2xl bg-sage-900 text-lg font-bold text-white shadow-sm transition hover:-translate-y-1 hover:bg-sage-800">
+                          {mins}m
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
-              )}
+              </div>
             </div>
+            
+            <p className="mt-12 text-center text-[11px] font-bold uppercase tracking-[0.25em] text-sage-400">
+              {breatheRoomStatus}
+            </p>
           </div>
         )}
 
         {activeTab === 'notes' && (
         <div className="mt-6 grid gap-6 pb-28 xl:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)] xl:pb-0">
-          <div className="overflow-hidden rounded-[2rem] border border-white/80 bg-white/84 p-6 shadow-soft backdrop-blur xl:p-8">
+          <div className="overflow-hidden rounded-[3rem] border border-[#e8dfd5] bg-white/84 p-6 shadow-soft backdrop-blur xl:p-8">
             <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
               <div className="max-w-3xl">
                 <p className="text-xs font-bold uppercase tracking-[0.24em] text-sage-600 sm:text-sm sm:tracking-widest">Important things</p>
@@ -5124,55 +6086,86 @@ function App() {
                 { label: 'Completed', value: completedPlannerTodoCount },
                 { label: 'Overdue', value: overduePlannerTodoCount }
               ].map((stat) => (
-                <div key={stat.label} className="rounded-[1.4rem] border border-sage-100 bg-sage-50/55 px-4 py-4 shadow-sm">
+                <div key={stat.label} className="rounded-[1.4rem] border border-[#e8dfd5] bg-sage-50/55 px-4 py-4 shadow-sm">
                   <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-500">{stat.label}</p>
                   <p className="mt-2 text-2xl font-extrabold text-sage-950">{stat.value}</p>
                 </div>
               ))}
             </div>
 
-            <div className="mt-6 rounded-[1.8rem] border border-sage-100/80 bg-sage-50/45 p-5 shadow-sm">
-              <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div className="mt-6 rounded-[2.2rem] border border-[#e8dfd5]/80 bg-sage-50/45 p-5 shadow-sm">
+              <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
                 <div>
                   <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-500">Important notes</p>
                   <p className="mt-1 text-sm font-semibold text-sage-600">Keep deadlines, reminders, shopping needs, travel details, or anything else you want in one calmer place.</p>
                 </div>
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-sage-400">{plannerStorageLabel}</p>
+                <div className="flex flex-wrap items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-700">
+                  <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1">{plannerNoteWordCount} words</span>
+                  <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1">{plannerNoteLineCount} lines</span>
+                  <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1">{plannerStorageLabel}</span>
+                </div>
+              </div>
+              <div className="mt-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+                <div className="flex flex-wrap gap-2">
+                  {plannerQuickTemplates.map((template) => (
+                    <button
+                      key={template}
+                      className="rounded-full border border-[#e8dfd5] bg-white px-3 py-2 text-xs font-extrabold text-sage-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-100"
+                      onClick={() => setPlannerBoard((current) => ({ ...current, text: current.text.trim() ? `${current.text.trim()}\n\n${template}` : template }))}
+                      type="button"
+                    >
+                      {template.split('\n')[0].replace('## ', '')}
+                    </button>
+                  ))}
+                </div>
+                <div className="flex items-center gap-2 rounded-full border border-[#e8dfd5] bg-white px-3 py-2 shadow-sm">
+                  <input
+                    className="w-40 bg-transparent text-sm font-semibold text-sage-800 outline-none placeholder:text-sage-400"
+                    onChange={(event) => setPlannerNoteSearch(event.target.value)}
+                    placeholder="Find in notes"
+                    value={plannerNoteSearch}
+                  />
+                  {plannerNoteSearch.trim() && (
+                    <span className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-sage-500">{plannerNoteSearchCount} hits</span>
+                  )}
+                </div>
               </div>
               <textarea
-                className="mt-4 min-h-[22rem] w-full rounded-[1.5rem] border border-sage-100 bg-white px-5 py-4 text-sm leading-7 text-sage-900 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
+                className="mt-4 min-h-[22rem] w-full rounded-[1.5rem] border border-[#e8dfd5] bg-white px-5 py-4 text-sm leading-7 text-sage-900 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
                 onChange={(event) => setPlannerBoard((current) => ({ ...current, text: event.target.value }))}
                 placeholder="Keep important things here: dates, calls, shopping needs, ideas, and practical details you want nearby."
                 value={plannerBoard.text}
               />
+              <p className="mt-3 text-xs font-semibold text-sage-500">Tip: use the quick chips above to drop in neat little sections instead of staring at a blank notes page.</p>
             </div>
           </div>
 
           <aside className="flex flex-col gap-5">
-            <div className="rounded-[1.9rem] border border-white/80 bg-white/78 p-5 shadow-soft backdrop-blur-xl">
+            <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/78 p-5 shadow-soft backdrop-blur-xl">
               <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                 <div>
                   <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">Task board</p>
                   <p className="mt-1 text-sm font-semibold text-sage-600">Small, clear tasks with priority, status, and optional due dates so the page stays useful without feeling noisy.</p>
                 </div>
                 <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-700">
-                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'all' ? 'border-sage-900 bg-sage-900 text-white' : 'border-sage-100 bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('all')} type="button">All {plannerTodoCount}</button>
-                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'open' ? 'border-sage-900 bg-sage-900 text-white' : 'border-sage-100 bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('open')} type="button">Open {openPlannerTodoCount}</button>
-                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'doing' ? 'border-sage-900 bg-sage-900 text-white' : 'border-sage-100 bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('doing')} type="button">Doing {inProgressPlannerTodoCount}</button>
-                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'done' ? 'border-sage-900 bg-sage-900 text-white' : 'border-sage-100 bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('done')} type="button">Done {completedPlannerTodoCount}</button>
-                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'high' ? 'border-sage-900 bg-sage-900 text-white' : 'border-sage-100 bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('high')} type="button">High {plannerBoard.todos.filter((todo) => todo.priority === 'high').length}</button>
+                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'all' ? 'border-sage-900 bg-sage-900 text-white' : 'border-[#e8dfd5] bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('all')} type="button">All {plannerTodoCount}</button>
+                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'open' ? 'border-sage-900 bg-sage-900 text-white' : 'border-[#e8dfd5] bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('open')} type="button">Open {openPlannerTodoCount}</button>
+                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'doing' ? 'border-sage-900 bg-sage-900 text-white' : 'border-[#e8dfd5] bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('doing')} type="button">Doing {inProgressPlannerTodoCount}</button>
+                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'done' ? 'border-sage-900 bg-sage-900 text-white' : 'border-[#e8dfd5] bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('done')} type="button">Done {completedPlannerTodoCount}</button>
+                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'high' ? 'border-sage-900 bg-sage-900 text-white' : 'border-[#e8dfd5] bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('high')} type="button">High {plannerBoard.todos.filter((todo) => todo.priority === 'high').length}</button>
+                  <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1">{plannerStorageLabel}</span>
                 </div>
               </div>
 
               <form className="mt-4 grid gap-3 sm:grid-cols-2" onSubmit={addPlannerTodo}>
                 <input
-                  className="flex-1 rounded-[1.15rem] border border-sage-100 bg-white px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70 sm:col-span-2"
+                  className="flex-1 rounded-[1.15rem] border border-[#e8dfd5] bg-white px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70 sm:col-span-2"
                   onChange={(event) => setPlannerTodoDraft(event.target.value)}
                   placeholder="Add a task"
                   value={plannerTodoDraft}
                 />
                 <select
-                  className="rounded-[1.15rem] border border-sage-100 bg-white px-4 py-3 text-sm font-semibold text-sage-800 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
+                  className="rounded-[1.15rem] border border-[#e8dfd5] bg-white px-4 py-3 text-sm font-semibold text-sage-800 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
                   onChange={(event) => setPlannerTodoPriorityDraft(event.target.value)}
                   value={plannerTodoPriorityDraft}
                 >
@@ -5181,14 +6174,14 @@ function App() {
                   <option value="high">High priority</option>
                 </select>
                 <input
-                  className="rounded-[1.15rem] border border-sage-100 bg-white px-4 py-3 text-sm font-semibold text-sage-800 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
+                  className="rounded-[1.15rem] border border-[#e8dfd5] bg-white px-4 py-3 text-sm font-semibold text-sage-800 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
                   min={todayISO()}
                   onChange={(event) => setPlannerTodoDueDateDraft(event.target.value)}
                   type="date"
                   value={plannerTodoDueDateDraft}
                 />
                 <select
-                  className="rounded-[1.15rem] border border-sage-100 bg-white px-4 py-3 text-sm font-semibold text-sage-800 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
+                  className="rounded-[1.15rem] border border-[#e8dfd5] bg-white px-4 py-3 text-sm font-semibold text-sage-800 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
                   onChange={(event) => setPlannerTodoRecurrenceDraft(event.target.value)}
                   value={plannerTodoRecurrenceDraft}
                 >
@@ -5205,7 +6198,7 @@ function App() {
               <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-500">
                 <span>{filteredPlannerTodos.length} shown · {overduePlannerTodoCount} overdue</span>
                 {completedPlannerTodoCount > 0 && (
-                  <button className="rounded-full border border-sage-100 bg-white px-3 py-2 text-sage-700 transition hover:bg-sage-50" onClick={clearCompletedPlannerTodos} type="button">
+                  <button className="rounded-full border border-[#e8dfd5] bg-white px-3 py-2 text-sage-700 transition hover:bg-sage-50" onClick={clearCompletedPlannerTodos} type="button">
                     Clear done tasks
                   </button>
                 )}
@@ -5217,17 +6210,17 @@ function App() {
                     ? 'border-sage-700 bg-sage-700 text-white'
                     : todo.status === 'doing'
                       ? 'border-teal-200 bg-teal-50 text-teal-700'
-                      : 'border-sage-200 bg-white text-sage-500 hover:border-sage-300 hover:text-sage-600';
+                      : 'border-amber-200/50 bg-white text-sage-500 hover:border-sage-300 hover:text-sage-600';
                   const priorityTone = todo.priority === 'high'
                     ? 'border-rose-200 bg-rose-50 text-rose-700'
                     : todo.priority === 'low'
-                      ? 'border-sage-100 bg-sage-50 text-sage-600'
+                      ? 'border-[#e8dfd5] bg-sage-50 text-sage-600'
                       : 'border-amber-200 bg-amber-50 text-amber-700';
                   const isEditingTodo = editingPlannerTodoId === todo.id;
                   return (
                     <div
                       key={todo.id}
-                      className={`rounded-[1.4rem] border bg-white px-4 py-3 shadow-sm transition ${draggedPlannerTodoId === todo.id ? 'border-teal-200 opacity-60' : 'border-sage-100'}`}
+                      className={`rounded-[1.4rem] border bg-white px-4 py-3 shadow-sm transition ${draggedPlannerTodoId === todo.id ? 'border-teal-200 opacity-60' : 'border-[#e8dfd5]'}`}
                       draggable={!isEditingTodo}
                       onDragEnd={() => setDraggedPlannerTodoId(null)}
                       onDragOver={(event) => event.preventDefault()}
@@ -5246,18 +6239,18 @@ function App() {
                           {isEditingTodo ? (
                             <div className="space-y-3">
                               <input
-                                className="w-full rounded-2xl border border-sage-100 bg-sage-50/60 px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
+                                className="w-full rounded-2xl border border-[#e8dfd5] bg-sage-50/60 px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
                                 onChange={(event) => setEditingPlannerTodoText(event.target.value)}
                                 value={editingPlannerTodoText}
                               />
                               <div className="grid gap-2 sm:grid-cols-3">
-                                <select className="rounded-2xl border border-sage-100 bg-white px-3 py-2 text-xs font-bold text-sage-700 outline-none" onChange={(event) => setEditingPlannerTodoPriority(event.target.value)} value={editingPlannerTodoPriority}>
+                                <select className="rounded-2xl border border-[#e8dfd5] bg-white px-3 py-2 text-xs font-bold text-sage-700 outline-none" onChange={(event) => setEditingPlannerTodoPriority(event.target.value)} value={editingPlannerTodoPriority}>
                                   <option value="low">Low priority</option>
                                   <option value="medium">Medium priority</option>
                                   <option value="high">High priority</option>
                                 </select>
-                                <input className="rounded-2xl border border-sage-100 bg-white px-3 py-2 text-xs font-bold text-sage-700 outline-none" min={todayISO()} onChange={(event) => setEditingPlannerTodoDueDate(event.target.value)} type="date" value={editingPlannerTodoDueDate} />
-                                <select className="rounded-2xl border border-sage-100 bg-white px-3 py-2 text-xs font-bold text-sage-700 outline-none" onChange={(event) => setEditingPlannerTodoRecurrence(event.target.value)} value={editingPlannerTodoRecurrence}>
+                                <input className="rounded-2xl border border-[#e8dfd5] bg-white px-3 py-2 text-xs font-bold text-sage-700 outline-none" min={todayISO()} onChange={(event) => setEditingPlannerTodoDueDate(event.target.value)} type="date" value={editingPlannerTodoDueDate} />
+                                <select className="rounded-2xl border border-[#e8dfd5] bg-white px-3 py-2 text-xs font-bold text-sage-700 outline-none" onChange={(event) => setEditingPlannerTodoRecurrence(event.target.value)} value={editingPlannerTodoRecurrence}>
                                   <option value="none">One-time</option>
                                   <option value="daily">Daily</option>
                                   <option value="weekly">Weekly</option>
@@ -5266,7 +6259,7 @@ function App() {
                               </div>
                               <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em]">
                                 <button className="rounded-full bg-sage-900 px-3 py-2 text-white transition hover:bg-sage-800" onClick={() => savePlannerTodoEdit(todo.id)} type="button">Save edit</button>
-                                <button className="rounded-full border border-sage-100 bg-white px-3 py-2 text-sage-600 transition hover:bg-sage-50" onClick={cancelEditingPlannerTodo} type="button">Cancel</button>
+                                <button className="rounded-full border border-[#e8dfd5] bg-white px-3 py-2 text-sage-600 transition hover:bg-sage-50" onClick={cancelEditingPlannerTodo} type="button">Cancel</button>
                               </div>
                             </div>
                           ) : (
@@ -5274,25 +6267,25 @@ function App() {
                               <div>
                                 <p className={`text-sm font-semibold leading-6 ${todo.status === 'done' ? 'text-sage-400 line-through' : 'text-sage-800'}`}>{todo.text}</p>
                                 <div className="mt-2 flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.16em]">
-                                  <span className={`rounded-full border px-2.5 py-1 ${todo.status === 'done' ? 'border-sage-200 bg-white text-sage-500' : 'border-sage-100 bg-white text-sage-600'}`}>{getPlannerStatusLabel(todo.status)}</span>
+                                  <span className={`rounded-full border px-2.5 py-1 ${todo.status === 'done' ? 'border-amber-200/50 bg-white text-sage-500' : 'border-[#e8dfd5] bg-white text-sage-600'}`}>{getPlannerStatusLabel(todo.status)}</span>
                                   <button className={`rounded-full border px-2.5 py-1 transition ${priorityTone}`} onClick={() => cyclePlannerTodoPriority(todo.id)} type="button">
                                     {getPlannerPriorityLabel(todo.priority)} priority
                                   </button>
-                                  {todo.dueDate ? <span className={`rounded-full border px-2.5 py-1 ${isPlannerTodoOverdue(todo) ? 'border-rose-200 bg-rose-50 text-rose-700' : 'border-sage-100 bg-white text-sage-600'}`}>{isPlannerTodoOverdue(todo) ? 'Overdue' : 'Due'} {formatShortDate(todo.dueDate)}</span> : null}
+                                  {todo.dueDate ? <span className={`rounded-full border px-2.5 py-1 ${isPlannerTodoOverdue(todo) ? 'border-rose-200 bg-rose-50 text-rose-700' : 'border-[#e8dfd5] bg-white text-sage-600'}`}>{isPlannerTodoOverdue(todo) ? 'Overdue' : 'Due'} {formatShortDate(todo.dueDate)}</span> : null}
                                   <span className="rounded-full border border-teal-100 bg-teal-50 px-2.5 py-1 text-teal-700">{getPlannerRecurrenceLabel(todo.recurrence)}</span>
                                 </div>
                               </div>
                               <div className="flex shrink-0 flex-col gap-2 text-sage-400">
-                                <button className="rounded-full border border-sage-100 bg-white p-1.5 transition hover:text-sage-700" onClick={() => startEditingPlannerTodo(todo)} type="button" aria-label="Edit task">
+                                <button className="rounded-full border border-[#e8dfd5] bg-white p-1.5 transition hover:text-sage-700" onClick={() => startEditingPlannerTodo(todo)} type="button" aria-label="Edit task">
                                   <PenLine size={15} />
                                 </button>
-                                <button className="rounded-full border border-sage-100 bg-white p-1.5 transition hover:text-sage-700" onClick={() => movePlannerTodo(todo.id, -1)} type="button" aria-label="Move task up">
+                                <button className="rounded-full border border-[#e8dfd5] bg-white p-1.5 transition hover:text-sage-700" onClick={() => movePlannerTodo(todo.id, -1)} type="button" aria-label="Move task up">
                                   <ArrowUp size={15} />
                                 </button>
-                                <button className="rounded-full border border-sage-100 bg-white p-1.5 text-xs font-black transition hover:text-sage-700" onClick={() => movePlannerTodo(todo.id, 1)} type="button" aria-label="Move task down">
+                                <button className="rounded-full border border-[#e8dfd5] bg-white p-1.5 text-xs font-black transition hover:text-sage-700" onClick={() => movePlannerTodo(todo.id, 1)} type="button" aria-label="Move task down">
                                   ↓
                                 </button>
-                                <button className="rounded-full border border-sage-100 bg-white p-1.5 transition hover:text-rose-500" onClick={() => deletePlannerTodo(todo.id)} type="button" aria-label="Delete task">
+                                <button className="rounded-full border border-[#e8dfd5] bg-white p-1.5 transition hover:text-rose-500" onClick={() => deletePlannerTodo(todo.id)} type="button" aria-label="Delete task">
                                   <Trash2 size={15} />
                                 </button>
                               </div>
@@ -5303,44 +6296,44 @@ function App() {
                     </div>
                   );
                 }) : (
-                  <div className="rounded-[1.4rem] border border-dashed border-sage-200 bg-sage-50/45 px-4 py-5 text-sm font-semibold leading-6 text-sage-500">
+                  <div className="rounded-[1.4rem] border border-dashed border-amber-200/50 bg-sage-50/45 px-4 py-5 text-sm font-semibold leading-6 text-sage-500">
                     No tasks match this view yet. Try another filter or add a new task with a priority, due date, or recurring rhythm.
                   </div>
                 )}
               </div>
             </div>
 
-            <div className="rounded-[1.9rem] border border-white/80 bg-white/78 p-5 shadow-soft backdrop-blur-xl">
+            <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/78 p-5 shadow-soft backdrop-blur-xl">
               <div className="flex items-center justify-between gap-3">
                 <div>
                   <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">Upcoming reminders</p>
                   <p className="mt-1 text-sm font-semibold text-sage-600">A calm shortlist of the dates that are coming up next.</p>
                 </div>
                 <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-700">
-                  <span className="rounded-full border border-sage-100 bg-sage-50 px-3 py-1">{upcomingReminderCount} upcoming</span>
-                  <span className="rounded-full border border-sage-100 bg-white px-3 py-1">{reminderStorageLabel}</span>
+                  <span className="rounded-full border border-[#e8dfd5] bg-sage-50 px-3 py-1">{upcomingReminderCount} upcoming</span>
+                  <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1">{reminderStorageLabel}</span>
                 </div>
               </div>
               <div className="mt-4 space-y-3">
                 {upcomingReminderPreview.length ? upcomingReminderPreview.map((item) => (
-                  <button className="w-full rounded-[1.4rem] border border-sage-100 bg-sage-50/45 px-4 py-3 text-left transition hover:-translate-y-0.5 hover:bg-white hover:shadow-sm" key={item.dateKey} onClick={() => { setSelectedCalendarDate(item.dateKey); navigateToTab('memories'); }} type="button">
+                  <button className="w-full rounded-[1.4rem] border border-[#e8dfd5] bg-sage-50/45 px-4 py-3 text-left transition hover:-translate-y-0.5 hover:bg-white hover:shadow-sm" key={item.dateKey} onClick={() => { setSelectedCalendarDate(item.dateKey); navigateToTab('memories'); }} type="button">
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <div className="min-w-0 flex-1">
                         <p className="text-sm font-extrabold leading-6 text-sage-900">{item.note}</p>
                         <p className="mt-1 text-xs font-bold uppercase tracking-[0.16em] text-sage-500">{formatDate(item.dateKey)}{item.time ? ` · ${formatReminderTime(item.time)}` : ''}</p>
                       </div>
-                      <span className="rounded-full border border-sage-100 bg-white px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-700">{item.relativeLabel}</span>
+                      <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-700">{item.relativeLabel}</span>
                     </div>
                   </button>
                 )) : (
-                  <div className="rounded-[1.4rem] border border-dashed border-sage-200 bg-sage-50/45 px-4 py-5 text-sm font-semibold leading-6 text-sage-500">
+                  <div className="rounded-[1.4rem] border border-dashed border-amber-200/50 bg-sage-50/45 px-4 py-5 text-sm font-semibold leading-6 text-sage-500">
                     No upcoming reminders yet. Mark an important date in the calendar and it will show up here.
                   </div>
                 )}
               </div>
             </div>
 
-            <div className="rounded-[1.9rem] border border-white/80 bg-white/78 p-5 shadow-soft backdrop-blur-xl">
+            <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/78 p-5 shadow-soft backdrop-blur-xl">
               <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">Keep it simple</p>
               <div className="mt-4 space-y-3 text-sm font-semibold leading-7 text-sage-700">
                 <p>Use this page for practical life details, not emotional journaling.</p>
@@ -5351,7 +6344,7 @@ function App() {
                 <button className="inline-flex items-center gap-2 rounded-full bg-sage-900 px-4 py-2 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-800" onClick={() => navigateToTab('write')} type="button">
                   <PenLine size={15} /> Go back to writing
                 </button>
-                <button className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white px-4 py-2 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50" onClick={() => navigateToTab('insights')} type="button">
+                <button className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white px-4 py-2 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50" onClick={() => navigateToTab('insights')} type="button">
                   <CalendarDays size={15} /> Open calendar
                 </button>
               </div>
@@ -5362,7 +6355,7 @@ function App() {
 
         {activeTab === 'insights' && (
         <div className="mt-6 grid gap-6 pb-28 xl:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] xl:pb-0">
-          <div className="overflow-hidden rounded-[2rem] border border-white/80 bg-gradient-to-br from-white/88 via-sage-50/68 to-sand-50/72 p-4 shadow-soft backdrop-blur sm:p-6 xl:p-8">
+          <div className="overflow-hidden rounded-[3rem] border border-[#e8dfd5] bg-gradient-to-br from-white/88 via-sage-50/68 to-sand-50/72 p-4 shadow-soft backdrop-blur sm:p-6 xl:p-8">
             <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
               <div className="max-w-3xl">
                 <p className="text-xs font-bold uppercase tracking-[0.24em] text-sage-600 sm:text-sm sm:tracking-widest">Reflection pattern</p>
@@ -5374,20 +6367,20 @@ function App() {
               </div>
             </div>
             <div className="mt-5 flex flex-wrap gap-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">
-              <span className="rounded-full border border-white/90 bg-white/88 px-3 py-2 shadow-sm">{weeklyCheckIns}/{weeklyGoal} check-ins this week</span>
-              <span className="rounded-full border border-white/90 bg-white/88 px-3 py-2 shadow-sm">{entries.length} pages in your archive</span>
-              <span className="rounded-full border border-white/90 bg-white/88 px-3 py-2 shadow-sm">{unlockedAchievementCount}/{achievementBadges.length} keepsakes lit</span>
+              <span className="rounded-full border border-[#e8dfd5] bg-white/88 px-3 py-2 shadow-sm">{weeklyCheckIns}/{weeklyGoal} check-ins this week</span>
+              <span className="rounded-full border border-[#e8dfd5] bg-white/88 px-3 py-2 shadow-sm">{entries.length} pages in your archive</span>
+              <span className="rounded-full border border-[#e8dfd5] bg-white/88 px-3 py-2 shadow-sm">{unlockedAchievementCount}/{achievementBadges.length} keepsakes lit</span>
             </div>
           </div>
 
-          <div className="rounded-[2rem] border border-white/80 bg-white/80 p-6 shadow-soft backdrop-blur xl:p-8">
+          <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/80 p-6 shadow-soft backdrop-blur xl:p-8">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-sand-500 sm:text-sm sm:tracking-widest">This week so far</p>
             <p className="mt-3 text-4xl font-extrabold text-sage-950">{weeklyCheckIns}/{weeklyGoal}</p>
             <p className="mt-3 text-sm font-semibold leading-7 text-sage-700">{weeklyCheckIns >= weeklyGoal ? 'You already gave yourself enough room this week.' : `${weeklyGoal - weeklyCheckIns} more soft check-ins if you want to fill this week.`}</p>
             <div className="mt-5 h-2.5 w-full overflow-hidden rounded-full bg-sage-100">
               <div className="h-full rounded-full bg-gradient-to-r from-sage-500 to-teal-500 transition-all duration-700" style={{ width: `${Math.min((weeklyCheckIns / weeklyGoal) * 100, 100)}%` }}></div>
             </div>
-            <div className="mt-6 rounded-[1.75rem] bg-gradient-to-br from-rose-50 to-white p-5 shadow-inner">
+            <div className="mt-6 rounded-[2.2rem] bg-gradient-to-br from-rose-50 to-white p-5 shadow-inner">
               <p className="text-xs font-bold uppercase tracking-[0.22em] text-rose-500 sm:text-sm sm:tracking-widest">Keepsake path</p>
               <div className="mt-3 flex items-center gap-4">
                 <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-white text-3xl shadow-sm">{rewardLevel.emoji}</div>
@@ -5399,7 +6392,7 @@ function App() {
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-[2rem] border border-white/80 bg-white/82 p-6 shadow-soft backdrop-blur xl:p-8">
+          <div className="overflow-hidden rounded-[3rem] border border-[#e8dfd5] bg-white/82 p-6 shadow-soft backdrop-blur xl:p-8">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.22em] text-sage-600 sm:text-sm sm:tracking-widest">Mood garden</p>
@@ -5410,13 +6403,13 @@ function App() {
             <div className="mt-5">
               <MoodChart entries={entries} weatherOptions={weatherOptions} />
             </div>
-            <div className="mt-5 rounded-[1.75rem] bg-white p-5 text-sm font-bold leading-7 text-sage-900 shadow-inner">
+            <div className="mt-5 rounded-[2.2rem] bg-white p-5 text-sm font-bold leading-7 text-sage-900 shadow-inner">
               {weeklySummary}
             </div>
           </div>
 
           <div className="grid gap-6">
-            <div className="rounded-[2rem] border border-white/80 bg-white/82 p-6 shadow-soft backdrop-blur xl:p-8">
+            <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/82 p-6 shadow-soft backdrop-blur xl:p-8">
               <p className="text-xs font-bold uppercase tracking-[0.22em] text-teal-600 sm:text-sm sm:tracking-widest">{returnRitual.eyebrow}</p>
               <p className="mt-2 text-2xl font-extrabold leading-tight text-sage-950">{returnRitual.title}</p>
               <p className="mt-3 text-sm font-semibold leading-7 text-sage-700">{returnRitual.text}</p>
@@ -5425,7 +6418,7 @@ function App() {
               </button>
             </div>
 
-            <div className="rounded-[2rem] border border-white/80 bg-white/82 p-6 shadow-soft backdrop-blur xl:p-8">
+            <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/82 p-6 shadow-soft backdrop-blur xl:p-8">
               <div className="flex items-center justify-between gap-3">
                 <p className="text-xs font-bold uppercase tracking-[0.22em] text-sage-600">Keepsake shelf</p>
                 <div className="rounded-full bg-sage-100 px-3 py-1 text-[10px] font-extrabold text-sage-800">{unlockedAchievementCount}/{achievementBadges.length}</div>
@@ -5444,200 +6437,212 @@ function App() {
         )}
 
         {activeTab === 'memories' && (
-        <div className="mt-6 grid gap-6 pb-24 xl:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:pb-0">
+        <div className="mt-6 grid gap-6 pb-24 lg:pb-0">
 
-          <div className="overflow-hidden rounded-[2rem] border border-white/80 bg-gradient-to-br from-white/88 via-sage-50/68 to-sand-50/72 p-4 shadow-soft backdrop-blur sm:p-6 lg:p-8">
-            <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.22em] text-sage-600 sm:text-sm sm:tracking-widest">Journal calendar</p>
-                <h2 className="mt-1 text-2xl font-extrabold text-ink sm:text-3xl">Keep the diary pages you want to revisit.</h2>
-                <p className="mt-2 text-sm font-semibold leading-7 text-sage-700">Mark meaningful dates, revisit saved pages, and return to entries that still matter when you want perspective later.</p>
-              </div>
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-3xl bg-white text-sage-700 shadow-sm">
-                <CalendarDays size={20} />
-              </div>
-            </div>
-            <div className="mb-5 flex flex-wrap gap-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-sage-700 sm:text-xs sm:tracking-[0.18em]">
-              <span className="rounded-full border border-white/90 bg-white/88 px-3 py-2 shadow-sm">{importantDateCount} marked dates</span>
-              <span className="rounded-full border border-white/90 bg-white/88 px-3 py-2 shadow-sm">{upcomingReminderCount} upcoming reminders</span>
-              <span className="rounded-full border border-white/90 bg-white/88 px-3 py-2 shadow-sm">{selectedDateEntries.length} page{selectedDateEntries.length === 1 ? '' : 's'} on this day</span>
-            </div>
-            <div className="mb-4 rounded-[1.5rem] bg-white/82 p-2.5 shadow-inner sm:rounded-[1.75rem] sm:p-3">
-              <div className="flex items-center justify-between gap-2 rounded-[1.2rem] bg-white/75 px-2 py-2 shadow-sm">
-                <button className="rounded-full bg-white px-3 py-2 text-sm font-extrabold text-sage-800 shadow-sm" onClick={() => setCalendarMonth(shiftMonthKey(calendarMonth, -1))} type="button">‹</button>
-                <p className="text-center text-sm font-extrabold text-sage-950 sm:text-base">{formatMonthLabel(calendarMonth)}</p>
-                <button className="rounded-full bg-white px-3 py-2 text-sm font-extrabold text-sage-800 shadow-sm" onClick={() => setCalendarMonth(shiftMonthKey(calendarMonth, 1))} type="button">›</button>
-              </div>
-              <button className="mt-3 inline-flex w-full items-center justify-center rounded-full border border-sage-100 bg-white px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700 shadow-sm transition hover:bg-sage-50 sm:w-auto" onClick={() => { setCalendarMonth(todayISO().slice(0, 7)); setSelectedCalendarDate(todayISO()); }} type="button">
-                Jump to today
-              </button>
-            </div>
-            <div className="grid grid-cols-7 gap-0.5 text-center text-[10px] font-extrabold uppercase tracking-[0.12em] text-sage-500 sm:gap-1 sm:text-xs sm:tracking-wider">
-              {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => <div key={day}>{day}</div>)}
-            </div>
-            <div className="mt-2 grid grid-cols-7 gap-0.5 sm:gap-1">
-              {calendarDays.map((day, index) => {
-                const dayEntries = day ? entriesByDate[day.dateKey] || [] : [];
-                const hasImportantDate = day ? Boolean(importantDates[day.dateKey]) : false;
-                const isSelected = day?.dateKey === selectedCalendarDate;
-                const isToday = day?.dateKey === todayISO();
-                return day ? (
-                  <button
-                    className={`relative aspect-square rounded-xl border text-xs font-extrabold transition hover:-translate-y-0.5 sm:rounded-2xl sm:text-sm ${isSelected ? 'border-sage-800 bg-sage-900 text-white shadow-lift' : isToday ? 'border-sage-300 bg-sage-100 text-sage-900' : 'border-sage-100 bg-white text-sage-800 hover:bg-sage-50'}`}
-                    key={day.dateKey}
-                    onClick={() => {
-                      setSelectedCalendarDate(day.dateKey);
-                      setImportanceModalOpen(false);
-                    }}
-                    type="button"
-                  >
-                    {day.day}
-                    {hasImportantDate && <span className={`absolute right-1 top-1 text-[9px] sm:right-1.5 sm:top-1.5 sm:text-[10px] ${isSelected ? 'text-sand-100' : 'text-rose-500'}`}>✦</span>}
-                    {dayEntries.length > 0 && <span className={`absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full sm:h-1.5 sm:w-1.5 ${isSelected ? 'bg-white' : 'bg-sage-700'}`} />}
-                  </button>
-                ) : <div key={`blank-${index}`} />;
-              })}
-            </div>
-            <div className="mt-5 rounded-[1.75rem] border border-white/80 bg-white/92 p-4 shadow-inner sm:p-5">
-              <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-                <div className="max-w-2xl">
-                  <p className="text-xs font-extrabold uppercase tracking-widest text-sage-600">{selectedCalendarDate}</p>
-                  <p className="mt-1 text-sm font-semibold leading-6 text-sage-700">Keep the calendar focused on the days that matter, then let notification permission and service-worker support surface today and tomorrow reminders more cleanly.</p>
-                </div>
-                <div className="flex w-full flex-col gap-2 sm:w-auto lg:min-w-[230px]">
-                  <button className={`w-full rounded-full px-4 py-2.5 text-sm font-extrabold transition ${selectedImportantDate ? 'bg-sage-100 text-sage-800 hover:bg-sage-200' : 'bg-sage-900 text-white hover:bg-sage-800'}`} onClick={() => openImportantDateEditor(selectedCalendarDate)} type="button">
-                    {selectedImportantDate ? 'Edit reminder' : 'Add reminder'}
-                  </button>
-                  <button className={`w-full rounded-full border px-4 py-2.5 text-sm font-extrabold transition ${notificationPermission === 'granted' ? 'border-sage-200 bg-white text-sage-700 hover:bg-sage-50' : 'border-sage-900 bg-white text-sage-900 hover:bg-sage-50'}`} onClick={requestNotificationPermission} type="button">
-                    {notificationPermission === 'granted' ? 'Notifications allowed' : 'Allow browser notifications'}
-                  </button>
-                  {selectedImportantDate && (
-                    <button className="w-full rounded-full bg-rose-100 px-4 py-2.5 text-sm font-extrabold text-rose-700 transition hover:bg-rose-200" onClick={() => deleteImportantDate(selectedCalendarDate)} type="button">
-                      Remove reminder
-                    </button>
-                  )}
-                </div>
-              </div>
-
-              <div className="mt-4 flex flex-wrap gap-2 text-[11px] font-extrabold uppercase tracking-[0.18em] text-sage-700">
-                <span className="rounded-full border border-sage-100 bg-sage-50 px-3 py-2">{notificationPermission === 'granted' ? 'Browser permission on' : notificationPermission === 'unsupported' ? 'Notifications unsupported' : 'Permission needed'}</span>
-                <span className="rounded-full border border-sage-100 bg-white px-3 py-2">{reminderStorageLabel}</span>
-                <span className="rounded-full border border-sage-100 bg-white px-3 py-2">{reminderDeliveryLabel}</span>
-                <span className="rounded-full border border-sage-100 bg-white px-3 py-2">{reminderBehaviorLabel}</span>
-                <span className={`rounded-full border px-3 py-2 ${webPushTokenReady ? 'border-teal-200 bg-teal-50 text-teal-700' : 'border-sage-100 bg-white text-sage-700'}`}>{webPushTokenReady ? 'True push ready' : 'Push setup in progress'}</span>
-              </div>
-
-              <div className="mt-4 rounded-2xl border border-sage-100 bg-white/90 px-4 py-3 text-sm font-semibold leading-6 text-sage-700">
-                {webPushStatus}
-              </div>
-
-              {notificationStatusMessage && (
-                <div className="mt-4 rounded-2xl border border-sage-100 bg-sage-50/80 px-4 py-3 text-sm font-semibold leading-6 text-sage-700">
-                  {notificationStatusMessage}
-                </div>
-              )}
-
-              {nextUpcomingReminder && (
-                <button className="mt-4 w-full rounded-2xl border border-sage-100 bg-sage-50/75 p-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:bg-white" onClick={() => setSelectedCalendarDate(nextUpcomingReminder.dateKey)} type="button">
-                  <div className="flex flex-wrap items-start justify-between gap-3">
-                    <div className="min-w-0 flex-1">
-                      <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Next reminder</p>
-                      <p className="mt-2 text-sm font-extrabold leading-6 text-sage-900">{nextUpcomingReminder.note}</p>
-                      <p className="mt-1 text-xs font-bold uppercase tracking-[0.16em] text-sage-500">{formatDate(nextUpcomingReminder.dateKey)}{nextUpcomingReminder.time ? ` · ${formatReminderTime(nextUpcomingReminder.time)}` : ''}</p>
-                    </div>
-                    <span className="rounded-full border border-sage-100 bg-white px-3 py-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-700">{nextUpcomingReminder.relativeLabel}</span>
-                  </div>
-                </button>
-              )}
-
-              {selectedImportantDate && (
-                <div className="mt-4 rounded-2xl border border-rose-100 bg-rose-50/70 p-4 shadow-sm">
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                    <div>
-                      <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-rose-600">Important reminder</p>
-                      <p className="mt-2 text-sm font-semibold leading-6 text-sage-800">{selectedImportantDate.note}</p>
-                    </div>
-                    <div className="flex flex-wrap gap-2 text-[11px] font-extrabold uppercase tracking-[0.18em] text-rose-700">
-                      {selectedImportantDate.time && <span className="rounded-full border border-rose-100 bg-white/90 px-3 py-2">{formatReminderTime(selectedImportantDate.time)}</span>}
-                      <span className="rounded-full border border-rose-100 bg-white/90 px-3 py-2">{selectedImportantDate.remindersEnabled ? 'Reminders on' : 'Reminders off'}</span>
-                      <span className="rounded-full border border-rose-100 bg-white/90 px-3 py-2">{getRelativeReminderLabel(selectedCalendarDate)}</span>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              <div className="mt-4 rounded-2xl border border-sage-100 bg-white/90 p-4 shadow-sm">
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div>
-                    <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Upcoming reminders</p>
-                    <p className="mt-1 text-sm font-semibold leading-6 text-sage-700">See the next few important dates in one place, then jump straight to the day you want.</p>
-                  </div>
-                  <span className="rounded-full border border-sage-100 bg-sage-50 px-3 py-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-700">{upcomingReminderCount} saved</span>
-                </div>
-                <div className="mt-4 space-y-3">
-                  {upcomingReminderPreview.length ? upcomingReminderPreview.map((item) => (
-                    <button className={`w-full rounded-2xl border px-4 py-3 text-left transition hover:-translate-y-0.5 hover:bg-sage-50 ${item.dateKey === selectedCalendarDate ? 'border-sage-300 bg-sage-50' : 'border-sage-100 bg-white'}`} key={item.dateKey} onClick={() => setSelectedCalendarDate(item.dateKey)} type="button">
-                      <div className="flex flex-wrap items-start justify-between gap-3">
-                        <div className="min-w-0 flex-1">
-                          <p className="text-sm font-extrabold leading-6 text-sage-900">{item.note}</p>
-                          <p className="mt-1 text-xs font-bold uppercase tracking-[0.16em] text-sage-500">{formatDate(item.dateKey)}{item.time ? ` · ${formatReminderTime(item.time)}` : ''}</p>
-                        </div>
-                        <span className="rounded-full border border-sage-100 bg-sage-50 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-700">{item.relativeLabel}</span>
-                      </div>
-                    </button>
-                  )) : (
-                    <p className="rounded-2xl border border-dashed border-sage-200 bg-sage-50/50 px-4 py-4 text-sm font-semibold leading-6 text-sage-500">No upcoming reminders yet. Add one for birthdays, meetings, travel, deadlines, or anything you want to see ahead of time.</p>
-                  )}
-                </div>
-              </div>
-
-              {importanceModalOpen && (
-                <div className="mt-4 rounded-2xl border border-sage-100 bg-sage-50/80 p-4 shadow-sm">
-                  <label className="block text-sm font-bold text-sage-800">
-                    What should they remember?
-                    <textarea
-                      className="mt-3 min-h-[96px] w-full rounded-2xl border border-sage-100 bg-white px-4 py-3 font-semibold leading-6 text-sage-900 outline-none transition focus:border-sage-300"
-                      maxLength={180}
-                      onChange={(event) => setImportanceDraft(event.target.value)}
-                      placeholder="Client call, interview, exam, anniversary, family plan..."
-                      value={importanceDraft}
-                    />
-                  </label>
-                  <div className="mt-3 grid gap-3 sm:grid-cols-[minmax(0,220px)_minmax(0,1fr)]">
-                    <label className="block text-sm font-bold text-sage-800">
-                      Time (optional)
-                      <input
-                        className="mt-2 w-full rounded-2xl border border-sage-100 bg-white px-4 py-3 font-semibold text-sage-900 outline-none transition focus:border-sage-300"
-                        onChange={(event) => setImportanceTimeDraft(event.target.value)}
-                        type="time"
-                        value={importanceTimeDraft}
-                      />
-                    </label>
-                    <label className="flex items-center gap-3 rounded-2xl border border-sage-100 bg-white px-4 py-3 text-sm font-semibold text-sage-800">
-                      <input checked={importanceReminderEnabled} className="h-4 w-4 rounded border-sage-300 text-sage-700 focus:ring-sage-300" onChange={(event) => setImportanceReminderEnabled(event.target.checked)} type="checkbox" />
-                      Notify me on the day and the day before if browser notifications are allowed
-                    </label>
-                  </div>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    <button className="rounded-full bg-sage-900 px-4 py-2 text-sm font-extrabold text-white transition hover:bg-sage-800" onClick={saveImportantDate} type="button">Save reminder</button>
-                    <button className="rounded-full border border-sage-200 bg-white px-4 py-2 text-sm font-extrabold text-sage-700 transition hover:bg-sage-50" onClick={() => setImportanceModalOpen(false)} type="button">Cancel</button>
-                  </div>
-                </div>
-              )}
-              {selectedDateEntries.length ? (
-                <div className="mt-4 space-y-3">
-                  {selectedDateEntries.map((entry) => (
-                    <button className="w-full rounded-2xl border border-sage-100 bg-sage-50/78 p-3 text-left transition hover:-translate-y-0.5 hover:bg-white hover:shadow-sm" key={entry.id} onClick={() => setSelectedEntry(entry)} type="button">
-                      <p className="font-extrabold text-sage-950">{entry.title}</p>
-                      <p className="mt-1 line-clamp-2 text-sm font-semibold leading-6 text-sage-700">{getPlainTextFromHtml(entry.body || entry.prompt || '') || 'Photo entry'}</p>
-                    </button>
-                  ))}
-                </div>
-              ) : <p className="mt-4 text-sm font-semibold leading-6 text-sage-700">No entry for this date yet. Pick this day as your next little check-in.</p>}
-            </div>
+          <div className="flex flex-wrap items-center justify-center gap-2 rounded-[1.6rem] border border-[#e8dfd5] bg-white/78 p-2 shadow-sm backdrop-blur">
+            <button className={`rounded-full px-5 py-2.5 text-sm font-extrabold transition ${memoriesView === 'calendar' ? 'bg-sage-900 text-white shadow-sm' : 'text-sage-700 hover:bg-sage-50'}`} onClick={() => setMemoriesView('calendar')} type="button">Calendar</button>
+            <button className={`rounded-full px-5 py-2.5 text-sm font-extrabold transition ${memoriesView === 'archive' ? 'bg-sage-900 text-white shadow-sm' : 'text-sage-700 hover:bg-sage-50'}`} onClick={() => setMemoriesView('archive')} type="button">Positivity archive</button>
           </div>
 
-          <div className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-white/80 bg-gradient-to-br from-white/90 via-white/84 to-sand-50/72 p-4 shadow-soft backdrop-blur sm:p-6 lg:p-8">
+          {memoriesView === 'calendar' && (
+          <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/84 p-4 shadow-soft backdrop-blur sm:p-5 lg:p-6">
+            <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.22em] text-sage-600">Journal calendar</p>
+                <h2 className="mt-1 text-2xl font-extrabold text-ink sm:text-3xl">Memories</h2>
+              </div>
+              <div className="flex flex-wrap gap-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-sage-700">
+                <span className="rounded-full border border-[#e8dfd5] bg-sage-50 px-3 py-2">{importantDateCount} saved</span>
+                <span className="rounded-full border border-[#e8dfd5] bg-sage-50 px-3 py-2">{upcomingReminderCount} reminders</span>
+              </div>
+            </div>
+
+            <div className="grid gap-5 xl:grid-cols-[minmax(19rem,29rem)_minmax(0,1fr)] xl:items-start">
+              <div className="rounded-[1.6rem] border border-[#e8dfd5] bg-sage-50/72 p-3 shadow-inner sm:p-4">
+                <div className="mb-3 flex items-center justify-between gap-2 rounded-[1.2rem] bg-white px-2 py-2 shadow-sm">
+                  <button className="rounded-full bg-sage-50 px-3 py-2 text-sm font-extrabold text-sage-800 transition hover:bg-sage-100" onClick={() => setCalendarMonth(shiftMonthKey(calendarMonth, -1))} type="button">‹</button>
+                  <p className="text-center text-sm font-extrabold text-sage-950 sm:text-base">{formatMonthLabel(calendarMonth)}</p>
+                  <button className="rounded-full bg-sage-50 px-3 py-2 text-sm font-extrabold text-sage-800 transition hover:bg-sage-100" onClick={() => setCalendarMonth(shiftMonthKey(calendarMonth, 1))} type="button">›</button>
+                </div>
+                <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-extrabold uppercase tracking-[0.12em] text-sage-500">
+                  {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => <div key={day}>{day}</div>)}
+                </div>
+                <div className="mt-2 grid grid-cols-7 gap-1">
+                  {calendarDays.map((day, index) => {
+                    const dayEntries = day ? entriesByDate[day.dateKey] || [] : [];
+                    const hasImportantDate = day ? Boolean(importantDates[day.dateKey]) : false;
+                    const dayForecast = day ? calendarForecastByDate[day.dateKey] : null;
+                    const dayForecastVisuals = getForecastVisuals(dayForecast);
+                    const isSelected = day?.dateKey === selectedCalendarDate;
+                    const isToday = day?.dateKey === todayISO();
+                    return day ? (
+                      <button
+                        className={`relative flex h-11 items-center justify-center rounded-xl border text-xs font-extrabold transition hover:-translate-y-0.5 sm:h-12 sm:text-sm ${isSelected ? 'border-sage-800 bg-sage-900 text-white shadow-lift' : isToday ? 'border-sage-300 bg-white text-sage-900' : 'border-[#e8dfd5] bg-white/92 text-sage-800 hover:bg-white'}`}
+                        key={day.dateKey}
+                        onClick={() => {
+                          setSelectedCalendarDate(day.dateKey);
+                          openImportantDateEditor(day.dateKey);
+                        }}
+                        type="button"
+                      >
+                        <span>{day.day}</span>
+                        {hasImportantDate && <span className={`absolute right-1.5 top-1 text-[10px] ${isSelected ? 'text-sand-100' : 'text-rose-500'}`}>✦</span>}
+                        {dayForecast && <span className="absolute bottom-1 right-1 text-[10px] leading-none" title={dayForecastVisuals.label}>{dayForecastVisuals.emoji}</span>}
+                        {dayEntries.length > 0 && <span className={`absolute bottom-1.5 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full ${isSelected ? 'bg-white' : 'bg-sage-700'}`} />}
+                      </button>
+                    ) : <div key={`blank-${index}`} />;
+                  })}
+                </div>
+                <button className="mt-3 inline-flex w-full items-center justify-center rounded-full border border-[#e8dfd5] bg-white px-3 py-2 text-xs font-extrabold uppercase tracking-[0.16em] text-sage-700 shadow-sm transition hover:bg-sage-50" onClick={() => { const today = todayISO(); setCalendarMonth(today.slice(0, 7)); setSelectedCalendarDate(today); openImportantDateEditor(today); }} type="button">
+                  Jump to today
+                </button>
+              </div>
+
+              <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/94 p-4 shadow-inner sm:p-5">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <p className="text-xs font-extrabold uppercase tracking-widest text-sage-600">Selected date</p>
+                    <h3 className="mt-1 text-2xl font-extrabold text-ink">{formatDate(selectedCalendarDate)}</h3>
+                    <p className="mt-1 text-sm font-semibold leading-6 text-sage-600">Click any date, then write a note or reminder here.</p>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <button className="rounded-full bg-sage-900 px-4 py-2.5 text-sm font-extrabold text-white transition hover:bg-sage-800" onClick={() => openImportantDateEditor(selectedCalendarDate)} type="button">
+                      {selectedImportantDate ? 'Edit note' : 'Write note'}
+                    </button>
+                    {selectedImportantDate && (
+                      <button className="rounded-full bg-rose-100 px-4 py-2.5 text-sm font-extrabold text-rose-700 transition hover:bg-rose-200" onClick={() => deleteImportantDate(selectedCalendarDate)} type="button">
+                        Remove
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                <div className="mt-4 rounded-2xl border border-[#e8dfd5] bg-gradient-to-br from-sage-50/90 to-white p-4 shadow-sm">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-xl shadow-sm">
+                        {selectedCalendarForecast ? selectedCalendarForecastVisuals.emoji : '📍'}
+                      </div>
+                      <div>
+                        <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-sage-600">Local weather</p>
+                        {selectedCalendarForecast ? (
+                          <p className="mt-1 text-sm font-extrabold text-sage-950">
+                            {selectedCalendarForecastVisuals.label} · {formatForecastTemperature(selectedCalendarForecast.maxTemp)} / {formatForecastTemperature(selectedCalendarForecast.minTemp)}
+                          </p>
+                        ) : (
+                          <p className="mt-1 text-sm font-semibold leading-6 text-sage-700">{calendarForecastStatus}</p>
+                        )}
+                        {selectedCalendarForecast && <p className="mt-1 text-xs font-bold uppercase tracking-[0.14em] text-sage-500">{calendarForecastLocation || 'Your location'} · {selectedCalendarDate}</p>}
+                      </div>
+                    </div>
+                    {calendarForecastPermission !== 'loading' && (
+                      <button className="rounded-full border border-amber-200/50 bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.14em] text-sage-700 transition hover:bg-sage-50" onClick={loadCalendarForecast} type="button">
+                        {calendarForecastPermission === 'granted' ? 'Refresh' : 'Use location'}
+                      </button>
+                    )}
+                    {calendarForecastPermission === 'loading' && <span className="rounded-full border border-[#e8dfd5] bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.14em] text-sage-600">Loading</span>}
+                  </div>
+                  {selectedCalendarForecast && <p className="mt-3 text-xs font-semibold leading-5 text-sage-600">Forecast uses your browser location and is available for nearby upcoming dates.</p>}
+                </div>
+
+                {selectedImportantDate && (
+                  <div className="mt-4 rounded-2xl border border-[#e8dfd5] bg-sage-50/76 p-4">
+                    <div className="flex flex-wrap items-start justify-between gap-3">
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-sage-600">Saved note or reminder</p>
+                        <p className="mt-2 text-base font-extrabold leading-6 text-sage-950">{selectedImportantDate.note}</p>
+                        {selectedImportantDate.details && <p className="mt-2 whitespace-pre-wrap text-sm font-semibold leading-6 text-sage-700">{selectedImportantDate.details}</p>}
+                      </div>
+                      <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.16em] text-sage-700">
+                        {selectedImportantDate.time && <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1.5">{formatReminderTime(selectedImportantDate.time)}</span>}
+                        <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1.5">{selectedImportantDate.remindersEnabled ? 'Reminder on' : 'Note only'}</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {importanceModalOpen && (
+                  <div className="mt-4 rounded-[1.6rem] border border-amber-200/50 bg-white p-4 shadow-sm sm:p-5">
+                    <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-700">Add to this date</p>
+                    <div className="mt-4 grid gap-3">
+                      <label className="block">
+                        <span className="text-sm font-extrabold text-sage-900">Title</span>
+                        <input
+                          className="mt-2 w-full rounded-2xl border border-amber-200/50 bg-sage-50/70 px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
+                          maxLength={80}
+                          onChange={(event) => setImportanceDraft(event.target.value)}
+                          placeholder="Exam, birthday, deadline..."
+                          value={importanceDraft}
+                        />
+                      </label>
+                      <label className="block">
+                        <span className="text-sm font-extrabold text-sage-900">Notes</span>
+                        <textarea
+                          className="mt-2 min-h-[150px] w-full rounded-2xl border border-amber-200/50 bg-sage-50/70 px-4 py-3 text-sm font-semibold leading-6 text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
+                          maxLength={320}
+                          onChange={(event) => setImportanceDetailsDraft(event.target.value)}
+                          placeholder="Write what you want to remember on this date."
+                          value={importanceDetailsDraft}
+                        />
+                      </label>
+                    </div>
+                    <div className="mt-3 grid gap-3 sm:grid-cols-[minmax(10rem,14rem)_minmax(0,1fr)]">
+                      <label className="block">
+                        <span className="text-sm font-extrabold text-sage-900">Time</span>
+                        <input
+                          className="mt-2 w-full rounded-2xl border border-amber-200/50 bg-sage-50/70 px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
+                          onChange={(event) => setImportanceTimeDraft(event.target.value)}
+                          type="time"
+                          value={importanceTimeDraft}
+                        />
+                      </label>
+                      <label className="flex items-center gap-3 rounded-2xl border border-[#e8dfd5] bg-sage-50/70 px-4 py-3 text-sm font-semibold leading-6 text-sage-800">
+                        <input checked={importanceReminderEnabled} className="h-4 w-4 rounded border-sage-300 text-sage-700 focus:ring-sage-300" onChange={(event) => setImportanceReminderEnabled(event.target.checked)} type="checkbox" />
+                        Remind me if browser notifications are allowed
+                      </label>
+                    </div>
+                    <div className="mt-4 flex flex-wrap gap-3">
+                      <button className="rounded-full bg-sage-900 px-5 py-3 text-sm font-extrabold text-white transition hover:bg-sage-800" onClick={saveImportantDate} type="button">Save</button>
+                      <button className="rounded-full border border-amber-200/50 bg-white px-5 py-3 text-sm font-extrabold text-sage-700 transition hover:bg-sage-50" onClick={() => setImportanceModalOpen(false)} type="button">Cancel</button>
+                      <button className={`rounded-full border px-5 py-3 text-sm font-extrabold transition ${notificationPermission === 'granted' ? 'border-amber-200/50 bg-white text-sage-700 hover:bg-sage-50' : 'border-sage-900 bg-white text-sage-900 hover:bg-sage-50'}`} onClick={requestNotificationPermission} type="button">
+                        {notificationPermission === 'granted' ? 'Notifications on' : 'Allow notifications'}
+                      </button>
+                    </div>
+                    {notificationStatusMessage && <p className="mt-3 rounded-2xl bg-sage-50 px-4 py-3 text-sm font-semibold leading-6 text-sage-700">{notificationStatusMessage}</p>}
+                  </div>
+                )}
+
+                {selectedDateEntries.length ? (
+                  <div className="mt-4 space-y-3">
+                    <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Journal entries on this day</p>
+                    {selectedDateEntries.map((entry) => (
+                      <button className="w-full rounded-2xl border border-[#e8dfd5] bg-white p-3 text-left transition hover:-translate-y-0.5 hover:bg-sage-50 hover:shadow-sm" key={entry.id} onClick={() => setSelectedEntry(entry)} type="button">
+                        <p className="font-extrabold text-sage-950">{entry.title}</p>
+                        <p className="mt-1 line-clamp-2 text-sm font-semibold leading-6 text-sage-700">{getPlainTextFromHtml(entry.body || entry.prompt || '') || 'Photo entry'}</p>
+                      </button>
+                    ))}
+                  </div>
+                ) : <p className="mt-4 rounded-2xl border border-dashed border-amber-200/50 bg-sage-50/50 px-4 py-4 text-sm font-semibold leading-6 text-sage-500">No diary entry for this date yet.</p>}
+
+                {upcomingReminderPreview.length > 0 && (
+                  <div className="mt-4 rounded-2xl border border-[#e8dfd5] bg-white p-4">
+                    <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Upcoming</p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {upcomingReminderPreview.slice(0, 3).map((item) => (
+                        <button className={`rounded-full border px-3 py-2 text-xs font-extrabold transition hover:bg-sage-50 ${item.dateKey === selectedCalendarDate ? 'border-sage-300 bg-sage-50 text-sage-900' : 'border-[#e8dfd5] bg-white text-sage-700'}`} key={item.dateKey} onClick={() => { setSelectedCalendarDate(item.dateKey); openImportantDateEditor(item.dateKey); }} type="button">
+                          {formatDate(item.dateKey)} · {item.note}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+          )}
+
+          {memoriesView === 'archive' && (
+          <div className="flex h-full flex-col overflow-hidden rounded-[3rem] border border-[#e8dfd5] bg-gradient-to-br from-white/90 via-white/84 to-sand-50/72 p-4 shadow-soft backdrop-blur sm:p-6 lg:p-8">
             <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div className="flex items-center gap-3">
                 <CalendarDays className="text-sage-700" size={18} />
@@ -5657,7 +6662,7 @@ function App() {
                 const mood = weatherOptions.find((item) => item.label === effectiveMoodLabel) || weatherOptions.find(m => m.label === entry.mood) || moods[2];
                 return (
                   <article
-                    className="group w-full cursor-pointer rounded-3xl border border-sage-100 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-lift sm:p-5"
+                    className="group w-full cursor-pointer rounded-3xl border border-[#e8dfd5] bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-lift sm:p-5"
                     key={entry.id}
                     onClick={() => setSelectedEntry(entry)}
                   >
@@ -5694,15 +6699,16 @@ function App() {
               })}
             </div>
           </div>
+        )}
         </div>
         )}
       </section>
 
       {activeTab === 'home' && (
       <>
-      {activeHomeSection === 'overview' && (
-      <section className="mx-auto max-w-7xl px-6 py-4">
-        <div className="quote-card quote-card-premium rounded-3xl border border-white/70 p-8 shadow-soft">
+      {activeHomeSection === 'overview' && !showMinimalHomeOverview && (
+      <section className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-4">
+        <div className="quote-card quote-card-premium rounded-3xl border border-amber-200/50 p-8 shadow-soft">
           <Quote className="mb-8 opacity-80" size={34} />
           <p className="quote-main-text font-bold leading-tight" style={{ fontFamily: activeQuoteFont, fontSize: activeQuoteSize, color: quoteStyle.textColor, lineHeight: 1.45 }}>“{quoteLibrary[quoteIndex % quoteLibrary.length]}”</p>
           <button className="quote-button mt-8 rounded-full bg-white px-5 py-3 text-sm font-extrabold shadow-lift transition hover:-translate-y-1 hover:bg-sage-50" onClick={() => setQuoteIndex((quoteIndex + 1) % quoteLibrary.length)}>
@@ -5713,7 +6719,7 @@ function App() {
       )}
 
       {activeHomeSection === 'about' && (
-      <section id="about" className="mx-auto max-w-7xl px-6 py-14">
+      <section id="about" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
         <SectionHeader
           eyebrow="About Lofi Memory"
           title="A private online diary designed to feel calm, personal, and easy to return to."
@@ -5743,13 +6749,13 @@ function App() {
       )}
 
       {activeHomeSection === 'guides' && (
-      <section id="seo-landing" className="mx-auto max-w-7xl px-6 py-10">
+      <section id="seo-landing" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-10">
         <SectionHeader
-          eyebrow="Gentle journaling guides"
-          title="Find the kind of journaling support that fits what you need today."
-          text="Some people want a private diary, some want an online diary, some want a diary app or journal app, some want an online journal, and some want help with how to write a diary. These pages help readers find the calmest place to begin."
+          eyebrow="Chill guides & calm routines"
+          title="Find the kind of game, reset, or journaling support that fits what you need today."
+          text="Some people want a private diary, some want an online journal, and some are simply looking for cozy browser games or easy ways to relax after a long day. These pages help readers find the calmest place to begin."
         />
-        <div className="mb-6 rounded-[1.8rem] border border-white/80 bg-white/82 p-5 shadow-lift backdrop-blur">
+        <div className="mb-6 rounded-[2.2rem] border border-[#e8dfd5] bg-white/82 p-5 shadow-lift backdrop-blur">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-sage-700">Most searched topics</p>
@@ -5759,13 +6765,13 @@ function App() {
           </div>
           <div className="mt-4 flex flex-wrap gap-2.5">
             {seoPopularSearches.map((item) => (
-              <a className="rounded-full border border-sage-200 bg-sage-50/70 px-4 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href={item.href} key={item.href}>{item.label}</a>
+              <a className="rounded-full border border-amber-200/50 bg-sage-50/70 px-4 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href={item.href} key={item.href}>{item.label}</a>
             ))}
           </div>
         </div>
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {seoLandingBlocks.slice(0, 6).map((item) => (
-            <article className="customizable-card rounded-3xl border border-white/70 bg-white/80 p-6 shadow-lift backdrop-blur transition hover:-translate-y-1 hover:bg-white/95" key={item.title}>
+          {seoLandingBlocks.slice(0, 8).map((item) => (
+            <article className="customizable-card rounded-3xl border border-amber-200/50 bg-white/80 p-6 shadow-lift backdrop-blur transition hover:-translate-y-1 hover:bg-white/95" key={item.title}>
               <div className="rounded-full bg-sage-100 px-3 py-1 text-xs font-extrabold uppercase tracking-widest text-sage-800">Reader guide</div>
               <h3 className="mt-4 text-2xl font-extrabold leading-tight text-ink">{item.title}</h3>
               <p className="mt-4 leading-8 text-sage-800">{item.text}</p>
@@ -5773,26 +6779,26 @@ function App() {
             </article>
           ))}
         </div>
-        <div className="mt-8 rounded-[2rem] border border-white/75 bg-white/80 p-6 shadow-lift backdrop-blur lg:p-8">
+        <div className="mt-8 rounded-[3rem] border border-white/75 bg-white/80 p-6 shadow-lift backdrop-blur lg:p-8">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <p className="text-sm font-extrabold uppercase tracking-[0.3em] text-sage-700">Keep exploring</p>
-              <h3 className="mt-3 text-3xl font-extrabold text-ink">Read the guide that matches the way you want to journal.</h3>
-              <p className="mt-3 max-w-3xl leading-8 text-sage-800">Whether you want privacy, mood check-ins, prompts, or a calmer evening reflection, these pages give visitors something useful to read before they begin.</p>
+              <h3 className="mt-3 text-3xl font-extrabold text-ink">Read the guide that matches the way you want to listen, relax, play, or journal.</h3>
+              <p className="mt-3 max-w-3xl leading-8 text-sage-800">Whether you want lofi music, a chill place online, relaxing games with music, a softer study break, privacy, mood check-ins, or evening reflection, these pages give visitors something useful to read before they begin.</p>
             </div>
-            <a className="inline-flex items-center justify-center rounded-full bg-sage-900 px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-sage-800" href="/online-diary.html">
+            <a className="inline-flex items-center justify-center rounded-full bg-sage-900 px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-sage-800" href="/listen-to-lofi-music-online.html">
               Browse guides
             </a>
           </div>
           <div className="mt-6 grid gap-5 lg:grid-cols-2">
             {seoGuideGroups.map((group) => (
-              <article className="rounded-[1.8rem] border border-sage-100/80 bg-sand-50/70 p-5 shadow-sm" key={group.title}>
+              <article className="rounded-[2.2rem] border border-[#e8dfd5]/80 bg-sand-50/70 p-5 shadow-sm" key={group.title}>
                 <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-sage-700">Guide collection</p>
                 <h4 className="mt-3 text-2xl font-extrabold leading-tight text-ink">{group.title}</h4>
                 <p className="mt-3 text-sm leading-7 text-sage-800">{group.description}</p>
                 <div className="mt-5 grid gap-2">
                   {group.links.map((page) => (
-                    <a className="group flex items-start justify-between gap-3 rounded-2xl border border-white/80 bg-white/82 px-4 py-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-200 hover:bg-white" href={page.href} key={page.href}>
+                    <a className="group flex items-start justify-between gap-3 rounded-2xl border border-[#e8dfd5] bg-white/82 px-4 py-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-white" href={page.href} key={page.href}>
                       <span>
                         <span className="block text-sm font-extrabold text-sage-950 group-hover:text-sage-800">{page.title}</span>
                         <span className="mt-1 block text-xs font-semibold leading-5 text-sage-600">{page.text}</span>
@@ -5805,16 +6811,16 @@ function App() {
             ))}
           </div>
           <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1.2fr)_minmax(280px,0.8fr)]">
-            <div className="rounded-3xl border border-white/80 bg-gradient-to-br from-white/95 to-sand-50/85 p-6 shadow-lift backdrop-blur">
+            <div className="rounded-3xl border border-[#e8dfd5] bg-gradient-to-br from-white/95 to-sand-50/85 p-6 shadow-lift backdrop-blur">
               <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-sage-700">Quiet reader space</p>
               <h4 className="mt-3 text-2xl font-extrabold leading-tight text-ink">A stable place for future recommendations, without interrupting the journal.</h4>
               <p className="mt-3 max-w-2xl leading-8 text-sage-800">This area sits outside the main writing flow, so future recommendations can live here without covering prompts, shifting the editor, or making the journaling experience feel crowded on mobile or desktop.</p>
               <div className="mt-5 flex flex-wrap gap-3">
                 <a className="inline-flex items-center justify-center rounded-full bg-sage-900 px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-sage-800" href="/private-online-diary.html">Open private diary guide</a>
-                <a className="inline-flex items-center justify-center rounded-full border border-sage-200 bg-white px-5 py-3 text-sm font-bold text-sage-900 transition hover:-translate-y-0.5 hover:border-sage-300" href="/journal-prompts.html">Browse prompts</a>
+                <a className="inline-flex items-center justify-center rounded-full border border-amber-200/50 bg-white px-5 py-3 text-sm font-bold text-sage-900 transition hover:-translate-y-0.5 hover:border-sage-300" href="/journal-prompts.html">Browse prompts</a>
               </div>
             </div>
-            <div className="rounded-3xl border border-sage-100/80 bg-white/85 p-6 shadow-lift backdrop-blur">
+            <div className="rounded-3xl border border-[#e8dfd5]/80 bg-white/85 p-6 shadow-lift backdrop-blur">
               <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-sage-700">Why this reader area stays separate</p>
               <ul className="mt-4 space-y-3 text-sm leading-7 text-sage-800">
                 <li>• Future recommendations can live here without interrupting the writing screen.</li>
@@ -5828,7 +6834,7 @@ function App() {
       )}
 
       {activeHomeSection === 'resources' && (
-      <section id="resources" className="mx-auto max-w-7xl px-6 py-14">
+      <section id="resources" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
         <SectionHeader
           eyebrow="Positive reflection tools"
           title="Small practices that make journaling easier."
@@ -5853,7 +6859,7 @@ function App() {
       )}
 
       {activeHomeSection === 'articles' && (
-      <section id="articles" className="mx-auto max-w-7xl px-6 py-14">
+      <section id="articles" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
         <SectionHeader
           eyebrow="Wellness Library"
           title="Articles and reflections for a gentler journaling practice."
@@ -5862,7 +6868,7 @@ function App() {
         <div className="grid gap-5 md:grid-cols-2">
           {wellnessArticles.map((article, index) => (
             article.href ? (
-              <a href={article.href} className="customizable-card rounded-3xl border border-white/70 bg-white/80 p-6 shadow-lift backdrop-blur transition hover:-translate-y-1 hover:bg-white/95 text-left block" key={article.title}>
+              <a href={article.href} className="customizable-card rounded-3xl border border-amber-200/50 bg-white/80 p-6 shadow-lift backdrop-blur transition hover:-translate-y-1 hover:bg-white/95 text-left block" key={article.title}>
                 <div className="mb-4 flex items-center justify-between gap-4">
                   <span className="rounded-full bg-sage-900 px-3 py-1 text-xs font-extrabold uppercase tracking-widest text-white">{article.read.split('•')[0]}</span>
                   <span className="text-sm font-bold text-sage-600">{article.read.split('•')[1] || ''}</span>
@@ -5874,7 +6880,7 @@ function App() {
                 </div>
               </a>
             ) : (
-              <article className="customizable-card rounded-3xl border border-white/70 bg-white/80 p-6 shadow-lift backdrop-blur transition hover:-translate-y-1 hover:bg-white/95" key={article.title}>
+              <article className="customizable-card rounded-3xl border border-amber-200/50 bg-white/80 p-6 shadow-lift backdrop-blur transition hover:-translate-y-1 hover:bg-white/95" key={article.title}>
                 <div className="mb-4 flex items-center justify-between gap-4">
                   <span className="rounded-full bg-sage-100 px-3 py-1 text-xs font-extrabold uppercase tracking-widest text-sage-800">Note</span>
                   <span className="text-sm font-bold text-sage-600">{article.read}</span>
@@ -5886,7 +6892,7 @@ function App() {
           ))}
         </div>
         <div className="mt-10 text-center">
-          <a href="/blog.html" className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white/70 px-6 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white backdrop-blur">
+          <a href="/blog.html" className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white/70 px-6 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white backdrop-blur">
             Visit the full Blog & Wellness Library &rarr;
           </a>
         </div>
@@ -5894,7 +6900,7 @@ function App() {
       )}
 
       {activeHomeSection === 'faq' && (
-      <section id="faq" className="mx-auto max-w-7xl px-6 py-14">
+      <section id="faq" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
         <SectionHeader
           eyebrow="Journal FAQ"
           title="Common questions about using a private online diary and mood journal."
@@ -5902,7 +6908,7 @@ function App() {
         />
         <div className="grid gap-4 lg:grid-cols-2">
           {seoFaqs.map((item) => (
-            <article className="rounded-3xl border border-white/80 bg-white/80 p-6 shadow-lift backdrop-blur" key={item.question}>
+            <article className="rounded-3xl border border-[#e8dfd5] bg-white/80 p-6 shadow-lift backdrop-blur" key={item.question}>
               <h3 className="text-xl font-extrabold text-ink">{item.question}</h3>
               <p className="mt-3 leading-7 text-sage-800">{item.answer}</p>
             </article>
@@ -5912,8 +6918,8 @@ function App() {
       )}
 
       {activeHomeSection === 'tips' && (
-      <section id="tips" className="mx-auto grid max-w-7xl gap-8 px-6 py-14 lg:grid-cols-12">
-        <div className="rounded-3xl border border-white/70 bg-gradient-to-br from-sand-100 to-sage-100 p-8 shadow-soft lg:col-span-5 lg:p-10">
+      <section id="tips" className="mx-auto grid max-w-[1280px] gap-8 px-5 py-14 sm:px-7 xl:px-10 lg:grid-cols-12">
+        <div className="rounded-3xl border border-amber-200/50 bg-gradient-to-br from-sand-100 to-sage-100 p-8 shadow-soft lg:col-span-5 lg:p-10">
           <Newspaper className="mb-7 text-sage-700" size={36} />
           <p className="text-sm font-bold uppercase tracking-widest text-sage-700">Journaling tips</p>
           <h2 className="mt-3 font-display text-5xl font-bold leading-tight text-sage-950">A softer way to start writing.</h2>
@@ -5921,7 +6927,7 @@ function App() {
         </div>
         <div className="grid gap-4 lg:col-span-7">
           {tips.map((tip, index) => (
-            <div className="flex items-start gap-4 rounded-3xl border border-white/70 bg-white/75 p-5 shadow-lift backdrop-blur" key={tip}>
+            <div className="flex items-start gap-4 rounded-3xl border border-amber-200/50 bg-white/75 p-5 shadow-lift backdrop-blur" key={tip}>
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-sage-700 font-bold text-white">{index + 1}</div>
               <p className="pt-2 text-lg font-semibold leading-7 text-sage-900">{tip}</p>
             </div>
@@ -5931,7 +6937,7 @@ function App() {
       )}
 
       {activeHomeSection === 'privacy' && (
-      <section id="privacy" className="mx-auto max-w-7xl px-6 py-14">
+      <section id="privacy" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
         <SectionHeader
           eyebrow="Privacy Policy"
           title="Your reflections belong to you."
@@ -5957,9 +6963,9 @@ function App() {
       )}
 
       {activeHomeSection === 'terms' && (
-      <section id="terms" className="mx-auto grid max-w-7xl gap-8 px-6 py-14 lg:grid-cols-12">
+      <section id="terms" className="mx-auto grid max-w-[1280px] gap-8 px-5 py-14 sm:px-7 xl:px-10 lg:grid-cols-12">
         <div className="lg:col-span-5">
-          <div className="sticky top-28 rounded-3xl border border-white/70 bg-white/75 p-8 shadow-soft backdrop-blur">
+          <div className="sticky top-28 rounded-3xl border border-amber-200/50 bg-white/75 p-8 shadow-soft backdrop-blur">
             <Scale className="mb-7 text-sage-700" size={36} />
             <p className="text-sm font-bold uppercase tracking-widest text-sage-600">Helpful notes</p>
             <h2 className="mt-3 font-display text-5xl font-bold leading-tight text-sage-950">A simple space for personal writing.</h2>
@@ -5990,8 +6996,8 @@ function App() {
 
       {activeHomeSection === 'contact' && (
       <>
-      <section id="contact" className="mx-auto max-w-7xl px-6 py-14">
-        <div className="overflow-hidden rounded-3xl border border-white/70 bg-sage-900 text-white shadow-soft">
+      <section id="contact" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
+        <div className="overflow-hidden rounded-3xl border border-amber-200/50 bg-sage-900 text-white shadow-soft">
           <div className="grid lg:grid-cols-2">
             <div className="p-8 lg:p-10">
               <Mail className="mb-7 text-sage-100" size={36} />
@@ -6023,7 +7029,7 @@ function App() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-8">
+      <section className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-8">
         <div className="rounded-3xl border border-dashed border-sage-300 bg-white/60 p-8 text-center shadow-lift backdrop-blur">
           <p className="text-sm font-bold uppercase tracking-widest text-sage-600">Support this project</p>
           <h2 className="mt-3 text-2xl font-extrabold text-ink">Help keep Lofi Memory free and peaceful</h2>
@@ -6034,14 +7040,14 @@ function App() {
       )}
 
       {activeHomeSection === 'seo-studio' && showAdminTools && (
-      <section id="seo-studio" className="mx-auto max-w-7xl px-6 py-14">
+      <section id="seo-studio" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
         <SectionHeader
           eyebrow="Admin-only AI SEO Studio"
           title="Review and draft SEO improvements without changing the public experience."
           text="This panel is only visible when the master email is signed in. It lets you run an AI SEO review from inside the website, keep the API key in your own browser, and work on ideas without exposing admin tools to normal visitors."
         />
         <div className="grid gap-6 xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-          <div className="rounded-[2rem] border border-white/80 bg-white/78 p-6 shadow-soft backdrop-blur-xl">
+          <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/78 p-6 shadow-soft backdrop-blur-xl">
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-sm font-bold uppercase tracking-widest text-sage-600">Master access</p>
@@ -6053,9 +7059,9 @@ function App() {
               </div>
             </div>
 
-            <div className="mt-6 rounded-[1.5rem] border border-sage-100 bg-white px-4 py-4 shadow-sm">
+            <div className="mt-6 rounded-[1.5rem] border border-[#e8dfd5] bg-white px-4 py-4 shadow-sm">
               <p className="text-sm font-extrabold uppercase tracking-[0.22em] text-sage-600">Preview mode</p>
-              <div className="mt-3 flex overflow-hidden rounded-full border border-sage-200 bg-sage-50 p-1">
+              <div className="mt-3 flex overflow-hidden rounded-full border border-amber-200/50 bg-sage-50 p-1">
                 <button
                   className={`flex-1 rounded-full px-4 py-2.5 text-sm font-extrabold transition ${adminViewMode === 'master' ? 'bg-sage-900 text-white shadow-sm' : 'text-sage-700 hover:bg-white'}`}
                   onClick={() => setAdminViewMode('master')}
@@ -6075,17 +7081,17 @@ function App() {
             </div>
 
             <div className="mt-6 grid gap-3 text-sm leading-7 text-sage-700">
-              <div className="rounded-2xl border border-sage-100 bg-sage-50/80 px-4 py-4">
+              <div className="rounded-2xl border border-[#e8dfd5] bg-sage-50/80 px-4 py-4">
                 <p className="font-extrabold text-sage-900">What this first version can do</p>
                 <p className="mt-2">Run an AI SEO review of the current diary site, suggest safer homepage and guide-page improvements, and draft ideas you can later implement without disrupting users.</p>
               </div>
-              <div className="rounded-2xl border border-sage-100 bg-white px-4 py-4">
+              <div className="rounded-2xl border border-[#e8dfd5] bg-white px-4 py-4">
                 <p className="font-extrabold text-sage-900">What it does not auto-publish yet</p>
                 <p className="mt-2">This version does not silently rewrite the live site on its own. It gives you admin-only guidance and drafts first, which is safer for SEO and much better for preserving tone.</p>
               </div>
             </div>
 
-            <div className="mt-6 rounded-[1.75rem] border border-sage-100 bg-gradient-to-br from-sage-900 via-sage-800 to-sage-700 p-5 text-white shadow-soft">
+            <div className="mt-6 rounded-[2.2rem] border border-[#e8dfd5] bg-gradient-to-br from-sage-900 via-sage-800 to-sage-700 p-5 text-white shadow-soft">
               <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-white/80">Suggested routine</p>
               <div className="mt-4 grid gap-3 text-sm leading-7 text-white/90">
                 <div>1. Run a fresh AI review when you want new SEO ideas.</div>
@@ -6096,15 +7102,15 @@ function App() {
             </div>
           </div>
 
-          <div className="rounded-[2rem] border border-white/80 bg-white/82 p-6 shadow-soft backdrop-blur-xl">
+          <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/82 p-6 shadow-soft backdrop-blur-xl">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
                 <p className="text-sm font-bold uppercase tracking-widest text-sage-600">Run AI review</p>
                 <h3 className="mt-2 text-2xl font-extrabold text-ink">SEO drafts that stay inside your admin view</h3>
               </div>
               <div className="flex flex-wrap items-center justify-end gap-2">
-                {seoStudioModelUsed && <span className="rounded-full border border-sage-200 bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.2em] text-sage-700">Model · {seoStudioModelUsed}</span>}
-                {seoStudioLastRun && <span className="rounded-full border border-sage-200 bg-sage-50 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.2em] text-sage-800">Last run · {seoStudioLastRun}</span>}
+                {seoStudioModelUsed && <span className="rounded-full border border-amber-200/50 bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.2em] text-sage-700">Model · {seoStudioModelUsed}</span>}
+                {seoStudioLastRun && <span className="rounded-full border border-amber-200/50 bg-sage-50 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.2em] text-sage-800">Last run · {seoStudioLastRun}</span>}
               </div>
             </div>
 
@@ -6113,13 +7119,13 @@ function App() {
                 Gemini API key
                 <div className="flex gap-2">
                   <input
-                    className="w-full rounded-2xl border border-sage-200 bg-white px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-400"
+                    className="w-full rounded-2xl border border-amber-200/50 bg-white px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-400"
                     onChange={(event) => setSeoStudioApiKey(event.target.value)}
                     placeholder="Paste your Gemini API key"
                     type={showSeoStudioKey ? 'text' : 'password'}
                     value={seoStudioApiKey}
                   />
-                  <button className="rounded-2xl border border-sage-200 bg-white px-4 text-sage-800 shadow-sm transition hover:bg-sage-50" onClick={() => setShowSeoStudioKey(!showSeoStudioKey)} type="button">
+                  <button className="rounded-2xl border border-amber-200/50 bg-white px-4 text-sage-800 shadow-sm transition hover:bg-sage-50" onClick={() => setShowSeoStudioKey(!showSeoStudioKey)} type="button">
                     {showSeoStudioKey ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
@@ -6129,7 +7135,7 @@ function App() {
               <label className="grid gap-2 text-sm font-bold text-sage-900">
                 What should the AI focus on?
                 <textarea
-                  className="min-h-[128px] rounded-2xl border border-sage-200 bg-white px-4 py-3 text-sm leading-7 text-sage-900 outline-none transition focus:border-sage-400"
+                  className="min-h-[128px] rounded-2xl border border-amber-200/50 bg-white px-4 py-3 text-sm leading-7 text-sage-900 outline-none transition focus:border-sage-400"
                   onChange={(event) => setSeoStudioPrompt(event.target.value)}
                   placeholder="Ask for homepage suggestions, new guide ideas, schema improvements, or calmer SEO fixes."
                   value={seoStudioPrompt}
@@ -6140,10 +7146,10 @@ function App() {
                 <button className="inline-flex items-center gap-2 rounded-full bg-sage-900 px-5 py-3 text-sm font-extrabold text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800 disabled:cursor-not-allowed disabled:opacity-60" disabled={seoStudioLoading} onClick={runSeoStudioReview} type="button">
                   <Sparkles size={16} /> {seoStudioLoading ? 'Running review...' : 'Run AI SEO review'}
                 </button>
-                <button className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white px-5 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-1 hover:border-sage-300 hover:bg-sage-50 disabled:cursor-not-allowed disabled:opacity-50" disabled={!seoStudioReport.trim()} onClick={copySeoStudioReport} type="button">
+                <button className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white px-5 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-1 hover:border-sage-300 hover:bg-sage-50 disabled:cursor-not-allowed disabled:opacity-50" disabled={!seoStudioReport.trim()} onClick={copySeoStudioReport} type="button">
                   <FileText size={16} /> {seoStudioCopied ? 'Copied' : 'Copy report'}
                 </button>
-                <button className="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white px-5 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-1 hover:border-sage-300 hover:bg-sage-50" onClick={clearSeoStudioReport} type="button">
+                <button className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white px-5 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-1 hover:border-sage-300 hover:bg-sage-50" onClick={clearSeoStudioReport} type="button">
                   Clear
                 </button>
               </div>
@@ -6154,7 +7160,7 @@ function App() {
                 </div>
               )}
 
-              <div className="rounded-[1.75rem] border border-sage-100 bg-sand-50/80 p-4 shadow-inner">
+              <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-sand-50/80 p-4 shadow-inner">
                 <div className="flex items-center justify-between gap-3">
                   <p className="text-sm font-extrabold uppercase tracking-[0.22em] text-sage-600">AI report</p>
                   <span className="text-xs font-bold uppercase tracking-[0.18em] text-sage-500">Admin draft only</span>
@@ -6173,8 +7179,8 @@ function App() {
       </section>
       )}
 
-      <footer className="mx-auto max-w-7xl px-6 pb-10 pt-6">
-        <div className="rounded-3xl border border-white/70 bg-white/60 p-6 text-center text-sm leading-7 text-sage-700 shadow-lift backdrop-blur">
+      <footer className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 pb-10 pt-6">
+        <div className="lofi-glass rounded-3xl border p-6 text-center text-sm leading-7 text-sage-700 shadow-lift backdrop-blur">
           <div className="mb-3 flex flex-wrap justify-center gap-4 font-bold text-sage-800">
             <a href="#home" onClick={() => openHomeSection('home')}>Home</a>
             <button onClick={() => setCustomizerOpen(true)} type="button">Design</button>
@@ -6183,76 +7189,168 @@ function App() {
             <a href="#articles" onClick={() => openHomeSection('articles')}>Articles</a>
             <a href="#tips" onClick={() => openHomeSection('tips')}>Tips</a>
             <a href="/blog.html">Blog</a>
+            <a href="/about.html">About</a>
+            <a href="/editorial-policy.html">Editorial Policy</a>
             <a href="/privacy.html">Privacy</a>
+            <a href="/advertising-policy.html">Advertising</a>
             <a href="/terms.html">Terms</a>
-            <a href="/contact.html">Contact</a>
+            <a href="/cookie-policy.html">Cookies</a>
+            <a href="/disclaimer.html">Disclaimer</a>
+            <a href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
           </div>
-          Lofi Memory is an online diary, private diary, diary app, journal app, and mood journal for noticing your thoughts, collecting small good moments, and understanding what you want next.
+          Lofi Memory is a soft browser space to listen to lofi music, relax, journal, breathe, and play chill games whenever you want a calmer moment online.
         </div>
       </footer>
       </>
       )}
 
       
+      <style>{`
+        @keyframes lofiVinylSpin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+
+        @keyframes lofiGlowPulse {
+          0%, 100% { opacity: 0.45; transform: scale(0.98); }
+          50% { opacity: 0.9; transform: scale(1.04); }
+        }
+      `}</style>
+
       {/* Floating Lofi Radio Player */}
-      <div className="fixed bottom-24 left-4 z-50 lg:bottom-10 lg:left-10 flex flex-col items-start gap-3">
-        {isRadioPlaying && (
-          <div className="rounded-2xl border border-white/60 bg-white/70 px-4 py-2 text-xs font-extrabold tracking-widest text-sage-800 shadow-soft backdrop-blur-xl animate-fade-in flex items-center gap-2">
-            <Music size={14} className="animate-pulse" /> LOFI RADIO ON
+      <div className={`fixed z-50 ${cookieConsentAccepted ? 'bottom-12 left-4 sm:left-5 lg:bottom-16 xl:left-[max(1rem,calc((100vw-1280px)/2-4.25rem))]' : 'bottom-32 left-4 sm:bottom-28 sm:left-5 lg:bottom-32 xl:left-[max(1rem,calc((100vw-1280px)/2-4.25rem))]'}`}>
+
+        <div ref={radioPlayerContainerRef} className="pointer-events-none absolute h-1 w-1 opacity-0" aria-hidden="true" />
+        <div className="group relative h-[3.6rem] w-[3.6rem] sm:h-[3.9rem] sm:w-[3.9rem] lg:h-[4.05rem] lg:w-[4.05rem]">
+          <div
+            ref={radioDialRef}
+            aria-label="Adjust lofi radio volume"
+            aria-valuemax={100}
+            aria-valuemin={0}
+            aria-valuenow={radioVolume}
+            className={`absolute inset-0 rounded-full p-[3px] transition duration-300 ${isRadioDialDragging ? 'scale-[1.03]' : ''} ${isRadioDialFeedbackVisible ? 'pointer-events-auto opacity-100 scale-100 shadow-soft' : 'pointer-events-none opacity-0 scale-90'} group-hover:pointer-events-auto group-hover:opacity-100 group-hover:scale-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-focus-within:scale-100`}
+            onKeyDown={(event) => {
+              if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
+                event.preventDefault();
+                setRadioVolume((current) => Math.min(current + 5, 100));
+                revealRadioDialFeedback();
+              }
+              if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
+                event.preventDefault();
+                setRadioVolume((current) => Math.max(current - 5, 0));
+                revealRadioDialFeedback();
+              }
+            }}
+            role="slider"
+            style={{
+              background: `conic-gradient(from ${RADIO_DIAL_START - 90}deg, ${isRadioDialFeedbackVisible ? 'rgba(92, 131, 78, 0.95)' : 'rgba(194, 206, 189, 0.9)'} 0deg, ${isRadioDialFeedbackVisible ? 'rgba(92, 131, 78, 0.95)' : 'rgba(194, 206, 189, 0.9)'} ${radioDialSweepDegrees}deg, rgba(194, 206, 189, 0.95) ${radioDialSweepDegrees}deg, rgba(194, 206, 189, 0.95) ${RADIO_DIAL_SWEEP}deg, rgba(255, 255, 255, 0.18) ${RADIO_DIAL_SWEEP}deg, rgba(255, 255, 255, 0.18) 360deg)`
+            }}
+            tabIndex={0}
+            title="Drag the knob to adjust the lofi radio volume"
+          >
+            <div className={`relative h-full w-full rounded-full border backdrop-blur-xl transition duration-300 ${isRadioPlaying ? 'border-[#e8dfd5] bg-white/76' : 'border-amber-200/50 bg-white/62'}`}>
+              <div className="pointer-events-none absolute inset-[4px] rounded-full border border-[#e8dfd5]/70" />
+              <div className="absolute inset-[3px] rounded-full" style={{ transform: `rotate(${radioDialDegrees}deg)` }}>
+                <div
+                  className={`absolute left-1/2 top-0 flex h-7 w-7 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full ${isRadioDialDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+                  onPointerDown={handleRadioDialThumbPointerDown}
+                  style={{ touchAction: 'none' }}
+                >
+                  <span className={`h-3.5 w-3.5 rounded-full border-2 border-white shadow-sm transition ${isRadioPlaying ? 'bg-sage-700' : 'bg-sage-400'} ${isRadioDialFeedbackVisible ? 'opacity-100' : 'opacity-70'}`} />
+                </div>
+              </div>
+            </div>
           </div>
-        )}
-        <button 
-          onClick={() => setIsRadioPlaying(!isRadioPlaying)}
-          className={`flex h-14 w-14 items-center justify-center rounded-full shadow-lift transition duration-300 hover:-translate-y-1 ${
-            isRadioPlaying ? 'bg-sage-300 text-white hover:bg-sage-400' : 'bg-sage-800 text-white hover:bg-sage-700'
-          }`}
-          title="Toggle Lofi Radio"
-        >
-          {isRadioPlaying ? <Music size={24} className="animate-pulse" /> : <Headphones size={24} />}
-        </button>
-      </div>
-      
-      {/* Hidden YouTube Iframe for the Lofi Stream */}
-      {isRadioPlaying && (
-        <div className="hidden">
-          <iframe 
-            width="1" 
-            height="1" 
-            src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=0" 
-            allow="autoplay"
-          />
+          <button
+            aria-label={isRadioPlaying ? 'Pause lofi radio' : 'Play lofi radio'}
+            onClick={() => {
+              if (isRadioPlaying) {
+                setIsRadioPlaying(false);
+                return;
+              }
+
+              setIsRadioPlaying(true);
+              radioUnlockedRef.current = true;
+              if (radioPlayerRef.current) {
+                try {
+                  radioPlayerRef.current.unMute?.();
+                  radioPlayerRef.current.setVolume?.(radioVolume);
+                  radioPlayerRef.current.playVideo?.();
+                  setRadioNeedsInteraction(false);
+                  setRadioStatusMessage('Lofi radio playing');
+                } catch {}
+              }
+            }}
+            className={`absolute inset-[0.74rem] z-20 flex items-center justify-center overflow-hidden rounded-full transition duration-300 hover:-translate-y-1 ${
+              isRadioPlaying
+                ? 'bg-sage-200/90 ring-1 ring-white/60 shadow-[0_8px_22px_rgba(72,111,66,0.18)] hover:bg-sage-200'
+                : 'bg-sage-100/90 shadow-[0_8px_18px_rgba(72,111,66,0.12)] hover:bg-sage-100'
+            }`}
+            title={radioNeedsInteraction ? 'Tap once for sound' : radioStatusMessage}
+            type="button"
+          >
+            {isRadioPlaying && (
+              <span
+                className="pointer-events-none absolute inset-0 rounded-full"
+                style={{ animation: 'lofiGlowPulse 2.4s ease-in-out infinite', background: 'radial-gradient(circle, rgba(139, 181, 124, 0.34) 0%, rgba(139, 181, 124, 0.16) 42%, rgba(139, 181, 124, 0) 72%)' }}
+              />
+            )}
+            <span
+              className="relative flex h-full w-full items-center justify-center rounded-full"
+              style={{ animation: isRadioPlaying ? 'lofiVinylSpin 6.8s linear infinite' : 'none' }}
+            >
+              <img
+                alt="Lofi radio vinyl icon"
+                className={`h-full w-full rounded-full object-cover transition duration-300 ${isRadioPlaying ? 'opacity-100 saturate-110' : 'opacity-90 saturate-75'}`}
+                src={radioVinylIcon}
+              />
+              <span className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle_at_32%_24%,rgba(255,255,255,0.42),transparent_28%),radial-gradient(circle_at_70%_72%,rgba(0,0,0,0.18),transparent_34%)]" />
+              <span className="pointer-events-none absolute flex h-4 w-4 items-center justify-center rounded-full border border-amber-200/50 bg-sage-950/85 shadow-[0_0_0_3px_rgba(255,255,255,0.35)]">
+                <span className="h-2 w-2 rounded-full bg-[radial-gradient(circle_at_35%_35%,#fff7d6,#d5b67f_58%,#6f4f2a)] shadow-[0_0_8px_rgba(255,244,212,0.45)]" />
+              </span>
+            </span>
+          </button>
+          {radioNeedsInteraction && (
+            <div className="pointer-events-none absolute -top-10 left-0 w-max max-w-[10rem] rounded-2xl border border-[#e8dfd5] bg-white/92 px-3 py-1.5 text-center text-[10px] font-extrabold uppercase tracking-[0.14em] text-sage-700 shadow-sm backdrop-blur-xl">
+              Tap once for sound
+            </div>
+          )}
+          <div className={`pointer-events-none absolute -bottom-2 left-1/2 -translate-x-1/2 rounded-full border border-white/75 bg-white/88 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-sage-600 shadow-sm backdrop-blur-xl transition duration-300 ${isRadioDialFeedbackVisible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'}`}>
+            {radioVolume}%
+          </div>
         </div>
-      )}
+      </div>
 
       {!cookieConsentAccepted && (
-        <div className="fixed bottom-24 left-0 right-0 z-50 p-4 sm:bottom-0 sm:p-6 flex justify-center pointer-events-none">
-          <div className="pointer-events-auto flex w-full max-w-2xl flex-col gap-4 rounded-[1.75rem] border border-sage-200 bg-white/95 p-5 shadow-2xl backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between">
+        <div className="pointer-events-none fixed bottom-24 right-3 z-40 flex justify-end sm:bottom-6 sm:right-6">
+          <div className="pointer-events-auto w-[min(22rem,calc(100vw-1.5rem))] rounded-[1.4rem] border border-amber-200/50/90 bg-white/94 p-4 shadow-soft backdrop-blur-xl">
             <p className="text-sm font-medium leading-relaxed text-sage-800">
-              We use cookies to improve your experience and serve personalized ads. By using this site, you agree to our <a href="/privacy.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Privacy Policy</a> and <a href="/terms.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Terms</a>.
+              We use cookies and browser storage to keep Lofi Memory smooth and support ads. <span className="font-extrabold text-sage-900">We do not have access to your private diary entries; they are stored securely for you alone.</span> By staying here, you agree to our <a href="/privacy.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Privacy Policy</a>, <a href="/terms.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Terms</a>, and <a href="/cookie-policy.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Cookie Policy</a>.
             </p>
-            <button
-              onClick={() => {
-                localStorage.setItem('quiet-journal-cookie-consent', 'true');
-                setCookieConsentAccepted(true);
-              }}
-              className="shrink-0 rounded-full bg-sage-900 px-6 py-2.5 text-sm font-extrabold text-white shadow-lift transition hover:-translate-y-0.5 hover:bg-sage-800"
-            >
-              I understand
-            </button>
+            <div className="mt-3 flex justify-end">
+              <button
+                onClick={() => {
+                  localStorage.setItem('quiet-journal-cookie-consent', 'true');
+                  setCookieConsentAccepted(true);
+                }}
+                className="shrink-0 rounded-full bg-sage-900 px-5 py-2.5 text-sm font-extrabold text-white shadow-lift transition hover:-translate-y-0.5 hover:bg-sage-800"
+              >
+                Got it
+              </button>
+            </div>
           </div>
         </div>
       )}
 
-      <div className="fixed inset-x-3 bottom-3 z-30 mx-auto max-w-lg rounded-[1.7rem] border border-white/90 bg-white/90 p-1.5 shadow-soft backdrop-blur-xl lg:hidden">
-        <div className="grid grid-cols-6 gap-1">
+      <div className="fixed inset-x-3 bottom-3 z-30 mx-auto max-w-lg rounded-[1.7rem] border lofi-glass p-1.5 shadow-soft backdrop-blur-xl lg:hidden">
+        <div className="grid grid-cols-7 gap-1">
         {[
-          { id: 'home', label: 'Home', icon: Waves },
-          { id: 'write', label: 'Write', icon: PenLine },
+          { id: 'unwind', label: 'Games', icon: Gamepad2 },
+          { id: 'home', label: 'Chill', icon: Headphones },
+          { id: 'write', label: 'Diary', icon: PenLine },
           { id: 'notes', label: 'Notes', icon: FileText },
-          { id: 'breathe', label: 'Breathe', icon: Wind },
-          { id: 'unwind', label: 'Unwind', icon: Leaf },
-          { id: 'memories', label: 'Memory', icon: BookOpen },
-          { id: 'insights', label: 'Insight', icon: Sparkles },
+          { id: 'breathe', label: 'Music', icon: Wind },
+          { id: 'memories', label: 'Memory', icon: CalendarDays },
           { id: 'design', label: 'Design', icon: Palette }
         ].map((tab) => {
           const isActive = activeTab === tab.id;
@@ -6283,7 +7381,7 @@ function App() {
         </div>
       </div>
 
-      {selectedEntry && (
+      {Boolean(selectedEntry) && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/45 p-4 backdrop-blur-sm" onClick={() => { if (!isEditingEntry) setSelectedEntry(null); }}>
           <div className="max-h-[88vh] w-full max-w-2xl overflow-y-auto rounded-3xl bg-white p-7 shadow-soft lg:p-9" onClick={(event) => event.stopPropagation()}>
             <div className="mb-4 flex items-center justify-between gap-4">
@@ -6306,7 +7404,7 @@ function App() {
                 )}
                 {isEditingEntry ? (
                   <input
-                    className="w-full rounded-2xl border border-sage-100 bg-sage-50/80 px-4 py-3 text-2xl font-extrabold text-ink outline-none focus:border-sage-400"
+                    className="w-full rounded-2xl border border-[#e8dfd5] bg-sage-50/80 px-4 py-3 text-2xl font-extrabold text-ink outline-none focus:border-sage-400"
                     onChange={(event) => setEditTitle(event.target.value)}
                     value={editTitle}
                   />
@@ -6326,7 +7424,7 @@ function App() {
                 <button className="rounded-full bg-sage-100 px-4 py-2 text-sm font-extrabold text-sage-900 transition hover:bg-sage-200" onClick={() => { setSelectedEntry(null); setIsEditingEntry(false); }} type="button">Close</button>
               </div>
             </div>
-            {selectedEntry.prompt && !isEditingEntry && (
+            {Boolean(selectedEntry?.prompt) && !isEditingEntry && (
               <div className="mb-5 rounded-2xl bg-sage-50 p-4 text-sm font-bold leading-7 text-sage-900">
                 Reflection prompt: {selectedEntry.prompt}
               </div>
@@ -6347,14 +7445,14 @@ function App() {
                     <input accept="image/*" className="hidden" onChange={handleEditEntryImageUpload} type="file" />
                   </label>
                 </div>
-                <div className="journal-editor-shell rounded-[2rem] p-3 md:p-4">
+                <div className="journal-editor-shell rounded-[3rem] p-3 md:p-4">
                   <div className="journal-editor-ribbon">quiet diary</div>
                   <div className="journal-editor-meta mb-3 flex flex-wrap items-center justify-end gap-2 px-3 text-xs font-bold uppercase tracking-[0.24em] text-sage-500">
                     <span>{editMood} mood · revisit gently</span>
                   </div>
                   <div
                     ref={editBodyRef}
-                    className="journal-editor journal-editor-soft min-h-72 w-full overflow-auto rounded-[1.75rem] px-6 py-6 outline-none"
+                    className="journal-editor journal-editor-soft min-h-72 w-full overflow-auto rounded-[2.2rem] px-6 py-6 outline-none"
                     contentEditable
                     suppressContentEditableWarning
                     style={{ fontFamily: activeJournalFont, fontSize: activeJournalSize, lineHeight: 1.95, color: '#24312e', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
@@ -6371,13 +7469,14 @@ function App() {
       )}
 
       <button
-        className="fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-sage-900 text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800"
+        className={`fixed z-40 flex h-12 w-12 items-center justify-center rounded-full bg-sage-900 text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800 ${cookieConsentAccepted ? 'bottom-6 right-6' : 'bottom-44 right-4 sm:bottom-36 sm:right-6'}`}
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         type="button"
         aria-label="Back to top"
       >
         <ArrowUp size={20} />
       </button>
+      </div>
     </main>
   );
 }
