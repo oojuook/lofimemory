@@ -502,6 +502,7 @@ const seoGuidePages = [
   { label: 'Trust page', title: 'About Lofi Memory', text: 'Understand what the product includes, how it fits together, and why the design stays intentionally calm.', href: '/about.html' },
   { label: 'Trust page', title: 'Editorial policy', text: 'See how originality, accuracy, corrections, and wellbeing boundaries are handled across the site.', href: '/editorial-policy.html' },
   { label: 'Trust page', title: 'Privacy policy', text: 'Review how storage, sign-in, notifications, embedded media, and advertising-related technologies are described.', href: '/privacy.html' },
+  { label: 'Trust page', title: 'Advertising policy', text: 'See how ads, Google AdSense, placement quality, editorial independence, and calm user experience are handled.', href: '/advertising-policy.html' },
   { label: 'Trust page', title: 'Contact and corrections', text: 'Find the direct support route for privacy requests, content corrections, bug reports, and ad questions.', href: '/contact.html' },
   { label: 'Helpful read', title: 'How to protect your privacy when journaling online', text: 'A practical read on trust, storage expectations, and what to look for before you write online.', href: '/article-protect-privacy-journaling-online.html' },
   { label: 'Helpful read', title: 'The psychology of journaling', text: 'Understand why writing can reduce mental noise and make thoughts easier to process.', href: '/article-psychology-of-journaling.html' },
@@ -6891,6 +6892,7 @@ function App() {
             <a href="/about.html">About</a>
             <a href="/editorial-policy.html">Editorial Policy</a>
             <a href="/privacy.html">Privacy</a>
+            <a href="/advertising-policy.html">Advertising</a>
             <a href="/terms.html">Terms</a>
             <a href="/cookie-policy.html">Cookies</a>
             <a href="/disclaimer.html">Disclaimer</a>

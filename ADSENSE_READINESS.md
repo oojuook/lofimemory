@@ -9,7 +9,8 @@ Google Publisher Policies require ad-supported pages to comply with Google's pub
 ## Project-specific priority actions
 
 1. Reduce reliance on thin or near-duplicate landing pages and concentrate internal linking around stronger, original pages.
-2. Keep trust pages easy to find: About, Contact, Privacy, Cookie Policy, Terms, Disclaimer, and Editorial Policy.
+2. Keep trust pages easy to find: About, Contact, Privacy, Cookie Policy, Terms, Disclaimer, Editorial Policy, and Advertising Policy.
 3. Keep `public/ads.txt` accurate and live at `/ads.txt`.
-4. Leave AdSense script on the main product page, but avoid placing ads on low-value legal or trust pages.
-5. Continue growing the article hub with original, useful posts before requesting another review.
+4. Leave AdSense script on the main product page, but avoid placing ads on low-value legal, trust, or noindexed pages.
+5. Keep stronger original guide pages indexable and listed in the sitemap while noindexing thin support pages.
+6. Continue growing the article hub with original, useful posts before requesting another review.

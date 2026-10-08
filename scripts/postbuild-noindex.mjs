@@ -11,6 +11,7 @@ const alwaysIndexed = new Set([
   'blog.html',
   'about.html',
   'editorial-policy.html',
+  'advertising-policy.html',
   'contact.html',
   'privacy.html',
   'cookie-policy.html',
@@ -29,6 +30,12 @@ const alwaysIgnored = new Set([
 ]);
 
 const noindexMeta = '<meta name="robots" content="noindex, follow" />';
+const adsenseScriptPattern = /\s*<script\s+async\s+src=["']https:\/\/pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js\?client=[^"']+["'][^>]*><\/script>\s*/gi;
+
+function stripAdSenseFromLowValuePages(html, fileName) {
+  if (shouldIndex(fileName)) return html;
+  return html.replace(adsenseScriptPattern, '\n');
+}
 
 function shouldIndex(fileName) {
   if (alwaysIgnored.has(fileName)) return true;
@@ -66,7 +73,7 @@ async function main() {
   for (const entry of htmlFiles) {
     const filePath = path.join(distDir, entry.name);
     const original = await fs.readFile(filePath, 'utf8');
-    const updated = upsertRobotsMeta(original, entry.name);
+    const updated = stripAdSenseFromLowValuePages(upsertRobotsMeta(original, entry.name), entry.name);
     if (updated !== original) {
       await fs.writeFile(filePath, updated, 'utf8');
       updatedCount += 1;
