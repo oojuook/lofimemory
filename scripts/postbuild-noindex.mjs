@@ -15,7 +15,12 @@ const alwaysIndexed = new Set([
   'privacy.html',
   'cookie-policy.html',
   'terms.html',
-  'disclaimer.html'
+  'disclaimer.html',
+  'relaxing-browser-games.html',
+  'games-to-relax.html',
+  'solitaire-online.html',
+  'minesweeper-online.html',
+  'browser-tetris-game.html'
 ]);
 
 const alwaysIgnored = new Set([
