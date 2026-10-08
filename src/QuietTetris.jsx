@@ -7,6 +7,7 @@ const COLS = 10;
 const SHAPES = {
   I: {
     color: '#67d7f7',
+    lofiColor: '#bde0fe',
     matrix: [
       [0, 0, 0, 0],
       [1, 1, 1, 1],
@@ -16,6 +17,7 @@ const SHAPES = {
   },
   O: {
     color: '#f5cb55',
+    lofiColor: '#faedcd',
     matrix: [
       [1, 1],
       [1, 1]
@@ -23,6 +25,7 @@ const SHAPES = {
   },
   T: {
     color: '#b48cff',
+    lofiColor: '#cdb4db',
     matrix: [
       [0, 1, 0],
       [1, 1, 1],
@@ -31,6 +34,7 @@ const SHAPES = {
   },
   S: {
     color: '#73d38e',
+    lofiColor: '#ccd5ae',
     matrix: [
       [0, 1, 1],
       [1, 1, 0],
@@ -39,6 +43,7 @@ const SHAPES = {
   },
   Z: {
     color: '#f48aa4',
+    lofiColor: '#ffafcc',
     matrix: [
       [1, 1, 0],
       [0, 1, 1],
@@ -47,6 +52,7 @@ const SHAPES = {
   },
   J: {
     color: '#7aa0ff',
+    lofiColor: '#a2d2ff',
     matrix: [
       [1, 0, 0],
       [1, 1, 1],
@@ -55,6 +61,7 @@ const SHAPES = {
   },
   L: {
     color: '#ffb45f',
+    lofiColor: '#ffc8dd',
     matrix: [
       [0, 0, 1],
       [1, 1, 1],
@@ -184,7 +191,8 @@ function getLineScore(linesCleared, level = 1) {
   return 0;
 }
 
-export default function QuietTetris({ difficulty = 'medium' }) {
+export default function QuietTetris({ difficulty = 'medium', theme = 'lofi' }) {
+  const isLofi = theme === 'lofi';
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const bestScoreKey = `quiet-journal-tetris-best-${difficulty}`;
 
@@ -430,68 +438,70 @@ export default function QuietTetris({ difficulty = 'medium' }) {
 
   return (
     <div className="mx-auto mt-12 w-full max-w-[980px] pb-12">
-      <div className="rounded-[2rem] border border-violet-100 bg-gradient-to-br from-white via-violet-50/82 to-sky-50/76 p-5 shadow-soft lg:p-6">
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+      <div className={`relative overflow-hidden rounded-[2.4rem] border p-5 shadow-soft lg:p-8 ${isLofi ? 'border-white/50 shadow-[0_32px_90px_rgba(83,62,44,0.12)]' : 'border-violet-100 bg-gradient-to-br from-white via-violet-50/82 to-sky-50/76'}`}>
+        {isLofi && (
+          <>
+            <div className="absolute inset-0 bg-[#fff9f0]/92" />
+            <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #4a3a2d 1px, transparent 0)', backgroundSize: '16px 16px' }} />
+          </>
+        )}
+        <div className="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-violet-200 bg-white/88 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-violet-700 shadow-sm">
+            <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-violet-200 bg-white/88 text-violet-700'}`}>
               <Sparkles size={14} /> {config.label} stack flow
             </div>
-            <h3 className="mt-4 text-3xl font-bold tracking-tight text-violet-950">Tetris</h3>
-            <p className="mt-2 max-w-2xl text-sm leading-7 text-violet-700">A cozy block-stacking game inspired by classic Tetris pacing. Pieces now use the modern 7-bag system, so each shuffled bag contains I, J, L, O, S, T, and Z once before refilling for a fairer flow.</p>
-            <p className="mt-2 text-sm font-semibold text-violet-600">{config.note}</p>
+            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-violet-950'}`}>Tetris</h3>
+            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-violet-700'}`}>A cozy block-stacking game inspired by classic Tetris pacing. Pieces now use the modern 7-bag system, so each shuffled bag contains I, J, L, O, S, T, and Z once before refilling for a fairer flow.</p>
+            <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-violet-600'}`}>{config.note}</p>
           </div>
-          <div className="grid gap-2 rounded-[1.5rem] border border-white/85 bg-white/80 p-3 shadow-sm sm:grid-cols-2 xl:grid-cols-5 lg:min-w-[34rem]">
-            <div className="rounded-[1.15rem] bg-violet-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-violet-500">Score</p>
-              <p className="mt-2 text-xl font-extrabold text-violet-950">{score}</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-violet-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-violet-500">Lines</p>
-              <p className="mt-2 text-xl font-extrabold text-violet-950">{lines}</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-violet-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-violet-500">Level</p>
-              <p className="mt-2 text-xl font-extrabold text-violet-950">{currentLevel}</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-violet-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-violet-500">Speed</p>
-              <p className="mt-2 text-xl font-extrabold text-violet-950">{speedLabel}</p>
-            </div>
-            <div className="rounded-[1.15rem] bg-violet-50 px-4 py-3 text-center">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-violet-500">Best</p>
-              <p className="mt-2 text-xl font-extrabold text-violet-950">{bestScore}</p>
-            </div>
+          <div className={`grid gap-2 rounded-[1.5rem] border p-3 shadow-sm sm:grid-cols-2 xl:grid-cols-5 lg:min-w-[34rem] ${isLofi ? 'border-white/60 bg-white/70 backdrop-blur-sm' : 'border-white/85 bg-white/80'}`}>
+            {[
+              { label: 'Score', value: score, tone: isLofi ? 'bg-amber-50 text-amber-900' : 'bg-violet-50 text-violet-950' },
+              { label: 'Lines', value: lines, tone: isLofi ? 'bg-amber-50 text-amber-900' : 'bg-violet-50 text-violet-950' },
+              { label: 'Level', value: currentLevel, tone: isLofi ? 'bg-amber-50 text-amber-900' : 'bg-violet-50 text-violet-950' },
+              { label: 'Speed', value: speedLabel, tone: isLofi ? 'bg-amber-50 text-amber-900' : 'bg-violet-50 text-violet-950' },
+              { label: 'Best', value: bestScore, tone: isLofi ? 'bg-amber-50 text-amber-900' : 'bg-violet-50 text-violet-950' }
+            ].map((stat) => (
+              <div key={stat.label} className={`rounded-[1.15rem] px-4 py-3 text-center ${stat.tone}`}>
+                <p className={`text-[10px] font-extrabold uppercase tracking-[0.2em] ${isLofi ? 'opacity-60' : 'text-violet-500'}`}>{stat.label}</p>
+                <p className="mt-2 text-xl font-extrabold">{stat.value}</p>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="mt-6 grid gap-5 xl:grid-cols-[minmax(0,1fr)_220px]">
+        <div className="relative z-10 mt-6 grid gap-5 xl:grid-cols-[minmax(0,1fr)_220px]">
           <div>
-            <div className="relative mx-auto w-full max-w-[22rem] rounded-[1.8rem] border border-violet-100 bg-[#f6f2ff] p-3 shadow-inner sm:max-w-[24rem] sm:p-4">
-              <div className="mb-3 rounded-[1.2rem] border border-white/75 bg-white/72 p-3">
-                <div className="flex items-center justify-between text-[11px] font-extrabold uppercase tracking-[0.18em] text-violet-500">
+            <div className={`relative mx-auto w-full max-w-[22rem] rounded-[2.2rem] border p-4 shadow-inner sm:max-w-[24rem] sm:p-5 ${isLofi ? 'border-[#e8dfd5] bg-[#fdfaf5]' : 'border-violet-100 bg-[#f6f2ff]'}`}>
+              <div className={`mb-4 rounded-[1.4rem] border p-3.5 ${isLofi ? 'border-white bg-white/60 backdrop-blur-sm' : 'border-white/75 bg-white/72'}`}>
+                <div className={`flex items-center justify-between text-[11px] font-extrabold uppercase tracking-[0.18em] ${isLofi ? 'text-amber-800' : 'text-violet-500'}`}>
                   <span>Level {currentLevel}</span>
                   <span>{10 - levelProgress} line{levelProgress === 9 ? '' : 's'} to next speed</span>
                 </div>
-                <div className="mt-2 h-2 overflow-hidden rounded-full bg-violet-100">
-                  <div className="h-full rounded-full bg-gradient-to-r from-violet-500 to-sky-400 transition-all" style={{ width: `${levelProgress * 10}%` }} />
+                <div className={`mt-2.5 h-2.5 overflow-hidden rounded-full ${isLofi ? 'bg-amber-100/50' : 'bg-violet-100'}`}>
+                  <div className={`h-full rounded-full transition-all ${isLofi ? 'bg-gradient-to-r from-amber-500 to-orange-400' : 'bg-gradient-to-r from-violet-500 to-sky-400'}`} style={{ width: `${levelProgress * 10}%` }} />
                 </div>
               </div>
-              <div className="grid gap-[3px] rounded-[1.2rem] bg-[#ece6fb] p-[3px]" style={{ gridTemplateColumns: `repeat(${COLS}, minmax(0, 1fr))` }}>
+              <div className={`grid gap-[4px] rounded-[1.6rem] p-[4px] shadow-sm ${isLofi ? 'bg-[#d8c6b2]/30' : 'bg-[#ece6fb]'}`} style={{ gridTemplateColumns: `repeat(${COLS}, minmax(0, 1fr))` }}>
                 {displayBoard.flat().map((cell, index) => (
                   <div
                     key={`tetris-cell-${index + 1}`}
-                    className="aspect-square rounded-[0.35rem] border border-white/70 bg-white/75"
-                    style={{ backgroundColor: cell ? SHAPES[cell].color : '#fbf9ff' }}
-                  />
+                    className={`aspect-square rounded-[0.45rem] border ${isLofi ? 'border-white/40' : 'border-white/70 bg-white/75'}`}
+                    style={{ backgroundColor: cell ? (isLofi ? SHAPES[cell].lofiColor : SHAPES[cell].color) : (isLofi ? 'transparent' : '#fbf9ff') }}
+                  >
+                    {isLofi && cell && (
+                      <div className="h-full w-full rounded-[0.35rem] bg-gradient-to-br from-white/35 to-transparent" />
+                    )}
+                  </div>
                 ))}
               </div>
 
               {gameState !== 'playing' && (
-                <div className="absolute inset-0 flex flex-col items-center justify-center rounded-[1.8rem] bg-white/78 px-4 text-center backdrop-blur-[3px]">
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-violet-500">{gameState === 'start' ? 'Ready to stack' : 'Round over'}</p>
-                  <h4 className="mt-3 text-3xl font-extrabold text-violet-950">{gameState === 'start' ? 'Settle the blocks and clear neat rows.' : 'The stack reached the top.'}</h4>
+                <div className="absolute inset-0 flex flex-col items-center justify-center rounded-[2.2rem] px-4 text-center backdrop-blur-[6px] bg-white/75">
+                  <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800' : 'text-violet-500'}`}>{gameState === 'start' ? 'Ready to stack' : 'Round over'}</p>
+                  <h4 className={`mt-3 text-3xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-violet-950'}`}>{gameState === 'start' ? 'Settle the blocks and clear neat rows.' : 'The stack reached the top.'}</h4>
                   <button
-                    className="mt-5 rounded-full bg-violet-900 px-6 py-3 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-violet-800"
+                    className={`mt-5 rounded-full px-6 py-3 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#4a3a2d] hover:bg-[#3d3025]' : 'bg-violet-900 hover:bg-violet-800'}`}
                     onClick={startGame}
                     type="button"
                   >
@@ -502,22 +512,22 @@ export default function QuietTetris({ difficulty = 'medium' }) {
             </div>
 
             <div className="mt-4 grid gap-2 sm:grid-cols-2 xl:grid-cols-5">
-              <button className="rounded-full border border-violet-200 bg-white px-4 py-3 text-sm font-extrabold text-violet-900 shadow-sm" onClick={() => movePiece(0, -1)} type="button"><ArrowLeft size={16} className="mr-2 inline" />Left</button>
-              <button className="rounded-full border border-violet-200 bg-white px-4 py-3 text-sm font-extrabold text-violet-900 shadow-sm" onClick={rotatePiece} type="button"><RotateCcw size={16} className="mr-2 inline" />Rotate</button>
-              <button className="rounded-full border border-violet-200 bg-white px-4 py-3 text-sm font-extrabold text-violet-900 shadow-sm" onClick={() => movePiece(1, 0)} type="button"><ArrowDown size={16} className="mr-2 inline" />Down</button>
-              <button className={`rounded-full px-4 py-3 text-sm font-extrabold shadow-sm ${holdUsed ? 'bg-violet-100 text-violet-400' : 'border border-violet-200 bg-white text-violet-900'}`} onClick={holdPiece} type="button">Hold</button>
-              <button className="rounded-full bg-violet-900 px-4 py-3 text-sm font-extrabold text-white shadow-sm" onClick={hardDrop} type="button">Drop</button>
+              <button className={`rounded-full border bg-white px-4 py-3 text-sm font-extrabold shadow-sm ${isLofi ? 'border-amber-200 text-amber-900' : 'border-violet-200 text-violet-900'}`} onClick={() => movePiece(0, -1)} type="button"><ArrowLeft size={16} className="mr-2 inline" />Left</button>
+              <button className={`rounded-full border bg-white px-4 py-3 text-sm font-extrabold shadow-sm ${isLofi ? 'border-amber-200 text-amber-900' : 'border-violet-200 text-violet-900'}`} onClick={rotatePiece} type="button"><RotateCcw size={16} className="mr-2 inline" />Rotate</button>
+              <button className={`rounded-full border bg-white px-4 py-3 text-sm font-extrabold shadow-sm ${isLofi ? 'border-amber-200 text-amber-900' : 'border-violet-200 text-violet-900'}`} onClick={() => movePiece(1, 0)} type="button"><ArrowDown size={16} className="mr-2 inline" />Down</button>
+              <button className={`rounded-full px-4 py-3 text-sm font-extrabold shadow-sm ${holdUsed ? (isLofi ? 'bg-amber-100 text-amber-400' : 'bg-violet-100 text-violet-400') : (isLofi ? 'border border-amber-200 bg-white text-amber-900' : 'border border-violet-200 bg-white text-violet-900')}`} onClick={holdPiece} type="button">Hold</button>
+              <button className={`rounded-full px-4 py-3 text-sm font-extrabold text-white shadow-sm ${isLofi ? 'bg-[#4a3a2d]' : 'bg-violet-900'}`} onClick={hardDrop} type="button">Drop</button>
             </div>
           </div>
 
-          <div className="space-y-4">
-            <div className="rounded-[1.6rem] border border-white/80 bg-white/88 p-4 shadow-sm">
+          <div className="space-y-4 text-center xl:text-left">
+            <div className={`rounded-[1.6rem] border p-4 shadow-sm ${isLofi ? 'border-white bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/88'}`}>
               <div className="flex items-center justify-between gap-3">
-                <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-violet-500">Hold block</p>
-                <span className={`rounded-full px-2 py-1 text-[10px] font-extrabold uppercase tracking-[0.14em] ${holdUsed ? 'bg-violet-100 text-violet-400' : 'bg-violet-900 text-white'}`}>{holdUsed ? 'Used' : 'Ready'}</span>
+                <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800' : 'text-violet-500'}`}>Hold block</p>
+                <span className={`rounded-full px-2 py-1 text-[10px] font-extrabold uppercase tracking-[0.14em] ${holdUsed ? (isLofi ? 'bg-amber-100 text-amber-400' : 'bg-violet-100 text-violet-400') : (isLofi ? 'bg-amber-800 text-white' : 'bg-violet-900 text-white')}`}>{holdUsed ? 'Used' : 'Ready'}</span>
               </div>
               <button
-                className="mt-4 inline-grid gap-1 rounded-[1.1rem] bg-violet-50 p-3 text-left"
+                className={`mt-4 inline-grid gap-1 rounded-[1.1rem] p-3 text-left ${isLofi ? 'bg-amber-50/50' : 'bg-violet-50'}`}
                 onClick={holdPiece}
                 style={{ gridTemplateColumns: 'repeat(4, minmax(0, 1fr))' }}
                 type="button"
@@ -529,17 +539,17 @@ export default function QuietTetris({ difficulty = 'medium' }) {
                   return (
                     <div
                       key={`held-block-${index + 1}`}
-                      className="h-6 w-6 rounded-[0.45rem] border border-white/70 sm:h-7 sm:w-7"
-                      style={{ backgroundColor: hasBlock ? SHAPES[heldType].color : '#ffffff' }}
+                      className={`h-6 w-6 rounded-[0.45rem] border ${isLofi ? 'border-white/30' : 'border-white/70 sm:h-7 sm:w-7'}`}
+                      style={{ backgroundColor: hasBlock ? (isLofi ? SHAPES[heldType].lofiColor : SHAPES[heldType].color) : (isLofi ? 'transparent' : '#ffffff') }}
                     />
                   );
                 })}
               </button>
-              <p className="mt-3 text-xs font-semibold text-violet-600">Press C or Shift to store/swap once per falling piece.</p>
+              <p className={`mt-3 text-xs font-semibold ${isLofi ? 'text-amber-800/70' : 'text-violet-600'}`}>Press C or Shift to store/swap once per falling piece.</p>
             </div>
-            <div className="rounded-[1.6rem] border border-white/80 bg-white/88 p-4 shadow-sm">
-              <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-violet-500">Next block</p>
-              <div className="mt-4 inline-grid gap-1 rounded-[1.1rem] bg-violet-50 p-3" style={{ gridTemplateColumns: 'repeat(4, minmax(0, 1fr))' }}>
+            <div className={`rounded-[1.6rem] border p-4 shadow-sm ${isLofi ? 'border-white bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/88'}`}>
+              <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800' : 'text-violet-500'}`}>Next block</p>
+              <div className={`mt-4 inline-grid gap-1 rounded-[1.1rem] p-3 ${isLofi ? 'bg-amber-50/50' : 'bg-violet-50'}`} style={{ gridTemplateColumns: 'repeat(4, minmax(0, 1fr))' }}>
                 {Array.from({ length: 16 }, (_, index) => {
                   const row = Math.floor(index / 4);
                   const col = index % 4;
@@ -547,16 +557,16 @@ export default function QuietTetris({ difficulty = 'medium' }) {
                   return (
                     <div
                       key={`next-block-${index + 1}`}
-                      className="h-6 w-6 rounded-[0.45rem] border border-white/70 sm:h-7 sm:w-7"
-                      style={{ backgroundColor: hasBlock ? SHAPES[nextType].color : '#ffffff' }}
+                      className={`h-6 w-6 rounded-[0.45rem] border ${isLofi ? 'border-white/30' : 'border-white/70 sm:h-7 sm:w-7'}`}
+                      style={{ backgroundColor: hasBlock ? (isLofi ? SHAPES[nextType].lofiColor : SHAPES[nextType].color) : (isLofi ? 'transparent' : '#ffffff') }}
                     />
                   );
                 })}
               </div>
             </div>
-            <div className="rounded-[1.6rem] border border-white/80 bg-white/88 p-4 shadow-sm">
-              <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-violet-500">Controls</p>
-              <ul className="mt-3 space-y-2 text-sm leading-6 text-violet-700">
+            <div className={`rounded-[1.6rem] border p-4 shadow-sm ${isLofi ? 'border-white bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/88'}`}>
+              <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800' : 'text-violet-500'}`}>Controls</p>
+              <ul className={`mt-3 space-y-2 text-sm leading-6 ${isLofi ? 'text-[#6e5a4a]' : 'text-violet-700'}`}>
                 <li>- Left / right to slide</li>
                 <li>- Up to rotate</li>
                 <li>- Down to soft drop</li>
@@ -564,7 +574,7 @@ export default function QuietTetris({ difficulty = 'medium' }) {
                 <li>- Space to hard drop</li>
               </ul>
             </div>
-            <button className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-extrabold text-violet-900 shadow-sm transition hover:-translate-y-0.5" onClick={startGame} type="button">
+            <button className={`inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-extrabold shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'border border-amber-200 text-amber-900' : 'text-violet-900'}`} onClick={startGame} type="button">
               <RotateCcw size={16} /> Reset stack
             </button>
           </div>
