@@ -4867,15 +4867,18 @@ function App() {
 
       <div className={`transition-opacity duration-500 ${showEntryTransition ? 'pointer-events-none select-none opacity-0' : 'opacity-100'}`}>
       <nav className="sticky top-0 z-20 px-5 pt-5 sm:px-7 xl:px-10">
-        <div className="site-nav-shell lofi-glass lofi-picture-border lofi-border-memory mx-auto max-w-[1280px] rounded-[3.2rem] border p-4 shadow-soft backdrop-blur-xl lg:p-5">
-          <div className="flex flex-col gap-2.5 lg:gap-3 xl:flex-row xl:items-center xl:justify-between">
+        <div className="site-nav-shell lofi-picture-border lofi-border-memory relative mx-auto max-w-[1280px] overflow-hidden rounded-[3.2rem] border border-[#8b5e3c]/25 p-4 shadow-soft lg:p-5">
+          <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/20 to-black/5" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
+          <div className="relative z-10 flex flex-col gap-2.5 lg:gap-3 xl:flex-row xl:items-center xl:justify-between">
             <a className="flex items-center gap-3.5" href="#home" onClick={() => openHomeSection('home')}>
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[1.35rem] border border-[#e8dfd5] bg-white/88 p-1.5 shadow-[0_12px_34px_rgba(117,127,119,0.14)] ring-1 ring-sage-100 overflow-hidden">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[1.35rem] border border-white/30 bg-white/12 p-1.5 shadow-sm backdrop-blur-md overflow-hidden">
                 <img src={headerLogoIcon} alt="Lofi Memory Logo" className="h-full w-full rounded-[1rem] object-cover" />
               </div>
               <div>
-                <p className="font-display text-2xl font-bold text-sage-900">Lofi Memory</p>
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-sage-700">Chill music, lofi games & journal</p>
+                <p className="font-display text-2xl font-bold text-white drop-shadow-md">Lofi Memory</p>
+                <p className="text-xs font-black uppercase tracking-[0.28em] text-white/90 drop-shadow-sm">Chill music, lofi games & journal</p>
               </div>
             </a>
             <div className="site-nav-links hidden flex-1 items-center justify-center gap-7 xl:gap-9">
@@ -4890,7 +4893,7 @@ function App() {
               ].map((tab) => (
                 <button
                   key={tab.id}
-                  className={`flex items-center gap-2 text-sm font-extrabold uppercase tracking-widest transition ${activeTab === tab.id ? 'text-sage-950' : 'text-sage-700 hover:text-sage-900'}`}
+                  className={`flex items-center gap-2 text-sm font-black uppercase tracking-widest transition drop-shadow-sm ${activeTab === tab.id ? 'text-white' : 'text-white/80 hover:text-white'}`}
                   onClick={() => navigateToTab(tab.id)}
                 >
                   <tab.icon size={16} /> {tab.label}
@@ -4900,43 +4903,43 @@ function App() {
 
             <div className="site-nav-actions flex w-full flex-wrap items-center gap-2 lg:justify-end xl:w-auto xl:max-w-[34rem] xl:flex-none xl:flex-nowrap">
               {user ? (
-                <div className="flex min-w-[210px] flex-1 items-center justify-between gap-3 rounded-full border border-amber-200/50 bg-white/92 px-4 py-2.5 shadow-lift xl:flex-none">
+                <div className="flex min-w-[210px] flex-1 items-center justify-between gap-3 rounded-full border border-white/25 bg-white/15 px-4 py-2.5 shadow-sm backdrop-blur-md xl:flex-none">
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-extrabold text-sage-950">{user.displayName || user.email}</p>
-                    <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-sage-600">{cloudStatus}</p>
+                    <p className="truncate text-sm font-extrabold text-white">{user.displayName || user.email}</p>
+                    <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/70">{cloudStatus}</p>
                   </div>
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-sage-100 text-sage-700 shadow-sm">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-white/20 text-white shadow-sm">
                     <ShieldCheck size={15} />
                   </div>
                 </div>
               ) : (
-                <button className="flex min-w-[208px] flex-1 items-center justify-between gap-3 rounded-full border border-amber-200/50 bg-white/92 px-4 py-2.5 text-left shadow-lift transition hover:-translate-y-0.5 hover:bg-white xl:flex-none" onClick={signInWithGoogle} disabled={authLoading} type="button">
+                <button className="flex min-w-[208px] flex-1 items-center justify-between gap-3 rounded-full border border-white/25 bg-white/15 px-4 py-2.5 text-left shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25 xl:flex-none" onClick={signInWithGoogle} disabled={authLoading} type="button">
                   <div>
-                    <p className="text-sm font-extrabold text-sage-950">{authLoading ? 'Checking login...' : 'Sign in with Google'}</p>
-                    <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-sage-600">Sync across devices</p>
+                    <p className="text-sm font-extrabold text-white">{authLoading ? 'Checking login...' : 'Sign in with Google'}</p>
+                    <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-white/70">Sync across devices</p>
                   </div>
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-sage-900 text-white shadow-sm">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-white text-[#4a3a2d] shadow-sm">
                     <ShieldCheck size={15} />
                   </div>
                 </button>
               )}
-              <div className="flex flex-wrap items-center gap-2 rounded-full border border-[#e8dfd5] bg-white/82 p-1.5 shadow-sm xl:flex-nowrap">
+              <div className="flex flex-wrap items-center gap-2 rounded-full border border-white/20 bg-black/20 p-1.5 shadow-sm backdrop-blur-md xl:flex-nowrap">
                 {user && (
-                  <button className="rounded-full border border-amber-200/50 bg-white/90 px-3.5 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:bg-white" onClick={handleSignOut} type="button">
+                  <button className="rounded-full border border-white/30 bg-white/10 px-3.5 py-2 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-white/20" onClick={handleSignOut} type="button">
                     Sign out
                   </button>
                 )}
                 {isMasterAdmin && (
-                  <div className="flex overflow-hidden rounded-full border border-amber-200/50 bg-white/90 p-1">
+                  <div className="flex overflow-hidden rounded-full border border-white/25 bg-white/10 p-1">
                     <button
-                      className={`rounded-full px-3.5 py-2 text-sm font-extrabold transition ${adminViewMode === 'master' ? 'bg-sage-900 text-white shadow-sm' : 'text-sage-700 hover:bg-sage-50'}`}
+                      className={`rounded-full px-3.5 py-2 text-sm font-extrabold transition ${adminViewMode === 'master' ? 'bg-white text-[#4a3a2d] shadow-sm' : 'text-white/80 hover:bg-white/10'}`}
                       onClick={() => setAdminViewMode('master')}
                       type="button"
                     >
                       Master
                     </button>
                     <button
-                      className={`rounded-full px-3.5 py-2 text-sm font-extrabold transition ${adminViewMode === 'user' ? 'bg-sage-900 text-white shadow-sm' : 'text-sage-700 hover:bg-sage-50'}`}
+                      className={`rounded-full px-3.5 py-2 text-sm font-extrabold transition ${adminViewMode === 'user' ? 'bg-white text-[#4a3a2d] shadow-sm' : 'text-white/80 hover:bg-white/10'}`}
                       onClick={() => setAdminViewMode('user')}
                       type="button"
                     >
@@ -4945,26 +4948,26 @@ function App() {
                   </div>
                 )}
                 {showAdminTools && (
-                  <button className="rounded-full border border-sage-800 bg-sage-900 px-3.5 py-2 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-sage-800" onClick={() => openHomeSection('seo-studio')} type="button">
+                  <button className="rounded-full border border-white/40 bg-white px-3.5 py-2 text-sm font-bold text-[#4a3a2d] transition hover:-translate-y-0.5 hover:bg-[#fff9f0]" onClick={() => openHomeSection('seo-studio')} type="button">
                     SEO studio
                   </button>
                 )}
-                <button className={`rounded-full border px-3.5 py-2 text-sm font-bold transition hover:-translate-y-0.5 ${comfortMode ? 'border-sage-800 bg-sage-900 text-white' : 'border-amber-200/50 bg-white/90 text-sage-800 hover:bg-white'}`} onClick={() => setComfortMode(!comfortMode)} type="button">
+                <button className={`rounded-full border px-3.5 py-2 text-sm font-bold transition hover:-translate-y-0.5 ${comfortMode ? 'border-white bg-white text-[#4a3a2d]' : 'border-white/30 bg-white/10 text-white hover:bg-white/20'}`} onClick={() => setComfortMode(!comfortMode)} type="button">
                   Comfort
                 </button>
-                <button className="rounded-full border border-amber-200/50 bg-white/90 px-3.5 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:bg-white" onClick={() => (hasPin ? setPinSettingsOpen(true) : setLocked(true))} type="button">
+                <button className="rounded-full border border-white/30 bg-white/10 px-3.5 py-2 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-white/20" onClick={() => (hasPin ? setPinSettingsOpen(true) : setLocked(true))} type="button">
                   {hasPin ? 'Privacy' : 'Set lock'}
                 </button>
               </div>
             </div>
           </div>
-          <div className="site-nav-links mt-2 hidden flex-wrap items-center justify-center gap-2 rounded-[1.5rem] border border-[#e8dfd5] bg-white/88 p-1.5 2xl:flex">
-            <a className="rounded-full border border-amber-200/50 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#unwind" onClick={() => navigateToTab('unwind')}>Games</a>
-            <a className="rounded-full border border-amber-200/50 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#home" onClick={() => navigateToTab('home')}>Chill</a>
-            <button className="rounded-full border border-amber-200/50 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
-            <a className="rounded-full border border-amber-200/50 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#memories" onClick={() => navigateToTab('memories')}>Memories</a>
-            <a className="rounded-full border border-amber-200/50 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#breathe" onClick={() => navigateToTab('breathe')}>Music</a>
-            <a className="rounded-full border border-amber-200/50 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
+          <div className="site-nav-links mt-2 hidden flex-wrap items-center justify-center gap-2 rounded-[1.5rem] border border-white/20 bg-black/10 p-1.5 backdrop-blur-md 2xl:flex">
+            <a className="rounded-full border border-white/30 bg-white/12 px-4 py-2 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-white/20" href="#unwind" onClick={() => navigateToTab('unwind')}>Games</a>
+            <a className="rounded-full border border-white/30 bg-white/12 px-4 py-2 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-white/20" href="#home" onClick={() => navigateToTab('home')}>Chill</a>
+            <button className="rounded-full border border-white/30 bg-white/12 px-4 py-2 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-white/20" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
+            <a className="rounded-full border border-white/30 bg-white/12 px-4 py-2 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-white/20" href="#memories" onClick={() => navigateToTab('memories')}>Memories</a>
+            <a className="rounded-full border border-white/30 bg-white/12 px-4 py-2 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-white/20" href="#breathe" onClick={() => navigateToTab('breathe')}>Music</a>
+            <a className="rounded-full border border-white/30 bg-white/12 px-4 py-2 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-white/20" href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
           </div>
         </div>
       </nav>
