@@ -2021,6 +2021,7 @@ function App() {
   const [isGameTransitioning, setIsGameTransitioning] = useState(false);
   const [activeTransitionGameId, setActiveTransitionGameId] = useState(null);
   const [memoriesView, setMemoriesView] = useState('calendar');
+  const [gameVisualTheme, setGameVisualTheme] = useState('lofi');
   const showMinimalHomeOverview = activeTab === 'home' && activeHomeSection === 'overview';
   const homeEntryCards = [
     { id: 'unwind', title: 'Games', description: 'Chill games', icon: Gamepad2, iconTone: 'bg-[#d8dbff] text-violet-700', onClick: () => navigateToTab('unwind'), preview: gamesSectionPreviewImage },
@@ -5765,6 +5766,21 @@ function App() {
                       </div>
                       <div className="flex w-full flex-col gap-2 xl:max-w-[32rem] xl:items-end">
                         <div className="flex flex-wrap gap-2 xl:justify-end">
+                          <div className="flex h-11 items-center gap-1 rounded-2xl border border-sage-200 bg-white p-1 shadow-sm">
+                            {[
+                              { id: 'original', label: 'Original', icon: Sparkles },
+                              { id: 'lofi', label: 'Lofi', icon: Moon }
+                            ].map((t) => (
+                              <button
+                                key={t.id}
+                                onClick={() => setGameVisualTheme(t.id)}
+                                className={`flex items-center gap-2 rounded-xl px-3 py-1.5 text-xs font-black uppercase tracking-widest transition ${gameVisualTheme === t.id ? 'bg-sage-900 text-white shadow-sm' : 'text-sage-500 hover:bg-sage-50'}`}
+                                type="button"
+                              >
+                                <t.icon size={13} /> {t.label}
+                              </button>
+                            ))}
+                          </div>
                           <button onClick={toggleFullscreen} className="flex h-11 items-center gap-2 rounded-2xl border border-sage-200 bg-white px-5 text-sm font-bold text-sage-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50" type="button">
                             {isFullscreen ? <ArrowUp size={16} className="rotate-180" /> : <ArrowUp size={16} />}
                             {isFullscreen ? 'Exit full' : 'Full screen'}
@@ -5792,7 +5808,18 @@ function App() {
                       </div>
                     </div>
                   </div>
-                  <div className={`mx-auto mt-5 w-full ${isFullscreen ? 'max-w-none' : (selectedUnwindGameConfig.playingSpace || 'max-w-[980px]')}`}>{selectedUnwindGameConfig.component}</div>
+                  <div className={`mx-auto mt-5 w-full ${isFullscreen ? 'max-w-none' : (selectedUnwindGameConfig.playingSpace || 'max-w-[980px]')}`}>
+                    {gameVisualTheme === 'lofi' ? (
+                      <div className="relative overflow-hidden rounded-[2.4rem] border border-white/70 p-4 shadow-[0_24px_80px_rgba(83,62,44,0.18)] sm:p-6">
+                        <img src={selectedUnwindGameConfig.preview} alt="" className="absolute inset-0 h-full w-full object-cover opacity-35 blur-[1px] scale-105" aria-hidden="true" />
+                        <div className="absolute inset-0 bg-gradient-to-br from-[#fff7ec]/82 via-[#f4e2cf]/68 to-[#d9c6ff]/48" />
+                        <div className="absolute inset-x-8 top-6 h-24 rounded-full bg-white/35 blur-3xl" />
+                        <div className="lofi-game-skin relative z-10 rounded-[2rem] border border-white/80 bg-white/72 p-3 shadow-soft backdrop-blur-md sm:p-5">
+                          {selectedUnwindGameConfig.component}
+                        </div>
+                      </div>
+                    ) : selectedUnwindGameConfig.component}
+                  </div>
                 </div>
               </div>
             )}

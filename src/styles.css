@@ -1113,3 +1113,21 @@ input::placeholder {
 .fixed.inset-0.z-\[100\] p {
   animation: gameSplashTitleSlide 520ms ease-out 120ms both;
 }
+
+.lofi-game-skin {
+  color-scheme: light;
+}
+
+.lofi-game-skin > * {
+  filter: saturate(0.92) sepia(0.05) contrast(0.98);
+}
+
+.lofi-game-skin button,
+.lofi-game-skin input,
+.lofi-game-skin select {
+  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.lofi-game-skin button:hover {
+  transform: translateY(-1px);
+}
