@@ -4961,13 +4961,13 @@ function App() {
               </div>
             </div>
           </div>
-          <div className="site-nav-links mt-2 hidden flex-wrap items-center justify-center gap-2 rounded-[1.5rem] border border-white/20 bg-black/10 p-1.5 backdrop-blur-md 2xl:flex">
-            <a className="rounded-full border border-white/30 bg-white/12 px-4 py-2 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-white/20" href="#unwind" onClick={() => navigateToTab('unwind')}>Games</a>
-            <a className="rounded-full border border-white/30 bg-white/12 px-4 py-2 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-white/20" href="#home" onClick={() => navigateToTab('home')}>Chill</a>
-            <button className="rounded-full border border-white/30 bg-white/12 px-4 py-2 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-white/20" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
-            <a className="rounded-full border border-white/30 bg-white/12 px-4 py-2 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-white/20" href="#memories" onClick={() => navigateToTab('memories')}>Memories</a>
-            <a className="rounded-full border border-white/30 bg-white/12 px-4 py-2 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-white/20" href="#breathe" onClick={() => navigateToTab('breathe')}>Music</a>
-            <a className="rounded-full border border-white/30 bg-white/12 px-4 py-2 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-white/20" href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
+          <div className="site-nav-links mt-2.5 hidden flex-wrap items-center justify-center gap-3 rounded-[1.8rem] border border-white/20 bg-black/35 p-2 backdrop-blur-md 2xl:flex">
+            <a className="rounded-full border border-white/30 bg-white/20 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/30" href="#unwind" onClick={() => navigateToTab('unwind')}>Games</a>
+            <a className="rounded-full border border-white/30 bg-white/20 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/30" href="#home" onClick={() => navigateToTab('home')}>Chill</a>
+            <button className="rounded-full border border-white/30 bg-white/20 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/30" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
+            <a className="rounded-full border border-white/30 bg-white/20 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/30" href="#memories" onClick={() => navigateToTab('memories')}>Memories</a>
+            <a className="rounded-full border border-white/30 bg-white/20 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/30" href="#breathe" onClick={() => navigateToTab('breathe')}>Music</a>
+            <a className="rounded-full border border-white/30 bg-white/20 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/30" href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
           </div>
         </div>
       </nav>
@@ -4978,25 +4978,25 @@ function App() {
           <p className="text-[11px] font-extrabold uppercase tracking-[0.34em] text-[#9a806a]">Choose your chill space</p>
             <p className="mt-3 text-sm font-semibold leading-7 text-[#7f6a58]">Pick a space.</p>
         </div>
-        <div className="lofi-glass lofi-picture-border lofi-border-memory rounded-[3rem] border p-3 shadow-soft backdrop-blur-xl sm:p-4">
-          <div className="grid gap-3 md:grid-cols-2">
-            {homeEntryCards.map((card) => (
-              <button
-                key={card.id}
-                className="group lofi-glass lofi-picture-border lofi-border-watercolor relative flex min-h-[11rem] w-full flex-col items-start justify-start overflow-hidden rounded-[2.2rem] border px-5 py-5 text-left shadow-[0_10px_26px_rgba(146,126,106,0.07)] transition duration-300 hover:-translate-y-1 hover:border-[#d8c6b2] hover:shadow-[0_16px_34px_rgba(146,126,106,0.1)]"
-                onClick={card.onClick}
-                type="button"
-              >
-                <img src={card.preview} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" aria-hidden="true" />
-                <div className="absolute inset-0 bg-gradient-to-br from-black/45 via-black/5 to-transparent" />
-                <div className="relative z-10 p-2">
-                  <p className="text-lg font-black tracking-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">{card.title}</p>
-                  <p className="mt-0.5 text-xs font-bold uppercase tracking-widest text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">{card.description}</p>
-                </div>
-              </button>
-            ))}
+          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-3 shadow-soft sm:p-4">
+            <div className="grid gap-3 md:grid-cols-2">
+              {homeEntryCards.map((card) => (
+                <button
+                  key={card.id}
+                  className="group lofi-picture-border lofi-border-watercolor relative flex min-h-[12rem] w-full flex-col items-start justify-start overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/20 px-6 py-6 text-left shadow-sm transition duration-300 hover:-translate-y-1 hover:border-[#8b5e3c]/40 hover:shadow-lift"
+                  onClick={card.onClick}
+                  type="button"
+                >
+                  <img src={card.preview} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" aria-hidden="true" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/25 to-black/5" />
+                  <div className="relative z-10 w-full">
+                    <p className="text-xl font-black tracking-tight text-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)]">{card.title}</p>
+                    <p className="mt-1 text-[11px] font-black uppercase tracking-[0.25em] text-white/90 drop-shadow-md">{card.description}</p>
+                  </div>
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
       </section>
       )}
 
