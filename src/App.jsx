@@ -7212,25 +7212,30 @@ function App() {
       )}
 
       <footer className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 pb-10 pt-6">
-        <div className="lofi-glass rounded-3xl border p-6 text-center text-sm leading-7 text-sage-700 shadow-lift backdrop-blur">
-          <div className="mb-3 flex flex-wrap justify-center gap-4 font-bold text-sage-800">
-            <a href="#home" onClick={() => openHomeSection('home')}>Home</a>
-            <button onClick={() => setCustomizerOpen(true)} type="button">Design</button>
-            <a href="#about" onClick={() => openHomeSection('about')}>About</a>
-            <a href="#resources" onClick={() => openHomeSection('resources')}>Resources</a>
-            <a href="#articles" onClick={() => openHomeSection('articles')}>Articles</a>
-            <a href="#tips" onClick={() => openHomeSection('tips')}>Tips</a>
-            <a href="/blog.html">Blog</a>
-            <a href="/about.html">About</a>
-            <a href="/editorial-policy.html">Editorial Policy</a>
-            <a href="/privacy.html">Privacy</a>
-            <a href="/advertising-policy.html">Advertising</a>
-            <a href="/terms.html">Terms</a>
-            <a href="/cookie-policy.html">Cookies</a>
-            <a href="/disclaimer.html">Disclaimer</a>
-            <a href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
+        <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-white/20 p-8 text-center text-sm leading-7 shadow-soft">
+          <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.15),transparent_25rem)]" />
+          <div className="relative z-10">
+            <div className="mb-4 flex flex-wrap justify-center gap-4 font-black uppercase tracking-[0.15em] text-white">
+              <a className="transition hover:text-white/70" href="#home" onClick={() => openHomeSection('home')}>Home</a>
+              <button className="transition hover:text-white/70" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
+              <a className="transition hover:text-white/70" href="#about" onClick={() => openHomeSection('about')}>About</a>
+              <a className="transition hover:text-white/70" href="#resources" onClick={() => openHomeSection('resources')}>Resources</a>
+              <a className="transition hover:text-white/70" href="#articles" onClick={() => openHomeSection('articles')}>Articles</a>
+              <a className="transition hover:text-white/70" href="#tips" onClick={() => openHomeSection('tips')}>Tips</a>
+              <a className="transition hover:text-white/70" href="/blog.html">Blog</a>
+              <a className="transition hover:text-white/70" href="/about.html">About</a>
+              <a className="transition hover:text-white/70" href="/editorial-policy.html">Editorial Policy</a>
+              <a className="transition hover:text-white/70" href="/privacy.html">Privacy</a>
+              <a className="transition hover:text-white/70" href="/advertising-policy.html">Advertising</a>
+              <a className="transition hover:text-white/70" href="/terms.html">Terms</a>
+              <a className="transition hover:text-white/70" href="/cookie-policy.html">Cookies</a>
+              <a className="transition hover:text-white/70" href="/disclaimer.html">Disclaimer</a>
+              <a className="transition hover:text-white/70" href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
+            </div>
+            <p className="font-bold text-white/95 drop-shadow-md">Lofi Memory is a soft browser space to listen to lofi music, relax, journal, breathe, and play chill games whenever you want a calmer moment online.</p>
           </div>
-          Lofi Memory is a soft browser space to listen to lofi music, relax, journal, breathe, and play chill games whenever you want a calmer moment online.
         </div>
       </footer>
       </>
