@@ -1580,43 +1580,50 @@ function ThemeStudio({
   return (
     <div className={`customizer-shell fixed inset-y-0 right-0 z-30 flex transition ${isOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}>
       <div className={`fixed inset-0 bg-ink/20 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`} onClick={onClose} />
-      <aside id="design" className={`relative h-full w-screen max-w-5xl overflow-y-auto bg-[#fffaf2]/95 shadow-soft backdrop-blur-xl transition duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-        <div className="grid min-h-full lg:grid-cols-12">
+      <aside id="design" className={`relative h-full w-screen max-w-5xl overflow-y-auto shadow-[0_0_60px_rgba(0,0,0,0.6)] backdrop-blur-3xl transition duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className="absolute inset-0 -z-10 min-h-full bg-black/85">
+          <div className="sticky top-0 h-screen w-full overflow-hidden">
+            <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/85 via-black/45 to-black/35" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.06),transparent_35rem)]" />
+          </div>
+        </div>
+        <div className="relative z-10 grid min-h-full lg:grid-cols-12">
           <div className="theme-panel p-7 text-white lg:col-span-4 lg:p-8">
             <div className="flex items-start justify-between gap-4">
-              <Palette className="text-white/90" size={34} />
-              <button className="rounded-full bg-white/20 px-4 py-2 text-sm font-bold text-white transition hover:bg-white/30" onClick={onClose} type="button">Done</button>
+              <Palette className="text-white drop-shadow-md" size={34} />
+              <button className="rounded-full border border-white/30 bg-white/20 px-4 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition hover:bg-white/30" onClick={onClose} type="button">Done</button>
             </div>
-            <p className="mt-7 text-sm font-bold uppercase tracking-widest text-white/80">Customize your space</p>
-            <h2 className="mt-3 font-display text-4xl font-bold leading-tight">Choose the look that feels right today.</h2>
-            <p className="mt-4 leading-7 text-white/85">Visitors can personalize colors and style. Their choice is saved only in their own browser, and this drawer can stay tucked away.</p>
+            <p className="mt-7 text-sm font-black uppercase tracking-widest text-white/80 drop-shadow-sm">Customize your space</p>
+            <h2 className="mt-3 font-display text-4xl font-bold leading-tight text-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.45)]">Choose the look that feels right today.</h2>
+            <p className="mt-4 font-bold leading-7 text-white/95 drop-shadow-[0_2px_4px_rgba(0,0,0,0.35)]">Visitors can personalize colors and style. Their choice is saved only in their own browser, and this drawer can stay tucked away.</p>
           </div>
           <div className="space-y-7 p-7 lg:col-span-8 lg:p-8">
             <div>
-              <div className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-sage-700"><Paintbrush size={16} /> Color theme</div>
+              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/90 drop-shadow-sm"><Paintbrush size={16} /> Color theme</div>
               <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-5">
                 {colorThemes.map((theme) => (
                   <button
-                    className={`custom-option rounded-3xl border p-4 text-left transition hover:-translate-y-1 ${selectedTheme === theme.id ? 'is-selected border-sage-500 bg-sage-50 shadow-lift' : 'border-[#e8dfd5] bg-white'}`}
+                    className={`custom-option rounded-3xl border p-4 text-left shadow-sm backdrop-blur-md transition hover:-translate-y-1 ${selectedTheme === theme.id ? 'is-selected border-white/60 bg-white/30 shadow-[0_0_24px_rgba(255,255,255,0.25)]' : 'border-white/20 bg-white/10 hover:bg-white/20'}`}
                     key={theme.id}
                     onClick={() => {
                       onThemeChange(theme.id);
                     }}
                     type="button"
                   >
-                    <span className="mb-3 block h-9 w-full rounded-2xl" style={{ background: `linear-gradient(135deg, ${theme.soft}, ${theme.accent})` }} />
-                    <span className="block text-sm font-extrabold text-ink">{theme.name}</span>
+                    <span className="mb-3 block h-9 w-full rounded-2xl shadow-inner" style={{ background: `linear-gradient(135deg, ${theme.soft}, ${theme.accent})` }} />
+                    <span className="block text-sm font-extrabold text-white drop-shadow-md">{theme.name}</span>
                   </button>
                 ))}
               </div>
             </div>
 
             <div className="grid gap-5 lg:grid-cols-3">
-              <label className="custom-option rounded-3xl border border-[#e8dfd5] bg-white p-5 shadow-sm lg:col-span-1">
-                <span className="mb-3 block text-sm font-bold uppercase tracking-widest text-sage-700">Custom color</span>
+              <label className="custom-option rounded-3xl border border-white/20 bg-white/10 p-5 shadow-sm backdrop-blur-md lg:col-span-1 block">
+                <span className="mb-3 block text-sm font-black uppercase tracking-widest text-white/90 drop-shadow-sm">Custom color</span>
                 <input
                   aria-label="Choose a custom accent color"
-                  className="h-12 w-full cursor-pointer rounded-2xl border border-[#e8dfd5] bg-white p-1"
+                  className="h-12 w-full cursor-pointer rounded-2xl border border-white/30 bg-black/20 p-1 backdrop-blur"
                   onChange={(event) => {
                     onCustomColorChange(event.target.value);
                     onThemeChange('custom');
@@ -1624,12 +1631,12 @@ function ThemeStudio({
                   type="color"
                   value={customColor}
                 />
-                <span className="mt-3 block text-sm font-semibold text-sage-700">Pick any accent color.</span>
+                <span className="mt-3 block text-sm font-bold text-white/80 drop-shadow-sm">Pick any accent color.</span>
               </label>
               <div className="grid gap-3 lg:col-span-2">
                 {designStyles.map((style) => (
                   <button
-                    className={`custom-option flex items-center justify-between rounded-3xl border bg-white p-4 text-left transition hover:-translate-y-1 ${selectedDesign === style.id ? 'is-selected border-sage-500 shadow-lift' : 'border-[#e8dfd5]'}`}
+                    className={`custom-option flex items-center justify-between rounded-3xl border p-4 text-left shadow-sm backdrop-blur-md transition hover:-translate-y-1 ${selectedDesign === style.id ? 'is-selected border-white/60 bg-white/30 shadow-[0_0_24px_rgba(255,255,255,0.25)]' : 'border-white/20 bg-white/10 hover:bg-white/20'}`}
                     key={style.id}
                     onClick={() => {
                       onDesignChange(style.id);
@@ -1637,17 +1644,17 @@ function ThemeStudio({
                     type="button"
                   >
                     <span>
-                      <span className="block font-extrabold text-ink">{style.name}</span>
-                      <span className="text-sm text-sage-700">{style.description}</span>
+                      <span className="block font-extrabold text-white drop-shadow-md">{style.name}</span>
+                      <span className="text-sm font-bold text-white/80 drop-shadow-sm">{style.description}</span>
                     </span>
-                    <span className="theme-dot h-8 w-8 rounded-full" />
+                    <span className="theme-dot h-8 w-8 rounded-full border border-white/30 shadow-inner" />
                   </button>
                 ))}
               </div>
             </div>
 
-            <div className="rounded-3xl border border-[#e8dfd5] bg-white p-5 shadow-sm">
-              <div className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-sage-700"><ImagePlus size={16} /> Wallpaper</div>
+            <div className="rounded-3xl border border-white/20 bg-white/10 p-5 shadow-sm backdrop-blur-md">
+              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/90 drop-shadow-sm"><ImagePlus size={16} /> Wallpaper</div>
               <p className="text-sm leading-6 text-sage-700">Import your own calm wallpaper. It stays soft behind the app with a blur overlay so the page still feels minimal and easy to read.</p>
               <div className="mt-4 grid gap-4 md:grid-cols-[minmax(0,1fr)_14rem] md:items-center">
                 <label className="flex cursor-pointer items-center justify-center gap-2 rounded-2xl border border-dashed border-sage-300 bg-sage-50/80 px-4 py-4 text-sm font-bold text-sage-800 transition hover:bg-sage-100">
@@ -1666,90 +1673,90 @@ function ThemeStudio({
               )}
             </div>
 
-            <div className="rounded-3xl border border-[#e8dfd5] bg-white p-5 shadow-sm">
-              <div className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-sage-700"><Sparkles size={16} /> Atmosphere presets</div>
-              <p className="text-sm leading-6 text-sage-700">Pick a ready-made mood and let the design drawer handle the look for you instead of crowding the writing area.</p>
+            <div className="rounded-3xl border border-white/20 bg-white/10 p-5 shadow-sm backdrop-blur-md">
+              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/90 drop-shadow-sm"><Sparkles size={16} /> Atmosphere presets</div>
+              <p className="text-sm font-bold leading-6 text-white/80 drop-shadow-sm">Pick a ready-made mood and let the design drawer handle the look for you instead of crowding the writing area.</p>
               <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
                 {journalAtmospherePresets.map((preset) => {
                   const isPresetActive = selectedTheme === preset.themeId && selectedDesign === preset.designId && journalStyle.fontId === preset.journalFontId && quoteStyle.fontId === preset.quoteFontId;
                   return (
                     <button
-                      className={`rounded-[1.4rem] border p-4 text-left transition hover:-translate-y-0.5 ${isPresetActive ? 'border-sage-500 bg-sage-50 shadow-lift' : 'border-[#e8dfd5] bg-white hover:bg-sage-50'}`}
+                      className={`flex flex-col rounded-[1.4rem] border p-4 text-left shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:shadow-md ${isPresetActive ? 'border-white/60 bg-white/30 shadow-[0_0_24px_rgba(255,255,255,0.25)]' : 'border-white/20 bg-white/10 hover:bg-white/20'}`}
                       key={preset.id}
                       onClick={() => onAtmosphereApply(preset)}
                       type="button"
                     >
-                      <span className="text-sm font-extrabold text-ink">{preset.name}</span>
-                      <span className="mt-2 block text-sm leading-6 text-sage-700">{preset.note}</span>
+                      <span className="text-sm font-extrabold text-white drop-shadow-md">{preset.name}</span>
+                      <span className="mt-2 text-sm font-bold leading-6 text-white/70 drop-shadow-sm">{preset.note}</span>
                     </button>
                   );
                 })}
               </div>
             </div>
 
-            <div className="rounded-3xl border border-[#e8dfd5] bg-white p-5 shadow-sm">
-              <div className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-sage-700"><Quote size={16} /> Quote card color</div>
+            <div className="rounded-3xl border border-white/20 bg-white/10 p-5 shadow-sm backdrop-blur-md">
+              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/90 drop-shadow-sm"><Quote size={16} /> Quote card color</div>
               <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6">
                 {quoteCardColors.map((color) => (
                   <button
-                    className={`custom-option rounded-2xl border p-3 text-left transition hover:-translate-y-1 ${quoteBg.toLowerCase() === color.value.toLowerCase() ? 'is-selected border-sage-500 shadow-lift' : 'border-[#e8dfd5]'}`}
+                    className={`custom-option rounded-2xl border p-3 text-left shadow-sm backdrop-blur-sm transition hover:-translate-y-1 ${quoteBg.toLowerCase() === color.value.toLowerCase() ? 'is-selected border-white/60 bg-white/30 shadow-[0_0_24px_rgba(255,255,255,0.25)]' : 'border-white/20 bg-white/10 hover:bg-white/20'}`}
                     key={color.value}
                     onClick={() => {
                       onQuoteBgChange(color.value);
                     }}
                     type="button"
                   >
-                    <span className="mb-2 block h-10 rounded-xl" style={{ background: color.value }} />
-                    <span className="text-sm font-extrabold text-ink">{color.name}</span>
+                    <span className="mb-2 block h-10 rounded-xl shadow-inner" style={{ background: color.value }} />
+                    <span className="text-sm font-extrabold text-white drop-shadow-md">{color.name}</span>
                   </button>
                 ))}
               </div>
-              <label className="mt-4 block rounded-2xl bg-sage-50 p-4">
-                <span className="mb-3 block text-sm font-bold text-sage-800">Or pick any quote card color</span>
-                <input className="h-11 w-full cursor-pointer rounded-xl border border-[#e8dfd5] bg-white p-1" onChange={(event) => onQuoteBgChange(event.target.value)} type="color" value={quoteBg} />
+              <label className="mt-4 block rounded-2xl border border-white/20 bg-black/20 p-4 backdrop-blur-md">
+                <span className="mb-3 block text-sm font-bold text-white/80 drop-shadow-sm">Or pick any quote card color</span>
+                <input className="h-11 w-full cursor-pointer rounded-xl border border-white/30 bg-white/10 p-1" onChange={(event) => onQuoteBgChange(event.target.value)} type="color" value={quoteBg} />
               </label>
             </div>
 
-            <div className="rounded-3xl border border-[#e8dfd5] bg-white p-5 shadow-sm">
-              <div className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-sage-700"><ImagePlus size={16} /> Custom emotion</div>
-              <p className="text-sm leading-6 text-sage-700">Keep personal moods in the design drawer instead of the writing page. They still appear in your mood picker after you save them.</p>
+            <div className="rounded-3xl border border-white/20 bg-white/10 p-5 shadow-sm backdrop-blur-md">
+              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/90 drop-shadow-sm"><ImagePlus size={16} /> Custom emotion</div>
+              <p className="text-sm font-bold leading-6 text-white/80 drop-shadow-sm">Keep personal moods in the design drawer instead of the writing page. They still appear in your mood picker after you save them.</p>
               <div className="mt-5 grid gap-3 md:grid-cols-5">
                 <input
-                  className="rounded-2xl border border-[#e8dfd5] bg-sage-50/80 px-4 py-3 font-semibold outline-none transition focus:border-sage-400 focus:bg-white"
+                  className="rounded-2xl border border-white/30 bg-black/20 px-4 py-3 font-semibold text-white outline-none backdrop-blur-sm transition focus:border-white/60 focus:bg-black/30 placeholder-white/50"
                   onChange={(event) => onCustomWeatherNameChange(event.target.value)}
                   placeholder="Name"
                   value={customWeatherName}
                 />
                 <input
-                  className="rounded-2xl border border-[#e8dfd5] bg-sage-50/80 px-4 py-3 font-semibold outline-none transition focus:border-sage-400 focus:bg-white"
+                  className="rounded-2xl border border-white/30 bg-black/20 px-4 py-3 font-semibold text-white outline-none backdrop-blur-sm transition focus:border-white/60 focus:bg-black/30 placeholder-white/50"
                   maxLength={4}
                   onChange={(event) => onCustomWeatherEmojiChange(event.target.value)}
                   placeholder="Emoji"
                   value={customWeatherEmoji}
                 />
-                <label className="flex cursor-pointer items-center justify-center gap-2 rounded-2xl border border-dashed border-sage-300 bg-sage-50/80 px-4 py-3 text-sm font-bold text-sage-800 transition hover:bg-sage-100 md:col-span-2">
+                <label className="flex cursor-pointer items-center justify-center gap-2 rounded-2xl border border-dashed border-white/30 bg-white/5 px-4 py-3 text-sm font-bold text-white shadow-sm backdrop-blur-sm transition hover:bg-white/10 md:col-span-2">
                   <ImagePlus size={18} /> Upload image
                   <input accept="image/*" className="hidden" onChange={onCustomWeatherImageUpload} type="file" />
                 </label>
-                <button className="rounded-2xl bg-sage-800 px-4 py-3 font-bold text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-700" onClick={onAddCustomWeather} type="button">
+                <button className="rounded-2xl border border-white/20 bg-white/20 px-4 py-3 font-bold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/30" onClick={onAddCustomWeather} type="button">
                   Add emotion
                 </button>
               </div>
               {customWeatherImage && (
-                <div className="mt-4 flex items-center gap-3 rounded-2xl bg-sage-50 p-3 text-sm font-semibold text-sage-800">
+                <div className="mt-4 flex items-center gap-3 rounded-2xl border border-white/20 bg-black/20 p-3 text-sm font-semibold text-white/90 backdrop-blur-md">
                   <img alt="Custom weather preview" className="h-12 w-12 rounded-2xl object-cover" src={customWeatherImage} />
                   Image ready — add a name, then save it as a custom emotion.
                 </div>
               )}
               {customWeathers.length > 0 && (
                 <div className="mt-4">
-                  <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-sage-500">Saved custom moods</p>
+                  <p className="text-xs font-black uppercase tracking-[0.24em] text-white/70 drop-shadow-sm">Saved custom moods</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {customWeathers.map((weather) => (
-                      <div key={weather.id} className="inline-flex items-center gap-2 rounded-full border border-[#e8dfd5] bg-sage-50 px-3 py-2 text-sm font-semibold text-sage-700">
+                      <div key={weather.id} className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm backdrop-blur-md">
                         {weather.image ? <img alt={weather.label} className="h-6 w-6 rounded-full object-cover" src={weather.image} /> : <span>{weather.emoji}</span>}
                         <span>{weather.label}</span>
-                        <button className="text-sage-400 transition hover:text-rose-500" onClick={() => onDeleteCustomWeather(weather.label)} type="button">×</button>
+                        <button className="text-white/50 transition hover:text-white" onClick={() => onDeleteCustomWeather(weather.label)} type="button">×</button>
                       </div>
                     ))}
                   </div>
