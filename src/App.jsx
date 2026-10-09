@@ -4961,13 +4961,13 @@ function App() {
               </div>
             </div>
           </div>
-          <div className="site-nav-links mt-2.5 hidden flex-wrap items-center justify-center gap-3 rounded-[1.8rem] border border-white/20 bg-black/35 p-2 backdrop-blur-md 2xl:flex">
-            <a className="rounded-full border border-white/30 bg-white/20 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/30" href="#unwind" onClick={() => navigateToTab('unwind')}>Games</a>
-            <a className="rounded-full border border-white/30 bg-white/20 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/30" href="#home" onClick={() => navigateToTab('home')}>Chill</a>
-            <button className="rounded-full border border-white/30 bg-white/20 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/30" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
-            <a className="rounded-full border border-white/30 bg-white/20 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/30" href="#memories" onClick={() => navigateToTab('memories')}>Memories</a>
-            <a className="rounded-full border border-white/30 bg-white/20 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/30" href="#breathe" onClick={() => navigateToTab('breathe')}>Music</a>
-            <a className="rounded-full border border-white/30 bg-white/20 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/30" href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
+          <div className="site-nav-links mt-2.5 hidden flex-wrap items-center justify-center gap-3 rounded-[1.8rem] border border-white/20 bg-black/40 p-2 backdrop-blur-xl 2xl:flex">
+            <a className="rounded-full border border-white/40 bg-white/25 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/35 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]" href="#unwind" onClick={() => navigateToTab('unwind')}>Games</a>
+            <a className="rounded-full border border-white/40 bg-white/25 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/35 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]" href="#home" onClick={() => navigateToTab('home')}>Chill</a>
+            <button className="rounded-full border border-white/40 bg-white/25 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/35 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
+            <a className="rounded-full border border-white/40 bg-white/25 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/35 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]" href="#memories" onClick={() => navigateToTab('memories')}>Memories</a>
+            <a className="rounded-full border border-white/40 bg-white/25 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/35 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]" href="#breathe" onClick={() => navigateToTab('breathe')}>Music</a>
+            <a className="rounded-full border border-white/40 bg-white/25 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/35 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]" href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
           </div>
         </div>
       </nav>
@@ -5831,7 +5831,7 @@ function App() {
                       </div>
                     </div>
                   </div>
-                  <div className={`relative z-10 mx-auto mt-5 w-full ${isFullscreen ? 'max-w-none' : (selectedUnwindGameConfig.playingSpace || 'max-w-[980px]')}`}>
+                  <div className={`relative z-10 mx-auto mt-5 w-full ${isFullscreen ? 'max-w-none h-[calc(100vh-140px)] min-h-[600px] flex flex-col' : (selectedUnwindGameConfig.playingSpace || 'max-w-[980px]')}`}>
                     {selectedUnwindGameConfig.component}
                   </div>
                 </div>
