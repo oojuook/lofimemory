@@ -1581,11 +1581,11 @@ function ThemeStudio({
     <div className={`customizer-shell fixed inset-y-0 right-0 z-30 flex transition ${isOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}>
       <div className={`fixed inset-0 bg-ink/20 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`} onClick={onClose} />
       <aside id="design" className={`relative h-full w-screen max-w-5xl overflow-y-auto shadow-[0_0_60px_rgba(0,0,0,0.6)] backdrop-blur-3xl transition duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-        <div className="absolute inset-0 -z-10 min-h-full bg-black/85">
+        <div className="absolute inset-0 -z-10 min-h-full bg-black/50">
           <div className="sticky top-0 h-screen w-full overflow-hidden">
             <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
-            <div className="absolute inset-0 bg-gradient-to-br from-black/85 via-black/45 to-black/35" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.06),transparent_35rem)]" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/25 to-black/10" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.08),transparent_35rem)]" />
           </div>
         </div>
         <div className="relative z-10 grid min-h-full lg:grid-cols-12">
