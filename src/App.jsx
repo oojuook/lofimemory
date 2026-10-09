@@ -4841,14 +4841,15 @@ function App() {
   return (
     <main className={`personalized-site lofi-vibe ${wallpaperImage ? 'wallpaper-active' : ''} design-${selectedDesign} ${comfortMode ? 'comfort-mode' : ''} isolate min-h-screen overflow-hidden bg-sand-50 pb-24 text-ink lg:pb-0`} style={themeStyle}>
       {isGameTransitioning && <GameSplash game={transitioningGameConfig} />}
-      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-        {wallpaperImage && <div className="lofi-user-wallpaper absolute inset-0" style={{ backgroundImage: `url(${wallpaperImage})` }} />}
-        <div className="lofi-ambient-grid absolute inset-0" />
-        <div className="absolute left-[-2rem] top-0 h-[28rem] w-[28rem] rounded-full bg-[#efe4d7]/80 blur-3xl" />
-        <div className="absolute right-[-3rem] top-44 h-[26rem] w-[26rem] rounded-full bg-[#f8efe5]/85 blur-3xl" />
-        <div className="absolute bottom-[-4rem] left-1/3 h-[22rem] w-[22rem] rounded-full bg-[#f2e8dc]/78 blur-3xl" />
-        <div className="lofi-record-glow absolute -right-20 top-[22rem] hidden h-72 w-72 rounded-full lg:block" />
-        <div className="lofi-moon-glow absolute left-[6%] top-[34rem] hidden h-28 w-28 rounded-full md:block" />
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[#fffaf2]">
+        <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-[0.35] blur-[1px] transition-opacity duration-1000" aria-hidden="true" />
+        {wallpaperImage && <div className="lofi-user-wallpaper absolute inset-0 z-10" style={{ backgroundImage: `url(${wallpaperImage})` }} />}
+        <div className="lofi-ambient-grid absolute inset-0 z-20 opacity-30" />
+        <div className="absolute left-[-2rem] top-0 z-30 h-[28rem] w-[28rem] rounded-full bg-[#efe4d7]/60 blur-3xl" />
+        <div className="absolute right-[-3rem] top-44 z-30 h-[26rem] w-[26rem] rounded-full bg-[#f8efe5]/70 blur-3xl" />
+        <div className="absolute bottom-[-4rem] left-1/3 z-30 h-[22rem] w-[22rem] rounded-full bg-[#f2e8dc]/65 blur-3xl" />
+        <div className="lofi-record-glow absolute -right-20 top-[22rem] z-30 hidden h-72 w-72 rounded-full lg:block opacity-70" />
+        <div className="lofi-moon-glow absolute left-[6%] top-[34rem] z-30 hidden h-28 w-28 rounded-full md:block opacity-60" />
       </div>
 
 
