@@ -5733,41 +5733,49 @@ function App() {
                 <p className="mt-5 text-sm leading-7 text-sage-700">{latestEntry ? `Continuing "${latestEntry.title}".` : selectedMoodGuide.detail}</p>
               </div>
 
-              <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/78 p-6 shadow-soft backdrop-blur-xl">
-                <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-rose-600">Journey progress</p>
-                <div className="mt-5 flex items-start gap-4">
-                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-[1.5rem] bg-rose-50 text-3xl shadow-sm ring-4 ring-rose-50/50">{nextAchievement.emoji}</div>
-                  <div>
-                    <p className="text-lg font-extrabold text-ink">{nextAchievement.title}</p>
-                    <p className="mt-1 text-sm leading-relaxed text-sage-700">{nextAchievement.hint}</p>
+              <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur-xl">
+                <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+                <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+                <div className="relative z-10">
+                  <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/90 drop-shadow-md">Journey progress</p>
+                  <div className="mt-5 flex items-start gap-4">
+                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-[1.5rem] bg-white/20 text-3xl shadow-sm backdrop-blur-md ring-4 ring-white/10">{nextAchievement.emoji}</div>
+                    <div>
+                      <p className="text-lg font-black text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">{nextAchievement.title}</p>
+                      <p className="mt-1 text-sm font-bold leading-relaxed text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">{nextAchievement.hint}</p>
+                    </div>
                   </div>
+                  <div className="mt-5 h-2 w-full overflow-hidden rounded-full bg-black/40 shadow-inner">
+                    <div className="h-full bg-white/90 transition-all duration-700" style={{ width: `${(unlockedAchievementCount / achievementBadges.length) * 100}%` }}></div>
+                  </div>
+                  <p className="mt-4 text-[13px] font-black text-white/95 drop-shadow-md">{rewardLevel.next}</p>
                 </div>
-                <div className="mt-5 h-2 w-full overflow-hidden rounded-full bg-rose-100/50">
-                  <div className="h-full bg-rose-400 transition-all duration-700" style={{ width: `${(unlockedAchievementCount / achievementBadges.length) * 100}%` }}></div>
-                </div>
-                <p className="mt-4 text-[13px] font-bold text-rose-800">{rewardLevel.next}</p>
               </div>
 
-              <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/95 p-6 shadow-soft">
-                <div className="mb-5 flex items-center justify-between">
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Soft actions</p>
-                  <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-sage-50 text-sage-600 shadow-inner">
-                    <Compass size={14} />
+              <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur-xl">
+                <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+                <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+                <div className="relative z-10">
+                  <div className="mb-5 flex items-center justify-between">
+                    <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/90 drop-shadow-md">Soft actions</p>
+                    <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/20 text-white shadow-sm backdrop-blur-md">
+                      <Compass size={16} />
+                    </div>
                   </div>
+                  <div className="grid gap-3">
+                    {[
+                      { label: 'Name the feeling', icon: Feather, onClick: () => addStarterLine('Today feels') },
+                      { label: 'Open notes', icon: FileText, onClick: () => navigateToTab('notes'), count: openPlannerTodoCount },
+                      { label: 'View check-ins', icon: CalendarDays, onClick: () => navigateToTab('insights'), count: importantDateCount }
+                    ].map((btn) => (
+                      <button key={btn.label} className="group flex items-center justify-between rounded-2xl border border-white/20 bg-white/10 px-5 py-3.5 text-left text-sm font-black text-white shadow-sm backdrop-blur-md transition duration-300 hover:-translate-y-0.5 hover:bg-white/20 hover:shadow-md" onClick={btn.onClick} type="button">
+                        <span className="inline-flex items-center gap-3 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]"><btn.icon size={17} /> {btn.label}</span>
+                        {btn.count !== undefined && <span className="rounded-full bg-white/25 px-2.5 py-0.5 text-[10px] shadow-sm backdrop-blur-md">{btn.count}</span>}
+                      </button>
+                    ))}
+                  </div>
+                  <p className="mt-5 border-t border-white/20 pt-5 text-sm font-bold leading-relaxed text-white/90 italic drop-shadow-sm">&ldquo;You do not need to finish the whole story today.&rdquo;</p>
                 </div>
-                <div className="grid gap-3">
-                  {[
-                    { label: 'Name the feeling', icon: Feather, onClick: () => addStarterLine('Today feels'), color: 'text-sage-700' },
-                    { label: 'Open notes', icon: FileText, onClick: () => navigateToTab('notes'), count: openPlannerTodoCount, color: 'text-teal-700' },
-                    { label: 'View check-ins', icon: CalendarDays, onClick: () => navigateToTab('insights'), count: importantDateCount, color: 'text-rose-700' }
-                  ].map((btn) => (
-                    <button key={btn.label} className="group flex items-center justify-between rounded-2xl bg-sage-50/50 px-5 py-3.5 text-left text-sm font-extrabold text-sage-800 ring-1 ring-sage-100/50 transition duration-300 hover:-translate-y-0.5 hover:bg-white hover:shadow-soft hover:ring-white" onClick={btn.onClick} type="button">
-                      <span className={`inline-flex items-center gap-3 ${btn.color}`}><btn.icon size={17} /> {btn.label}</span>
-                      {btn.count !== undefined && <span className="rounded-full bg-white px-2 py-0.5 text-[10px] shadow-inner">{btn.count}</span>}
-                    </button>
-                  ))}
-                </div>
-                <p className="mt-5 border-t border-[#e8dfd5] pt-5 text-sm leading-relaxed text-sage-700 italic">&ldquo;You do not need to finish the whole story today.&rdquo;</p>
               </div>
             </aside>
           </div>
