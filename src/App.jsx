@@ -1580,25 +1580,30 @@ function ThemeStudio({
   return (
     <div className={`customizer-shell fixed inset-y-0 right-0 z-30 flex transition ${isOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}>
       <div className={`fixed inset-0 bg-ink/20 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`} onClick={onClose} />
-      <aside id="design" className={`relative h-full w-screen max-w-5xl overflow-y-auto shadow-[0_0_60px_rgba(0,0,0,0.6)] backdrop-blur-3xl transition duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-        <div className="absolute inset-0 -z-10 min-h-full bg-black/50">
-          <div className="sticky top-0 h-screen w-full overflow-hidden">
-            <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
-            <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/25 to-black/10" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.08),transparent_35rem)]" />
-          </div>
-        </div>
-        <div className="relative z-10 grid min-h-full lg:grid-cols-12">
-          <div className="theme-panel p-7 text-white lg:col-span-4 lg:p-8">
+      <aside id="design" className={`relative h-full w-screen max-w-5xl overflow-y-auto bg-[#2b231d] shadow-[0_0_60px_rgba(0,0,0,0.6)] backdrop-blur-3xl transition duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className="grid min-h-full lg:grid-cols-12">
+          <div className="theme-panel relative flex flex-col p-7 text-white lg:col-span-4 lg:p-10">
+            <div className="absolute inset-0 -z-10 h-full w-full overflow-hidden">
+              <div className="sticky top-0 h-screen w-full">
+                <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/80" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.08),transparent_35rem)]" />
+              </div>
+            </div>
             <div className="flex items-start justify-between gap-4">
               <Palette className="text-white drop-shadow-md" size={34} />
-              <button className="rounded-full border border-white/30 bg-white/20 px-4 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition hover:bg-white/30" onClick={onClose} type="button">Done</button>
+              <button className="rounded-full border border-white/30 bg-white/20 px-4 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition hover:bg-white/30 lg:hidden" onClick={onClose} type="button">Done</button>
             </div>
-            <p className="mt-7 text-sm font-black uppercase tracking-widest text-white/80 drop-shadow-sm">Customize your space</p>
-            <h2 className="mt-3 font-display text-4xl font-bold leading-tight text-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.45)]">Choose the look that feels right today.</h2>
-            <p className="mt-4 font-bold leading-7 text-white/95 drop-shadow-[0_2px_4px_rgba(0,0,0,0.35)]">Visitors can personalize colors and style. Their choice is saved only in their own browser, and this drawer can stay tucked away.</p>
+            <div className="mt-auto pt-32 lg:pt-0">
+              <p className="text-sm font-black uppercase tracking-widest text-white/90 drop-shadow-md">Customize your space</p>
+              <h2 className="mt-3 font-display text-4xl font-bold leading-tight text-white drop-shadow-lg">Choose the look that feels right today.</h2>
+              <p className="mt-4 font-bold leading-7 text-white/95 drop-shadow-md">Visitors can personalize colors and style. Their choice is saved only in their own browser.</p>
+            </div>
           </div>
-          <div className="space-y-7 p-7 lg:col-span-8 lg:p-8">
+          <div className="space-y-7 bg-[#2b231d] p-7 lg:col-span-8 lg:p-10">
+            <div className="hidden lg:flex lg:justify-end">
+              <button className="rounded-full border border-white/25 bg-white/10 px-6 py-2.5 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/20" onClick={onClose} type="button">Done</button>
+            </div>
             <div>
               <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/90 drop-shadow-sm"><Paintbrush size={16} /> Color theme</div>
               <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-5">
