@@ -3308,6 +3308,7 @@ function App() {
   const radioDialSweepDegrees = (radioVolume / 100) * RADIO_DIAL_SWEEP;
   const radioDialDegrees = RADIO_DIAL_START + radioDialSweepDegrees;
   const activeBreatheRoom = useMemo(() => breatheRoomOptions.find((room) => room.id === selectedBreatheRoom) || breatheRoomOptions[0], [selectedBreatheRoom]);
+  const entryTransitionWallpaper = wallpaperImage || activeBreatheRoom.wallpaper || lofiMemoryHeaderImage;
 
   const scheduleRadioDialFeedbackHide = (delay = 850) => {
     if (radioDialFeedbackTimeoutRef.current) {
@@ -4900,14 +4901,45 @@ function App() {
 
 
       {showEntryTransition && (
-        <div className={`fixed inset-0 z-40 flex items-center justify-center bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.42),transparent_30%),linear-gradient(180deg,rgba(248,243,235,0.98)_0%,rgba(242,234,224,0.97)_100%)] backdrop-blur-[10px] transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${entryTransitionClosing ? 'opacity-0' : 'opacity-100'}`}>
-          <div className={`px-6 text-center transition-all duration-[1050ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${entryTransitionClosing ? 'translate-y-3 scale-[1.02] opacity-0' : 'translate-y-0 scale-100 opacity-100'}`}>
-            <div className="mx-auto flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border border-[#e8dfd5] bg-white/88 p-2 shadow-[0_18px_50px_rgba(158,136,114,0.12)] ring-8 ring-white/30">
-              <img src={headerLogoIcon} alt="Lofi Memory logo" className="h-full w-full rounded-full object-cover" />
+        <div className={`fixed inset-0 z-40 overflow-hidden transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${entryTransitionClosing ? 'opacity-0' : 'opacity-100'}`}>
+          <img src={entryTransitionWallpaper} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,248,238,0.24),transparent_22%),linear-gradient(180deg,rgba(20,14,10,0.28)_0%,rgba(25,18,12,0.56)_35%,rgba(44,31,21,0.78)_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(255,255,255,0.22),transparent_0_22rem),radial-gradient(circle_at_80%_22%,rgba(255,214,170,0.14),transparent_0_18rem)]" />
+          <div className="absolute -left-10 top-10 h-48 w-48 rounded-full bg-[#f8d7b8]/20 blur-3xl" />
+          <div className="absolute bottom-[-3rem] right-[-2rem] h-64 w-64 rounded-full bg-[#8d6d54]/20 blur-3xl" />
+
+          <div className={`relative z-10 flex h-full items-center justify-center px-6 transition-all duration-[1050ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${entryTransitionClosing ? 'translate-y-3 scale-[1.02] opacity-0' : 'translate-y-0 scale-100 opacity-100'}`}>
+            <div className="w-full max-w-xl rounded-[2.8rem] border border-white/20 bg-[linear-gradient(145deg,rgba(34,25,18,0.76),rgba(67,49,34,0.52))] p-6 text-center text-white shadow-[0_35px_90px_rgba(0,0,0,0.28)] backdrop-blur-[18px] sm:p-8">
+              <div className="mx-auto flex w-fit items-center gap-3 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-[11px] font-black uppercase tracking-[0.32em] text-[#f7e6d2] shadow-sm">
+                <span className="h-2 w-2 rounded-full bg-[#f7c48b] animate-pulse" />
+                Lofi Memory
+              </div>
+
+              <div className="mt-6 flex items-center justify-center gap-4 sm:gap-5">
+                <div className="relative flex h-24 w-24 items-center justify-center rounded-full border border-white/20 bg-black/20 shadow-[0_18px_45px_rgba(0,0,0,0.2)] sm:h-28 sm:w-28">
+                  <div className="absolute inset-[10px] rounded-full border border-white/10 bg-[radial-gradient(circle,#3b2d22_0%,#17110d_72%)]" />
+                  <img src={radioVinylIcon} alt="" className="relative h-16 w-16 animate-[spin_12s_linear_infinite] object-contain opacity-95 sm:h-20 sm:w-20" aria-hidden="true" />
+                </div>
+                <div className="flex h-24 w-24 items-center justify-center overflow-hidden rounded-[2rem] border border-white/20 bg-white/12 p-2 shadow-[0_18px_45px_rgba(0,0,0,0.18)] sm:h-28 sm:w-28">
+                  <img src={headerLogoIcon} alt="Lofi Memory logo" className="h-full w-full rounded-[1.5rem] object-cover" />
+                </div>
+              </div>
+
+              <p className="mt-7 text-[11px] font-extrabold uppercase tracking-[0.38em] text-[#f0d5b6]">{activeBreatheRoom.title}</p>
+              <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-white sm:text-5xl">Settle into your cozy corner.</h1>
+              <p className="mx-auto mt-3 max-w-md text-sm font-semibold leading-7 tracking-[0.08em] text-[#f6e7d7]/86">A soft little transition before the music, games, journaling, and memories open up.</p>
+
+              <div className="mx-auto mt-7 w-full max-w-xs">
+                <div className="h-2 overflow-hidden rounded-full bg-white/12">
+                  <div className="h-full rounded-full bg-[linear-gradient(90deg,#f7d0a7_0%,#d9a87c_38%,#a98467_100%)] shadow-[0_0_20px_rgba(247,208,167,0.45)]" style={{ width: '100%', animation: 'gameSplashProgress 1.7s ease-in-out infinite' }} />
+                </div>
+                <div className="mt-4 flex items-center justify-center gap-2">
+                  {[0, 1, 2].map((dot) => (
+                    <span key={`entry-dot-${dot}`} className="h-2.5 w-2.5 rounded-full bg-[#f8d6b3]" style={{ animation: 'pulse 1.8s ease-in-out infinite', animationDelay: `${dot * 0.22}s`, opacity: 0.72 }} />
+                  ))}
+                </div>
+              </div>
             </div>
-            <p className="mt-6 text-[11px] font-extrabold uppercase tracking-[0.42em] text-[#8d7763]">Lofi Memory</p>
-            <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-[#3d3025] sm:text-5xl">Clear your mind.</h1>
-            <p className="mt-3 text-sm font-semibold tracking-[0.08em] text-[#8c7967]">A calm little pause before you relax.</p>
           </div>
         </div>
       )}
