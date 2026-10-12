@@ -51,19 +51,30 @@ function getPriority(fileName) {
   return '0.8';
 }
 
+function getChangeFreq(fileName) {
+  if (fileName === 'index.html' || fileName === 'blog.html') return 'weekly';
+  if (fileName.startsWith('article-')) return 'monthly';
+  return 'weekly';
+}
+
 function toUrl(fileName) {
   if (fileName === 'index.html') return `${baseUrl}/`;
   return `${baseUrl}/${fileName}`;
 }
 
 function xmlEntry(fileName) {
-  return [
-    '  <url>',
-    `    <loc>${toUrl(fileName)}</loc>`,
-    '    <changefreq>weekly</changefreq>',
-    `    <priority>${getPriority(fileName)}</priority>`,
-    '  </url>'
-  ].join('\n');
+  const stats = fs.stat(path.join(publicDir, fileName));
+  return stats.then((fileStat) => {
+    const lastMod = fileStat.mtime.toISOString().slice(0, 10);
+    return [
+      '  <url>',
+      `    <loc>${toUrl(fileName)}</loc>`,
+      `    <lastmod>${lastMod}</lastmod>`,
+      `    <changefreq>${getChangeFreq(fileName)}</changefreq>`,
+      `    <priority>${getPriority(fileName)}</priority>`,
+      '  </url>'
+    ].join('\n');
+  });
 }
 
 async function main() {
@@ -75,10 +86,12 @@ async function main() {
   const selectedFiles = ['index.html', ...curatedPages, ...articles];
   const dedupedFiles = [...new Set(selectedFiles)].filter((file) => allFiles.includes(file));
 
+  const xmlEntries = await Promise.all(dedupedFiles.map(xmlEntry));
+
   const xml = [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-    ...dedupedFiles.map(xmlEntry),
+    ...xmlEntries,
     '</urlset>',
     ''
   ].join('\n');
