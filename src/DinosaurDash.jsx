@@ -152,8 +152,9 @@ function getObstacleHitbox(obstacle) {
   };
 }
 
-export default function DinosaurDash({ difficulty = 'medium', theme = 'lofi' }) {
+export default function DinosaurDash({ difficulty = 'medium', theme = 'lofi', viewportMode = 'embedded' }) {
   const isLofi = theme === 'lofi';
+  const isExpandedLayout = viewportMode === 'fullscreen';
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const bestScoreKey = `quiet-journal-dinosaur-dash-best-${difficulty}`;
 
@@ -545,7 +546,7 @@ export default function DinosaurDash({ difficulty = 'medium', theme = 'lofi' }) 
   }, [bestScore, bestScoreKey, gameState, score]);
 
   return (
-    <div className="mx-auto mt-12 w-full max-w-4xl pb-12">
+    <div className={`mx-auto w-full ${isExpandedLayout ? 'min-h-full max-w-none' : 'mt-12 max-w-4xl pb-12'}`}>
       <div className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-amber-200/50 bg-[#fff7ec] shadow-[0_28px_80px_rgba(83,62,44,0.12)]' : 'border-stone-200 bg-gradient-to-br from-white via-stone-50/75 to-stone-100/85'}`}>
         {isLofi && (
           <>

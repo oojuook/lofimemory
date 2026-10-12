@@ -98,8 +98,9 @@ function TileArtwork({ tile, size, imageSrc, isLofi = false }) {
   );
 }
 
-export default function LofiJigsaw({ difficulty = 'medium', theme = 'lofi' }) {
+export default function LofiJigsaw({ difficulty = 'medium', theme = 'lofi', viewportMode = 'embedded' }) {
   const isLofi = theme === 'lofi';
+  const isExpandedLayout = viewportMode === 'fullscreen';
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const { size, shuffleMoves, label, note } = config;
   const totalTiles = size * size - 1;
@@ -218,7 +219,7 @@ export default function LofiJigsaw({ difficulty = 'medium', theme = 'lofi' }) {
   };
 
   return (
-    <div className="mx-auto mt-12 w-full max-w-[980px] pb-12">
+    <div className={`mx-auto w-full ${isExpandedLayout ? 'min-h-full max-w-none' : 'mt-12 max-w-[980px] pb-12'}`}>
       <div className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-amber-200/50 bg-[#fff7ec] shadow-[0_30px_90px_rgba(83,62,44,0.12)]' : 'border-sage-100 bg-gradient-to-br from-white via-sage-50/82 to-sand-50/82'}`}>
         {isLofi && (
           <>
@@ -236,7 +237,7 @@ export default function LofiJigsaw({ difficulty = 'medium', theme = 'lofi' }) {
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-sage-600'}`}>{note}</p>
             <p className={`mt-2 text-xs font-semibold uppercase tracking-[0.18em] ${isLofi ? 'text-amber-800/60' : 'text-sage-500'}`}>{size}×{size} board • {totalTiles} picture pieces • relaxing sliding puzzle</p>
           </div>
-          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[24rem] ${isLofi ? 'rounded-[1.35rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
+          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-3 ${isExpandedLayout ? '' : 'lg:min-w-[24rem]'} ${isLofi ? 'rounded-[1.35rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
             {[
               ['Moves', moves],
               ['Time', formatTime(time)],

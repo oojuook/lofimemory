@@ -31,8 +31,9 @@ const difficultySettings = {
   }
 };
 
-export default function ZenGame({ difficulty = 'medium', theme = 'lofi' }) {
+export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewportMode = 'embedded' }) {
   const isLofi = theme === 'lofi';
+  const isExpandedLayout = viewportMode === 'fullscreen';
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const bestScoreKey = `quiet-journal-highscore-${difficulty}`;
 
@@ -257,7 +258,7 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi' }) {
   const levelText = useMemo(() => config.label, [config.label]);
 
   return (
-    <div className="mx-auto mt-12 w-full max-w-3xl pb-12">
+    <div className={`mx-auto w-full ${isExpandedLayout ? 'min-h-full max-w-none' : 'mt-12 max-w-3xl pb-12'}`}>
       <div className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-[#e8dfd5]/80 bg-[#fff9f0] shadow-[0_28px_80px_rgba(83,62,44,0.12)]' : 'border-sage-100 bg-gradient-to-br from-white via-sage-50/82 to-sky-50/74'}`}>
         {isLofi && (
           <>

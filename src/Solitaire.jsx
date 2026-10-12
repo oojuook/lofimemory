@@ -221,8 +221,9 @@ function WastePile({
   );
 }
 
-export default function Solitaire({ difficulty = 'medium', theme = 'lofi' }) {
+export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewportMode = 'embedded' }) {
   const isLofi = theme === 'lofi';
+  const isParentFullscreen = viewportMode === 'fullscreen';
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const containerRef = useRef(null);
   const playfieldRef = useRef(null);
@@ -245,6 +246,7 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi' }) {
   const [isAutoFinishing, setIsAutoFinishing] = useState(false);
   const [winCards, setWinCards] = useState([]);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const isExpandedLayout = isParentFullscreen || isFullscreen;
 
   useEffect(() => {
     setGame(dealGame());
@@ -804,8 +806,8 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi' }) {
   };
 
   return (
-    <div ref={containerRef} className={`mx-auto w-full ${isFullscreen ? `${isLofi ? 'bg-[#fff7ec]' : 'bg-[#07542f]'} min-h-screen p-3 sm:p-5` : 'pb-6 sm:pb-8'}`}>
-      <div className={`overflow-hidden rounded-[2rem] border shadow-[0_22px_50px_rgba(83,62,44,0.12)] ${isLofi ? 'border-[#e8dfd5]/80 bg-[#fff7ec]' : 'border-emerald-950/25 bg-[#0b6f3c]'} ${isFullscreen ? 'flex min-h-[calc(100vh-1.5rem)] flex-col sm:min-h-[calc(100vh-2.5rem)]' : ''}`}>
+    <div ref={containerRef} className={`mx-auto w-full ${isExpandedLayout ? `${isLofi ? 'bg-[#fff7ec]' : 'bg-[#07542f]'} min-h-full p-0 sm:p-2` : 'pb-6 sm:pb-8'}`}>
+      <div className={`overflow-hidden rounded-[2rem] border shadow-[0_22px_50px_rgba(83,62,44,0.12)] ${isLofi ? 'border-[#e8dfd5]/80 bg-[#fff7ec]' : 'border-emerald-950/25 bg-[#0b6f3c]'} ${isExpandedLayout ? 'flex min-h-full flex-col' : ''}`}>
         <div className={`flex flex-wrap items-center justify-between gap-4 border-b px-4 py-4 sm:px-6 ${isLofi ? 'border-[#e8dfd5]/80 bg-white/72 text-[#3d3025] backdrop-blur-sm' : 'border-white/10 bg-[#086133] text-white'}`}>
           <div className="flex items-center gap-3">
             {isLofi ? (
@@ -828,10 +830,12 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi' }) {
           </div>
           <div className={`flex flex-wrap items-center gap-2 text-[11px] font-black uppercase tracking-[0.16em] ${isLofi ? 'text-[#6e5a4a]' : ''}`}>
             <button className={`rounded-full px-4 py-2 shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#4a3a2d] text-white hover:bg-[#3d3025]' : 'bg-white text-emerald-900 hover:bg-emerald-50'}`} onClick={resetGame} type="button">New</button>
-            <button className={`inline-flex items-center gap-2 rounded-full px-4 py-2 transition hover:-translate-y-0.5 ${isLofi ? 'border border-[#e8dfd5] bg-white text-[#4a3a2d] hover:bg-[#fff9f0]' : 'bg-white/13 text-white hover:bg-white/20'}`} onClick={toggleFullscreen} type="button">
-              {isFullscreen ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
-              {isFullscreen ? 'Exit full' : 'Full screen'}
-            </button>
+            {!isParentFullscreen && (
+              <button className={`inline-flex items-center gap-2 rounded-full px-4 py-2 transition hover:-translate-y-0.5 ${isLofi ? 'border border-[#e8dfd5] bg-white text-[#4a3a2d] hover:bg-[#fff9f0]' : 'bg-white/13 text-white hover:bg-white/20'}`} onClick={toggleFullscreen} type="button">
+                {isFullscreen ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
+                {isFullscreen ? 'Exit full' : 'Full screen'}
+              </button>
+            )}
             {canAutoFinish ? (
               <button className={`rounded-full px-4 py-2 shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#faedcd] text-[#4a3a2d] hover:bg-[#f7e4b7]' : 'bg-amber-300 text-emerald-950 hover:bg-amber-200'}`} onClick={triggerAutoFinish} type="button">
                 {isAutoFinishing ? 'Finishing…' : 'Auto finish · F'}
@@ -843,7 +847,7 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi' }) {
           </div>
         </div>
 
-        <div className={`relative min-h-[560px] overflow-auto p-4 sm:p-6 lg:p-8 ${isFullscreen ? 'flex-1' : ''} ${isLofi ? 'bg-[#fff7ec]' : 'bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.18),transparent_38%),linear-gradient(135deg,#0b7c43,#075b33)]'}`}>
+        <div className={`relative min-h-[560px] overflow-auto p-4 sm:p-6 lg:p-8 ${isExpandedLayout ? 'flex-1' : ''} ${isLofi ? 'bg-[#fff7ec]' : 'bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.18),transparent_38%),linear-gradient(135deg,#0b7c43,#075b33)]'}`}>
           <div className={`pointer-events-none absolute inset-0 opacity-[0.06] ${isLofi ? 'hidden' : ''}`} style={{ backgroundImage: 'repeating-linear-gradient(45deg, #ffffff 0 1px, transparent 1px 12px)' }} />
           {isLofi && (
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(74,58,45,0.04),transparent_70%)] opacity-40 pointer-events-none" />
@@ -879,7 +883,7 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi' }) {
             </div>
           ) : null}
 
-          <div ref={playfieldRef} className={`relative mx-auto flex min-w-[560px] max-w-[920px] flex-col gap-8 ${isFullscreen ? 'h-full' : ''}`}>
+          <div ref={playfieldRef} className={`relative mx-auto flex ${isExpandedLayout ? 'min-w-full max-w-none' : 'min-w-[560px] max-w-[920px]'} flex-col gap-8 ${isExpandedLayout ? 'h-full' : ''}`}>
             <style>
               {`@keyframes foundation-flight {
                 from {

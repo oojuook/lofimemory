@@ -191,8 +191,9 @@ function getLineScore(linesCleared, level = 1) {
   return 0;
 }
 
-export default function QuietTetris({ difficulty = 'medium', theme = 'lofi' }) {
+export default function QuietTetris({ difficulty = 'medium', theme = 'lofi', viewportMode = 'embedded' }) {
   const isLofi = theme === 'lofi';
+  const isExpandedLayout = viewportMode === 'fullscreen';
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const bestScoreKey = `quiet-journal-tetris-best-${difficulty}`;
 
@@ -437,7 +438,7 @@ export default function QuietTetris({ difficulty = 'medium', theme = 'lofi' }) {
   const heldMatrix = heldType ? SHAPES[heldType].matrix : null;
 
   return (
-    <div className="mx-auto mt-12 w-full max-w-[980px] pb-12">
+    <div className={`mx-auto w-full ${isExpandedLayout ? 'min-h-full max-w-none' : 'mt-12 max-w-[980px] pb-12'}`}>
       <div className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-8 ${isLofi ? 'border-[#e8dfd5]/80 bg-[#fff9f0] shadow-[0_32px_90px_rgba(83,62,44,0.12)]' : 'border-violet-100 bg-gradient-to-br from-white via-violet-50/82 to-sky-50/76'}`}>
         {isLofi && (
           <>
@@ -454,7 +455,7 @@ export default function QuietTetris({ difficulty = 'medium', theme = 'lofi' }) {
             <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-violet-700'}`}>A cozy block-stacking game inspired by classic Tetris pacing. Pieces now use the modern 7-bag system, so each shuffled bag contains I, J, L, O, S, T, and Z once before refilling for a fairer flow.</p>
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-violet-600'}`}>{config.note}</p>
           </div>
-          <div className={`grid gap-2 rounded-[1.5rem] border p-3 shadow-sm sm:grid-cols-2 xl:grid-cols-5 lg:min-w-[34rem] ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-white/85 bg-white/80'}`}>
+          <div className={`grid gap-2 rounded-[1.5rem] border p-3 shadow-sm sm:grid-cols-2 xl:grid-cols-5 ${isExpandedLayout ? '' : 'lg:min-w-[34rem]'} ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-white/85 bg-white/80'}`}>
             {[
               { label: 'Score', value: score, tone: isLofi ? 'bg-amber-50 text-amber-900' : 'bg-violet-50 text-violet-950' },
               { label: 'Lines', value: lines, tone: isLofi ? 'bg-amber-50 text-amber-900' : 'bg-violet-50 text-violet-950' },

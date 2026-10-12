@@ -79,8 +79,9 @@ function getTargetIndex(blankIndex, direction, size) {
   return -1;
 }
 
-export default function QuietSlide({ difficulty = 'medium', theme = 'lofi' }) {
+export default function QuietSlide({ difficulty = 'medium', theme = 'lofi', viewportMode = 'embedded' }) {
   const isLofi = theme === 'lofi';
+  const isExpandedLayout = viewportMode === 'fullscreen';
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const bestMovesKey = `quiet-journal-quiet-slide-best-${difficulty}`;
   const clearsKey = `quiet-journal-quiet-slide-clears-${difficulty}`;
@@ -179,7 +180,7 @@ export default function QuietSlide({ difficulty = 'medium', theme = 'lofi' }) {
   ];
 
   return (
-    <div className="mx-auto mt-12 w-full max-w-[920px] pb-12">
+    <div className={`mx-auto w-full ${isExpandedLayout ? 'min-h-full max-w-none' : 'mt-12 max-w-[920px] pb-12'}`}>
       <div className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-amber-200/50 bg-[#fff7ec] shadow-[0_26px_80px_rgba(83,62,44,0.12)]' : 'border-slate-100 bg-gradient-to-br from-white via-slate-50/80 to-sand-50/80'}`}>
         {isLofi && (
           <>
@@ -196,7 +197,7 @@ export default function QuietSlide({ difficulty = 'medium', theme = 'lofi' }) {
             <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-700'}`}>A cozy sliding puzzle inspired by the classic 15-puzzle style people search for when they want a quiet brain reset. Move each tile into place and let the simple sequence calm everything down.</p>
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-slate-600'}`}>{config.note}</p>
           </div>
-          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-3 lg:min-w-[23rem] ${isLofi ? 'rounded-[1.35rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
+          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-3 ${isExpandedLayout ? '' : 'lg:min-w-[23rem]'} ${isLofi ? 'rounded-[1.35rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
             {[
               ['Moves', moves],
               ['Best', bestMoves || '—'],

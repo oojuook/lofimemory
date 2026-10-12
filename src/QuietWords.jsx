@@ -113,8 +113,9 @@ function pickWord(pool, config, previousWord = '') {
   };
 }
 
-export default function QuietWords({ difficulty = 'medium', theme = 'lofi' }) {
+export default function QuietWords({ difficulty = 'medium', theme = 'lofi', viewportMode = 'embedded' }) {
   const isLofi = theme === 'lofi';
+  const isExpandedLayout = viewportMode === 'fullscreen';
   const pool = difficultyPools[difficulty] || difficultyPools.medium;
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const bestStreakKey = `quiet-journal-quiet-words-best-${difficulty}`;
@@ -202,7 +203,7 @@ export default function QuietWords({ difficulty = 'medium', theme = 'lofi' }) {
   };
 
   return (
-    <div className="mx-auto mt-12 w-full max-w-[920px] pb-12">
+    <div className={`mx-auto w-full ${isExpandedLayout ? 'min-h-full max-w-none' : 'mt-12 max-w-[920px] pb-12'}`}>
       <div className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-amber-200/50 bg-[#fff7ec] shadow-[0_26px_80px_rgba(83,62,44,0.12)]' : 'border-sage-100 bg-gradient-to-br from-white via-sage-50/82 to-sand-50/78'}`}>
         {isLofi && (
           <>
@@ -223,7 +224,7 @@ export default function QuietWords({ difficulty = 'medium', theme = 'lofi' }) {
               <span className={`rounded-full px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] shadow-sm ${isLofi ? 'border border-white/70 bg-white/70 text-amber-900 backdrop-blur-sm' : 'bg-white text-sage-700'}`}>{config.hintLabel}</span>
             </div>
           </div>
-          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-4 lg:min-w-[28rem] ${isLofi ? 'rounded-[1.35rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
+          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-4 ${isExpandedLayout ? '' : 'lg:min-w-[28rem]'} ${isLofi ? 'rounded-[1.35rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
             {[
               ['Streak', streak],
               ['Best', bestStreak],

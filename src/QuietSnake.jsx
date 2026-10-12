@@ -66,8 +66,9 @@ function isReverseDirection(current, next) {
   return current.x + next.x === 0 && current.y + next.y === 0;
 }
 
-export default function QuietSnake({ difficulty = 'medium', theme = 'lofi' }) {
+export default function QuietSnake({ difficulty = 'medium', theme = 'lofi', viewportMode = 'embedded' }) {
   const isLofi = theme === 'lofi';
+  const isExpandedLayout = viewportMode === 'fullscreen';
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const bestScoreKey = `quiet-journal-quiet-snake-best-${difficulty}`;
 
@@ -224,7 +225,7 @@ export default function QuietSnake({ difficulty = 'medium', theme = 'lofi' }) {
   const cellClass = config.boardWidth >= 21 ? 'h-3.5 w-3.5 sm:h-4 sm:w-4' : config.boardWidth >= 15 ? 'h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5' : 'h-7 w-7 sm:h-8 sm:w-8';
 
   return (
-    <div className="mx-auto mt-12 w-full max-w-[980px] pb-12">
+    <div className={`mx-auto w-full ${isExpandedLayout ? 'min-h-full max-w-none' : 'mt-12 max-w-[980px] pb-12'}`}>
       <div className={`rounded-[2rem] border p-5 lg:p-6 ${isLofi ? 'border-amber-200/60 bg-[#fff7ec] shadow-[0_26px_70px_rgba(83,62,44,0.13)]' : 'border-[4px] border-[#111111] bg-[#c8d8b6] shadow-[10px_10px_0_rgba(17,17,17,0.12)]'}`}>
         <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
@@ -235,7 +236,7 @@ export default function QuietSnake({ difficulty = 'medium', theme = 'lofi' }) {
             <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-[#30412a]'}`}>A cozy snake flow with pastel board cues, wrap-around edges, and a calmer arcade rhythm that feels softer in lofi mode.</p>
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-[#466038]'}`}>{config.note}</p>
           </div>
-          <div className={`grid gap-2 p-3 sm:grid-cols-3 lg:min-w-[21rem] ${isLofi ? 'rounded-[1.5rem] border border-[#e8dfd5]/80 bg-white/70 shadow-sm backdrop-blur-sm' : 'border-4 border-[#111111] bg-[#dfe9cf] shadow-[6px_6px_0_rgba(17,17,17,0.12)]'}`}>
+          <div className={`grid gap-2 p-3 sm:grid-cols-3 ${isExpandedLayout ? '' : 'lg:min-w-[21rem]'} ${isLofi ? 'rounded-[1.5rem] border border-[#e8dfd5]/80 bg-white/70 shadow-sm backdrop-blur-sm' : 'border-4 border-[#111111] bg-[#dfe9cf] shadow-[6px_6px_0_rgba(17,17,17,0.12)]'}`}>
             {[
               ['Score', score],
               ['Best', bestScore],

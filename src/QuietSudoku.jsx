@@ -429,7 +429,7 @@ function SudokuHeader({ completedRounds, config, conflictCount, elapsedLabel, is
         </p>
         <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-slate-600'}`}>{config.note}</p>
       </div>
-      <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-2 xl:grid-cols-5 lg:min-w-[34rem] ${isLofi ? 'rounded-[1.35rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
+      <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-2 xl:grid-cols-5 ${isExpandedLayout ? '' : 'lg:min-w-[34rem]'} ${isLofi ? 'rounded-[1.35rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
         {[
           ['Solved', completedRounds, null],
           ['Open cells', openCells, null],
@@ -557,8 +557,9 @@ function SudokuSidebar({
   );
 }
 
-export default function QuietSudoku({ difficulty = 'medium', theme = 'lofi' }) {
+export default function QuietSudoku({ difficulty = 'medium', theme = 'lofi', viewportMode = 'embedded' }) {
   const isLofi = theme === 'lofi';
+  const isExpandedLayout = viewportMode === 'fullscreen';
   const initialDifficulty = puzzleBank[difficulty] ? difficulty : 'medium';
   const [selectedDifficulty, setSelectedDifficulty] = useState(initialDifficulty);
 
@@ -863,7 +864,7 @@ export default function QuietSudoku({ difficulty = 'medium', theme = 'lofi' }) {
   }, [clearSelectedCell, handleDigitInput, selectedCell]);
 
   return (
-    <div className="mx-auto mt-12 w-full max-w-[1040px] pb-12">
+    <div className={`mx-auto w-full ${isExpandedLayout ? 'min-h-full max-w-none' : 'mt-12 max-w-[1040px] pb-12'}`}>
       <div className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-amber-200/50 bg-[#fff7ec] shadow-[0_28px_90px_rgba(83,62,44,0.12)]' : 'border-sage-100 bg-gradient-to-br from-white via-slate-50/80 to-sand-50/80'}`}>
         {isLofi && (
           <>

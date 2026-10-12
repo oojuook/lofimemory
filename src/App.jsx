@@ -2204,7 +2204,7 @@ function App() {
       tone: 'from-emerald-800 to-teal-900 text-white',
       preview: gameSolitairePreview,
       playingSpace: 'max-w-[1180px]',
-      component: <Solitaire difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <Solitaire difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'mind-sweeper',
@@ -2215,7 +2215,7 @@ function App() {
       tone: 'from-lime-100 to-emerald-50 text-emerald-700',
       preview: gameMindSweeperPreview,
       playingSpace: 'max-w-[980px]',
-      component: <MindSweeper difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <MindSweeper difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'drifting-leaf',
@@ -2226,7 +2226,7 @@ function App() {
       tone: 'from-emerald-100 to-sage-50 text-emerald-700',
       preview: gameDriftingSeedPreview,
       playingSpace: 'max-w-[900px]',
-      component: <ZenGame difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <ZenGame difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'stream-surfer',
@@ -2237,7 +2237,7 @@ function App() {
       tone: 'from-sky-100 to-cyan-50 text-sky-700',
       preview: gameLilypadPreview,
       playingSpace: 'max-w-[1120px]',
-      component: <StreamSurfer difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <StreamSurfer difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'lofi-jigsaw',
@@ -2248,7 +2248,7 @@ function App() {
       tone: 'from-emerald-100 via-amber-50 to-rose-50 text-emerald-700',
       preview: gameJigsawPreview,
       playingSpace: 'max-w-[1080px]',
-      component: <LofiJigsaw difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <LofiJigsaw difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'lotus-match',
@@ -2259,7 +2259,7 @@ function App() {
       tone: 'from-rose-100 to-orange-50 text-rose-700',
       preview: gameLotusPreview,
       playingSpace: 'max-w-[1020px]',
-      component: <LotusMatch difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <LotusMatch difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'quiet-tiles',
@@ -2270,7 +2270,7 @@ function App() {
       tone: 'from-violet-100 to-slate-50 text-violet-700',
       preview: gameTilesPreview,
       playingSpace: 'max-w-[820px]',
-      component: <QuietTiles difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <QuietTiles difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'quiet-tetris',
@@ -2281,7 +2281,7 @@ function App() {
       tone: 'from-indigo-100 to-sky-50 text-indigo-700',
       preview: gameTetrisPreview,
       playingSpace: 'max-w-[1120px]',
-      component: <QuietTetris difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <QuietTetris difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'quiet-slide',
@@ -2292,7 +2292,7 @@ function App() {
       tone: 'from-amber-100 to-stone-50 text-amber-700',
       preview: gameSlidePreview,
       playingSpace: 'max-w-[860px]',
-      component: <QuietSlide difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <QuietSlide difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'quiet-sudoku',
@@ -2303,7 +2303,7 @@ function App() {
       tone: 'from-cyan-100 to-blue-50 text-cyan-700',
       preview: gameSudokuPreview,
       playingSpace: 'max-w-[980px]',
-      component: <QuietSudoku difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <QuietSudoku difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'quiet-wordle',
@@ -2314,7 +2314,7 @@ function App() {
       tone: 'from-teal-100 to-sky-50 text-teal-700',
       preview: gameWordlePreview,
       playingSpace: 'max-w-[780px]',
-      component: <QuietWordle difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <QuietWordle difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'quiet-words',
@@ -2325,7 +2325,7 @@ function App() {
       tone: 'from-fuchsia-100 to-rose-50 text-fuchsia-700',
       preview: gameWordsPreview,
       playingSpace: 'max-w-[860px]',
-      component: <QuietWords difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <QuietWords difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'typing-speed-test',
@@ -2336,7 +2336,7 @@ function App() {
       tone: 'from-sky-100 to-indigo-50 text-sky-700',
       preview: gameTypingPreview,
       playingSpace: 'max-w-[960px]',
-      component: <TypingSpeedTest difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <TypingSpeedTest difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'quiet-clues',
@@ -2347,7 +2347,7 @@ function App() {
       tone: 'from-amber-100 to-rose-50 text-amber-700',
       preview: gameCluesPreview,
       playingSpace: 'max-w-[820px]',
-      component: <QuietClues difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <QuietClues difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'quiet-snake',
@@ -2358,7 +2358,7 @@ function App() {
       tone: 'from-emerald-100 to-lime-50 text-emerald-700',
       preview: gameSnakePreview,
       playingSpace: 'max-w-[1040px]',
-      component: <QuietSnake difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <QuietSnake difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'dinosaur-dash',
@@ -2369,7 +2369,7 @@ function App() {
       tone: 'from-orange-100 to-yellow-50 text-orange-700',
       preview: gameDinoPreview,
       playingSpace: 'max-w-[1060px]',
-      component: <DinosaurDash difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <DinosaurDash difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     }
   ];
   const selectedUnwindGameConfig = unwindGames.find((game) => game.id === selectedUnwindGame) || unwindGames[0];
@@ -2404,7 +2404,14 @@ function App() {
 
   
 
-  const returnToGameLibrary = () => {
+  const returnToGameLibrary = async () => {
+    if (document.fullscreenElement === selectedGameInterfaceRef.current) {
+      try {
+        await document.exitFullscreen();
+      } catch (err) {
+        console.error('Exit fullscreen failed:', err);
+      }
+    }
     setUnwindViewMode('grid');
     window.setTimeout(() => {
       document.getElementById('game-library')?.scrollIntoView({
@@ -2516,9 +2523,9 @@ function App() {
   const toggleFullscreen = useCallback(async () => {
     if (!selectedGameInterfaceRef.current) return;
     try {
-      if (document.fullscreenElement) {
+      if (document.fullscreenElement === selectedGameInterfaceRef.current) {
         await document.exitFullscreen();
-      } else {
+      } else if (!document.fullscreenElement) {
         await selectedGameInterfaceRef.current.requestFullscreen();
       }
     } catch (err) {
@@ -2528,7 +2535,7 @@ function App() {
 
   useEffect(() => {
     const handleFsChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
+      setIsFullscreen(document.fullscreenElement === selectedGameInterfaceRef.current);
     };
     document.addEventListener('fullscreenchange', handleFsChange);
     return () => document.removeEventListener('fullscreenchange', handleFsChange);
@@ -5798,26 +5805,28 @@ function App() {
                         {activeTab === 'unwind' && (
           <div id="game-library" className="mx-auto max-w-[1280px] px-4 py-8 lg:px-6 lg:py-14 fade-in">
             {unwindViewMode === 'detail' && (
-              <div ref={selectedGameInterfaceRef} className="game-detail-reveal mb-16 scroll-mt-24">
-                <button className="mb-5 inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white/88 px-4 py-2 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-x-0.5 hover:bg-white" onClick={returnToGameLibrary} type="button">
-                  <span aria-hidden="true">←</span> Back to games
-                </button>
-                <div className={`lofi-glass lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border p-3 shadow-soft backdrop-blur sm:p-4 lg:p-5 ${gameVisualTheme === 'lofi' ? 'border-[#e8dfd5] bg-[#fffaf2]/85' : ''}`}>
+              <div className={`game-detail-reveal ${isFullscreen ? 'mb-0 scroll-mt-0' : 'mb-16 scroll-mt-24'}`}>
+                {!isFullscreen && (
+                  <button className="mb-5 inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white/88 px-4 py-2 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-x-0.5 hover:bg-white" onClick={returnToGameLibrary} type="button">
+                    <span aria-hidden="true">←</span> Back to games
+                  </button>
+                )}
+                <div ref={selectedGameInterfaceRef} className={`lofi-glass lofi-picture-border lofi-border-memory relative overflow-hidden backdrop-blur ${isFullscreen ? 'flex min-h-[100dvh] flex-col rounded-none border-0 p-2 shadow-none sm:rounded-[2.5rem] sm:border sm:p-3' : 'rounded-[3rem] border p-3 shadow-soft sm:p-4 lg:p-5'} ${gameVisualTheme === 'lofi' ? 'border-[#e8dfd5] bg-[#fffaf2]/85' : ''}`}>
                   {gameVisualTheme === 'lofi' && (
                     <>
                       <img src={lofiRoomWallpaperImage} alt="" className="pointer-events-none absolute inset-0 h-full w-full scale-105 object-cover opacity-[0.07] blur-[1px]" aria-hidden="true" />
                       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.82),transparent_38%),linear-gradient(135deg,rgba(255,250,242,0.92),rgba(250,237,205,0.7),rgba(255,200,221,0.38))]" />
                     </>
                   )}
-                  <div className={`relative z-10 rounded-[1.7rem] border p-4 shadow-sm ${gameVisualTheme === 'lofi' ? 'border-amber-200/40 bg-white/60' : 'border-[#e8dfd5] bg-sage-50/55'}`}>
-                    <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
-                      <div>
+                  <div className={`relative z-10 rounded-[1.7rem] border p-4 shadow-sm ${isFullscreen ? 'flex min-h-0 flex-1 flex-col' : ''} ${gameVisualTheme === 'lofi' ? 'border-amber-200/40 bg-white/60' : 'border-[#e8dfd5] bg-sage-50/55'}`}>
+                    <div className={`flex flex-col gap-4 ${isFullscreen ? 'lg:flex-row lg:items-start lg:justify-between' : 'xl:flex-row xl:items-center xl:justify-between'}`}>
+                      <div className="min-w-0">
                         <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${gameVisualTheme === 'lofi' ? 'text-amber-800/80' : 'text-sage-600'}`}>Now playing</p>
-                        <h1 className={`mt-2 font-display text-4xl font-bold tracking-tight ${gameVisualTheme === 'lofi' ? 'text-[#3d3025]' : 'text-sage-950'}`}>{selectedUnwindGameConfig.title}</h1>
-                        <p className={`mt-2 max-w-2xl text-sm leading-7 ${gameVisualTheme === 'lofi' ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>{selectedUnwindGameConfig.description}</p>
+                        <h1 className={`mt-2 font-display font-bold tracking-tight ${isFullscreen ? 'text-3xl sm:text-4xl' : 'text-4xl'} ${gameVisualTheme === 'lofi' ? 'text-[#3d3025]' : 'text-sage-950'}`}>{selectedUnwindGameConfig.title}</h1>
+                        <p className={`mt-2 max-w-2xl text-sm leading-7 ${isFullscreen ? 'hidden sm:block' : ''} ${gameVisualTheme === 'lofi' ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>{selectedUnwindGameConfig.description}</p>
                       </div>
-                      <div className="flex w-full flex-col gap-2 xl:max-w-[32rem] xl:items-end">
-                        <div className="flex flex-wrap gap-2 xl:justify-end">
+                      <div className={`flex w-full flex-col gap-2 ${isFullscreen ? 'lg:max-w-[36rem] lg:items-end' : 'xl:max-w-[32rem] xl:items-end'}`}>
+                        <div className={`flex flex-wrap gap-2 ${isFullscreen ? 'lg:justify-end' : 'xl:justify-end'}`}>
                           <div className={`flex h-11 items-center gap-1 rounded-2xl border bg-white p-1 shadow-sm ${gameVisualTheme === 'lofi' ? 'border-amber-200' : 'border-amber-200/50'}`}>
                             {[
                               { id: 'original', label: 'Original', icon: Sparkles },
@@ -5843,7 +5852,7 @@ function App() {
                           </button>
                         </div>
                         <p className={`text-[11px] font-extrabold uppercase tracking-[0.2em] ${gameVisualTheme === 'lofi' ? 'text-amber-800/80' : 'text-sage-600'}`}>Difficulty in-game</p>
-                        <div className="flex flex-wrap gap-2 xl:justify-end">
+                        <div className={`flex flex-wrap gap-2 ${isFullscreen ? 'lg:justify-end' : 'xl:justify-end'}`}>
                           {difficultyOptions.map((difficulty) => (
                             <button
                               key={difficulty.id}
@@ -5860,7 +5869,7 @@ function App() {
                       </div>
                     </div>
                   </div>
-                  <div className={`relative z-10 mx-auto mt-5 w-full ${isFullscreen ? 'max-w-none h-[calc(100vh-140px)] min-h-[600px] flex flex-col' : (selectedUnwindGameConfig.playingSpace || 'max-w-[980px]')}`}>
+                  <div className={`relative z-10 mx-auto mt-5 w-full ${isFullscreen ? 'flex min-h-0 flex-1 max-w-none' : (selectedUnwindGameConfig.playingSpace || 'max-w-[980px]')}`}>
                     {selectedUnwindGameConfig.component}
                   </div>
                 </div>

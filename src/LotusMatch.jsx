@@ -110,8 +110,9 @@ function MemoryCardBack({ isLofi = false }) {
   );
 }
 
-export default function LotusMatch({ difficulty = 'medium', theme = 'lofi' }) {
+export default function LotusMatch({ difficulty = 'medium', theme = 'lofi', viewportMode = 'embedded' }) {
   const isLofi = theme === 'lofi';
+  const isExpandedLayout = viewportMode === 'fullscreen';
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const { pairCount, previewMs, mismatchMs, label, note } = config;
   const bestScoreKey = `quiet-journal-lotus-best-${difficulty}`;
@@ -235,7 +236,7 @@ export default function LotusMatch({ difficulty = 'medium', theme = 'lofi' }) {
         : 'Tap two cards at a time and follow the pattern.';
 
   return (
-    <div className="mx-auto mt-12 w-full max-w-[900px] pb-12">
+    <div className={`mx-auto w-full ${isExpandedLayout ? 'min-h-full max-w-none' : 'mt-12 max-w-[900px] pb-12'}`}>
       <div className={`rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-amber-200/50 bg-[#fff7ec]' : 'border-sage-100 bg-gradient-to-br from-white via-sage-50/82 to-sand-50/82'}`}>
         <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
@@ -247,7 +248,7 @@ export default function LotusMatch({ difficulty = 'medium', theme = 'lofi' }) {
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-sage-600'}`}>{note}</p>
             <p className={`mt-2 text-xs font-semibold uppercase tracking-[0.18em] ${isLofi ? 'text-amber-800/60' : 'text-sage-500'}`}>{pairCount} pairs • {previewLabel} preview • {mismatchLabel} reset</p>
           </div>
-          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-4 lg:min-w-[29rem] ${isLofi ? 'rounded-[1.5rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
+          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-4 ${isExpandedLayout ? '' : 'lg:min-w-[29rem]'} ${isLofi ? 'rounded-[1.5rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
             {[
               ['Pairs', `${matchedPairs}/${pairCount}`],
               ['Moves', moves],

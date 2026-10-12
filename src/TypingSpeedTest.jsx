@@ -210,8 +210,9 @@ function WordPrompt({ activeInput = '', isActive, isLofi = false, isPast, prompt
   );
 }
 
-export default function TypingSpeedTest({ difficulty = 'medium', theme = 'lofi' }) {
+export default function TypingSpeedTest({ difficulty = 'medium', theme = 'lofi', viewportMode = 'embedded' }) {
   const isLofi = theme === 'lofi';
+  const isExpandedLayout = viewportMode === 'fullscreen';
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const [typingMode, setTypingMode] = useState('words');
   const modeConfig = typingModeSettings[typingMode] || typingModeSettings.words;
@@ -436,7 +437,7 @@ export default function TypingSpeedTest({ difficulty = 'medium', theme = 'lofi' 
   }, [isRunning, modeConfig.finishedMessage, modeConfig.idleMessage, modeConfig.runningMessage, roundStatus]);
 
   return (
-    <div className="mx-auto mt-12 w-full max-w-[1040px] pb-12">
+    <div className={`mx-auto w-full ${isExpandedLayout ? 'min-h-full max-w-none' : 'mt-12 max-w-[1040px] pb-12'}`}>
       <div className={`relative overflow-hidden rounded-[2rem] border p-4 shadow-soft sm:p-5 lg:p-6 ${isLofi ? 'border-amber-200/50 bg-[#fff7ec] shadow-[0_28px_80px_rgba(83,62,44,0.12)]' : 'border-sky-100 bg-gradient-to-br from-white via-sky-50/70 to-slate-50/86'}`}>
         {isLofi && (
           <>

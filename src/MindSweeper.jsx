@@ -158,8 +158,9 @@ function revealOpenArea(board, startRow, startCol) {
   }
 }
 
-export default function MindSweeper({ difficulty = 'medium', theme = 'lofi' }) {
+export default function MindSweeper({ difficulty = 'medium', theme = 'lofi', viewportMode = 'embedded' }) {
   const isLofi = theme === 'lofi';
+  const isExpandedLayout = viewportMode === 'fullscreen';
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const { boardWidth, boardHeight, mineCount, label, densityLabel } = config;
   const safeTiles = boardWidth * boardHeight - mineCount;
@@ -247,7 +248,7 @@ export default function MindSweeper({ difficulty = 'medium', theme = 'lofi' }) {
   const cellPixelSize = boardWidth >= 30 ? 24 : boardWidth >= 16 ? 28 : 36;
 
   return (
-    <div className="mx-auto mt-12 w-full max-w-[980px] pb-12">
+    <div className={`mx-auto w-full ${isExpandedLayout ? 'min-h-full max-w-none' : 'mt-12 max-w-[980px] pb-12'}`}>
       <div className={`rounded-[2rem] border p-4 lg:p-5 ${isLofi ? 'border-amber-200/60 bg-[#fff7ec] shadow-[0_26px_70px_rgba(83,62,44,0.13)]' : 'border-[4px] border-[#16191b] bg-[#2b2f31] shadow-[0_18px_45px_rgba(18,22,20,0.22)]'}`}>
         <div className={`rounded-[1.5rem] border p-4 lg:p-5 ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-t-[3px] border-l-[3px] border-[#50565a] border-r-[3px] border-b-[3px] border-r-[#111315] border-b-[#111315] bg-[#383d40]'}`}>
           <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
@@ -262,7 +263,7 @@ export default function MindSweeper({ difficulty = 'medium', theme = 'lofi' }) {
                 <span className={`rounded-full border px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-[#5d6468] bg-[#2b2f31] text-[#d9e0df]'}`}>Safe first tap</span>
               </div>
             </div>
-            <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-4 lg:min-w-[31rem] ${isLofi ? 'rounded-[1.5rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[0.8rem] border-t-[3px] border-l-[3px] border-[#50565a] border-r-[3px] border-b-[3px] border-r-[#111315] border-b-[#111315] bg-[#2b2f31]'}`}>
+            <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-4 ${isExpandedLayout ? '' : 'lg:min-w-[31rem]'} ${isLofi ? 'rounded-[1.5rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[0.8rem] border-t-[3px] border-l-[3px] border-[#50565a] border-r-[3px] border-b-[3px] border-r-[#111315] border-b-[#111315] bg-[#2b2f31]'}`}>
               {[
                 ['Grid', `${boardWidth}×${boardHeight}`],
                 ['Mines', mineCount],
