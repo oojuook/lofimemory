@@ -1591,13 +1591,13 @@ function ThemeStudio({
               </div>
             </div>
             <div className="flex items-start justify-between gap-4">
-              <Palette className="text-white drop-shadow-md" size={34} />
+              <Palette className="text-white lofi-sharp-text" size={34} />
               <button className="rounded-full border border-white/30 bg-white/20 px-4 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition hover:bg-white/30 lg:hidden" onClick={onClose} type="button">Done</button>
             </div>
             <div className="mt-auto pt-32 lg:pt-0">
-              <p className="text-sm font-black uppercase tracking-widest text-white/90 drop-shadow-md">Customize your space</p>
-              <h2 className="mt-3 font-display text-4xl font-bold leading-tight text-white drop-shadow-lg">Choose the look that feels right today.</h2>
-              <p className="mt-4 font-bold leading-7 text-white/95 drop-shadow-md">Visitors can personalize colors and style. Their choice is saved only in their own browser.</p>
+              <p className="text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft">Customize your space</p>
+              <h2 className="mt-3 font-display text-4xl font-bold leading-tight text-white lofi-sharp-text">Choose the look that feels right today.</h2>
+              <p className="mt-4 font-bold leading-7 text-white lofi-sharp-text-soft">Visitors can personalize colors and style. Their choice is saved only in their own browser.</p>
             </div>
           </div>
           <div className="space-y-7 bg-[#2b231d] p-7 lg:col-span-8 lg:p-10">
@@ -1605,7 +1605,7 @@ function ThemeStudio({
               <button className="rounded-full border border-white/25 bg-white/10 px-6 py-2.5 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/20" onClick={onClose} type="button">Done</button>
             </div>
             <div>
-              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/90 drop-shadow-sm"><Paintbrush size={16} /> Color theme</div>
+              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft"><Paintbrush size={16} /> Color theme</div>
               <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-5">
                 {colorThemes.map((theme) => (
                   <button
@@ -1617,7 +1617,7 @@ function ThemeStudio({
                     type="button"
                   >
                     <span className="mb-3 block h-9 w-full rounded-2xl shadow-inner" style={{ background: `linear-gradient(135deg, ${theme.soft}, ${theme.accent})` }} />
-                    <span className="block text-sm font-extrabold text-white drop-shadow-md">{theme.name}</span>
+                    <span className="block text-sm font-extrabold text-white lofi-sharp-text">{theme.name}</span>
                   </button>
                 ))}
               </div>
@@ -1625,7 +1625,7 @@ function ThemeStudio({
 
             <div className="grid gap-5 lg:grid-cols-3">
               <label className="custom-option rounded-3xl border border-white/20 bg-white/10 p-5 shadow-sm backdrop-blur-md lg:col-span-1 block">
-                <span className="mb-3 block text-sm font-black uppercase tracking-widest text-white/90 drop-shadow-sm">Custom color</span>
+                <span className="mb-3 block text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft">Custom color</span>
                 <input
                   aria-label="Choose a custom accent color"
                   className="h-12 w-full cursor-pointer rounded-2xl border border-white/30 bg-black/20 p-1 backdrop-blur"
@@ -1636,7 +1636,7 @@ function ThemeStudio({
                   type="color"
                   value={customColor}
                 />
-                <span className="mt-3 block text-sm font-bold text-white/80 drop-shadow-sm">Pick any accent color.</span>
+                <span className="mt-3 block text-sm font-bold text-white/95 lofi-sharp-text-soft">Pick any accent color.</span>
               </label>
               <div className="grid gap-3 lg:col-span-2">
                 {designStyles.map((style) => (
@@ -1649,8 +1649,8 @@ function ThemeStudio({
                     type="button"
                   >
                     <span>
-                      <span className="block font-extrabold text-white drop-shadow-md">{style.name}</span>
-                      <span className="text-sm font-bold text-white/80 drop-shadow-sm">{style.description}</span>
+                      <span className="block font-extrabold text-white lofi-sharp-text">{style.name}</span>
+                      <span className="text-sm font-bold text-white/95 lofi-sharp-text-soft">{style.description}</span>
                     </span>
                     <span className="theme-dot h-8 w-8 rounded-full border border-white/30 shadow-inner" />
                   </button>
@@ -1659,7 +1659,7 @@ function ThemeStudio({
             </div>
 
             <div className="rounded-3xl border border-white/20 bg-white/10 p-5 shadow-sm backdrop-blur-md">
-              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/90 drop-shadow-sm"><ImagePlus size={16} /> Wallpaper</div>
+              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft"><ImagePlus size={16} /> Wallpaper</div>
               <p className="text-sm leading-6 text-sage-700">Import your own calm wallpaper. It stays soft behind the app with a blur overlay so the page still feels minimal and easy to read.</p>
               <div className="mt-4 grid gap-4 md:grid-cols-[minmax(0,1fr)_14rem] md:items-center">
                 <label className="flex cursor-pointer items-center justify-center gap-2 rounded-2xl border border-dashed border-sage-300 bg-sage-50/80 px-4 py-4 text-sm font-bold text-sage-800 transition hover:bg-sage-100">
@@ -1679,8 +1679,8 @@ function ThemeStudio({
             </div>
 
             <div className="rounded-3xl border border-white/20 bg-white/10 p-5 shadow-sm backdrop-blur-md">
-              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/90 drop-shadow-sm"><Sparkles size={16} /> Atmosphere presets</div>
-              <p className="text-sm font-bold leading-6 text-white/80 drop-shadow-sm">Pick a ready-made mood and let the design drawer handle the look for you instead of crowding the writing area.</p>
+              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft"><Sparkles size={16} /> Atmosphere presets</div>
+              <p className="text-sm font-bold leading-6 text-white/95 lofi-sharp-text-soft">Pick a ready-made mood and let the design drawer handle the look for you instead of crowding the writing area.</p>
               <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
                 {journalAtmospherePresets.map((preset) => {
                   const isPresetActive = selectedTheme === preset.themeId && selectedDesign === preset.designId && journalStyle.fontId === preset.journalFontId && quoteStyle.fontId === preset.quoteFontId;
@@ -1691,8 +1691,8 @@ function ThemeStudio({
                       onClick={() => onAtmosphereApply(preset)}
                       type="button"
                     >
-                      <span className="text-sm font-extrabold text-white drop-shadow-md">{preset.name}</span>
-                      <span className="mt-2 text-sm font-bold leading-6 text-white/70 drop-shadow-sm">{preset.note}</span>
+                      <span className="text-sm font-extrabold text-white lofi-sharp-text">{preset.name}</span>
+                      <span className="mt-2 text-sm font-bold leading-6 text-white/85 lofi-sharp-text-soft">{preset.note}</span>
                     </button>
                   );
                 })}
@@ -1700,7 +1700,7 @@ function ThemeStudio({
             </div>
 
             <div className="rounded-3xl border border-white/20 bg-white/10 p-5 shadow-sm backdrop-blur-md">
-              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/90 drop-shadow-sm"><Quote size={16} /> Quote card color</div>
+              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft"><Quote size={16} /> Quote card color</div>
               <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6">
                 {quoteCardColors.map((color) => (
                   <button
@@ -1712,19 +1712,19 @@ function ThemeStudio({
                     type="button"
                   >
                     <span className="mb-2 block h-10 rounded-xl shadow-inner" style={{ background: color.value }} />
-                    <span className="text-sm font-extrabold text-white drop-shadow-md">{color.name}</span>
+                    <span className="text-sm font-extrabold text-white lofi-sharp-text">{color.name}</span>
                   </button>
                 ))}
               </div>
               <label className="mt-4 block rounded-2xl border border-white/20 bg-black/20 p-4 backdrop-blur-md">
-                <span className="mb-3 block text-sm font-bold text-white/80 drop-shadow-sm">Or pick any quote card color</span>
+                <span className="mb-3 block text-sm font-bold text-white/95 lofi-sharp-text-soft">Or pick any quote card color</span>
                 <input className="h-11 w-full cursor-pointer rounded-xl border border-white/30 bg-white/10 p-1" onChange={(event) => onQuoteBgChange(event.target.value)} type="color" value={quoteBg} />
               </label>
             </div>
 
             <div className="rounded-3xl border border-white/20 bg-white/10 p-5 shadow-sm backdrop-blur-md">
-              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/90 drop-shadow-sm"><ImagePlus size={16} /> Custom emotion</div>
-              <p className="text-sm font-bold leading-6 text-white/80 drop-shadow-sm">Keep personal moods in the design drawer instead of the writing page. They still appear in your mood picker after you save them.</p>
+              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft"><ImagePlus size={16} /> Custom emotion</div>
+              <p className="text-sm font-bold leading-6 text-white/95 lofi-sharp-text-soft">Keep personal moods in the design drawer instead of the writing page. They still appear in your mood picker after you save them.</p>
               <div className="mt-5 grid gap-3 md:grid-cols-5">
                 <input
                   className="rounded-2xl border border-white/30 bg-black/20 px-4 py-3 font-semibold text-white outline-none backdrop-blur-sm transition focus:border-white/60 focus:bg-black/30 placeholder-white/50"
@@ -1755,7 +1755,7 @@ function ThemeStudio({
               )}
               {customWeathers.length > 0 && (
                 <div className="mt-4">
-                  <p className="text-xs font-black uppercase tracking-[0.24em] text-white/70 drop-shadow-sm">Saved custom moods</p>
+                  <p className="text-xs font-black uppercase tracking-[0.24em] text-white/85 lofi-sharp-text-soft">Saved custom moods</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {customWeathers.map((weather) => (
                       <div key={weather.id} className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm backdrop-blur-md">
@@ -4982,12 +4982,12 @@ function App() {
             </div>
           </div>
           <div className="site-nav-links mt-2.5 hidden flex-wrap items-center justify-center gap-3 rounded-[1.8rem] border border-white/20 bg-black/40 p-2 backdrop-blur-xl 2xl:flex">
-            <a className="rounded-full border border-white/40 bg-white/25 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/35 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]" href="#unwind" onClick={() => navigateToTab('unwind')}>Games</a>
-            <a className="rounded-full border border-white/40 bg-white/25 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/35 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]" href="#home" onClick={() => navigateToTab('home')}>Chill</a>
-            <button className="rounded-full border border-white/40 bg-white/25 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/35 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
-            <a className="rounded-full border border-white/40 bg-white/25 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/35 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]" href="#memories" onClick={() => navigateToTab('memories')}>Memories</a>
-            <a className="rounded-full border border-white/40 bg-white/25 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/35 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]" href="#breathe" onClick={() => navigateToTab('breathe')}>Music</a>
-            <a className="rounded-full border border-white/40 bg-white/25 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/35 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]" href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
+            <a className="rounded-full border border-white/40 bg-white/25 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/35 lofi-sharp-chip" href="#unwind" onClick={() => navigateToTab('unwind')}>Games</a>
+            <a className="rounded-full border border-white/40 bg-white/25 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/35 lofi-sharp-chip" href="#home" onClick={() => navigateToTab('home')}>Chill</a>
+            <button className="rounded-full border border-white/40 bg-white/25 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/35 lofi-sharp-chip" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
+            <a className="rounded-full border border-white/40 bg-white/25 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/35 lofi-sharp-chip" href="#memories" onClick={() => navigateToTab('memories')}>Memories</a>
+            <a className="rounded-full border border-white/40 bg-white/25 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/35 lofi-sharp-chip" href="#breathe" onClick={() => navigateToTab('breathe')}>Music</a>
+            <a className="rounded-full border border-white/40 bg-white/25 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/35 lofi-sharp-chip" href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
           </div>
         </div>
       </nav>
@@ -5474,17 +5474,17 @@ function App() {
               <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
               <div className="relative z-10">
-                <h1 className="font-display text-5xl font-bold tracking-tight text-white drop-shadow-md">Diary</h1>
-                <p className="mt-2 text-xs font-black uppercase tracking-[0.3em] text-white/90 drop-shadow-sm">Private Journal</p>
+                <h1 className="font-display text-5xl font-bold tracking-tight text-white lofi-sharp-text">Diary</h1>
+                <p className="mt-2 text-xs font-black uppercase tracking-[0.3em] text-white/95 lofi-sharp-text-soft">Private Journal</p>
                 <div className="mt-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                   <div className="max-w-xl">
-                    <p className="text-base font-bold text-white/95 drop-shadow-md">Keep it simple. Write what feels true. A sentence, a fragment, or a few plain words are already enough.</p>
+                    <p className="text-base font-bold text-white lofi-sharp-text-soft">Keep it simple. Write what feels true. A sentence, a fragment, or a few plain words are already enough.</p>
                   </div>
-                  <div className="inline-flex items-center gap-2 self-start rounded-full border border-white/25 bg-white/12 px-4 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md">
+                  <div className="inline-flex items-center gap-2 self-start rounded-full border border-white/25 bg-white/12 px-4 py-2 text-sm font-bold text-white lofi-sharp-chip shadow-sm backdrop-blur-md">
                     <CalendarDays size={16} /> {formatDate(new Date().toISOString())}
                   </div>
                 </div>
-                <div className="mt-6 flex flex-wrap gap-2 text-[11px] font-black uppercase tracking-[0.2em] text-white/80 sm:text-xs">
+                <div className="mt-6 flex flex-wrap gap-2 text-[11px] font-black uppercase tracking-[0.2em] text-white/90 lofi-sharp-text-soft sm:text-xs">
                   <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-sm">{selectedMood} mood</span>
                   <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-sm">{draftWordCount} words</span>
                   <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-sm">{completedQuestCount}/{journalQuest.length} ritual steps</span>
@@ -5493,8 +5493,8 @@ function App() {
             </div>
 
             <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
-              <label className="block text-sm font-bold text-white drop-shadow-md" htmlFor="entry-title">Title, if you want one</label>
-              <p className="text-sm font-semibold text-white/80 drop-shadow-sm">It can stay short, plain, or even blank.</p>
+              <label className="block text-sm font-bold text-white lofi-sharp-text" htmlFor="entry-title">Title, if you want one</label>
+              <p className="text-sm font-semibold text-white/95 lofi-sharp-text-soft">It can stay short, plain, or even blank.</p>
             </div>
             <input
               className="journal-title-input mb-5 w-full rounded-[2.2rem] border border-white/20 bg-black/15 px-5 py-4 text-lg font-bold text-white placeholder-white/50 outline-none backdrop-blur-md transition focus:border-white/40 focus:bg-black/30"
@@ -5508,11 +5508,11 @@ function App() {
               <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
                 <div className="space-y-3">
                   <div>
-                    <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/90 drop-shadow-sm">Light controls</p>
-                    <p className="mt-1 text-sm font-bold text-white/80 drop-shadow-sm">Keep only what helps, then let the page stay quiet.</p>
+                    <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft">Light controls</p>
+                    <p className="mt-1 text-sm font-bold text-white/95 lofi-sharp-text-soft">Keep only what helps, then let the page stay quiet.</p>
                   </div>
                   <div className="grid gap-3 sm:grid-cols-2 xl:min-w-[31rem] xl:grid-cols-3">
-                    <label className="block text-[11px] font-black uppercase tracking-[0.22em] text-white/90 drop-shadow-sm">
+                    <label className="block text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">
                       Mood
                       <select className="mt-2 w-full rounded-[1.15rem] border border-white/30 bg-black/20 px-3.5 py-3 text-sm font-bold text-white outline-none backdrop-blur-sm transition focus:border-white/60 focus:bg-black/30" onChange={(event) => setSelectedMood(event.target.value)} value={selectedMood}>
                         {weatherOptions.map((mood) => (
@@ -5520,7 +5520,7 @@ function App() {
                         ))}
                       </select>
                     </label>
-                    <label className="block text-[11px] font-black uppercase tracking-[0.22em] text-white/90 drop-shadow-sm">
+                    <label className="block text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">
                       Font
                       <select className="mt-2 w-full rounded-[1.15rem] border border-white/30 bg-black/20 px-3.5 py-3 text-sm font-bold text-white outline-none backdrop-blur-sm transition focus:border-white/60 focus:bg-black/30" onChange={(event) => setJournalStyle({ ...journalStyle, fontId: event.target.value })} value={journalStyle.fontId}>
                         {journalFontOptions.map((font) => (
@@ -5528,7 +5528,7 @@ function App() {
                         ))}
                       </select>
                     </label>
-                    <label className="block text-[11px] font-black uppercase tracking-[0.22em] text-white/90 drop-shadow-sm">
+                    <label className="block text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">
                       Size
                       <select className="mt-2 w-full rounded-[1.15rem] border border-white/30 bg-black/20 px-3.5 py-3 text-sm font-bold text-white outline-none backdrop-blur-sm transition focus:border-white/60 focus:bg-black/30" onChange={(event) => setJournalStyle({ ...journalStyle, sizeId: event.target.value })} value={journalStyle.sizeId}>
                         {journalSizeOptions.map((size) => (
@@ -5558,7 +5558,7 @@ function App() {
 
             <div className="journal-editor-shell mt-2 rounded-[3rem] p-3 md:p-4 backdrop-blur-md bg-white/5 border border-white/10">
               <div className="journal-editor-ribbon bg-black/30 text-white/90 border border-white/20">quiet page</div>
-              <div className="journal-editor-meta journal-editor-top mb-3 flex flex-wrap items-center justify-between gap-2 px-3 text-[11px] font-black uppercase tracking-[0.22em] text-white/70 drop-shadow-sm sm:text-xs sm:tracking-[0.24em]">
+              <div className="journal-editor-meta journal-editor-top mb-3 flex flex-wrap items-center justify-between gap-2 px-3 text-[11px] font-black uppercase tracking-[0.22em] text-white/85 lofi-sharp-text-soft sm:text-xs sm:tracking-[0.24em]">
               <span>{selectedMood} mood · today</span>
               <span>{draftWordCount === 0 ? 'slow is still writing' : `${draftWordCount} words so far`}</span>
             </div>
@@ -5733,17 +5733,17 @@ function App() {
                 <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
                 <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
                 <div className="relative z-10">
-                  <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/90 drop-shadow-md">Atmosphere</p>
+                  <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Atmosphere</p>
                   <div className="mt-5 flex items-center gap-4">
                     <div className="flex h-16 w-16 items-center justify-center rounded-[1.5rem] bg-white/20 text-3xl shadow-sm backdrop-blur-md ring-4 ring-white/10 transition hover:scale-105">
                       <WeatherGlyph mood={selectedMoodOption} size="text-2xl" />
                     </div>
                     <div>
-                      <p className="text-xl font-black text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">{selectedMoodGuide.title}</p>
-                      <p className="text-sm font-bold text-white/80 drop-shadow-sm">{selectedMoodGuide.summary}</p>
+                      <p className="text-xl font-black text-white lofi-sharp-text">{selectedMoodGuide.title}</p>
+                      <p className="text-sm font-bold text-white/95 lofi-sharp-text-soft">{selectedMoodGuide.summary}</p>
                     </div>
                   </div>
-                  <p className="mt-5 text-sm font-bold leading-7 text-white/90 drop-shadow-sm">{latestEntry ? `Continuing "${latestEntry.title}".` : selectedMoodGuide.detail}</p>
+                  <p className="mt-5 text-sm font-bold leading-7 text-white/95 lofi-sharp-text-soft">{latestEntry ? `Continuing "${latestEntry.title}".` : selectedMoodGuide.detail}</p>
                 </div>
               </div>
 
@@ -5751,18 +5751,18 @@ function App() {
                 <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
                 <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
                 <div className="relative z-10">
-                  <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/90 drop-shadow-md">Journey progress</p>
+                  <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Journey progress</p>
                   <div className="mt-5 flex items-start gap-4">
                     <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-[1.5rem] bg-white/20 text-3xl shadow-sm backdrop-blur-md ring-4 ring-white/10">{nextAchievement.emoji}</div>
                     <div>
-                      <p className="text-lg font-black text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">{nextAchievement.title}</p>
-                      <p className="mt-1 text-sm font-bold leading-relaxed text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">{nextAchievement.hint}</p>
+                      <p className="text-lg font-black text-white lofi-sharp-text">{nextAchievement.title}</p>
+                      <p className="mt-1 text-sm font-bold leading-relaxed text-white/95 lofi-sharp-text-soft">{nextAchievement.hint}</p>
                     </div>
                   </div>
                   <div className="mt-5 h-2 w-full overflow-hidden rounded-full bg-black/40 shadow-inner">
                     <div className="h-full bg-white/90 transition-all duration-700" style={{ width: `${(unlockedAchievementCount / achievementBadges.length) * 100}%` }}></div>
                   </div>
-                  <p className="mt-4 text-[13px] font-black text-white/95 drop-shadow-md">{rewardLevel.next}</p>
+                  <p className="mt-4 text-[13px] font-black text-white lofi-sharp-text-soft">{rewardLevel.next}</p>
                 </div>
               </div>
 
@@ -5771,7 +5771,7 @@ function App() {
                 <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
                 <div className="relative z-10">
                   <div className="mb-5 flex items-center justify-between">
-                    <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/90 drop-shadow-md">Soft actions</p>
+                    <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Soft actions</p>
                     <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/20 text-white shadow-sm backdrop-blur-md">
                       <Compass size={16} />
                     </div>
@@ -5783,12 +5783,12 @@ function App() {
                       { label: 'View check-ins', icon: CalendarDays, onClick: () => navigateToTab('insights'), count: importantDateCount }
                     ].map((btn) => (
                       <button key={btn.label} className="group flex items-center justify-between rounded-2xl border border-white/20 bg-white/10 px-5 py-3.5 text-left text-sm font-black text-white shadow-sm backdrop-blur-md transition duration-300 hover:-translate-y-0.5 hover:bg-white/20 hover:shadow-md" onClick={btn.onClick} type="button">
-                        <span className="inline-flex items-center gap-3 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]"><btn.icon size={17} /> {btn.label}</span>
+                        <span className="inline-flex items-center gap-3 lofi-sharp-chip"><btn.icon size={17} /> {btn.label}</span>
                         {btn.count !== undefined && <span className="rounded-full bg-white/25 px-2.5 py-0.5 text-[10px] shadow-sm backdrop-blur-md">{btn.count}</span>}
                       </button>
                     ))}
                   </div>
-                  <p className="mt-5 border-t border-white/20 pt-5 text-sm font-bold leading-relaxed text-white/90 italic drop-shadow-sm">&ldquo;You do not need to finish the whole story today.&rdquo;</p>
+                  <p className="mt-5 border-t border-white/20 pt-5 text-sm font-bold leading-relaxed text-white/95 italic lofi-sharp-text-soft">&ldquo;You do not need to finish the whole story today.&rdquo;</p>
                 </div>
               </div>
             </aside>
@@ -5890,9 +5890,9 @@ function App() {
                     <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
                     <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
                     <div className="relative z-10">
-                      <h1 className="font-display text-5xl font-bold tracking-tight text-white drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)] md:text-7xl">Games</h1>
-                      <p className="mt-3 text-xs font-black uppercase tracking-[0.34em] text-white/90 drop-shadow-md">Chill games</p>
-                      <p className="mt-6 max-w-2xl text-base font-bold leading-7 text-white/95 drop-shadow-[0_2px_4px_rgba(0,0,0,0.35)]">Start with cozy Solitaire or Mind Sweeper, then explore more relaxing browser games while the lofi music keeps the page calm.</p>
+                      <h1 className="font-display text-5xl font-bold tracking-tight text-white lofi-sharp-text md:text-7xl">Games</h1>
+                      <p className="mt-3 text-xs font-black uppercase tracking-[0.34em] text-white/95 lofi-sharp-text-soft">Chill games</p>
+                      <p className="mt-6 max-w-2xl text-base font-bold leading-7 text-white lofi-sharp-text-soft">Start with cozy Solitaire or Mind Sweeper, then explore more relaxing browser games while the lofi music keeps the page calm.</p>
                     </div>
                   </div>
                 )}
@@ -5908,10 +5908,10 @@ function App() {
                     <img src={game.preview} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" aria-hidden="true" />
                     <div className="absolute inset-0 bg-gradient-to-br from-black/48 via-black/10 to-transparent" />
                     <div className="relative z-10 p-1">
-                      <p className="text-xs font-black uppercase tracking-[0.24em] text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]">{game.detail}</p>
-                      <h2 className="mt-1 font-display text-2xl font-bold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">{game.title}</h2>
+                      <p className="text-xs font-black uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft">{game.detail}</p>
+                      <h2 className="mt-1 font-display text-2xl font-bold text-white lofi-sharp-text">{game.title}</h2>
                     </div>
-                    <div className="absolute bottom-5 left-5 z-10 text-[10px] font-black uppercase tracking-widest text-white/90 opacity-0 drop-shadow-[0_1px_2px_rgba(0,0,0,0.55)] transition group-hover:opacity-100">
+                    <div className="absolute bottom-5 left-5 z-10 text-[10px] font-black uppercase tracking-widest text-white/95 opacity-0 lofi-sharp-chip transition group-hover:opacity-100">
                       Open game →
                     </div>
                   </button>
@@ -5922,10 +5922,10 @@ function App() {
                 <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
                 <div className="relative z-10 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                   <div>
-                    <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm">Quick start picks</p>
-                    <h2 className="mt-2 text-2xl font-extrabold text-white drop-shadow-md">Start with the easiest game for your mood.</h2>
+                    <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Quick start picks</p>
+                    <h2 className="mt-2 text-2xl font-extrabold text-white lofi-sharp-text">Start with the easiest game for your mood.</h2>
                   </div>
-                  <p className="max-w-xl text-sm leading-7 text-white/90 drop-shadow-sm">These are the friendliest entry points if you want something that feels simple right away.</p>
+                  <p className="max-w-xl text-sm leading-7 text-white/95 lofi-sharp-text-soft">These are the friendliest entry points if you want something that feels simple right away.</p>
                 </div>
                 <div className="relative z-10 mt-4 flex flex-wrap gap-2.5">
                   {[
@@ -5953,10 +5953,10 @@ function App() {
                   <div className="relative z-10">
                     <div className="flex items-center gap-3">
                       <Sparkles className="text-white/80" size={20} />
-                      <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm">Featured relaxing games</p>
+                      <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Featured relaxing games</p>
                     </div>
-                    <h2 className="mt-3 text-2xl font-extrabold text-white drop-shadow-md">Solitaire and Mind Sweeper are ready first.</h2>
-                    <p className="mt-2 text-sm leading-7 text-white/90 drop-shadow-sm">Start with a familiar card game or a calm Minesweeper-style logic board, then keep the lofi music running while you unwind.</p>
+                    <h2 className="mt-3 text-2xl font-extrabold text-white lofi-sharp-text">Solitaire and Mind Sweeper are ready first.</h2>
+                    <p className="mt-2 text-sm leading-7 text-white/95 lofi-sharp-text-soft">Start with a familiar card game or a calm Minesweeper-style logic board, then keep the lofi music running while you unwind.</p>
                   </div>
                 </div>
                 <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/25 p-5 shadow-sm backdrop-blur-xl">
@@ -5965,10 +5965,10 @@ function App() {
                   <div className="relative z-10">
                     <div className="flex items-center gap-3">
                       <PenLine className="text-white/80" size={20} />
-                      <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm">Chill game journal</p>
+                      <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Chill game journal</p>
                     </div>
-                    <h2 className="mt-3 text-2xl font-extrabold text-white drop-shadow-md">Play, then write one soft reflection.</h2>
-                    <p className="mt-2 text-sm leading-7 text-white/90 drop-shadow-sm">A calm game can become a journaling prompt: what felt relaxing, what color or sound stayed with you, and what thought became easier to let go.</p>
+                    <h2 className="mt-3 text-2xl font-extrabold text-white lofi-sharp-text">Play, then write one soft reflection.</h2>
+                    <p className="mt-2 text-sm leading-7 text-white/95 lofi-sharp-text-soft">A calm game can become a journaling prompt: what felt relaxing, what color or sound stayed with you, and what thought became easier to let go.</p>
                   </div>
                 </div>
               </div>
@@ -5977,10 +5977,10 @@ function App() {
                 <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
                 <div className="relative z-10 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                   <div>
-                    <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm">Stay in the vibe</p>
-                    <h2 className="mt-2 text-2xl font-extrabold text-white drop-shadow-md">Finish a round, then keep hanging out here.</h2>
+                    <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Stay in the vibe</p>
+                    <h2 className="mt-2 text-2xl font-extrabold text-white lofi-sharp-text">Finish a round, then keep hanging out here.</h2>
                   </div>
-                  <p className="max-w-2xl text-sm leading-7 text-white/90 drop-shadow-sm">Lofi Memory works best when you can bounce from one calm thing to another — a game, a breath, a quick note, or one sentence of journaling — without needing to leave the same soft space.</p>
+                  <p className="max-w-2xl text-sm leading-7 text-white/95 lofi-sharp-text-soft">Lofi Memory works best when you can bounce from one calm thing to another — a game, a breath, a quick note, or one sentence of journaling — without needing to leave the same soft space.</p>
                 </div>
                 <div className="relative z-10 mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
                   {[
@@ -5991,8 +5991,8 @@ function App() {
                   ].map((item) => (
                     <button key={item.label} className="group rounded-[1.45rem] border border-white/20 bg-black/20 p-4 text-left backdrop-blur-md shadow-sm transition hover:-translate-y-1 hover:border-white/40 hover:bg-black/40 hover:shadow-md" onClick={item.action} type="button">
                       <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/20 text-white shadow-sm backdrop-blur-md transition group-hover:bg-white/30"><item.icon size={17} /></div>
-                      <h3 className="mt-3 text-base font-extrabold text-white drop-shadow-md">{item.label}</h3>
-                      <p className="mt-2 text-sm leading-6 text-white/90 drop-shadow-sm">{item.detail}</p>
+                      <h3 className="mt-3 text-base font-extrabold text-white lofi-sharp-text">{item.label}</h3>
+                      <p className="mt-2 text-sm leading-6 text-white/95 lofi-sharp-text-soft">{item.detail}</p>
                     </button>
                   ))}
                 </div>
@@ -6002,18 +6002,18 @@ function App() {
                   <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
                   <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
                   <div className="relative z-10">
-                    <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm">Game-first comfort</p>
-                    <h2 className="mt-3 text-2xl font-extrabold text-white drop-shadow-md">The games are meant to be the easiest place to begin.</h2>
-                    <p className="mt-3 text-sm leading-7 text-white/90 drop-shadow-sm">If you just want something familiar, start with <span className="font-extrabold text-white drop-shadow-md">Solitaire</span> for a classic card reset or <span className="font-extrabold text-white drop-shadow-md">Mind Sweeper</span> for calm Minesweeper-style logic. Prefer other cozy puzzles? <span className="font-extrabold text-white drop-shadow-md">Lofi Jigsaw</span>, <span className="font-extrabold text-white drop-shadow-md">Sudoku</span>, <span className="font-extrabold text-white drop-shadow-md">Wordle</span>, and <span className="font-extrabold text-white drop-shadow-md">Tiles</span> are easy relaxing games to play while the lofi music stays on.</p>
+                    <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Game-first comfort</p>
+                    <h2 className="mt-3 text-2xl font-extrabold text-white lofi-sharp-text">The games are meant to be the easiest place to begin.</h2>
+                    <p className="mt-3 text-sm leading-7 text-white/95 lofi-sharp-text-soft">If you just want something familiar, start with <span className="font-extrabold text-white lofi-sharp-text">Solitaire</span> for a classic card reset or <span className="font-extrabold text-white lofi-sharp-text">Mind Sweeper</span> for calm Minesweeper-style logic. Prefer other cozy puzzles? <span className="font-extrabold text-white lofi-sharp-text">Lofi Jigsaw</span>, <span className="font-extrabold text-white lofi-sharp-text">Sudoku</span>, <span className="font-extrabold text-white lofi-sharp-text">Wordle</span>, and <span className="font-extrabold text-white lofi-sharp-text">Tiles</span> are easy relaxing games to play while the lofi music stays on.</p>
                   </div>
                 </article>
                 <article className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/25 p-5 shadow-sm backdrop-blur-xl lg:p-6">
                   <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
                   <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
                   <div className="relative z-10">
-                    <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm">Right now</p>
-                    <h2 className="mt-3 text-2xl font-extrabold text-white drop-shadow-md">{selectedUnwindGameConfig.title} • {selectedDifficultyConfig.label}</h2>
-                    <p className="mt-3 text-sm leading-7 text-white/90 drop-shadow-sm">{selectedUnwindGameConfig.description}</p>
+                    <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Right now</p>
+                    <h2 className="mt-3 text-2xl font-extrabold text-white lofi-sharp-text">{selectedUnwindGameConfig.title} • {selectedDifficultyConfig.label}</h2>
+                    <p className="mt-3 text-sm leading-7 text-white/95 lofi-sharp-text-soft">{selectedUnwindGameConfig.description}</p>
                   </div>
                   <div className="relative z-10 mt-4 flex flex-wrap gap-2">
                     <span className="rounded-full border border-white/20 bg-black/20 px-3 py-2 text-xs font-black uppercase tracking-[0.18em] text-white backdrop-blur-md shadow-sm">Switch anytime</span>
@@ -6042,9 +6042,9 @@ function App() {
               <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
               <div className="relative z-10">
-                <h1 className="font-display text-5xl font-bold tracking-tight text-white drop-shadow-md">Music Room</h1>
-                <p className="mt-2 text-xs font-black uppercase tracking-[0.3em] text-white/90 drop-shadow-sm">Sounds & Wallpapers</p>
-                <p className="mt-6 max-w-2xl text-base font-bold leading-7 text-white/95 drop-shadow-[0_2px_4px_rgba(0,0,0,0.35)]">Choose a wallpaper to change the ambient sound and mood. Each room brings its own calm energy to your space.</p>
+                <h1 className="font-display text-5xl font-bold tracking-tight text-white lofi-sharp-text">Music Room</h1>
+                <p className="mt-2 text-xs font-black uppercase tracking-[0.3em] text-white/95 lofi-sharp-text-soft">Sounds & Wallpapers</p>
+                <p className="mt-6 max-w-2xl text-base font-bold leading-7 text-white lofi-sharp-text-soft">Choose a wallpaper to change the ambient sound and mood. Each room brings its own calm energy to your space.</p>
               </div>
             </div>
             
@@ -6151,11 +6151,11 @@ function App() {
             <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
             <div className="relative z-10">
-              <h1 className="font-display text-5xl font-bold tracking-tight text-white drop-shadow-md">Notes</h1>
-              <p className="mt-2 text-xs font-black uppercase tracking-[0.3em] text-white/90 drop-shadow-sm">Important things</p>
+              <h1 className="font-display text-5xl font-bold tracking-tight text-white lofi-sharp-text">Notes</h1>
+              <p className="mt-2 text-xs font-black uppercase tracking-[0.3em] text-white/95 lofi-sharp-text-soft">Important things</p>
               <div className="mt-8 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
                 <div className="max-w-xl">
-                  <p className="text-base font-bold leading-7 text-white/95 drop-shadow-md">One cleaner page for reminders, practical notes, and the things you cannot afford to forget.</p>
+                  <p className="text-base font-bold leading-7 text-white lofi-sharp-text-soft">One cleaner page for reminders, practical notes, and the things you cannot afford to forget.</p>
                 </div>
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-3xl border border-white/25 bg-white/15 text-white shadow-sm backdrop-blur-md">
                   <FileText size={20} />
@@ -6173,8 +6173,8 @@ function App() {
                 <div key={stat.label} className="relative overflow-hidden rounded-[1.4rem] border border-white/20 p-4 shadow-sm">
                   <div className="absolute inset-0 bg-white/15 backdrop-blur-md" />
                   <div className="relative z-10">
-                    <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm">{stat.label}</p>
-                    <p className="mt-2 text-2xl font-black text-white drop-shadow-md">{stat.value}</p>
+                    <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">{stat.label}</p>
+                    <p className="mt-2 text-2xl font-black text-white lofi-sharp-text">{stat.value}</p>
                   </div>
                 </div>
               ))}
@@ -6233,8 +6233,8 @@ function App() {
               <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
               <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                 <div>
-                  <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/80 drop-shadow-sm">Task board</p>
-                  <p className="mt-1 text-sm font-semibold text-white drop-shadow-md">Small, clear tasks with priority, status, and optional due dates so the page stays useful without feeling noisy.</p>
+                  <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft">Task board</p>
+                  <p className="mt-1 text-sm font-semibold text-white lofi-sharp-text">Small, clear tasks with priority, status, and optional due dates so the page stays useful without feeling noisy.</p>
                 </div>
                 <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-white">
                   <button className={`rounded-full border px-3 py-1 backdrop-blur-md transition ${plannerTodoFilter === 'all' ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white/90 hover:bg-black/40'}`} onClick={() => setPlannerTodoFilter('all')} type="button">All {plannerTodoCount}</button>
@@ -6284,7 +6284,7 @@ function App() {
                 </button>
               </form>
 
-              <div className="relative z-10 mt-4 flex flex-wrap items-center justify-between gap-3 text-[10px] font-black uppercase tracking-[0.18em] text-white/80 drop-shadow-sm">
+              <div className="relative z-10 mt-4 flex flex-wrap items-center justify-between gap-3 text-[10px] font-black uppercase tracking-[0.18em] text-white/95 lofi-sharp-text-soft">
                 <span>{filteredPlannerTodos.length} shown · {overduePlannerTodoCount} overdue</span>
                 {completedPlannerTodoCount > 0 && (
                   <button className="rounded-full border border-white/30 bg-black/20 px-3 py-2 text-white transition backdrop-blur-md hover:bg-black/40" onClick={clearCompletedPlannerTodos} type="button">
@@ -6388,7 +6388,7 @@ function App() {
                   <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[1.4rem] border border-[#8b5e3c]/25 p-5 shadow-sm backdrop-blur-xl">
                     <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-60" aria-hidden="true" />
                     <div className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/25 to-black/15" />
-                    <div className="relative z-10 text-sm font-semibold leading-6 text-white drop-shadow-md">
+                    <div className="relative z-10 text-sm font-semibold leading-6 text-white lofi-sharp-text">
                       No tasks match this view yet. Try another filter or add a new task with a priority, due date, or recurring rhythm.
                     </div>
                   </div>
@@ -6401,8 +6401,8 @@ function App() {
               <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
               <div className="relative z-10 flex items-center justify-between gap-3">
                 <div>
-                  <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/80 drop-shadow-sm">Upcoming reminders</p>
-                  <p className="mt-1 text-sm font-semibold text-white drop-shadow-md">A calm shortlist of the dates that are coming up next.</p>
+                  <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft">Upcoming reminders</p>
+                  <p className="mt-1 text-sm font-semibold text-white lofi-sharp-text">A calm shortlist of the dates that are coming up next.</p>
                 </div>
                 <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-white">
                   <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1 backdrop-blur-md">{upcomingReminderCount} upcoming</span>
@@ -6414,17 +6414,17 @@ function App() {
                   <button className="w-full rounded-[1.4rem] border border-white/20 bg-black/20 px-4 py-3 text-left transition backdrop-blur-md hover:-translate-y-0.5 hover:bg-black/40 hover:shadow-sm" key={item.dateKey} onClick={() => { setSelectedCalendarDate(item.dateKey); navigateToTab('memories'); }} type="button">
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <div className="min-w-0 flex-1">
-                        <p className="text-sm font-bold leading-6 text-white drop-shadow-md">{item.note}</p>
-                        <p className="mt-1 text-xs font-bold uppercase tracking-[0.16em] text-white/70 drop-shadow-sm">{formatDate(item.dateKey)}{item.time ? ` · ${formatReminderTime(item.time)}` : ''}</p>
+                        <p className="text-sm font-bold leading-6 text-white lofi-sharp-text">{item.note}</p>
+                        <p className="mt-1 text-xs font-bold uppercase tracking-[0.16em] text-white/85 lofi-sharp-text-soft">{formatDate(item.dateKey)}{item.time ? ` · ${formatReminderTime(item.time)}` : ''}</p>
                       </div>
-                      <span className="rounded-full border border-white/30 bg-white/20 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-white drop-shadow-sm">{item.relativeLabel}</span>
+                      <span className="rounded-full border border-white/30 bg-white/20 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-white lofi-sharp-chip">{item.relativeLabel}</span>
                     </div>
                   </button>
                 )) : (
                   <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[1.4rem] border border-[#8b5e3c]/25 p-5 shadow-sm backdrop-blur-xl">
                     <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-60" aria-hidden="true" />
                     <div className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/25 to-black/15" />
-                    <div className="relative z-10 text-sm font-semibold leading-6 text-white drop-shadow-md">
+                    <div className="relative z-10 text-sm font-semibold leading-6 text-white lofi-sharp-text">
                       No upcoming reminders yet. Mark an important date in the calendar and it will show up here.
                     </div>
                   </div>
@@ -6436,8 +6436,8 @@ function App() {
               <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
               <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
               <div className="relative z-10">
-                <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/80 drop-shadow-sm">Keep it simple</p>
-                <div className="mt-4 space-y-3 text-sm font-semibold leading-7 text-white drop-shadow-md">
+                <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft">Keep it simple</p>
+                <div className="mt-4 space-y-3 text-sm font-semibold leading-7 text-white lofi-sharp-text">
                   <p>Use this page for practical life details, not emotional journaling.</p>
                   <p>Keep the to-do list short enough that it still feels calm to open.</p>
                   <p>Move back to writing when you want reflection instead of admin.</p>
@@ -6463,9 +6463,9 @@ function App() {
             <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
             <div className="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
               <div className="max-w-3xl">
-                <p className="text-xs font-black uppercase tracking-[0.24em] text-white/80 drop-shadow-sm sm:text-sm sm:tracking-widest">Reflection pattern</p>
-                <h2 className="mt-2 text-3xl font-extrabold leading-tight text-white drop-shadow-md sm:text-4xl">Your recent journal check-ins</h2>
-                <p className="mt-3 text-sm font-semibold leading-7 text-white drop-shadow-md">See the week in a calmer way: mood shifts, small streaks, and the gentle rhythm you are building by returning.</p>
+                <p className="text-xs font-black uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft sm:text-sm sm:tracking-widest">Reflection pattern</p>
+                <h2 className="mt-2 text-3xl font-extrabold leading-tight text-white lofi-sharp-text sm:text-4xl">Your recent journal check-ins</h2>
+                <p className="mt-3 text-sm font-semibold leading-7 text-white lofi-sharp-text">See the week in a calmer way: mood shifts, small streaks, and the gentle rhythm you are building by returning.</p>
               </div>
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-3xl bg-white/20 text-white shadow-sm backdrop-blur-md">
                 <Moon size={20} />
@@ -6482,19 +6482,19 @@ function App() {
             <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
             <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
             <div className="relative z-10">
-              <p className="text-xs font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm sm:text-sm sm:tracking-widest">This week so far</p>
-              <p className="mt-3 text-4xl font-extrabold text-white drop-shadow-md">{weeklyCheckIns}/{weeklyGoal}</p>
-              <p className="mt-3 text-sm font-semibold leading-7 text-white drop-shadow-md">{weeklyCheckIns >= weeklyGoal ? 'You already gave yourself enough room this week.' : `${weeklyGoal - weeklyCheckIns} more soft check-ins if you want to fill this week.`}</p>
+              <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft sm:text-sm sm:tracking-widest">This week so far</p>
+              <p className="mt-3 text-4xl font-extrabold text-white lofi-sharp-text">{weeklyCheckIns}/{weeklyGoal}</p>
+              <p className="mt-3 text-sm font-semibold leading-7 text-white lofi-sharp-text">{weeklyCheckIns >= weeklyGoal ? 'You already gave yourself enough room this week.' : `${weeklyGoal - weeklyCheckIns} more soft check-ins if you want to fill this week.`}</p>
               <div className="mt-5 h-2.5 w-full overflow-hidden rounded-full bg-white/10 backdrop-blur-md shadow-inner">
                 <div className="h-full rounded-full bg-gradient-to-r from-white/60 to-white/90 transition-all duration-700" style={{ width: `${Math.min((weeklyCheckIns / weeklyGoal) * 100, 100)}%` }}></div>
               </div>
               <div className="mt-6 rounded-[2.2rem] border border-white/20 bg-black/20 p-5 shadow-sm backdrop-blur-md">
-                <p className="text-xs font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm sm:text-sm sm:tracking-widest">Keepsake path</p>
+                <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft sm:text-sm sm:tracking-widest">Keepsake path</p>
                 <div className="mt-3 flex items-center gap-4">
                   <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-white/20 text-3xl shadow-sm backdrop-blur-md text-white">{rewardLevel.emoji}</div>
                   <div>
-                    <p className="text-lg font-extrabold text-white drop-shadow-md">{rewardLevel.title}</p>
-                    <p className="text-sm font-semibold leading-6 text-white/90 drop-shadow-sm">{entriesToNextReward === 0 ? 'Your next bloom is here.' : `${entriesToNextReward} pages until the next bloom.`}</p>
+                    <p className="text-lg font-extrabold text-white lofi-sharp-text">{rewardLevel.title}</p>
+                    <p className="text-sm font-semibold leading-6 text-white/95 lofi-sharp-text-soft">{entriesToNextReward === 0 ? 'Your next bloom is here.' : `${entriesToNextReward} pages until the next bloom.`}</p>
                   </div>
                 </div>
               </div>
@@ -6506,15 +6506,15 @@ function App() {
             <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
             <div className="relative z-10 flex flex-wrap items-center justify-between gap-3">
               <div>
-                <p className="text-xs font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm sm:text-sm sm:tracking-widest">Mood garden</p>
-                <p className="mt-2 text-sm font-semibold leading-6 text-white drop-shadow-md">A softer chart view so the patterns stay readable on both mobile and desktop.</p>
+                <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft sm:text-sm sm:tracking-widest">Mood garden</p>
+                <p className="mt-2 text-sm font-semibold leading-6 text-white lofi-sharp-text">A softer chart view so the patterns stay readable on both mobile and desktop.</p>
               </div>
               <div className="rounded-full bg-white/20 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-white backdrop-blur-md shadow-sm">Weekly summary</div>
             </div>
             <div className="relative z-10 mt-5 bg-white/90 rounded-[2rem] p-4 shadow-sm backdrop-blur-md">
               <MoodChart entries={entries} weatherOptions={weatherOptions} />
             </div>
-            <div className="relative z-10 mt-5 rounded-[2.2rem] border border-white/20 bg-black/20 p-5 text-sm font-bold leading-7 text-white drop-shadow-md shadow-sm backdrop-blur-md">
+            <div className="relative z-10 mt-5 rounded-[2.2rem] border border-white/20 bg-black/20 p-5 text-sm font-bold leading-7 text-white lofi-sharp-text shadow-sm backdrop-blur-md">
               {weeklySummary}
             </div>
           </div>
@@ -6524,9 +6524,9 @@ function App() {
               <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
               <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
               <div className="relative z-10">
-                <p className="text-xs font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm sm:text-sm sm:tracking-widest">{returnRitual.eyebrow}</p>
-                <p className="mt-2 text-2xl font-extrabold leading-tight text-white drop-shadow-md">{returnRitual.title}</p>
-                <p className="mt-3 text-sm font-semibold leading-7 text-white drop-shadow-md">{returnRitual.text}</p>
+                <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft sm:text-sm sm:tracking-widest">{returnRitual.eyebrow}</p>
+                <p className="mt-2 text-2xl font-extrabold leading-tight text-white lofi-sharp-text">{returnRitual.title}</p>
+                <p className="mt-3 text-sm font-semibold leading-7 text-white lofi-sharp-text">{returnRitual.text}</p>
                 <button className="mt-5 inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2.5 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/30" onClick={() => navigateToTab('write')} type="button">
                   <PenLine size={16} /> Return to writing
                 </button>
@@ -6537,7 +6537,7 @@ function App() {
               <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-85" aria-hidden="true" />
               <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
               <div className="relative z-10 flex items-center justify-between gap-3">
-                <p className="text-xs font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm">Keepsake shelf</p>
+                <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Keepsake shelf</p>
                 <div className="rounded-full bg-white/20 px-3 py-1 text-[10px] font-black text-white shadow-sm backdrop-blur-md">{unlockedAchievementCount}/{achievementBadges.length}</div>
               </div>
               <div className="relative z-10 mt-4 grid grid-cols-6 gap-2">
@@ -6547,7 +6547,7 @@ function App() {
                   </div>
                 ))}
               </div>
-              <p className="relative z-10 mt-4 text-sm font-semibold leading-7 text-white/90 drop-shadow-md">Every return adds another little sign that this space is becoming yours.</p>
+              <p className="relative z-10 mt-4 text-sm font-semibold leading-7 text-white/95 lofi-sharp-text-soft">Every return adds another little sign that this space is becoming yours.</p>
             </div>
           </div>
         </div>
@@ -6560,8 +6560,8 @@ function App() {
             <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
             <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
             <div className="relative z-10 flex gap-2">
-              <button className={`rounded-full px-5 py-2.5 text-sm font-extrabold transition backdrop-blur-md ${memoriesView === 'calendar' ? 'bg-white/30 text-white shadow-sm' : 'bg-black/20 text-white/80 hover:bg-black/40 hover:text-white'}`} onClick={() => setMemoriesView('calendar')} type="button">Calendar</button>
-              <button className={`rounded-full px-5 py-2.5 text-sm font-extrabold transition backdrop-blur-md ${memoriesView === 'archive' ? 'bg-white/30 text-white shadow-sm' : 'bg-black/20 text-white/80 hover:bg-black/40 hover:text-white'}`} onClick={() => setMemoriesView('archive')} type="button">Positivity archive</button>
+              <button className={`rounded-full px-5 py-2.5 text-sm font-extrabold transition backdrop-blur-md ${memoriesView === 'calendar' ? 'bg-white/30 text-white lofi-sharp-chip shadow-sm' : 'bg-black/20 text-white/90 lofi-sharp-chip hover:bg-black/40 hover:text-white'}`} onClick={() => setMemoriesView('calendar')} type="button">Calendar</button>
+              <button className={`rounded-full px-5 py-2.5 text-sm font-extrabold transition backdrop-blur-md ${memoriesView === 'archive' ? 'bg-white/30 text-white lofi-sharp-chip shadow-sm' : 'bg-black/20 text-white/90 lofi-sharp-chip hover:bg-black/40 hover:text-white'}`} onClick={() => setMemoriesView('archive')} type="button">Positivity archive</button>
             </div>
           </div>
 
@@ -6573,8 +6573,8 @@ function App() {
             <div className="relative z-10">
               <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <h1 className="font-display text-5xl font-bold tracking-tight text-white drop-shadow-md">Memories</h1>
-                  <p className="mt-2 text-xs font-black uppercase tracking-[0.3em] text-white/90 drop-shadow-sm">Journal calendar</p>
+                  <h1 className="font-display text-5xl font-bold tracking-tight text-white lofi-sharp-text">Memories</h1>
+                  <p className="mt-2 text-xs font-black uppercase tracking-[0.3em] text-white/95 lofi-sharp-text-soft">Journal calendar</p>
                 </div>
                 <div className="flex flex-wrap gap-2 text-[11px] font-black uppercase tracking-[0.16em] text-white/90">
                   <span className="rounded-full border border-white/20 bg-black/20 px-3 py-2 backdrop-blur-sm">{importantDateCount} saved</span>
@@ -6586,10 +6586,10 @@ function App() {
                 <div className="rounded-[1.6rem] border border-white/20 bg-black/20 p-3 shadow-inner backdrop-blur-md sm:p-4">
                 <div className="mb-3 flex items-center justify-between gap-2 rounded-[1.2rem] bg-white/20 px-2 py-2 shadow-sm backdrop-blur-md">
                   <button className="rounded-full bg-black/20 px-3 py-2 text-sm font-extrabold text-white transition hover:bg-black/40" onClick={() => setCalendarMonth(shiftMonthKey(calendarMonth, -1))} type="button">‹</button>
-                  <p className="text-center text-sm font-extrabold text-white drop-shadow-md sm:text-base">{formatMonthLabel(calendarMonth)}</p>
+                  <p className="text-center text-sm font-extrabold text-white lofi-sharp-text sm:text-base">{formatMonthLabel(calendarMonth)}</p>
                   <button className="rounded-full bg-black/20 px-3 py-2 text-sm font-extrabold text-white transition hover:bg-black/40" onClick={() => setCalendarMonth(shiftMonthKey(calendarMonth, 1))} type="button">›</button>
                 </div>
-                <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-extrabold uppercase tracking-[0.12em] text-white/70 drop-shadow-sm">
+                <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-extrabold uppercase tracking-[0.12em] text-white/85 lofi-sharp-text-soft">
                   {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => <div key={day}>{day}</div>)}
                 </div>
                 <div className="mt-2 grid grid-cols-7 gap-1">
@@ -6602,7 +6602,7 @@ function App() {
                     const isToday = day?.dateKey === todayISO();
                     return day ? (
                       <button
-                        className={`relative flex h-11 items-center justify-center rounded-xl border text-xs font-extrabold backdrop-blur-md transition hover:-translate-y-0.5 sm:h-12 sm:text-sm ${isSelected ? 'border-white/60 bg-white/40 text-white shadow-sm' : isToday ? 'border-white/40 bg-white/20 text-white drop-shadow-md' : 'border-white/20 bg-black/20 text-white drop-shadow-sm hover:bg-black/40'}`}
+                        className={`relative flex h-11 items-center justify-center rounded-xl border text-xs font-extrabold backdrop-blur-md transition hover:-translate-y-0.5 sm:h-12 sm:text-sm ${isSelected ? 'border-white/60 bg-white/40 text-white lofi-sharp-chip shadow-sm' : isToday ? 'border-white/40 bg-white/20 text-white lofi-sharp-chip' : 'border-white/20 bg-black/20 text-white lofi-sharp-chip hover:bg-black/40'}`}
                         key={day.dateKey}
                         onClick={() => {
                           setSelectedCalendarDate(day.dateKey);
@@ -6618,7 +6618,7 @@ function App() {
                     ) : <div key={`blank-${index}`} />;
                   })}
                 </div>
-                <button className="mt-3 inline-flex w-full items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-md px-3 py-2 text-xs font-black uppercase tracking-[0.16em] text-white shadow-sm transition hover:bg-white/20" onClick={() => { const today = todayISO(); setCalendarMonth(today.slice(0, 7)); setSelectedCalendarDate(today); openImportantDateEditor(today); }} type="button">
+                <button className="mt-3 inline-flex w-full items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-md px-3 py-2 text-xs font-black uppercase tracking-[0.16em] text-white lofi-sharp-chip shadow-sm transition hover:bg-white/20" onClick={() => { const today = todayISO(); setCalendarMonth(today.slice(0, 7)); setSelectedCalendarDate(today); openImportantDateEditor(today); }} type="button">
                   Jump to today
                 </button>
               </div>
@@ -6626,16 +6626,16 @@ function App() {
               <div className="rounded-[2.2rem] border border-white/20 bg-black/20 p-4 shadow-sm backdrop-blur-md sm:p-5">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div>
-                    <p className="text-xs font-black uppercase tracking-widest text-white/80 drop-shadow-sm">Selected date</p>
-                    <h3 className="mt-1 text-2xl font-extrabold text-white drop-shadow-md">{formatDate(selectedCalendarDate)}</h3>
-                    <p className="mt-1 text-sm font-semibold leading-6 text-white drop-shadow-sm">Click any date, then write a note or reminder here.</p>
+                    <p className="text-xs font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft">Selected date</p>
+                    <h3 className="mt-1 text-2xl font-extrabold text-white lofi-sharp-text">{formatDate(selectedCalendarDate)}</h3>
+                    <p className="mt-1 text-sm font-semibold leading-6 text-white lofi-sharp-text-soft">Click any date, then write a note or reminder here.</p>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    <button className="rounded-full bg-white/20 px-4 py-2.5 text-sm font-extrabold text-white backdrop-blur-md shadow-sm transition hover:bg-white/30" onClick={() => openImportantDateEditor(selectedCalendarDate)} type="button">
+                    <button className="rounded-full bg-white/20 px-4 py-2.5 text-sm font-extrabold text-white lofi-sharp-chip backdrop-blur-md shadow-sm transition hover:bg-white/30" onClick={() => openImportantDateEditor(selectedCalendarDate)} type="button">
                       {selectedImportantDate ? 'Edit note' : 'Write note'}
                     </button>
                     {selectedImportantDate && (
-                      <button className="rounded-full bg-red-500/20 border border-red-400/30 px-4 py-2.5 text-sm font-extrabold text-white backdrop-blur-md transition hover:bg-red-500/40" onClick={() => deleteImportantDate(selectedCalendarDate)} type="button">
+                      <button className="rounded-full bg-red-500/20 border border-red-400/30 px-4 py-2.5 text-sm font-extrabold text-white lofi-sharp-chip backdrop-blur-md transition hover:bg-red-500/40" onClick={() => deleteImportantDate(selectedCalendarDate)} type="button">
                         Remove
                       </button>
                     )}
@@ -6649,34 +6649,34 @@ function App() {
                         {selectedCalendarForecast ? selectedCalendarForecastVisuals.emoji : '📍'}
                       </div>
                       <div>
-                        <p className="text-xs font-black uppercase tracking-[0.2em] text-white/80 drop-shadow-sm">Local weather</p>
+                        <p className="text-xs font-black uppercase tracking-[0.2em] text-white/95 lofi-sharp-text-soft">Local weather</p>
                         {selectedCalendarForecast ? (
-                          <p className="mt-1 text-sm font-extrabold text-white drop-shadow-md">
+                          <p className="mt-1 text-sm font-extrabold text-white lofi-sharp-text">
                             {selectedCalendarForecastVisuals.label} · {formatForecastTemperature(selectedCalendarForecast.maxTemp)} / {formatForecastTemperature(selectedCalendarForecast.minTemp)}
                           </p>
                         ) : (
-                          <p className="mt-1 text-sm font-semibold leading-6 text-white drop-shadow-sm">{calendarForecastStatus}</p>
+                          <p className="mt-1 text-sm font-semibold leading-6 text-white lofi-sharp-text-soft">{calendarForecastStatus}</p>
                         )}
-                        {selectedCalendarForecast && <p className="mt-1 text-xs font-bold uppercase tracking-[0.14em] text-white/70 drop-shadow-sm">{calendarForecastLocation || 'Your location'} · {selectedCalendarDate}</p>}
+                        {selectedCalendarForecast && <p className="mt-1 text-xs font-bold uppercase tracking-[0.14em] text-white/85 lofi-sharp-text-soft">{calendarForecastLocation || 'Your location'} · {selectedCalendarDate}</p>}
                       </div>
                     </div>
                     {calendarForecastPermission !== 'loading' && (
-                      <button className="rounded-full border border-white/30 bg-black/20 px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-white backdrop-blur-md shadow-sm transition hover:bg-black/40" onClick={loadCalendarForecast} type="button">
+                      <button className="rounded-full border border-white/30 bg-black/20 px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-white lofi-sharp-chip backdrop-blur-md shadow-sm transition hover:bg-black/40" onClick={loadCalendarForecast} type="button">
                         {calendarForecastPermission === 'granted' ? 'Refresh' : 'Use location'}
                       </button>
                     )}
                     {calendarForecastPermission === 'loading' && <span className="rounded-full border border-white/30 bg-black/20 px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-white backdrop-blur-md shadow-sm">Loading</span>}
                   </div>
-                  {selectedCalendarForecast && <p className="mt-3 text-xs font-semibold leading-5 text-white/70 drop-shadow-sm">Forecast uses your browser location and is available for nearby upcoming dates.</p>}
+                  {selectedCalendarForecast && <p className="mt-3 text-xs font-semibold leading-5 text-white/85 lofi-sharp-text-soft">Forecast uses your browser location and is available for nearby upcoming dates.</p>}
                 </div>
 
                 {selectedImportantDate && (
                   <div className="mt-4 rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur-md shadow-sm">
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <div className="min-w-0 flex-1">
-                        <p className="text-xs font-black uppercase tracking-[0.2em] text-white/80 drop-shadow-sm">Saved note or reminder</p>
-                        <p className="mt-2 text-base font-extrabold leading-6 text-white drop-shadow-md">{selectedImportantDate.note}</p>
-                        {selectedImportantDate.details && <p className="mt-2 whitespace-pre-wrap text-sm font-semibold leading-6 text-white/90 drop-shadow-sm">{selectedImportantDate.details}</p>}
+                        <p className="text-xs font-black uppercase tracking-[0.2em] text-white/95 lofi-sharp-text-soft">Saved note or reminder</p>
+                        <p className="mt-2 text-base font-extrabold leading-6 text-white lofi-sharp-text">{selectedImportantDate.note}</p>
+                        {selectedImportantDate.details && <p className="mt-2 whitespace-pre-wrap text-sm font-semibold leading-6 text-white/95 lofi-sharp-text-soft">{selectedImportantDate.details}</p>}
                       </div>
                       <div className="flex flex-wrap gap-2 text-[10px] font-black uppercase tracking-[0.16em] text-white">
                         {selectedImportantDate.time && <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-md shadow-sm">{formatReminderTime(selectedImportantDate.time)}</span>}
@@ -6688,10 +6688,10 @@ function App() {
 
                 {importanceModalOpen && (
                   <div className="mt-4 rounded-[1.6rem] border border-white/20 bg-black/20 p-4 shadow-sm backdrop-blur-md sm:p-5">
-                    <p className="text-xs font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm">Add to this date</p>
+                    <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Add to this date</p>
                     <div className="mt-4 grid gap-3">
                       <label className="block">
-                        <span className="text-sm font-extrabold text-white drop-shadow-md">Title</span>
+                        <span className="text-sm font-extrabold text-white lofi-sharp-text">Title</span>
                         <input
                           className="mt-2 w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm font-semibold text-white outline-none backdrop-blur-md placeholder:text-white/50 transition focus:border-white/40 focus:ring-4 focus:ring-white/10"
                           maxLength={80}
@@ -6701,7 +6701,7 @@ function App() {
                         />
                       </label>
                       <label className="block">
-                        <span className="text-sm font-extrabold text-white drop-shadow-md">Notes</span>
+                        <span className="text-sm font-extrabold text-white lofi-sharp-text">Notes</span>
                         <textarea
                           className="mt-2 min-h-[150px] w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm font-semibold leading-6 text-white outline-none backdrop-blur-md placeholder:text-white/50 transition focus:border-white/40 focus:ring-4 focus:ring-white/10"
                           maxLength={320}
@@ -6713,7 +6713,7 @@ function App() {
                     </div>
                     <div className="mt-3 grid gap-3 sm:grid-cols-[minmax(10rem,14rem)_minmax(0,1fr)]">
                       <label className="block">
-                        <span className="text-sm font-extrabold text-white drop-shadow-md">Time</span>
+                        <span className="text-sm font-extrabold text-white lofi-sharp-text">Time</span>
                         <input
                           className="mt-2 w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm font-semibold text-white outline-none backdrop-blur-md transition focus:border-white/40 focus:ring-4 focus:ring-white/10 [color-scheme:dark]"
                           onChange={(event) => setImportanceTimeDraft(event.target.value)}
@@ -6733,25 +6733,25 @@ function App() {
                         {notificationPermission === 'granted' ? 'Notifications on' : 'Allow notifications'}
                       </button>
                     </div>
-                    {notificationStatusMessage && <p className="mt-3 rounded-2xl bg-black/20 border border-white/20 backdrop-blur-md px-4 py-3 text-sm font-semibold leading-6 text-white/90 drop-shadow-sm">{notificationStatusMessage}</p>}
+                    {notificationStatusMessage && <p className="mt-3 rounded-2xl bg-black/20 border border-white/20 backdrop-blur-md px-4 py-3 text-sm font-semibold leading-6 text-white/95 lofi-sharp-text-soft">{notificationStatusMessage}</p>}
                   </div>
                 )}
 
                 {selectedDateEntries.length ? (
                   <div className="mt-4 space-y-3">
-                    <p className="text-xs font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm">Journal entries on this day</p>
+                    <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Journal entries on this day</p>
                     {selectedDateEntries.map((entry) => (
                       <button className="w-full rounded-2xl border border-white/20 bg-black/20 p-3 text-left backdrop-blur-md shadow-sm transition hover:-translate-y-0.5 hover:bg-black/40 hover:shadow-md" key={entry.id} onClick={() => setSelectedEntry(entry)} type="button">
-                        <p className="font-extrabold text-white drop-shadow-md">{entry.title}</p>
-                        <p className="mt-1 line-clamp-2 text-sm font-semibold leading-6 text-white/90 drop-shadow-sm">{getPlainTextFromHtml(entry.body || entry.prompt || '') || 'Photo entry'}</p>
+                        <p className="font-extrabold text-white lofi-sharp-text">{entry.title}</p>
+                        <p className="mt-1 line-clamp-2 text-sm font-semibold leading-6 text-white/95 lofi-sharp-text-soft">{getPlainTextFromHtml(entry.body || entry.prompt || '') || 'Photo entry'}</p>
                       </button>
                     ))}
                   </div>
-                ) : <p className="mt-4 rounded-2xl border border-white/20 bg-black/20 px-4 py-4 text-sm font-semibold leading-6 text-white/80 drop-shadow-sm backdrop-blur-md shadow-sm">No diary entry for this date yet.</p>}
+                ) : <p className="mt-4 rounded-2xl border border-white/20 bg-black/20 px-4 py-4 text-sm font-semibold leading-6 text-white/95 lofi-sharp-text-soft backdrop-blur-md shadow-sm">No diary entry for this date yet.</p>}
 
                 {upcomingReminderPreview.length > 0 && (
                   <div className="mt-4 rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur-md shadow-sm">
-                    <p className="text-xs font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm">Upcoming</p>
+                    <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Upcoming</p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       {upcomingReminderPreview.slice(0, 3).map((item) => (
                         <button className={`rounded-full border px-3 py-2 text-xs font-extrabold backdrop-blur-md shadow-sm transition hover:bg-white/30 ${item.dateKey === selectedCalendarDate ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white'}`} key={item.dateKey} onClick={() => { setSelectedCalendarDate(item.dateKey); openImportantDateEditor(item.dateKey); }} type="button">
@@ -6773,10 +6773,10 @@ function App() {
             <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
             <div className="relative z-10 mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div className="flex items-center gap-3">
-                <CalendarDays className="text-white drop-shadow-md" size={18} />
+                <CalendarDays className="text-white lofi-sharp-text" size={18} />
                 <div>
-                  <h2 className="text-2xl font-extrabold text-white drop-shadow-md sm:text-3xl">Your positivity archive</h2>
-                  <p className="mt-1 text-sm font-semibold leading-7 text-white drop-shadow-sm">Open any page to read the full memory, with a calmer layout that uses the whole panel more gracefully.</p>
+                  <h2 className="text-2xl font-extrabold text-white lofi-sharp-text sm:text-3xl">Your positivity archive</h2>
+                  <p className="mt-1 text-sm font-semibold leading-7 text-white lofi-sharp-text-soft">Open any page to read the full memory, with a calmer layout that uses the whole panel more gracefully.</p>
                 </div>
               </div>
               <div className="rounded-full bg-black/20 border border-white/20 backdrop-blur-md px-3 py-1 text-xs font-black uppercase tracking-[0.18em] text-white shadow-sm sm:text-[11px]">
@@ -6799,8 +6799,8 @@ function App() {
                         <span className="inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1.5 backdrop-blur-md shadow-sm text-white"><WeatherGlyph mood={mood} size="text-base" /> {entry.mood}</span>
                         <span className="rounded-full bg-black/20 px-3 py-1.5 shadow-sm border border-white/20 backdrop-blur-md text-white">{formatDate(entry.createdAt)}</span>
                       </div>
-                      <h3 className="text-xl font-extrabold leading-tight text-white drop-shadow-md">{entry.title}</h3>
-                      <p className="mt-3 whitespace-pre-line break-words leading-7 text-white/90 drop-shadow-sm">
+                      <h3 className="text-xl font-extrabold leading-tight text-white lofi-sharp-text">{entry.title}</h3>
+                      <p className="mt-3 whitespace-pre-line break-words leading-7 text-white/95 lofi-sharp-text-soft">
                         {(() => {
                           const tempDiv = document.createElement('div');
                           tempDiv.innerHTML = entry.body || entry.prompt || '';
@@ -7162,9 +7162,9 @@ function App() {
           <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
           <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
           <div className="relative z-10">
-            <p className="text-sm font-black uppercase tracking-widest text-white/80 drop-shadow-sm">Support this project</p>
-            <h2 className="mt-3 text-2xl font-extrabold text-white drop-shadow-md">Help keep Lofi Memory free and peaceful</h2>
-            <p className="mx-auto mt-3 max-w-2xl leading-7 text-white/90 drop-shadow-sm">This space may be supported by gentle, non-intrusive advertising after approval. Ads will stay outside the private writing area so journaling remains calm.</p>
+            <p className="text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft">Support this project</p>
+            <h2 className="mt-3 text-2xl font-extrabold text-white lofi-sharp-text">Help keep Lofi Memory free and peaceful</h2>
+            <p className="mx-auto mt-3 max-w-2xl leading-7 text-white/95 lofi-sharp-text-soft">This space may be supported by gentle, non-intrusive advertising after approval. Ads will stay outside the private writing area so journaling remains calm.</p>
           </div>
         </div>
       </section>
@@ -7184,9 +7184,9 @@ function App() {
             <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
             <div className="relative z-10 flex items-start justify-between gap-4">
               <div>
-                <p className="text-sm font-black uppercase tracking-widest text-white/80 drop-shadow-sm">Master access</p>
-                <h3 className="mt-2 text-2xl font-extrabold text-white drop-shadow-md">Signed in as {user?.email}</h3>
-                <p className="mt-3 leading-7 text-white/90 drop-shadow-sm">Normal visitors never see this section. The public journaling flow stays exactly the same unless you later choose to apply changes manually.</p>
+                <p className="text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft">Master access</p>
+                <h3 className="mt-2 text-2xl font-extrabold text-white lofi-sharp-text">Signed in as {user?.email}</h3>
+                <p className="mt-3 leading-7 text-white/95 lofi-sharp-text-soft">Normal visitors never see this section. The public journaling flow stays exactly the same unless you later choose to apply changes manually.</p>
               </div>
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/20 text-white shadow-sm backdrop-blur-md">
                 <ShieldCheck size={20} />
@@ -7194,7 +7194,7 @@ function App() {
             </div>
 
             <div className="relative z-10 mt-6 rounded-[1.5rem] border border-white/20 bg-black/20 p-4 shadow-sm backdrop-blur-md">
-              <p className="text-sm font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm">Preview mode</p>
+              <p className="text-sm font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Preview mode</p>
               <div className="mt-3 flex overflow-hidden rounded-full border border-white/30 bg-white/10 p-1">
                 <button
                   className={`flex-1 rounded-full px-4 py-2.5 text-sm font-black transition backdrop-blur-md ${adminViewMode === 'master' ? 'bg-white/30 text-white shadow-sm' : 'text-white/80 hover:bg-white/10'}`}
@@ -7211,28 +7211,28 @@ function App() {
                   User view
                 </button>
               </div>
-              <p className="mt-3 text-sm leading-7 text-white/90 drop-shadow-sm">Switch to user view any time to hide admin tools and preview the calmer public experience while staying signed in.</p>
+              <p className="mt-3 text-sm leading-7 text-white/95 lofi-sharp-text-soft">Switch to user view any time to hide admin tools and preview the calmer public experience while staying signed in.</p>
             </div>
 
-            <div className="relative z-10 mt-6 grid gap-3 text-sm leading-7 text-white/90 drop-shadow-sm">
+            <div className="relative z-10 mt-6 grid gap-3 text-sm leading-7 text-white/95 lofi-sharp-text-soft">
               <div className="rounded-2xl border border-white/20 bg-black/20 p-4 backdrop-blur-md shadow-sm">
-                <p className="font-extrabold text-white drop-shadow-md">What this first version can do</p>
+                <p className="font-extrabold text-white lofi-sharp-text">What this first version can do</p>
                 <p className="mt-2">Run an AI SEO review of the current diary site, suggest safer homepage and guide-page improvements, and draft ideas you can later implement without disrupting users.</p>
               </div>
               <div className="rounded-2xl border border-white/20 bg-black/20 p-4 backdrop-blur-md shadow-sm">
-                <p className="font-extrabold text-white drop-shadow-md">What it does not auto-publish yet</p>
+                <p className="font-extrabold text-white lofi-sharp-text">What it does not auto-publish yet</p>
                 <p className="mt-2">This version does not silently rewrite the live site on its own. It gives you admin-only guidance and drafts first, which is safer for SEO and much better for preserving tone.</p>
               </div>
             </div>
 
             <div className="relative z-10 mt-6 rounded-[2.2rem] border border-white/20 bg-white/20 p-5 text-white shadow-sm backdrop-blur-md">
-              <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/80 drop-shadow-sm">Suggested routine</p>
-              <div className="mt-4 grid gap-3 text-sm leading-7 text-white/90 drop-shadow-sm">
+              <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft">Suggested routine</p>
+              <div className="mt-4 grid gap-3 text-sm leading-7 text-white/95 lofi-sharp-text-soft">
                 <div>1. Run a fresh AI review when you want new SEO ideas.</div>
                 <div>2. Pick only a few high-impact suggestions at a time.</div>
                 <div>3. Keep the writing experience calm and avoid constant churn.</div>
               </div>
-              <p className="mt-4 text-xs font-black uppercase tracking-[0.18em] text-white/80 drop-shadow-sm">Master email: {MASTER_ADMIN_EMAIL}</p>
+              <p className="mt-4 text-xs font-black uppercase tracking-[0.18em] text-white/95 lofi-sharp-text-soft">Master email: {MASTER_ADMIN_EMAIL}</p>
             </div>
           </div>
 
@@ -7241,8 +7241,8 @@ function App() {
             <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
             <div className="relative z-10 flex flex-wrap items-start justify-between gap-4">
               <div>
-                <p className="text-sm font-black uppercase tracking-widest text-white/80 drop-shadow-sm">Run AI review</p>
-                <h3 className="mt-2 text-2xl font-extrabold text-white drop-shadow-md">SEO drafts that stay inside your admin view</h3>
+                <p className="text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft">Run AI review</p>
+                <h3 className="mt-2 text-2xl font-extrabold text-white lofi-sharp-text">SEO drafts that stay inside your admin view</h3>
               </div>
               <div className="flex flex-wrap items-center justify-end gap-2">
                 {seoStudioModelUsed && <span className="rounded-full border border-white/20 bg-black/20 px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-white shadow-sm backdrop-blur-md">Model · {seoStudioModelUsed}</span>}
@@ -7251,7 +7251,7 @@ function App() {
             </div>
 
             <div className="relative z-10 mt-6 grid gap-4">
-              <label className="grid gap-2 text-sm font-bold text-white drop-shadow-md">
+              <label className="grid gap-2 text-sm font-bold text-white lofi-sharp-text">
                 Gemini API key
                 <div className="flex gap-2">
                   <input
@@ -7265,10 +7265,10 @@ function App() {
                     {showSeoStudioKey ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
-                <span className="text-xs font-semibold text-white/80 drop-shadow-sm">Stored only in this browser for the master email view. Use a browser-restricted key if possible.</span>
+                <span className="text-xs font-semibold text-white/95 lofi-sharp-text-soft">Stored only in this browser for the master email view. Use a browser-restricted key if possible.</span>
               </label>
 
-              <label className="grid gap-2 text-sm font-bold text-white drop-shadow-md">
+              <label className="grid gap-2 text-sm font-bold text-white lofi-sharp-text">
                 What should the AI focus on?
                 <textarea
                   className="min-h-[128px] rounded-2xl border border-white/20 bg-black/20 px-4 py-3 text-sm leading-7 text-white outline-none backdrop-blur-md transition placeholder:text-white/50 focus:border-white/40 focus:ring-4 focus:ring-white/10"
@@ -7298,14 +7298,14 @@ function App() {
 
               <div className="rounded-[2.2rem] border border-white/20 bg-black/20 p-4 shadow-sm backdrop-blur-md">
                 <div className="flex items-center justify-between gap-3">
-                  <p className="text-sm font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm">AI report</p>
-                  <span className="text-xs font-bold uppercase tracking-[0.18em] text-white/70 drop-shadow-sm">Admin draft only</span>
+                  <p className="text-sm font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">AI report</p>
+                  <span className="text-xs font-bold uppercase tracking-[0.18em] text-white/85 lofi-sharp-text-soft">Admin draft only</span>
                 </div>
                 <div className="mt-4 max-h-[28rem] overflow-auto rounded-[1.4rem] bg-black/30 border border-white/20 p-4 shadow-inner lofi-scrollbar">
                   {seoStudioReport ? (
-                    <pre className="whitespace-pre-wrap text-sm leading-7 text-white/90 drop-shadow-sm">{seoStudioReport}</pre>
+                    <pre className="whitespace-pre-wrap text-sm leading-7 text-white/95 lofi-sharp-text-soft">{seoStudioReport}</pre>
                   ) : (
-                    <p className="text-sm leading-7 text-white/70 drop-shadow-sm">Run the AI SEO review to generate a fresh draft. It will use the current Lofi Memory positioning, homepage framing, guide-page cluster, and privacy-first diary context.</p>
+                    <p className="text-sm leading-7 text-white/85 lofi-sharp-text-soft">Run the AI SEO review to generate a fresh draft. It will use the current Lofi Memory positioning, homepage framing, guide-page cluster, and privacy-first diary context.</p>
                   )}
                 </div>
               </div>
@@ -7338,7 +7338,7 @@ function App() {
               <a className="transition hover:text-white/70" href="/disclaimer.html">Disclaimer</a>
               <a className="transition hover:text-white/70" href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
             </div>
-            <p className="font-bold text-white/95 drop-shadow-md">Lofi Memory is a soft browser space to listen to lofi music, relax, journal, breathe, and play chill games whenever you want a calmer moment online.</p>
+            <p className="font-bold text-white lofi-sharp-text-soft">Lofi Memory is a soft browser space to listen to lofi music, relax, journal, breathe, and play chill games whenever you want a calmer moment online.</p>
           </div>
         </div>
       </footer>
