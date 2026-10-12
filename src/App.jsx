@@ -4945,21 +4945,21 @@ function App() {
               )}
               <div className="flex flex-wrap items-center gap-2 rounded-full border border-white/20 bg-black/20 p-1.5 shadow-sm backdrop-blur-md xl:flex-nowrap">
                 {user && (
-                  <button className="rounded-full border border-white/30 bg-white/10 px-3.5 py-2 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-white/20" onClick={handleSignOut} type="button">
+                  <button className="rounded-full border border-white/30 bg-white/10 px-3.5 py-2 text-sm font-bold text-white lofi-sharp-chip transition hover:-translate-y-0.5 hover:bg-white/20" onClick={handleSignOut} type="button">
                     Sign out
                   </button>
                 )}
                 {isMasterAdmin && (
                   <div className="flex overflow-hidden rounded-full border border-white/25 bg-white/10 p-1">
                     <button
-                      className={`rounded-full px-3.5 py-2 text-sm font-extrabold transition ${adminViewMode === 'master' ? 'bg-white text-[#4a3a2d] shadow-sm' : 'text-white/80 hover:bg-white/10'}`}
+                      className={`rounded-full px-3.5 py-2 text-sm font-extrabold transition lofi-sharp-chip ${adminViewMode === 'master' ? 'bg-white text-[#4a3a2d] shadow-sm' : 'text-white/90 hover:bg-white/10'}`}
                       onClick={() => setAdminViewMode('master')}
                       type="button"
                     >
                       Master
                     </button>
                     <button
-                      className={`rounded-full px-3.5 py-2 text-sm font-extrabold transition ${adminViewMode === 'user' ? 'bg-white text-[#4a3a2d] shadow-sm' : 'text-white/80 hover:bg-white/10'}`}
+                      className={`rounded-full px-3.5 py-2 text-sm font-extrabold transition lofi-sharp-chip ${adminViewMode === 'user' ? 'bg-white text-[#4a3a2d] shadow-sm' : 'text-white/90 hover:bg-white/10'}`}
                       onClick={() => setAdminViewMode('user')}
                       type="button"
                     >
@@ -4972,10 +4972,10 @@ function App() {
                     SEO studio
                   </button>
                 )}
-                <button className={`rounded-full border px-3.5 py-2 text-sm font-bold transition hover:-translate-y-0.5 ${comfortMode ? 'border-white bg-white text-[#4a3a2d]' : 'border-white/30 bg-white/10 text-white hover:bg-white/20'}`} onClick={() => setComfortMode(!comfortMode)} type="button">
+                <button className={`rounded-full border px-3.5 py-2 text-sm font-bold lofi-sharp-chip transition hover:-translate-y-0.5 ${comfortMode ? 'border-white bg-white text-[#4a3a2d]' : 'border-white/30 bg-white/10 text-white hover:bg-white/20'}`} onClick={() => setComfortMode(!comfortMode)} type="button">
                   Comfort
                 </button>
-                <button className="rounded-full border border-white/30 bg-white/10 px-3.5 py-2 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-white/20" onClick={() => (hasPin ? setPinSettingsOpen(true) : setLocked(true))} type="button">
+                <button className="rounded-full border border-white/30 bg-white/10 px-3.5 py-2 text-sm font-bold text-white lofi-sharp-chip transition hover:-translate-y-0.5 hover:bg-white/20" onClick={() => (hasPin ? setPinSettingsOpen(true) : setLocked(true))} type="button">
                   {hasPin ? 'Privacy' : 'Set lock'}
                 </button>
               </div>
@@ -5249,10 +5249,10 @@ function App() {
 
             <div className="mt-8 rounded-[1.6rem] bg-white/12 px-5 py-5 text-center ring-1 ring-white/12">
               <div className="mx-auto max-w-xl">
-                <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-white/90">Quiet reminder</p>
-                <p className="mt-3 text-sm leading-7 text-white/95">You can leave one small honest note today and return tomorrow. The page will still be here when you are ready.</p>
+                <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft">Quiet reminder</p>
+                <p className="mt-3 text-sm leading-7 text-white/95 lofi-sharp-text-soft">You can leave one small honest note today and return tomorrow. The page will still be here when you are ready.</p>
                 <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
-                  <p className="text-sm font-semibold tracking-[0.08em] text-white/90">{streak > 0 ? `${streak} day${streak === 1 ? '' : 's'} of rhythm` : 'Begin with one gentle page'}</p>
+                  <p className="text-sm font-semibold tracking-[0.08em] text-white/95 lofi-sharp-chip">{streak > 0 ? `${streak} day${streak === 1 ? '' : 's'} of rhythm` : 'Begin with one gentle page'}</p>
                   <a className="inline-flex items-center rounded-full bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.14em] text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50" href="#journal" onClick={() => navigateToTab('write')}>
                     Write now
                   </a>
@@ -5861,7 +5861,7 @@ function App() {
                               type="button"
                             >
                               {difficulty.label}
-                              <span className={`ml-2 text-[10px] uppercase tracking-[0.18em] ${selectedGameDifficulty === difficulty.id ? 'text-white/75' : (gameVisualTheme === 'lofi' ? 'text-amber-800/60' : 'text-sage-500')}`}>{difficulty.detail}</span>
+                              <span className={`ml-2 text-[10px] uppercase tracking-[0.18em] ${selectedGameDifficulty === difficulty.id ? 'text-white/90' : (gameVisualTheme === 'lofi' ? 'text-amber-800/70' : 'text-sage-500')}`}>{difficulty.detail}</span>
                             </button>
                           ))}
                         </div>
@@ -5952,7 +5952,7 @@ function App() {
                   <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
                   <div className="relative z-10">
                     <div className="flex items-center gap-3">
-                      <Sparkles className="text-white/80" size={20} />
+                      <Sparkles className="text-white/90" size={20} />
                       <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Featured relaxing games</p>
                     </div>
                     <h2 className="mt-3 text-2xl font-extrabold text-white lofi-sharp-text">Solitaire and Mind Sweeper are ready first.</h2>
@@ -5964,7 +5964,7 @@ function App() {
                   <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
                   <div className="relative z-10">
                     <div className="flex items-center gap-3">
-                      <PenLine className="text-white/80" size={20} />
+                      <PenLine className="text-white/90" size={20} />
                       <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Chill game journal</p>
                     </div>
                     <h2 className="mt-3 text-2xl font-extrabold text-white lofi-sharp-text">Play, then write one soft reflection.</h2>
@@ -6576,7 +6576,7 @@ function App() {
                   <h1 className="font-display text-5xl font-bold tracking-tight text-white lofi-sharp-text">Memories</h1>
                   <p className="mt-2 text-xs font-black uppercase tracking-[0.3em] text-white/95 lofi-sharp-text-soft">Journal calendar</p>
                 </div>
-                <div className="flex flex-wrap gap-2 text-[11px] font-black uppercase tracking-[0.16em] text-white/90">
+                <div className="flex flex-wrap gap-2 text-[11px] font-black uppercase tracking-[0.16em] text-white/95 lofi-sharp-chip">
                   <span className="rounded-full border border-white/20 bg-black/20 px-3 py-2 backdrop-blur-sm">{importantDateCount} saved</span>
                   <span className="rounded-full border border-white/20 bg-black/20 px-3 py-2 backdrop-blur-sm">{upcomingReminderCount} reminders</span>
                 </div>
@@ -7197,14 +7197,14 @@ function App() {
               <p className="text-sm font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Preview mode</p>
               <div className="mt-3 flex overflow-hidden rounded-full border border-white/30 bg-white/10 p-1">
                 <button
-                  className={`flex-1 rounded-full px-4 py-2.5 text-sm font-black transition backdrop-blur-md ${adminViewMode === 'master' ? 'bg-white/30 text-white shadow-sm' : 'text-white/80 hover:bg-white/10'}`}
+                  className={`flex-1 rounded-full px-4 py-2.5 text-sm font-black transition backdrop-blur-md lofi-sharp-chip ${adminViewMode === 'master' ? 'bg-white/30 text-white shadow-sm' : 'text-white/90 hover:bg-white/10'}`}
                   onClick={() => setAdminViewMode('master')}
                   type="button"
                 >
                   Master view
                 </button>
                 <button
-                  className={`flex-1 rounded-full px-4 py-2.5 text-sm font-black transition backdrop-blur-md ${adminViewMode === 'user' ? 'bg-white/30 text-white shadow-sm' : 'text-white/80 hover:bg-white/10'}`}
+                  className={`flex-1 rounded-full px-4 py-2.5 text-sm font-black transition backdrop-blur-md lofi-sharp-chip ${adminViewMode === 'user' ? 'bg-white/30 text-white shadow-sm' : 'text-white/90 hover:bg-white/10'}`}
                   onClick={() => setAdminViewMode('user')}
                   type="button"
                 >
@@ -7321,22 +7321,22 @@ function App() {
           <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.15),transparent_25rem)]" />
           <div className="relative z-10">
-            <div className="mb-4 flex flex-wrap justify-center gap-4 font-black uppercase tracking-[0.15em] text-white">
-              <a className="transition hover:text-white/70" href="#home" onClick={() => openHomeSection('home')}>Home</a>
-              <button className="transition hover:text-white/70" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
-              <a className="transition hover:text-white/70" href="#about" onClick={() => openHomeSection('about')}>About</a>
-              <a className="transition hover:text-white/70" href="#resources" onClick={() => openHomeSection('resources')}>Resources</a>
-              <a className="transition hover:text-white/70" href="#articles" onClick={() => openHomeSection('articles')}>Articles</a>
-              <a className="transition hover:text-white/70" href="#tips" onClick={() => openHomeSection('tips')}>Tips</a>
-              <a className="transition hover:text-white/70" href="/blog.html">Blog</a>
-              <a className="transition hover:text-white/70" href="/about.html">About</a>
-              <a className="transition hover:text-white/70" href="/editorial-policy.html">Editorial Policy</a>
-              <a className="transition hover:text-white/70" href="/privacy.html">Privacy</a>
-              <a className="transition hover:text-white/70" href="/advertising-policy.html">Advertising</a>
-              <a className="transition hover:text-white/70" href="/terms.html">Terms</a>
-              <a className="transition hover:text-white/70" href="/cookie-policy.html">Cookies</a>
-              <a className="transition hover:text-white/70" href="/disclaimer.html">Disclaimer</a>
-              <a className="transition hover:text-white/70" href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
+            <div className="mb-4 flex flex-wrap justify-center gap-4 font-black uppercase tracking-[0.15em] text-white lofi-sharp-chip">
+              <a className="transition hover:text-white" href="#home" onClick={() => openHomeSection('home')}>Home</a>
+              <button className="transition hover:text-white" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
+              <a className="transition hover:text-white" href="#about" onClick={() => openHomeSection('about')}>About</a>
+              <a className="transition hover:text-white" href="#resources" onClick={() => openHomeSection('resources')}>Resources</a>
+              <a className="transition hover:text-white" href="#articles" onClick={() => openHomeSection('articles')}>Articles</a>
+              <a className="transition hover:text-white" href="#tips" onClick={() => openHomeSection('tips')}>Tips</a>
+              <a className="transition hover:text-white" href="/blog.html">Blog</a>
+              <a className="transition hover:text-white" href="/about.html">About</a>
+              <a className="transition hover:text-white" href="/editorial-policy.html">Editorial Policy</a>
+              <a className="transition hover:text-white" href="/privacy.html">Privacy</a>
+              <a className="transition hover:text-white" href="/advertising-policy.html">Advertising</a>
+              <a className="transition hover:text-white" href="/terms.html">Terms</a>
+              <a className="transition hover:text-white" href="/cookie-policy.html">Cookies</a>
+              <a className="transition hover:text-white" href="/disclaimer.html">Disclaimer</a>
+              <a className="transition hover:text-white" href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
             </div>
             <p className="font-bold text-white lofi-sharp-text-soft">Lofi Memory is a soft browser space to listen to lofi music, relax, journal, breathe, and play chill games whenever you want a calmer moment online.</p>
           </div>
