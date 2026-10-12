@@ -101,6 +101,20 @@ input::placeholder {
   border-radius: 3.2rem;
 }
 
+.personalized-site .lofi-sharp-text {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.54);
+}
+
+.personalized-site .lofi-sharp-text-soft {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.42);
+}
+
 .personalized-site .theme-panel {
   background:
     var(--theme-texture),
@@ -776,10 +790,10 @@ input::placeholder {
 
 .lofi-glass {
   position: relative;
-  background: linear-gradient(145deg, rgba(255, 250, 242, 0.9), rgba(250, 237, 205, 0.72)) !important;
-  backdrop-filter: blur(24px) saturate(112%) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(112%) !important;
-  border-color: rgba(232, 223, 213, 0.88) !important;
+  background: linear-gradient(145deg, rgba(255, 250, 242, 0.94), rgba(250, 237, 205, 0.78)) !important;
+  backdrop-filter: blur(16px) saturate(108%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(108%) !important;
+  border-color: rgba(232, 223, 213, 0.92) !important;
   box-shadow: 0 20px 60px rgba(83, 62, 44, 0.08) !important;
 }
 

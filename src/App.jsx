@@ -4897,8 +4897,8 @@ function App() {
                 <img src={headerLogoIcon} alt="Lofi Memory Logo" className="h-full w-full rounded-[1rem] object-cover" />
               </div>
               <div>
-                <p className="font-display text-2xl font-bold text-white drop-shadow-md">Lofi Memory</p>
-                <p className="text-xs font-black uppercase tracking-[0.28em] text-white/90 drop-shadow-sm">Chill music, lofi games & journal</p>
+                <p className="font-display text-2xl font-bold text-white lofi-sharp-text">Lofi Memory</p>
+                <p className="lofi-sharp-text-soft text-xs font-black uppercase tracking-[0.28em] text-white/95">Relaxing games, music, diary & notes</p>
               </div>
             </a>
             <div className="site-nav-links hidden flex-1 items-center justify-center gap-7 xl:gap-9">
@@ -4913,7 +4913,7 @@ function App() {
               ].map((tab) => (
                 <button
                   key={tab.id}
-                  className={`flex items-center gap-2 text-sm font-black uppercase tracking-widest transition drop-shadow-sm ${activeTab === tab.id ? 'text-white' : 'text-white/80 hover:text-white'}`}
+                  className={`flex items-center gap-2 text-sm font-black uppercase tracking-widest transition lofi-sharp-text-soft ${activeTab === tab.id ? 'text-white' : 'text-white/90 hover:text-white'}`}
                   onClick={() => navigateToTab(tab.id)}
                 >
                   <tab.icon size={16} /> {tab.label}
@@ -4925,8 +4925,8 @@ function App() {
               {user ? (
                 <div className="flex min-w-[210px] flex-1 items-center justify-between gap-3 rounded-full border border-white/25 bg-white/15 px-4 py-2.5 shadow-sm backdrop-blur-md xl:flex-none">
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-extrabold text-white">{user.displayName || user.email}</p>
-                    <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/70">{cloudStatus}</p>
+                    <p className="truncate text-sm font-extrabold text-white lofi-sharp-text">{user.displayName || user.email}</p>
+                    <p className="lofi-sharp-text-soft text-[11px] font-bold uppercase tracking-[0.18em] text-white/85">{cloudStatus}</p>
                   </div>
                   <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-white/20 text-white shadow-sm">
                     <ShieldCheck size={15} />
@@ -4935,8 +4935,8 @@ function App() {
               ) : (
                 <button className="flex min-w-[208px] flex-1 items-center justify-between gap-3 rounded-full border border-white/25 bg-white/15 px-4 py-2.5 text-left shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25 xl:flex-none" onClick={signInWithGoogle} disabled={authLoading} type="button">
                   <div>
-                    <p className="text-sm font-extrabold text-white">{authLoading ? 'Checking login...' : 'Sign in with Google'}</p>
-                    <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-white/70">Sync across devices</p>
+                    <p className="text-sm font-extrabold text-white lofi-sharp-text">{authLoading ? 'Checking login...' : 'Sign in with Google'}</p>
+                    <p className="lofi-sharp-text-soft text-[11px] font-bold uppercase tracking-[0.16em] text-white/85">Sync across devices</p>
                   </div>
                   <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-white text-[#4a3a2d] shadow-sm">
                     <ShieldCheck size={15} />
@@ -4996,7 +4996,7 @@ function App() {
       <section id="home" className="mx-auto max-w-[1040px] px-5 pb-20 pt-10 sm:px-7 xl:px-10">
         <div className="mb-6 text-center">
           <p className="text-[11px] font-extrabold uppercase tracking-[0.34em] text-[#9a806a]">Choose your chill space</p>
-            <p className="mt-3 text-sm font-semibold leading-7 text-[#7f6a58]">Pick a space.</p>
+            <p className="mt-3 text-sm font-semibold leading-7 text-[#7f6a58]">Start with games, music, diary, notes, or memories.</p>
         </div>
           <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-3 shadow-soft sm:p-4">
             <div className="grid gap-3 md:grid-cols-2">
@@ -5010,8 +5010,8 @@ function App() {
                   <img src={card.preview} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" aria-hidden="true" />
                   <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/25 to-black/5" />
                   <div className="relative z-10 w-full">
-                    <p className="text-xl font-black tracking-tight text-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)]">{card.title}</p>
-                    <p className="mt-1 text-[11px] font-black uppercase tracking-[0.25em] text-white/90 drop-shadow-md">{card.description}</p>
+                    <p className="lofi-sharp-text text-xl font-black tracking-tight text-white">{card.title}</p>
+                    <p className="lofi-sharp-text-soft mt-1 text-[11px] font-black uppercase tracking-[0.25em] text-white/95">{card.description}</p>
                   </div>
                 </button>
               ))}
@@ -5028,11 +5028,11 @@ function App() {
             <div className="absolute inset-0 bg-gradient-to-br from-black/58 via-black/28 to-black/10" />
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.20),transparent_20rem)]" />
             <div className="relative z-10">
-              <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/15 px-4 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md">
-                <Headphones size={16} /> Lofi music & chill vibes
+              <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/15 px-4 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md lofi-sharp-text-soft">
+                <Headphones size={16} /> Relaxing music, browser games, diary & notes
               </div>
-              <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.96] tracking-tight text-white drop-shadow-[0_4px_9px_rgba(0,0,0,0.48)] md:text-6xl">Lofi Memory — a relaxing place to play games and listen to music.</h1>
-              <p className="mt-5 max-w-3xl text-[1.18rem] font-bold leading-8 text-white/95 drop-shadow-[0_2px_5px_rgba(0,0,0,0.42)]">Listen to lofi music, play relaxing browser games, chill, keep a private online diary, and enjoy a cozy music room in one soft online space.</p>
+              <h1 className="lofi-sharp-text max-w-3xl font-display text-5xl font-bold leading-[0.96] tracking-tight text-white md:text-6xl">Lofi Memory is your cozy online space for relaxing games, lofi music, private journaling, and notes.</h1>
+              <p className="lofi-sharp-text-soft mt-5 max-w-3xl text-[1.18rem] font-bold leading-8 text-white/100">Listen to lofi music, play relaxing browser games, keep a private online diary, save reminders, and settle into a softer music room without bouncing between tabs.</p>
 
               <div className="lofi-now-playing mt-7 flex flex-col gap-4 rounded-[2.2rem] border border-white/20 bg-black/15 p-4 shadow-sm backdrop-blur-md sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-4">
@@ -5040,8 +5040,8 @@ function App() {
                     <div className="h-5 w-5 rounded-full border border-white/25 bg-[#f3e7d8]" />
                   </div>
                   <div>
-                    <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-white/70">Now playing</p>
-                    <p className="mt-1 text-base font-extrabold text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.35)]">Dusk room · rain window · soft study beats</p>
+                    <p className="lofi-sharp-text-soft text-[11px] font-extrabold uppercase tracking-[0.24em] text-white/85">Now playing</p>
+                    <p className="lofi-sharp-text mt-1 text-base font-extrabold text-white">Dusk room · rain window · soft study beats</p>
                   </div>
                 </div>
                 <div className="lofi-equalizer" aria-hidden="true"><span /><span /><span /><span /><span /></div>
@@ -5149,8 +5149,8 @@ function App() {
                       </div>
                       <div className="min-w-0 flex-1">
                         <span className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-700">Write</span>
-                        <span className="mt-1 block text-base font-extrabold text-sage-950">Thought drop</span>
-                        <span className="mt-2 block text-sm leading-6 text-sage-700">Write down whatever is on your mind only when you want to keep it, with more room to breathe.</span>
+                        <span className="mt-1 block text-base font-extrabold text-sage-950">Private journal</span>
+                        <span className="mt-2 block text-sm leading-6 text-sage-700">Write down what is on your mind whenever you want to keep the moment, with more room to breathe.</span>
                       </div>
                     </button>
                   </div>
