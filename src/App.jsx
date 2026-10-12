@@ -5457,97 +5457,101 @@ function App() {
         </div>
 
         {activeTab === 'write' && (
-        <form className="lofi-picture-border lofi-border-memory rounded-[3rem] border border-[#e8dfd5]/80 bg-white/94 p-4 shadow-soft backdrop-blur sm:p-6 xl:p-8" onSubmit={saveEntry}>
-          <div className="lofi-picture-border lofi-border-memory relative mb-6 overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/25 p-8 shadow-sm lg:p-10">
-            <img src={diarySectionPreviewImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
-            <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
-            <div className="relative z-10">
-              <h1 className="font-display text-5xl font-bold tracking-tight text-white drop-shadow-md">Diary</h1>
-              <p className="mt-2 text-xs font-black uppercase tracking-[0.3em] text-white/90 drop-shadow-sm">Private Journal</p>
-              <div className="mt-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-                <div className="max-w-xl">
-                  <p className="text-base font-bold text-white/95 drop-shadow-md">Keep it simple. Write what feels true. A sentence, a fragment, or a few plain words are already enough.</p>
+        <form className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-4 shadow-soft sm:p-6 xl:p-8" onSubmit={saveEntry}>
+          <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/25 to-black/15" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.06),transparent_35rem)]" />
+          <div className="relative z-10">
+            <div className="lofi-picture-border lofi-border-memory relative mb-6 overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/25 p-8 shadow-sm lg:p-10">
+              <img src={diarySectionPreviewImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+              <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
+              <div className="relative z-10">
+                <h1 className="font-display text-5xl font-bold tracking-tight text-white drop-shadow-md">Diary</h1>
+                <p className="mt-2 text-xs font-black uppercase tracking-[0.3em] text-white/90 drop-shadow-sm">Private Journal</p>
+                <div className="mt-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                  <div className="max-w-xl">
+                    <p className="text-base font-bold text-white/95 drop-shadow-md">Keep it simple. Write what feels true. A sentence, a fragment, or a few plain words are already enough.</p>
+                  </div>
+                  <div className="inline-flex items-center gap-2 self-start rounded-full border border-white/25 bg-white/12 px-4 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md">
+                    <CalendarDays size={16} /> {formatDate(new Date().toISOString())}
+                  </div>
                 </div>
-                <div className="inline-flex items-center gap-2 self-start rounded-full border border-white/25 bg-white/12 px-4 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md">
-                  <CalendarDays size={16} /> {formatDate(new Date().toISOString())}
+                <div className="mt-6 flex flex-wrap gap-2 text-[11px] font-black uppercase tracking-[0.2em] text-white/80 sm:text-xs">
+                  <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-sm">{selectedMood} mood</span>
+                  <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-sm">{draftWordCount} words</span>
+                  <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-sm">{completedQuestCount}/{journalQuest.length} ritual steps</span>
                 </div>
-              </div>
-              <div className="mt-6 flex flex-wrap gap-2 text-[11px] font-black uppercase tracking-[0.2em] text-white/80 sm:text-xs">
-                <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-sm">{selectedMood} mood</span>
-                <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-sm">{draftWordCount} words</span>
-                <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-sm">{completedQuestCount}/{journalQuest.length} ritual steps</span>
               </div>
             </div>
-          </div>
 
-          <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
-            <label className="block text-sm font-bold text-sage-800" htmlFor="entry-title">Title, if you want one</label>
-            <p className="text-sm font-semibold text-sage-500">It can stay short, plain, or even blank.</p>
-          </div>
-          <input
-            className="journal-title-input mb-5 w-full rounded-[2.2rem] px-5 py-4 text-lg font-semibold outline-none"
-            id="entry-title"
-            onChange={(event) => setTitle(event.target.value)}
-            placeholder="e.g. The part of today I want to keep"
-            value={title}
-          />
+            <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
+              <label className="block text-sm font-bold text-white drop-shadow-md" htmlFor="entry-title">Title, if you want one</label>
+              <p className="text-sm font-semibold text-white/80 drop-shadow-sm">It can stay short, plain, or even blank.</p>
+            </div>
+            <input
+              className="journal-title-input mb-5 w-full rounded-[2.2rem] border border-white/20 bg-black/15 px-5 py-4 text-lg font-bold text-white placeholder-white/50 outline-none backdrop-blur-md transition focus:border-white/40 focus:bg-black/30"
+              id="entry-title"
+              onChange={(event) => setTitle(event.target.value)}
+              placeholder="e.g. The part of today I want to keep"
+              value={title}
+            />
 
-          <div className="mb-4 rounded-[1.6rem] border border-[#e8dfd5]/90 bg-gradient-to-r from-white via-sage-50/45 to-white p-3.5 shadow-sm backdrop-blur-sm sm:p-4">
-            <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
-              <div className="space-y-3">
-                <div>
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-500">Light controls</p>
-                  <p className="mt-1 text-sm font-semibold text-sage-600">Keep only what helps, then let the page stay quiet.</p>
+            <div className="mb-4 rounded-[1.6rem] border border-white/20 bg-white/10 p-3.5 shadow-sm backdrop-blur-md sm:p-4">
+              <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+                <div className="space-y-3">
+                  <div>
+                    <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/90 drop-shadow-sm">Light controls</p>
+                    <p className="mt-1 text-sm font-bold text-white/80 drop-shadow-sm">Keep only what helps, then let the page stay quiet.</p>
+                  </div>
+                  <div className="grid gap-3 sm:grid-cols-2 xl:min-w-[31rem] xl:grid-cols-3">
+                    <label className="block text-[11px] font-black uppercase tracking-[0.22em] text-white/90 drop-shadow-sm">
+                      Mood
+                      <select className="mt-2 w-full rounded-[1.15rem] border border-white/30 bg-black/20 px-3.5 py-3 text-sm font-bold text-white outline-none backdrop-blur-sm transition focus:border-white/60 focus:bg-black/30" onChange={(event) => setSelectedMood(event.target.value)} value={selectedMood}>
+                        {weatherOptions.map((mood) => (
+                          <option className="text-ink" key={mood.label} value={mood.label}>{mood.label}</option>
+                        ))}
+                      </select>
+                    </label>
+                    <label className="block text-[11px] font-black uppercase tracking-[0.22em] text-white/90 drop-shadow-sm">
+                      Font
+                      <select className="mt-2 w-full rounded-[1.15rem] border border-white/30 bg-black/20 px-3.5 py-3 text-sm font-bold text-white outline-none backdrop-blur-sm transition focus:border-white/60 focus:bg-black/30" onChange={(event) => setJournalStyle({ ...journalStyle, fontId: event.target.value })} value={journalStyle.fontId}>
+                        {journalFontOptions.map((font) => (
+                          <option className="text-ink" key={font.id} value={font.id}>{font.label}</option>
+                        ))}
+                      </select>
+                    </label>
+                    <label className="block text-[11px] font-black uppercase tracking-[0.22em] text-white/90 drop-shadow-sm">
+                      Size
+                      <select className="mt-2 w-full rounded-[1.15rem] border border-white/30 bg-black/20 px-3.5 py-3 text-sm font-bold text-white outline-none backdrop-blur-sm transition focus:border-white/60 focus:bg-black/30" onChange={(event) => setJournalStyle({ ...journalStyle, sizeId: event.target.value })} value={journalStyle.sizeId}>
+                        {journalSizeOptions.map((size) => (
+                          <option className="text-ink" key={size.id} value={size.id}>{size.label}</option>
+                        ))}
+                      </select>
+                    </label>
+                  </div>
                 </div>
-                <div className="grid gap-3 sm:grid-cols-2 xl:min-w-[31rem] xl:grid-cols-3">
-                  <label className="block text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-500">
-                    Mood
-                    <select className="mt-2 w-full rounded-[1.15rem] border border-[#e8dfd5] bg-white/95 px-3.5 py-3 text-sm font-semibold text-ink outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70" onChange={(event) => setSelectedMood(event.target.value)} value={selectedMood}>
-                      {weatherOptions.map((mood) => (
-                        <option key={mood.label} value={mood.label}>{mood.label}</option>
-                      ))}
-                    </select>
+                <div className="flex flex-wrap items-center gap-2 xl:max-w-[22rem] xl:justify-end">
+                  <button className="rounded-full border border-white/30 bg-white/15 px-3.5 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25" onClick={() => toggleBoldText(entryBodyRef, setBody)} title="Bold selected text" type="button">Bold</button>
+                  <button className="rounded-full border border-white/30 bg-white/15 px-3.5 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25" onClick={() => toggleUnderlineText(entryBodyRef, setBody)} title="Underline selected text" type="button">Underline</button>
+                  <button className="rounded-full border border-white/30 bg-white/15 px-3.5 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25" onClick={() => toggleBulletList(entryBodyRef, setBody)} title="Bullet points" type="button">List</button>
+                  {quickEmojis.slice(0, 4).map((emoji) => (
+                    <button key={emoji} className="rounded-full border border-white/30 bg-white/15 px-3 py-1.5 text-base shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25" onClick={() => insertQuickEmoji(emoji)} type="button">
+                      {emoji}
+                    </button>
+                  ))}
+                  <label className="flex cursor-pointer items-center gap-2 rounded-full border border-white/30 bg-white/15 px-3.5 py-2 text-sm font-black text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25">
+                    <ImagePlus size={14} /> Photo
+                    <input accept="image/*" className="hidden" onChange={handleEntryImageUpload} type="file" />
                   </label>
-                  <label className="block text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-500">
-                    Font
-                    <select className="mt-2 w-full rounded-[1.15rem] border border-[#e8dfd5] bg-white/95 px-3.5 py-3 text-sm font-semibold text-ink outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70" onChange={(event) => setJournalStyle({ ...journalStyle, fontId: event.target.value })} value={journalStyle.fontId}>
-                      {journalFontOptions.map((font) => (
-                        <option key={font.id} value={font.id}>{font.label}</option>
-                      ))}
-                    </select>
-                  </label>
-                  <label className="block text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-500">
-                    Size
-                    <select className="mt-2 w-full rounded-[1.15rem] border border-[#e8dfd5] bg-white/95 px-3.5 py-3 text-sm font-semibold text-ink outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70" onChange={(event) => setJournalStyle({ ...journalStyle, sizeId: event.target.value })} value={journalStyle.sizeId}>
-                      {journalSizeOptions.map((size) => (
-                        <option key={size.id} value={size.id}>{size.label}</option>
-                      ))}
-                    </select>
-                  </label>
+                  <button className="rounded-full border border-white/30 bg-white px-4 py-2 text-sm font-black text-[#3d3025] shadow-sm transition hover:-translate-y-0.5 hover:bg-white/90" type="submit">Save page</button>
                 </div>
-              </div>
-              <div className="flex flex-wrap items-center gap-2 xl:max-w-[22rem] xl:justify-end">
-                <button className="rounded-full border border-[#e8dfd5] bg-white px-3.5 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-sage-50" onClick={() => toggleBoldText(entryBodyRef, setBody)} title="Bold selected text" type="button">Bold</button>
-                <button className="rounded-full border border-[#e8dfd5] bg-white px-3.5 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-sage-50" onClick={() => toggleUnderlineText(entryBodyRef, setBody)} title="Underline selected text" type="button">Underline</button>
-                <button className="rounded-full border border-[#e8dfd5] bg-white px-3.5 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-sage-50" onClick={() => toggleBulletList(entryBodyRef, setBody)} title="Bullet points" type="button">List</button>
-                {quickEmojis.slice(0, 4).map((emoji) => (
-                  <button key={emoji} className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1.5 text-base shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-sage-50" onClick={() => insertQuickEmoji(emoji)} type="button">
-                    {emoji}
-                  </button>
-                ))}
-                <label className="flex cursor-pointer items-center gap-2 rounded-full border border-[#e8dfd5] bg-white px-3.5 py-2 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-sage-50">
-                  <ImagePlus size={14} /> Photo
-                  <input accept="image/*" className="hidden" onChange={handleEntryImageUpload} type="file" />
-                </label>
-                <button className="rounded-full bg-ink px-4 py-2 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-800" type="submit">Save page</button>
               </div>
             </div>
-          </div>
 
-          <div className="journal-editor-shell mt-2 rounded-[3rem] p-3 md:p-4">
-            <div className="journal-editor-ribbon">quiet page</div>
-            <div className="journal-editor-meta journal-editor-top mb-3 flex flex-wrap items-center justify-between gap-2 px-3 text-[11px] font-bold uppercase tracking-[0.22em] text-sage-500 sm:text-xs sm:tracking-[0.24em]">
+            <div className="journal-editor-shell mt-2 rounded-[3rem] p-3 md:p-4 backdrop-blur-md bg-white/5 border border-white/10">
+              <div className="journal-editor-ribbon bg-black/30 text-white/90 border border-white/20">quiet page</div>
+              <div className="journal-editor-meta journal-editor-top mb-3 flex flex-wrap items-center justify-between gap-2 px-3 text-[11px] font-black uppercase tracking-[0.22em] text-white/70 drop-shadow-sm sm:text-xs sm:tracking-[0.24em]">
               <span>{selectedMood} mood · today</span>
               <span>{draftWordCount === 0 ? 'slow is still writing' : `${draftWordCount} words so far`}</span>
             </div>
@@ -5718,19 +5722,22 @@ function App() {
             </div>
 
             <aside className="flex flex-col gap-6 lg:sticky lg:top-28 lg:self-start">
-              <div className={`group relative overflow-hidden rounded-[3rem] border p-6 shadow-lift backdrop-blur transition duration-300 hover:shadow-soft ${selectedMoodGuide.shellClass}`}>
-                <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-sage-50/50 blur-2xl group-hover:bg-sage-100/60"></div>
-                <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Atmosphere</p>
-                <div className="mt-5 flex items-center gap-4">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-[1.5rem] bg-white text-3xl shadow-soft transition group-hover:scale-110">
-                    <WeatherGlyph mood={selectedMoodOption} size="text-2xl" />
+              <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur-xl transition duration-300 hover:shadow-md">
+                <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+                <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+                <div className="relative z-10">
+                  <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/90 drop-shadow-md">Atmosphere</p>
+                  <div className="mt-5 flex items-center gap-4">
+                    <div className="flex h-16 w-16 items-center justify-center rounded-[1.5rem] bg-white/20 text-3xl shadow-sm backdrop-blur-md ring-4 ring-white/10 transition hover:scale-105">
+                      <WeatherGlyph mood={selectedMoodOption} size="text-2xl" />
+                    </div>
+                    <div>
+                      <p className="text-xl font-black text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">{selectedMoodGuide.title}</p>
+                      <p className="text-sm font-bold text-white/80 drop-shadow-sm">{selectedMoodGuide.summary}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-xl font-extrabold text-ink">{selectedMoodGuide.title}</p>
-                    <p className="text-sm font-semibold text-sage-700">{selectedMoodGuide.summary}</p>
-                  </div>
+                  <p className="mt-5 text-sm font-bold leading-7 text-white/90 drop-shadow-sm">{latestEntry ? `Continuing "${latestEntry.title}".` : selectedMoodGuide.detail}</p>
                 </div>
-                <p className="mt-5 text-sm leading-7 text-sage-700">{latestEntry ? `Continuing "${latestEntry.title}".` : selectedMoodGuide.detail}</p>
               </div>
 
               <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur-xl">
@@ -5780,10 +5787,11 @@ function App() {
             </aside>
           </div>
           {saveReward && (
-            <div className="reward-toast mt-5 rounded-3xl border border-[#e8dfd5] bg-sage-900 p-5 font-extrabold leading-7 text-white shadow-soft">
+            <div className="relative z-10 reward-toast mt-5 rounded-3xl border border-[#e8dfd5] bg-sage-900 p-5 font-extrabold leading-7 text-white shadow-soft">
               {saveReward}
             </div>
           )}
+          </div>
         </form>
         )}
 
@@ -5900,15 +5908,17 @@ function App() {
                   </button>
                 ))}
               </div>
-              <div className="mt-6 rounded-[2.2rem] border border-[#e8dfd5] bg-white/82 p-5 shadow-sm backdrop-blur">
-                <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+              <div className="lofi-picture-border lofi-border-memory relative overflow-hidden mt-6 rounded-[2.2rem] border border-[#8b5e3c]/25 p-5 shadow-sm backdrop-blur-xl">
+                <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+                <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+                <div className="relative z-10 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                   <div>
-                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Quick start picks</p>
-                    <h2 className="mt-2 text-2xl font-extrabold text-sage-950">Start with the easiest game for your mood.</h2>
+                    <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm">Quick start picks</p>
+                    <h2 className="mt-2 text-2xl font-extrabold text-white drop-shadow-md">Start with the easiest game for your mood.</h2>
                   </div>
-                  <p className="max-w-xl text-sm leading-7 text-sage-700">These are the friendliest entry points if you want something that feels simple right away.</p>
+                  <p className="max-w-xl text-sm leading-7 text-white/90 drop-shadow-sm">These are the friendliest entry points if you want something that feels simple right away.</p>
                 </div>
-                <div className="mt-4 flex flex-wrap gap-2.5">
+                <div className="relative z-10 mt-4 flex flex-wrap gap-2.5">
                   {[
                     { id: 'solitaire', label: 'Solitaire • classic' },
                     { id: 'mind-sweeper', label: 'Mind Sweeper • logic' },
@@ -5918,7 +5928,7 @@ function App() {
                   ].map((item) => (
                     <button
                       key={item.id}
-                      className="rounded-full border border-amber-200/50 bg-sage-50/80 px-4 py-2 text-sm font-extrabold text-sage-800 transition hover:bg-white"
+                      className="rounded-full border border-white/20 bg-black/20 px-4 py-2 text-sm font-extrabold text-white backdrop-blur-md shadow-sm transition hover:bg-black/40"
                       onClick={() => selectUnwindGame(item.id)}
                       type="button"
                     >
@@ -5928,60 +5938,78 @@ function App() {
                 </div>
               </div>
               <div className="mt-6 grid gap-5 lg:grid-cols-2">
-                <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-sage-50/55 p-5 shadow-sm backdrop-blur">
-                  <div className="flex items-center gap-3">
-                    <Sparkles className="text-sage-600" size={20} />
-                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Featured relaxing games</p>
+                <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/25 p-5 shadow-sm backdrop-blur-xl">
+                  <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+                  <div className="relative z-10">
+                    <div className="flex items-center gap-3">
+                      <Sparkles className="text-white/80" size={20} />
+                      <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm">Featured relaxing games</p>
+                    </div>
+                    <h2 className="mt-3 text-2xl font-extrabold text-white drop-shadow-md">Solitaire and Mind Sweeper are ready first.</h2>
+                    <p className="mt-2 text-sm leading-7 text-white/90 drop-shadow-sm">Start with a familiar card game or a calm Minesweeper-style logic board, then keep the lofi music running while you unwind.</p>
                   </div>
-                  <h2 className="mt-3 text-2xl font-extrabold text-sage-950">Solitaire and Mind Sweeper are ready first.</h2>
-                  <p className="mt-2 text-sm leading-7 text-sage-700">Start with a familiar card game or a calm Minesweeper-style logic board, then keep the lofi music running while you unwind.</p>
                 </div>
-                <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/78 p-5 shadow-sm backdrop-blur">
-                  <div className="flex items-center gap-3">
-                    <PenLine className="text-sage-600" size={20} />
-                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Chill game journal</p>
+                <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/25 p-5 shadow-sm backdrop-blur-xl">
+                  <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+                  <div className="relative z-10">
+                    <div className="flex items-center gap-3">
+                      <PenLine className="text-white/80" size={20} />
+                      <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm">Chill game journal</p>
+                    </div>
+                    <h2 className="mt-3 text-2xl font-extrabold text-white drop-shadow-md">Play, then write one soft reflection.</h2>
+                    <p className="mt-2 text-sm leading-7 text-white/90 drop-shadow-sm">A calm game can become a journaling prompt: what felt relaxing, what color or sound stayed with you, and what thought became easier to let go.</p>
                   </div>
-                  <h2 className="mt-3 text-2xl font-extrabold text-sage-950">Play, then write one soft reflection.</h2>
-                  <p className="mt-2 text-sm leading-7 text-sage-700">A calm game can become a journaling prompt: what felt relaxing, what color or sound stayed with you, and what thought became easier to let go.</p>
                 </div>
               </div>
-              <div className="mt-6 rounded-[2.2rem] border border-[#e8dfd5] bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
-                <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+              <div className="lofi-picture-border lofi-border-memory relative overflow-hidden mt-6 rounded-[2.2rem] border border-[#8b5e3c]/25 p-5 shadow-sm backdrop-blur-xl lg:p-6">
+                <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+                <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+                <div className="relative z-10 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                   <div>
-                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Stay in the vibe</p>
-                    <h2 className="mt-2 text-2xl font-extrabold text-sage-950">Finish a round, then keep hanging out here.</h2>
+                    <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm">Stay in the vibe</p>
+                    <h2 className="mt-2 text-2xl font-extrabold text-white drop-shadow-md">Finish a round, then keep hanging out here.</h2>
                   </div>
-                  <p className="max-w-2xl text-sm leading-7 text-sage-700">Lofi Memory works best when you can bounce from one calm thing to another — a game, a breath, a quick note, or one sentence of journaling — without needing to leave the same soft space.</p>
+                  <p className="max-w-2xl text-sm leading-7 text-white/90 drop-shadow-sm">Lofi Memory works best when you can bounce from one calm thing to another — a game, a breath, a quick note, or one sentence of journaling — without needing to leave the same soft space.</p>
                 </div>
-                <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+                <div className="relative z-10 mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
                   {[
                     { label: 'Play Solitaire', detail: 'Open the classic card reset first when you want a familiar relaxing game with lofi music nearby.', action: () => selectUnwindGame('solitaire'), icon: Sparkles },
                     { label: 'Try Mind Sweeper', detail: 'Clear calm logic tiles when you want a Minesweeper-style focus break.', action: () => selectUnwindGame('mind-sweeper'), icon: Grid2x2 },
                     { label: 'Breathe for a minute', detail: 'Open the breathing screen for a softer reset between rounds.', action: () => navigateToTab('breathe'), icon: Wind },
                     { label: 'Write one line', detail: 'Catch a thought before it disappears, then come back to the games later.', action: () => navigateToTab('write'), icon: PenLine }
                   ].map((item) => (
-                    <button key={item.label} className="group rounded-[1.45rem] border border-white/85 bg-sage-50/55 p-4 text-left transition hover:-translate-y-1 hover:border-amber-200/50 hover:bg-white hover:shadow-lift" onClick={item.action} type="button">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-sage-800 shadow-sm transition group-hover:bg-sage-900 group-hover:text-white"><item.icon size={17} /></div>
-                      <h3 className="mt-3 text-base font-extrabold text-sage-950">{item.label}</h3>
-                      <p className="mt-2 text-sm leading-6 text-sage-700">{item.detail}</p>
+                    <button key={item.label} className="group rounded-[1.45rem] border border-white/20 bg-black/20 p-4 text-left backdrop-blur-md shadow-sm transition hover:-translate-y-1 hover:border-white/40 hover:bg-black/40 hover:shadow-md" onClick={item.action} type="button">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/20 text-white shadow-sm backdrop-blur-md transition group-hover:bg-white/30"><item.icon size={17} /></div>
+                      <h3 className="mt-3 text-base font-extrabold text-white drop-shadow-md">{item.label}</h3>
+                      <p className="mt-2 text-sm leading-6 text-white/90 drop-shadow-sm">{item.detail}</p>
                     </button>
                   ))}
                 </div>
               </div>
               <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)]">
-                <article className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Game-first comfort</p>
-                  <h2 className="mt-3 text-2xl font-extrabold text-sage-950">The games are meant to be the easiest place to begin.</h2>
-                  <p className="mt-3 text-sm leading-7 text-sage-700">If you just want something familiar, start with <span className="font-extrabold text-sage-900">Solitaire</span> for a classic card reset or <span className="font-extrabold text-sage-900">Mind Sweeper</span> for calm Minesweeper-style logic. Prefer other cozy puzzles? <span className="font-extrabold text-sage-900">Lofi Jigsaw</span>, <span className="font-extrabold text-sage-900">Sudoku</span>, <span className="font-extrabold text-sage-900">Wordle</span>, and <span className="font-extrabold text-sage-900">Tiles</span> are easy relaxing games to play while the lofi music stays on.</p>
+                <article className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/25 p-5 shadow-sm backdrop-blur-xl lg:p-6">
+                  <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+                  <div className="relative z-10">
+                    <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm">Game-first comfort</p>
+                    <h2 className="mt-3 text-2xl font-extrabold text-white drop-shadow-md">The games are meant to be the easiest place to begin.</h2>
+                    <p className="mt-3 text-sm leading-7 text-white/90 drop-shadow-sm">If you just want something familiar, start with <span className="font-extrabold text-white drop-shadow-md">Solitaire</span> for a classic card reset or <span className="font-extrabold text-white drop-shadow-md">Mind Sweeper</span> for calm Minesweeper-style logic. Prefer other cozy puzzles? <span className="font-extrabold text-white drop-shadow-md">Lofi Jigsaw</span>, <span className="font-extrabold text-white drop-shadow-md">Sudoku</span>, <span className="font-extrabold text-white drop-shadow-md">Wordle</span>, and <span className="font-extrabold text-white drop-shadow-md">Tiles</span> are easy relaxing games to play while the lofi music stays on.</p>
+                  </div>
                 </article>
-                <article className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Right now</p>
-                  <h2 className="mt-3 text-2xl font-extrabold text-sage-950">{selectedUnwindGameConfig.title} • {selectedDifficultyConfig.label}</h2>
-                  <p className="mt-3 text-sm leading-7 text-sage-700">{selectedUnwindGameConfig.description}</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    <span className="rounded-full border border-amber-200/50 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Switch anytime</span>
-                    <span className="rounded-full border border-amber-200/50 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Best in short sessions</span>
-                    <span className="rounded-full border border-amber-200/50 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Made for quick resets</span>
+                <article className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/25 p-5 shadow-sm backdrop-blur-xl lg:p-6">
+                  <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+                  <div className="relative z-10">
+                    <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm">Right now</p>
+                    <h2 className="mt-3 text-2xl font-extrabold text-white drop-shadow-md">{selectedUnwindGameConfig.title} • {selectedDifficultyConfig.label}</h2>
+                    <p className="mt-3 text-sm leading-7 text-white/90 drop-shadow-sm">{selectedUnwindGameConfig.description}</p>
+                  </div>
+                  <div className="relative z-10 mt-4 flex flex-wrap gap-2">
+                    <span className="rounded-full border border-white/20 bg-black/20 px-3 py-2 text-xs font-black uppercase tracking-[0.18em] text-white backdrop-blur-md shadow-sm">Switch anytime</span>
+                    <span className="rounded-full border border-white/20 bg-black/20 px-3 py-2 text-xs font-black uppercase tracking-[0.18em] text-white backdrop-blur-md shadow-sm">Best in short sessions</span>
+                    <span className="rounded-full border border-white/20 bg-black/20 px-3 py-2 text-xs font-black uppercase tracking-[0.18em] text-white backdrop-blur-md shadow-sm">Made for quick resets</span>
                   </div>
                 </article>
               </div>
@@ -6133,9 +6161,12 @@ function App() {
                 { label: 'Completed', value: completedPlannerTodoCount },
                 { label: 'Overdue', value: overduePlannerTodoCount }
               ].map((stat) => (
-                <div key={stat.label} className="rounded-[1.4rem] border border-[#e8dfd5] bg-sage-50/55 px-4 py-4 shadow-sm">
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-500">{stat.label}</p>
-                  <p className="mt-2 text-2xl font-extrabold text-sage-950">{stat.value}</p>
+                <div key={stat.label} className="relative overflow-hidden rounded-[1.4rem] border border-white/20 p-4 shadow-sm">
+                  <div className="absolute inset-0 bg-white/15 backdrop-blur-md" />
+                  <div className="relative z-10">
+                    <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm">{stat.label}</p>
+                    <p className="mt-2 text-2xl font-black text-white drop-shadow-md">{stat.value}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -6188,31 +6219,33 @@ function App() {
           </div>
 
           <aside className="flex flex-col gap-5">
-            <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/78 p-5 shadow-soft backdrop-blur-xl">
-              <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+            <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur-xl">
+              <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+              <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+              <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                 <div>
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">Task board</p>
-                  <p className="mt-1 text-sm font-semibold text-sage-600">Small, clear tasks with priority, status, and optional due dates so the page stays useful without feeling noisy.</p>
+                  <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/80 drop-shadow-sm">Task board</p>
+                  <p className="mt-1 text-sm font-semibold text-white drop-shadow-md">Small, clear tasks with priority, status, and optional due dates so the page stays useful without feeling noisy.</p>
                 </div>
-                <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-700">
-                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'all' ? 'border-sage-900 bg-sage-900 text-white' : 'border-[#e8dfd5] bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('all')} type="button">All {plannerTodoCount}</button>
-                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'open' ? 'border-sage-900 bg-sage-900 text-white' : 'border-[#e8dfd5] bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('open')} type="button">Open {openPlannerTodoCount}</button>
-                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'doing' ? 'border-sage-900 bg-sage-900 text-white' : 'border-[#e8dfd5] bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('doing')} type="button">Doing {inProgressPlannerTodoCount}</button>
-                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'done' ? 'border-sage-900 bg-sage-900 text-white' : 'border-[#e8dfd5] bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('done')} type="button">Done {completedPlannerTodoCount}</button>
-                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'high' ? 'border-sage-900 bg-sage-900 text-white' : 'border-[#e8dfd5] bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('high')} type="button">High {plannerBoard.todos.filter((todo) => todo.priority === 'high').length}</button>
-                  <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1">{plannerStorageLabel}</span>
+                <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-white">
+                  <button className={`rounded-full border px-3 py-1 backdrop-blur-md transition ${plannerTodoFilter === 'all' ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white/90 hover:bg-black/40'}`} onClick={() => setPlannerTodoFilter('all')} type="button">All {plannerTodoCount}</button>
+                  <button className={`rounded-full border px-3 py-1 backdrop-blur-md transition ${plannerTodoFilter === 'open' ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white/90 hover:bg-black/40'}`} onClick={() => setPlannerTodoFilter('open')} type="button">Open {openPlannerTodoCount}</button>
+                  <button className={`rounded-full border px-3 py-1 backdrop-blur-md transition ${plannerTodoFilter === 'doing' ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white/90 hover:bg-black/40'}`} onClick={() => setPlannerTodoFilter('doing')} type="button">Doing {inProgressPlannerTodoCount}</button>
+                  <button className={`rounded-full border px-3 py-1 backdrop-blur-md transition ${plannerTodoFilter === 'done' ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white/90 hover:bg-black/40'}`} onClick={() => setPlannerTodoFilter('done')} type="button">Done {completedPlannerTodoCount}</button>
+                  <button className={`rounded-full border px-3 py-1 backdrop-blur-md transition ${plannerTodoFilter === 'high' ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white/90 hover:bg-black/40'}`} onClick={() => setPlannerTodoFilter('high')} type="button">High {plannerBoard.todos.filter((todo) => todo.priority === 'high').length}</button>
+                  <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1 backdrop-blur-md text-white/90">{plannerStorageLabel}</span>
                 </div>
               </div>
 
-              <form className="mt-4 grid gap-3 sm:grid-cols-2" onSubmit={addPlannerTodo}>
+              <form className="relative z-10 mt-4 grid gap-3 sm:grid-cols-2" onSubmit={addPlannerTodo}>
                 <input
-                  className="flex-1 rounded-[1.15rem] border border-[#e8dfd5] bg-white px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70 sm:col-span-2"
+                  className="flex-1 rounded-[1.15rem] border border-white/20 bg-black/20 px-4 py-3 text-sm font-semibold text-white outline-none backdrop-blur-md placeholder:text-white/60 transition focus:border-white/40 focus:ring-4 focus:ring-white/10 sm:col-span-2"
                   onChange={(event) => setPlannerTodoDraft(event.target.value)}
                   placeholder="Add a task"
                   value={plannerTodoDraft}
                 />
                 <select
-                  className="rounded-[1.15rem] border border-[#e8dfd5] bg-white px-4 py-3 text-sm font-semibold text-sage-800 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
+                  className="rounded-[1.15rem] border border-white/20 bg-black/40 px-4 py-3 text-sm font-semibold text-white outline-none backdrop-blur-md transition focus:border-white/40 focus:ring-4 focus:ring-white/10 [&>option]:bg-[#2b231d]"
                   onChange={(event) => setPlannerTodoPriorityDraft(event.target.value)}
                   value={plannerTodoPriorityDraft}
                 >
@@ -6221,14 +6254,14 @@ function App() {
                   <option value="high">High priority</option>
                 </select>
                 <input
-                  className="rounded-[1.15rem] border border-[#e8dfd5] bg-white px-4 py-3 text-sm font-semibold text-sage-800 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
+                  className="rounded-[1.15rem] border border-white/20 bg-black/40 px-4 py-3 text-sm font-semibold text-white outline-none backdrop-blur-md transition focus:border-white/40 focus:ring-4 focus:ring-white/10"
                   min={todayISO()}
                   onChange={(event) => setPlannerTodoDueDateDraft(event.target.value)}
                   type="date"
                   value={plannerTodoDueDateDraft}
                 />
                 <select
-                  className="rounded-[1.15rem] border border-[#e8dfd5] bg-white px-4 py-3 text-sm font-semibold text-sage-800 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
+                  className="rounded-[1.15rem] border border-white/20 bg-black/40 px-4 py-3 text-sm font-semibold text-white outline-none backdrop-blur-md transition focus:border-white/40 focus:ring-4 focus:ring-white/10 [&>option]:bg-[#2b231d]"
                   onChange={(event) => setPlannerTodoRecurrenceDraft(event.target.value)}
                   value={plannerTodoRecurrenceDraft}
                 >
@@ -6237,15 +6270,15 @@ function App() {
                   <option value="weekly">Weekly</option>
                   <option value="monthly">Monthly</option>
                 </select>
-                <button className="inline-flex items-center justify-center rounded-[1.15rem] bg-sage-900 px-4 py-3 text-white shadow-lift transition hover:-translate-y-0.5 hover:bg-sage-800 sm:col-span-2" type="submit">
+                <button className="inline-flex items-center justify-center rounded-[1.15rem] bg-white/20 px-4 py-3 text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/30 sm:col-span-2" type="submit">
                   <Plus size={18} />
                 </button>
               </form>
 
-              <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-500">
+              <div className="relative z-10 mt-4 flex flex-wrap items-center justify-between gap-3 text-[10px] font-black uppercase tracking-[0.18em] text-white/80 drop-shadow-sm">
                 <span>{filteredPlannerTodos.length} shown · {overduePlannerTodoCount} overdue</span>
                 {completedPlannerTodoCount > 0 && (
-                  <button className="rounded-full border border-[#e8dfd5] bg-white px-3 py-2 text-sage-700 transition hover:bg-sage-50" onClick={clearCompletedPlannerTodos} type="button">
+                  <button className="rounded-full border border-white/30 bg-black/20 px-3 py-2 text-white transition backdrop-blur-md hover:bg-black/40" onClick={clearCompletedPlannerTodos} type="button">
                     Clear done tasks
                   </button>
                 )}
@@ -6343,57 +6376,71 @@ function App() {
                     </div>
                   );
                 }) : (
-                  <div className="rounded-[1.4rem] border border-dashed border-amber-200/50 bg-sage-50/45 px-4 py-5 text-sm font-semibold leading-6 text-sage-500">
-                    No tasks match this view yet. Try another filter or add a new task with a priority, due date, or recurring rhythm.
+                  <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[1.4rem] border border-[#8b5e3c]/25 p-5 shadow-sm backdrop-blur-xl">
+                    <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-60" aria-hidden="true" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/25 to-black/15" />
+                    <div className="relative z-10 text-sm font-semibold leading-6 text-white drop-shadow-md">
+                      No tasks match this view yet. Try another filter or add a new task with a priority, due date, or recurring rhythm.
+                    </div>
                   </div>
                 )}
               </div>
             </div>
 
-            <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/78 p-5 shadow-soft backdrop-blur-xl">
-              <div className="flex items-center justify-between gap-3">
+            <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur-xl">
+              <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+              <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+              <div className="relative z-10 flex items-center justify-between gap-3">
                 <div>
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">Upcoming reminders</p>
-                  <p className="mt-1 text-sm font-semibold text-sage-600">A calm shortlist of the dates that are coming up next.</p>
+                  <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/80 drop-shadow-sm">Upcoming reminders</p>
+                  <p className="mt-1 text-sm font-semibold text-white drop-shadow-md">A calm shortlist of the dates that are coming up next.</p>
                 </div>
-                <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-700">
-                  <span className="rounded-full border border-[#e8dfd5] bg-sage-50 px-3 py-1">{upcomingReminderCount} upcoming</span>
-                  <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1">{reminderStorageLabel}</span>
+                <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-white">
+                  <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1 backdrop-blur-md">{upcomingReminderCount} upcoming</span>
+                  <span className="rounded-full border border-white/20 bg-white/20 px-3 py-1 backdrop-blur-md">{reminderStorageLabel}</span>
                 </div>
               </div>
-              <div className="mt-4 space-y-3">
+              <div className="relative z-10 mt-4 space-y-3">
                 {upcomingReminderPreview.length ? upcomingReminderPreview.map((item) => (
-                  <button className="w-full rounded-[1.4rem] border border-[#e8dfd5] bg-sage-50/45 px-4 py-3 text-left transition hover:-translate-y-0.5 hover:bg-white hover:shadow-sm" key={item.dateKey} onClick={() => { setSelectedCalendarDate(item.dateKey); navigateToTab('memories'); }} type="button">
+                  <button className="w-full rounded-[1.4rem] border border-white/20 bg-black/20 px-4 py-3 text-left transition backdrop-blur-md hover:-translate-y-0.5 hover:bg-black/40 hover:shadow-sm" key={item.dateKey} onClick={() => { setSelectedCalendarDate(item.dateKey); navigateToTab('memories'); }} type="button">
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <div className="min-w-0 flex-1">
-                        <p className="text-sm font-extrabold leading-6 text-sage-900">{item.note}</p>
-                        <p className="mt-1 text-xs font-bold uppercase tracking-[0.16em] text-sage-500">{formatDate(item.dateKey)}{item.time ? ` · ${formatReminderTime(item.time)}` : ''}</p>
+                        <p className="text-sm font-bold leading-6 text-white drop-shadow-md">{item.note}</p>
+                        <p className="mt-1 text-xs font-bold uppercase tracking-[0.16em] text-white/70 drop-shadow-sm">{formatDate(item.dateKey)}{item.time ? ` · ${formatReminderTime(item.time)}` : ''}</p>
                       </div>
-                      <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-700">{item.relativeLabel}</span>
+                      <span className="rounded-full border border-white/30 bg-white/20 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-white drop-shadow-sm">{item.relativeLabel}</span>
                     </div>
                   </button>
                 )) : (
-                  <div className="rounded-[1.4rem] border border-dashed border-amber-200/50 bg-sage-50/45 px-4 py-5 text-sm font-semibold leading-6 text-sage-500">
-                    No upcoming reminders yet. Mark an important date in the calendar and it will show up here.
+                  <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[1.4rem] border border-[#8b5e3c]/25 p-5 shadow-sm backdrop-blur-xl">
+                    <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-60" aria-hidden="true" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/25 to-black/15" />
+                    <div className="relative z-10 text-sm font-semibold leading-6 text-white drop-shadow-md">
+                      No upcoming reminders yet. Mark an important date in the calendar and it will show up here.
+                    </div>
                   </div>
                 )}
               </div>
             </div>
 
-            <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/78 p-5 shadow-soft backdrop-blur-xl">
-              <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">Keep it simple</p>
-              <div className="mt-4 space-y-3 text-sm font-semibold leading-7 text-sage-700">
-                <p>Use this page for practical life details, not emotional journaling.</p>
-                <p>Keep the to-do list short enough that it still feels calm to open.</p>
-                <p>Move back to writing when you want reflection instead of admin.</p>
-              </div>
-              <div className="mt-5 flex flex-wrap gap-2">
-                <button className="inline-flex items-center gap-2 rounded-full bg-sage-900 px-4 py-2 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-800" onClick={() => navigateToTab('write')} type="button">
-                  <PenLine size={15} /> Go back to writing
-                </button>
-                <button className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white px-4 py-2 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50" onClick={() => navigateToTab('insights')} type="button">
-                  <CalendarDays size={15} /> Open calendar
-                </button>
+            <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur-xl">
+              <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+              <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+              <div className="relative z-10">
+                <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/80 drop-shadow-sm">Keep it simple</p>
+                <div className="mt-4 space-y-3 text-sm font-semibold leading-7 text-white drop-shadow-md">
+                  <p>Use this page for practical life details, not emotional journaling.</p>
+                  <p>Keep the to-do list short enough that it still feels calm to open.</p>
+                  <p>Move back to writing when you want reflection instead of admin.</p>
+                </div>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  <button className="inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/30" onClick={() => navigateToTab('write')} type="button">
+                    <PenLine size={15} /> Go back to writing
+                  </button>
+                  <button className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/20 px-4 py-2 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-black/30" onClick={() => navigateToTab('insights')} type="button">
+                    <CalendarDays size={15} /> Open calendar
+                  </button>
+                </div>
               </div>
             </div>
           </aside>
@@ -6402,82 +6449,96 @@ function App() {
 
         {activeTab === 'insights' && (
         <div className="mt-6 grid gap-6 pb-28 xl:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] xl:pb-0">
-          <div className="overflow-hidden rounded-[3rem] border border-[#e8dfd5] bg-gradient-to-br from-white/88 via-sage-50/68 to-sand-50/72 p-4 shadow-soft backdrop-blur sm:p-6 xl:p-8">
-            <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-4 shadow-soft backdrop-blur sm:p-6 xl:p-8">
+            <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-85" aria-hidden="true" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+            <div className="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
               <div className="max-w-3xl">
-                <p className="text-xs font-bold uppercase tracking-[0.24em] text-sage-600 sm:text-sm sm:tracking-widest">Reflection pattern</p>
-                <h2 className="mt-2 text-3xl font-extrabold leading-tight text-ink sm:text-4xl">Your recent journal check-ins</h2>
-                <p className="mt-3 text-sm font-semibold leading-7 text-sage-700">See the week in a calmer way: mood shifts, small streaks, and the gentle rhythm you are building by returning.</p>
+                <p className="text-xs font-black uppercase tracking-[0.24em] text-white/80 drop-shadow-sm sm:text-sm sm:tracking-widest">Reflection pattern</p>
+                <h2 className="mt-2 text-3xl font-extrabold leading-tight text-white drop-shadow-md sm:text-4xl">Your recent journal check-ins</h2>
+                <p className="mt-3 text-sm font-semibold leading-7 text-white drop-shadow-md">See the week in a calmer way: mood shifts, small streaks, and the gentle rhythm you are building by returning.</p>
               </div>
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-3xl bg-white text-sage-700 shadow-sm">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-3xl bg-white/20 text-white shadow-sm backdrop-blur-md">
                 <Moon size={20} />
               </div>
             </div>
-            <div className="mt-5 flex flex-wrap gap-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">
-              <span className="rounded-full border border-[#e8dfd5] bg-white/88 px-3 py-2 shadow-sm">{weeklyCheckIns}/{weeklyGoal} check-ins this week</span>
-              <span className="rounded-full border border-[#e8dfd5] bg-white/88 px-3 py-2 shadow-sm">{entries.length} pages in your archive</span>
-              <span className="rounded-full border border-[#e8dfd5] bg-white/88 px-3 py-2 shadow-sm">{unlockedAchievementCount}/{achievementBadges.length} keepsakes lit</span>
+            <div className="relative z-10 mt-5 flex flex-wrap gap-2 text-xs font-black uppercase tracking-[0.18em] text-white">
+              <span className="rounded-full border border-white/20 bg-black/20 px-3 py-2 shadow-sm backdrop-blur-md">{weeklyCheckIns}/{weeklyGoal} check-ins this week</span>
+              <span className="rounded-full border border-white/20 bg-black/20 px-3 py-2 shadow-sm backdrop-blur-md">{entries.length} pages in your archive</span>
+              <span className="rounded-full border border-white/20 bg-black/20 px-3 py-2 shadow-sm backdrop-blur-md">{unlockedAchievementCount}/{achievementBadges.length} keepsakes lit</span>
             </div>
           </div>
 
-          <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/80 p-6 shadow-soft backdrop-blur xl:p-8">
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-sand-500 sm:text-sm sm:tracking-widest">This week so far</p>
-            <p className="mt-3 text-4xl font-extrabold text-sage-950">{weeklyCheckIns}/{weeklyGoal}</p>
-            <p className="mt-3 text-sm font-semibold leading-7 text-sage-700">{weeklyCheckIns >= weeklyGoal ? 'You already gave yourself enough room this week.' : `${weeklyGoal - weeklyCheckIns} more soft check-ins if you want to fill this week.`}</p>
-            <div className="mt-5 h-2.5 w-full overflow-hidden rounded-full bg-sage-100">
-              <div className="h-full rounded-full bg-gradient-to-r from-sage-500 to-teal-500 transition-all duration-700" style={{ width: `${Math.min((weeklyCheckIns / weeklyGoal) * 100, 100)}%` }}></div>
-            </div>
-            <div className="mt-6 rounded-[2.2rem] bg-gradient-to-br from-rose-50 to-white p-5 shadow-inner">
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-rose-500 sm:text-sm sm:tracking-widest">Keepsake path</p>
-              <div className="mt-3 flex items-center gap-4">
-                <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-white text-3xl shadow-sm">{rewardLevel.emoji}</div>
-                <div>
-                  <p className="text-lg font-extrabold text-sage-950">{rewardLevel.title}</p>
-                  <p className="text-sm font-semibold leading-6 text-sage-700">{entriesToNextReward === 0 ? 'Your next bloom is here.' : `${entriesToNextReward} pages until the next bloom.`}</p>
+          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur xl:p-8">
+            <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+            <div className="relative z-10">
+              <p className="text-xs font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm sm:text-sm sm:tracking-widest">This week so far</p>
+              <p className="mt-3 text-4xl font-extrabold text-white drop-shadow-md">{weeklyCheckIns}/{weeklyGoal}</p>
+              <p className="mt-3 text-sm font-semibold leading-7 text-white drop-shadow-md">{weeklyCheckIns >= weeklyGoal ? 'You already gave yourself enough room this week.' : `${weeklyGoal - weeklyCheckIns} more soft check-ins if you want to fill this week.`}</p>
+              <div className="mt-5 h-2.5 w-full overflow-hidden rounded-full bg-white/10 backdrop-blur-md shadow-inner">
+                <div className="h-full rounded-full bg-gradient-to-r from-white/60 to-white/90 transition-all duration-700" style={{ width: `${Math.min((weeklyCheckIns / weeklyGoal) * 100, 100)}%` }}></div>
+              </div>
+              <div className="mt-6 rounded-[2.2rem] border border-white/20 bg-black/20 p-5 shadow-sm backdrop-blur-md">
+                <p className="text-xs font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm sm:text-sm sm:tracking-widest">Keepsake path</p>
+                <div className="mt-3 flex items-center gap-4">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-white/20 text-3xl shadow-sm backdrop-blur-md text-white">{rewardLevel.emoji}</div>
+                  <div>
+                    <p className="text-lg font-extrabold text-white drop-shadow-md">{rewardLevel.title}</p>
+                    <p className="text-sm font-semibold leading-6 text-white/90 drop-shadow-sm">{entriesToNextReward === 0 ? 'Your next bloom is here.' : `${entriesToNextReward} pages until the next bloom.`}</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-[3rem] border border-[#e8dfd5] bg-white/82 p-6 shadow-soft backdrop-blur xl:p-8">
-            <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur xl:p-8">
+            <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-80" aria-hidden="true" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+            <div className="relative z-10 flex flex-wrap items-center justify-between gap-3">
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.22em] text-sage-600 sm:text-sm sm:tracking-widest">Mood garden</p>
-                <p className="mt-2 text-sm font-semibold leading-6 text-sage-700">A softer chart view so the patterns stay readable on both mobile and desktop.</p>
+                <p className="text-xs font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm sm:text-sm sm:tracking-widest">Mood garden</p>
+                <p className="mt-2 text-sm font-semibold leading-6 text-white drop-shadow-md">A softer chart view so the patterns stay readable on both mobile and desktop.</p>
               </div>
-              <div className="rounded-full bg-sage-100 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-800">Weekly summary</div>
+              <div className="rounded-full bg-white/20 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-white backdrop-blur-md shadow-sm">Weekly summary</div>
             </div>
-            <div className="mt-5">
+            <div className="relative z-10 mt-5 bg-white/90 rounded-[2rem] p-4 shadow-sm backdrop-blur-md">
               <MoodChart entries={entries} weatherOptions={weatherOptions} />
             </div>
-            <div className="mt-5 rounded-[2.2rem] bg-white p-5 text-sm font-bold leading-7 text-sage-900 shadow-inner">
+            <div className="relative z-10 mt-5 rounded-[2.2rem] border border-white/20 bg-black/20 p-5 text-sm font-bold leading-7 text-white drop-shadow-md shadow-sm backdrop-blur-md">
               {weeklySummary}
             </div>
           </div>
 
           <div className="grid gap-6">
-            <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/82 p-6 shadow-soft backdrop-blur xl:p-8">
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-teal-600 sm:text-sm sm:tracking-widest">{returnRitual.eyebrow}</p>
-              <p className="mt-2 text-2xl font-extrabold leading-tight text-sage-950">{returnRitual.title}</p>
-              <p className="mt-3 text-sm font-semibold leading-7 text-sage-700">{returnRitual.text}</p>
-              <button className="mt-5 inline-flex items-center gap-2 rounded-full bg-sage-900 px-4 py-2.5 text-sm font-extrabold text-white shadow-lift transition hover:-translate-y-0.5 hover:bg-sage-800" onClick={() => navigateToTab('write')} type="button">
-                <PenLine size={16} /> Return to writing
-              </button>
+            <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur xl:p-8">
+              <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+              <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+              <div className="relative z-10">
+                <p className="text-xs font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm sm:text-sm sm:tracking-widest">{returnRitual.eyebrow}</p>
+                <p className="mt-2 text-2xl font-extrabold leading-tight text-white drop-shadow-md">{returnRitual.title}</p>
+                <p className="mt-3 text-sm font-semibold leading-7 text-white drop-shadow-md">{returnRitual.text}</p>
+                <button className="mt-5 inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2.5 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/30" onClick={() => navigateToTab('write')} type="button">
+                  <PenLine size={16} /> Return to writing
+                </button>
+              </div>
             </div>
 
-            <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/82 p-6 shadow-soft backdrop-blur xl:p-8">
-              <div className="flex items-center justify-between gap-3">
-                <p className="text-xs font-bold uppercase tracking-[0.22em] text-sage-600">Keepsake shelf</p>
-                <div className="rounded-full bg-sage-100 px-3 py-1 text-[10px] font-extrabold text-sage-800">{unlockedAchievementCount}/{achievementBadges.length}</div>
+            <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur xl:p-8">
+              <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-85" aria-hidden="true" />
+              <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+              <div className="relative z-10 flex items-center justify-between gap-3">
+                <p className="text-xs font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm">Keepsake shelf</p>
+                <div className="rounded-full bg-white/20 px-3 py-1 text-[10px] font-black text-white shadow-sm backdrop-blur-md">{unlockedAchievementCount}/{achievementBadges.length}</div>
               </div>
-              <div className="mt-4 grid grid-cols-6 gap-2">
+              <div className="relative z-10 mt-4 grid grid-cols-6 gap-2">
                 {achievementBadges.map((badge) => (
-                  <div key={badge.id} className={`flex aspect-square items-center justify-center rounded-2xl text-xl shadow-sm transition-all ${badge.unlocked ? 'bg-white grayscale-0' : 'bg-sage-50/50 opacity-40 grayscale'}`} title={`${badge.title}: ${badge.hint}`}>
+                  <div key={badge.id} className={`flex aspect-square items-center justify-center rounded-2xl text-xl shadow-sm backdrop-blur-md transition-all ${badge.unlocked ? 'bg-white/20 grayscale-0' : 'bg-black/20 opacity-40 grayscale'}`} title={`${badge.title}: ${badge.hint}`}>
                     {badge.emoji}
                   </div>
                 ))}
               </div>
-              <p className="mt-4 text-sm font-semibold leading-7 text-sage-700">Every return adds another little sign that this space is becoming yours.</p>
+              <p className="relative z-10 mt-4 text-sm font-semibold leading-7 text-white/90 drop-shadow-md">Every return adds another little sign that this space is becoming yours.</p>
             </div>
           </div>
         </div>
@@ -6486,9 +6547,13 @@ function App() {
         {activeTab === 'memories' && (
         <div className="mt-6 grid gap-6 pb-24 lg:pb-0">
 
-          <div className="flex flex-wrap items-center justify-center gap-2 rounded-[1.6rem] border border-[#e8dfd5] bg-white/78 p-2 shadow-sm backdrop-blur">
-            <button className={`rounded-full px-5 py-2.5 text-sm font-extrabold transition ${memoriesView === 'calendar' ? 'bg-sage-900 text-white shadow-sm' : 'text-sage-700 hover:bg-sage-50'}`} onClick={() => setMemoriesView('calendar')} type="button">Calendar</button>
-            <button className={`rounded-full px-5 py-2.5 text-sm font-extrabold transition ${memoriesView === 'archive' ? 'bg-sage-900 text-white shadow-sm' : 'text-sage-700 hover:bg-sage-50'}`} onClick={() => setMemoriesView('archive')} type="button">Positivity archive</button>
+          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden flex flex-wrap items-center justify-center gap-2 rounded-[1.6rem] border border-[#8b5e3c]/25 p-2 shadow-sm backdrop-blur-xl">
+            <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+            <div className="relative z-10 flex gap-2">
+              <button className={`rounded-full px-5 py-2.5 text-sm font-extrabold transition backdrop-blur-md ${memoriesView === 'calendar' ? 'bg-white/30 text-white shadow-sm' : 'bg-black/20 text-white/80 hover:bg-black/40 hover:text-white'}`} onClick={() => setMemoriesView('calendar')} type="button">Calendar</button>
+              <button className={`rounded-full px-5 py-2.5 text-sm font-extrabold transition backdrop-blur-md ${memoriesView === 'archive' ? 'bg-white/30 text-white shadow-sm' : 'bg-black/20 text-white/80 hover:bg-black/40 hover:text-white'}`} onClick={() => setMemoriesView('archive')} type="button">Positivity archive</button>
+            </div>
           </div>
 
           {memoriesView === 'calendar' && (
@@ -6509,13 +6574,13 @@ function App() {
               </div>
 
               <div className="mt-8 grid gap-5 xl:grid-cols-[minmax(19rem,29rem)_minmax(0,1fr)] xl:items-start">
-                <div className="rounded-[1.6rem] border border-white/20 bg-white/12 p-3 shadow-inner backdrop-blur-md sm:p-4">
-                <div className="mb-3 flex items-center justify-between gap-2 rounded-[1.2rem] bg-white px-2 py-2 shadow-sm">
-                  <button className="rounded-full bg-sage-50 px-3 py-2 text-sm font-extrabold text-sage-800 transition hover:bg-sage-100" onClick={() => setCalendarMonth(shiftMonthKey(calendarMonth, -1))} type="button">‹</button>
-                  <p className="text-center text-sm font-extrabold text-sage-950 sm:text-base">{formatMonthLabel(calendarMonth)}</p>
-                  <button className="rounded-full bg-sage-50 px-3 py-2 text-sm font-extrabold text-sage-800 transition hover:bg-sage-100" onClick={() => setCalendarMonth(shiftMonthKey(calendarMonth, 1))} type="button">›</button>
+                <div className="rounded-[1.6rem] border border-white/20 bg-black/20 p-3 shadow-inner backdrop-blur-md sm:p-4">
+                <div className="mb-3 flex items-center justify-between gap-2 rounded-[1.2rem] bg-white/20 px-2 py-2 shadow-sm backdrop-blur-md">
+                  <button className="rounded-full bg-black/20 px-3 py-2 text-sm font-extrabold text-white transition hover:bg-black/40" onClick={() => setCalendarMonth(shiftMonthKey(calendarMonth, -1))} type="button">‹</button>
+                  <p className="text-center text-sm font-extrabold text-white drop-shadow-md sm:text-base">{formatMonthLabel(calendarMonth)}</p>
+                  <button className="rounded-full bg-black/20 px-3 py-2 text-sm font-extrabold text-white transition hover:bg-black/40" onClick={() => setCalendarMonth(shiftMonthKey(calendarMonth, 1))} type="button">›</button>
                 </div>
-                <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-extrabold uppercase tracking-[0.12em] text-sage-500">
+                <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-extrabold uppercase tracking-[0.12em] text-white/70 drop-shadow-sm">
                   {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => <div key={day}>{day}</div>)}
                 </div>
                 <div className="mt-2 grid grid-cols-7 gap-1">
@@ -6528,7 +6593,7 @@ function App() {
                     const isToday = day?.dateKey === todayISO();
                     return day ? (
                       <button
-                        className={`relative flex h-11 items-center justify-center rounded-xl border text-xs font-extrabold transition hover:-translate-y-0.5 sm:h-12 sm:text-sm ${isSelected ? 'border-sage-800 bg-sage-900 text-white shadow-lift' : isToday ? 'border-sage-300 bg-white text-sage-900' : 'border-[#e8dfd5] bg-white/92 text-sage-800 hover:bg-white'}`}
+                        className={`relative flex h-11 items-center justify-center rounded-xl border text-xs font-extrabold backdrop-blur-md transition hover:-translate-y-0.5 sm:h-12 sm:text-sm ${isSelected ? 'border-white/60 bg-white/40 text-white shadow-sm' : isToday ? 'border-white/40 bg-white/20 text-white drop-shadow-md' : 'border-white/20 bg-black/20 text-white drop-shadow-sm hover:bg-black/40'}`}
                         key={day.dateKey}
                         onClick={() => {
                           setSelectedCalendarDate(day.dateKey);
@@ -6537,89 +6602,89 @@ function App() {
                         type="button"
                       >
                         <span>{day.day}</span>
-                        {hasImportantDate && <span className={`absolute right-1.5 top-1 text-[10px] ${isSelected ? 'text-sand-100' : 'text-rose-500'}`}>✦</span>}
+                        {hasImportantDate && <span className={`absolute right-1.5 top-1 text-[10px] ${isSelected ? 'text-white' : 'text-rose-400'}`}>✦</span>}
                         {dayForecast && <span className="absolute bottom-1 right-1 text-[10px] leading-none" title={dayForecastVisuals.label}>{dayForecastVisuals.emoji}</span>}
-                        {dayEntries.length > 0 && <span className={`absolute bottom-1.5 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full ${isSelected ? 'bg-white' : 'bg-sage-700'}`} />}
+                        {dayEntries.length > 0 && <span className={`absolute bottom-1.5 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full ${isSelected ? 'bg-white' : 'bg-white/80'}`} />}
                       </button>
                     ) : <div key={`blank-${index}`} />;
                   })}
                 </div>
-                <button className="mt-3 inline-flex w-full items-center justify-center rounded-full border border-[#e8dfd5] bg-white px-3 py-2 text-xs font-extrabold uppercase tracking-[0.16em] text-sage-700 shadow-sm transition hover:bg-sage-50" onClick={() => { const today = todayISO(); setCalendarMonth(today.slice(0, 7)); setSelectedCalendarDate(today); openImportantDateEditor(today); }} type="button">
+                <button className="mt-3 inline-flex w-full items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-md px-3 py-2 text-xs font-black uppercase tracking-[0.16em] text-white shadow-sm transition hover:bg-white/20" onClick={() => { const today = todayISO(); setCalendarMonth(today.slice(0, 7)); setSelectedCalendarDate(today); openImportantDateEditor(today); }} type="button">
                   Jump to today
                 </button>
               </div>
 
-              <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/94 p-4 shadow-inner sm:p-5">
+              <div className="rounded-[2.2rem] border border-white/20 bg-black/20 p-4 shadow-sm backdrop-blur-md sm:p-5">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div>
-                    <p className="text-xs font-extrabold uppercase tracking-widest text-sage-600">Selected date</p>
-                    <h3 className="mt-1 text-2xl font-extrabold text-ink">{formatDate(selectedCalendarDate)}</h3>
-                    <p className="mt-1 text-sm font-semibold leading-6 text-sage-600">Click any date, then write a note or reminder here.</p>
+                    <p className="text-xs font-black uppercase tracking-widest text-white/80 drop-shadow-sm">Selected date</p>
+                    <h3 className="mt-1 text-2xl font-extrabold text-white drop-shadow-md">{formatDate(selectedCalendarDate)}</h3>
+                    <p className="mt-1 text-sm font-semibold leading-6 text-white drop-shadow-sm">Click any date, then write a note or reminder here.</p>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    <button className="rounded-full bg-sage-900 px-4 py-2.5 text-sm font-extrabold text-white transition hover:bg-sage-800" onClick={() => openImportantDateEditor(selectedCalendarDate)} type="button">
+                    <button className="rounded-full bg-white/20 px-4 py-2.5 text-sm font-extrabold text-white backdrop-blur-md shadow-sm transition hover:bg-white/30" onClick={() => openImportantDateEditor(selectedCalendarDate)} type="button">
                       {selectedImportantDate ? 'Edit note' : 'Write note'}
                     </button>
                     {selectedImportantDate && (
-                      <button className="rounded-full bg-rose-100 px-4 py-2.5 text-sm font-extrabold text-rose-700 transition hover:bg-rose-200" onClick={() => deleteImportantDate(selectedCalendarDate)} type="button">
+                      <button className="rounded-full bg-red-500/20 border border-red-400/30 px-4 py-2.5 text-sm font-extrabold text-white backdrop-blur-md transition hover:bg-red-500/40" onClick={() => deleteImportantDate(selectedCalendarDate)} type="button">
                         Remove
                       </button>
                     )}
                   </div>
                 </div>
 
-                <div className="mt-4 rounded-2xl border border-[#e8dfd5] bg-gradient-to-br from-sage-50/90 to-white p-4 shadow-sm">
+                <div className="mt-4 rounded-2xl border border-white/20 bg-white/10 p-4 shadow-sm backdrop-blur-md">
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-xl shadow-sm">
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white/20 text-white backdrop-blur-md text-xl shadow-sm">
                         {selectedCalendarForecast ? selectedCalendarForecastVisuals.emoji : '📍'}
                       </div>
                       <div>
-                        <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-sage-600">Local weather</p>
+                        <p className="text-xs font-black uppercase tracking-[0.2em] text-white/80 drop-shadow-sm">Local weather</p>
                         {selectedCalendarForecast ? (
-                          <p className="mt-1 text-sm font-extrabold text-sage-950">
+                          <p className="mt-1 text-sm font-extrabold text-white drop-shadow-md">
                             {selectedCalendarForecastVisuals.label} · {formatForecastTemperature(selectedCalendarForecast.maxTemp)} / {formatForecastTemperature(selectedCalendarForecast.minTemp)}
                           </p>
                         ) : (
-                          <p className="mt-1 text-sm font-semibold leading-6 text-sage-700">{calendarForecastStatus}</p>
+                          <p className="mt-1 text-sm font-semibold leading-6 text-white drop-shadow-sm">{calendarForecastStatus}</p>
                         )}
-                        {selectedCalendarForecast && <p className="mt-1 text-xs font-bold uppercase tracking-[0.14em] text-sage-500">{calendarForecastLocation || 'Your location'} · {selectedCalendarDate}</p>}
+                        {selectedCalendarForecast && <p className="mt-1 text-xs font-bold uppercase tracking-[0.14em] text-white/70 drop-shadow-sm">{calendarForecastLocation || 'Your location'} · {selectedCalendarDate}</p>}
                       </div>
                     </div>
                     {calendarForecastPermission !== 'loading' && (
-                      <button className="rounded-full border border-amber-200/50 bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.14em] text-sage-700 transition hover:bg-sage-50" onClick={loadCalendarForecast} type="button">
+                      <button className="rounded-full border border-white/30 bg-black/20 px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-white backdrop-blur-md shadow-sm transition hover:bg-black/40" onClick={loadCalendarForecast} type="button">
                         {calendarForecastPermission === 'granted' ? 'Refresh' : 'Use location'}
                       </button>
                     )}
-                    {calendarForecastPermission === 'loading' && <span className="rounded-full border border-[#e8dfd5] bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.14em] text-sage-600">Loading</span>}
+                    {calendarForecastPermission === 'loading' && <span className="rounded-full border border-white/30 bg-black/20 px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-white backdrop-blur-md shadow-sm">Loading</span>}
                   </div>
-                  {selectedCalendarForecast && <p className="mt-3 text-xs font-semibold leading-5 text-sage-600">Forecast uses your browser location and is available for nearby upcoming dates.</p>}
+                  {selectedCalendarForecast && <p className="mt-3 text-xs font-semibold leading-5 text-white/70 drop-shadow-sm">Forecast uses your browser location and is available for nearby upcoming dates.</p>}
                 </div>
 
                 {selectedImportantDate && (
-                  <div className="mt-4 rounded-2xl border border-[#e8dfd5] bg-sage-50/76 p-4">
+                  <div className="mt-4 rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur-md shadow-sm">
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <div className="min-w-0 flex-1">
-                        <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-sage-600">Saved note or reminder</p>
-                        <p className="mt-2 text-base font-extrabold leading-6 text-sage-950">{selectedImportantDate.note}</p>
-                        {selectedImportantDate.details && <p className="mt-2 whitespace-pre-wrap text-sm font-semibold leading-6 text-sage-700">{selectedImportantDate.details}</p>}
+                        <p className="text-xs font-black uppercase tracking-[0.2em] text-white/80 drop-shadow-sm">Saved note or reminder</p>
+                        <p className="mt-2 text-base font-extrabold leading-6 text-white drop-shadow-md">{selectedImportantDate.note}</p>
+                        {selectedImportantDate.details && <p className="mt-2 whitespace-pre-wrap text-sm font-semibold leading-6 text-white/90 drop-shadow-sm">{selectedImportantDate.details}</p>}
                       </div>
-                      <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.16em] text-sage-700">
-                        {selectedImportantDate.time && <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1.5">{formatReminderTime(selectedImportantDate.time)}</span>}
-                        <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1.5">{selectedImportantDate.remindersEnabled ? 'Reminder on' : 'Note only'}</span>
+                      <div className="flex flex-wrap gap-2 text-[10px] font-black uppercase tracking-[0.16em] text-white">
+                        {selectedImportantDate.time && <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-md shadow-sm">{formatReminderTime(selectedImportantDate.time)}</span>}
+                        <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-md shadow-sm">{selectedImportantDate.remindersEnabled ? 'Reminder on' : 'Note only'}</span>
                       </div>
                     </div>
                   </div>
                 )}
 
                 {importanceModalOpen && (
-                  <div className="mt-4 rounded-[1.6rem] border border-amber-200/50 bg-white p-4 shadow-sm sm:p-5">
-                    <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-700">Add to this date</p>
+                  <div className="mt-4 rounded-[1.6rem] border border-white/20 bg-black/20 p-4 shadow-sm backdrop-blur-md sm:p-5">
+                    <p className="text-xs font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm">Add to this date</p>
                     <div className="mt-4 grid gap-3">
                       <label className="block">
-                        <span className="text-sm font-extrabold text-sage-900">Title</span>
+                        <span className="text-sm font-extrabold text-white drop-shadow-md">Title</span>
                         <input
-                          className="mt-2 w-full rounded-2xl border border-amber-200/50 bg-sage-50/70 px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
+                          className="mt-2 w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm font-semibold text-white outline-none backdrop-blur-md placeholder:text-white/50 transition focus:border-white/40 focus:ring-4 focus:ring-white/10"
                           maxLength={80}
                           onChange={(event) => setImportanceDraft(event.target.value)}
                           placeholder="Exam, birthday, deadline..."
@@ -6627,9 +6692,9 @@ function App() {
                         />
                       </label>
                       <label className="block">
-                        <span className="text-sm font-extrabold text-sage-900">Notes</span>
+                        <span className="text-sm font-extrabold text-white drop-shadow-md">Notes</span>
                         <textarea
-                          className="mt-2 min-h-[150px] w-full rounded-2xl border border-amber-200/50 bg-sage-50/70 px-4 py-3 text-sm font-semibold leading-6 text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
+                          className="mt-2 min-h-[150px] w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm font-semibold leading-6 text-white outline-none backdrop-blur-md placeholder:text-white/50 transition focus:border-white/40 focus:ring-4 focus:ring-white/10"
                           maxLength={320}
                           onChange={(event) => setImportanceDetailsDraft(event.target.value)}
                           placeholder="Write what you want to remember on this date."
@@ -6639,48 +6704,48 @@ function App() {
                     </div>
                     <div className="mt-3 grid gap-3 sm:grid-cols-[minmax(10rem,14rem)_minmax(0,1fr)]">
                       <label className="block">
-                        <span className="text-sm font-extrabold text-sage-900">Time</span>
+                        <span className="text-sm font-extrabold text-white drop-shadow-md">Time</span>
                         <input
-                          className="mt-2 w-full rounded-2xl border border-amber-200/50 bg-sage-50/70 px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
+                          className="mt-2 w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm font-semibold text-white outline-none backdrop-blur-md transition focus:border-white/40 focus:ring-4 focus:ring-white/10 [color-scheme:dark]"
                           onChange={(event) => setImportanceTimeDraft(event.target.value)}
                           type="time"
                           value={importanceTimeDraft}
                         />
                       </label>
-                      <label className="flex items-center gap-3 rounded-2xl border border-[#e8dfd5] bg-sage-50/70 px-4 py-3 text-sm font-semibold leading-6 text-sage-800">
-                        <input checked={importanceReminderEnabled} className="h-4 w-4 rounded border-sage-300 text-sage-700 focus:ring-sage-300" onChange={(event) => setImportanceReminderEnabled(event.target.checked)} type="checkbox" />
+                      <label className="flex items-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm font-semibold leading-6 text-white backdrop-blur-md">
+                        <input checked={importanceReminderEnabled} className="h-4 w-4 rounded border-white/30 text-white/50 focus:ring-white/30 accent-black/50" onChange={(event) => setImportanceReminderEnabled(event.target.checked)} type="checkbox" />
                         Remind me if browser notifications are allowed
                       </label>
                     </div>
                     <div className="mt-4 flex flex-wrap gap-3">
-                      <button className="rounded-full bg-sage-900 px-5 py-3 text-sm font-extrabold text-white transition hover:bg-sage-800" onClick={saveImportantDate} type="button">Save</button>
-                      <button className="rounded-full border border-amber-200/50 bg-white px-5 py-3 text-sm font-extrabold text-sage-700 transition hover:bg-sage-50" onClick={() => setImportanceModalOpen(false)} type="button">Cancel</button>
-                      <button className={`rounded-full border px-5 py-3 text-sm font-extrabold transition ${notificationPermission === 'granted' ? 'border-amber-200/50 bg-white text-sage-700 hover:bg-sage-50' : 'border-sage-900 bg-white text-sage-900 hover:bg-sage-50'}`} onClick={requestNotificationPermission} type="button">
+                      <button className="rounded-full bg-white/20 px-5 py-3 text-sm font-extrabold text-white backdrop-blur-md shadow-sm transition hover:bg-white/30" onClick={saveImportantDate} type="button">Save</button>
+                      <button className="rounded-full border border-white/30 bg-black/20 px-5 py-3 text-sm font-extrabold text-white backdrop-blur-md shadow-sm transition hover:bg-black/40" onClick={() => setImportanceModalOpen(false)} type="button">Cancel</button>
+                      <button className={`rounded-full border px-5 py-3 text-sm font-extrabold backdrop-blur-md shadow-sm transition ${notificationPermission === 'granted' ? 'border-white/30 bg-black/20 text-white hover:bg-black/40' : 'border-white/50 bg-white/20 text-white hover:bg-white/30'}`} onClick={requestNotificationPermission} type="button">
                         {notificationPermission === 'granted' ? 'Notifications on' : 'Allow notifications'}
                       </button>
                     </div>
-                    {notificationStatusMessage && <p className="mt-3 rounded-2xl bg-sage-50 px-4 py-3 text-sm font-semibold leading-6 text-sage-700">{notificationStatusMessage}</p>}
+                    {notificationStatusMessage && <p className="mt-3 rounded-2xl bg-black/20 border border-white/20 backdrop-blur-md px-4 py-3 text-sm font-semibold leading-6 text-white/90 drop-shadow-sm">{notificationStatusMessage}</p>}
                   </div>
                 )}
 
                 {selectedDateEntries.length ? (
                   <div className="mt-4 space-y-3">
-                    <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Journal entries on this day</p>
+                    <p className="text-xs font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm">Journal entries on this day</p>
                     {selectedDateEntries.map((entry) => (
-                      <button className="w-full rounded-2xl border border-[#e8dfd5] bg-white p-3 text-left transition hover:-translate-y-0.5 hover:bg-sage-50 hover:shadow-sm" key={entry.id} onClick={() => setSelectedEntry(entry)} type="button">
-                        <p className="font-extrabold text-sage-950">{entry.title}</p>
-                        <p className="mt-1 line-clamp-2 text-sm font-semibold leading-6 text-sage-700">{getPlainTextFromHtml(entry.body || entry.prompt || '') || 'Photo entry'}</p>
+                      <button className="w-full rounded-2xl border border-white/20 bg-black/20 p-3 text-left backdrop-blur-md shadow-sm transition hover:-translate-y-0.5 hover:bg-black/40 hover:shadow-md" key={entry.id} onClick={() => setSelectedEntry(entry)} type="button">
+                        <p className="font-extrabold text-white drop-shadow-md">{entry.title}</p>
+                        <p className="mt-1 line-clamp-2 text-sm font-semibold leading-6 text-white/90 drop-shadow-sm">{getPlainTextFromHtml(entry.body || entry.prompt || '') || 'Photo entry'}</p>
                       </button>
                     ))}
                   </div>
-                ) : <p className="mt-4 rounded-2xl border border-dashed border-amber-200/50 bg-sage-50/50 px-4 py-4 text-sm font-semibold leading-6 text-sage-500">No diary entry for this date yet.</p>}
+                ) : <p className="mt-4 rounded-2xl border border-white/20 bg-black/20 px-4 py-4 text-sm font-semibold leading-6 text-white/80 drop-shadow-sm backdrop-blur-md shadow-sm">No diary entry for this date yet.</p>}
 
                 {upcomingReminderPreview.length > 0 && (
-                  <div className="mt-4 rounded-2xl border border-[#e8dfd5] bg-white p-4">
-                    <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Upcoming</p>
+                  <div className="mt-4 rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur-md shadow-sm">
+                    <p className="text-xs font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm">Upcoming</p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       {upcomingReminderPreview.slice(0, 3).map((item) => (
-                        <button className={`rounded-full border px-3 py-2 text-xs font-extrabold transition hover:bg-sage-50 ${item.dateKey === selectedCalendarDate ? 'border-sage-300 bg-sage-50 text-sage-900' : 'border-[#e8dfd5] bg-white text-sage-700'}`} key={item.dateKey} onClick={() => { setSelectedCalendarDate(item.dateKey); openImportantDateEditor(item.dateKey); }} type="button">
+                        <button className={`rounded-full border px-3 py-2 text-xs font-extrabold backdrop-blur-md shadow-sm transition hover:bg-white/30 ${item.dateKey === selectedCalendarDate ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white'}`} key={item.dateKey} onClick={() => { setSelectedCalendarDate(item.dateKey); openImportantDateEditor(item.dateKey); }} type="button">
                           {formatDate(item.dateKey)} · {item.note}
                         </button>
                       ))}
@@ -6694,37 +6759,39 @@ function App() {
         )}
 
           {memoriesView === 'archive' && (
-          <div className="flex h-full flex-col overflow-hidden rounded-[3rem] border border-[#e8dfd5] bg-gradient-to-br from-white/90 via-white/84 to-sand-50/72 p-4 shadow-soft backdrop-blur sm:p-6 lg:p-8">
-            <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden flex h-full flex-col rounded-[3rem] border border-[#8b5e3c]/25 p-4 shadow-soft backdrop-blur sm:p-6 lg:p-8">
+            <img src={memoriesSectionPreviewImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
+            <div className="relative z-10 mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div className="flex items-center gap-3">
-                <CalendarDays className="text-sage-700" size={18} />
+                <CalendarDays className="text-white drop-shadow-md" size={18} />
                 <div>
-                  <h2 className="text-2xl font-extrabold text-ink sm:text-3xl">Your positivity archive</h2>
-                  <p className="mt-1 text-sm font-semibold leading-7 text-sage-700">Open any page to read the full memory, with a calmer layout that uses the whole panel more gracefully.</p>
+                  <h2 className="text-2xl font-extrabold text-white drop-shadow-md sm:text-3xl">Your positivity archive</h2>
+                  <p className="mt-1 text-sm font-semibold leading-7 text-white drop-shadow-sm">Open any page to read the full memory, with a calmer layout that uses the whole panel more gracefully.</p>
                 </div>
               </div>
-              <div className="rounded-full bg-sage-100 px-3 py-1 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700 sm:text-[11px]">
+              <div className="rounded-full bg-black/20 border border-white/20 backdrop-blur-md px-3 py-1 text-xs font-black uppercase tracking-[0.18em] text-white shadow-sm sm:text-[11px]">
                 {entries.length} saved
               </div>
             </div>
-            <div className="flex-1 space-y-4 overflow-y-auto pr-0 min-h-[24rem] sm:min-h-[32rem] sm:pr-2 xl:min-h-0">
-              {!entries.length && <p className="rounded-3xl bg-white p-5 font-semibold leading-7 text-sage-900 shadow-inner">No entries yet. Start with one sentence if that is all you have today.</p>}
+            <div className="relative z-10 flex-1 space-y-4 overflow-y-auto pr-0 min-h-[24rem] sm:min-h-[32rem] sm:pr-2 xl:min-h-0 lofi-scrollbar">
+              {!entries.length && <p className="rounded-3xl border border-white/20 bg-black/20 p-5 font-semibold leading-7 text-white backdrop-blur-md shadow-sm">No entries yet. Start with one sentence if that is all you have today.</p>}
               {entries.map((entry) => {
                 const effectiveMoodLabel = { 'Grounded': 'Happy', 'Soft': 'Calm', 'Okay': 'Neutral', 'Heavy': 'Sad', 'Stormy': 'Anxious' }[entry.mood] || entry.mood;
                 const mood = weatherOptions.find((item) => item.label === effectiveMoodLabel) || weatherOptions.find(m => m.label === entry.mood) || moods[2];
                 return (
                   <article
-                    className="group w-full cursor-pointer rounded-3xl border border-[#e8dfd5] bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-lift sm:p-5"
+                    className="group w-full cursor-pointer rounded-3xl border border-white/20 bg-black/20 p-4 shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-black/30 hover:shadow-md sm:p-5"
                     key={entry.id}
                     onClick={() => setSelectedEntry(entry)}
                   >
                     <div className="flex flex-col gap-1">
-                      <div className="mb-2 flex flex-wrap items-center gap-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-600">
-                        <span className="inline-flex items-center gap-2 rounded-full bg-sage-50 px-3 py-1.5 text-sage-700"><WeatherGlyph mood={mood} size="text-base" /> {entry.mood}</span>
-                        <span className="rounded-full bg-white px-3 py-1.5 ring-1 ring-sage-100">{formatDate(entry.createdAt)}</span>
+                      <div className="mb-2 flex flex-wrap items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-white">
+                        <span className="inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1.5 backdrop-blur-md shadow-sm text-white"><WeatherGlyph mood={mood} size="text-base" /> {entry.mood}</span>
+                        <span className="rounded-full bg-black/20 px-3 py-1.5 shadow-sm border border-white/20 backdrop-blur-md text-white">{formatDate(entry.createdAt)}</span>
                       </div>
-                      <h3 className="text-xl font-extrabold leading-tight text-ink">{entry.title}</h3>
-                      <p className="mt-3 whitespace-pre-line break-words leading-7 text-sage-800">
+                      <h3 className="text-xl font-extrabold leading-tight text-white drop-shadow-md">{entry.title}</h3>
+                      <p className="mt-3 whitespace-pre-line break-words leading-7 text-white/90 drop-shadow-sm">
                         {(() => {
                           const tempDiv = document.createElement('div');
                           tempDiv.innerHTML = entry.body || entry.prompt || '';
@@ -7082,10 +7149,14 @@ function App() {
       </section>
 
       <section className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-8">
-        <div className="rounded-3xl border border-dashed border-sage-300 bg-white/60 p-8 text-center shadow-lift backdrop-blur">
-          <p className="text-sm font-bold uppercase tracking-widest text-sage-600">Support this project</p>
-          <h2 className="mt-3 text-2xl font-extrabold text-ink">Help keep Lofi Memory free and peaceful</h2>
-          <p className="mx-auto mt-3 max-w-2xl leading-7 text-sage-700">This space may be supported by gentle, non-intrusive advertising after approval. Ads will stay outside the private writing area so journaling remains calm.</p>
+        <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/25 p-8 text-center shadow-soft backdrop-blur">
+          <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+          <div className="relative z-10">
+            <p className="text-sm font-black uppercase tracking-widest text-white/80 drop-shadow-sm">Support this project</p>
+            <h2 className="mt-3 text-2xl font-extrabold text-white drop-shadow-md">Help keep Lofi Memory free and peaceful</h2>
+            <p className="mx-auto mt-3 max-w-2xl leading-7 text-white/90 drop-shadow-sm">This space may be supported by gentle, non-intrusive advertising after approval. Ads will stay outside the private writing area so journaling remains calm.</p>
+          </div>
         </div>
       </section>
       </>
@@ -7099,95 +7170,99 @@ function App() {
           text="This panel is only visible when the master email is signed in. It lets you run an AI SEO review from inside the website, keep the API key in your own browser, and work on ideas without exposing admin tools to normal visitors."
         />
         <div className="grid gap-6 xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-          <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/78 p-6 shadow-soft backdrop-blur-xl">
-            <div className="flex items-start justify-between gap-4">
+          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur-xl">
+            <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+            <div className="relative z-10 flex items-start justify-between gap-4">
               <div>
-                <p className="text-sm font-bold uppercase tracking-widest text-sage-600">Master access</p>
-                <h3 className="mt-2 text-2xl font-extrabold text-ink">Signed in as {user?.email}</h3>
-                <p className="mt-3 leading-7 text-sage-700">Normal visitors never see this section. The public journaling flow stays exactly the same unless you later choose to apply changes manually.</p>
+                <p className="text-sm font-black uppercase tracking-widest text-white/80 drop-shadow-sm">Master access</p>
+                <h3 className="mt-2 text-2xl font-extrabold text-white drop-shadow-md">Signed in as {user?.email}</h3>
+                <p className="mt-3 leading-7 text-white/90 drop-shadow-sm">Normal visitors never see this section. The public journaling flow stays exactly the same unless you later choose to apply changes manually.</p>
               </div>
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-sage-900 text-white shadow-sm">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/20 text-white shadow-sm backdrop-blur-md">
                 <ShieldCheck size={20} />
               </div>
             </div>
 
-            <div className="mt-6 rounded-[1.5rem] border border-[#e8dfd5] bg-white px-4 py-4 shadow-sm">
-              <p className="text-sm font-extrabold uppercase tracking-[0.22em] text-sage-600">Preview mode</p>
-              <div className="mt-3 flex overflow-hidden rounded-full border border-amber-200/50 bg-sage-50 p-1">
+            <div className="relative z-10 mt-6 rounded-[1.5rem] border border-white/20 bg-black/20 p-4 shadow-sm backdrop-blur-md">
+              <p className="text-sm font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm">Preview mode</p>
+              <div className="mt-3 flex overflow-hidden rounded-full border border-white/30 bg-white/10 p-1">
                 <button
-                  className={`flex-1 rounded-full px-4 py-2.5 text-sm font-extrabold transition ${adminViewMode === 'master' ? 'bg-sage-900 text-white shadow-sm' : 'text-sage-700 hover:bg-white'}`}
+                  className={`flex-1 rounded-full px-4 py-2.5 text-sm font-black transition backdrop-blur-md ${adminViewMode === 'master' ? 'bg-white/30 text-white shadow-sm' : 'text-white/80 hover:bg-white/10'}`}
                   onClick={() => setAdminViewMode('master')}
                   type="button"
                 >
                   Master view
                 </button>
                 <button
-                  className={`flex-1 rounded-full px-4 py-2.5 text-sm font-extrabold transition ${adminViewMode === 'user' ? 'bg-sage-900 text-white shadow-sm' : 'text-sage-700 hover:bg-white'}`}
+                  className={`flex-1 rounded-full px-4 py-2.5 text-sm font-black transition backdrop-blur-md ${adminViewMode === 'user' ? 'bg-white/30 text-white shadow-sm' : 'text-white/80 hover:bg-white/10'}`}
                   onClick={() => setAdminViewMode('user')}
                   type="button"
                 >
                   User view
                 </button>
               </div>
-              <p className="mt-3 text-sm leading-7 text-sage-700">Switch to user view any time to hide admin tools and preview the calmer public experience while staying signed in.</p>
+              <p className="mt-3 text-sm leading-7 text-white/90 drop-shadow-sm">Switch to user view any time to hide admin tools and preview the calmer public experience while staying signed in.</p>
             </div>
 
-            <div className="mt-6 grid gap-3 text-sm leading-7 text-sage-700">
-              <div className="rounded-2xl border border-[#e8dfd5] bg-sage-50/80 px-4 py-4">
-                <p className="font-extrabold text-sage-900">What this first version can do</p>
+            <div className="relative z-10 mt-6 grid gap-3 text-sm leading-7 text-white/90 drop-shadow-sm">
+              <div className="rounded-2xl border border-white/20 bg-black/20 p-4 backdrop-blur-md shadow-sm">
+                <p className="font-extrabold text-white drop-shadow-md">What this first version can do</p>
                 <p className="mt-2">Run an AI SEO review of the current diary site, suggest safer homepage and guide-page improvements, and draft ideas you can later implement without disrupting users.</p>
               </div>
-              <div className="rounded-2xl border border-[#e8dfd5] bg-white px-4 py-4">
-                <p className="font-extrabold text-sage-900">What it does not auto-publish yet</p>
+              <div className="rounded-2xl border border-white/20 bg-black/20 p-4 backdrop-blur-md shadow-sm">
+                <p className="font-extrabold text-white drop-shadow-md">What it does not auto-publish yet</p>
                 <p className="mt-2">This version does not silently rewrite the live site on its own. It gives you admin-only guidance and drafts first, which is safer for SEO and much better for preserving tone.</p>
               </div>
             </div>
 
-            <div className="mt-6 rounded-[2.2rem] border border-[#e8dfd5] bg-gradient-to-br from-sage-900 via-sage-800 to-sage-700 p-5 text-white shadow-soft">
-              <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-white/80">Suggested routine</p>
-              <div className="mt-4 grid gap-3 text-sm leading-7 text-white/90">
+            <div className="relative z-10 mt-6 rounded-[2.2rem] border border-white/20 bg-white/20 p-5 text-white shadow-sm backdrop-blur-md">
+              <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/80 drop-shadow-sm">Suggested routine</p>
+              <div className="mt-4 grid gap-3 text-sm leading-7 text-white/90 drop-shadow-sm">
                 <div>1. Run a fresh AI review when you want new SEO ideas.</div>
                 <div>2. Pick only a few high-impact suggestions at a time.</div>
                 <div>3. Keep the writing experience calm and avoid constant churn.</div>
               </div>
-              <p className="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-white/80">Master email: {MASTER_ADMIN_EMAIL}</p>
+              <p className="mt-4 text-xs font-black uppercase tracking-[0.18em] text-white/80 drop-shadow-sm">Master email: {MASTER_ADMIN_EMAIL}</p>
             </div>
           </div>
 
-          <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/82 p-6 shadow-soft backdrop-blur-xl">
-            <div className="flex flex-wrap items-start justify-between gap-4">
+          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur-xl">
+            <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+            <div className="relative z-10 flex flex-wrap items-start justify-between gap-4">
               <div>
-                <p className="text-sm font-bold uppercase tracking-widest text-sage-600">Run AI review</p>
-                <h3 className="mt-2 text-2xl font-extrabold text-ink">SEO drafts that stay inside your admin view</h3>
+                <p className="text-sm font-black uppercase tracking-widest text-white/80 drop-shadow-sm">Run AI review</p>
+                <h3 className="mt-2 text-2xl font-extrabold text-white drop-shadow-md">SEO drafts that stay inside your admin view</h3>
               </div>
               <div className="flex flex-wrap items-center justify-end gap-2">
-                {seoStudioModelUsed && <span className="rounded-full border border-amber-200/50 bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.2em] text-sage-700">Model · {seoStudioModelUsed}</span>}
-                {seoStudioLastRun && <span className="rounded-full border border-amber-200/50 bg-sage-50 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.2em] text-sage-800">Last run · {seoStudioLastRun}</span>}
+                {seoStudioModelUsed && <span className="rounded-full border border-white/20 bg-black/20 px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-white shadow-sm backdrop-blur-md">Model · {seoStudioModelUsed}</span>}
+                {seoStudioLastRun && <span className="rounded-full border border-white/20 bg-white/20 px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-white shadow-sm backdrop-blur-md">Last run · {seoStudioLastRun}</span>}
               </div>
             </div>
 
-            <div className="mt-6 grid gap-4">
-              <label className="grid gap-2 text-sm font-bold text-sage-900">
+            <div className="relative z-10 mt-6 grid gap-4">
+              <label className="grid gap-2 text-sm font-bold text-white drop-shadow-md">
                 Gemini API key
                 <div className="flex gap-2">
                   <input
-                    className="w-full rounded-2xl border border-amber-200/50 bg-white px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-400"
+                    className="w-full rounded-2xl border border-white/20 bg-black/20 px-4 py-3 text-sm font-semibold text-white outline-none backdrop-blur-md transition placeholder:text-white/50 focus:border-white/40 focus:ring-4 focus:ring-white/10"
                     onChange={(event) => setSeoStudioApiKey(event.target.value)}
                     placeholder="Paste your Gemini API key"
                     type={showSeoStudioKey ? 'text' : 'password'}
                     value={seoStudioApiKey}
                   />
-                  <button className="rounded-2xl border border-amber-200/50 bg-white px-4 text-sage-800 shadow-sm transition hover:bg-sage-50" onClick={() => setShowSeoStudioKey(!showSeoStudioKey)} type="button">
+                  <button className="rounded-2xl border border-white/20 bg-black/20 px-4 text-white shadow-sm backdrop-blur-md transition hover:bg-black/40" onClick={() => setShowSeoStudioKey(!showSeoStudioKey)} type="button">
                     {showSeoStudioKey ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
-                <span className="text-xs font-semibold text-sage-600">Stored only in this browser for the master email view. Use a browser-restricted key if possible.</span>
+                <span className="text-xs font-semibold text-white/80 drop-shadow-sm">Stored only in this browser for the master email view. Use a browser-restricted key if possible.</span>
               </label>
 
-              <label className="grid gap-2 text-sm font-bold text-sage-900">
+              <label className="grid gap-2 text-sm font-bold text-white drop-shadow-md">
                 What should the AI focus on?
                 <textarea
-                  className="min-h-[128px] rounded-2xl border border-amber-200/50 bg-white px-4 py-3 text-sm leading-7 text-sage-900 outline-none transition focus:border-sage-400"
+                  className="min-h-[128px] rounded-2xl border border-white/20 bg-black/20 px-4 py-3 text-sm leading-7 text-white outline-none backdrop-blur-md transition placeholder:text-white/50 focus:border-white/40 focus:ring-4 focus:ring-white/10"
                   onChange={(event) => setSeoStudioPrompt(event.target.value)}
                   placeholder="Ask for homepage suggestions, new guide ideas, schema improvements, or calmer SEO fixes."
                   value={seoStudioPrompt}
@@ -7195,33 +7270,33 @@ function App() {
               </label>
 
               <div className="flex flex-wrap gap-3">
-                <button className="inline-flex items-center gap-2 rounded-full bg-sage-900 px-5 py-3 text-sm font-extrabold text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800 disabled:cursor-not-allowed disabled:opacity-60" disabled={seoStudioLoading} onClick={runSeoStudioReview} type="button">
+                <button className="inline-flex items-center gap-2 rounded-full bg-white/20 px-5 py-3 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/30 disabled:cursor-not-allowed disabled:opacity-60" disabled={seoStudioLoading} onClick={runSeoStudioReview} type="button">
                   <Sparkles size={16} /> {seoStudioLoading ? 'Running review...' : 'Run AI SEO review'}
                 </button>
-                <button className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white px-5 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-1 hover:border-sage-300 hover:bg-sage-50 disabled:cursor-not-allowed disabled:opacity-50" disabled={!seoStudioReport.trim()} onClick={copySeoStudioReport} type="button">
+                <button className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/20 px-5 py-3 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:border-white/50 hover:bg-black/40 disabled:cursor-not-allowed disabled:opacity-50" disabled={!seoStudioReport.trim()} onClick={copySeoStudioReport} type="button">
                   <FileText size={16} /> {seoStudioCopied ? 'Copied' : 'Copy report'}
                 </button>
-                <button className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white px-5 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-1 hover:border-sage-300 hover:bg-sage-50" onClick={clearSeoStudioReport} type="button">
+                <button className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/20 px-5 py-3 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:border-white/50 hover:bg-black/40" onClick={clearSeoStudioReport} type="button">
                   Clear
                 </button>
               </div>
 
               {seoStudioError && (
-                <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold leading-7 text-rose-700">
+                <div className="rounded-2xl border border-red-300/50 bg-red-900/40 px-4 py-3 text-sm font-semibold leading-7 text-red-100 backdrop-blur-md shadow-sm">
                   {seoStudioError}
                 </div>
               )}
 
-              <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-sand-50/80 p-4 shadow-inner">
+              <div className="rounded-[2.2rem] border border-white/20 bg-black/20 p-4 shadow-sm backdrop-blur-md">
                 <div className="flex items-center justify-between gap-3">
-                  <p className="text-sm font-extrabold uppercase tracking-[0.22em] text-sage-600">AI report</p>
-                  <span className="text-xs font-bold uppercase tracking-[0.18em] text-sage-500">Admin draft only</span>
+                  <p className="text-sm font-black uppercase tracking-[0.22em] text-white/80 drop-shadow-sm">AI report</p>
+                  <span className="text-xs font-bold uppercase tracking-[0.18em] text-white/70 drop-shadow-sm">Admin draft only</span>
                 </div>
-                <div className="mt-4 max-h-[28rem] overflow-auto rounded-[1.4rem] bg-white p-4 shadow-sm ring-1 ring-sage-100">
+                <div className="mt-4 max-h-[28rem] overflow-auto rounded-[1.4rem] bg-black/30 border border-white/20 p-4 shadow-inner lofi-scrollbar">
                   {seoStudioReport ? (
-                    <pre className="whitespace-pre-wrap text-sm leading-7 text-sage-800">{seoStudioReport}</pre>
+                    <pre className="whitespace-pre-wrap text-sm leading-7 text-white/90 drop-shadow-sm">{seoStudioReport}</pre>
                   ) : (
-                    <p className="text-sm leading-7 text-sage-600">Run the AI SEO review to generate a fresh draft. It will use the current Lofi Memory positioning, homepage framing, guide-page cluster, and privacy-first diary context.</p>
+                    <p className="text-sm leading-7 text-white/70 drop-shadow-sm">Run the AI SEO review to generate a fresh draft. It will use the current Lofi Memory positioning, homepage framing, guide-page cluster, and privacy-first diary context.</p>
                   )}
                 </div>
               </div>
