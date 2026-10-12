@@ -705,6 +705,21 @@ const breatheRoomOptions = [
     decoration: '🎧',
     videoId: 'rFZHOHl-L8A',
     wallpaper: lofiRoomWallpaperImage
+  },
+  {
+    id: 'maple',
+    title: 'Maple Intro',
+    sound: 'Theme music',
+    description: 'A nostalgic game-theme intro for cozy focus and a softer late-night desk mood.',
+    icon: Headphones,
+    status: 'Maple Intro selected — nostalgic theme music is ready.',
+    gradient: 'from-amber-100 via-orange-50 to-rose-50',
+    textTone: 'text-amber-900',
+    ringTone: 'ring-amber-200',
+    volume: 32,
+    decoration: '🍁',
+    videoId: '0qj4hgJeSe4',
+    wallpaper: lofiRoomWallpaperImage
   }
 ];
 
@@ -4981,13 +4996,13 @@ function App() {
               </div>
             </div>
           </div>
-          <div className="site-nav-links mt-2.5 hidden flex-wrap items-center justify-center gap-3 rounded-[1.8rem] border border-white/20 bg-black/40 p-2 backdrop-blur-xl 2xl:flex">
-            <a className="rounded-full border border-white/40 bg-white/25 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/35 lofi-sharp-chip" href="#unwind" onClick={() => navigateToTab('unwind')}>Games</a>
-            <a className="rounded-full border border-white/40 bg-white/25 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/35 lofi-sharp-chip" href="#home" onClick={() => navigateToTab('home')}>Chill</a>
-            <button className="rounded-full border border-white/40 bg-white/25 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/35 lofi-sharp-chip" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
-            <a className="rounded-full border border-white/40 bg-white/25 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/35 lofi-sharp-chip" href="#memories" onClick={() => navigateToTab('memories')}>Memories</a>
-            <a className="rounded-full border border-white/40 bg-white/25 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/35 lofi-sharp-chip" href="#breathe" onClick={() => navigateToTab('breathe')}>Music</a>
-            <a className="rounded-full border border-white/40 bg-white/25 px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-white/35 lofi-sharp-chip" href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
+          <div className="site-nav-links mt-2.5 hidden flex-wrap items-center justify-center gap-3 rounded-[1.8rem] border border-[#8b5e3c]/15 bg-[#f3e6d7]/82 p-2 shadow-[0_18px_40px_rgba(87,62,43,0.12)] backdrop-blur-xl 2xl:flex">
+            <a className="rounded-full border border-[#cfb49b]/65 bg-[#fffaf3]/92 px-5 py-2.5 text-sm font-black text-[#4a3a2d] shadow-sm transition hover:-translate-y-0.5 hover:border-[#b99578] hover:bg-white lofi-sharp-chip" href="#unwind" onClick={() => navigateToTab('unwind')}>Games</a>
+            <a className="rounded-full border border-[#cfb49b]/65 bg-[#fffaf3]/92 px-5 py-2.5 text-sm font-black text-[#4a3a2d] shadow-sm transition hover:-translate-y-0.5 hover:border-[#b99578] hover:bg-white lofi-sharp-chip" href="#home" onClick={() => navigateToTab('home')}>Chill</a>
+            <button className="rounded-full border border-[#cfb49b]/65 bg-[#fffaf3]/92 px-5 py-2.5 text-sm font-black text-[#4a3a2d] shadow-sm transition hover:-translate-y-0.5 hover:border-[#b99578] hover:bg-white lofi-sharp-chip" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
+            <a className="rounded-full border border-[#cfb49b]/65 bg-[#fffaf3]/92 px-5 py-2.5 text-sm font-black text-[#4a3a2d] shadow-sm transition hover:-translate-y-0.5 hover:border-[#b99578] hover:bg-white lofi-sharp-chip" href="#memories" onClick={() => navigateToTab('memories')}>Memories</a>
+            <a className="rounded-full border border-[#cfb49b]/65 bg-[#fffaf3]/92 px-5 py-2.5 text-sm font-black text-[#4a3a2d] shadow-sm transition hover:-translate-y-0.5 hover:border-[#b99578] hover:bg-white lofi-sharp-chip" href="#breathe" onClick={() => navigateToTab('breathe')}>Music</a>
+            <a className="rounded-full border border-[#cfb49b]/65 bg-[#fffaf3]/92 px-5 py-2.5 text-sm font-black text-[#4a3a2d] shadow-sm transition hover:-translate-y-0.5 hover:border-[#b99578] hover:bg-white lofi-sharp-chip" href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
           </div>
         </div>
       </nav>
@@ -6040,7 +6055,7 @@ function App() {
               </div>
             </div>
             
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
               {breatheRoomOptions.map((option) => {
                 const isSelected = selectedBreatheRoom === option.id;
                 return (
@@ -6070,13 +6085,13 @@ function App() {
                          </div>
                        ) : null}
                     </div>
-                    <div className="p-6 text-left">
-                      <div className="flex items-center justify-between">
-                        <h3 className={`text-xl font-bold ${option.textTone}`}>{option.title}</h3>
-                        {isSelected ? <span className={`text-[10px] font-black uppercase tracking-widest ${option.textTone} opacity-60`}>Active</span> : null}
+                    <div className="rounded-[2.1rem] bg-[#fff8f1]/96 p-6 text-left shadow-[0_-18px_40px_rgba(255,255,255,0.24)]">
+                      <div className="flex items-center justify-between gap-3">
+                        <h3 className="text-xl font-bold text-[#3f3126]">{option.title}</h3>
+                        {isSelected ? <span className="text-[10px] font-black uppercase tracking-widest text-[#7b5d44]/80">Active</span> : null}
                       </div>
-                      <p className={`mt-1 text-xs font-bold uppercase tracking-widest ${option.textTone} opacity-50`}>{option.sound}</p>
-                      <p className="mt-4 text-sm leading-relaxed text-sage-600">{option.description}</p>
+                      <p className="mt-1 text-xs font-bold uppercase tracking-widest text-[#7b5d44]">{option.sound}</p>
+                      <p className="mt-4 text-sm leading-relaxed text-[#6a5444]">{option.description}</p>
                     </div>
                   </button>
                 );
