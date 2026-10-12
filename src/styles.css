@@ -123,9 +123,7 @@ input::placeholder {
 }
 
 .personalized-site .theme-panel {
-  background:
-    var(--theme-texture),
-    linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 74%, #24312e));
+  background: transparent;
 }
 
 .personalized-site .theme-icon,

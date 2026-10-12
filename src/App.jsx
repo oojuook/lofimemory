@@ -1583,18 +1583,18 @@ function ThemeStudio({
       <aside id="design" className={`relative h-full w-screen max-w-5xl overflow-y-auto bg-[#2b231d] shadow-[0_0_60px_rgba(0,0,0,0.6)] backdrop-blur-3xl transition duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="grid min-h-full lg:grid-cols-12">
           <div className="theme-panel relative flex flex-col p-7 text-white lg:col-span-4 lg:p-10">
-            <div className="absolute inset-0 -z-10 h-full w-full overflow-hidden">
+            <div className="absolute inset-0 z-0 h-full w-full overflow-hidden">
               <div className="sticky top-0 h-screen w-full">
                 <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
                 <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/80" />
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.08),transparent_35rem)]" />
               </div>
             </div>
-            <div className="flex items-start justify-between gap-4">
+            <div className="relative z-10 flex items-start justify-between gap-4">
               <Palette className="text-white lofi-sharp-text" size={34} />
               <button className="rounded-full border border-white/30 bg-white/20 px-4 py-2 text-sm font-bold text-white lofi-sharp-chip shadow-sm backdrop-blur-md transition hover:bg-white/30 lg:hidden" onClick={onClose} type="button">Done</button>
             </div>
-            <div className="mt-auto pt-32 lg:pt-0">
+            <div className="relative z-10 mt-auto pt-32 lg:pt-0">
               <p className="text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft">Customize your space</p>
               <h2 className="mt-3 font-display text-4xl font-bold leading-tight text-white lofi-sharp-text">Choose the look that feels right today.</h2>
               <p className="mt-4 font-bold leading-7 text-white lofi-sharp-text-soft">Visitors can personalize colors and style. Their choice is saved only in their own browser.</p>
@@ -5094,19 +5094,11 @@ function App() {
               <div className="mt-8 flex flex-wrap items-center gap-3 text-sm">
                 <span className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Popular guides</span>
                 <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-music-room.html">Lofi music room</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-music-website.html">Lofi music website</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/listen-to-lofi-music-online.html">Listen to lofi</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-radio-online.html">Lofi radio</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/relaxing-music-online.html">Relaxing music</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-music-online.html">Chill music</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-music-and-games.html">Music + games</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-study-music.html">Study music</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-vibes.html">Lofi vibes</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-vibes.html">Chill vibes</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/website-to-relax.html">Website to relax</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-place-online.html">Chill place online</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-games.html">Chill games</a>
                 <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/relaxing-browser-games.html">Relaxing browser games</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/daily-journaling-app.html">Daily journaling app</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/write-diary-online.html">Write diary online</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-radio-online.html">Lofi radio</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-place-online.html">Chill place online</a>
               </div>
 
               <div className="mt-8 grid gap-4 sm:grid-cols-3 xl:grid-cols-3">
@@ -7318,27 +7310,19 @@ function App() {
       <footer className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 pb-10 pt-6">
         <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-white/20 p-8 text-center text-sm leading-7 shadow-soft">
           <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
-          <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/25 to-black/5" />
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.15),transparent_25rem)]" />
           <div className="relative z-10">
-            <div className="mb-4 flex flex-wrap justify-center gap-4 font-black uppercase tracking-[0.15em] text-white lofi-sharp-chip">
+            <div className="mb-6 flex flex-wrap justify-center gap-x-8 gap-y-3 font-black uppercase tracking-[0.15em] text-white/95 lofi-sharp-chip">
               <a className="transition hover:text-white" href="#home" onClick={() => openHomeSection('home')}>Home</a>
               <button className="transition hover:text-white" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
               <a className="transition hover:text-white" href="#about" onClick={() => openHomeSection('about')}>About</a>
-              <a className="transition hover:text-white" href="#resources" onClick={() => openHomeSection('resources')}>Resources</a>
-              <a className="transition hover:text-white" href="#articles" onClick={() => openHomeSection('articles')}>Articles</a>
-              <a className="transition hover:text-white" href="#tips" onClick={() => openHomeSection('tips')}>Tips</a>
               <a className="transition hover:text-white" href="/blog.html">Blog</a>
-              <a className="transition hover:text-white" href="/about.html">About</a>
-              <a className="transition hover:text-white" href="/editorial-policy.html">Editorial Policy</a>
               <a className="transition hover:text-white" href="/privacy.html">Privacy</a>
-              <a className="transition hover:text-white" href="/advertising-policy.html">Advertising</a>
               <a className="transition hover:text-white" href="/terms.html">Terms</a>
-              <a className="transition hover:text-white" href="/cookie-policy.html">Cookies</a>
-              <a className="transition hover:text-white" href="/disclaimer.html">Disclaimer</a>
               <a className="transition hover:text-white" href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
             </div>
-            <p className="font-bold text-white lofi-sharp-text-soft">Lofi Memory is a soft browser space to listen to lofi music, relax, journal, breathe, and play chill games whenever you want a calmer moment online.</p>
+            <p className="font-bold text-white lofi-sharp-text-soft">Lofi Memory is a calm browser space to listen to lofi music, relax, journal, and play chill games.</p>
           </div>
         </div>
       </footer>
