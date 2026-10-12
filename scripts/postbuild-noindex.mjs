@@ -39,9 +39,7 @@ function stripAdSenseFromLowValuePages(html, fileName) {
 
 function shouldIndex(fileName) {
   if (alwaysIgnored.has(fileName)) return true;
-  if (alwaysIndexed.has(fileName)) return true;
-  if (fileName.startsWith('article-') && fileName.endsWith('.html')) return true;
-  return false;
+  return true;
 }
 
 function upsertRobotsMeta(html, fileName) {
