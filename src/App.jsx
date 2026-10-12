@@ -11,6 +11,7 @@ import dinoDashIconImage from './assets/dino-dash-icon.png';
 import rainWallpaperImage from './assets/rain-wallpaper.png';
 import fireWallpaperImage from './assets/fire-wallpaper.png';
 import lofiRoomWallpaperImage from './assets/lofi-room-wallpaper.png';
+import maplestoryThemeWallpaperImage from './assets/maplestory-theme-wallpaper.png';
 import lofiMemoryHeaderImage from './assets/lofi-memory-header.png';
 import lotusMatchPreviewImage from './assets/lotus-match-preview.png';
 import gamesSectionPreviewImage from './assets/games-section-preview.png';
@@ -708,18 +709,18 @@ const breatheRoomOptions = [
   },
   {
     id: 'maple',
-    title: 'Maple Intro',
-    sound: 'Theme music',
-    description: 'A nostalgic game-theme intro for cozy focus and a softer late-night desk mood.',
+    title: 'MapleStory Theme',
+    sound: 'Login theme',
+    description: 'A nostalgic MapleStory login theme with a dreamy lofi wallpaper for cozy focus and late-night desk vibes.',
     icon: Headphones,
-    status: 'Maple Intro selected — nostalgic theme music is ready.',
+    status: 'MapleStory Theme selected — nostalgic login music is ready.',
     gradient: 'from-amber-100 via-orange-50 to-rose-50',
     textTone: 'text-amber-900',
     ringTone: 'ring-amber-200',
     volume: 32,
     decoration: '🍁',
     videoId: '0qj4hgJeSe4',
-    wallpaper: lofiRoomWallpaperImage
+    wallpaper: maplestoryThemeWallpaperImage
   }
 ];
 
@@ -2163,6 +2164,7 @@ function App() {
   const radioPlayerContainerRef = useRef(null);
   const radioPlayerRef = useRef(null);
   const radioUnlockedRef = useRef(false);
+  const radioNowPlayingRef = useRef('Lofi Desk');
 
   const isMasterAdmin = user?.email?.toLowerCase() === MASTER_ADMIN_EMAIL;
   const showAdminTools = isMasterAdmin && adminViewMode === 'master';
@@ -3455,7 +3457,7 @@ function App() {
           },
           events: {
             onReady: (event) => {
-              setRadioStatusMessage('Starting lofi radio');
+              setRadioStatusMessage(`Starting ${radioNowPlayingRef.current}`);
               try {
                 event.target.setVolume(radioVolume);
                 if (radioUnlockedRef.current) {
@@ -3465,21 +3467,30 @@ function App() {
                 }
                 event.target.playVideo();
                 setRadioNeedsInteraction(!radioUnlockedRef.current);
-                setRadioStatusMessage(radioUnlockedRef.current ? 'Lofi radio playing' : 'Lofi radio live — tap once for sound');
+                setRadioStatusMessage(radioUnlockedRef.current ? `${radioNowPlayingRef.current} playing` : `${radioNowPlayingRef.current} live — tap once for sound`);
               } catch {
                 setRadioNeedsInteraction(true);
                 setRadioStatusMessage('Tap once for sound');
               }
             },
             onStateChange: (event) => {
+              if (event.data === YT.PlayerState.ENDED) {
+                try {
+                  event.target.seekTo(0);
+                  event.target.playVideo();
+                  setRadioStatusMessage(`${radioNowPlayingRef.current} looping`);
+                } catch {}
+                return;
+              }
+
               if (event.data === YT.PlayerState.PLAYING) {
                 setRadioNeedsInteraction(!radioUnlockedRef.current);
-                setRadioStatusMessage(radioUnlockedRef.current ? 'Lofi radio playing' : 'Lofi radio live — tap once for sound');
+                setRadioStatusMessage(radioUnlockedRef.current ? `${radioNowPlayingRef.current} playing` : `${radioNowPlayingRef.current} live — tap once for sound`);
               }
             },
             onAutoplayBlocked: () => {
               setRadioNeedsInteraction(true);
-              setRadioStatusMessage('Tap once to turn on the lofi radio');
+              setRadioStatusMessage(`Tap once to turn on ${radioNowPlayingRef.current}`);
               try {
                 radioPlayerRef.current?.mute?.();
                 radioPlayerRef.current?.playVideo?.();
@@ -3499,7 +3510,7 @@ function App() {
         radioPlayerRef.current.setVolume?.(radioVolume);
         radioPlayerRef.current.playVideo?.();
         setRadioNeedsInteraction(!radioUnlockedRef.current);
-        setRadioStatusMessage(radioUnlockedRef.current ? 'Lofi radio playing' : 'Lofi radio live — tap once for sound');
+        setRadioStatusMessage(radioUnlockedRef.current ? `${radioNowPlayingRef.current} playing` : `${radioNowPlayingRef.current} live — tap once for sound`);
       } catch {
         setRadioNeedsInteraction(true);
         setRadioStatusMessage('Tap once for sound');
@@ -3520,7 +3531,7 @@ function App() {
       radioUnlockedRef.current = true;
       setRadioNeedsInteraction(false);
       if (!radioPlayerRef.current) {
-        setRadioStatusMessage('Lofi radio waking up');
+        setRadioStatusMessage(`${radioNowPlayingRef.current} waking up`);
         return;
       }
 
@@ -3528,7 +3539,7 @@ function App() {
         radioPlayerRef.current.unMute?.();
         radioPlayerRef.current.setVolume?.(radioVolume);
         radioPlayerRef.current.playVideo?.();
-        setRadioStatusMessage('Lofi radio playing');
+        setRadioStatusMessage(`${radioNowPlayingRef.current} playing`);
       } catch {}
     };
 
@@ -4846,6 +4857,7 @@ function App() {
   const applyBreatheRoom = (id) => {
     const room = breatheRoomOptions.find((r) => r.id === id);
     if (!room) return;
+    radioNowPlayingRef.current = room.title;
     setSelectedBreatheRoom(id);
     setRadioVolume(room.volume);
     setBreatheRoomStatus(room.status);
