@@ -1592,7 +1592,7 @@ function ThemeStudio({
             </div>
             <div className="flex items-start justify-between gap-4">
               <Palette className="text-white lofi-sharp-text" size={34} />
-              <button className="rounded-full border border-white/30 bg-white/20 px-4 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition hover:bg-white/30 lg:hidden" onClick={onClose} type="button">Done</button>
+              <button className="rounded-full border border-white/30 bg-white/20 px-4 py-2 text-sm font-bold text-white lofi-sharp-chip shadow-sm backdrop-blur-md transition hover:bg-white/30 lg:hidden" onClick={onClose} type="button">Done</button>
             </div>
             <div className="mt-auto pt-32 lg:pt-0">
               <p className="text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft">Customize your space</p>
@@ -1602,7 +1602,7 @@ function ThemeStudio({
           </div>
           <div className="space-y-7 bg-[#2b231d] p-7 lg:col-span-8 lg:p-10">
             <div className="hidden lg:flex lg:justify-end">
-              <button className="rounded-full border border-white/25 bg-white/10 px-6 py-2.5 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/20" onClick={onClose} type="button">Done</button>
+              <button className="rounded-full border border-white/25 bg-white/10 px-6 py-2.5 text-sm font-extrabold text-white lofi-sharp-chip shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/20" onClick={onClose} type="button">Done</button>
             </div>
             <div>
               <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft"><Paintbrush size={16} /> Color theme</div>
@@ -1692,7 +1692,7 @@ function ThemeStudio({
                       type="button"
                     >
                       <span className="text-sm font-extrabold text-white lofi-sharp-text">{preset.name}</span>
-                      <span className="mt-2 text-sm font-bold leading-6 text-white/85 lofi-sharp-text-soft">{preset.note}</span>
+                      <span className="mt-2 text-sm font-bold leading-6 text-white/95 lofi-sharp-text-soft">{preset.note}</span>
                     </button>
                   );
                 })}
@@ -1748,14 +1748,14 @@ function ThemeStudio({
                 </button>
               </div>
               {customWeatherImage && (
-                <div className="mt-4 flex items-center gap-3 rounded-2xl border border-white/20 bg-black/20 p-3 text-sm font-semibold text-white/90 backdrop-blur-md">
+                <div className="mt-4 flex items-center gap-3 rounded-2xl border border-white/20 bg-black/20 p-3 text-sm font-semibold text-white/95 backdrop-blur-md lofi-sharp-text-soft">
                   <img alt="Custom weather preview" className="h-12 w-12 rounded-2xl object-cover" src={customWeatherImage} />
                   Image ready — add a name, then save it as a custom emotion.
                 </div>
               )}
               {customWeathers.length > 0 && (
                 <div className="mt-4">
-                  <p className="text-xs font-black uppercase tracking-[0.24em] text-white/85 lofi-sharp-text-soft">Saved custom moods</p>
+                  <p className="text-xs font-black uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft">Saved custom moods</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {customWeathers.map((weather) => (
                       <div key={weather.id} className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm backdrop-blur-md">
@@ -4926,7 +4926,7 @@ function App() {
                 <div className="flex min-w-[210px] flex-1 items-center justify-between gap-3 rounded-full border border-white/25 bg-white/15 px-4 py-2.5 shadow-sm backdrop-blur-md xl:flex-none">
                   <div className="min-w-0">
                     <p className="truncate text-sm font-extrabold text-white lofi-sharp-text">{user.displayName || user.email}</p>
-                    <p className="lofi-sharp-text-soft text-[11px] font-bold uppercase tracking-[0.18em] text-white/85">{cloudStatus}</p>
+                    <p className="lofi-sharp-text-soft text-[11px] font-bold uppercase tracking-[0.18em] text-white/90">{cloudStatus}</p>
                   </div>
                   <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-white/20 text-white shadow-sm">
                     <ShieldCheck size={15} />
@@ -4936,7 +4936,7 @@ function App() {
                 <button className="flex min-w-[208px] flex-1 items-center justify-between gap-3 rounded-full border border-white/25 bg-white/15 px-4 py-2.5 text-left shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25 xl:flex-none" onClick={signInWithGoogle} disabled={authLoading} type="button">
                   <div>
                     <p className="text-sm font-extrabold text-white lofi-sharp-text">{authLoading ? 'Checking login...' : 'Sign in with Google'}</p>
-                    <p className="lofi-sharp-text-soft text-[11px] font-bold uppercase tracking-[0.16em] text-white/85">Sync across devices</p>
+                    <p className="lofi-sharp-text-soft text-[11px] font-bold uppercase tracking-[0.16em] text-white/90">Sync across devices</p>
                   </div>
                   <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-white text-[#4a3a2d] shadow-sm">
                     <ShieldCheck size={15} />
@@ -5951,9 +5951,9 @@ function App() {
                   <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
                   <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
                   <div className="relative z-10">
-                    <div className="flex items-center gap-3">
-                      <Sparkles className="text-white/90" size={20} />
-                      <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Featured relaxing games</p>
+                    <div className="flex items-center gap-3 lofi-sharp-chip">
+                      <Sparkles className="text-white/95" size={20} />
+                      <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/95">Featured relaxing games</p>
                     </div>
                     <h2 className="mt-3 text-2xl font-extrabold text-white lofi-sharp-text">Solitaire and Mind Sweeper are ready first.</h2>
                     <p className="mt-2 text-sm leading-7 text-white/95 lofi-sharp-text-soft">Start with a familiar card game or a calm Minesweeper-style logic board, then keep the lofi music running while you unwind.</p>
@@ -5963,9 +5963,9 @@ function App() {
                   <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
                   <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
                   <div className="relative z-10">
-                    <div className="flex items-center gap-3">
-                      <PenLine className="text-white/90" size={20} />
-                      <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Chill game journal</p>
+                    <div className="flex items-center gap-3 lofi-sharp-chip">
+                      <PenLine className="text-white/95" size={20} />
+                      <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/95">Chill game journal</p>
                     </div>
                     <h2 className="mt-3 text-2xl font-extrabold text-white lofi-sharp-text">Play, then write one soft reflection.</h2>
                     <p className="mt-2 text-sm leading-7 text-white/95 lofi-sharp-text-soft">A calm game can become a journaling prompt: what felt relaxing, what color or sound stayed with you, and what thought became easier to let go.</p>
@@ -6236,13 +6236,13 @@ function App() {
                   <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft">Task board</p>
                   <p className="mt-1 text-sm font-semibold text-white lofi-sharp-text">Small, clear tasks with priority, status, and optional due dates so the page stays useful without feeling noisy.</p>
                 </div>
-                <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-white">
-                  <button className={`rounded-full border px-3 py-1 backdrop-blur-md transition ${plannerTodoFilter === 'all' ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white/90 hover:bg-black/40'}`} onClick={() => setPlannerTodoFilter('all')} type="button">All {plannerTodoCount}</button>
-                  <button className={`rounded-full border px-3 py-1 backdrop-blur-md transition ${plannerTodoFilter === 'open' ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white/90 hover:bg-black/40'}`} onClick={() => setPlannerTodoFilter('open')} type="button">Open {openPlannerTodoCount}</button>
-                  <button className={`rounded-full border px-3 py-1 backdrop-blur-md transition ${plannerTodoFilter === 'doing' ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white/90 hover:bg-black/40'}`} onClick={() => setPlannerTodoFilter('doing')} type="button">Doing {inProgressPlannerTodoCount}</button>
-                  <button className={`rounded-full border px-3 py-1 backdrop-blur-md transition ${plannerTodoFilter === 'done' ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white/90 hover:bg-black/40'}`} onClick={() => setPlannerTodoFilter('done')} type="button">Done {completedPlannerTodoCount}</button>
-                  <button className={`rounded-full border px-3 py-1 backdrop-blur-md transition ${plannerTodoFilter === 'high' ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white/90 hover:bg-black/40'}`} onClick={() => setPlannerTodoFilter('high')} type="button">High {plannerBoard.todos.filter((todo) => todo.priority === 'high').length}</button>
-                  <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1 backdrop-blur-md text-white/90">{plannerStorageLabel}</span>
+                <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-white lofi-sharp-chip">
+                  <button className={`rounded-full border px-3 py-1 backdrop-blur-md transition ${plannerTodoFilter === 'all' ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white/95 hover:bg-black/40'}`} onClick={() => setPlannerTodoFilter('all')} type="button">All {plannerTodoCount}</button>
+                  <button className={`rounded-full border px-3 py-1 backdrop-blur-md transition ${plannerTodoFilter === 'open' ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white/95 hover:bg-black/40'}`} onClick={() => setPlannerTodoFilter('open')} type="button">Open {openPlannerTodoCount}</button>
+                  <button className={`rounded-full border px-3 py-1 backdrop-blur-md transition ${plannerTodoFilter === 'doing' ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white/95 hover:bg-black/40'}`} onClick={() => setPlannerTodoFilter('doing')} type="button">Doing {inProgressPlannerTodoCount}</button>
+                  <button className={`rounded-full border px-3 py-1 backdrop-blur-md transition ${plannerTodoFilter === 'done' ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white/95 hover:bg-black/40'}`} onClick={() => setPlannerTodoFilter('done')} type="button">Done {completedPlannerTodoCount}</button>
+                  <button className={`rounded-full border px-3 py-1 backdrop-blur-md transition ${plannerTodoFilter === 'high' ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white/95 hover:bg-black/40'}`} onClick={() => setPlannerTodoFilter('high')} type="button">High {plannerBoard.todos.filter((todo) => todo.priority === 'high').length}</button>
+                  <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1 backdrop-blur-md text-white/95">{plannerStorageLabel}</span>
                 </div>
               </div>
 
@@ -6589,7 +6589,7 @@ function App() {
                   <p className="text-center text-sm font-extrabold text-white lofi-sharp-text sm:text-base">{formatMonthLabel(calendarMonth)}</p>
                   <button className="rounded-full bg-black/20 px-3 py-2 text-sm font-extrabold text-white transition hover:bg-black/40" onClick={() => setCalendarMonth(shiftMonthKey(calendarMonth, 1))} type="button">›</button>
                 </div>
-                <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-extrabold uppercase tracking-[0.12em] text-white/85 lofi-sharp-text-soft">
+                <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-extrabold uppercase tracking-[0.12em] text-white/90 lofi-sharp-text-soft">
                   {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => <div key={day}>{day}</div>)}
                 </div>
                 <div className="mt-2 grid grid-cols-7 gap-1">
@@ -6657,7 +6657,7 @@ function App() {
                         ) : (
                           <p className="mt-1 text-sm font-semibold leading-6 text-white lofi-sharp-text-soft">{calendarForecastStatus}</p>
                         )}
-                        {selectedCalendarForecast && <p className="mt-1 text-xs font-bold uppercase tracking-[0.14em] text-white/85 lofi-sharp-text-soft">{calendarForecastLocation || 'Your location'} · {selectedCalendarDate}</p>}
+                        {selectedCalendarForecast && <p className="mt-1 text-xs font-bold uppercase tracking-[0.14em] text-white/90 lofi-sharp-text-soft">{calendarForecastLocation || 'Your location'} · {selectedCalendarDate}</p>}
                       </div>
                     </div>
                     {calendarForecastPermission !== 'loading' && (
@@ -6667,7 +6667,7 @@ function App() {
                     )}
                     {calendarForecastPermission === 'loading' && <span className="rounded-full border border-white/30 bg-black/20 px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-white backdrop-blur-md shadow-sm">Loading</span>}
                   </div>
-                  {selectedCalendarForecast && <p className="mt-3 text-xs font-semibold leading-5 text-white/85 lofi-sharp-text-soft">Forecast uses your browser location and is available for nearby upcoming dates.</p>}
+                  {selectedCalendarForecast && <p className="mt-3 text-xs font-semibold leading-5 text-white/90 lofi-sharp-text-soft">Forecast uses your browser location and is available for nearby upcoming dates.</p>}
                 </div>
 
                 {selectedImportantDate && (
@@ -7299,13 +7299,13 @@ function App() {
               <div className="rounded-[2.2rem] border border-white/20 bg-black/20 p-4 shadow-sm backdrop-blur-md">
                 <div className="flex items-center justify-between gap-3">
                   <p className="text-sm font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">AI report</p>
-                  <span className="text-xs font-bold uppercase tracking-[0.18em] text-white/85 lofi-sharp-text-soft">Admin draft only</span>
+                  <span className="text-xs font-bold uppercase tracking-[0.18em] text-white/90 lofi-sharp-text-soft">Admin draft only</span>
                 </div>
                 <div className="mt-4 max-h-[28rem] overflow-auto rounded-[1.4rem] bg-black/30 border border-white/20 p-4 shadow-inner lofi-scrollbar">
                   {seoStudioReport ? (
                     <pre className="whitespace-pre-wrap text-sm leading-7 text-white/95 lofi-sharp-text-soft">{seoStudioReport}</pre>
                   ) : (
-                    <p className="text-sm leading-7 text-white/85 lofi-sharp-text-soft">Run the AI SEO review to generate a fresh draft. It will use the current Lofi Memory positioning, homepage framing, guide-page cluster, and privacy-first diary context.</p>
+                    <p className="text-sm leading-7 text-white/90 lofi-sharp-text-soft">Run the AI SEO review to generate a fresh draft. It will use the current Lofi Memory positioning, homepage framing, guide-page cluster, and privacy-first diary context.</p>
                   )}
                 </div>
               </div>
