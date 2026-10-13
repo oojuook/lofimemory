@@ -470,7 +470,8 @@ export default function TypingSpeedTest({ difficulty = 'medium', theme = 'lofi',
             <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #7a6250 1px, transparent 0)', backgroundSize: '18px 18px' }} />
           </>
         )}
-        <div className="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+        {!isExpandedLayout && (
+<div className="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-sky-200 bg-white/88 text-sky-700'}`}>
               <Sparkles size={14} /> {config.label} typing pace
@@ -523,8 +524,8 @@ export default function TypingSpeedTest({ difficulty = 'medium', theme = 'lofi',
             ))}
           </div>
         </div>
-
-        <div className="relative z-10 mt-6 grid gap-4 xl:grid-cols-[minmax(0,1fr)_260px]">
+)}
+<div className="relative z-10 mt-6 grid gap-4 xl:grid-cols-[minmax(0,1fr)_260px]">
           <div className={`rounded-[1.5rem] border p-4 shadow-sm sm:p-5 ${isLofi ? 'border-[#e8dfd5]/80 bg-white/72 backdrop-blur-sm' : 'border-white/80 bg-white/92'}`}>
             <button
               className={`block w-full overflow-y-auto rounded-[1.5rem] px-3 py-4 text-left shadow-inner outline-none ring-offset-0 transition focus-visible:ring-2 sm:px-4 ${typingMode === 'sentences' ? 'min-h-[15rem] sm:min-h-[17rem] lg:min-h-[18rem]' : 'h-[11.5rem] sm:h-[13rem]'} ${isLofi ? 'bg-[linear-gradient(145deg,rgba(253,250,245,0.98),rgba(245,230,211,0.88))] focus-visible:ring-amber-300' : 'bg-slate-50/90 focus-visible:ring-sky-300'}`}

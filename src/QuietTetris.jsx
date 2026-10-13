@@ -526,6 +526,11 @@ export default function QuietTetris({ difficulty = 'medium', theme = 'lofi', vie
                 <div className="absolute inset-0 flex flex-col items-center justify-center rounded-[2rem] px-4 text-center backdrop-blur-[6px] bg-white/75">
                   <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800' : 'text-violet-500'}`}>{gameState === 'start' ? 'Ready to stack' : 'Round over'}</p>
                   <h4 className={`mt-3 text-3xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-violet-950'}`}>{gameState === 'start' ? 'Settle the blocks and clear neat rows.' : 'The stack reached the top.'}</h4>
+                  {gameState === 'over' && (
+                    <p className={`mt-2 font-bold ${isLofi ? 'text-[#3d3025]' : 'text-violet-900'}`}>
+                      Final Level: {currentLevel} • Score: {score}
+                    </p>
+                  )}
                   <button
                     className={`mt-5 rounded-full px-6 py-3 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#4a3a2d] hover:bg-[#3d3025]' : 'bg-violet-900 hover:bg-violet-800'}`}
                     onClick={startGame}
@@ -537,7 +542,9 @@ export default function QuietTetris({ difficulty = 'medium', theme = 'lofi', vie
               )}
             </div>
 
-            <div className="mt-6 flex flex-col gap-5 sm:mt-8 sm:flex-row sm:items-start sm:gap-8">
+            {!isExpandedLayout && (
+<>
+<div className="mt-6 flex flex-col gap-5 sm:mt-8 sm:flex-row sm:items-start sm:gap-8">
               <div className="flex-1">
                 <div className="grid grid-cols-3 gap-3">
                   <div />
@@ -608,6 +615,8 @@ export default function QuietTetris({ difficulty = 'medium', theme = 'lofi', vie
                 Controls: Arrows to move/rotate, Space to drop, C to hold.
               </div>
             </div>
+</>
+)}
           </div>
         </div>
       </div>
