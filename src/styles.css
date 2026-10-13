@@ -1262,3 +1262,70 @@ input::placeholder {
 .lofi-game-skin button:hover {
   transform: translateY(-1px);
 }
+
+/* Mobile Optimizations */
+@media (max-width: 640px) {
+  .lofi-picture-border {
+    padding: 0.75rem !important;
+    border-radius: 1.5rem !important;
+  }
+  
+  .lofi-border-memory {
+    border-width: 1px !important;
+  }
+  
+  .site-nav-shell {
+    padding: 0.75rem !important;
+    border-radius: 1.5rem !important;
+  }
+  
+  .personalized-site {
+    padding-bottom: 6rem !important;
+  }
+
+  .journal-editor-shell {
+    padding: 1rem !important;
+  }
+  
+  .lofi-glass {
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+
+  /* Compact header for mobile */
+  nav.sticky {
+    padding-top: 0.5rem !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+  
+  .mobile-bottom-nav {
+    bottom: 1.5rem !important;
+    left: 1rem !important;
+    right: 1rem !important;
+  }
+  
+  /* Horizontal scroll for diary toolbar */
+  .diary-toolbar {
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    display: flex;
+    gap: 0.5rem;
+    padding-bottom: 0.25rem;
+  }
+  .diary-toolbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  h2.font-display {
+    font-size: 2.2rem !important;
+  }
+  
+  .section-header p {
+    font-size: 0.75rem !important;
+  }
+}

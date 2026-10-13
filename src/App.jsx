@@ -4982,19 +4982,19 @@ function App() {
       )}
 
       <div className={`transition-opacity duration-300 ${showEntryTransition ? 'pointer-events-none select-none opacity-0' : 'opacity-100'}`}>
-      <nav className="sticky top-0 z-20 px-5 pt-5 sm:px-7 xl:px-10">
-        <div className="site-nav-shell lofi-picture-border lofi-border-memory relative mx-auto max-w-[1280px] overflow-hidden rounded-[3.2rem] border border-[#8b5e3c]/25 p-4 shadow-soft lg:p-5">
+      <nav className="sticky top-0 z-20 px-3 pt-3 sm:px-5 sm:pt-5 xl:px-10">
+        <div className="site-nav-shell lofi-picture-border lofi-border-memory relative mx-auto max-w-[1280px] overflow-hidden rounded-[2rem] sm:rounded-[3.2rem] border border-[#8b5e3c]/25 p-3 sm:p-4 shadow-soft lg:p-5">
           <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
           <div className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/20 to-black/5" />
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
           <div className="relative z-10 flex flex-col gap-2.5 lg:gap-3 xl:flex-row xl:items-center xl:justify-between">
-            <a className="flex items-center gap-3.5" href="#home" onClick={() => openHomeSection('home')}>
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[1.35rem] border border-white/30 bg-white/12 p-1.5 shadow-sm backdrop-blur-md overflow-hidden">
-                <img src={headerLogoIcon} alt="Lofi Memory Logo" className="h-full w-full rounded-[1rem] object-cover" />
+            <a className="flex items-center gap-2.5 sm:gap-3.5" href="#home" onClick={() => openHomeSection('home')}>
+              <div className="flex h-11 w-11 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-[1rem] sm:rounded-[1.35rem] border border-white/30 bg-white/12 p-1 sm:p-1.5 shadow-sm backdrop-blur-md overflow-hidden">
+                <img src={headerLogoIcon} alt="Lofi Memory Logo" className="h-full w-full rounded-[0.7rem] sm:rounded-[1rem] object-cover" />
               </div>
               <div>
-                <p className="font-display text-2xl font-bold text-white lofi-sharp-text">Lofi Memory</p>
-                <p className="lofi-sharp-text-soft text-xs font-black uppercase tracking-[0.28em] text-white/95">Relaxing games, music, diary & notes</p>
+                <p className="font-display text-xl sm:text-2xl font-bold text-white lofi-sharp-text leading-tight">Lofi Memory</p>
+                <p className="lofi-sharp-text-soft text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] sm:tracking-[0.28em] text-white/95">Relaxing games & notes</p>
               </div>
             </a>
             <div className="site-nav-links hidden flex-1 items-center justify-center gap-7 xl:gap-9">
@@ -5019,7 +5019,7 @@ function App() {
 
             <div className="site-nav-actions flex w-full flex-wrap items-center gap-2 lg:justify-end xl:w-auto xl:max-w-[34rem] xl:flex-none xl:flex-nowrap">
               {user ? (
-                <div className="flex min-w-[210px] flex-1 items-center justify-between gap-3 rounded-full border border-white/25 bg-white/15 px-4 py-2.5 shadow-sm backdrop-blur-md xl:flex-none">
+                <div className="flex min-w-[160px] sm:min-w-[210px] flex-1 items-center justify-between gap-2 sm:gap-3 rounded-full border border-white/25 bg-white/15 px-3 py-2 sm:px-4 sm:py-2.5 shadow-sm backdrop-blur-md xl:flex-none">
                   <div className="min-w-0">
                     <p className="truncate text-sm font-extrabold text-white lofi-sharp-text">{user.displayName || user.email}</p>
                     <p className="lofi-sharp-text-soft text-[11px] font-bold uppercase tracking-[0.18em] text-white/90">{cloudStatus}</p>
@@ -5029,19 +5029,19 @@ function App() {
                   </div>
                 </div>
               ) : (
-                <button className="flex min-w-[208px] flex-1 items-center justify-between gap-3 rounded-full border border-white/25 bg-white/15 px-4 py-2.5 text-left shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25 xl:flex-none" onClick={signInWithGoogle} disabled={authLoading} type="button">
+                <button className="flex min-w-[160px] sm:min-w-[208px] flex-1 items-center justify-between gap-2 sm:gap-3 rounded-full border border-white/25 bg-white/15 px-3 py-2 sm:px-4 sm:py-2.5 text-left shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25 xl:flex-none" onClick={signInWithGoogle} disabled={authLoading} type="button">
                   <div>
-                    <p className="text-sm font-extrabold text-white lofi-sharp-text">{authLoading ? 'Checking login...' : 'Sign in with Google'}</p>
-                    <p className="lofi-sharp-text-soft text-[11px] font-bold uppercase tracking-[0.16em] text-white/90">Sync across devices</p>
+                    <p className="text-xs sm:text-sm font-extrabold text-white lofi-sharp-text">{authLoading ? '...' : 'Sign in'}</p>
+                    <p className="lofi-sharp-text-soft text-[9px] sm:text-[11px] font-bold uppercase tracking-[0.16em] text-white/90">Sync</p>
                   </div>
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-white text-[#4a3a2d] shadow-sm">
-                    <ShieldCheck size={15} />
+                  <div className="flex h-7 w-7 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-xl sm:rounded-2xl bg-white text-[#4a3a2d] shadow-sm">
+                    <ShieldCheck size={14} />
                   </div>
                 </button>
               )}
-              <div className="flex flex-wrap items-center gap-2 rounded-full border border-white/20 bg-black/20 p-1.5 shadow-sm backdrop-blur-md xl:flex-nowrap">
+              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 rounded-full border border-white/20 bg-black/20 p-1 sm:p-1.5 shadow-sm backdrop-blur-md xl:flex-nowrap">
                 {user && (
-                  <button className="rounded-full border border-white/30 bg-white/10 px-3.5 py-2 text-sm font-bold text-white lofi-sharp-chip transition hover:-translate-y-0.5 hover:bg-white/20" onClick={handleSignOut} type="button">
+                  <button className="rounded-full border border-white/30 bg-white/10 px-3 py-1.5 sm:px-3.5 sm:py-2 text-[11px] sm:text-sm font-bold text-white lofi-sharp-chip transition hover:-translate-y-0.5 hover:bg-white/20" onClick={handleSignOut} type="button">
                     Sign out
                   </button>
                 )}
@@ -5068,11 +5068,11 @@ function App() {
                     SEO studio
                   </button>
                 )}
-                <button className={`rounded-full border px-3.5 py-2 text-sm font-bold lofi-sharp-chip transition hover:-translate-y-0.5 ${comfortMode ? 'border-white bg-white text-[#4a3a2d]' : 'border-white/30 bg-white/10 text-white hover:bg-white/20'}`} onClick={() => setComfortMode(!comfortMode)} type="button">
+                <button className={`rounded-full border px-3 py-1.5 sm:px-3.5 sm:py-2 text-[11px] sm:text-sm font-bold lofi-sharp-chip transition hover:-translate-y-0.5 ${comfortMode ? 'border-white bg-white text-[#4a3a2d]' : 'border-white/30 bg-white/10 text-white hover:bg-white/20'}`} onClick={() => setComfortMode(!comfortMode)} type="button">
                   Comfort
                 </button>
-                <button className="rounded-full border border-white/30 bg-white/10 px-3.5 py-2 text-sm font-bold text-white lofi-sharp-chip transition hover:-translate-y-0.5 hover:bg-white/20" onClick={() => (hasPin ? setPinSettingsOpen(true) : setLocked(true))} type="button">
-                  {hasPin ? 'Privacy' : 'Set lock'}
+                <button className="rounded-full border border-white/30 bg-white/10 px-3 py-1.5 sm:px-3.5 sm:py-2 text-[11px] sm:text-sm font-bold text-white lofi-sharp-chip transition hover:-translate-y-0.5 hover:bg-white/20" onClick={() => (hasPin ? setPinSettingsOpen(true) : setLocked(true))} type="button">
+                  {hasPin ? 'Privacy' : 'Lock'}
                 </button>
               </div>
             </div>
@@ -5088,8 +5088,42 @@ function App() {
         </div>
       </nav>
 
+      {/* Mobile Bottom Nav */}
+      <div className="mobile-bottom-nav fixed bottom-4 left-4 right-4 z-50 xl:hidden">
+        <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-full border border-[#8b5e3c]/25 p-1.5 shadow-lift backdrop-blur-2xl transition duration-500 hover:shadow-soft">
+          <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-60" aria-hidden="true" />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/20 to-black/5" />
+          <div className="relative z-10 flex items-center gap-1 overflow-x-auto px-1 custom-scrollbar sm:justify-around sm:px-2">
+            {[
+              { id: 'unwind', label: 'Games', icon: Gamepad2 },
+              { id: 'home', label: 'Chill', icon: Headphones },
+              { id: 'write', label: 'Diary', icon: PenLine },
+              { id: 'notes', label: 'Notes', icon: FileText },
+              { id: 'breathe', label: 'Music', icon: Wind },
+              { id: 'memories', label: 'Archive', icon: CalendarDays }
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                className={`flex shrink-0 flex-col items-center gap-1 rounded-full px-2.5 py-2 transition-all duration-300 ${activeTab === tab.id ? 'bg-white/20 text-white shadow-inner scale-105' : 'text-white/70 hover:text-white'}`}
+                onClick={() => navigateToTab(tab.id)}
+              >
+                <tab.icon size={18} />
+                <span className="text-[9px] font-black uppercase tracking-wider">{tab.label}</span>
+              </button>
+            ))}
+            <button
+              className={`flex shrink-0 flex-col items-center gap-1 rounded-full px-2.5 py-2 transition-all duration-300 ${activeTab === 'design' ? 'bg-white/20 text-white shadow-inner scale-105' : 'text-white/70 hover:text-white'}`}
+              onClick={() => navigateToTab('design')}
+            >
+              <Palette size={18} />
+              <span className="text-[9px] font-black uppercase tracking-wider">Design</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
       {showMinimalHomeOverview && (
-      <section id="home" className="mx-auto max-w-[1040px] px-5 pb-20 pt-10 sm:px-7 xl:px-10">
+      <section id="home" className="mx-auto max-w-[1040px] px-3 pb-24 pt-6 sm:px-5 sm:pb-20 sm:pt-10 xl:px-10">
         <div className="mb-6 text-center">
           <p className="text-[11px] font-extrabold uppercase tracking-[0.34em] text-[#9a806a]">Choose your chill space</p>
             <p className="mt-3 text-sm font-semibold leading-7 text-[#7f6a58]">Start with games, music, diary, notes, or memories.</p>
@@ -5891,7 +5925,7 @@ function App() {
         )}
 
                         {activeTab === 'unwind' && (
-          <div id="game-library" className="mx-auto max-w-[1280px] px-4 py-8 lg:px-6 lg:py-14 fade-in">
+          <div id="game-library" className="mx-auto max-w-[1280px] px-2 py-5 sm:px-4 sm:py-8 lg:px-6 lg:py-14 fade-in">
             {unwindViewMode === 'detail' && (
               <div className={`game-detail-reveal ${isFullscreen ? 'mb-0 scroll-mt-0' : 'mb-16 scroll-mt-24'}`}>
                 {!isFullscreen && (
