@@ -2031,7 +2031,7 @@ function App() {
   const initialCalendarDate = getInitialSelectedCalendarDate();
   const [activeTab, setActiveTab] = useState(initialActiveTab);
   const [activeHomeSection, setActiveHomeSection] = useState(getInitialHomeSection);
-  const [showEntryTransition, setShowEntryTransition] = useState(initialActiveTab === 'home');
+  const [showEntryTransition, setShowEntryTransition] = useState(false);
   const [entryTransitionClosing, setEntryTransitionClosing] = useState(false);
   const [entries, setEntries] = useState(getInitialEntries);
   const [selectedMood, setSelectedMood] = useState('Calm');
@@ -4981,7 +4981,7 @@ function App() {
         </div>
       )}
 
-      <div className={`transition-opacity duration-200 ${showEntryTransition ? 'pointer-events-none select-none opacity-0' : 'opacity-100'}`}>
+      <div className={`transition-opacity duration-300 ${showEntryTransition ? 'pointer-events-none select-none opacity-0' : 'opacity-100'}`}>
       <nav className="sticky top-0 z-20 px-5 pt-5 sm:px-7 xl:px-10">
         <div className="site-nav-shell lofi-picture-border lofi-border-memory relative mx-auto max-w-[1280px] overflow-hidden rounded-[3.2rem] border border-[#8b5e3c]/25 p-4 shadow-soft lg:p-5">
           <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
