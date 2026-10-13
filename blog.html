@@ -3,91 +3,121 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-    <title>Blog & Wellness Library - Lofi Memory</title>
-    <meta name="description" content="Explore articles and guides on journaling habits, mental health, emotional wellness, and maintaining a private online diary." />
-    <link rel="canonical" href="https://quietjournaljourney.vercel.app/blog.html" />
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6094559377350805" crossorigin="anonymous"></script>
+    <title>Lofi Memory Blog | Private Journaling, Relaxation & Cozy Game Reads</title>
+    <meta name="description" content="Explore Lofi Memory articles on private journaling, digital calm, sleep-friendly writing, relaxation, and cozy game breaks that help you reset." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://lofimemory.vercel.app/blog.html" />
     <style>
-      body { font-family: 'Inter', sans-serif; background-color: #f7f9f7; color: #1e2926; margin: 0; padding: 0; }
-      .nav-header { padding: 20px; text-align: center; }
-      .nav-header a { text-decoration: none; color: #31442c; font-weight: 700; font-size: 1.25rem; display: inline-flex; align-items: center; gap: 10px;}
-      .landing-container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
-      h1 { font-size: 2.5rem; font-weight: 800; color: #1e2926; margin-bottom: 10px; text-align: center; }
-      .subtitle { text-align: center; font-size: 1.1rem; color: #45643b; margin-bottom: 50px; }
-      .grid { display: grid; gap: 20px; grid-template-columns: 1fr; }
-      @media (min-width: 768px) { .grid { grid-template-columns: 1fr 1fr; } }
-      .card { background: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.7); border-radius: 24px; padding: 30px; text-decoration: none; display: block; transition: transform 0.2s, background 0.2s; box-shadow: 0 4px 20px rgba(0,0,0,0.03); backdrop-filter: blur(10px); }
-      .card:hover { transform: translateY(-4px); background: #ffffff; }
-      .card-tag { display: inline-block; background: #31442c; color: white; padding: 4px 12px; border-radius: 99px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; }
-      .card h3 { color: #1e2926; font-size: 1.35rem; margin: 0 0 10px; font-weight: 800; }
-      .card p { color: #3a5133; font-size: 0.95rem; line-height: 1.6; margin: 0; }
+      :root { color-scheme: light; --bg:#f7f9f7; --ink:#1e2926; --muted:#5b6d64; --panel:rgba(255,255,255,.92); --border:rgba(255,255,255,.84); --shadow:0 18px 44px rgba(43,61,49,.08); --sage:#284a3a; --sage-soft:#e7f0ea; --peach:#f7ede4; }
+      * { box-sizing:border-box; }
+      body { margin:0; font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:linear-gradient(180deg,#f9fbf8 0%,#f4eee6 100%); color:var(--ink); line-height:1.7; }
+      a { color:var(--sage); }
+      .shell { width:min(1120px,calc(100% - 32px)); margin:0 auto; }
+      .hero { padding:40px 0 28px; }
+      .hero-card,.section,.article-card,.note-card { background:var(--panel); border:1px solid var(--border); border-radius:30px; box-shadow:var(--shadow); }
+      .hero-card { padding:30px; }
+      .eyebrow { display:inline-flex; align-items:center; padding:10px 16px; border-radius:999px; background:var(--sage-soft); color:var(--sage); font-size:12px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; }
+      h1 { margin:18px 0 12px; font-size:clamp(2.4rem,5vw,4.4rem); line-height:1; letter-spacing:-.04em; }
+      h2 { margin:0 0 14px; font-size:clamp(1.45rem,3vw,2rem); }
+      h3 { margin:0 0 10px; font-size:1.15rem; }
+      p { margin:0; }
+      .lead { max-width:760px; font-size:1.1rem; color:var(--muted); }
+      .actions, .tag-row, .grid, .reading-grid, .trust-grid { display:grid; gap:18px; }
+      .actions { grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); margin-top:24px; }
+      .action-link { display:flex; align-items:center; justify-content:center; min-height:56px; border-radius:999px; text-decoration:none; font-weight:800; }
+      .action-link.primary { background:var(--sage); color:#fff; }
+      .action-link.secondary { border:1px solid #d7e2db; color:var(--sage); background:#fff; }
+      .tag-row { grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); margin-top:20px; }
+      .tag { padding:14px 16px; border-radius:20px; background:#fff; border:1px solid #dfe8e2; color:var(--sage); font-weight:700; }
+      .section { padding:28px; margin-bottom:22px; }
+      .reading-grid { grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); }
+      .article-card { padding:22px; display:grid; gap:14px; }
+      .meta { font-size:.82rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#6a7f73; }
+      .article-card p { color:var(--muted); }
+      .article-card a { text-decoration:none; font-weight:800; }
+      .trust-grid { grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
+      .note-card { padding:22px; }
+      footer { padding:18px 0 42px; color:var(--muted); text-align:center; }
+      footer nav { display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin-bottom:14px; }
     </style>
   </head>
   <body>
-    <div class="nav-header">
-      <a href="/">
-        <img src="/logo-transparent.png" alt="Logo" style="height:32px; width:32px; object-fit:contain;" />
-        Lofi Memory
-      </a>
-    </div>
-    <div class="landing-container">
-      <h1>Wellness Library & Blog</h1>
-      <p class="subtitle">Articles on mindful journaling, privacy, and mental clarity.</p>
-      
-      <div class="grid">
-                <a href="/article-memory-games-cognitive-relief.html" class="card">
-          <span class="card-tag">Cognitive</span>
-          <h3>How gentle memory games provide cognitive relief before writing</h3>
-          <p>Understand why playing a simple memory match game can help organize your thoughts and reduce brain fog before journaling.</p>
-        </a>
-        <!-- New Articles -->
-        <a href="/article-brain-dumping-sleep.html" class="card">
-          <span class="card-tag">Sleep</span>
-          <h3>Why brain dumping at night helps you sleep</h3>
-          <p>Discover how emptying your mind into a private journal before bed reduces anxiety.</p>
-        </a>
-        <a href="/article-digital-journal-distractions.html" class="card">
-          <span class="card-tag">Focus</span>
-          <h3>How to keep a digital journal without getting distracted</h3>
-          <p>Practical tips for maintaining focus while journaling online.</p>
-        </a>
-        <a href="/article-psychology-of-journaling.html" class="card">
-          <span class="card-tag">Psychology</span>
-          <h3>The psychology behind writing your feelings down</h3>
-          <p>Explore the psychological benefits of expressive writing and emotional healing.</p>
-        </a>
-        <a href="/article-protect-privacy-journaling-online.html" class="card">
-          <span class="card-tag">Privacy</span>
-          <h3>How to protect your privacy when journaling online</h3>
-          <p>A guide to understanding digital privacy and secure diaries.</p>
-        </a>
-        
-        <!-- Old Articles -->
-        <a href="/article-how-to-start-journaling-habit.html" class="card">
-          <span class="card-tag">Habits</span>
-          <h3>How to start a journaling habit for anxiety</h3>
-          <p>A comprehensive guide to building a journaling routine that feels gentle and sustainable.</p>
-        </a>
-        <a href="/article-benefits-of-private-online-diary.html" class="card">
-          <span class="card-tag">Benefits</span>
-          <h3>The unexpected benefits of a private online diary</h3>
-          <p>From enhanced emotional regulation to unparalleled convenience.</p>
-        </a>
-        <a href="/article-daily-reflection-mental-health.html" class="card">
-          <span class="card-tag">Mental Health</span>
-          <h3>Why daily reflection is essential for mental health</h3>
-          <p>Taking time for daily reflection is a fundamental requirement for maintaining self-awareness.</p>
-        </a>
-        <a href="/article-journaling-prompts-self-discovery.html" class="card">
-          <span class="card-tag">Prompts</span>
-          <h3>Journaling prompts for deep self-discovery</h3>
-          <p>Curated journaling prompts that act as a gentle guide without pressure.</p>
-        </a>
+    <header class="hero">
+      <div class="shell">
+        <div class="hero-card">
+          <div class="eyebrow">Lofi Memory Blog</div>
+          <h1>Original reads for calmer days online.</h1>
+          <p class="lead">This blog is the reading side of Lofi Memory: a place for longer, more useful writing about private journaling, lighter routines, digital calm, sleep-friendly brain dumps, and cozy game breaks that help you reset without making the web feel louder.</p>
+          <div class="actions">
+            <a class="action-link primary" href="/">Open Lofi Memory</a>
+            <a class="action-link secondary" href="/editorial-policy.html">Read editorial policy</a>
+            <a class="action-link secondary" href="/privacy.html">Review privacy policy</a>
+          </div>
+          <div class="tag-row">
+            <div class="tag">Private journaling</div>
+            <div class="tag">Relaxation and focus</div>
+            <div class="tag">Sleep and reflection</div>
+            <div class="tag">Cozy game breaks</div>
+            <div class="tag">Digital calm</div>
+          </div>
+        </div>
       </div>
-      
-      <div style="text-align: center; margin-top: 60px;">
-        <a href="/" style="display: inline-block; padding: 15px 30px; background-color: #587f49; color: #ffffff; text-decoration: none; border-radius: 9999px; font-weight: 700;">Open Your Journal</a>
-      </div>
-    </div>
+    </header>
+
+    <main class="shell">
+      <section class="section">
+        <h2>What you will find here</h2>
+        <p>Lofi Memory works best when the experience feels trustworthy before it feels optimized. That means this hub now points visitors toward the pages that explain the product clearly, offer original reading value, and help them decide whether the site is useful for their own routines. Instead of scattering attention across dozens of tiny search pages, the blog gathers the stronger, more complete reads in one place so people can browse naturally and understand the product without guessing.</p>
+      </section>
+
+      <section class="section">
+        <h2>Featured articles</h2>
+        <div class="reading-grid">
+          <article class="article-card"><div class="meta">Journaling • Privacy</div><h3>How to protect your privacy when journaling online</h3><p>A practical read on personal boundaries, trust signals, storage choices, and what a calmer private writing space should explain clearly.</p><a href="/article-protect-privacy-journaling-online.html">Read the article</a></article>
+          <article class="article-card"><div class="meta">Journaling • Psychology</div><h3>The psychology of journaling: why writing things down helps</h3><p>Why journaling can reduce mental noise, strengthen recall, and turn vague feelings into something easier to understand.</p><a href="/article-psychology-of-journaling.html">Read the article</a></article>
+          <article class="article-card"><div class="meta">Habits • Getting started</div><h3>How to start a journaling habit that actually lasts</h3><p>Small routines, lower pressure, and better cues for turning writing into something you can realistically keep.</p><a href="/article-how-to-start-journaling-habit.html">Read the article</a></article>
+          <article class="article-card"><div class="meta">Product fit • Privacy</div><h3>The benefits of using a private online diary</h3><p>A closer look at when a browser-based diary can feel more flexible, secure, and sustainable than scattered notes.</p><a href="/article-benefits-of-private-online-diary.html">Read the article</a></article>
+          <article class="article-card"><div class="meta">Reflection • Sleep</div><h3>Can brain dumping before sleep help quiet a busy mind?</h3><p>How a short pre-sleep writing routine can lower mental carryover, reduce clutter, and make bedtime feel less crowded.</p><a href="/article-brain-dumping-sleep.html">Read the article</a></article>
+          <article class="article-card"><div class="meta">Reflection • Daily practice</div><h3>Daily reflection and mental health: why small check-ins matter</h3><p>Why short, honest check-ins are often more repeatable than heavy self-improvement systems.</p><a href="/article-daily-reflection-mental-health.html">Read the article</a></article>
+          <article class="article-card"><div class="meta">Games • Mental reset</div><h3>How gentle memory games provide cognitive relief before writing</h3><p>A read on why a brief puzzle can create just enough structure to help your thoughts settle before journaling.</p><a href="/article-memory-games-cognitive-relief.html">Read the article</a></article>
+          <article class="article-card"><div class="meta">Games • Relaxation</div><h3>Why gaming helps anxiety for some people</h3><p>What repetitive, low-stakes play can offer when you need a small buffer between stress and the next task.</p><a href="/article-why-gaming-helps-anxiety.html">Read the article</a></article>
+          <article class="article-card"><div class="meta">Prompts • Self discovery</div><h3>Journaling prompts for self-discovery that do not feel forced</h3><p>Gentle prompts that help you begin without turning the page into a performance.</p><a href="/article-journaling-prompts-self-discovery.html">Read the article</a></article>
+          <article class="article-card"><div class="meta">Focus • Digital habits</div><h3>How a digital journal can reduce distractions</h3><p>Why the right online setup can feel simpler, not noisier, when your goal is fewer tabs and a clearer head.</p><a href="/article-digital-journal-distractions.html">Read the article</a></article>
+          <article class="article-card"><div class="meta">Games • Word breaks</div><h3>Why daily word puzzles make relaxing breaks easier</h3><p>A quick look at why familiar word loops can feel grounding when you want a tidy brain reset.</p><a href="/article-daily-word-puzzles-relax.html">Read the article</a></article>
+          <article class="article-card"><div class="meta">Games • Cognitive rhythm</div><h3>Why word guessing games feel good when your mind is busy</h3><p>How small pattern-recognition wins can provide relief without demanding too much energy.</p><a href="/article-word-guessing-games-busy-mind.html">Read the article</a></article>
+          <article class="article-card"><div class="meta">Games • Music</div><h3>The benefits of lofi gaming for mental health and focus</h3><p>Why music, visual softness, and low-pressure play can work together as a gentler online break.</p><a href="/article-benefits-lofi-gaming-mental-health.html">Read the article</a></article>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Trust and site information</h2>
+        <p>If you are deciding whether Lofi Memory is a good fit before you sign in, save anything, or interact with ads, start with these pages. They explain the product, the site standards, and how to ask questions or request a correction.</p>
+        <div class="trust-grid" style="margin-top:18px;">
+          <article class="note-card"><h3>About Lofi Memory</h3><p>What the product is trying to be, what tools are included, and why the overall experience is designed to stay soft and uncluttered.</p><p style="margin-top:12px;"><a href="/about.html">Open About</a></p></article>
+          <article class="note-card"><h3>Editorial policy</h3><p>How content is reviewed, what gets published, how corrections are handled, and where the site draws the line on wellbeing claims.</p><p style="margin-top:12px;"><a href="/editorial-policy.html">Open editorial policy</a></p></article>
+          <article class="note-card"><h3>Privacy and cookies</h3><p>How local storage, sign-in, notifications, embedded media, and advertising-related technologies may be used on the site.</p><p style="margin-top:12px;"><a href="/privacy.html">Privacy</a> · <a href="/cookie-policy.html">Cookies</a></p></article>
+          <article class="note-card"><h3>Questions or corrections</h3><p>How to reach the site owner for support, privacy requests, content corrections, or ad-related questions.</p><p style="margin-top:12px;"><a href="/contact.html">Open contact page</a></p></article>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Why this hub matters</h2>
+        <p>The best version of this site is not a maze of tiny keyword pages. It is a calm product with real tools, clear trust pages, and articles that stand on their own even if someone never clicks anything else. This blog is meant to make that clearer: fewer doorway-style paths, more useful reading, and a simpler way for both visitors and reviewers to understand what Lofi Memory offers.</p>
+      </section>
+    </main>
+
+    <footer class="shell">
+      <nav>
+        <a href="/">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/editorial-policy.html">Editorial Policy</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/cookie-policy.html">Cookie Policy</a>
+        <a href="/disclaimer.html">Disclaimer</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+      <p>Last updated: October 2026</p>
+    </footer>
   </body>
 </html>
