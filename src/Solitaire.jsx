@@ -916,7 +916,7 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
 
             <div className="flex items-start justify-between gap-1.5 sm:gap-6">
               <div className="flex gap-1 sm:gap-4">
-                <div className="w-[2.4rem] text-center xs:w-[2.9rem] sm:w-[4.2rem] md:w-[5.8rem]">
+                <div className="w-[2.4rem] text-center xs:w-[2.9rem] sm:w-[3.6rem] md:w-[4.8rem]">
                   {game.stock.length > 0 ? (
                     <Card card={{ id: 'stock', faceUp: false }} compact isLofi={isLofi} onClick={drawFromStock} />
                   ) : (
@@ -924,7 +924,7 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
                   )}
                   <span className={`mt-2 block text-[8px] font-extrabold uppercase tracking-[0.12em] ${isLofi ? 'text-amber-800/70' : 'text-white/78'}`}>{game.stock.length}</span>
                 </div>
-                <div className="w-[2.4rem] text-center xs:w-[2.9rem] sm:w-[4.2rem] md:w-[5.8rem]">
+                <div className="w-[2.4rem] text-center xs:w-[2.9rem] sm:w-[3.6rem] md:w-[4.8rem]">
                   <WastePile
                     cards={game.waste}
                     drawCount={config.drawCount}
@@ -949,7 +949,7 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
                   const topCard = pile[pile.length - 1];
                   const isDragTarget = dragOverTarget === `foundation-${suit}`;
                   return (
-                    <div key={suit} className={`w-[2.4rem] xs:w-[2.9rem] sm:w-[4.2rem] md:w-[5.8rem] rounded-[0.6rem] sm:rounded-[1rem] p-0.5 sm:p-1 text-center transition ${isDragTarget ? (isLofi ? 'bg-amber-900/10 ring-2 ring-amber-200/50' : 'bg-white/12 ring-2 ring-amber-200/70') : ''}`}>
+                    <div key={suit} className={`w-[2.4rem] xs:w-[2.9rem] sm:w-[3.6rem] md:w-[4.8rem] rounded-[0.6rem] sm:rounded-[1rem] p-0.5 sm:p-1 text-center transition ${isDragTarget ? (isLofi ? 'bg-amber-900/10 ring-2 ring-amber-200/50' : 'bg-white/12 ring-2 ring-amber-200/70') : ''}`}>
                       <Card
                         card={topCard}
                         compact
@@ -979,7 +979,7 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
               {game.tableau.map((column, columnIndex) => (
                 <div
                   key={`column-${columnIndex + 1}`}
-                  className={`min-h-[16rem] space-y-[-2rem] sm:min-h-[22rem] sm:space-y-[-2.65rem] md:space-y-[-3.35rem] rounded-[0.5rem] sm:rounded-[1rem] p-0.5 sm:p-1.5 transition ${dragOverTarget === `tableau-${columnIndex}` ? (isLofi ? 'bg-amber-900/10 ring-2 ring-amber-200/50' : 'bg-white/14 ring-2 ring-amber-200/70') : (isLofi ? 'bg-amber-900/5' : 'bg-emerald-950/10')}`}
+                  className={`min-h-[16rem] space-y-[-2rem] sm:min-h-[22rem] sm:space-y-[-2.65rem] md:space-y-[-2.85rem] rounded-[0.5rem] sm:rounded-[1rem] p-0.5 sm:p-1.5 transition ${dragOverTarget === `tableau-${columnIndex}` ? (isLofi ? 'bg-amber-900/10 ring-2 ring-amber-200/50' : 'bg-white/14 ring-2 ring-amber-200/70') : (isLofi ? 'bg-amber-900/5' : 'bg-emerald-950/10')}`}
                   data-drop-target={`tableau-${columnIndex}`}
                 >
                   {column.length === 0 ? (
