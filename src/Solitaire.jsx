@@ -845,7 +845,7 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
           </div>
         </div>
 
-        <div className={`relative min-h-0 flex-1 overflow-auto p-2 sm:p-4 md:p-6 lg:p-8 ${isLofi ? 'bg-[#fff7ec]' : 'bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.18),transparent_38%),linear-gradient(135deg,#0b7c43,#075b33)]'}`}>
+        <div className={`relative min-h-0 flex-1 overflow-auto p-1.5 sm:p-4 md:p-6 lg:p-8 ${isLofi ? 'bg-[#fff7ec]' : 'bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.18),transparent_38%),linear-gradient(135deg,#0b7c43,#075b33)]'}`}>
           <div className={`pointer-events-none absolute inset-0 opacity-[0.06] ${isLofi ? 'hidden' : ''}`} style={{ backgroundImage: 'repeating-linear-gradient(45deg, #ffffff 0 1px, transparent 1px 12px)' }} />
           {isLofi && (
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(74,58,45,0.04),transparent_70%)] opacity-40 pointer-events-none" />
@@ -881,7 +881,7 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
             </div>
           ) : null}
 
-          <div ref={playfieldRef} className={`relative mx-auto flex ${isExpandedLayout ? 'min-w-full max-w-none' : 'w-full max-w-[920px]'} flex-col gap-6 sm:gap-8 ${isExpandedLayout ? 'h-full' : ''}`}>
+          <div ref={playfieldRef} className={`relative mx-auto flex ${isExpandedLayout ? 'min-w-full max-w-none' : 'w-full max-w-[920px]'} flex-col gap-4 sm:gap-8 ${isExpandedLayout ? 'h-full' : ''}`}>
             <style>
               {`@keyframes foundation-flight {
                 from {

@@ -5930,7 +5930,7 @@ function App() {
                     <span aria-hidden="true">←</span> Back to games
                   </button>
                 )}
-                <div ref={selectedGameInterfaceRef} className={`lofi-glass lofi-picture-border lofi-border-memory relative overflow-hidden backdrop-blur ${isFullscreen ? 'is-fullscreen fixed inset-0 z-[120] flex h-[100dvh] w-screen flex-col rounded-none border-0 bg-[#fff7ec] p-0 shadow-none' : 'rounded-[3rem] border p-3 shadow-soft sm:p-4 lg:p-5'} ${!isFullscreen && gameVisualTheme === 'lofi' ? 'border-[#e8dfd5] bg-[#fffaf2]/85' : ''}`}>
+                <div ref={selectedGameInterfaceRef} className={`lofi-glass lofi-picture-border lofi-border-memory relative overflow-hidden backdrop-blur ${isFullscreen ? 'is-fullscreen fixed inset-0 z-[120] flex h-[100dvh] w-screen flex-col overflow-auto rounded-none border-0 bg-[#fff7ec] p-0 shadow-none sm:overflow-hidden' : 'rounded-[3rem] border p-3 shadow-soft sm:p-4 lg:p-5'} ${!isFullscreen && gameVisualTheme === 'lofi' ? 'border-[#e8dfd5] bg-[#fffaf2]/85' : ''}`}>
                   {!isFullscreen && gameVisualTheme === 'lofi' && (
                     <>
                       <img src={lofiRoomWallpaperImage} alt="" className="pointer-events-none absolute inset-0 h-full w-full scale-105 object-cover opacity-[0.07] blur-[1px]" aria-hidden="true" />
