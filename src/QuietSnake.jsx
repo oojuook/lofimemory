@@ -80,9 +80,13 @@ export default function QuietSnake({ difficulty = 'medium', theme = 'lofi', view
     const observer = new ResizeObserver((entries) => {
       const { width, height } = entries[0].contentRect;
       if (width === 0 || height === 0) return;
+      // We want to scale the native layout up to fit the window.
       const scaleW = width / 850;
       const scaleH = height / 750;
-      setScale(Math.min(scaleW, scaleH, 2.0) * 0.95);
+      // For games with responsive layouts, we don't actually want to lock them to a fixed width/height box before scaling.
+      // But if we do use transform: scale, we must lock their unscaled dimensions.
+      // The issue was: the internal div had no height constraint, so it collapsed.
+      setScale(Math.min(scaleW, scaleH, 1.8) * 0.98);
     });
     observer.observe(wrapperRef.current);
     return () => observer.disconnect();
@@ -311,17 +315,39 @@ export default function QuietSnake({ difficulty = 'medium', theme = 'lofi', view
               )}
             </div>
 
-            <div className="mt-5 grid grid-cols-3 gap-3 sm:mt-6 sm:max-w-md sm:grid-cols-3">
+            
+              {/* Only show these hardware-style controls below the game on desktop/embedded */}
+              {!isExpandedLayout && (
+                <div className="mt-5 grid grid-cols-3 gap-3 sm:mt-6 sm:max-w-md sm:grid-cols-3">
+                  
               <div />
               <button className={`flex h-14 items-center justify-center rounded-2xl text-sm font-extrabold shadow-sm transition active:scale-95 sm:h-16 ${isLofi ? 'border border-amber-200 bg-white text-amber-900' : 'border-2 border-[#111111] bg-[#dfe9cf] text-[#111111] shadow-[4px_4px_0_rgba(17,17,17,0.12)]'}`} onClick={() => requestTurn({ x: 0, y: -1 })} type="button"><ArrowUp size={24} /></button>
               <div />
               <button className={`flex h-14 items-center justify-center rounded-2xl text-sm font-extrabold shadow-sm transition active:scale-95 sm:h-16 ${isLofi ? 'border border-amber-200 bg-white text-amber-900' : 'border-2 border-[#111111] bg-[#dfe9cf] text-[#111111] shadow-[4px_4px_0_rgba(17,17,17,0.12)]'}`} onClick={() => requestTurn({ x: -1, y: 0 })} type="button"><ArrowLeft size={24} /></button>
               <button className={`flex h-14 items-center justify-center rounded-2xl text-sm font-extrabold shadow-sm transition active:scale-95 sm:h-16 ${isLofi ? 'border border-amber-200 bg-white text-amber-900' : 'border-2 border-[#111111] bg-[#dfe9cf] text-[#111111] shadow-[4px_4px_0_rgba(17,17,17,0.12)]'}`} onClick={() => requestTurn({ x: 0, y: 1 })} type="button"><ArrowDown size={24} /></button>
               <button className={`flex h-14 items-center justify-center rounded-2xl text-sm font-extrabold shadow-sm transition active:scale-95 sm:h-16 ${isLofi ? 'border border-amber-200 bg-white text-amber-900' : 'border-2 border-[#111111] bg-[#dfe9cf] text-[#111111] shadow-[4px_4px_0_rgba(17,17,17,0.12)]'}`} onClick={() => requestTurn({ x: 1, y: 0 })} type="button"><ArrowRight size={24} /></button>
+            
+                </div>
+              )}
             </div>
+
+            {/* Mobile / Fullscreen Floating Controls */}
+            {isExpandedLayout && (
+              <div className="absolute bottom-6 left-0 right-0 z-50 flex justify-center pointer-events-none md:hidden">
+                <div className="grid grid-cols-3 gap-2 pointer-events-auto opacity-70">
+                  <div />
+                  <button className="flex h-16 w-16 items-center justify-center rounded-2xl bg-black/20 text-white backdrop-blur-md active:bg-black/40 active:scale-95" onClick={() => requestTurn({ x: 0, y: -1 })} type="button"><ArrowUp size={32} /></button>
+                  <div />
+                  <button className="flex h-16 w-16 items-center justify-center rounded-2xl bg-black/20 text-white backdrop-blur-md active:bg-black/40 active:scale-95" onClick={() => requestTurn({ x: -1, y: 0 })} type="button"><ArrowLeft size={32} /></button>
+                  <button className="flex h-16 w-16 items-center justify-center rounded-2xl bg-black/20 text-white backdrop-blur-md active:bg-black/40 active:scale-95" onClick={() => requestTurn({ x: 0, y: 1 })} type="button"><ArrowDown size={32} /></button>
+                  <button className="flex h-16 w-16 items-center justify-center rounded-2xl bg-black/20 text-white backdrop-blur-md active:bg-black/40 active:scale-95" onClick={() => requestTurn({ x: 1, y: 0 })} type="button"><ArrowRight size={32} /></button>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="space-y-4">
+
             <div className={`p-4 shadow-sm ${isLofi ? 'rounded-[1.5rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-4 border-[#111111] bg-[#dfe9cf] shadow-[6px_6px_0_rgba(17,17,17,0.12)]'}`}>
               <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800' : 'text-[#30412a]'}`}>How it plays</p>
               <ul className={`mt-3 space-y-2 text-sm font-semibold leading-6 ${isLofi ? 'text-[#6e5a4a]' : 'text-[#30412a]'}`}>
@@ -341,7 +367,6 @@ export default function QuietSnake({ difficulty = 'medium', theme = 'lofi', view
         </div>
       </div>
         </div>
-      </div>
     </div>
   );
 }

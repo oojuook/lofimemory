@@ -2222,6 +2222,17 @@ function App() {
       component: <Solitaire difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
+      id: 'quiet-snake',
+      title: 'Snake',
+      detail: 'Classic arcade loop',
+      description: 'A cozy snake run with clear turns, quick rounds, and a gentle retro feel.',
+      icon: SnakeIcon,
+      tone: 'from-emerald-100 to-lime-50 text-emerald-700',
+      preview: gameSnakePreview,
+      playingSpace: 'max-w-[1040px]',
+      component: <QuietSnake difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
+    },
+    {
       id: 'mind-sweeper',
       title: 'Mind Sweeper',
       detail: 'Soft Minesweeper logic',
@@ -2363,17 +2374,6 @@ function App() {
       preview: gameCluesPreview,
       playingSpace: 'max-w-[820px]',
       component: <QuietClues difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
-    },
-    {
-      id: 'quiet-snake',
-      title: 'Snake',
-      detail: 'Classic arcade loop',
-      description: 'A cozy snake run with clear turns, quick rounds, and a gentle retro feel.',
-      icon: SnakeIcon,
-      tone: 'from-emerald-100 to-lime-50 text-emerald-700',
-      preview: gameSnakePreview,
-      playingSpace: 'max-w-[1040px]',
-      component: <QuietSnake difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'dinosaur-dash',

@@ -224,9 +224,13 @@ export default function TypingSpeedTest({ difficulty = 'medium', theme = 'lofi',
     const observer = new ResizeObserver((entries) => {
       const { width, height } = entries[0].contentRect;
       if (width === 0 || height === 0) return;
+      // We want to scale the native layout up to fit the window.
       const scaleW = width / 950;
       const scaleH = height / 650;
-      setScale(Math.min(scaleW, scaleH, 2.0) * 0.95);
+      // For games with responsive layouts, we don't actually want to lock them to a fixed width/height box before scaling.
+      // But if we do use transform: scale, we must lock their unscaled dimensions.
+      // The issue was: the internal div had no height constraint, so it collapsed.
+      setScale(Math.min(scaleW, scaleH, 1.8) * 0.98);
     });
     observer.observe(wrapperRef.current);
     return () => observer.disconnect();
