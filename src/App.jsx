@@ -1600,11 +1600,9 @@ function ThemeStudio({
         <div className="grid min-h-full lg:grid-cols-12">
           <div className="theme-panel relative flex flex-col p-7 text-white lg:col-span-4 lg:p-10">
             <div className="absolute inset-0 z-0 h-full w-full overflow-hidden">
-              <div className="sticky top-0 h-screen w-full">
-                <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
-                <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/80" />
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.08),transparent_35rem)]" />
-              </div>
+              <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover object-center" aria-hidden="true" />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/80" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.08),transparent_35rem)]" />
             </div>
             <div className="relative z-10 flex items-start justify-between gap-4">
               <Palette className="text-white lofi-sharp-text" size={34} />
@@ -2583,11 +2581,11 @@ function App() {
 
     const closeTimer = window.setTimeout(() => {
       setEntryTransitionClosing(true);
-    }, 1650);
+    }, 520);
     const hideTimer = window.setTimeout(() => {
       setShowEntryTransition(false);
       setEntryTransitionClosing(false);
-    }, 2450);
+    }, 860);
 
     return () => {
       window.clearTimeout(closeTimer);
@@ -3309,6 +3307,45 @@ function App() {
   const radioDialDegrees = RADIO_DIAL_START + radioDialSweepDegrees;
   const activeBreatheRoom = useMemo(() => breatheRoomOptions.find((room) => room.id === selectedBreatheRoom) || breatheRoomOptions[0], [selectedBreatheRoom]);
   const entryTransitionWallpaper = wallpaperImage || activeBreatheRoom.wallpaper || lofiMemoryHeaderImage;
+  const entryWelcomeTheme = activeBreatheRoom.id === 'maple'
+    ? {
+        eyebrow: 'MapleStory Theme',
+        heading: 'A dreamy MapleStory corner.',
+        copy: 'Warm nostalgia, soft glow, and a cozy little world waiting for you.',
+        shellClass: 'border-[#ffd7b2]/28 bg-[linear-gradient(145deg,rgba(52,33,24,0.8),rgba(93,64,46,0.58))]',
+        accentClass: 'bg-[linear-gradient(90deg,#ffd6b0_0%,#e2aa78_42%,#9e765e_100%)]',
+        dotClass: 'bg-[#ffd5ae]',
+        orbClass: 'bg-[#ffd7bc]/20'
+      }
+    : activeBreatheRoom.id === 'rain'
+      ? {
+          eyebrow: 'Rain Window',
+          heading: 'A softer rainy little hideaway.',
+          copy: 'Slow breaths, gentle ambience, and a calm page to settle into.',
+          shellClass: 'border-[#cde2eb]/24 bg-[linear-gradient(145deg,rgba(24,36,46,0.78),rgba(48,69,82,0.56))]',
+          accentClass: 'bg-[linear-gradient(90deg,#d8eef6_0%,#90bfd0_45%,#5d8390_100%)]',
+          dotClass: 'bg-[#d8eef6]',
+          orbClass: 'bg-[#a8d4e1]/18'
+        }
+      : activeBreatheRoom.id === 'fire'
+        ? {
+            eyebrow: 'Fireplace Nook',
+            heading: 'A warm nook for slower evenings.',
+            copy: 'Soft crackle, amber light, and a cozy space to unwind for a bit.',
+            shellClass: 'border-[#f2c6a1]/24 bg-[linear-gradient(145deg,rgba(52,29,20,0.8),rgba(88,54,35,0.58))]',
+            accentClass: 'bg-[linear-gradient(90deg,#ffd4a3_0%,#e89a63_40%,#9f5e43_100%)]',
+            dotClass: 'bg-[#ffd6af]',
+            orbClass: 'bg-[#f1b989]/18'
+          }
+        : {
+            eyebrow: 'Lofi Desk',
+            heading: 'Settle into your cozy corner.',
+            copy: 'Music, games, journaling, and memories — all in one gentle place.',
+            shellClass: 'border-white/18 bg-[linear-gradient(145deg,rgba(34,25,18,0.76),rgba(67,49,34,0.52))]',
+            accentClass: 'bg-[linear-gradient(90deg,#f7d0a7_0%,#d9a87c_38%,#a98467_100%)]',
+            dotClass: 'bg-[#f8d6b3]',
+            orbClass: 'bg-[#f8d7b8]/16'
+          };
 
   const scheduleRadioDialFeedbackHide = (delay = 850) => {
     if (radioDialFeedbackTimeoutRef.current) {
@@ -4901,41 +4938,41 @@ function App() {
 
 
       {showEntryTransition && (
-        <div className={`fixed inset-0 z-40 overflow-hidden transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${entryTransitionClosing ? 'opacity-0' : 'opacity-100'}`}>
+        <div className={`fixed inset-0 z-40 overflow-hidden transition-opacity duration-[520ms] ease-out ${entryTransitionClosing ? 'opacity-0' : 'opacity-100'}`}>
           <img src={entryTransitionWallpaper} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,248,238,0.24),transparent_22%),linear-gradient(180deg,rgba(20,14,10,0.28)_0%,rgba(25,18,12,0.56)_35%,rgba(44,31,21,0.78)_100%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(255,255,255,0.22),transparent_0_22rem),radial-gradient(circle_at_80%_22%,rgba(255,214,170,0.14),transparent_0_18rem)]" />
-          <div className="absolute -left-10 top-10 h-48 w-48 rounded-full bg-[#f8d7b8]/20 blur-3xl" />
-          <div className="absolute bottom-[-3rem] right-[-2rem] h-64 w-64 rounded-full bg-[#8d6d54]/20 blur-3xl" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(19,14,10,0.26)_0%,rgba(28,20,15,0.48)_38%,rgba(40,29,22,0.72)_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(255,255,255,0.16),transparent_0_18rem),radial-gradient(circle_at_82%_22%,rgba(255,224,187,0.12),transparent_0_16rem)]" />
+          <div className={`absolute -left-8 top-8 h-40 w-40 rounded-full blur-3xl ${entryWelcomeTheme.orbClass}`} />
+          <div className="absolute bottom-[-2rem] right-[-1rem] h-48 w-48 rounded-full bg-black/12 blur-3xl" />
 
-          <div className={`relative z-10 flex h-full items-center justify-center px-6 transition-all duration-[1050ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${entryTransitionClosing ? 'translate-y-3 scale-[1.02] opacity-0' : 'translate-y-0 scale-100 opacity-100'}`}>
-            <div className="w-full max-w-xl rounded-[2.8rem] border border-white/20 bg-[linear-gradient(145deg,rgba(34,25,18,0.76),rgba(67,49,34,0.52))] p-6 text-center text-white shadow-[0_35px_90px_rgba(0,0,0,0.28)] backdrop-blur-[18px] sm:p-8">
-              <div className="mx-auto flex w-fit items-center gap-3 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-[11px] font-black uppercase tracking-[0.32em] text-[#f7e6d2] shadow-sm">
-                <span className="h-2 w-2 rounded-full bg-[#f7c48b] animate-pulse" />
+          <div className={`relative z-10 flex h-full items-center justify-center px-5 transition-all duration-[620ms] ease-out ${entryTransitionClosing ? 'translate-y-2 scale-[1.01] opacity-0' : 'translate-y-0 scale-100 opacity-100'}`}>
+            <div className={`w-full max-w-lg rounded-[2.5rem] border p-5 text-center text-white shadow-[0_24px_60px_rgba(0,0,0,0.26)] sm:p-7 ${entryWelcomeTheme.shellClass}`}>
+              <div className="mx-auto flex w-fit items-center gap-3 rounded-full border border-white/14 bg-white/8 px-4 py-2 text-[11px] font-black uppercase tracking-[0.32em] text-[#f7e6d2] shadow-sm">
+                <span className={`h-2 w-2 rounded-full ${entryWelcomeTheme.dotClass}`} />
                 Lofi Memory
               </div>
 
-              <div className="mt-6 flex items-center justify-center gap-4 sm:gap-5">
-                <div className="relative flex h-24 w-24 items-center justify-center rounded-full border border-white/20 bg-black/20 shadow-[0_18px_45px_rgba(0,0,0,0.2)] sm:h-28 sm:w-28">
-                  <div className="absolute inset-[10px] rounded-full border border-white/10 bg-[radial-gradient(circle,#3b2d22_0%,#17110d_72%)]" />
-                  <img src={radioVinylIcon} alt="" className="relative h-16 w-16 animate-[spin_12s_linear_infinite] object-contain opacity-95 sm:h-20 sm:w-20" aria-hidden="true" />
+              <div className="mt-5 flex items-center justify-center gap-3 sm:gap-4">
+                <div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-white/16 bg-black/18 shadow-[0_14px_34px_rgba(0,0,0,0.18)] sm:h-24 sm:w-24">
+                  <div className="absolute inset-[9px] rounded-full border border-white/10 bg-[radial-gradient(circle,#3b2d22_0%,#17110d_72%)]" />
+                  <img src={radioVinylIcon} alt="" className="relative h-14 w-14 object-contain opacity-95 sm:h-16 sm:w-16" aria-hidden="true" />
                 </div>
-                <div className="flex h-24 w-24 items-center justify-center overflow-hidden rounded-[2rem] border border-white/20 bg-white/12 p-2 shadow-[0_18px_45px_rgba(0,0,0,0.18)] sm:h-28 sm:w-28">
-                  <img src={headerLogoIcon} alt="Lofi Memory logo" className="h-full w-full rounded-[1.5rem] object-cover" />
+                <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-[1.8rem] border border-white/18 bg-white/10 p-2 shadow-[0_14px_34px_rgba(0,0,0,0.16)] sm:h-24 sm:w-24">
+                  <img src={headerLogoIcon} alt="Lofi Memory logo" className="h-full w-full rounded-[1.35rem] object-cover" />
                 </div>
               </div>
 
-              <p className="mt-7 text-[11px] font-extrabold uppercase tracking-[0.38em] text-[#f0d5b6]">{activeBreatheRoom.title}</p>
-              <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-white sm:text-5xl">Settle into your cozy corner.</h1>
-              <p className="mx-auto mt-3 max-w-md text-sm font-semibold leading-7 tracking-[0.08em] text-[#f6e7d7]/86">A soft little transition before the music, games, journaling, and memories open up.</p>
+              <p className="mt-6 text-[11px] font-extrabold uppercase tracking-[0.38em] text-[#f0d5b6]">{entryWelcomeTheme.eyebrow}</p>
+              <h1 className="mt-3 font-display text-[2rem] font-bold tracking-tight text-white sm:text-[2.8rem]">{entryWelcomeTheme.heading}</h1>
+              <p className="mx-auto mt-3 max-w-md text-sm font-semibold leading-7 tracking-[0.06em] text-[#f6e7d7]/84">{entryWelcomeTheme.copy}</p>
 
-              <div className="mx-auto mt-7 w-full max-w-xs">
-                <div className="h-2 overflow-hidden rounded-full bg-white/12">
-                  <div className="h-full rounded-full bg-[linear-gradient(90deg,#f7d0a7_0%,#d9a87c_38%,#a98467_100%)] shadow-[0_0_20px_rgba(247,208,167,0.45)]" style={{ width: '100%', animation: 'gameSplashProgress 1.7s ease-in-out infinite' }} />
+              <div className="mx-auto mt-6 w-full max-w-xs">
+                <div className="h-1.5 overflow-hidden rounded-full bg-white/12">
+                  <div className={`h-full rounded-full shadow-[0_0_16px_rgba(247,208,167,0.3)] ${entryWelcomeTheme.accentClass}`} style={{ width: '100%', animation: 'gameSplashProgress 0.95s ease-out infinite' }} />
                 </div>
-                <div className="mt-4 flex items-center justify-center gap-2">
+                <div className="mt-3 flex items-center justify-center gap-2">
                   {[0, 1, 2].map((dot) => (
-                    <span key={`entry-dot-${dot}`} className="h-2.5 w-2.5 rounded-full bg-[#f8d6b3]" style={{ animation: 'pulse 1.8s ease-in-out infinite', animationDelay: `${dot * 0.22}s`, opacity: 0.72 }} />
+                    <span key={`entry-dot-${dot}`} className={`h-2 w-2 rounded-full ${entryWelcomeTheme.dotClass}`} style={{ animation: 'pulse 1.15s ease-in-out infinite', animationDelay: `${dot * 0.14}s`, opacity: 0.68 }} />
                   ))}
                 </div>
               </div>
@@ -4944,7 +4981,7 @@ function App() {
         </div>
       )}
 
-      <div className={`transition-opacity duration-500 ${showEntryTransition ? 'pointer-events-none select-none opacity-0' : 'opacity-100'}`}>
+      <div className={`transition-opacity duration-200 ${showEntryTransition ? 'pointer-events-none select-none opacity-0' : 'opacity-100'}`}>
       <nav className="sticky top-0 z-20 px-5 pt-5 sm:px-7 xl:px-10">
         <div className="site-nav-shell lofi-picture-border lofi-border-memory relative mx-auto max-w-[1280px] overflow-hidden rounded-[3.2rem] border border-[#8b5e3c]/25 p-4 shadow-soft lg:p-5">
           <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
@@ -5862,14 +5899,15 @@ function App() {
                     <span aria-hidden="true">←</span> Back to games
                   </button>
                 )}
-                <div ref={selectedGameInterfaceRef} className={`lofi-glass lofi-picture-border lofi-border-memory relative overflow-hidden backdrop-blur ${isFullscreen ? 'flex min-h-[100dvh] flex-col rounded-none border-0 p-2 shadow-none sm:rounded-[2.5rem] sm:border sm:p-3' : 'rounded-[3rem] border p-3 shadow-soft sm:p-4 lg:p-5'} ${gameVisualTheme === 'lofi' ? 'border-[#e8dfd5] bg-[#fffaf2]/85' : ''}`}>
-                  {gameVisualTheme === 'lofi' && (
+                <div ref={selectedGameInterfaceRef} className={`lofi-glass lofi-picture-border lofi-border-memory relative overflow-hidden backdrop-blur ${isFullscreen ? 'is-fullscreen flex min-h-[100dvh] flex-col rounded-none border-0 bg-transparent p-0 shadow-none' : 'rounded-[3rem] border p-3 shadow-soft sm:p-4 lg:p-5'} ${!isFullscreen && gameVisualTheme === 'lofi' ? 'border-[#e8dfd5] bg-[#fffaf2]/85' : ''}`}>
+                  {!isFullscreen && gameVisualTheme === 'lofi' && (
                     <>
                       <img src={lofiRoomWallpaperImage} alt="" className="pointer-events-none absolute inset-0 h-full w-full scale-105 object-cover opacity-[0.07] blur-[1px]" aria-hidden="true" />
                       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.82),transparent_38%),linear-gradient(135deg,rgba(255,250,242,0.92),rgba(250,237,205,0.7),rgba(255,200,221,0.38))]" />
                     </>
                   )}
-                  <div className={`relative z-10 rounded-[1.7rem] border p-4 shadow-sm ${isFullscreen ? 'flex min-h-0 flex-1 flex-col' : ''} ${gameVisualTheme === 'lofi' ? 'border-amber-200/40 bg-white/60' : 'border-[#e8dfd5] bg-sage-50/55'}`}>
+                  {!isFullscreen && (
+                  <div className={`relative z-10 rounded-[1.7rem] border p-4 shadow-sm ${gameVisualTheme === 'lofi' ? 'border-amber-200/40 bg-white/60' : 'border-[#e8dfd5] bg-sage-50/55'}`}>
                     <div className={`flex flex-col gap-4 ${isFullscreen ? 'lg:flex-row lg:items-start lg:justify-between' : 'xl:flex-row xl:items-center xl:justify-between'}`}>
                       <div className="min-w-0">
                         <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${gameVisualTheme === 'lofi' ? 'text-amber-800/80' : 'text-sage-600'}`}>Now playing</p>
@@ -5920,7 +5958,8 @@ function App() {
                       </div>
                     </div>
                   </div>
-                  <div className={`relative z-10 mx-auto mt-5 w-full ${isFullscreen ? 'flex min-h-0 flex-1 max-w-none' : (selectedUnwindGameConfig.playingSpace || 'max-w-[980px]')}`}>
+                  )}
+                  <div className={`relative z-10 mx-auto w-full ${isFullscreen ? 'flex min-h-0 flex-1 max-w-none' : `mt-5 ${selectedUnwindGameConfig.playingSpace || 'max-w-[980px]'}`}`}>
                     {selectedUnwindGameConfig.component}
                   </div>
                 </div>
