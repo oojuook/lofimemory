@@ -1329,3 +1329,92 @@ input::placeholder {
     font-size: 0.75rem !important;
   }
 }
+
+/* Extra phone polish pass */
+@media (max-width: 640px) {
+  html,
+  body,
+  #root,
+  .personalized-site {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+  .personalized-site button,
+  .personalized-site a,
+  .personalized-site input,
+  .personalized-site textarea,
+  .personalized-site select {
+    touch-action: manipulation;
+  }
+
+  .personalized-site input,
+  .personalized-site textarea,
+  .personalized-site select {
+    font-size: 16px !important;
+  }
+
+  .personalized-site textarea {
+    min-height: 9rem;
+  }
+
+  .personalized-site button,
+  .personalized-site a[role='button'] {
+    min-height: 44px;
+  }
+
+  .mobile-bottom-nav {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .mobile-bottom-nav .custom-scrollbar {
+    scroll-snap-type: x proximity;
+  }
+
+  .mobile-bottom-nav button {
+    scroll-snap-align: center;
+    min-width: 3.8rem;
+  }
+
+  .game-detail-reveal {
+    animation-duration: 280ms;
+  }
+
+  .game-detail-enter,
+  .game-library-enter,
+  .site-ui-fade-in {
+    animation-duration: 240ms;
+  }
+
+  .lofi-game-skin {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .lofi-game-skin canvas {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .mobile-bottom-nav {
+    left: 0.45rem !important;
+    right: 0.45rem !important;
+  }
+
+  .mobile-bottom-nav span {
+    font-size: 8px !important;
+    letter-spacing: 0.04em !important;
+  }
+
+  .mobile-bottom-nav button {
+    min-width: 3.35rem;
+    padding-left: 0.45rem !important;
+    padding-right: 0.45rem !important;
+  }
+
+  .site-nav-actions {
+    gap: 0.35rem !important;
+  }
+}

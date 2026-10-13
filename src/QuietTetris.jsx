@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowDown, ArrowLeft, RotateCcw, Sparkles } from 'lucide-react';
+import { ArrowDown, ArrowLeft, ArrowRight, RotateCcw, Sparkles } from 'lucide-react';
 
 const ROWS = 20;
 const COLS = 10;
@@ -512,72 +512,77 @@ export default function QuietTetris({ difficulty = 'medium', theme = 'lofi', vie
               )}
             </div>
 
-            <div className="mt-4 grid gap-2 sm:grid-cols-2 xl:grid-cols-5">
-              <button className={`rounded-full border bg-white px-4 py-3 text-sm font-extrabold shadow-sm ${isLofi ? 'border-amber-200 text-amber-900' : 'border-violet-200 text-violet-900'}`} onClick={() => movePiece(0, -1)} type="button"><ArrowLeft size={16} className="mr-2 inline" />Left</button>
-              <button className={`rounded-full border bg-white px-4 py-3 text-sm font-extrabold shadow-sm ${isLofi ? 'border-amber-200 text-amber-900' : 'border-violet-200 text-violet-900'}`} onClick={rotatePiece} type="button"><RotateCcw size={16} className="mr-2 inline" />Rotate</button>
-              <button className={`rounded-full border bg-white px-4 py-3 text-sm font-extrabold shadow-sm ${isLofi ? 'border-amber-200 text-amber-900' : 'border-violet-200 text-violet-900'}`} onClick={() => movePiece(1, 0)} type="button"><ArrowDown size={16} className="mr-2 inline" />Down</button>
-              <button className={`rounded-full px-4 py-3 text-sm font-extrabold shadow-sm ${holdUsed ? (isLofi ? 'bg-amber-100 text-amber-400' : 'bg-violet-100 text-violet-400') : (isLofi ? 'border border-amber-200 bg-white text-amber-900' : 'border border-violet-200 bg-white text-violet-900')}`} onClick={holdPiece} type="button">Hold</button>
-              <button className={`rounded-full px-4 py-3 text-sm font-extrabold text-white shadow-sm ${isLofi ? 'bg-[#4a3a2d]' : 'bg-violet-900'}`} onClick={hardDrop} type="button">Drop</button>
-            </div>
-          </div>
+            <div className="mt-6 flex flex-col gap-5 sm:mt-8 sm:flex-row sm:items-start sm:gap-8">
+              <div className="flex-1">
+                <div className="grid grid-cols-3 gap-3">
+                  <div />
+                  <button className="flex h-14 items-center justify-center rounded-2xl border border-amber-200 bg-white text-amber-900 shadow-sm transition active:scale-95 sm:h-16" onClick={rotatePiece} type="button"><RotateCcw size={24} /></button>
+                  <div />
+                  
+                  <button className="flex h-14 items-center justify-center rounded-2xl border border-amber-200 bg-white text-amber-900 shadow-sm transition active:scale-95 sm:h-16" onClick={() => movePiece(0, -1)} type="button"><ArrowLeft size={24} /></button>
+                  <button className="flex h-14 items-center justify-center rounded-2xl border border-amber-200 bg-white text-amber-900 shadow-sm transition active:scale-95 sm:h-16" onClick={() => movePiece(1, 0)} type="button"><ArrowDown size={24} /></button>
+                  <button className="flex h-14 items-center justify-center rounded-2xl border border-amber-200 bg-white text-amber-900 shadow-sm transition active:scale-95 sm:h-16" onClick={() => movePiece(0, 1)} type="button"><ArrowRight size={24} /></button>
+                </div>
+                <div className="mt-4 grid grid-cols-2 gap-3">
+                  <button className={`flex h-12 items-center justify-center rounded-full px-4 text-sm font-black uppercase tracking-widest shadow-sm transition active:scale-95 ${holdUsed ? (isLofi ? 'bg-amber-100 text-amber-400' : 'bg-violet-100 text-violet-400') : (isLofi ? 'border border-amber-200 bg-white text-amber-900' : 'border border-violet-200 bg-white text-violet-900')}`} onClick={holdPiece} type="button">Hold</button>
+                  <button className={`flex h-12 items-center justify-center rounded-full px-4 text-sm font-black uppercase tracking-widest text-white shadow-sm transition active:scale-95 ${isLofi ? 'bg-[#4a3a2d]' : 'bg-violet-900'}`} onClick={hardDrop} type="button">Drop</button>
+                </div>
+              </div>
 
-          <div className="space-y-4 text-center xl:text-left">
-            <div className={`rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/72 backdrop-blur-sm' : 'border-white/80 bg-white/88'}`}>
-              <div className="flex items-center justify-between gap-3">
-                <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800' : 'text-violet-500'}`}>Hold block</p>
-                <span className={`rounded-full px-2 py-1 text-[10px] font-extrabold uppercase tracking-[0.14em] ${holdUsed ? (isLofi ? 'bg-amber-100 text-amber-400' : 'bg-violet-100 text-violet-400') : (isLofi ? 'bg-amber-800 text-white' : 'bg-violet-900 text-white')}`}>{holdUsed ? 'Used' : 'Ready'}</span>
+              <div className="flex shrink-0 flex-row gap-4 sm:w-48 sm:flex-col">
+                <div className={`flex-1 rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/72 backdrop-blur-sm' : 'border-white/80 bg-white/88'}`}>
+                  <div className="flex items-center justify-between gap-3">
+                    <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800' : 'text-violet-500'}`}>Hold block</p>
+                    <span className={`rounded-full px-2 py-1 text-[10px] font-extrabold uppercase tracking-[0.14em] ${holdUsed ? (isLofi ? 'bg-amber-100 text-amber-400' : 'bg-violet-100 text-violet-400') : (isLofi ? 'bg-amber-800 text-white' : 'bg-violet-900 text-white')}`}>{holdUsed ? 'Used' : 'Ready'}</span>
+                  </div>
+                  <button
+                    className={`mt-4 inline-grid gap-1 rounded-[1.1rem] p-3 text-left ${isLofi ? 'bg-[#faedcd]/65' : 'bg-violet-50'}`}
+                    onClick={holdPiece}
+                    style={{ gridTemplateColumns: 'repeat(4, minmax(0, 1fr))' }}
+                    type="button"
+                  >
+                    {Array.from({ length: 16 }, (_, index) => {
+                      const row = Math.floor(index / 4);
+                      const col = index % 4;
+                      const hasBlock = heldMatrix?.[row]?.[col];
+                      return (
+                        <div
+                          key={`held-block-${index + 1}`}
+                          className={`h-6 w-6 rounded-[0.45rem] border ${isLofi ? 'border-[#e8dfd5]/70' : 'border-white/70 sm:h-7 sm:w-7'}`}
+                          style={{ backgroundColor: hasBlock ? (isLofi ? SHAPES[heldType].lofiColor : SHAPES[heldType].color) : (isLofi ? 'transparent' : '#ffffff') }}
+                        />
+                      );
+                    })}
+                  </button>
+                </div>
+                <div className={`flex-1 rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/72 backdrop-blur-sm' : 'border-white/80 bg-white/88'}`}>
+                  <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800' : 'text-violet-500'}`}>Next block</p>
+                  <div className={`mt-4 inline-grid gap-1 rounded-[1.1rem] p-3 ${isLofi ? 'bg-[#faedcd]/65' : 'bg-violet-50'}`} style={{ gridTemplateColumns: 'repeat(4, minmax(0, 1fr))' }}>
+                    {Array.from({ length: 16 }, (_, index) => {
+                      const row = Math.floor(index / 4);
+                      const col = index % 4;
+                      const hasBlock = nextMatrix[row]?.[col];
+                      return (
+                        <div
+                          key={`next-block-${index + 1}`}
+                          className={`h-6 w-6 rounded-[0.45rem] border ${isLofi ? 'border-[#e8dfd5]/70' : 'border-white/70 sm:h-7 sm:w-7'}`}
+                          style={{ backgroundColor: hasBlock ? (isLofi ? SHAPES[nextType].lofiColor : SHAPES[nextType].color) : (isLofi ? 'transparent' : '#ffffff') }}
+                        />
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
-              <button
-                className={`mt-4 inline-grid gap-1 rounded-[1.1rem] p-3 text-left ${isLofi ? 'bg-[#faedcd]/65' : 'bg-violet-50'}`}
-                onClick={holdPiece}
-                style={{ gridTemplateColumns: 'repeat(4, minmax(0, 1fr))' }}
-                type="button"
-              >
-                {Array.from({ length: 16 }, (_, index) => {
-                  const row = Math.floor(index / 4);
-                  const col = index % 4;
-                  const hasBlock = heldMatrix?.[row]?.[col];
-                  return (
-                    <div
-                      key={`held-block-${index + 1}`}
-                      className={`h-6 w-6 rounded-[0.45rem] border ${isLofi ? 'border-[#e8dfd5]/70' : 'border-white/70 sm:h-7 sm:w-7'}`}
-                      style={{ backgroundColor: hasBlock ? (isLofi ? SHAPES[heldType].lofiColor : SHAPES[heldType].color) : (isLofi ? 'transparent' : '#ffffff') }}
-                    />
-                  );
-                })}
+            </div>
+
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-4 border-t border-amber-100 pt-6">
+              <button className={`inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-extrabold shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'border border-amber-200 text-amber-900' : 'text-violet-900'}`} onClick={startGame} type="button">
+                <RotateCcw size={16} /> Reset stack
               </button>
-              <p className={`mt-3 text-xs font-semibold ${isLofi ? 'text-amber-800/70' : 'text-violet-600'}`}>Press C or Shift to store/swap once per falling piece.</p>
-            </div>
-            <div className={`rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/72 backdrop-blur-sm' : 'border-white/80 bg-white/88'}`}>
-              <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800' : 'text-violet-500'}`}>Next block</p>
-              <div className={`mt-4 inline-grid gap-1 rounded-[1.1rem] p-3 ${isLofi ? 'bg-[#faedcd]/65' : 'bg-violet-50'}`} style={{ gridTemplateColumns: 'repeat(4, minmax(0, 1fr))' }}>
-                {Array.from({ length: 16 }, (_, index) => {
-                  const row = Math.floor(index / 4);
-                  const col = index % 4;
-                  const hasBlock = nextMatrix[row]?.[col];
-                  return (
-                    <div
-                      key={`next-block-${index + 1}`}
-                      className={`h-6 w-6 rounded-[0.45rem] border ${isLofi ? 'border-[#e8dfd5]/70' : 'border-white/70 sm:h-7 sm:w-7'}`}
-                      style={{ backgroundColor: hasBlock ? (isLofi ? SHAPES[nextType].lofiColor : SHAPES[nextType].color) : (isLofi ? 'transparent' : '#ffffff') }}
-                    />
-                  );
-                })}
+              <div className={`rounded-full border border-amber-200/50 bg-[#faedcd]/40 px-5 py-3 text-sm font-bold ${isLofi ? 'text-amber-900' : 'text-violet-900'}`}>
+                Controls: Arrows to move/rotate, Space to drop, C to hold.
               </div>
             </div>
-            <div className={`rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/72 backdrop-blur-sm' : 'border-white/80 bg-white/88'}`}>
-              <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800' : 'text-violet-500'}`}>Controls</p>
-              <ul className={`mt-3 space-y-2 text-sm leading-6 ${isLofi ? 'text-[#6e5a4a]' : 'text-violet-700'}`}>
-                <li>- Left / right to slide</li>
-                <li>- Up to rotate</li>
-                <li>- Down to soft drop</li>
-                <li>- C / Shift to hold or swap</li>
-                <li>- Space to hard drop</li>
-              </ul>
-            </div>
-            <button className={`inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-extrabold shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'border border-amber-200 text-amber-900' : 'text-violet-900'}`} onClick={startGame} type="button">
-              <RotateCcw size={16} /> Reset stack
-            </button>
           </div>
         </div>
       </div>

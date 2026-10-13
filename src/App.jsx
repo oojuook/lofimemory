@@ -5151,50 +5151,45 @@ function App() {
       )}
 
       {activeTab === 'home' && activeHomeSection === 'overview' && !showMinimalHomeOverview && (
-      <section id="home" className="mx-auto grid max-w-[1280px] gap-8 px-5 pb-28 pt-10 sm:px-7 lg:grid-cols-12 lg:pb-12 xl:gap-12 xl:px-10">
+      <section id="home" className="mx-auto grid max-w-[1280px] gap-6 px-3 pb-24 pt-6 sm:gap-8 sm:px-5 sm:pb-28 sm:pt-10 lg:grid-cols-12 lg:pb-12 xl:gap-12 xl:px-10">
         <div className="lg:col-span-8">
-          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3.2rem] border border-[#8b5e3c]/25 p-8 shadow-[0_32px_90px_rgba(83,62,44,0.18)] lg:p-10 xl:p-11">
+          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[2.2rem] sm:rounded-[3.2rem] border border-[#8b5e3c]/25 p-5 sm:p-8 shadow-[0_32px_90px_rgba(83,62,44,0.18)] lg:p-10 xl:p-11">
             <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
             <div className="absolute inset-0 bg-gradient-to-br from-black/58 via-black/28 to-black/10" />
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.20),transparent_20rem)]" />
             <div className="relative z-10">
-              <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/15 px-4 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md lofi-sharp-text-soft">
-                <Headphones size={16} /> Relaxing music, browser games, diary & notes
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/15 px-3 py-1.5 text-[11px] sm:mb-7 sm:px-4 sm:py-2 sm:text-sm font-bold text-white shadow-sm backdrop-blur-md lofi-sharp-text-soft">
+                <Headphones size={15} /> Relaxing music, games, diary & notes
               </div>
-              <h1 className="lofi-sharp-text max-w-3xl font-display text-5xl font-bold leading-[0.96] tracking-tight text-white md:text-6xl">Lofi Memory is your cozy online space for relaxing games, lofi music, private journaling, and notes.</h1>
-              <p className="lofi-sharp-text-soft mt-5 max-w-3xl text-[1.18rem] font-bold leading-8 text-white/100">Listen to lofi music, play relaxing browser games, keep a private online diary, save reminders, and settle into a softer music room without bouncing between tabs.</p>
+              <h1 className="lofi-sharp-text max-w-3xl font-display text-3xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl sm:leading-[0.96] md:text-6xl">Lofi Memory is your cozy online space for relaxing games, lofi music, private journaling, and notes.</h1>
+              <p className="lofi-sharp-text-soft mt-4 max-w-3xl text-base font-bold leading-7 text-white/100 sm:mt-5 sm:text-[1.18rem] sm:leading-8">Listen to lofi music, play relaxing browser games, keep a private online diary, save reminders, and settle into a softer music room without bouncing between tabs.</p>
 
-              <div className="lofi-now-playing mt-7 flex flex-col gap-4 rounded-[2.2rem] border border-white/20 bg-black/15 p-4 shadow-sm backdrop-blur-md sm:flex-row sm:items-center sm:justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="lofi-mini-record flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-white/20 bg-[#3f342c] shadow-[0_14px_28px_rgba(0,0,0,0.18)]">
-                    <div className="h-5 w-5 rounded-full border border-white/25 bg-[#f3e7d8]" />
+              <div className="lofi-now-playing mt-6 sm:mt-7 flex flex-col gap-4 rounded-[1.8rem] sm:rounded-[2.2rem] border border-white/20 bg-black/15 p-3.5 sm:p-4 shadow-sm backdrop-blur-md sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="lofi-mini-record flex h-14 w-14 sm:h-16 sm:w-16 shrink-0 items-center justify-center rounded-full border border-white/20 bg-[#3f342c] shadow-[0_14px_28px_rgba(0,0,0,0.18)]">
+                    <div className="h-4 w-4 sm:h-5 sm:w-5 rounded-full border border-white/25 bg-[#f3e7d8]" />
                   </div>
-                  <div>
-                    <p className="lofi-sharp-text-soft text-[11px] font-extrabold uppercase tracking-[0.24em] text-white/85">Now playing</p>
-                    <p className="lofi-sharp-text mt-1 text-base font-extrabold text-white">Dusk room · rain window · soft study beats</p>
+                  <div className="min-w-0">
+                    <p className="lofi-sharp-text-soft text-[10px] sm:text-[11px] font-extrabold uppercase tracking-[0.24em] text-white/85">Now playing</p>
+                    <p className="lofi-sharp-text mt-0.5 truncate text-sm sm:text-base font-extrabold text-white">Dusk room · rain window · soft study beats</p>
                   </div>
                 </div>
-                <div className="lofi-equalizer" aria-hidden="true"><span /><span /><span /><span /><span /></div>
+                <div className="lofi-equalizer hidden sm:flex" aria-hidden="true"><span /><span /><span /><span /><span /></div>
               </div>
 
-              <div className="mt-9 flex flex-wrap gap-3">
-                <button className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-extrabold text-[#4f3f32] shadow-[0_12px_28px_rgba(0,0,0,0.16)] transition hover:-translate-y-1 hover:bg-[#fff9f0]" onClick={() => setIsRadioPlaying(true)} type="button">
-                  <Headphones size={17} /> Start lofi music
+              <div className="mt-7 flex flex-wrap gap-2 sm:mt-9 sm:gap-3">
+                <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full bg-white px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-[#4f3f32] shadow-[0_12px_28px_rgba(0,0,0,0.16)] transition hover:-translate-y-1 hover:bg-[#fff9f0]" onClick={() => setIsRadioPlaying(true)} type="button">
+                  <Headphones size={16} /> Start music
                 </button>
-                <a className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/15 px-5 py-3 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/25" href="#unwind" onClick={() => navigateToTab('unwind')}>
-                  <Leaf size={17} /> Play relaxing games
+                <a className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/30 bg-white/15 px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/25" href="#unwind" onClick={() => navigateToTab('unwind')}>
+                  <Leaf size={16} /> Games
                 </a>
-                <a className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/15 px-5 py-3 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/25" href="#notes" onClick={() => navigateToTab('notes')}>
-                  <FileText size={17} /> Open notes & to-dos
+                <a className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/30 bg-white/15 px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/25" href="#notes" onClick={() => navigateToTab('notes')}>
+                  <FileText size={16} /> Notes
                 </a>
-                <button className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/15 px-5 py-3 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/25" onClick={() => setCustomizerOpen(true)} type="button">
-                  <Palette size={17} /> Choose your theme
+                <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/30 bg-white/15 px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/25" onClick={() => setCustomizerOpen(true)} type="button">
+                  <Palette size={16} /> Design
                 </button>
-                {hasPin && (
-                  <button className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/15 px-5 py-3 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/25" onClick={() => setPinSettingsOpen(true)} type="button">
-                    <Shield size={17} /> Privacy settings
-                  </button>
-                )}
               </div>
 
               <div className="mt-7 grid gap-3 lg:grid-cols-3">
@@ -6160,8 +6155,8 @@ function App() {
         )}
 
         {activeTab === 'breathe' && (
-          <div className="mx-auto max-w-5xl px-6 py-10 lg:py-16 fade-in">
-            <div className="lofi-picture-border lofi-border-memory relative mb-14 overflow-hidden rounded-[3.2rem] border border-[#8b5e3c]/25 p-8 shadow-soft lg:p-10 xl:p-12">
+          <div className="mx-auto max-w-5xl px-3 py-6 sm:px-6 sm:py-10 lg:py-16 fade-in">
+            <div className="lofi-picture-border lofi-border-memory relative mb-8 sm:mb-14 overflow-hidden rounded-[2.2rem] sm:rounded-[3.2rem] border border-[#8b5e3c]/25 p-5 sm:p-8 shadow-soft lg:p-10 xl:p-12">
               <img src={musicSectionPreviewImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
               <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
@@ -6269,8 +6264,9 @@ function App() {
         )}
 
         {activeTab === 'notes' && (
-        <div className="mt-6 grid gap-6 pb-28 xl:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)] xl:pb-0">
-          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-8 shadow-soft lg:p-10 xl:p-12">
+        <div className="mx-auto max-w-[1280px] px-3 pt-4 sm:px-5 sm:pt-6">
+          <div className="grid gap-6 pb-28 xl:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)] xl:pb-0">
+            <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[2.2rem] sm:rounded-[3rem] border border-[#8b5e3c]/25 p-5 sm:p-8 shadow-soft lg:p-10 xl:p-12">
             <img src={notesSectionPreviewImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
             <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
@@ -6577,6 +6573,7 @@ function App() {
               </div>
             </div>
           </aside>
+          </div>
         </div>
         )}
 
@@ -6678,7 +6675,8 @@ function App() {
         )}
 
         {activeTab === 'memories' && (
-        <div className="mt-6 grid gap-6 pb-24 lg:pb-0">
+        <div className="mx-auto max-w-[1280px] px-3 pt-4 sm:px-5 sm:pt-6">
+          <div className="grid gap-6 pb-24 lg:pb-0">
 
           <div className="lofi-picture-border lofi-border-memory relative overflow-hidden flex flex-wrap items-center justify-center gap-2 rounded-[1.6rem] border border-[#8b5e3c]/25 p-2 shadow-sm backdrop-blur-xl">
             <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
@@ -6952,6 +6950,7 @@ function App() {
             </div>
           </div>
         )}
+        </div>
         </div>
         )}
       </section>

@@ -290,22 +290,13 @@ export default function QuietSnake({ difficulty = 'medium', theme = 'lofi', view
               )}
             </div>
 
-            <div className="mt-4 grid gap-2 sm:grid-cols-4">
-              {[
-                [ArrowUp, 'Up', { x: 0, y: -1 }],
-                [ArrowLeft, 'Left', { x: -1, y: 0 }],
-                [ArrowRight, 'Right', { x: 1, y: 0 }],
-                [ArrowDown, 'Down', { x: 0, y: 1 }]
-              ].map(([Icon, label, dir]) => (
-                <button
-                  key={label}
-                  className={`px-4 py-3 text-sm font-extrabold shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'rounded-full border border-amber-200 bg-white text-amber-900' : 'border-2 border-[#111111] bg-[#dfe9cf] text-[#111111] shadow-[4px_4px_0_rgba(17,17,17,0.12)]'}`}
-                  onClick={() => requestTurn(dir)}
-                  type="button"
-                >
-                  <Icon size={16} className="mr-2 inline" />{label}
-                </button>
-              ))}
+            <div className="mt-5 grid grid-cols-3 gap-3 sm:mt-6 sm:max-w-md sm:grid-cols-3">
+              <div />
+              <button className={`flex h-14 items-center justify-center rounded-2xl text-sm font-extrabold shadow-sm transition active:scale-95 sm:h-16 ${isLofi ? 'border border-amber-200 bg-white text-amber-900' : 'border-2 border-[#111111] bg-[#dfe9cf] text-[#111111] shadow-[4px_4px_0_rgba(17,17,17,0.12)]'}`} onClick={() => requestTurn({ x: 0, y: -1 })} type="button"><ArrowUp size={24} /></button>
+              <div />
+              <button className={`flex h-14 items-center justify-center rounded-2xl text-sm font-extrabold shadow-sm transition active:scale-95 sm:h-16 ${isLofi ? 'border border-amber-200 bg-white text-amber-900' : 'border-2 border-[#111111] bg-[#dfe9cf] text-[#111111] shadow-[4px_4px_0_rgba(17,17,17,0.12)]'}`} onClick={() => requestTurn({ x: -1, y: 0 })} type="button"><ArrowLeft size={24} /></button>
+              <button className={`flex h-14 items-center justify-center rounded-2xl text-sm font-extrabold shadow-sm transition active:scale-95 sm:h-16 ${isLofi ? 'border border-amber-200 bg-white text-amber-900' : 'border-2 border-[#111111] bg-[#dfe9cf] text-[#111111] shadow-[4px_4px_0_rgba(17,17,17,0.12)]'}`} onClick={() => requestTurn({ x: 0, y: 1 })} type="button"><ArrowDown size={24} /></button>
+              <button className={`flex h-14 items-center justify-center rounded-2xl text-sm font-extrabold shadow-sm transition active:scale-95 sm:h-16 ${isLofi ? 'border border-amber-200 bg-white text-amber-900' : 'border-2 border-[#111111] bg-[#dfe9cf] text-[#111111] shadow-[4px_4px_0_rgba(17,17,17,0.12)]'}`} onClick={() => requestTurn({ x: 1, y: 0 })} type="button"><ArrowRight size={24} /></button>
             </div>
           </div>
 
