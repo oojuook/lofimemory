@@ -900,9 +900,9 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
   <div ref={boardWrapperRef} className={`relative flex-1 min-h-0 w-full flex items-center justify-center ${isExpandedLayout ? 'min-h-full' : 'h-[65vh] min-h-[400px]'}`}>
     <div 
       ref={playfieldRef} 
-      className="relative flex flex-col mx-auto"
-      style={{ fontSize: boardDims.w > 0 && boardDims.h > 0 ? `${Math.max(16, Math.min(boardDims.w / 8.2, boardDims.h / 8.5, 240))}px` : '48px',
-        gap: '0.4em'
+      className="relative flex flex-col mx-auto w-full px-2 sm:px-6 max-w-[1400px]"
+      style={{ fontSize: boardDims.w > 0 && boardDims.h > 0 ? `${Math.max(16, Math.min(boardDims.w / 7.5, boardDims.h / 9.5, 240))}px` : '48px',
+        gap: "1.5em"
       }}
     >
 
@@ -939,8 +939,8 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
             ) : null}
 
             
-            <div className="grid grid-cols-7" style={{ gap: '0.15em' }}>
-                <div className="text-center w-full">
+            <div className="grid grid-cols-7 w-full justify-items-center" style={{ gap: "0.2em" }}>
+                <div className="text-center w-full flex flex-col items-center">
                   {game.stock.length > 0 ? (
                     <Card card={{ id: 'stock', faceUp: false }} compact isLofi={isLofi} onClick={drawFromStock} />
                   ) : (
@@ -948,7 +948,7 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
                   )}
                   <span className={`mt-1 block font-extrabold uppercase tracking-[0.12em] ${isLofi ? 'text-amber-800/70' : 'text-white/78'}`} style={{ fontSize: '0.18em' }}>{game.stock.length}</span>
                 </div>
-                <div className="text-center w-full">
+                <div className="text-center w-full flex flex-col items-center">
                   <WastePile
                     cards={game.waste}
                     drawCount={config.drawCount}
@@ -971,7 +971,7 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
                   const topCard = pile[pile.length - 1];
                   const isDragTarget = dragOverTarget === `foundation-${suit}`;
                   return (
-                    <div key={suit} className={`w-full text-center transition rounded-[0.08em] ${isDragTarget ? (isLofi ? 'bg-amber-900/10 ring-2 ring-amber-200/50' : 'bg-white/12 ring-2 ring-amber-200/70') : ''}`}>
+                    <div key={suit} className={`w-full flex flex-col items-center text-center transition rounded-[0.08em] ${isDragTarget ? (isLofi ? 'bg-amber-900/10 ring-2 ring-amber-200/50' : 'bg-white/12 ring-2 ring-amber-200/70') : ''}`}>
                       <Card
                         card={topCard}
                         compact
@@ -996,12 +996,12 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
                 })}
             </div>
 
-            <div className="grid grid-cols-7" style={{ gap: '0.15em' }}>
+            <div className="grid grid-cols-7 w-full justify-items-center" style={{ gap: "0.2em" }}>
 
               {game.tableau.map((column, columnIndex) => (
                 <div
                   key={`column-${columnIndex + 1}`}
-                  className={`relative transition w-full pb-[1.5em] ${dragOverTarget === 'tableau-' + columnIndex ? (isLofi ? 'bg-amber-900/10 ring-2 ring-amber-200/50' : 'bg-white/14 ring-2 ring-amber-200/70') : ''}`}
+                  className={`relative flex flex-col items-center transition w-full pb-[1.5em] ${dragOverTarget === 'tableau-' + columnIndex ? (isLofi ? 'bg-amber-900/10 ring-2 ring-amber-200/50' : 'bg-white/14 ring-2 ring-amber-200/70') : ''}`}
                   data-drop-target={`tableau-${columnIndex}`}
                 >
                   {column.length === 0 ? (
@@ -1009,7 +1009,7 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
                   ) : column.map((card, cardIndex) => {
                     const isSelected = selectedKey === `tableau-${columnIndex}-${cardIndex}`;
                     return (
-    <div key={card.id} className={cardIndex > 0 ? 'relative' : ''} style={{ marginTop: cardIndex > 0 ? (card.faceUp ? '-1.05em' : '-1.25em') : '0' }}>
+    <div key={card.id} className={cardIndex > 0 ? 'relative' : ''} style={{ marginTop: cardIndex > 0 ? (card.faceUp ? '-0.8em' : '-1.12em') : '0' }}>
       <Card
         card={card}
         compact
