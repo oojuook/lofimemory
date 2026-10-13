@@ -5089,6 +5089,7 @@ function App() {
       </nav>
 
       {/* Mobile Bottom Nav */}
+      {!isFullscreen && (
       <div className="mobile-bottom-nav fixed bottom-4 left-4 right-4 z-50 xl:hidden">
         <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-full border border-[#8b5e3c]/25 p-1.5 shadow-lift backdrop-blur-2xl transition duration-500 hover:shadow-soft">
           <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-60" aria-hidden="true" />
@@ -5121,6 +5122,7 @@ function App() {
           </div>
         </div>
       </div>
+      )}
 
       {showMinimalHomeOverview && (
       <section id="home" className="mx-auto max-w-[1040px] px-3 pb-24 pt-6 sm:px-5 sm:pb-20 sm:pt-10 xl:px-10">
@@ -5928,7 +5930,7 @@ function App() {
                     <span aria-hidden="true">←</span> Back to games
                   </button>
                 )}
-                <div ref={selectedGameInterfaceRef} className={`lofi-glass lofi-picture-border lofi-border-memory relative overflow-hidden backdrop-blur ${isFullscreen ? 'is-fullscreen flex min-h-[100dvh] flex-col rounded-none border-0 bg-transparent p-0 shadow-none' : 'rounded-[3rem] border p-3 shadow-soft sm:p-4 lg:p-5'} ${!isFullscreen && gameVisualTheme === 'lofi' ? 'border-[#e8dfd5] bg-[#fffaf2]/85' : ''}`}>
+                <div ref={selectedGameInterfaceRef} className={`lofi-glass lofi-picture-border lofi-border-memory relative overflow-hidden backdrop-blur ${isFullscreen ? 'is-fullscreen fixed inset-0 z-[120] flex h-[100dvh] w-screen flex-col rounded-none border-0 bg-[#fff7ec] p-0 shadow-none' : 'rounded-[3rem] border p-3 shadow-soft sm:p-4 lg:p-5'} ${!isFullscreen && gameVisualTheme === 'lofi' ? 'border-[#e8dfd5] bg-[#fffaf2]/85' : ''}`}>
                   {!isFullscreen && gameVisualTheme === 'lofi' && (
                     <>
                       <img src={lofiRoomWallpaperImage} alt="" className="pointer-events-none absolute inset-0 h-full w-full scale-105 object-cover opacity-[0.07] blur-[1px]" aria-hidden="true" />
@@ -5988,7 +5990,7 @@ function App() {
                     </div>
                   </div>
                   )}
-                  <div className={`relative z-10 mx-auto w-full ${isFullscreen ? 'flex min-h-0 flex-1 max-w-none' : `mt-5 ${selectedUnwindGameConfig.playingSpace || 'max-w-[980px]'}`}`}>
+                  <div className={`relative z-10 mx-auto w-full ${isFullscreen ? 'flex min-h-0 flex-1 max-w-none overflow-auto' : `mt-5 ${selectedUnwindGameConfig.playingSpace || 'max-w-[980px]'}`}`}>
                     {selectedUnwindGameConfig.component}
                   </div>
                 </div>

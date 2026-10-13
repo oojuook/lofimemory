@@ -141,7 +141,7 @@ function Card({
 
   return (
     <button
-      className={`${baseClass} relative flex flex-col justify-start border ${isLofi ? 'bg-white border-amber-200/60' : 'bg-white border-white/95'} p-1 sm:p-1.5 text-left font-bold shadow-sm hover:-translate-y-0.5 ${selected ? `z-20 -translate-y-1 ${isLofi ? 'border-amber-400 ring-4 ring-amber-200/50' : 'border-amber-300 ring-4 ring-amber-200/80'}` : ''} ${cardColor(card, isLofi)} ${ghosted ? 'opacity-0' : ''} ${draggable ? 'cursor-grab active:cursor-grabbing touch-none select-none' : ''}`}
+      className={`${baseClass} relative flex flex-col justify-start border ${isLofi ? 'bg-white border-amber-200/60' : 'bg-white border-white/95'} p-0.5 sm:p-1 md:p-1.5 text-left font-bold shadow-sm hover:-translate-y-0.5 ${selected ? `z-20 -translate-y-1 ${isLofi ? 'border-amber-400 ring-4 ring-amber-200/50' : 'border-amber-300 ring-4 ring-amber-200/80'}` : ''} ${cardColor(card, isLofi)} ${ghosted ? 'opacity-0' : ''} ${draggable ? 'cursor-grab active:cursor-grabbing touch-none select-none' : ''}`}
       data-drop-target={dropTarget}
       draggable={false}
       onClick={onClick}
@@ -152,11 +152,11 @@ function Card({
       type="button"
     >
       <div className="flex items-center gap-0.5 leading-none">
-        <span className="text-[11px] sm:text-[13px]">{card.rank}</span>
-        <span className="text-[10px] sm:text-[12px]">{card.suit}</span>
+        <span className="text-[9px] sm:text-[11px] md:text-[13px]">{card.rank}</span>
+        <span className="text-[8px] sm:text-[10px] md:text-[12px]">{card.suit}</span>
       </div>
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <span className="text-xl sm:text-2xl opacity-90">{card.suit}</span>
+        <span className="text-lg sm:text-xl md:text-2xl opacity-90">{card.suit}</span>
       </div>
       {isLofi && (
         <div className="absolute inset-0 rounded-[0.5rem] sm:rounded-[0.7rem] bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
@@ -191,8 +191,8 @@ function WastePile({
     <div className={`relative ${compactHeight} ${stackWidthClass}`}>
       {visibleCards.map((card, index) => {
         const isTopCard = index === visibleCards.length - 1;
-        const offsetX = index * (drawCount >= 3 ? 12 : 8);
-        const offsetY = index * (drawCount >= 3 ? 6 : 4);
+        const offsetX = index * (drawCount >= 3 ? 8 : 5);
+        const offsetY = index * (drawCount >= 3 ? 4 : 3);
         return (
           <div
             className="absolute left-0 top-0 w-full"
@@ -811,42 +811,41 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
           <div className="flex items-center gap-3">
             {isLofi ? (
               <div>
-                <div className="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-white/85 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-amber-800 shadow-sm">
+                <div className="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-white/85 px-3 py-1.5 text-[9px] sm:text-[11px] font-extrabold uppercase tracking-[0.22em] text-amber-800 shadow-sm">
                   <Sparkles size={14} /> {config.label} card flow
                 </div>
-                <h3 className="mt-3 font-display text-2xl font-black tracking-tight text-[#3d3025]">Solitaire</h3>
-                <p className="mt-1 text-sm font-semibold text-[#6e5a4a]">{config.note}</p>
+                <h3 className="mt-2 sm:mt-3 font-display text-xl sm:text-2xl font-black tracking-tight text-[#3d3025]">Solitaire</h3>
+                <p className="mt-1 text-xs sm:text-sm font-semibold text-[#6e5a4a] leading-tight">{config.note}</p>
               </div>
             ) : (
               <>
-                <div className="grid h-9 w-9 place-items-center rounded-full bg-white/14 text-lg shadow-inner">♣</div>
+                <div className="grid h-7 w-7 sm:h-9 sm:w-9 place-items-center rounded-full bg-white/14 text-sm sm:text-lg shadow-inner">♣</div>
                 <div>
-                  <p className="text-[10px] font-extrabold uppercase tracking-[0.22em] text-emerald-100/80">Clean card table</p>
-                  <h3 className="font-display text-2xl font-black tracking-tight">Solitaire</h3>
+                  <p className="text-[9px] font-extrabold uppercase tracking-[0.22em] text-emerald-100/80">Clean card table</p>
+                  <h3 className="font-display text-xl sm:text-2xl font-black tracking-tight">Solitaire</h3>
                 </div>
               </>
             )}
           </div>
-          <div className={`flex flex-wrap items-center gap-2 text-[11px] font-black uppercase tracking-[0.16em] ${isLofi ? 'text-[#6e5a4a]' : ''}`}>
-            <button className={`rounded-full px-4 py-2 shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#4a3a2d] text-white hover:bg-[#3d3025]' : 'bg-white text-emerald-900 hover:bg-emerald-50'}`} onClick={resetGame} type="button">New</button>
+          <div className={`flex flex-wrap items-center gap-1.5 sm:gap-2 text-[9px] sm:text-[11px] font-black uppercase tracking-[0.16em] ${isLofi ? 'text-[#6e5a4a]' : ''}`}>
+            <button className={`rounded-full px-3 py-1.5 sm:px-4 sm:py-2 shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#4a3a2d] text-white hover:bg-[#3d3025]' : 'bg-white text-emerald-900 hover:bg-emerald-50'}`} onClick={resetGame} type="button">New</button>
             {!isParentFullscreen && (
-              <button className={`inline-flex items-center gap-2 rounded-full px-4 py-2 transition hover:-translate-y-0.5 ${isLofi ? 'border border-[#e8dfd5] bg-white text-[#4a3a2d] hover:bg-[#fff9f0]' : 'bg-white/13 text-white hover:bg-white/20'}`} onClick={toggleFullscreen} type="button">
-                {isFullscreen ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
-                {isFullscreen ? 'Exit full' : 'Full screen'}
+              <button className={`inline-flex items-center gap-1.5 sm:gap-2 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 transition hover:-translate-y-0.5 ${isLofi ? 'border border-[#e8dfd5] bg-white text-[#4a3a2d] hover:bg-[#fff9f0]' : 'bg-white/13 text-white hover:bg-white/20'}`} onClick={toggleFullscreen} type="button">
+                {isFullscreen ? <Minimize2 size={12} /> : <Maximize2 size={12} />}
+                <span className="hidden sm:inline">{isFullscreen ? 'Exit full' : 'Full screen'}</span>
+                <span className="sm:hidden">{isFullscreen ? 'Exit' : 'Full'}</span>
               </button>
             )}
             {canAutoFinish ? (
-              <button className={`rounded-full px-4 py-2 shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#faedcd] text-[#4a3a2d] hover:bg-[#f7e4b7]' : 'bg-amber-300 text-emerald-950 hover:bg-amber-200'}`} onClick={triggerAutoFinish} type="button">
-                {isAutoFinishing ? 'Finishing…' : 'Auto finish · F'}
+              <button className={`rounded-full px-3 py-1.5 sm:px-4 sm:py-2 shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#faedcd] text-[#4a3a2d] hover:bg-[#f7e4b7]' : 'bg-amber-300 text-emerald-950 hover:bg-amber-200'}`} onClick={triggerAutoFinish} type="button">
+                {isAutoFinishing ? '…' : 'Finish'}
               </button>
             ) : null}
-            <span className={`rounded-full px-4 py-2 ${isLofi ? 'border border-[#e8dfd5] bg-white/80 text-[#4a3a2d]' : 'bg-white/13'}`}>{config.label}</span>
-            <span className={`rounded-full px-4 py-2 ${isLofi ? 'border border-[#e8dfd5] bg-white/80 text-[#4a3a2d]' : 'bg-white/13'}`}>Moves {game.moves}</span>
-            <span className={`rounded-full px-4 py-2 ${isLofi ? 'border border-[#e8dfd5] bg-white/80 text-[#4a3a2d]' : 'bg-white/13'}`}>Home {foundationCount}/52</span>
+            <span className={`rounded-full px-3 py-1.5 sm:px-4 sm:py-2 ${isLofi ? 'border border-[#e8dfd5] bg-white/80 text-[#4a3a2d]' : 'bg-white/13'}`}>Moves {game.moves}</span>
           </div>
         </div>
 
-        <div className={`relative min-h-[560px] overflow-auto p-4 sm:p-6 lg:p-8 ${isExpandedLayout ? 'flex-1' : ''} ${isLofi ? 'bg-[#fff7ec]' : 'bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.18),transparent_38%),linear-gradient(135deg,#0b7c43,#075b33)]'}`}>
+        <div className={`relative min-h-0 flex-1 overflow-auto p-2 sm:p-4 md:p-6 lg:p-8 ${isLofi ? 'bg-[#fff7ec]' : 'bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.18),transparent_38%),linear-gradient(135deg,#0b7c43,#075b33)]'}`}>
           <div className={`pointer-events-none absolute inset-0 opacity-[0.06] ${isLofi ? 'hidden' : ''}`} style={{ backgroundImage: 'repeating-linear-gradient(45deg, #ffffff 0 1px, transparent 1px 12px)' }} />
           {isLofi && (
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(74,58,45,0.04),transparent_70%)] opacity-40 pointer-events-none" />
@@ -882,7 +881,7 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
             </div>
           ) : null}
 
-          <div ref={playfieldRef} className={`relative mx-auto flex ${isExpandedLayout ? 'min-w-full max-w-none' : 'min-w-[560px] max-w-[920px]'} flex-col gap-8 ${isExpandedLayout ? 'h-full' : ''}`}>
+          <div ref={playfieldRef} className={`relative mx-auto flex ${isExpandedLayout ? 'min-w-full max-w-none' : 'w-full max-w-[920px]'} flex-col gap-6 sm:gap-8 ${isExpandedLayout ? 'h-full' : ''}`}>
             <style>
               {`@keyframes foundation-flight {
                 from {
@@ -915,17 +914,17 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
               </div>
             ) : null}
 
-            <div className="flex items-start justify-between gap-4 sm:gap-6">
-              <div className="flex gap-2 sm:gap-4">
-                <div className="w-[4.2rem] text-center sm:w-[5.8rem]">
+            <div className="flex items-start justify-between gap-1.5 sm:gap-6">
+              <div className="flex gap-1 sm:gap-4">
+                <div className="w-[2.4rem] text-center xs:w-[2.9rem] sm:w-[4.2rem] md:w-[5.8rem]">
                   {game.stock.length > 0 ? (
                     <Card card={{ id: 'stock', faceUp: false }} compact isLofi={isLofi} onClick={drawFromStock} />
                   ) : (
                     <Card compact isLofi={isLofi} onClick={drawFromStock} />
                   )}
-                  <span className={`mt-2 block text-[10px] font-extrabold uppercase tracking-[0.16em] ${isLofi ? 'text-amber-800/70' : 'text-white/78'}`}>{game.stock.length}</span>
+                  <span className={`mt-2 block text-[8px] font-extrabold uppercase tracking-[0.12em] ${isLofi ? 'text-amber-800/70' : 'text-white/78'}`}>{game.stock.length}</span>
                 </div>
-                <div className="w-[4.2rem] text-center sm:w-[5.8rem]">
+                <div className="w-[2.4rem] text-center xs:w-[2.9rem] sm:w-[4.2rem] md:w-[5.8rem]">
                   <WastePile
                     cards={game.waste}
                     drawCount={config.drawCount}
@@ -940,17 +939,17 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
                     onDoubleClick={doubleClickWaste}
                     onPointerDown={(event) => beginPointerDrag(event, { type: 'waste' })}
                   />
-                  <span className={`mt-2 block text-[10px] font-extrabold uppercase tracking-[0.16em] ${isLofi ? 'text-amber-800/70' : 'text-white/78'}`}>Waste</span>
+                  <span className={`mt-2 block text-[8px] font-extrabold uppercase tracking-[0.12em] ${isLofi ? 'text-amber-800/70' : 'text-white/78'}`}>Waste</span>
                 </div>
               </div>
 
-              <div className="flex justify-end gap-2 sm:gap-4">
+              <div className="flex justify-end gap-1 sm:gap-4">
                 {SUITS.map((suit) => {
                   const pile = game.foundations[suit];
                   const topCard = pile[pile.length - 1];
                   const isDragTarget = dragOverTarget === `foundation-${suit}`;
                   return (
-                    <div key={suit} className={`w-[4.2rem] rounded-[1rem] p-1 text-center transition sm:w-[5.8rem] ${isDragTarget ? (isLofi ? 'bg-amber-900/10 ring-2 ring-amber-200/50' : 'bg-white/12 ring-2 ring-amber-200/70') : ''}`}>
+                    <div key={suit} className={`w-[2.4rem] xs:w-[2.9rem] sm:w-[4.2rem] md:w-[5.8rem] rounded-[0.6rem] sm:rounded-[1rem] p-0.5 sm:p-1 text-center transition ${isDragTarget ? (isLofi ? 'bg-amber-900/10 ring-2 ring-amber-200/50' : 'bg-white/12 ring-2 ring-amber-200/70') : ''}`}>
                       <Card
                         card={topCard}
                         compact
@@ -969,18 +968,18 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
                         onClick={() => selectFoundation(suit)}
                         onPointerDown={topCard ? (event) => beginPointerDrag(event, { type: 'foundation', suit }) : undefined}
                       />
-                      <span className={`mt-2 block text-sm font-black ${isRed(suit) ? (isLofi ? 'text-[#ff8fa3]' : 'text-rose-100') : (isLofi ? 'text-[#6e5a4a]' : 'text-white/90')}`}>{suit}</span>
+                      <span className={`mt-2 block text-[10px] sm:text-sm font-black ${isRed(suit) ? (isLofi ? 'text-[#ff8fa3]' : 'text-rose-100') : (isLofi ? 'text-[#6e5a4a]' : 'text-white/90')}`}>{suit}</span>
                     </div>
                   );
                 })}
               </div>
             </div>
 
-            <div className="grid grid-cols-7 gap-2 pb-8 sm:gap-3 lg:gap-4">
+            <div className="grid grid-cols-7 gap-1 sm:gap-3 lg:gap-4 pb-8">
               {game.tableau.map((column, columnIndex) => (
                 <div
                   key={`column-${columnIndex + 1}`}
-                  className={`min-h-[22rem] space-y-[-2.65rem] rounded-[0.7rem] p-1 transition sm:space-y-[-3.35rem] sm:rounded-[1rem] sm:p-1.5 ${dragOverTarget === `tableau-${columnIndex}` ? (isLofi ? 'bg-amber-900/10 ring-2 ring-amber-200/50' : 'bg-white/14 ring-2 ring-amber-200/70') : (isLofi ? 'bg-amber-900/5' : 'bg-emerald-950/10')}`}
+                  className={`min-h-[16rem] space-y-[-2rem] sm:min-h-[22rem] sm:space-y-[-2.65rem] md:space-y-[-3.35rem] rounded-[0.5rem] sm:rounded-[1rem] p-0.5 sm:p-1.5 transition ${dragOverTarget === `tableau-${columnIndex}` ? (isLofi ? 'bg-amber-900/10 ring-2 ring-amber-200/50' : 'bg-white/14 ring-2 ring-amber-200/70') : (isLofi ? 'bg-amber-900/5' : 'bg-emerald-950/10')}`}
                   data-drop-target={`tableau-${columnIndex}`}
                 >
                   {column.length === 0 ? (
