@@ -105,7 +105,7 @@ function Card({
   isLofi = false
 }) {
   const sizeClass = 'w-[1em] h-[1.4em]';
-  const baseClass = `${sizeClass} shrink-0 rounded-[0.5em] sm:rounded-[0.7em] transition duration-200`;
+  const baseClass = `${sizeClass} shrink-0 rounded-[0.08em] transition duration-200`;
 
   if (!card) {
     return (
@@ -141,7 +141,7 @@ function Card({
 
   return (
     <button
-      className={`${baseClass} relative flex flex-col justify-start border ${isLofi ? 'bg-white border-amber-200/60' : 'bg-white border-white/95'} p-0.5 sm:p-1 md:p-1.5 text-left font-bold shadow-sm hover:-translate-y-0.5 ${selected ? `z-20 -translate-y-1 ${isLofi ? 'border-amber-400 ring-4 ring-amber-200/50' : 'border-amber-300 ring-4 ring-amber-200/80'}` : ''} ${cardColor(card, isLofi)} ${ghosted ? 'opacity-0' : ''} ${draggable ? 'cursor-grab active:cursor-grabbing touch-none select-none' : ''}`}
+      className={`${baseClass} relative flex flex-col justify-start border ${isLofi ? 'bg-white border-amber-200/60' : 'bg-white border-white/95'} p-[0.06em] text-left font-bold shadow-sm hover:-translate-y-0.5 ${selected ? `z-20 -translate-y-1 ${isLofi ? 'border-amber-400 ring-4 ring-amber-200/50' : 'border-amber-300 ring-4 ring-amber-200/80'}` : ''} ${cardColor(card, isLofi)} ${ghosted ? 'opacity-0' : ''} ${draggable ? 'cursor-grab active:cursor-grabbing touch-none select-none' : ''}`}
       data-drop-target={dropTarget}
       draggable={false}
       onClick={onClick}
@@ -152,14 +152,14 @@ function Card({
       type="button"
     >
       <div className="flex items-center leading-none" style={{ gap: '0.04em' }}>
-        <span style={{ fontSize: '0.2em' }}>{card.rank}</span>
-        <span style={{ fontSize: '0.18em' }}>{card.suit}</span>
+        <span style={{ fontSize: "0.22em" }}>{card.rank}</span>
+        <span style={{ fontSize: "0.18em" }}>{card.suit}</span>
       </div>
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <span className="opacity-90" style={{ fontSize: '0.4em' }}>{card.suit}</span>
+        <span className="opacity-90" style={{ fontSize: "0.5em" }}>{card.suit}</span>
       </div>
       {isLofi && (
-        <div className="absolute inset-0 rounded-[0.5em] sm:rounded-[0.7em] bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 rounded-[0.08em] bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
       )}
     </button>
   );
@@ -879,28 +879,30 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
                     top: '40%'
                   }}
                 >
-                  <div className={`h-[5.35rem] w-[3.75rem] sm:h-24 sm:w-16 flex flex-col justify-between rounded-[0.8rem] border p-1.5 text-left font-black shadow-lg ${isLofi ? 'border-[#e8dfd5] bg-[#fdfaf5]' : 'border-white/95 bg-[#fffdf8]'} ${cardColor(card, isLofi)}`}>
-                    <div className="flex flex-col leading-none">
-                      <span className="text-[12px] sm:text-sm">{card.rank}</span>
-                      <span className={`text-[11px] ${isLofi ? 'opacity-70' : 'opacity-85'} sm:text-xs`}>{card.suit}</span>
-                    </div>
-                    <span className="self-center text-2xl leading-none sm:text-3xl">{card.suit}</span>
-                    <div className={`rotate-180 self-end leading-none ${isLofi ? 'opacity-40' : 'opacity-55'}`}>
-                      <span className="text-[12px] sm:text-sm">{card.rank}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : null}
+                  
+    <div style={{ width: '4rem', height: '5.6rem', fontSize: '1rem' }} className={`flex flex-col justify-between rounded-[0.4rem] border p-[0.3rem] text-left font-black shadow-lg ${isLofi ? 'border-[#e8dfd5] bg-[#fdfaf5]' : 'border-white/95 bg-[#fffdf8]'} ${cardColor(card, isLofi)}`}>
+      <div className="flex flex-col leading-none">
+        <span className="text-sm">{card.rank}</span>
+        <span className={`text-xs ${isLofi ? 'opacity-70' : 'opacity-85'}`}>{card.suit}</span>
+      </div>
+      <span className="self-center text-3xl leading-none">{card.suit}</span>
+      <div className={`rotate-180 self-end leading-none ${isLofi ? 'opacity-40' : 'opacity-55'}`}>
+        <span className="text-sm">{card.rank}</span>
+      </div>
+    </div>
+  </div>
+))}
+</div>
+) : null}
+
 
           
   <div ref={boardWrapperRef} className={`relative flex-1 min-h-0 w-full flex items-center justify-center ${isExpandedLayout ? 'h-full' : 'h-[65vh] min-h-[400px]'}`}>
     <div 
       ref={playfieldRef} 
-      className="relative flex flex-col"
+      className="relative flex flex-col mx-auto"
       style={{
-        fontSize: boardDims.w > 0 && boardDims.h > 0 ? `${Math.max(20, Math.min(boardDims.w / 8.5, boardDims.h / 9.0))}px` : '48px',
+        fontSize: boardDims.w > 0 && boardDims.h > 0 ? `${Math.max(16, Math.min(boardDims.w / 8.5, boardDims.h / 9.5, 140))}px` : '48px',
         gap: '0.4em'
       }}
     >
@@ -970,7 +972,7 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
                   const topCard = pile[pile.length - 1];
                   const isDragTarget = dragOverTarget === `foundation-${suit}`;
                   return (
-                    <div key={suit} className={`w-full text-center transition rounded-[0.5em] ${isDragTarget ? (isLofi ? 'bg-amber-900/10 ring-2 ring-amber-200/50' : 'bg-white/12 ring-2 ring-amber-200/70') : ''}`}>
+                    <div key={suit} className={`w-full text-center transition rounded-[0.08em] ${isDragTarget ? (isLofi ? 'bg-amber-900/10 ring-2 ring-amber-200/50' : 'bg-white/12 ring-2 ring-amber-200/70') : ''}`}>
                       <Card
                         card={topCard}
                         compact
@@ -1000,7 +1002,7 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
               {game.tableau.map((column, columnIndex) => (
                 <div
                   key={`column-${columnIndex + 1}`}
-                  className={`relative transition w-full pb-[4em] ${dragOverTarget === 'tableau-' + columnIndex ? (isLofi ? 'bg-amber-900/10 ring-2 ring-amber-200/50' : 'bg-white/14 ring-2 ring-amber-200/70') : ''}`}
+                  className={`relative transition w-full pb-[1.5em] ${dragOverTarget === 'tableau-' + columnIndex ? (isLofi ? 'bg-amber-900/10 ring-2 ring-amber-200/50' : 'bg-white/14 ring-2 ring-amber-200/70') : ''}`}
                   data-drop-target={`tableau-${columnIndex}`}
                 >
                   {column.length === 0 ? (
