@@ -3,4 +3,4 @@ Allow: /
 
 User-agent: *
 Allow: /
-Sitemap: https://quietjournaljourney.vercel.app/sitemap.xml
+Sitemap: https://lofimemory.vercel.app/sitemap.xml

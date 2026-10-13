@@ -1,11 +1,11 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { viteSingleFile } from 'vite-plugin-singlefile';
 
 export default defineConfig({
-  plugins: [react(), viteSingleFile()],
+  plugins: [react()],
   base: './',
   build: {
-    cssCodeSplit: false
+    assetsInlineLimit: 4096, // Only inline very small assets (4kb)
+    chunkSizeWarningLimit: 1000,
   }
 });
