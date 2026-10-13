@@ -473,7 +473,7 @@ export default function QuietTetris({ difficulty = 'medium', theme = 'lofi', vie
 
         <div className="relative z-10 mt-6 grid gap-5 xl:grid-cols-[minmax(0,1fr)_220px]">
           <div>
-            <div className={`relative mx-auto w-full max-w-[22rem] rounded-[2rem] border p-4 shadow-inner sm:max-w-[24rem] sm:p-5 ${isLofi ? 'border-[#e8dfd5] bg-[#fdfaf5]' : 'border-violet-100 bg-[#f6f2ff]'}`}>
+            <div className={`relative mx-auto w-full ${isExpandedLayout ? 'max-w-[min(100%,_42vh)] sm:max-w-[min(100%,_48vh)] lg:max-w-[min(100%,_50vh)]' : 'max-w-[22rem] sm:max-w-[24rem]'} rounded-[2rem] border p-4 shadow-inner sm:p-5 ${isLofi ? 'border-[#e8dfd5] bg-[#fdfaf5]' : 'border-violet-100 bg-[#f6f2ff]'}`}>
               <div className={`mb-4 rounded-[1.4rem] border p-3.5 ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-white/75 bg-white/72'}`}>
                 <div className={`flex items-center justify-between text-[11px] font-extrabold uppercase tracking-[0.18em] ${isLofi ? 'text-amber-800' : 'text-violet-500'}`}>
                   <span>Level {currentLevel}</span>
