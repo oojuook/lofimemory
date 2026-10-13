@@ -104,8 +104,8 @@ function Card({
   cardStyle,
   isLofi = false
 }) {
-  const sizeClass = compact ? 'h-[4.35rem] w-[3rem] sm:h-[5.35rem] sm:w-[3.75rem]' : 'h-[5.35rem] w-[3.75rem] sm:h-24 sm:w-16';
-  const baseClass = `${sizeClass} shrink-0 rounded-[0.8rem] transition duration-200`;
+  const sizeClass = compact ? 'aspect-[2.5/3.5] w-full' : 'aspect-[2.5/3.5] w-full';
+  const baseClass = `${sizeClass} shrink-0 rounded-[0.5rem] sm:rounded-[0.7rem] transition duration-200`;
 
   if (!card) {
     return (
@@ -126,14 +126,14 @@ function Card({
       <button
         ref={cardRef}
         aria-label="Hidden card"
-        className={`${baseClass} grid place-items-center border ${isLofi ? 'border-amber-200/60 bg-gradient-to-br from-[#d4a373] via-[#a98467] to-[#6c584c]' : 'border-emerald-100/55 bg-[radial-gradient(circle_at_35%_25%,rgba(255,255,255,0.28),transparent_28%),linear-gradient(145deg,#0f8f50,#08733f_48%,#075a33)]'} shadow-[0_5px_12px_rgba(0,0,0,0.22)] ${isLofi ? 'ring-1 ring-amber-100/20' : 'ring-1 ring-emerald-300/30'} hover:-translate-y-0.5 ${ghosted ? 'opacity-0' : ''}`}
+        className={`${baseClass} grid place-items-center border ${isLofi ? 'border-amber-200/60 bg-gradient-to-br from-[#d4a373] via-[#a98467] to-[#6c584c]' : 'border-emerald-100/55 bg-[radial-gradient(circle_at_35%_25%,rgba(255,255,255,0.28),transparent_28%),linear-gradient(145deg,#0f8f50,#08733f_48%,#075a33)]'} shadow-sm ${isLofi ? 'ring-1 ring-amber-100/20' : 'ring-1 ring-emerald-300/30'} hover:-translate-y-0.5 ${ghosted ? 'opacity-0' : ''}`}
         data-drop-target={dropTarget}
         onClick={onClick}
         style={cardStyle}
         type="button"
       >
-        <div className={`grid h-8 w-8 place-items-center rounded-full border ${isLofi ? 'border-white/20 bg-white/5' : 'border-white/35 bg-white/12'} sm:h-10 sm:w-10`}>
-          <span className={`text-sm font-black ${isLofi ? 'text-white/40' : 'text-white/72'}`}>✦</span>
+        <div className={`grid h-6 w-6 place-items-center rounded-full border ${isLofi ? 'border-white/20 bg-white/5' : 'border-white/35 bg-white/12'} sm:h-8 sm:w-8`}>
+          <span className={`text-[10px] font-black ${isLofi ? 'text-white/40' : 'text-white/72'}`}>✦</span>
         </div>
       </button>
     );
@@ -141,7 +141,7 @@ function Card({
 
   return (
     <button
-      className={`${baseClass} relative flex flex-col justify-between border ${isLofi ? 'bg-[#fdfaf5] border-[#e8dfd5]' : 'bg-[#fffdf8] border-white/95'} p-1.5 text-left font-black shadow-[0_5px_12px_rgba(0,0,0,0.22)] hover:-translate-y-0.5 ${selected ? `z-20 -translate-y-1 ${isLofi ? 'border-amber-400 ring-4 ring-amber-200/50' : 'border-amber-300 ring-4 ring-amber-200/80'}` : ''} ${cardColor(card, isLofi)} ${ghosted ? 'opacity-0' : ''} ${draggable ? 'cursor-grab active:cursor-grabbing touch-none select-none' : ''}`}
+      className={`${baseClass} relative flex flex-col justify-start border ${isLofi ? 'bg-white border-amber-200/60' : 'bg-white border-white/95'} p-1 sm:p-1.5 text-left font-bold shadow-sm hover:-translate-y-0.5 ${selected ? `z-20 -translate-y-1 ${isLofi ? 'border-amber-400 ring-4 ring-amber-200/50' : 'border-amber-300 ring-4 ring-amber-200/80'}` : ''} ${cardColor(card, isLofi)} ${ghosted ? 'opacity-0' : ''} ${draggable ? 'cursor-grab active:cursor-grabbing touch-none select-none' : ''}`}
       data-drop-target={dropTarget}
       draggable={false}
       onClick={onClick}
@@ -151,16 +151,15 @@ function Card({
       style={cardStyle}
       type="button"
     >
-      <div className="flex flex-col leading-none">
-        <span className="text-[12px] sm:text-sm">{card.rank}</span>
-        <span className={`text-[11px] ${isLofi ? 'opacity-70' : 'opacity-85'} sm:text-xs`}>{card.suit}</span>
+      <div className="flex items-center gap-0.5 leading-none">
+        <span className="text-[11px] sm:text-[13px]">{card.rank}</span>
+        <span className="text-[10px] sm:text-[12px]">{card.suit}</span>
       </div>
-      <span className="self-center text-2xl leading-none sm:text-3xl">{card.suit}</span>
-      <div className={`rotate-180 self-end leading-none ${isLofi ? 'opacity-40' : 'opacity-55'}`}>
-        <span className="text-[12px] sm:text-sm">{card.rank}</span>
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <span className="text-xl sm:text-2xl opacity-90">{card.suit}</span>
       </div>
       {isLofi && (
-        <div className="absolute inset-0 rounded-[0.8rem] bg-gradient-to-br from-white/20 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 rounded-[0.5rem] sm:rounded-[0.7rem] bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
       )}
     </button>
   );
@@ -181,22 +180,22 @@ function WastePile({
   isLofi = false
 }) {
   const visibleCards = cards.slice(-Math.max(1, drawCount));
-  const compactHeight = 'h-[4.35rem] sm:h-[5.35rem]';
-  const stackWidthClass = drawCount >= 3 ? 'w-[5.8rem] sm:w-[7rem]' : drawCount === 2 ? 'w-[4.9rem] sm:w-[6rem]' : 'w-[3rem] sm:w-[3.75rem]';
+  const compactHeight = 'aspect-[2.5/3.5] w-full';
+  const stackWidthClass = '';
 
   if (visibleCards.length === 0) {
-    return <Card compact isLofi={isLofi} onClick={onClick} />;
+    return <div className="aspect-[2.5/3.5] w-full"><Card compact isLofi={isLofi} onClick={onClick} /></div>;
   }
 
   return (
     <div className={`relative ${compactHeight} ${stackWidthClass}`}>
       {visibleCards.map((card, index) => {
         const isTopCard = index === visibleCards.length - 1;
-        const offsetX = drawCount >= 3 ? index * 20 : index * 16;
-        const offsetY = drawCount >= 3 ? index * 10 : index * 7;
+        const offsetX = index * (drawCount >= 3 ? 12 : 8);
+        const offsetY = index * (drawCount >= 3 ? 6 : 4);
         return (
           <div
-            className="absolute left-0 top-0"
+            className="absolute left-0 top-0 w-full"
             key={card.id}
             style={{ transform: `translate(${offsetX}px, ${offsetY}px)`, zIndex: index + 1 }}
           >
@@ -916,17 +915,17 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
               </div>
             ) : null}
 
-            <div className="flex items-start justify-between gap-6">
-              <div className="flex gap-4">
-                <div className="text-center">
+            <div className="flex items-start justify-between gap-4 sm:gap-6">
+              <div className="flex gap-2 sm:gap-4">
+                <div className="w-[4.2rem] text-center sm:w-[5.8rem]">
                   {game.stock.length > 0 ? (
                     <Card card={{ id: 'stock', faceUp: false }} compact isLofi={isLofi} onClick={drawFromStock} />
                   ) : (
                     <Card compact isLofi={isLofi} onClick={drawFromStock} />
                   )}
-                  <span className={`mt-2 block text-[10px] font-extrabold uppercase tracking-[0.16em] ${isLofi ? 'text-amber-800/70' : 'text-white/78'}`}>Deck {game.stock.length}</span>
+                  <span className={`mt-2 block text-[10px] font-extrabold uppercase tracking-[0.16em] ${isLofi ? 'text-amber-800/70' : 'text-white/78'}`}>{game.stock.length}</span>
                 </div>
-                <div className="text-center">
+                <div className="w-[4.2rem] text-center sm:w-[5.8rem]">
                   <WastePile
                     cards={game.waste}
                     drawCount={config.drawCount}
@@ -945,13 +944,13 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
                 </div>
               </div>
 
-              <div className="flex justify-end gap-4">
+              <div className="flex justify-end gap-2 sm:gap-4">
                 {SUITS.map((suit) => {
                   const pile = game.foundations[suit];
                   const topCard = pile[pile.length - 1];
                   const isDragTarget = dragOverTarget === `foundation-${suit}`;
                   return (
-                    <div key={suit} className={`rounded-[1rem] p-1 text-center transition ${isDragTarget ? (isLofi ? 'bg-amber-900/10 ring-2 ring-amber-200/50' : 'bg-white/12 ring-2 ring-amber-200/70') : ''}`}>
+                    <div key={suit} className={`w-[4.2rem] rounded-[1rem] p-1 text-center transition sm:w-[5.8rem] ${isDragTarget ? (isLofi ? 'bg-amber-900/10 ring-2 ring-amber-200/50' : 'bg-white/12 ring-2 ring-amber-200/70') : ''}`}>
                       <Card
                         card={topCard}
                         compact
@@ -977,11 +976,11 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
               </div>
             </div>
 
-            <div className="grid grid-cols-7 gap-3 pb-8 sm:gap-4 lg:gap-5">
+            <div className="grid grid-cols-7 gap-2 pb-8 sm:gap-3 lg:gap-4">
               {game.tableau.map((column, columnIndex) => (
                 <div
                   key={`column-${columnIndex + 1}`}
-                  className={`min-h-[19rem] min-w-[3.6rem] space-y-[-2.45rem] rounded-[1.1rem] p-1.5 pb-20 transition sm:space-y-[-2.85rem] ${dragOverTarget === `tableau-${columnIndex}` ? (isLofi ? 'bg-amber-900/10 ring-2 ring-amber-200/50' : 'bg-white/14 ring-2 ring-amber-200/70') : (isLofi ? 'bg-amber-900/5' : 'bg-emerald-950/10')}`}
+                  className={`min-h-[22rem] space-y-[-2.65rem] rounded-[0.7rem] p-1 transition sm:space-y-[-3.35rem] sm:rounded-[1rem] sm:p-1.5 ${dragOverTarget === `tableau-${columnIndex}` ? (isLofi ? 'bg-amber-900/10 ring-2 ring-amber-200/50' : 'bg-white/14 ring-2 ring-amber-200/70') : (isLofi ? 'bg-amber-900/5' : 'bg-emerald-950/10')}`}
                   data-drop-target={`tableau-${columnIndex}`}
                 >
                   {column.length === 0 ? (
