@@ -194,6 +194,25 @@ function getLineScore(linesCleared, level = 1) {
 export default function QuietTetris({ difficulty = 'medium', theme = 'lofi', viewportMode = 'embedded' }) {
   const isLofi = theme === 'lofi';
   const isExpandedLayout = viewportMode === 'fullscreen';
+  const [scale, setScale] = useState(1);
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    if (!isExpandedLayout || !wrapperRef.current) {
+      setScale(1);
+      return;
+    }
+    const observer = new ResizeObserver((entries) => {
+      const { width, height } = entries[0].contentRect;
+      if (width === 0 || height === 0) return;
+      const scaleW = width / 850;
+      const scaleH = height / 750;
+      setScale(Math.min(scaleW, scaleH, 2.0) * 0.95);
+    });
+    observer.observe(wrapperRef.current);
+    return () => observer.disconnect();
+  }, [isExpandedLayout]);
+
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const bestScoreKey = `quiet-journal-tetris-best-${difficulty}`;
 
@@ -438,7 +457,9 @@ export default function QuietTetris({ difficulty = 'medium', theme = 'lofi', vie
   const heldMatrix = heldType ? SHAPES[heldType].matrix : null;
 
   return (
-    <div className={`mx-auto w-full ${isExpandedLayout ? 'min-h-full max-w-none' : 'mt-12 max-w-[980px] pb-12'}`}>
+    <div ref={wrapperRef} className={`mx-auto w-full ${isExpandedLayout ? 'h-full flex-1 flex items-center justify-center max-w-none overflow-hidden' : 'mt-12 max-w-[980px] pb-12'}`}>
+      <div style={isExpandedLayout ? { transform: `scale(${scale})`, transformOrigin: 'center center', width: '100%', maxWidth: '850px' } : {}} className={isExpandedLayout ? "flex justify-center" : ""}>
+        <div className="w-full">
       <div className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-8 ${isLofi ? 'border-[#e8dfd5]/80 bg-[#fff9f0] shadow-[0_32px_90px_rgba(83,62,44,0.12)]' : 'border-violet-100 bg-gradient-to-br from-white via-violet-50/82 to-sky-50/76'}`}>
         {isLofi && (
           <>
@@ -473,7 +494,7 @@ export default function QuietTetris({ difficulty = 'medium', theme = 'lofi', vie
 
         <div className="relative z-10 mt-6 grid gap-5 xl:grid-cols-[minmax(0,1fr)_220px]">
           <div>
-            <div className={`relative mx-auto w-full ${isExpandedLayout ? 'max-w-[min(100%,_42vh)] sm:max-w-[min(100%,_48vh)] lg:max-w-[min(100%,_50vh)]' : 'max-w-[22rem] sm:max-w-[24rem]'} rounded-[2rem] border p-4 shadow-inner sm:p-5 ${isLofi ? 'border-[#e8dfd5] bg-[#fdfaf5]' : 'border-violet-100 bg-[#f6f2ff]'}`}>
+            <div className={`relative mx-auto w-full max-w-[22rem] rounded-[2rem] border p-4 shadow-inner sm:max-w-[24rem] sm:p-5 ${isLofi ? 'border-[#e8dfd5] bg-[#fdfaf5]' : 'border-violet-100 bg-[#f6f2ff]'}`}>
               <div className={`mb-4 rounded-[1.4rem] border p-3.5 ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-white/75 bg-white/72'}`}>
                 <div className={`flex items-center justify-between text-[11px] font-extrabold uppercase tracking-[0.18em] ${isLofi ? 'text-amber-800' : 'text-violet-500'}`}>
                   <span>Level {currentLevel}</span>
@@ -584,6 +605,8 @@ export default function QuietTetris({ difficulty = 'medium', theme = 'lofi', vie
               </div>
             </div>
           </div>
+        </div>
+      </div>
         </div>
       </div>
     </div>

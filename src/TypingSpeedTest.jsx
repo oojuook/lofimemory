@@ -213,6 +213,25 @@ function WordPrompt({ activeInput = '', isActive, isLofi = false, isPast, prompt
 export default function TypingSpeedTest({ difficulty = 'medium', theme = 'lofi', viewportMode = 'embedded' }) {
   const isLofi = theme === 'lofi';
   const isExpandedLayout = viewportMode === 'fullscreen';
+  const [scale, setScale] = useState(1);
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    if (!isExpandedLayout || !wrapperRef.current) {
+      setScale(1);
+      return;
+    }
+    const observer = new ResizeObserver((entries) => {
+      const { width, height } = entries[0].contentRect;
+      if (width === 0 || height === 0) return;
+      const scaleW = width / 950;
+      const scaleH = height / 650;
+      setScale(Math.min(scaleW, scaleH, 2.0) * 0.95);
+    });
+    observer.observe(wrapperRef.current);
+    return () => observer.disconnect();
+  }, [isExpandedLayout]);
+
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const [typingMode, setTypingMode] = useState('words');
   const modeConfig = typingModeSettings[typingMode] || typingModeSettings.words;
@@ -437,7 +456,9 @@ export default function TypingSpeedTest({ difficulty = 'medium', theme = 'lofi',
   }, [isRunning, modeConfig.finishedMessage, modeConfig.idleMessage, modeConfig.runningMessage, roundStatus]);
 
   return (
-    <div className={`mx-auto w-full ${isExpandedLayout ? 'min-h-full max-w-none' : 'mt-12 max-w-[1040px] pb-12'}`}>
+    <div ref={wrapperRef} className={`mx-auto w-full ${isExpandedLayout ? 'h-full flex-1 flex items-center justify-center max-w-none overflow-hidden' : 'mt-12 max-w-[1040px] pb-12'}`}>
+      <div style={isExpandedLayout ? { transform: `scale(${scale})`, transformOrigin: 'center center', width: '100%', maxWidth: '950px' } : {}} className={isExpandedLayout ? "flex justify-center" : ""}>
+        <div className="w-full">
       <div className={`relative overflow-hidden rounded-[2rem] border p-4 shadow-soft sm:p-5 lg:p-6 ${isLofi ? 'border-amber-200/50 bg-[#fff7ec] shadow-[0_28px_80px_rgba(83,62,44,0.12)]' : 'border-sky-100 bg-gradient-to-br from-white via-sky-50/70 to-slate-50/86'}`}>
         {isLofi && (
           <>
@@ -639,6 +660,8 @@ export default function TypingSpeedTest({ difficulty = 'medium', theme = 'lofi',
               <RotateCcw size={16} /> Restart typing flow
             </button>
           </div>
+        </div>
+      </div>
         </div>
       </div>
     </div>

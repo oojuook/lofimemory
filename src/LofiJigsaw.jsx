@@ -101,6 +101,25 @@ function TileArtwork({ tile, size, imageSrc, isLofi = false }) {
 export default function LofiJigsaw({ difficulty = 'medium', theme = 'lofi', viewportMode = 'embedded' }) {
   const isLofi = theme === 'lofi';
   const isExpandedLayout = viewportMode === 'fullscreen';
+  const [scale, setScale] = useState(1);
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    if (!isExpandedLayout || !wrapperRef.current) {
+      setScale(1);
+      return;
+    }
+    const observer = new ResizeObserver((entries) => {
+      const { width, height } = entries[0].contentRect;
+      if (width === 0 || height === 0) return;
+      const scaleW = width / 950;
+      const scaleH = height / 850;
+      setScale(Math.min(scaleW, scaleH, 2.0) * 0.95);
+    });
+    observer.observe(wrapperRef.current);
+    return () => observer.disconnect();
+  }, [isExpandedLayout]);
+
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const { size, shuffleMoves, label, note } = config;
   const totalTiles = size * size - 1;
@@ -219,7 +238,9 @@ export default function LofiJigsaw({ difficulty = 'medium', theme = 'lofi', view
   };
 
   return (
-    <div className={`mx-auto w-full ${isExpandedLayout ? 'min-h-full max-w-none' : 'mt-12 max-w-[980px] pb-12'}`}>
+    <div ref={wrapperRef} className={`mx-auto w-full ${isExpandedLayout ? 'h-full flex-1 flex items-center justify-center max-w-none overflow-hidden' : 'mt-12 max-w-[980px] pb-12'}`}>
+      <div style={isExpandedLayout ? { transform: `scale(${scale})`, transformOrigin: 'center center', width: '100%', maxWidth: '950px' } : {}} className={isExpandedLayout ? "flex justify-center" : ""}>
+        <div className="w-full">
       <div className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-amber-200/50 bg-[#fff7ec] shadow-[0_30px_90px_rgba(83,62,44,0.12)]' : 'border-sage-100 bg-gradient-to-br from-white via-sage-50/82 to-sand-50/82'}`}>
         {isLofi && (
           <>
@@ -303,6 +324,8 @@ export default function LofiJigsaw({ difficulty = 'medium', theme = 'lofi', view
 
         <div className={`relative z-10 mt-5 rounded-[1.5rem] border px-4 py-4 text-sm font-semibold shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 text-[#6e5a4a] backdrop-blur-sm' : 'border-white/75 bg-white/76 text-sage-700'}`}>
           Lofi Jigsaw Puzzle is designed for people searching for relaxing puzzle games, cozy browser games, and simple online jigsaw-style play. Pair it with a quick journal note afterward to turn a small game break into a calm reflection.
+        </div>
+      </div>
         </div>
       </div>
     </div>

@@ -69,6 +69,25 @@ function isReverseDirection(current, next) {
 export default function QuietSnake({ difficulty = 'medium', theme = 'lofi', viewportMode = 'embedded' }) {
   const isLofi = theme === 'lofi';
   const isExpandedLayout = viewportMode === 'fullscreen';
+  const [scale, setScale] = useState(1);
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    if (!isExpandedLayout || !wrapperRef.current) {
+      setScale(1);
+      return;
+    }
+    const observer = new ResizeObserver((entries) => {
+      const { width, height } = entries[0].contentRect;
+      if (width === 0 || height === 0) return;
+      const scaleW = width / 850;
+      const scaleH = height / 750;
+      setScale(Math.min(scaleW, scaleH, 2.0) * 0.95);
+    });
+    observer.observe(wrapperRef.current);
+    return () => observer.disconnect();
+  }, [isExpandedLayout]);
+
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const bestScoreKey = `quiet-journal-quiet-snake-best-${difficulty}`;
 
@@ -225,7 +244,9 @@ export default function QuietSnake({ difficulty = 'medium', theme = 'lofi', view
   const cellClass = config.boardWidth >= 21 ? 'h-3.5 w-3.5 sm:h-4 sm:w-4' : config.boardWidth >= 15 ? 'h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5' : 'h-7 w-7 sm:h-8 sm:w-8';
 
   return (
-    <div className={`mx-auto w-full ${isExpandedLayout ? 'min-h-full max-w-none' : 'mt-12 max-w-[980px] pb-12'}`}>
+    <div ref={wrapperRef} className={`mx-auto w-full ${isExpandedLayout ? 'h-full flex-1 flex items-center justify-center max-w-none overflow-hidden' : 'mt-12 max-w-[980px] pb-12'}`}>
+      <div style={isExpandedLayout ? { transform: `scale(${scale})`, transformOrigin: 'center center', width: '100%', maxWidth: '850px' } : {}} className={isExpandedLayout ? "flex justify-center" : ""}>
+        <div className="w-full">
       <div className={`rounded-[2rem] border p-5 lg:p-6 ${isLofi ? 'border-amber-200/60 bg-[#fff7ec] shadow-[0_26px_70px_rgba(83,62,44,0.13)]' : 'border-[4px] border-[#111111] bg-[#c8d8b6] shadow-[10px_10px_0_rgba(17,17,17,0.12)]'}`}>
         <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
@@ -317,6 +338,8 @@ export default function QuietSnake({ difficulty = 'medium', theme = 'lofi', view
               <RotateCcw size={16} /> Reset board
             </button>
           </div>
+        </div>
+      </div>
         </div>
       </div>
     </div>

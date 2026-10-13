@@ -161,6 +161,25 @@ function revealOpenArea(board, startRow, startCol) {
 export default function MindSweeper({ difficulty = 'medium', theme = 'lofi', viewportMode = 'embedded' }) {
   const isLofi = theme === 'lofi';
   const isExpandedLayout = viewportMode === 'fullscreen';
+  const [scale, setScale] = useState(1);
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    if (!isExpandedLayout || !wrapperRef.current) {
+      setScale(1);
+      return;
+    }
+    const observer = new ResizeObserver((entries) => {
+      const { width, height } = entries[0].contentRect;
+      if (width === 0 || height === 0) return;
+      const scaleW = width / 980;
+      const scaleH = height / 850;
+      setScale(Math.min(scaleW, scaleH, 2.0) * 0.95);
+    });
+    observer.observe(wrapperRef.current);
+    return () => observer.disconnect();
+  }, [isExpandedLayout]);
+
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const { boardWidth, boardHeight, mineCount, label, densityLabel } = config;
   const safeTiles = boardWidth * boardHeight - mineCount;
@@ -248,7 +267,9 @@ export default function MindSweeper({ difficulty = 'medium', theme = 'lofi', vie
   const cellPixelSize = boardWidth >= 30 ? 24 : boardWidth >= 16 ? 28 : 36;
 
   return (
-    <div className={`mx-auto w-full ${isExpandedLayout ? 'min-h-full max-w-none' : 'mt-6 sm:mt-12 max-w-[980px] pb-8 sm:pb-12'}`}>
+    <div ref={wrapperRef} className={`mx-auto w-full ${isExpandedLayout ? 'h-full flex-1 flex items-center justify-center max-w-none overflow-hidden' : 'mt-6 sm:mt-12 max-w-[980px] pb-8 sm:pb-12'}`}>
+      <div style={isExpandedLayout ? { transform: `scale(${scale})`, transformOrigin: 'center center', width: '100%', maxWidth: '980px' } : {}} className={isExpandedLayout ? "flex justify-center" : ""}>
+        <div className="w-full">
       <div className={`rounded-[1.5rem] sm:rounded-[2rem] border p-2 sm:p-4 lg:p-5 ${isLofi ? 'border-amber-200/60 bg-[#fff7ec] shadow-[0_26px_70px_rgba(83,62,44,0.13)]' : 'border-[4px] border-[#16191b] bg-[#2b2f31] shadow-[0_18px_45px_rgba(18,22,20,0.22)]'}`}>
         <div className={`rounded-[1.2rem] sm:rounded-[1.5rem] border p-2.5 sm:p-4 lg:p-5 ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-t-[3px] border-l-[3px] border-[#50565a] border-r-[3px] border-b-[3px] border-r-[#111315] border-b-[#111315] bg-[#383d40]'}`}>
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
@@ -352,6 +373,8 @@ export default function MindSweeper({ difficulty = 'medium', theme = 'lofi', vie
               })}
             </div>
           </div>
+        </div>
+      </div>
         </div>
       </div>
     </div>

@@ -560,6 +560,25 @@ function SudokuSidebar({
 export default function QuietSudoku({ difficulty = 'medium', theme = 'lofi', viewportMode = 'embedded' }) {
   const isLofi = theme === 'lofi';
   const isExpandedLayout = viewportMode === 'fullscreen';
+  const [scale, setScale] = useState(1);
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    if (!isExpandedLayout || !wrapperRef.current) {
+      setScale(1);
+      return;
+    }
+    const observer = new ResizeObserver((entries) => {
+      const { width, height } = entries[0].contentRect;
+      if (width === 0 || height === 0) return;
+      const scaleW = width / 850;
+      const scaleH = height / 850;
+      setScale(Math.min(scaleW, scaleH, 2.0) * 0.95);
+    });
+    observer.observe(wrapperRef.current);
+    return () => observer.disconnect();
+  }, [isExpandedLayout]);
+
   const initialDifficulty = puzzleBank[difficulty] ? difficulty : 'medium';
   const [selectedDifficulty, setSelectedDifficulty] = useState(initialDifficulty);
 
@@ -864,7 +883,9 @@ export default function QuietSudoku({ difficulty = 'medium', theme = 'lofi', vie
   }, [clearSelectedCell, handleDigitInput, selectedCell]);
 
   return (
-    <div className={`mx-auto w-full ${isExpandedLayout ? 'min-h-full max-w-none' : 'mt-12 max-w-[1040px] pb-12'}`}>
+    <div ref={wrapperRef} className={`mx-auto w-full ${isExpandedLayout ? 'h-full flex-1 flex items-center justify-center max-w-none overflow-hidden' : 'mt-12 max-w-[1040px] pb-12'}`}>
+      <div style={isExpandedLayout ? { transform: `scale(${scale})`, transformOrigin: 'center center', width: '100%', maxWidth: '850px' } : {}} className={isExpandedLayout ? "flex justify-center" : ""}>
+        <div className="w-full">
       <div className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-amber-200/50 bg-[#fff7ec] shadow-[0_28px_90px_rgba(83,62,44,0.12)]' : 'border-sage-100 bg-gradient-to-br from-white via-slate-50/80 to-sand-50/80'}`}>
         {isLofi && (
           <>
@@ -970,6 +991,8 @@ export default function QuietSudoku({ difficulty = 'medium', theme = 'lofi', vie
               startRound={startRound}
             />
           </div>
+        </div>
+      </div>
         </div>
       </div>
     </div>
