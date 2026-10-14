@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Lofi Memory SEO Updates</title>
+    <link>https://lofimemory.vercel.app/</link>
+    <description>Latest Lofi Memory pages for private journaling, lofi music, cozy browser games, study focus, mood tracking, notes, and reminders.</description>
+    <language>en</language>
+    <atom:link href="https://lofimemory.vercel.app/feed.xml" rel="self" type="application/rss+xml" />
+    <item><title>Private diary online no signup</title><link>https://lofimemory.vercel.app/private-diary-no-signup.html</link><description>A low-friction private diary page for browser-based writing, moods, prompts, notes, and lofi music.</description></item>
+    <item><title>No download browser games</title><link>https://lofimemory.vercel.app/no-download-browser-games.html</link><description>Cozy games online with no download, including Solitaire, Minesweeper, Snake, Wordle, Sudoku, and typing games.</description></item>
+    <item><title>Lofi music for studying</title><link>https://lofimemory.vercel.app/lofi-music-for-studying.html</link><description>Lofi radio and focus music for studying, writing, notes, reminders, and calming game breaks.</description></item>
+    <item><title>Focus music online</title><link>https://lofimemory.vercel.app/focus-music-online.html</link><description>Focus music with lofi radio, notes, journaling, reminders, and short browser-game breaks.</description></item>
+    <item><title>Single player browser games</title><link>https://lofimemory.vercel.app/single-player-browser-games.html</link><description>Solo browser games for calm breaks without downloads, lobbies, or competitive noise.</description></item>
+  </channel>
+</rss>
