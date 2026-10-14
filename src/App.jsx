@@ -571,6 +571,10 @@ const seoPopularSearches = [
   { label: 'Relaxing games hub', href: '/relaxing-games-hub.html' },
   { label: 'Lofi focus hub', href: '/lofi-focus-hub.html' },
   { label: 'HTML sitemap', href: '/sitemap.html' },
+  { label: 'Gratitude journal online', href: '/gratitude-journal-online.html' },
+  { label: 'Aesthetic online journal', href: '/aesthetic-online-journal.html' },
+  { label: 'Pomodoro timer with lofi', href: '/pomodoro-timer-with-lofi.html' },
+  { label: 'Cozy games for study breaks', href: '/cozy-games-for-study-breaks.html' },
   { label: 'Private online diary', href: '/private-online-diary.html' },
   { label: 'Private diary online no signup', href: '/private-diary-no-signup.html' },
   { label: 'Free online diary', href: '/free-online-diary.html' },
@@ -611,15 +615,15 @@ const seoPopularSearches = [
 const seoKeywordClusters = [
   {
     title: 'Private journaling searches',
-    text: 'private journaling hub, private diary online no signup, free online diary, digital diary app, private online diary, online diary with lock, private journal app, mood tracker journal, daily journaling app'
+    text: 'private journaling hub, gratitude journal online, aesthetic online journal, private diary online no signup, free online diary, digital diary app, private online diary, online diary with lock, private journal app, mood tracker journal, daily journaling app'
   },
   {
     title: 'Relaxing game searches',
-    text: 'relaxing games hub, calming games online, single player browser games, cozy browser games, relaxing browser games, no download browser games, games to play when bored, solitaire online, minesweeper online, snake game online'
+    text: 'relaxing games hub, cozy games for study breaks, calming games online, single player browser games, cozy browser games, relaxing browser games, no download browser games, games to play when bored, solitaire online, minesweeper online, snake game online'
   },
   {
     title: 'Lofi focus searches',
-    text: 'lofi focus hub, study timer with music, lofi study timer, focus music online, writing with lofi music, lofi radio online, lofi music for studying, chill music, relaxing games with music'
+    text: 'lofi focus hub, pomodoro timer with lofi, study timer with music, lofi study timer, focus music online, writing with lofi music, lofi radio online, lofi music for studying, chill music, relaxing games with music'
   }
 ];
 

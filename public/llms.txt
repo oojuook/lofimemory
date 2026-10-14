@@ -3,10 +3,10 @@
 Lofi Memory is a cozy browser space for no-download relaxing games, lofi radio, private journaling, mood tracking, notes, reminders, memories, and calm daily reflection.
 
 ## Keyword clusters
-- Private journaling hub, private diary online no signup, free online diary, digital diary app, private online diary, online diary with lock, private journal app, daily journaling app, mood tracker journal, journal prompts for self discovery
-- Relaxing games hub, calming games online, single player browser games, cozy browser games, relaxing browser games, no download browser games, games to play when bored, relaxing games with music
+- Private journaling hub, gratitude journal online, aesthetic online journal, private diary online no signup, free online diary, digital diary app, private online diary, online diary with lock, private journal app, daily journaling app, mood tracker journal, journal prompts for self discovery
+- Relaxing games hub, cozy games for study breaks, calming games online, single player browser games, cozy browser games, relaxing browser games, no download browser games, games to play when bored, relaxing games with music
 - Solitaire online, Minesweeper online, Snake game online, Wordle online, Sudoku online, Typing test online
-- Lofi focus hub, study timer with music, lofi study timer, focus music online, writing with lofi music, lofi radio online, lofi music for studying, focus music, chill music, lofi music room for writing
+- Lofi focus hub, pomodoro timer with lofi, study timer with music, lofi study timer, focus music online, writing with lofi music, lofi radio online, lofi music for studying, focus music, chill music, lofi music room for writing
 
 ## Primary pages
 - Home: https://lofimemory.vercel.app/
@@ -14,6 +14,10 @@ Lofi Memory is a cozy browser space for no-download relaxing games, lofi radio, 
 - Private journaling hub: https://lofimemory.vercel.app/private-journaling-hub.html
 - Relaxing games hub: https://lofimemory.vercel.app/relaxing-games-hub.html
 - Lofi focus hub: https://lofimemory.vercel.app/lofi-focus-hub.html
+- Gratitude journal online: https://lofimemory.vercel.app/gratitude-journal-online.html
+- Aesthetic online journal: https://lofimemory.vercel.app/aesthetic-online-journal.html
+- Pomodoro timer with lofi: https://lofimemory.vercel.app/pomodoro-timer-with-lofi.html
+- Cozy games for study breaks: https://lofimemory.vercel.app/cozy-games-for-study-breaks.html
 - Blog: https://lofimemory.vercel.app/blog.html
 - About: https://lofimemory.vercel.app/about.html
 - Lofi music room: https://lofimemory.vercel.app/lofi-music-room.html
