@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Play, RotateCcw, Sparkles } from 'lucide-react';
 
 const difficultySettings = {
@@ -63,7 +63,7 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
     setHighScore(parseInt(localStorage.getItem(bestScoreKey) || '0', 10));
   }, [bestScoreKey]);
 
-  const jump = () => {
+  const jump = useCallback(() => {
     if (gameState === 'playing') {
       stateRef.current.velocity = config.jumpVelocity;
     } else if (gameState === 'start' || gameState === 'over') {
@@ -77,7 +77,7 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
       setScore(0);
       setGameState('playing');
     }
-  };
+  }, [config.jumpVelocity, gameState]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -88,7 +88,7 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [gameState, config.jumpVelocity]);
+  }, [jump]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -258,16 +258,17 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
   const levelText = useMemo(() => config.label, [config.label]);
 
   return (
-    <div className={`mx-auto w-full ${isExpandedLayout ? 'min-h-full max-w-none' : 'mt-12 max-w-3xl pb-12'}`}>
-      <div className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-[#e8dfd5]/80 bg-[#fff9f0] shadow-[0_28px_80px_rgba(83,62,44,0.12)]' : 'border-sage-100 bg-gradient-to-br from-white via-sage-50/82 to-sky-50/74'}`}>
-        {isLofi && (
+    <div className={`mx-auto w-full ${isExpandedLayout ? 'h-full flex-1 flex items-center justify-center max-w-none overflow-hidden' : 'mt-12 max-w-3xl pb-12'}`}>
+      <div className={!isExpandedLayout ? `relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-[#e8dfd5]/80 bg-[#fff9f0] shadow-[0_28px_80px_rgba(83,62,44,0.12)]' : 'border-sage-100 bg-gradient-to-br from-white via-sage-50/82 to-sky-50/74'}` : ''}>
+        {isLofi ? (
           <>
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.96),rgba(255,249,240,0.92)_45%,rgba(189,224,254,0.45)_100%)]" />
             <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #6e5a4a 1px, transparent 0)', backgroundSize: '18px 18px' }} />
           </>
-        )}
+        ) : null}
 
-        <div className="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+        {!isExpandedLayout ? (
+          <div className="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/85 text-amber-800' : 'border-sage-200 bg-white/88 text-sage-700'}`}>
               <Sparkles size={14} /> {levelText} drift
@@ -289,9 +290,10 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
             ))}
           </div>
         </div>
+        ) : null}
 
-        <div className={`relative z-10 mt-5 rounded-[1.5rem] border p-3 shadow-sm sm:p-4 ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-sage-200 bg-white'}`}>
-          <div className={`relative overflow-hidden rounded-[1.5rem] border ${isLofi ? 'border-[#e8dfd5] bg-[#fff9f0]' : 'border-sage-200'}`} style={{ aspectRatio: '3/2' }}>
+        <div className={`relative z-10 ${isExpandedLayout ? 'w-full max-w-[min(96vw,1200px)]' : 'mt-5 rounded-[1.5rem] border p-3 shadow-sm sm:p-4'} ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-sage-200 bg-white'}`}>
+          <div className={`relative overflow-hidden ${isExpandedLayout ? 'rounded-[1.2rem]' : 'rounded-[1.5rem] border'} ${isLofi ? (isExpandedLayout ? 'bg-[#fff9f0]' : 'border-[#e8dfd5] bg-[#fff9f0]') : (isExpandedLayout ? 'bg-white' : 'border-sage-200')} shadow-sm`} style={{ aspectRatio: '3/2' }}>
             <canvas
               ref={canvasRef}
               width={600}
@@ -299,8 +301,22 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
               className="block h-full w-full cursor-pointer touch-none"
               onClick={jump}
             />
+            {isExpandedLayout ? (
+              <div className="absolute top-4 right-4 z-50 pointer-events-none sm:top-6 sm:right-6">
+                <div className="flex items-center gap-3 rounded-2xl border border-white/20 bg-black/10 p-2.5 shadow-sm backdrop-blur-md pointer-events-auto">
+                   <div className="border-r border-white/20 px-3 py-1 text-center">
+                     <p className="text-[9px] font-black uppercase tracking-widest text-white/70">Score</p>
+                     <p className="text-lg font-black text-white">{score}</p>
+                   </div>
+                   <div className="px-3 py-1 text-center">
+                     <p className="text-[9px] font-black uppercase tracking-widest text-white/70">Best</p>
+                     <p className="text-lg font-black text-white">{highScore}</p>
+                   </div>
+                </div>
+              </div>
+            ) : null}
 
-            {gameState === 'start' && (
+            {gameState === 'start' && !isExpandedLayout && (
               <div className={`pointer-events-none absolute inset-0 flex flex-col items-center justify-center px-4 text-center backdrop-blur-[3px] ${isLofi ? 'bg-white/28' : 'bg-white/30'}`}>
                 <button className={`pointer-events-auto mb-4 flex items-center gap-3 rounded-full px-8 py-4 text-sm font-bold text-white shadow-lift transition hover:-translate-y-1 ${isLofi ? 'bg-[#4a3a2d] hover:bg-[#3d3025]' : 'bg-sage-800 hover:bg-sage-700'}`} onClick={jump} type="button">
                   <Play size={18} /> Tap to float

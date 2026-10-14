@@ -2225,6 +2225,7 @@ function App() {
       id: 'quiet-snake',
       title: 'Snake',
       detail: 'Classic arcade loop',
+      isNew: true,
       description: 'A cozy snake run with clear turns, quick rounds, and a gentle retro feel.',
       icon: SnakeIcon,
       tone: 'from-emerald-100 to-lime-50 text-emerald-700',
@@ -2247,6 +2248,7 @@ function App() {
       id: 'drifting-leaf',
       title: 'Drifting Seed',
       detail: 'Soft endless glide',
+      isNew: true,
       description: 'A slow, floaty game for clearing your head before you write.',
       icon: SeedIcon,
       tone: 'from-emerald-100 to-sage-50 text-emerald-700',
@@ -5192,6 +5194,13 @@ function App() {
                 <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/30 bg-white/15 px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/25" onClick={() => setCustomizerOpen(true)} type="button">
                   <Palette size={16} /> Design
                 </button>
+              </div>
+
+              <div className="mt-5 flex flex-wrap gap-2 text-[11px] font-extrabold uppercase tracking-[0.18em] text-white/90 sm:text-xs">
+                <span className="rounded-full border border-white/20 bg-white/12 px-3 py-2 shadow-sm backdrop-blur-md">Private journal</span>
+                <span className="rounded-full border border-white/20 bg-white/12 px-3 py-2 shadow-sm backdrop-blur-md">Cozy browser games</span>
+                <span className="rounded-full border border-white/20 bg-white/12 px-3 py-2 shadow-sm backdrop-blur-md">Lofi radio</span>
+                <span className="rounded-full border border-white/20 bg-white/12 px-3 py-2 shadow-sm backdrop-blur-md">Notes & reminders</span>
               </div>
 
               <div className="mt-7 grid gap-3 lg:grid-cols-3">

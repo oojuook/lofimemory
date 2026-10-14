@@ -36,6 +36,18 @@ const directionMap = {
   KeyD: { x: 1, y: 0 },
 };
 
+const foodPixelPattern = [
+  { key: 'top-left', filled: 0 },
+  { key: 'top-center', filled: 1 },
+  { key: 'top-right', filled: 0 },
+  { key: 'middle-left', filled: 1 },
+  { key: 'middle-center', filled: 1 },
+  { key: 'middle-right', filled: 1 },
+  { key: 'bottom-left', filled: 0 },
+  { key: 'bottom-center', filled: 1 },
+  { key: 'bottom-right', filled: 0 },
+];
+
 function createInitialSnake(boardWidth, boardHeight) {
   const centerX = Math.floor(boardWidth / 2);
   const centerY = Math.floor(boardHeight / 2);
@@ -69,6 +81,10 @@ function isReverseDirection(current, next) {
 export default function QuietSnake({ difficulty = 'medium', theme = 'lofi', viewportMode = 'embedded' }) {
   const isLofi = theme === 'lofi';
   const isExpandedLayout = viewportMode === 'fullscreen';
+  const config = difficultySettings[difficulty] || difficultySettings.medium;
+  const nativeCellSize = config.boardWidth >= 21 ? 16 : config.boardWidth >= 15 ? 20 : 32;
+  const nativeBoardWidth = config.boardWidth * nativeCellSize;
+  const nativeBoardHeight = config.boardHeight * nativeCellSize;
   const [scale, setScale] = useState(1);
   const wrapperRef = useRef(null);
 
@@ -80,19 +96,12 @@ export default function QuietSnake({ difficulty = 'medium', theme = 'lofi', view
     const observer = new ResizeObserver((entries) => {
       const { width, height } = entries[0].contentRect;
       if (width === 0 || height === 0) return;
-      // We want to scale the native layout up to fit the window.
-      const scaleW = width / 850;
-      const scaleH = height / 750;
-      // For games with responsive layouts, we don't actually want to lock them to a fixed width/height box before scaling.
-      // But if we do use transform: scale, we must lock their unscaled dimensions.
-      // The issue was: the internal div had no height constraint, so it collapsed.
-      setScale(Math.min(scaleW, scaleH, 1.8) * 0.98);
+      setScale(Math.min(width / nativeBoardWidth, height / nativeBoardHeight, 10.0));
     });
     observer.observe(wrapperRef.current);
     return () => observer.disconnect();
-  }, [isExpandedLayout]);
+  }, [isExpandedLayout, nativeBoardHeight, nativeBoardWidth]);
 
-  const config = difficultySettings[difficulty] || difficultySettings.medium;
   const bestScoreKey = `quiet-journal-quiet-snake-best-${difficulty}`;
 
   const [snake, setSnake] = useState(() => createInitialSnake(config.boardWidth, config.boardHeight));
@@ -246,11 +255,15 @@ export default function QuietSnake({ difficulty = 'medium', theme = 'lofi', view
   }), [config.boardHeight, config.boardWidth, food, snake, snakeCellSet]);
 
   const cellClass = config.boardWidth >= 21 ? 'h-3.5 w-3.5 sm:h-4 sm:w-4' : config.boardWidth >= 15 ? 'h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5' : 'h-7 w-7 sm:h-8 sm:w-8';
+  const expandedCellStyle = isExpandedLayout ? { width: `${nativeCellSize}px`, height: `${nativeCellSize}px` } : undefined;
 
   return (
     <div ref={wrapperRef} className={`mx-auto w-full ${isExpandedLayout ? 'h-full flex-1 flex items-center justify-center max-w-none overflow-hidden' : 'mt-12 max-w-[980px] pb-12'}`}>
-      <div style={isExpandedLayout ? { transform: `scale(${scale})`, transformOrigin: 'center center', width: '100%', maxWidth: '850px' } : {}} className={isExpandedLayout ? "flex justify-center" : ""}>
-        <div className="w-full">
+      <div
+        style={isExpandedLayout ? { transform: `scale(${scale})`, transformOrigin: 'center center', width: `${nativeBoardWidth}px`, height: `${nativeBoardHeight}px` } : {}}
+        className={isExpandedLayout ? 'flex items-center justify-center' : ''}
+      >
+        <div className={isExpandedLayout ? 'w-fit' : 'w-full'}>
       <div className={!isExpandedLayout ? `rounded-[2rem] border p-5 lg:p-6 ${isLofi ? 'border-amber-200/60 bg-[#fff7ec] shadow-[0_26px_70px_rgba(83,62,44,0.13)]' : 'border-[4px] border-[#111111] bg-[#c8d8b6] shadow-[10px_10px_0_rgba(17,17,17,0.12)]'}` : ""}>
         {!isExpandedLayout && (
 <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
@@ -277,20 +290,21 @@ export default function QuietSnake({ difficulty = 'medium', theme = 'lofi', view
         </div>
 
         )}
-<div className={`mt-6 grid gap-5 ${isExpandedLayout ? "justify-center" : "xl:grid-cols-[minmax(0,1fr)_240px]"}`}>
+<div className={isExpandedLayout ? "grid justify-center" : "mt-6 grid gap-5 xl:grid-cols-[minmax(0,1fr)_240px]"}>
           <div>
-            <div className={`relative mx-auto w-full max-w-[26rem] p-4 sm:p-5 ${isLofi ? 'rounded-[1.5rem] border border-[#e8dfd5] bg-[#fff9f0] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.8),0_18px_40px_rgba(83,62,44,0.12)]' : 'border-[10px] border-[#5f7754] bg-[#9abf88] shadow-[inset_0_0_0_2px_rgba(20,20,20,0.08)]'}`}>
+            <div className={`relative mx-auto ${isExpandedLayout ? 'w-fit p-0' : 'w-full max-w-[26rem] p-4 sm:p-5'} ${isLofi ? 'rounded-[1.5rem] border border-[#e8dfd5] bg-[#fff9f0] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.8),0_18px_40px_rgba(83,62,44,0.12)]' : 'border-[10px] border-[#5f7754] bg-[#9abf88] shadow-[inset_0_0_0_2px_rgba(20,20,20,0.08)]'}`}>
               <div className={`grid ${isLofi ? 'bg-[linear-gradient(135deg,#fffaf4,#faedcd)]' : 'bg-[#9abf88]'}`} style={{ gridTemplateColumns: `repeat(${config.boardWidth}, minmax(0, 1fr))` }}>
                 {cells.map((cell) => (
                   <div
                     key={cell.key}
                     className={`relative ${cellClass} ${cell.isSnake ? (isLofi ? 'bg-[#ccd5ae]' : 'bg-[#111111]') : 'bg-transparent'} ${isLofi ? 'border border-[#e8dfd5]/70' : ''}`}
+                    style={expandedCellStyle}
                   >
                     {cell.isFood ? (
                       <div className="absolute inset-0 flex items-center justify-center">
                         <div className="grid h-3.5 w-3.5 grid-cols-3 grid-rows-3 gap-[1px] sm:h-4 sm:w-4">
-                          {[0, 1, 0, 1, 1, 1, 0, 1, 0].map((filled, index) => (
-                            <span key={index} className={filled ? (isLofi ? 'bg-[#ffafcc]' : 'bg-[#111111]') : 'bg-transparent'} />
+                          {foodPixelPattern.map((pixel) => (
+                            <span key={pixel.key} className={pixel.filled ? (isLofi ? 'bg-[#ffafcc]' : 'bg-[#111111]') : 'bg-transparent'} />
                           ))}
                         </div>
                       </div>
@@ -299,7 +313,7 @@ export default function QuietSnake({ difficulty = 'medium', theme = 'lofi', view
                 ))}
               </div>
 
-              {gameState !== 'playing' && (
+              {(gameState === 'over' || (!isExpandedLayout && gameState === 'start')) && (
                 <div className={`absolute inset-0 flex items-center justify-center p-4 backdrop-blur-[1px] ${isLofi ? 'bg-[#fff7ec]/74' : 'bg-[#9abf88]/86'}`}>
                   <div className={`max-w-sm px-5 py-5 text-center ${isLofi ? 'rounded-[1.5rem] border border-[#e8dfd5]/80 bg-white/82 shadow-[0_18px_40px_rgba(83,62,44,0.14)] backdrop-blur-sm' : 'border-4 border-[#111111] bg-[#cfe0bc] shadow-[8px_8px_0_rgba(17,17,17,0.14)]'}`}>
                     <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800' : 'text-[#30412a]'}`}>{gameState === 'over' ? 'Run over' : 'Ready to glide'}</p>
@@ -339,7 +353,7 @@ export default function QuietSnake({ difficulty = 'medium', theme = 'lofi', view
             </div>
 
             {/* Mobile / Fullscreen Floating Controls */}
-            {isExpandedLayout && (
+            {isExpandedLayout ? (
               <div className="absolute bottom-6 left-0 right-0 z-50 flex justify-center pointer-events-none md:hidden">
                 <div className="grid grid-cols-3 gap-2 pointer-events-auto opacity-70">
                   <div />
@@ -350,7 +364,7 @@ export default function QuietSnake({ difficulty = 'medium', theme = 'lofi', view
                   <button className="flex h-16 w-16 items-center justify-center rounded-2xl bg-black/20 text-white backdrop-blur-md active:bg-black/40 active:scale-95" onClick={() => requestTurn({ x: 1, y: 0 })} type="button"><ArrowRight size={32} /></button>
                 </div>
               </div>
-            )}
+            ) : null}
           </div>
 
           {!isExpandedLayout && (

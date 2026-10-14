@@ -1,11 +1,35 @@
 {
+  "id": "/",
   "name": "Lofi Memory",
   "short_name": "Lofi Memory",
-  "description": "A calm private online diary with prompts, moods, notes, and reminders.",
+  "description": "A cozy browser space for lofi radio, relaxing games, private journaling, notes, and reminders.",
+  "lang": "en",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "display_override": ["standalone", "browser"],
+  "orientation": "any",
   "background_color": "#eef5e8",
   "theme_color": "#45643b",
+  "categories": ["lifestyle", "productivity", "music", "games"],
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Open journal",
+      "short_name": "Journal",
+      "url": "/#journal"
+    },
+    {
+      "name": "Play games",
+      "short_name": "Games",
+      "url": "/#unwind"
+    },
+    {
+      "name": "Music room",
+      "short_name": "Music",
+      "url": "/#breathe"
+    }
+  ],
   "icons": [
     {
       "src": "/favicon-48.png?v=headphones-v2",
