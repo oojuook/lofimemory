@@ -568,6 +568,8 @@ const seoGuideGroups = [
 
 const seoPopularSearches = [
   { label: 'Private online diary', href: '/private-online-diary.html' },
+  { label: 'Private diary online no signup', href: '/private-diary-no-signup.html' },
+  { label: 'Free online diary', href: '/free-online-diary.html' },
   { label: 'Online diary with lock', href: '/online-diary-with-lock.html' },
   { label: 'Private journal app', href: '/private-journal-app.html' },
   { label: 'Daily journaling app', href: '/daily-journaling-app.html' },
@@ -575,6 +577,7 @@ const seoPopularSearches = [
   { label: 'Mood journal and mood tracker', href: '/mood-tracker-journal.html' },
   { label: 'Mental health journal online', href: '/mental-health-journal-online.html' },
   { label: 'Cozy browser games', href: '/cozy-browser-games.html' },
+  { label: 'Calming games online', href: '/calming-games-online.html' },
   { label: 'Relaxing browser games', href: '/relaxing-browser-games.html' },
   { label: 'Games to play when bored', href: '/games-to-play-when-bored.html' },
   { label: 'No download browser games', href: '/no-download-browser-games.html' },
@@ -586,6 +589,7 @@ const seoPopularSearches = [
   { label: 'Typing test online', href: '/typing-test-online.html' },
   { label: 'Lofi radio online', href: '/lofi-radio-online.html' },
   { label: 'Lofi music for studying', href: '/lofi-music-for-studying.html' },
+  { label: 'Study timer with music', href: '/study-timer-with-music.html' },
   { label: 'Lofi music room', href: '/lofi-music-room.html' },
   { label: 'Relaxing games with music', href: '/relaxing-games-with-music.html' },
   { label: 'Chill place online', href: '/chill-place-online.html' },
@@ -599,15 +603,15 @@ const seoPopularSearches = [
 const seoKeywordClusters = [
   {
     title: 'Private journaling searches',
-    text: 'private online diary, online diary with lock, private journal app, mood tracker journal, daily journaling app, journal prompts for self discovery'
+    text: 'private diary online no signup, free online diary, private online diary, online diary with lock, private journal app, mood tracker journal, daily journaling app'
   },
   {
     title: 'Relaxing game searches',
-    text: 'cozy browser games, relaxing browser games, no download browser games, games to play when bored, solitaire online, minesweeper online, snake game online'
+    text: 'calming games online, cozy browser games, relaxing browser games, no download browser games, games to play when bored, solitaire online, minesweeper online, snake game online'
   },
   {
     title: 'Lofi focus searches',
-    text: 'lofi radio online, lofi music for studying, focus music, chill music, relaxing games with music, lofi music room for writing'
+    text: 'study timer with music, lofi study timer, lofi radio online, lofi music for studying, focus music, chill music, relaxing games with music, lofi music room for writing'
   }
 ];
 
