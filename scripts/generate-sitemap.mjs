@@ -8,24 +8,19 @@ const publicDir = path.resolve(__dirname, '../public');
 const sitemapPath = path.join(publicDir, 'sitemap.xml');
 const baseUrl = 'https://lofimemory.vercel.app';
 
-const curatedPages = [
+const pinnedPages = [
+  'index.html',
   'blog.html',
   'about.html',
-  'editorial-policy.html',
-  'advertising-policy.html',
-  'contact.html',
-  'privacy.html',
-  'cookie-policy.html',
-  'terms.html',
   'lofi-music-room.html',
   'lofi-radio-online.html',
   'listen-to-lofi-music-online.html',
   'relaxing-browser-games.html',
+  'cozy-browser-games.html',
   'games-to-relax.html',
-  '2048-online.html',
+  'lofi-games.html',
   'solitaire-online.html',
   'minesweeper-online.html',
-  'browser-tetris-game.html',
   'snake-game-online.html',
   'wordle-online.html',
   'typing-test-online.html',
@@ -43,18 +38,27 @@ const curatedPages = [
   'chill-place-online.html'
 ];
 
+const excludedPages = new Set([
+  'logo-preview.html',
+  'google5226abd8d86c0ece.html',
+  'googled1931b3f15730e0b.html'
+]);
+
 function getPriority(fileName) {
   if (fileName === 'index.html') return '1.0';
-  if (['blog.html', 'about.html', 'privacy.html', 'terms.html'].includes(fileName)) return '0.9';
-  if (fileName.startsWith('article-')) return '0.72';
-  if (['lofi-music-room.html', 'relaxing-browser-games.html', 'daily-journaling-app.html', 'write-diary-online.html', 'private-online-diary.html'].includes(fileName)) return '0.88';
-  return '0.8';
+  if (['blog.html', 'about.html', 'privacy.html', 'terms.html', 'contact.html'].includes(fileName)) return '0.9';
+  if (fileName.startsWith('article-')) return '0.74';
+  if (fileName.includes('journal') || fileName.includes('diary')) return '0.86';
+  if (fileName.includes('game') || fileName.includes('solitaire') || fileName.includes('minesweeper') || fileName.includes('snake') || fileName.includes('wordle') || fileName.includes('sudoku') || fileName.includes('typing')) return '0.86';
+  if (fileName.includes('lofi') || fileName.includes('music') || fileName.includes('relax')) return '0.84';
+  return '0.76';
 }
 
 function getChangeFreq(fileName) {
   if (fileName === 'index.html' || fileName === 'blog.html') return 'weekly';
   if (fileName.startsWith('article-')) return 'monthly';
-  return 'weekly';
+  if (fileName.includes('policy') || ['privacy.html', 'terms.html'].includes(fileName)) return 'yearly';
+  return 'monthly';
 }
 
 function toUrl(fileName) {
@@ -79,11 +83,12 @@ function xmlEntry(fileName) {
 
 async function main() {
   const allFiles = await fs.readdir(publicDir);
-  const articles = allFiles
-    .filter((file) => file.startsWith('article-') && file.endsWith('.html'))
+  const htmlPages = allFiles
+    .filter((file) => file.endsWith('.html'))
+    .filter((file) => !excludedPages.has(file))
     .sort();
 
-  const selectedFiles = ['index.html', ...curatedPages, ...articles];
+  const selectedFiles = [...pinnedPages, ...htmlPages];
   const dedupedFiles = [...new Set(selectedFiles)].filter((file) => allFiles.includes(file));
 
   const xmlEntries = await Promise.all(dedupedFiles.map(xmlEntry));

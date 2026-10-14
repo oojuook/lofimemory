@@ -56,7 +56,12 @@
             "name": "Lofi Memory",
             "url": "https://lofimemory.vercel.app/",
             "description": "A cozy browser space for relaxing games, lofi radio, a private journal, notes, reminders, and calm daily reflection.",
-            "inLanguage": "en"
+            "inLanguage": "en",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://lofimemory.vercel.app/blog.html?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
           },
           {
             "@type": "Organization",
@@ -118,6 +123,31 @@
               "Cozy browser games for short relaxing breaks",
               "Cozy Solitaire and Minesweeper-style logic games",
               "Blog articles about journaling, privacy, reflection, and gentle game breaks"
+            ]
+          },
+          {
+            "@type": "ItemList",
+            "@id": "https://lofimemory.vercel.app/#game-list",
+            "name": "Cozy browser games in Lofi Memory",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Solitaire online", "url": "https://lofimemory.vercel.app/solitaire-online.html" },
+              { "@type": "ListItem", "position": 2, "name": "Minesweeper online", "url": "https://lofimemory.vercel.app/minesweeper-online.html" },
+              { "@type": "ListItem", "position": 3, "name": "Snake game online", "url": "https://lofimemory.vercel.app/snake-game-online.html" },
+              { "@type": "ListItem", "position": 4, "name": "Wordle online", "url": "https://lofimemory.vercel.app/wordle-online.html" },
+              { "@type": "ListItem", "position": 5, "name": "Sudoku online", "url": "https://lofimemory.vercel.app/sudoku-online.html" },
+              { "@type": "ListItem", "position": 6, "name": "Typing test online", "url": "https://lofimemory.vercel.app/typing-test-online.html" }
+            ]
+          },
+          {
+            "@type": "ItemList",
+            "@id": "https://lofimemory.vercel.app/#journal-guide-list",
+            "name": "Private journaling and calm reflection guides",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Private online diary", "url": "https://lofimemory.vercel.app/private-online-diary.html" },
+              { "@type": "ListItem", "position": 2, "name": "Online diary with lock", "url": "https://lofimemory.vercel.app/online-diary-with-lock.html" },
+              { "@type": "ListItem", "position": 3, "name": "Daily journaling app", "url": "https://lofimemory.vercel.app/daily-journaling-app.html" },
+              { "@type": "ListItem", "position": 4, "name": "Mood journal", "url": "https://lofimemory.vercel.app/mood-journal.html" },
+              { "@type": "ListItem", "position": 5, "name": "Journal prompts", "url": "https://lofimemory.vercel.app/journal-prompts.html" }
             ]
           },
           {
@@ -200,6 +230,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
+    <noscript>
+      <main style="max-width: 860px; margin: 40px auto; padding: 24px; font-family: Inter, Arial, sans-serif; line-height: 1.7; color: #25351f;">
+        <h1>Lofi Memory: cozy browser games, lofi radio, private journal, notes, and reminders</h1>
+        <p>Lofi Memory is a calm online space for writing a private journal, listening to lofi radio, keeping notes, setting reminders, and playing relaxing browser games such as Solitaire, Minesweeper, Snake, Wordle, Sudoku, and typing games.</p>
+        <nav aria-label="Lofi Memory SEO links">
+          <a href="/relaxing-browser-games.html">Relaxing browser games</a> ·
+          <a href="/cozy-browser-games.html">Cozy browser games</a> ·
+          <a href="/lofi-music-room.html">Lofi music room</a> ·
+          <a href="/private-online-diary.html">Private online diary</a> ·
+          <a href="/online-diary-with-lock.html">Online diary with lock</a> ·
+          <a href="/daily-journaling-app.html">Daily journaling app</a> ·
+          <a href="/journal-prompts.html">Journal prompts</a> ·
+          <a href="/blog.html">Lofi Memory blog</a>
+        </nav>
+      </main>
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

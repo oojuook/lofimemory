@@ -1,0 +1,28 @@
+# Lofi Memory
+
+Lofi Memory is a cozy browser space for relaxing games, lofi radio, private journaling, notes, reminders, memories, and calm daily reflection.
+
+## Primary pages
+- Home: https://lofimemory.vercel.app/
+- Blog: https://lofimemory.vercel.app/blog.html
+- About: https://lofimemory.vercel.app/about.html
+- Lofi music room: https://lofimemory.vercel.app/lofi-music-room.html
+- Lofi radio online: https://lofimemory.vercel.app/lofi-radio-online.html
+- Relaxing browser games: https://lofimemory.vercel.app/relaxing-browser-games.html
+- Cozy browser games: https://lofimemory.vercel.app/cozy-browser-games.html
+- Private online diary: https://lofimemory.vercel.app/private-online-diary.html
+- Online diary with lock: https://lofimemory.vercel.app/online-diary-with-lock.html
+- Daily journaling app: https://lofimemory.vercel.app/daily-journaling-app.html
+- Journal prompts: https://lofimemory.vercel.app/journal-prompts.html
+- Mood journal: https://lofimemory.vercel.app/mood-journal.html
+
+## Game pages
+- Solitaire online: https://lofimemory.vercel.app/solitaire-online.html
+- Minesweeper online: https://lofimemory.vercel.app/minesweeper-online.html
+- Snake game online: https://lofimemory.vercel.app/snake-game-online.html
+- Wordle online: https://lofimemory.vercel.app/wordle-online.html
+- Sudoku online: https://lofimemory.vercel.app/sudoku-online.html
+- Typing test online: https://lofimemory.vercel.app/typing-test-online.html
+
+## Sitemap
+- https://lofimemory.vercel.app/sitemap.xml
