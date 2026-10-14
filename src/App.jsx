@@ -579,6 +579,10 @@ const seoPopularSearches = [
   { label: 'Daily planner with journal', href: '/daily-planner-with-journal.html' },
   { label: 'Self-care reminder app', href: '/self-care-reminder-app.html' },
   { label: 'Private memory calendar', href: '/private-memory-calendar.html' },
+  { label: 'Online diary for students', href: '/online-diary-for-students.html' },
+  { label: 'Cute notes app online', href: '/cute-notes-app-online.html' },
+  { label: 'Brain dump journal online', href: '/brain-dump-journal-online.html' },
+  { label: 'Relaxing games before bed', href: '/relaxing-games-before-bed.html' },
   { label: 'Private online diary', href: '/private-online-diary.html' },
   { label: 'Private diary online no signup', href: '/private-diary-no-signup.html' },
   { label: 'Free online diary', href: '/free-online-diary.html' },
@@ -619,15 +623,15 @@ const seoPopularSearches = [
 const seoKeywordClusters = [
   {
     title: 'Private journaling searches',
-    text: 'private journaling hub, gratitude journal online, aesthetic online journal, private memory calendar, private diary online no signup, free online diary, digital diary app, private online diary, online diary with lock, private journal app, mood tracker journal, daily journaling app'
+    text: 'private journaling hub, gratitude journal online, aesthetic online journal, brain dump journal online, online diary for students, private memory calendar, private diary online no signup, free online diary, digital diary app, private online diary, online diary with lock, private journal app, mood tracker journal, daily journaling app'
   },
   {
     title: 'Relaxing game searches',
-    text: 'relaxing games hub, cozy games for study breaks, calming games online, single player browser games, cozy browser games, relaxing browser games, no download browser games, games to play when bored, solitaire online, minesweeper online, snake game online'
+    text: 'relaxing games hub, relaxing games before bed, cozy games for study breaks, calming games online, single player browser games, cozy browser games, relaxing browser games, no download browser games, games to play when bored, solitaire online, minesweeper online, snake game online'
   },
   {
     title: 'Lofi focus searches',
-    text: 'lofi focus hub, pomodoro timer with lofi, online notes with reminders, daily planner with journal, self-care reminder app, study timer with music, lofi study timer, focus music online, writing with lofi music, lofi radio online, lofi music for studying, chill music, relaxing games with music'
+    text: 'lofi focus hub, pomodoro timer with lofi, cute notes app online, online notes with reminders, daily planner with journal, self-care reminder app, study timer with music, lofi study timer, focus music online, writing with lofi music, lofi radio online, lofi music for studying, chill music, relaxing games with music'
   }
 ];
 
