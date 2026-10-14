@@ -567,21 +567,47 @@ const seoGuideGroups = [
 ];
 
 const seoPopularSearches = [
-  { label: 'Lofi Memory blog', href: '/blog.html' },
-  { label: 'About Lofi Memory', href: '/about.html' },
-  { label: 'Editorial policy', href: '/editorial-policy.html' },
-  { label: 'Privacy policy', href: '/privacy.html' },
+  { label: 'Private online diary', href: '/private-online-diary.html' },
+  { label: 'Online diary with lock', href: '/online-diary-with-lock.html' },
+  { label: 'Daily journaling app', href: '/daily-journaling-app.html' },
+  { label: 'Journal prompts for self discovery', href: '/journal-prompts.html' },
+  { label: 'Mood journal and mood tracker', href: '/mood-journal.html' },
+  { label: 'Mental health journal online', href: '/mental-health-journal-online.html' },
+  { label: 'Cozy browser games', href: '/cozy-browser-games.html' },
+  { label: 'Relaxing browser games', href: '/relaxing-browser-games.html' },
+  { label: 'Games to play when bored', href: '/games-to-relax.html' },
+  { label: 'No download browser games', href: '/lofi-games.html' },
+  { label: 'Solitaire online', href: '/solitaire-online.html' },
+  { label: 'Minesweeper online', href: '/minesweeper-online.html' },
+  { label: 'Snake game online', href: '/snake-game-online.html' },
+  { label: 'Wordle online', href: '/wordle-online.html' },
+  { label: 'Sudoku online', href: '/sudoku-online.html' },
+  { label: 'Typing test online', href: '/typing-test-online.html' },
+  { label: 'Lofi radio online', href: '/lofi-radio-online.html' },
+  { label: 'Lofi music for studying', href: '/listen-to-lofi-music-online.html' },
+  { label: 'Lofi music room', href: '/lofi-music-room.html' },
+  { label: 'Relaxing games with music', href: '/relaxing-games-with-music.html' },
+  { label: 'Chill place online', href: '/chill-place-online.html' },
   { label: 'How journaling helps', href: '/article-psychology-of-journaling.html' },
   { label: 'Protect privacy when journaling online', href: '/article-protect-privacy-journaling-online.html' },
   { label: 'How to start a journaling habit', href: '/article-how-to-start-journaling-habit.html' },
   { label: 'Benefits of a private online diary', href: '/article-benefits-of-private-online-diary.html' },
-  { label: 'Daily reflection and mental health', href: '/article-daily-reflection-mental-health.html' },
-  { label: 'Brain dumping before sleep', href: '/article-brain-dumping-sleep.html' },
-  { label: 'Memory games before writing', href: '/article-memory-games-cognitive-relief.html' },
-  { label: 'Why gaming helps anxiety', href: '/article-why-gaming-helps-anxiety.html' },
-  { label: 'Word puzzles for relaxing breaks', href: '/article-daily-word-puzzles-relax.html' },
-  { label: 'Word guessing games and busy minds', href: '/article-word-guessing-games-busy-mind.html' },
-  { label: 'Benefits of lofi gaming for focus', href: '/article-benefits-lofi-gaming-mental-health.html' }
+  { label: 'Memory games before writing', href: '/article-memory-games-cognitive-relief.html' }
+];
+
+const seoKeywordClusters = [
+  {
+    title: 'Private journaling searches',
+    text: 'private online diary, online diary with lock, private journal app, mood tracker journal, daily journaling app, journal prompts for self discovery'
+  },
+  {
+    title: 'Relaxing game searches',
+    text: 'cozy browser games, relaxing browser games, no download browser games, games to play when bored, solitaire online, minesweeper online, snake game online'
+  },
+  {
+    title: 'Lofi focus searches',
+    text: 'lofi radio online, lofi music for studying, focus music, chill music, relaxing games with music, lofi music room for writing'
+  }
 ];
 
 const THEME_STORAGE_KEY = 'quiet-journal-theme-v1';
@@ -5481,6 +5507,14 @@ function App() {
                         + {seoPopularSearches.length - 12} more
                       </button>
                     )}
+                  </div>
+                  <div className="mt-5 grid gap-3 lg:grid-cols-3">
+                    {seoKeywordClusters.map((cluster) => (
+                      <div key={cluster.title} className="rounded-[1.4rem] border border-sage-100 bg-white/70 p-4">
+                        <p className="text-[11px] font-extrabold uppercase tracking-[0.2em] text-sage-600">{cluster.title}</p>
+                        <p className="mt-2 text-sm font-semibold leading-6 text-sage-700">{cluster.text}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

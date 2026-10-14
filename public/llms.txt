@@ -1,6 +1,12 @@
 # Lofi Memory
 
-Lofi Memory is a cozy browser space for relaxing games, lofi radio, private journaling, notes, reminders, memories, and calm daily reflection.
+Lofi Memory is a cozy browser space for no-download relaxing games, lofi radio, private journaling, mood tracking, notes, reminders, memories, and calm daily reflection.
+
+## Keyword clusters
+- Private online diary, online diary with lock, private journal app, daily journaling app, mood tracker journal, journal prompts for self discovery
+- Cozy browser games, relaxing browser games, no download browser games, games to play when bored, relaxing games with music
+- Solitaire online, Minesweeper online, Snake game online, Wordle online, Sudoku online, Typing test online
+- Lofi radio online, lofi music for studying, focus music, chill music, lofi music room for writing
 
 ## Primary pages
 - Home: https://lofimemory.vercel.app/
@@ -8,13 +14,16 @@ Lofi Memory is a cozy browser space for relaxing games, lofi radio, private jour
 - About: https://lofimemory.vercel.app/about.html
 - Lofi music room: https://lofimemory.vercel.app/lofi-music-room.html
 - Lofi radio online: https://lofimemory.vercel.app/lofi-radio-online.html
+- Listen to lofi music online: https://lofimemory.vercel.app/listen-to-lofi-music-online.html
 - Relaxing browser games: https://lofimemory.vercel.app/relaxing-browser-games.html
 - Cozy browser games: https://lofimemory.vercel.app/cozy-browser-games.html
+- Games to relax: https://lofimemory.vercel.app/games-to-relax.html
 - Private online diary: https://lofimemory.vercel.app/private-online-diary.html
 - Online diary with lock: https://lofimemory.vercel.app/online-diary-with-lock.html
 - Daily journaling app: https://lofimemory.vercel.app/daily-journaling-app.html
 - Journal prompts: https://lofimemory.vercel.app/journal-prompts.html
 - Mood journal: https://lofimemory.vercel.app/mood-journal.html
+- Mental health journal online: https://lofimemory.vercel.app/mental-health-journal-online.html
 
 ## Game pages
 - Solitaire online: https://lofimemory.vercel.app/solitaire-online.html
