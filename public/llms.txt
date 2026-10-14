@@ -3,13 +3,17 @@
 Lofi Memory is a cozy browser space for no-download relaxing games, lofi radio, private journaling, mood tracking, notes, reminders, memories, and calm daily reflection.
 
 ## Keyword clusters
-- Private diary online no signup, free online diary, digital diary app, private online diary, online diary with lock, private journal app, daily journaling app, mood tracker journal, journal prompts for self discovery
-- Calming games online, single player browser games, cozy browser games, relaxing browser games, no download browser games, games to play when bored, relaxing games with music
+- Private journaling hub, private diary online no signup, free online diary, digital diary app, private online diary, online diary with lock, private journal app, daily journaling app, mood tracker journal, journal prompts for self discovery
+- Relaxing games hub, calming games online, single player browser games, cozy browser games, relaxing browser games, no download browser games, games to play when bored, relaxing games with music
 - Solitaire online, Minesweeper online, Snake game online, Wordle online, Sudoku online, Typing test online
-- Study timer with music, lofi study timer, focus music online, writing with lofi music, lofi radio online, lofi music for studying, focus music, chill music, lofi music room for writing
+- Lofi focus hub, study timer with music, lofi study timer, focus music online, writing with lofi music, lofi radio online, lofi music for studying, focus music, chill music, lofi music room for writing
 
 ## Primary pages
 - Home: https://lofimemory.vercel.app/
+- HTML sitemap: https://lofimemory.vercel.app/sitemap.html
+- Private journaling hub: https://lofimemory.vercel.app/private-journaling-hub.html
+- Relaxing games hub: https://lofimemory.vercel.app/relaxing-games-hub.html
+- Lofi focus hub: https://lofimemory.vercel.app/lofi-focus-hub.html
 - Blog: https://lofimemory.vercel.app/blog.html
 - About: https://lofimemory.vercel.app/about.html
 - Lofi music room: https://lofimemory.vercel.app/lofi-music-room.html
@@ -48,6 +52,7 @@ Lofi Memory is a cozy browser space for no-download relaxing games, lofi radio, 
 - Typing test online: https://lofimemory.vercel.app/typing-test-online.html
 
 ## Discovery
-- Sitemap: https://lofimemory.vercel.app/sitemap.xml
+- HTML sitemap: https://lofimemory.vercel.app/sitemap.html
+- XML Sitemap: https://lofimemory.vercel.app/sitemap.xml
 - RSS feed: https://lofimemory.vercel.app/feed.xml
 - OpenSearch: https://lofimemory.vercel.app/opensearch.xml

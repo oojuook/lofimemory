@@ -11,6 +11,10 @@ const baseUrl = 'https://lofimemory.vercel.app';
 const pinnedPages = [
   'index.html',
   'blog.html',
+  'sitemap.html',
+  'private-journaling-hub.html',
+  'relaxing-games-hub.html',
+  'lofi-focus-hub.html',
   'about.html',
   'lofi-music-room.html',
   'lofi-radio-online.html',
@@ -60,7 +64,7 @@ const excludedPages = new Set([
 
 function getPriority(fileName) {
   if (fileName === 'index.html') return '1.0';
-  if (['blog.html', 'about.html', 'privacy.html', 'terms.html', 'contact.html'].includes(fileName)) return '0.9';
+  if (['blog.html', 'sitemap.html', 'private-journaling-hub.html', 'relaxing-games-hub.html', 'lofi-focus-hub.html', 'about.html', 'privacy.html', 'terms.html', 'contact.html'].includes(fileName)) return '0.9';
   if (fileName.startsWith('article-')) return '0.74';
   if (fileName.includes('journal') || fileName.includes('diary')) return '0.86';
   if (fileName.includes('game') || fileName.includes('solitaire') || fileName.includes('minesweeper') || fileName.includes('snake') || fileName.includes('wordle') || fileName.includes('sudoku') || fileName.includes('typing')) return '0.86';

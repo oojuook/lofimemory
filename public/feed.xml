@@ -6,6 +6,9 @@
     <description>Latest Lofi Memory pages for private journaling, lofi music, cozy browser games, study focus, mood tracking, notes, and reminders.</description>
     <language>en</language>
     <atom:link href="https://lofimemory.vercel.app/feed.xml" rel="self" type="application/rss+xml" />
+    <item><title>Private journaling hub</title><link>https://lofimemory.vercel.app/private-journaling-hub.html</link><description>A topic hub for private diary, free online diary, digital diary, mood tracking, and self-discovery prompts.</description></item>
+    <item><title>Relaxing games hub</title><link>https://lofimemory.vercel.app/relaxing-games-hub.html</link><description>A topic hub for cozy browser games, calming games online, single-player games, and no-download game breaks.</description></item>
+    <item><title>Lofi focus hub</title><link>https://lofimemory.vercel.app/lofi-focus-hub.html</link><description>A topic hub for lofi radio, lofi music for studying, focus music, writing music, and study timer pages.</description></item>
     <item><title>Private diary online no signup</title><link>https://lofimemory.vercel.app/private-diary-no-signup.html</link><description>A low-friction private diary page for browser-based writing, moods, prompts, notes, and lofi music.</description></item>
     <item><title>No download browser games</title><link>https://lofimemory.vercel.app/no-download-browser-games.html</link><description>Cozy games online with no download, including Solitaire, Minesweeper, Snake, Wordle, Sudoku, and typing games.</description></item>
     <item><title>Lofi music for studying</title><link>https://lofimemory.vercel.app/lofi-music-for-studying.html</link><description>Lofi radio and focus music for studying, writing, notes, reminders, and calming game breaks.</description></item>

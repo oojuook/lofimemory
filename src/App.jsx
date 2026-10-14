@@ -567,6 +567,10 @@ const seoGuideGroups = [
 ];
 
 const seoPopularSearches = [
+  { label: 'Private journaling hub', href: '/private-journaling-hub.html' },
+  { label: 'Relaxing games hub', href: '/relaxing-games-hub.html' },
+  { label: 'Lofi focus hub', href: '/lofi-focus-hub.html' },
+  { label: 'HTML sitemap', href: '/sitemap.html' },
   { label: 'Private online diary', href: '/private-online-diary.html' },
   { label: 'Private diary online no signup', href: '/private-diary-no-signup.html' },
   { label: 'Free online diary', href: '/free-online-diary.html' },
@@ -607,15 +611,15 @@ const seoPopularSearches = [
 const seoKeywordClusters = [
   {
     title: 'Private journaling searches',
-    text: 'private diary online no signup, free online diary, digital diary app, private online diary, online diary with lock, private journal app, mood tracker journal, daily journaling app'
+    text: 'private journaling hub, private diary online no signup, free online diary, digital diary app, private online diary, online diary with lock, private journal app, mood tracker journal, daily journaling app'
   },
   {
     title: 'Relaxing game searches',
-    text: 'calming games online, single player browser games, cozy browser games, relaxing browser games, no download browser games, games to play when bored, solitaire online, minesweeper online, snake game online'
+    text: 'relaxing games hub, calming games online, single player browser games, cozy browser games, relaxing browser games, no download browser games, games to play when bored, solitaire online, minesweeper online, snake game online'
   },
   {
     title: 'Lofi focus searches',
-    text: 'study timer with music, lofi study timer, focus music online, writing with lofi music, lofi radio online, lofi music for studying, chill music, relaxing games with music'
+    text: 'lofi focus hub, study timer with music, lofi study timer, focus music online, writing with lofi music, lofi radio online, lofi music for studying, chill music, relaxing games with music'
   }
 ];
 
