@@ -55,6 +55,30 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://lofimemory.vercel.app/online-notes-with-reminders.html</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/private-memory-calendar.html</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/daily-planner-with-journal.html</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/self-care-reminder-app.html</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://lofimemory.vercel.app/about.html</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>

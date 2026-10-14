@@ -575,6 +575,10 @@ const seoPopularSearches = [
   { label: 'Aesthetic online journal', href: '/aesthetic-online-journal.html' },
   { label: 'Pomodoro timer with lofi', href: '/pomodoro-timer-with-lofi.html' },
   { label: 'Cozy games for study breaks', href: '/cozy-games-for-study-breaks.html' },
+  { label: 'Online notes with reminders', href: '/online-notes-with-reminders.html' },
+  { label: 'Daily planner with journal', href: '/daily-planner-with-journal.html' },
+  { label: 'Self-care reminder app', href: '/self-care-reminder-app.html' },
+  { label: 'Private memory calendar', href: '/private-memory-calendar.html' },
   { label: 'Private online diary', href: '/private-online-diary.html' },
   { label: 'Private diary online no signup', href: '/private-diary-no-signup.html' },
   { label: 'Free online diary', href: '/free-online-diary.html' },
@@ -615,7 +619,7 @@ const seoPopularSearches = [
 const seoKeywordClusters = [
   {
     title: 'Private journaling searches',
-    text: 'private journaling hub, gratitude journal online, aesthetic online journal, private diary online no signup, free online diary, digital diary app, private online diary, online diary with lock, private journal app, mood tracker journal, daily journaling app'
+    text: 'private journaling hub, gratitude journal online, aesthetic online journal, private memory calendar, private diary online no signup, free online diary, digital diary app, private online diary, online diary with lock, private journal app, mood tracker journal, daily journaling app'
   },
   {
     title: 'Relaxing game searches',
@@ -623,7 +627,7 @@ const seoKeywordClusters = [
   },
   {
     title: 'Lofi focus searches',
-    text: 'lofi focus hub, pomodoro timer with lofi, study timer with music, lofi study timer, focus music online, writing with lofi music, lofi radio online, lofi music for studying, chill music, relaxing games with music'
+    text: 'lofi focus hub, pomodoro timer with lofi, online notes with reminders, daily planner with journal, self-care reminder app, study timer with music, lofi study timer, focus music online, writing with lofi music, lofi radio online, lofi music for studying, chill music, relaxing games with music'
   }
 ];
 
