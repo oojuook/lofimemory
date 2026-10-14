@@ -7,3 +7,12 @@ For games, recurring high-intent phrases include "free browser games," "no downl
 For lofi music, search snippets consistently pair lofi with tasks and moods: "lofi beats to study / relax to," "focus music," "chill music," "study music," "reading," "everyday listening," "lofi study music," and "lofi music for studying." Lofi Memory should connect music with journaling, studying, focus, reading, writing, and relaxation rather than only using the generic phrase "lofi music"::cite[497].
 
 A strong keyword map for Lofi Memory should prioritize four clusters: (1) private diary and journal keywords, (2) cozy / relaxing browser games keywords, (3) lofi radio and focus music keywords, and (4) combined use-case phrases such as "relaxing games with music," "journal with lofi music," "cozy productivity app," and "chill place online." These clusters fit the actual product and can be expanded without keyword stuffing.
+
+## New landing pages added in this SEO pass
+
+- `no-download-browser-games.html` targets no-download / no-signup game intent and links onward to game-specific pages.
+- `games-to-play-when-bored.html` targets boredom-driven discovery, a common casual-game search pattern.
+- `private-journal-app.html` targets app-comparison and private journal intent.
+- `mood-tracker-journal.html` targets mood tracker, mood journal, and daily reflection intent.
+- `lofi-music-for-studying.html` targets lofi study music, focus music, and writing-with-music intent.
+- `journal-prompts-self-discovery.html` targets self-discovery prompt searches and links to the journaling ecosystem.

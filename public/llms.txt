@@ -15,14 +15,20 @@ Lofi Memory is a cozy browser space for no-download relaxing games, lofi radio, 
 - Lofi music room: https://lofimemory.vercel.app/lofi-music-room.html
 - Lofi radio online: https://lofimemory.vercel.app/lofi-radio-online.html
 - Listen to lofi music online: https://lofimemory.vercel.app/listen-to-lofi-music-online.html
+- Lofi music for studying: https://lofimemory.vercel.app/lofi-music-for-studying.html
 - Relaxing browser games: https://lofimemory.vercel.app/relaxing-browser-games.html
 - Cozy browser games: https://lofimemory.vercel.app/cozy-browser-games.html
+- No download browser games: https://lofimemory.vercel.app/no-download-browser-games.html
+- Games to play when bored: https://lofimemory.vercel.app/games-to-play-when-bored.html
 - Games to relax: https://lofimemory.vercel.app/games-to-relax.html
+- Private journal app: https://lofimemory.vercel.app/private-journal-app.html
 - Private online diary: https://lofimemory.vercel.app/private-online-diary.html
 - Online diary with lock: https://lofimemory.vercel.app/online-diary-with-lock.html
 - Daily journaling app: https://lofimemory.vercel.app/daily-journaling-app.html
 - Journal prompts: https://lofimemory.vercel.app/journal-prompts.html
+- Journal prompts for self discovery: https://lofimemory.vercel.app/journal-prompts-self-discovery.html
 - Mood journal: https://lofimemory.vercel.app/mood-journal.html
+- Mood tracker journal: https://lofimemory.vercel.app/mood-tracker-journal.html
 - Mental health journal online: https://lofimemory.vercel.app/mental-health-journal-online.html
 
 ## Game pages

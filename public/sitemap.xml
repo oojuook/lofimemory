@@ -31,6 +31,12 @@
     <priority>0.84</priority>
   </url>
   <url>
+    <loc>https://lofimemory.vercel.app/lofi-music-for-studying.html</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.84</priority>
+  </url>
+  <url>
     <loc>https://lofimemory.vercel.app/relaxing-browser-games.html</loc>
     <lastmod>2026-10-12</lastmod>
     <changefreq>monthly</changefreq>
@@ -39,6 +45,18 @@
   <url>
     <loc>https://lofimemory.vercel.app/cozy-browser-games.html</loc>
     <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/no-download-browser-games.html</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/games-to-play-when-bored.html</loc>
+    <lastmod>2026-10-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.86</priority>
   </url>
@@ -97,6 +115,12 @@
     <priority>0.86</priority>
   </url>
   <url>
+    <loc>https://lofimemory.vercel.app/private-journal-app.html</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
     <loc>https://lofimemory.vercel.app/write-diary-online.html</loc>
     <lastmod>2026-10-12</lastmod>
     <changefreq>monthly</changefreq>
@@ -121,6 +145,12 @@
     <priority>0.86</priority>
   </url>
   <url>
+    <loc>https://lofimemory.vercel.app/journal-prompts-self-discovery.html</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
     <loc>https://lofimemory.vercel.app/mental-health-journal-online.html</loc>
     <lastmod>2026-10-06</lastmod>
     <changefreq>monthly</changefreq>
@@ -129,6 +159,12 @@
   <url>
     <loc>https://lofimemory.vercel.app/mood-journal.html</loc>
     <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/mood-tracker-journal.html</loc>
+    <lastmod>2026-10-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.86</priority>
   </url>
@@ -830,12 +866,6 @@
   </url>
   <url>
     <loc>https://lofimemory.vercel.app/private-diary-online-free.html</loc>
-    <lastmod>2026-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.86</priority>
-  </url>
-  <url>
-    <loc>https://lofimemory.vercel.app/private-journal-app.html</loc>
     <lastmod>2026-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.86</priority>
