@@ -979,30 +979,29 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
     ), 1.4);
     return Math.max(maxHeight, columnHeight);
   }, 1.4);
-  const maxCardFontSize = deviceType === 'phone' ? 46 : (isExpandedLayout ? 86 : 82);
+  const maxCardFontSize = deviceType === 'phone' ? 42 : (isExpandedLayout ? 78 : 74);
   const fittedCardFontSize = boardDims.w > 0 && boardDims.h > 0
-    ? Math.max(14, Math.min(boardDims.w / (isExpandedLayout ? 13.4 : 11.2), boardDims.h / (tallestTableauUnits + (isExpandedLayout ? 2.2 : 3.2)), maxCardFontSize))
-    : 44;
+    ? Math.max(13, Math.min(boardDims.w / (isExpandedLayout ? 14.2 : 11.8), boardDims.h / (tallestTableauUnits + (isExpandedLayout ? 2 : 3)), maxCardFontSize))
+    : 40;
 
   return (
     <div ref={containerRef} data-device-type={deviceType} className={`mx-auto w-full ${isExpandedLayout ? `${isLofi ? 'bg-[#fff7ec]' : 'bg-[#07542f]'} min-h-full p-0 sm:p-2` : 'pb-6 sm:pb-8'}`}>
       <div className={`overflow-hidden rounded-[2rem] border shadow-[0_22px_50px_rgba(83,62,44,0.12)] ${isLofi ? 'border-[#e8dfd5]/80 bg-[#fff7ec]' : 'border-emerald-950/25 bg-[#0b6f3c]'} ${isExpandedLayout ? 'flex min-h-full flex-col' : ''}`}>
-        <div className={`flex flex-wrap items-center justify-between gap-4 border-b px-4 py-4 sm:px-6 ${isLofi ? 'border-[#e8dfd5]/80 bg-white/72 text-[#3d3025] backdrop-blur-sm' : 'border-white/10 bg-[#086133] text-white'}`}>
+        <div className={`flex flex-wrap items-center justify-between gap-3 border-b px-3 py-3 sm:px-5 ${isLofi ? 'border-[#e8dfd5]/80 bg-white/72 text-[#3d3025] backdrop-blur-sm' : 'border-white/10 bg-[#086133] text-white'}`}>
           <div className="flex items-center gap-3">
             {isLofi ? (
               <div>
                 <div className="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-white/85 px-3 py-1.5 text-[9px] sm:text-[11px] font-extrabold uppercase tracking-[0.22em] text-amber-800 shadow-sm">
-                  <Sparkles size={14} /> {config.label} card flow
+                  <Sparkles size={14} /> {config.label}
                 </div>
-                <h3 className="mt-2 sm:mt-3 font-display text-xl sm:text-2xl font-black tracking-tight text-[#3d3025]">Solitaire</h3>
                 <p className="mt-1 text-xs sm:text-sm font-semibold text-[#6e5a4a] leading-tight">{config.note}</p>
               </div>
             ) : (
               <>
                 <div className="grid h-7 w-7 sm:h-9 sm:w-9 place-items-center rounded-full bg-white/14 text-sm sm:text-lg shadow-inner">♣</div>
                 <div>
-                  <p className="text-[9px] font-extrabold uppercase tracking-[0.22em] text-emerald-100/80">Clean card table</p>
-                  <h3 className="font-display text-xl sm:text-2xl font-black tracking-tight">Solitaire</h3>
+                  <p className="text-[9px] font-extrabold uppercase tracking-[0.22em] text-emerald-100/80">{config.label}</p>
+                  <p className="mt-1 text-xs text-white/72 sm:text-sm">{config.note}</p>
                 </div>
               </>
             )}
