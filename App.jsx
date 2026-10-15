@@ -11,6 +11,9 @@ import dinoDashIconImage from './assets/dino-dash-icon.png';
 import rainWallpaperImage from './assets/rain-wallpaper.png';
 import fireWallpaperImage from './assets/fire-wallpaper.png';
 import lofiRoomWallpaperImage from './assets/lofi-room-wallpaper.png';
+import maplestoryThemeWallpaperImage from './assets/maplestory-theme-wallpaper.png';
+import hogwartsMusicRoomImage from './assets/hogwarts-music-room.png';
+import lofiMemoryHeaderImage from './assets/lofi-memory-header.png';
 import lotusMatchPreviewImage from './assets/lotus-match-preview.png';
 import gamesSectionPreviewImage from './assets/games-section-preview.png';
 import diarySectionPreviewImage from './assets/diary-section-preview.png';
@@ -565,21 +568,72 @@ const seoGuideGroups = [
 ];
 
 const seoPopularSearches = [
-  { label: 'Lofi Memory blog', href: '/blog.html' },
-  { label: 'About Lofi Memory', href: '/about.html' },
-  { label: 'Editorial policy', href: '/editorial-policy.html' },
-  { label: 'Privacy policy', href: '/privacy.html' },
+  { label: 'Private journaling hub', href: '/private-journaling-hub.html' },
+  { label: 'Relaxing games hub', href: '/relaxing-games-hub.html' },
+  { label: 'Lofi focus hub', href: '/lofi-focus-hub.html' },
+  { label: 'HTML sitemap', href: '/sitemap.html' },
+  { label: 'Gratitude journal online', href: '/gratitude-journal-online.html' },
+  { label: 'Aesthetic online journal', href: '/aesthetic-online-journal.html' },
+  { label: 'Pomodoro timer with lofi', href: '/pomodoro-timer-with-lofi.html' },
+  { label: 'Cozy games for study breaks', href: '/cozy-games-for-study-breaks.html' },
+  { label: 'Online notes with reminders', href: '/online-notes-with-reminders.html' },
+  { label: 'Daily planner with journal', href: '/daily-planner-with-journal.html' },
+  { label: 'Self-care reminder app', href: '/self-care-reminder-app.html' },
+  { label: 'Private memory calendar', href: '/private-memory-calendar.html' },
+  { label: 'Online diary for students', href: '/online-diary-for-students.html' },
+  { label: 'Cute notes app online', href: '/cute-notes-app-online.html' },
+  { label: 'Brain dump journal online', href: '/brain-dump-journal-online.html' },
+  { label: 'Relaxing games before bed', href: '/relaxing-games-before-bed.html' },
+  { label: 'Private online diary', href: '/private-online-diary.html' },
+  { label: 'Private diary online no signup', href: '/private-diary-no-signup.html' },
+  { label: 'Free online diary', href: '/free-online-diary.html' },
+  { label: 'Online diary with lock', href: '/online-diary-with-lock.html' },
+  { label: 'Private journal app', href: '/private-journal-app.html' },
+  { label: 'Digital diary app', href: '/digital-diary-app.html' },
+  { label: 'Daily journaling app', href: '/daily-journaling-app.html' },
+  { label: 'Journal prompts for self discovery', href: '/journal-prompts-self-discovery.html' },
+  { label: 'Mood journal and mood tracker', href: '/mood-tracker-journal.html' },
+  { label: 'Mental health journal online', href: '/mental-health-journal-online.html' },
+  { label: 'Cozy browser games', href: '/cozy-browser-games.html' },
+  { label: 'Calming games online', href: '/calming-games-online.html' },
+  { label: 'Relaxing browser games', href: '/relaxing-browser-games.html' },
+  { label: 'Games to play when bored', href: '/games-to-play-when-bored.html' },
+  { label: 'No download browser games', href: '/no-download-browser-games.html' },
+  { label: 'Single player browser games', href: '/single-player-browser-games.html' },
+  { label: 'Solitaire online', href: '/solitaire-online.html' },
+  { label: 'Minesweeper online', href: '/minesweeper-online.html' },
+  { label: 'Snake game online', href: '/snake-game-online.html' },
+  { label: 'Wordle online', href: '/wordle-online.html' },
+  { label: 'Sudoku online', href: '/sudoku-online.html' },
+  { label: 'Typing test online', href: '/typing-test-online.html' },
+  { label: 'Lofi radio online', href: '/lofi-radio-online.html' },
+  { label: 'Lofi music for studying', href: '/lofi-music-for-studying.html' },
+  { label: 'Study timer with music', href: '/study-timer-with-music.html' },
+  { label: 'Focus music online', href: '/focus-music-online.html' },
+  { label: 'Writing with lofi music', href: '/writing-with-lofi-music.html' },
+  { label: 'Lofi music room', href: '/lofi-music-room.html' },
+  { label: 'Relaxing games with music', href: '/relaxing-games-with-music.html' },
+  { label: 'Chill place online', href: '/chill-place-online.html' },
   { label: 'How journaling helps', href: '/article-psychology-of-journaling.html' },
   { label: 'Protect privacy when journaling online', href: '/article-protect-privacy-journaling-online.html' },
   { label: 'How to start a journaling habit', href: '/article-how-to-start-journaling-habit.html' },
   { label: 'Benefits of a private online diary', href: '/article-benefits-of-private-online-diary.html' },
-  { label: 'Daily reflection and mental health', href: '/article-daily-reflection-mental-health.html' },
-  { label: 'Brain dumping before sleep', href: '/article-brain-dumping-sleep.html' },
-  { label: 'Memory games before writing', href: '/article-memory-games-cognitive-relief.html' },
-  { label: 'Why gaming helps anxiety', href: '/article-why-gaming-helps-anxiety.html' },
-  { label: 'Word puzzles for relaxing breaks', href: '/article-daily-word-puzzles-relax.html' },
-  { label: 'Word guessing games and busy minds', href: '/article-word-guessing-games-busy-mind.html' },
-  { label: 'Benefits of lofi gaming for focus', href: '/article-benefits-lofi-gaming-mental-health.html' }
+  { label: 'Memory games before writing', href: '/article-memory-games-cognitive-relief.html' }
+];
+
+const seoKeywordClusters = [
+  {
+    title: 'Private journaling searches',
+    text: 'private journaling hub, gratitude journal online, aesthetic online journal, brain dump journal online, online diary for students, private memory calendar, private diary online no signup, free online diary, digital diary app, private online diary, online diary with lock, private journal app, mood tracker journal, daily journaling app'
+  },
+  {
+    title: 'Relaxing game searches',
+    text: 'relaxing games hub, relaxing games before bed, cozy games for study breaks, calming games online, single player browser games, cozy browser games, relaxing browser games, no download browser games, games to play when bored, solitaire online, minesweeper online, snake game online'
+  },
+  {
+    title: 'Lofi focus searches',
+    text: 'lofi focus hub, pomodoro timer with lofi, cute notes app online, online notes with reminders, daily planner with journal, self-care reminder app, study timer with music, lofi study timer, focus music online, writing with lofi music, lofi radio online, lofi music for studying, chill music, relaxing games with music'
+  }
 ];
 
 const THEME_STORAGE_KEY = 'quiet-journal-theme-v1';
@@ -704,6 +758,39 @@ const breatheRoomOptions = [
     decoration: '🎧',
     videoId: 'rFZHOHl-L8A',
     wallpaper: lofiRoomWallpaperImage
+  },
+  {
+    id: 'maple',
+    title: 'MapleStory Theme',
+    sound: 'MapleStory music',
+    description: 'A nostalgic MapleStory-inspired YouTube track with a dreamy lofi wallpaper for cozy focus and late-night desk vibes.',
+    icon: Headphones,
+    status: 'MapleStory Theme selected — the updated YouTube song is ready.',
+    gradient: 'from-amber-100 via-orange-50 to-rose-50',
+    textTone: 'text-amber-900',
+    ringTone: 'ring-amber-200',
+    volume: 32,
+    decoration: '🍁',
+    videoId: '3DEkF2uvPoc',
+    wallpaper: maplestoryThemeWallpaperImage
+  },
+  {
+    id: 'hogwarts',
+    title: 'Hogwarts Music Room',
+    sound: 'Hogwarts ambience',
+    description: 'A candlelit castle-inspired music room for magical studying, quiet journaling, and cozy late-night focus.',
+    icon: Sparkles,
+    status: 'Hogwarts Music Room selected — the magical study ambience is ready.',
+    gradient: 'from-stone-200 via-amber-100 to-violet-100',
+    textTone: 'text-violet-900',
+    ringTone: 'ring-violet-200',
+    volume: 34,
+    decoration: '🏰',
+    showDecoration: false,
+    videoId: 'BQrxsyGTztM',
+    startSeconds: 8741,
+    wallpaper: hogwartsMusicRoomImage,
+    imagePosition: 'center 44%'
   }
 ];
 
@@ -879,10 +966,24 @@ function GamePreview({ gameId }) {
   if (gameId === 'drifting-leaf') {
     return (
       <div className={shellClass}>
-        <div className="flex h-20 items-center justify-center rounded-[1rem] bg-gradient-to-br from-emerald-100 via-lime-50 to-white overflow-hidden relative">
-          <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #3a5a48 1px, transparent 0)', backgroundSize: '12px 12px' }}></div>
-          <div className="flex items-center gap-5 text-2xl text-emerald-700 relative animate-bounce" style={{ animationDuration: '3.5s' }}>
-            <span>🍃</span><span className="opacity-40 text-sm">•</span><span>🌰</span>
+        <div className="relative flex h-20 items-center justify-center overflow-hidden rounded-[1rem] bg-gradient-to-b from-[#f6c8be] via-[#f3d8c6] to-[#f7eadb]">
+          <div className="absolute inset-0 opacity-15" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #6e5a4a 1px, transparent 0)', backgroundSize: '12px 12px' }} />
+          <div className="absolute left-1/2 top-3 h-5 w-10 -translate-x-1/2 rounded-full bg-[#fff7ef]/90 blur-sm" />
+          <div className="absolute left-6 top-5 h-4 w-10 rounded-full bg-white/35 blur-sm" />
+          <div className="absolute right-7 bottom-5 h-5 w-14 rounded-full bg-white/35 blur-sm" />
+          <div className="relative flex items-center justify-center animate-bounce" style={{ animationDuration: '3.8s' }}>
+            {[-18, -12, -6, 0, 6, 12, 18].map((offset, index) => (
+              <span
+                key={offset}
+                className="absolute h-5 w-[1px] origin-bottom rounded-full bg-[#fffaf4]/90"
+                style={{ transform: `translateY(-0.45rem) rotate(${offset}deg)`, opacity: index % 2 === 0 ? 1 : 0.82 }}
+              />
+            ))}
+            <span className="absolute h-6 w-6 rounded-full bg-[radial-gradient(circle,#f3c7cb_0%,#f7dfdf_55%,rgba(255,249,244,0)_100%)]" />
+            <span className="absolute -top-4 -left-1 h-5 w-2.5 rounded-full bg-[#a3b18a] rotate-[-35deg]" />
+            <span className="absolute -top-4 left-1 h-5 w-2.5 rounded-full bg-[#a3b18a] rotate-[35deg]" />
+            <span className="absolute top-2 h-5 w-[2px] rounded-full bg-[#6f4b35]" />
+            <span className="absolute top-6 h-3.5 w-3.5 rounded-full bg-[#6f4b35]" style={{ clipPath: 'polygon(50% 100%, 0% 35%, 50% 0%, 100% 35%)' }} />
           </div>
         </div>
       </div>
@@ -1579,43 +1680,53 @@ function ThemeStudio({
   return (
     <div className={`customizer-shell fixed inset-y-0 right-0 z-30 flex transition ${isOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}>
       <div className={`fixed inset-0 bg-ink/20 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`} onClick={onClose} />
-      <aside id="design" className={`relative h-full w-screen max-w-5xl overflow-y-auto bg-[#fffaf2]/95 shadow-soft backdrop-blur-xl transition duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      <aside id="design" className={`relative h-full w-screen max-w-5xl overflow-y-auto bg-[#2b231d] shadow-[0_0_60px_rgba(0,0,0,0.6)] backdrop-blur-3xl transition duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="grid min-h-full lg:grid-cols-12">
-          <div className="theme-panel p-7 text-white lg:col-span-4 lg:p-8">
-            <div className="flex items-start justify-between gap-4">
-              <Palette className="text-white/90" size={34} />
-              <button className="rounded-full bg-white/20 px-4 py-2 text-sm font-bold text-white transition hover:bg-white/30" onClick={onClose} type="button">Done</button>
+          <div className="theme-panel relative flex flex-col p-7 text-white lg:col-span-4 lg:p-10">
+            <div className="absolute inset-0 z-0 h-full w-full overflow-hidden">
+              <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover object-center" aria-hidden="true" />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/80" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.08),transparent_35rem)]" />
             </div>
-            <p className="mt-7 text-sm font-bold uppercase tracking-widest text-white/80">Customize your space</p>
-            <h2 className="mt-3 font-display text-4xl font-bold leading-tight">Choose the look that feels right today.</h2>
-            <p className="mt-4 leading-7 text-white/85">Visitors can personalize colors and style. Their choice is saved only in their own browser, and this drawer can stay tucked away.</p>
+            <div className="relative z-10 flex items-start justify-between gap-4">
+              <Palette className="text-white lofi-sharp-text" size={34} />
+              <button className="rounded-full border border-white/30 bg-white/20 px-4 py-2 text-sm font-bold text-white lofi-sharp-chip shadow-sm backdrop-blur-md transition hover:bg-white/30 lg:hidden" onClick={onClose} type="button">Done</button>
+            </div>
+            <div className="relative z-10 mt-auto pt-32 lg:pt-0">
+              <p className="text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft">Customize your space</p>
+              <h2 className="mt-3 font-display text-4xl font-bold leading-tight text-white lofi-sharp-text">Choose the look that feels right today.</h2>
+              <p className="mt-4 font-bold leading-7 text-white lofi-sharp-text-soft">Visitors can personalize colors and style. Their choice is saved only in their own browser.</p>
+            </div>
           </div>
-          <div className="space-y-7 p-7 lg:col-span-8 lg:p-8">
+          <div className="space-y-7 bg-[#2b231d] p-7 lg:col-span-8 lg:p-10">
+            <div className="hidden lg:flex lg:justify-end">
+              <button className="rounded-full border border-white/25 bg-white/10 px-6 py-2.5 text-sm font-extrabold text-white lofi-sharp-chip shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/20" onClick={onClose} type="button">Done</button>
+            </div>
             <div>
-              <div className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-sage-700"><Paintbrush size={16} /> Color theme</div>
+              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft"><Paintbrush size={16} /> Color theme</div>
               <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-5">
                 {colorThemes.map((theme) => (
                   <button
-                    className={`custom-option rounded-3xl border p-4 text-left transition hover:-translate-y-1 ${selectedTheme === theme.id ? 'is-selected border-sage-500 bg-sage-50 shadow-lift' : 'border-[#e8dfd5] bg-white'}`}
+                    className={`custom-option rounded-3xl border p-4 text-left shadow-sm backdrop-blur-md transition hover:-translate-y-1 ${selectedTheme === theme.id ? 'is-selected border-white/60 bg-white/30 shadow-[0_0_24px_rgba(255,255,255,0.25)]' : 'border-white/20 bg-white/10 hover:bg-white/20'}`}
                     key={theme.id}
                     onClick={() => {
                       onThemeChange(theme.id);
                     }}
                     type="button"
                   >
-                    <span className="mb-3 block h-9 w-full rounded-2xl" style={{ background: `linear-gradient(135deg, ${theme.soft}, ${theme.accent})` }} />
-                    <span className="block text-sm font-extrabold text-ink">{theme.name}</span>
+                    <span className="mb-3 block h-9 w-full rounded-2xl shadow-inner" style={{ background: `linear-gradient(135deg, ${theme.soft}, ${theme.accent})` }} />
+                    <span className="block text-sm font-extrabold text-white lofi-sharp-text">{theme.name}</span>
                   </button>
                 ))}
               </div>
             </div>
 
             <div className="grid gap-5 lg:grid-cols-3">
-              <label className="custom-option rounded-3xl border border-[#e8dfd5] bg-white p-5 shadow-sm lg:col-span-1">
-                <span className="mb-3 block text-sm font-bold uppercase tracking-widest text-sage-700">Custom color</span>
+              <label className="custom-option rounded-3xl border border-white/20 bg-white/10 p-5 shadow-sm backdrop-blur-md lg:col-span-1 block">
+                <span className="mb-3 block text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft">Custom color</span>
                 <input
                   aria-label="Choose a custom accent color"
-                  className="h-12 w-full cursor-pointer rounded-2xl border border-[#e8dfd5] bg-white p-1"
+                  className="h-12 w-full cursor-pointer rounded-2xl border border-white/30 bg-black/20 p-1 backdrop-blur"
                   onChange={(event) => {
                     onCustomColorChange(event.target.value);
                     onThemeChange('custom');
@@ -1623,12 +1734,12 @@ function ThemeStudio({
                   type="color"
                   value={customColor}
                 />
-                <span className="mt-3 block text-sm font-semibold text-sage-700">Pick any accent color.</span>
+                <span className="mt-3 block text-sm font-bold text-white/95 lofi-sharp-text-soft">Pick any accent color.</span>
               </label>
               <div className="grid gap-3 lg:col-span-2">
                 {designStyles.map((style) => (
                   <button
-                    className={`custom-option flex items-center justify-between rounded-3xl border bg-white p-4 text-left transition hover:-translate-y-1 ${selectedDesign === style.id ? 'is-selected border-sage-500 shadow-lift' : 'border-[#e8dfd5]'}`}
+                    className={`custom-option flex items-center justify-between rounded-3xl border p-4 text-left shadow-sm backdrop-blur-md transition hover:-translate-y-1 ${selectedDesign === style.id ? 'is-selected border-white/60 bg-white/30 shadow-[0_0_24px_rgba(255,255,255,0.25)]' : 'border-white/20 bg-white/10 hover:bg-white/20'}`}
                     key={style.id}
                     onClick={() => {
                       onDesignChange(style.id);
@@ -1636,17 +1747,17 @@ function ThemeStudio({
                     type="button"
                   >
                     <span>
-                      <span className="block font-extrabold text-ink">{style.name}</span>
-                      <span className="text-sm text-sage-700">{style.description}</span>
+                      <span className="block font-extrabold text-white lofi-sharp-text">{style.name}</span>
+                      <span className="text-sm font-bold text-white/95 lofi-sharp-text-soft">{style.description}</span>
                     </span>
-                    <span className="theme-dot h-8 w-8 rounded-full" />
+                    <span className="theme-dot h-8 w-8 rounded-full border border-white/30 shadow-inner" />
                   </button>
                 ))}
               </div>
             </div>
 
-            <div className="rounded-3xl border border-[#e8dfd5] bg-white p-5 shadow-sm">
-              <div className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-sage-700"><ImagePlus size={16} /> Wallpaper</div>
+            <div className="rounded-3xl border border-white/20 bg-white/10 p-5 shadow-sm backdrop-blur-md">
+              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft"><ImagePlus size={16} /> Wallpaper</div>
               <p className="text-sm leading-6 text-sage-700">Import your own calm wallpaper. It stays soft behind the app with a blur overlay so the page still feels minimal and easy to read.</p>
               <div className="mt-4 grid gap-4 md:grid-cols-[minmax(0,1fr)_14rem] md:items-center">
                 <label className="flex cursor-pointer items-center justify-center gap-2 rounded-2xl border border-dashed border-sage-300 bg-sage-50/80 px-4 py-4 text-sm font-bold text-sage-800 transition hover:bg-sage-100">
@@ -1665,90 +1776,90 @@ function ThemeStudio({
               )}
             </div>
 
-            <div className="rounded-3xl border border-[#e8dfd5] bg-white p-5 shadow-sm">
-              <div className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-sage-700"><Sparkles size={16} /> Atmosphere presets</div>
-              <p className="text-sm leading-6 text-sage-700">Pick a ready-made mood and let the design drawer handle the look for you instead of crowding the writing area.</p>
+            <div className="rounded-3xl border border-white/20 bg-white/10 p-5 shadow-sm backdrop-blur-md">
+              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft"><Sparkles size={16} /> Atmosphere presets</div>
+              <p className="text-sm font-bold leading-6 text-white/95 lofi-sharp-text-soft">Pick a ready-made mood and let the design drawer handle the look for you instead of crowding the writing area.</p>
               <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
                 {journalAtmospherePresets.map((preset) => {
                   const isPresetActive = selectedTheme === preset.themeId && selectedDesign === preset.designId && journalStyle.fontId === preset.journalFontId && quoteStyle.fontId === preset.quoteFontId;
                   return (
                     <button
-                      className={`rounded-[1.4rem] border p-4 text-left transition hover:-translate-y-0.5 ${isPresetActive ? 'border-sage-500 bg-sage-50 shadow-lift' : 'border-[#e8dfd5] bg-white hover:bg-sage-50'}`}
+                      className={`flex flex-col rounded-[1.4rem] border p-4 text-left shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:shadow-md ${isPresetActive ? 'border-white/60 bg-white/30 shadow-[0_0_24px_rgba(255,255,255,0.25)]' : 'border-white/20 bg-white/10 hover:bg-white/20'}`}
                       key={preset.id}
                       onClick={() => onAtmosphereApply(preset)}
                       type="button"
                     >
-                      <span className="text-sm font-extrabold text-ink">{preset.name}</span>
-                      <span className="mt-2 block text-sm leading-6 text-sage-700">{preset.note}</span>
+                      <span className="text-sm font-extrabold text-white lofi-sharp-text">{preset.name}</span>
+                      <span className="mt-2 text-sm font-bold leading-6 text-white/95 lofi-sharp-text-soft">{preset.note}</span>
                     </button>
                   );
                 })}
               </div>
             </div>
 
-            <div className="rounded-3xl border border-[#e8dfd5] bg-white p-5 shadow-sm">
-              <div className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-sage-700"><Quote size={16} /> Quote card color</div>
+            <div className="rounded-3xl border border-white/20 bg-white/10 p-5 shadow-sm backdrop-blur-md">
+              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft"><Quote size={16} /> Quote card color</div>
               <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6">
                 {quoteCardColors.map((color) => (
                   <button
-                    className={`custom-option rounded-2xl border p-3 text-left transition hover:-translate-y-1 ${quoteBg.toLowerCase() === color.value.toLowerCase() ? 'is-selected border-sage-500 shadow-lift' : 'border-[#e8dfd5]'}`}
+                    className={`custom-option rounded-2xl border p-3 text-left shadow-sm backdrop-blur-sm transition hover:-translate-y-1 ${quoteBg.toLowerCase() === color.value.toLowerCase() ? 'is-selected border-white/60 bg-white/30 shadow-[0_0_24px_rgba(255,255,255,0.25)]' : 'border-white/20 bg-white/10 hover:bg-white/20'}`}
                     key={color.value}
                     onClick={() => {
                       onQuoteBgChange(color.value);
                     }}
                     type="button"
                   >
-                    <span className="mb-2 block h-10 rounded-xl" style={{ background: color.value }} />
-                    <span className="text-sm font-extrabold text-ink">{color.name}</span>
+                    <span className="mb-2 block h-10 rounded-xl shadow-inner" style={{ background: color.value }} />
+                    <span className="text-sm font-extrabold text-white lofi-sharp-text">{color.name}</span>
                   </button>
                 ))}
               </div>
-              <label className="mt-4 block rounded-2xl bg-sage-50 p-4">
-                <span className="mb-3 block text-sm font-bold text-sage-800">Or pick any quote card color</span>
-                <input className="h-11 w-full cursor-pointer rounded-xl border border-[#e8dfd5] bg-white p-1" onChange={(event) => onQuoteBgChange(event.target.value)} type="color" value={quoteBg} />
+              <label className="mt-4 block rounded-2xl border border-white/20 bg-black/20 p-4 backdrop-blur-md">
+                <span className="mb-3 block text-sm font-bold text-white/95 lofi-sharp-text-soft">Or pick any quote card color</span>
+                <input className="h-11 w-full cursor-pointer rounded-xl border border-white/30 bg-white/10 p-1" onChange={(event) => onQuoteBgChange(event.target.value)} type="color" value={quoteBg} />
               </label>
             </div>
 
-            <div className="rounded-3xl border border-[#e8dfd5] bg-white p-5 shadow-sm">
-              <div className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-sage-700"><ImagePlus size={16} /> Custom emotion</div>
-              <p className="text-sm leading-6 text-sage-700">Keep personal moods in the design drawer instead of the writing page. They still appear in your mood picker after you save them.</p>
+            <div className="rounded-3xl border border-white/20 bg-white/10 p-5 shadow-sm backdrop-blur-md">
+              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft"><ImagePlus size={16} /> Custom emotion</div>
+              <p className="text-sm font-bold leading-6 text-white/95 lofi-sharp-text-soft">Keep personal moods in the design drawer instead of the writing page. They still appear in your mood picker after you save them.</p>
               <div className="mt-5 grid gap-3 md:grid-cols-5">
                 <input
-                  className="rounded-2xl border border-[#e8dfd5] bg-sage-50/80 px-4 py-3 font-semibold outline-none transition focus:border-sage-400 focus:bg-white"
+                  className="rounded-2xl border border-white/30 bg-black/20 px-4 py-3 font-semibold text-white outline-none backdrop-blur-sm transition focus:border-white/60 focus:bg-black/30 placeholder-white/50"
                   onChange={(event) => onCustomWeatherNameChange(event.target.value)}
                   placeholder="Name"
                   value={customWeatherName}
                 />
                 <input
-                  className="rounded-2xl border border-[#e8dfd5] bg-sage-50/80 px-4 py-3 font-semibold outline-none transition focus:border-sage-400 focus:bg-white"
+                  className="rounded-2xl border border-white/30 bg-black/20 px-4 py-3 font-semibold text-white outline-none backdrop-blur-sm transition focus:border-white/60 focus:bg-black/30 placeholder-white/50"
                   maxLength={4}
                   onChange={(event) => onCustomWeatherEmojiChange(event.target.value)}
                   placeholder="Emoji"
                   value={customWeatherEmoji}
                 />
-                <label className="flex cursor-pointer items-center justify-center gap-2 rounded-2xl border border-dashed border-sage-300 bg-sage-50/80 px-4 py-3 text-sm font-bold text-sage-800 transition hover:bg-sage-100 md:col-span-2">
+                <label className="flex cursor-pointer items-center justify-center gap-2 rounded-2xl border border-dashed border-white/30 bg-white/5 px-4 py-3 text-sm font-bold text-white shadow-sm backdrop-blur-sm transition hover:bg-white/10 md:col-span-2">
                   <ImagePlus size={18} /> Upload image
                   <input accept="image/*" className="hidden" onChange={onCustomWeatherImageUpload} type="file" />
                 </label>
-                <button className="rounded-2xl bg-sage-800 px-4 py-3 font-bold text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-700" onClick={onAddCustomWeather} type="button">
+                <button className="rounded-2xl border border-white/20 bg-white/20 px-4 py-3 font-bold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/30" onClick={onAddCustomWeather} type="button">
                   Add emotion
                 </button>
               </div>
               {customWeatherImage && (
-                <div className="mt-4 flex items-center gap-3 rounded-2xl bg-sage-50 p-3 text-sm font-semibold text-sage-800">
+                <div className="mt-4 flex items-center gap-3 rounded-2xl border border-white/20 bg-black/20 p-3 text-sm font-semibold text-white/95 backdrop-blur-md lofi-sharp-text-soft">
                   <img alt="Custom weather preview" className="h-12 w-12 rounded-2xl object-cover" src={customWeatherImage} />
                   Image ready — add a name, then save it as a custom emotion.
                 </div>
               )}
               {customWeathers.length > 0 && (
                 <div className="mt-4">
-                  <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-sage-500">Saved custom moods</p>
+                  <p className="text-xs font-black uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft">Saved custom moods</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {customWeathers.map((weather) => (
-                      <div key={weather.id} className="inline-flex items-center gap-2 rounded-full border border-[#e8dfd5] bg-sage-50 px-3 py-2 text-sm font-semibold text-sage-700">
+                      <div key={weather.id} className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm backdrop-blur-md">
                         {weather.image ? <img alt={weather.label} className="h-6 w-6 rounded-full object-cover" src={weather.image} /> : <span>{weather.emoji}</span>}
                         <span>{weather.label}</span>
-                        <button className="text-sage-400 transition hover:text-rose-500" onClick={() => onDeleteCustomWeather(weather.label)} type="button">×</button>
+                        <button className="text-white/50 transition hover:text-white" onClick={() => onDeleteCustomWeather(weather.label)} type="button">×</button>
                       </div>
                     ))}
                   </div>
@@ -2004,7 +2115,7 @@ function App() {
   const initialCalendarDate = getInitialSelectedCalendarDate();
   const [activeTab, setActiveTab] = useState(initialActiveTab);
   const [activeHomeSection, setActiveHomeSection] = useState(getInitialHomeSection);
-  const [showEntryTransition, setShowEntryTransition] = useState(initialActiveTab === 'home');
+  const [showEntryTransition, setShowEntryTransition] = useState(false);
   const [entryTransitionClosing, setEntryTransitionClosing] = useState(false);
   const [entries, setEntries] = useState(getInitialEntries);
   const [selectedMood, setSelectedMood] = useState('Calm');
@@ -2125,6 +2236,7 @@ function App() {
   const [adminViewMode, setAdminViewMode] = useState(() => localStorage.getItem(ADMIN_VIEW_MODE_STORAGE_KEY) || 'master');
   const [seoStudioModelUsed, setSeoStudioModelUsed] = useState('');
   const [showAllSearches, setShowAllSearches] = useState(false);
+  const [interfaceMode, setInterfaceMode] = useState('pc');
   const entryBodyRef = useRef(null);
   const companionMediaRef = useRef(null);
   const plannerBoardRef = useRef(plannerBoard);
@@ -2135,6 +2247,7 @@ function App() {
   const radioPlayerContainerRef = useRef(null);
   const radioPlayerRef = useRef(null);
   const radioUnlockedRef = useRef(false);
+  const radioNowPlayingRef = useRef('Lofi Desk');
 
   const isMasterAdmin = user?.email?.toLowerCase() === MASTER_ADMIN_EMAIL;
   const showAdminTools = isMasterAdmin && adminViewMode === 'master';
@@ -2191,7 +2304,19 @@ function App() {
       tone: 'from-emerald-800 to-teal-900 text-white',
       preview: gameSolitairePreview,
       playingSpace: 'max-w-[1180px]',
-      component: <Solitaire difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <Solitaire difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
+    },
+    {
+      id: 'quiet-snake',
+      title: 'Snake',
+      detail: 'Classic arcade loop',
+      isNew: true,
+      description: 'A cozy snake run with clear turns, quick rounds, and a gentle retro feel.',
+      icon: SnakeIcon,
+      tone: 'from-emerald-100 to-lime-50 text-emerald-700',
+      preview: gameSnakePreview,
+      playingSpace: 'max-w-[1040px]',
+      component: <QuietSnake difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'mind-sweeper',
@@ -2202,18 +2327,19 @@ function App() {
       tone: 'from-lime-100 to-emerald-50 text-emerald-700',
       preview: gameMindSweeperPreview,
       playingSpace: 'max-w-[980px]',
-      component: <MindSweeper difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <MindSweeper difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'drifting-leaf',
       title: 'Drifting Seed',
       detail: 'Soft endless glide',
+      isNew: true,
       description: 'A slow, floaty game for clearing your head before you write.',
       icon: SeedIcon,
       tone: 'from-emerald-100 to-sage-50 text-emerald-700',
       preview: gameDriftingSeedPreview,
       playingSpace: 'max-w-[900px]',
-      component: <ZenGame difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <ZenGame difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'stream-surfer',
@@ -2224,7 +2350,7 @@ function App() {
       tone: 'from-sky-100 to-cyan-50 text-sky-700',
       preview: gameLilypadPreview,
       playingSpace: 'max-w-[1120px]',
-      component: <StreamSurfer difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <StreamSurfer difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'lofi-jigsaw',
@@ -2235,7 +2361,7 @@ function App() {
       tone: 'from-emerald-100 via-amber-50 to-rose-50 text-emerald-700',
       preview: gameJigsawPreview,
       playingSpace: 'max-w-[1080px]',
-      component: <LofiJigsaw difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <LofiJigsaw difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'lotus-match',
@@ -2246,7 +2372,7 @@ function App() {
       tone: 'from-rose-100 to-orange-50 text-rose-700',
       preview: gameLotusPreview,
       playingSpace: 'max-w-[1020px]',
-      component: <LotusMatch difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <LotusMatch difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'quiet-tiles',
@@ -2257,7 +2383,7 @@ function App() {
       tone: 'from-violet-100 to-slate-50 text-violet-700',
       preview: gameTilesPreview,
       playingSpace: 'max-w-[820px]',
-      component: <QuietTiles difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <QuietTiles difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'quiet-tetris',
@@ -2268,7 +2394,7 @@ function App() {
       tone: 'from-indigo-100 to-sky-50 text-indigo-700',
       preview: gameTetrisPreview,
       playingSpace: 'max-w-[1120px]',
-      component: <QuietTetris difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <QuietTetris difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'quiet-slide',
@@ -2279,7 +2405,7 @@ function App() {
       tone: 'from-amber-100 to-stone-50 text-amber-700',
       preview: gameSlidePreview,
       playingSpace: 'max-w-[860px]',
-      component: <QuietSlide difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <QuietSlide difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'quiet-sudoku',
@@ -2290,7 +2416,7 @@ function App() {
       tone: 'from-cyan-100 to-blue-50 text-cyan-700',
       preview: gameSudokuPreview,
       playingSpace: 'max-w-[980px]',
-      component: <QuietSudoku difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <QuietSudoku difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'quiet-wordle',
@@ -2301,7 +2427,7 @@ function App() {
       tone: 'from-teal-100 to-sky-50 text-teal-700',
       preview: gameWordlePreview,
       playingSpace: 'max-w-[780px]',
-      component: <QuietWordle difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <QuietWordle difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'quiet-words',
@@ -2312,7 +2438,7 @@ function App() {
       tone: 'from-fuchsia-100 to-rose-50 text-fuchsia-700',
       preview: gameWordsPreview,
       playingSpace: 'max-w-[860px]',
-      component: <QuietWords difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <QuietWords difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'typing-speed-test',
@@ -2323,7 +2449,7 @@ function App() {
       tone: 'from-sky-100 to-indigo-50 text-sky-700',
       preview: gameTypingPreview,
       playingSpace: 'max-w-[960px]',
-      component: <TypingSpeedTest difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <TypingSpeedTest difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'quiet-clues',
@@ -2334,18 +2460,7 @@ function App() {
       tone: 'from-amber-100 to-rose-50 text-amber-700',
       preview: gameCluesPreview,
       playingSpace: 'max-w-[820px]',
-      component: <QuietClues difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
-    },
-    {
-      id: 'quiet-snake',
-      title: 'Snake',
-      detail: 'Classic arcade loop',
-      description: 'A cozy snake run with clear turns, quick rounds, and a gentle retro feel.',
-      icon: SnakeIcon,
-      tone: 'from-emerald-100 to-lime-50 text-emerald-700',
-      preview: gameSnakePreview,
-      playingSpace: 'max-w-[1040px]',
-      component: <QuietSnake difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <QuietClues difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     },
     {
       id: 'dinosaur-dash',
@@ -2356,12 +2471,14 @@ function App() {
       tone: 'from-orange-100 to-yellow-50 text-orange-700',
       preview: gameDinoPreview,
       playingSpace: 'max-w-[1060px]',
-      component: <DinosaurDash difficulty={selectedGameDifficulty} theme={gameVisualTheme} />
+      component: <DinosaurDash difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
     }
   ];
   const selectedUnwindGameConfig = unwindGames.find((game) => game.id === selectedUnwindGame) || unwindGames[0];
   const transitioningGameConfig = unwindGames.find((game) => game.id === activeTransitionGameId) || null;
   const selectedDifficultyConfig = difficultyOptions.find((difficulty) => difficulty.id === selectedGameDifficulty) || difficultyOptions[1];
+  const isPhoneInterface = interfaceMode === 'phone';
+  const isPcInterface = interfaceMode === 'pc';
 
     const selectUnwindGame = (gameId) => {
 
@@ -2391,7 +2508,14 @@ function App() {
 
   
 
-  const returnToGameLibrary = () => {
+  const returnToGameLibrary = async () => {
+    if (document.fullscreenElement === selectedGameInterfaceRef.current) {
+      try {
+        await document.exitFullscreen();
+      } catch (err) {
+        console.error('Exit fullscreen failed:', err);
+      }
+    }
     setUnwindViewMode('grid');
     window.setTimeout(() => {
       document.getElementById('game-library')?.scrollIntoView({
@@ -2503,9 +2627,9 @@ function App() {
   const toggleFullscreen = useCallback(async () => {
     if (!selectedGameInterfaceRef.current) return;
     try {
-      if (document.fullscreenElement) {
+      if (document.fullscreenElement === selectedGameInterfaceRef.current) {
         await document.exitFullscreen();
-      } else {
+      } else if (!document.fullscreenElement) {
         await selectedGameInterfaceRef.current.requestFullscreen();
       }
     } catch (err) {
@@ -2515,10 +2639,31 @@ function App() {
 
   useEffect(() => {
     const handleFsChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
+      setIsFullscreen(document.fullscreenElement === selectedGameInterfaceRef.current);
     };
     document.addEventListener('fullscreenchange', handleFsChange);
     return () => document.removeEventListener('fullscreenchange', handleFsChange);
+  }, []);
+
+  useEffect(() => {
+    const detectInterfaceMode = () => {
+      const userAgent = navigator.userAgent || '';
+      const isMobileAgent = /Android|iPhone|iPad|iPod|Mobile/i.test(userAgent);
+      const hasCoarsePointer = window.matchMedia?.('(pointer: coarse)').matches;
+      const hasFinePointer = window.matchMedia?.('(pointer: fine)').matches;
+      const isNarrowScreen = window.matchMedia?.('(max-width: 767px)').matches;
+      const nextMode = isMobileAgent || (hasCoarsePointer && !hasFinePointer) || (hasCoarsePointer && isNarrowScreen) ? 'phone' : 'pc';
+      setInterfaceMode(nextMode);
+      document.documentElement.dataset.interfaceMode = nextMode;
+    };
+
+    detectInterfaceMode();
+    window.addEventListener('resize', detectInterfaceMode);
+    window.addEventListener('orientationchange', detectInterfaceMode);
+    return () => {
+      window.removeEventListener('resize', detectInterfaceMode);
+      window.removeEventListener('orientationchange', detectInterfaceMode);
+    };
   }, []);
 
   function navigateToTab(tabId) {
@@ -2546,11 +2691,11 @@ function App() {
 
     const closeTimer = window.setTimeout(() => {
       setEntryTransitionClosing(true);
-    }, 1650);
+    }, 520);
     const hideTimer = window.setTimeout(() => {
       setShowEntryTransition(false);
       setEntryTransitionClosing(false);
-    }, 2450);
+    }, 860);
 
     return () => {
       window.clearTimeout(closeTimer);
@@ -3271,6 +3416,46 @@ function App() {
   const radioDialSweepDegrees = (radioVolume / 100) * RADIO_DIAL_SWEEP;
   const radioDialDegrees = RADIO_DIAL_START + radioDialSweepDegrees;
   const activeBreatheRoom = useMemo(() => breatheRoomOptions.find((room) => room.id === selectedBreatheRoom) || breatheRoomOptions[0], [selectedBreatheRoom]);
+  const entryTransitionWallpaper = wallpaperImage || activeBreatheRoom.wallpaper || lofiMemoryHeaderImage;
+  const entryWelcomeTheme = activeBreatheRoom.id === 'maple'
+    ? {
+        eyebrow: 'MapleStory Theme',
+        heading: 'A dreamy MapleStory corner.',
+        copy: 'Warm nostalgia, soft glow, and a cozy little world waiting for you.',
+        shellClass: 'border-[#ffd7b2]/28 bg-[linear-gradient(145deg,rgba(52,33,24,0.8),rgba(93,64,46,0.58))]',
+        accentClass: 'bg-[linear-gradient(90deg,#ffd6b0_0%,#e2aa78_42%,#9e765e_100%)]',
+        dotClass: 'bg-[#ffd5ae]',
+        orbClass: 'bg-[#ffd7bc]/20'
+      }
+    : activeBreatheRoom.id === 'rain'
+      ? {
+          eyebrow: 'Rain Window',
+          heading: 'A softer rainy little hideaway.',
+          copy: 'Slow breaths, gentle ambience, and a calm page to settle into.',
+          shellClass: 'border-[#cde2eb]/24 bg-[linear-gradient(145deg,rgba(24,36,46,0.78),rgba(48,69,82,0.56))]',
+          accentClass: 'bg-[linear-gradient(90deg,#d8eef6_0%,#90bfd0_45%,#5d8390_100%)]',
+          dotClass: 'bg-[#d8eef6]',
+          orbClass: 'bg-[#a8d4e1]/18'
+        }
+      : activeBreatheRoom.id === 'fire'
+        ? {
+            eyebrow: 'Fireplace Nook',
+            heading: 'A warm nook for slower evenings.',
+            copy: 'Soft crackle, amber light, and a cozy space to unwind for a bit.',
+            shellClass: 'border-[#f2c6a1]/24 bg-[linear-gradient(145deg,rgba(52,29,20,0.8),rgba(88,54,35,0.58))]',
+            accentClass: 'bg-[linear-gradient(90deg,#ffd4a3_0%,#e89a63_40%,#9f5e43_100%)]',
+            dotClass: 'bg-[#ffd6af]',
+            orbClass: 'bg-[#f1b989]/18'
+          }
+        : {
+            eyebrow: 'Lofi Desk',
+            heading: 'Settle into your cozy corner.',
+            copy: 'Music, games, journaling, and memories — all in one gentle place.',
+            shellClass: 'border-white/18 bg-[linear-gradient(145deg,rgba(34,25,18,0.76),rgba(67,49,34,0.52))]',
+            accentClass: 'bg-[linear-gradient(90deg,#f7d0a7_0%,#d9a87c_38%,#a98467_100%)]',
+            dotClass: 'bg-[#f8d6b3]',
+            orbClass: 'bg-[#f8d7b8]/16'
+          };
 
   const scheduleRadioDialFeedbackHide = (delay = 850) => {
     if (radioDialFeedbackTimeoutRef.current) {
@@ -3420,7 +3605,7 @@ function App() {
           },
           events: {
             onReady: (event) => {
-              setRadioStatusMessage('Starting lofi radio');
+              setRadioStatusMessage(`Starting ${radioNowPlayingRef.current}`);
               try {
                 event.target.setVolume(radioVolume);
                 if (radioUnlockedRef.current) {
@@ -3430,21 +3615,30 @@ function App() {
                 }
                 event.target.playVideo();
                 setRadioNeedsInteraction(!radioUnlockedRef.current);
-                setRadioStatusMessage(radioUnlockedRef.current ? 'Lofi radio playing' : 'Lofi radio live — tap once for sound');
+                setRadioStatusMessage(radioUnlockedRef.current ? `${radioNowPlayingRef.current} playing` : `${radioNowPlayingRef.current} live — tap once for sound`);
               } catch {
                 setRadioNeedsInteraction(true);
                 setRadioStatusMessage('Tap once for sound');
               }
             },
             onStateChange: (event) => {
+              if (event.data === YT.PlayerState.ENDED) {
+                try {
+                  event.target.seekTo(0);
+                  event.target.playVideo();
+                  setRadioStatusMessage(`${radioNowPlayingRef.current} looping`);
+                } catch {}
+                return;
+              }
+
               if (event.data === YT.PlayerState.PLAYING) {
                 setRadioNeedsInteraction(!radioUnlockedRef.current);
-                setRadioStatusMessage(radioUnlockedRef.current ? 'Lofi radio playing' : 'Lofi radio live — tap once for sound');
+                setRadioStatusMessage(radioUnlockedRef.current ? `${radioNowPlayingRef.current} playing` : `${radioNowPlayingRef.current} live — tap once for sound`);
               }
             },
             onAutoplayBlocked: () => {
               setRadioNeedsInteraction(true);
-              setRadioStatusMessage('Tap once to turn on the lofi radio');
+              setRadioStatusMessage(`Tap once to turn on ${radioNowPlayingRef.current}`);
               try {
                 radioPlayerRef.current?.mute?.();
                 radioPlayerRef.current?.playVideo?.();
@@ -3464,7 +3658,7 @@ function App() {
         radioPlayerRef.current.setVolume?.(radioVolume);
         radioPlayerRef.current.playVideo?.();
         setRadioNeedsInteraction(!radioUnlockedRef.current);
-        setRadioStatusMessage(radioUnlockedRef.current ? 'Lofi radio playing' : 'Lofi radio live — tap once for sound');
+        setRadioStatusMessage(radioUnlockedRef.current ? `${radioNowPlayingRef.current} playing` : `${radioNowPlayingRef.current} live — tap once for sound`);
       } catch {
         setRadioNeedsInteraction(true);
         setRadioStatusMessage('Tap once for sound');
@@ -3485,7 +3679,7 @@ function App() {
       radioUnlockedRef.current = true;
       setRadioNeedsInteraction(false);
       if (!radioPlayerRef.current) {
-        setRadioStatusMessage('Lofi radio waking up');
+        setRadioStatusMessage(`${radioNowPlayingRef.current} waking up`);
         return;
       }
 
@@ -3493,7 +3687,7 @@ function App() {
         radioPlayerRef.current.unMute?.();
         radioPlayerRef.current.setVolume?.(radioVolume);
         radioPlayerRef.current.playVideo?.();
-        setRadioStatusMessage('Lofi radio playing');
+        setRadioStatusMessage(`${radioNowPlayingRef.current} playing`);
       } catch {}
     };
 
@@ -4811,6 +5005,7 @@ function App() {
   const applyBreatheRoom = (id) => {
     const room = breatheRoomOptions.find((r) => r.id === id);
     if (!room) return;
+    radioNowPlayingRef.current = room.title;
     setSelectedBreatheRoom(id);
     setRadioVolume(room.volume);
     setBreatheRoomStatus(room.status);
@@ -4819,7 +5014,7 @@ function App() {
       radioUnlockedRef.current = true;
       radioPlayerRef.current.loadVideoById({
         videoId: room.videoId,
-        startSeconds: 0,
+        startSeconds: room.startSeconds || 0,
         suggestedQuality: 'small'
       });
       radioPlayerRef.current.unMute?.();
@@ -4838,104 +5033,122 @@ function App() {
   }
 
   return (
-    <main className={`personalized-site lofi-vibe ${wallpaperImage ? 'wallpaper-active' : ''} design-${selectedDesign} ${comfortMode ? 'comfort-mode' : ''} isolate min-h-screen overflow-hidden bg-sand-50 pb-24 text-ink lg:pb-0`} style={themeStyle}>
+    <main data-interface-mode={interfaceMode} data-device-type={interfaceMode} className={`personalized-site lofi-vibe interface-${interfaceMode} ${isPhoneInterface ? 'phone-interface pb-28' : 'pc-interface pb-10 lg:pb-0'} ${wallpaperImage ? 'wallpaper-active' : ''} design-${selectedDesign} ${comfortMode ? 'comfort-mode' : ''} isolate min-h-screen overflow-hidden bg-sand-50 text-ink`} style={themeStyle}>
       {isGameTransitioning && <GameSplash game={transitioningGameConfig} />}
-      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-        {wallpaperImage && <div className="lofi-user-wallpaper absolute inset-0" style={{ backgroundImage: `url(${wallpaperImage})` }} />}
-        <div className="lofi-ambient-grid absolute inset-0" />
-        <div className="absolute left-[-2rem] top-0 h-[28rem] w-[28rem] rounded-full bg-[#efe4d7]/80 blur-3xl" />
-        <div className="absolute right-[-3rem] top-44 h-[26rem] w-[26rem] rounded-full bg-[#f8efe5]/85 blur-3xl" />
-        <div className="absolute bottom-[-4rem] left-1/3 h-[22rem] w-[22rem] rounded-full bg-[#f2e8dc]/78 blur-3xl" />
-        <div className="lofi-record-glow absolute -right-20 top-[22rem] hidden h-72 w-72 rounded-full lg:block" />
-        <div className="lofi-moon-glow absolute left-[6%] top-[34rem] hidden h-28 w-28 rounded-full md:block" />
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[#fffaf2]">
+        <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-[0.35] blur-[1px] transition-opacity duration-1000" aria-hidden="true" />
+        {wallpaperImage && <div className="lofi-user-wallpaper absolute inset-0 z-10" style={{ backgroundImage: `url(${wallpaperImage})` }} />}
+        <div className="lofi-ambient-grid absolute inset-0 z-20 opacity-30" />
+        <div className="absolute left-[-2rem] top-0 z-30 h-[28rem] w-[28rem] rounded-full bg-[#efe4d7]/60 blur-3xl" />
+        <div className="absolute right-[-3rem] top-44 z-30 h-[26rem] w-[26rem] rounded-full bg-[#f8efe5]/70 blur-3xl" />
+        <div className="absolute bottom-[-4rem] left-1/3 z-30 h-[22rem] w-[22rem] rounded-full bg-[#f2e8dc]/65 blur-3xl" />
+        <div className="lofi-record-glow absolute -right-20 top-[22rem] z-30 hidden h-72 w-72 rounded-full lg:block opacity-70" />
+        <div className="lofi-moon-glow absolute left-[6%] top-[34rem] z-30 hidden h-28 w-28 rounded-full md:block opacity-60" />
       </div>
 
 
       {showEntryTransition && (
-        <div className={`fixed inset-0 z-40 flex items-center justify-center bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.42),transparent_30%),linear-gradient(180deg,rgba(248,243,235,0.98)_0%,rgba(242,234,224,0.97)_100%)] backdrop-blur-[10px] transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${entryTransitionClosing ? 'opacity-0' : 'opacity-100'}`}>
-          <div className={`px-6 text-center transition-all duration-[1050ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${entryTransitionClosing ? 'translate-y-3 scale-[1.02] opacity-0' : 'translate-y-0 scale-100 opacity-100'}`}>
-            <div className="mx-auto flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border border-[#e8dfd5] bg-white/88 p-2 shadow-[0_18px_50px_rgba(158,136,114,0.12)] ring-8 ring-white/30">
-              <img src={headerLogoIcon} alt="Lofi Memory logo" className="h-full w-full rounded-full object-cover" />
+        <div className={`fixed inset-0 z-40 overflow-hidden transition-opacity duration-[520ms] ease-out ${entryTransitionClosing ? 'opacity-0' : 'opacity-100'}`}>
+          <img src={entryTransitionWallpaper} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(19,14,10,0.26)_0%,rgba(28,20,15,0.48)_38%,rgba(40,29,22,0.72)_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(255,255,255,0.16),transparent_0_18rem),radial-gradient(circle_at_82%_22%,rgba(255,224,187,0.12),transparent_0_16rem)]" />
+          <div className={`absolute -left-8 top-8 h-40 w-40 rounded-full blur-3xl ${entryWelcomeTheme.orbClass}`} />
+          <div className="absolute bottom-[-2rem] right-[-1rem] h-48 w-48 rounded-full bg-black/12 blur-3xl" />
+
+          <div className={`relative z-10 flex h-full items-center justify-center px-5 transition-all duration-[620ms] ease-out ${entryTransitionClosing ? 'translate-y-2 scale-[1.01] opacity-0' : 'translate-y-0 scale-100 opacity-100'}`}>
+            <div className={`w-full max-w-lg rounded-[2.5rem] border p-5 text-center text-white shadow-[0_24px_60px_rgba(0,0,0,0.26)] sm:p-7 ${entryWelcomeTheme.shellClass}`}>
+              <div className="mx-auto flex w-fit items-center gap-3 rounded-full border border-white/14 bg-white/8 px-4 py-2 text-[11px] font-black uppercase tracking-[0.32em] text-[#f7e6d2] shadow-sm">
+                <span className={`h-2 w-2 rounded-full ${entryWelcomeTheme.dotClass}`} />
+                Lofi Memory
+              </div>
+
+              <div className="mt-5 flex items-center justify-center gap-3 sm:gap-4">
+                <div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-white/16 bg-black/18 shadow-[0_14px_34px_rgba(0,0,0,0.18)] sm:h-24 sm:w-24">
+                  <div className="absolute inset-[9px] rounded-full border border-white/10 bg-[radial-gradient(circle,#3b2d22_0%,#17110d_72%)]" />
+                  <img src={radioVinylIcon} alt="" className="relative h-14 w-14 object-contain opacity-95 sm:h-16 sm:w-16" aria-hidden="true" />
+                </div>
+                <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-[1.8rem] border border-white/18 bg-white/10 p-2 shadow-[0_14px_34px_rgba(0,0,0,0.16)] sm:h-24 sm:w-24">
+                  <img src={headerLogoIcon} alt="Lofi Memory logo" className="h-full w-full rounded-[1.35rem] object-cover" />
+                </div>
+              </div>
+
+              <p className="mt-6 text-[11px] font-extrabold uppercase tracking-[0.38em] text-[#f0d5b6]">{entryWelcomeTheme.eyebrow}</p>
+              <h1 className="mt-3 font-display text-[2rem] font-bold tracking-tight text-white sm:text-[2.8rem]">{entryWelcomeTheme.heading}</h1>
+              <p className="mx-auto mt-3 max-w-md text-sm font-semibold leading-7 tracking-[0.06em] text-[#f6e7d7]/84">{entryWelcomeTheme.copy}</p>
+
+              <div className="mx-auto mt-6 w-full max-w-xs">
+                <div className="h-1.5 overflow-hidden rounded-full bg-white/12">
+                  <div className={`h-full rounded-full shadow-[0_0_16px_rgba(247,208,167,0.3)] ${entryWelcomeTheme.accentClass}`} style={{ width: '100%', animation: 'gameSplashProgress 0.95s ease-out infinite' }} />
+                </div>
+                <div className="mt-3 flex items-center justify-center gap-2">
+                  {[0, 1, 2].map((dot) => (
+                    <span key={`entry-dot-${dot}`} className={`h-2 w-2 rounded-full ${entryWelcomeTheme.dotClass}`} style={{ animation: 'pulse 1.15s ease-in-out infinite', animationDelay: `${dot * 0.14}s`, opacity: 0.68 }} />
+                  ))}
+                </div>
+              </div>
             </div>
-            <p className="mt-6 text-[11px] font-extrabold uppercase tracking-[0.42em] text-[#8d7763]">Lofi Memory</p>
-            <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-[#3d3025] sm:text-5xl">Clear your mind.</h1>
-            <p className="mt-3 text-sm font-semibold tracking-[0.08em] text-[#8c7967]">A calm little pause before you relax.</p>
           </div>
         </div>
       )}
 
-      <div className={`transition-opacity duration-500 ${showEntryTransition ? 'pointer-events-none select-none opacity-0' : 'opacity-100'}`}>
-      <nav className="sticky top-0 z-20 px-5 pt-5 sm:px-7 xl:px-10">
-        <div className="site-nav-shell lofi-glass lofi-picture-border lofi-border-memory mx-auto max-w-[1280px] rounded-[3.2rem] border p-4 shadow-soft backdrop-blur-xl lg:p-5">
-          <div className="flex flex-col gap-2.5 lg:gap-3 xl:flex-row xl:items-center xl:justify-between">
-            <a className="flex items-center gap-3.5" href="#home" onClick={() => openHomeSection('home')}>
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[1.35rem] border border-[#e8dfd5] bg-white/88 p-1.5 shadow-[0_12px_34px_rgba(117,127,119,0.14)] ring-1 ring-sage-100 overflow-hidden">
-                <img src={headerLogoIcon} alt="Lofi Memory Logo" className="h-full w-full rounded-[1rem] object-cover" />
+      <div className={`transition-opacity duration-300 ${showEntryTransition ? 'pointer-events-none select-none opacity-0' : 'opacity-100'}`}>
+      <nav className="sticky top-0 z-20 px-3 pt-3 sm:px-5 sm:pt-5 xl:px-10">
+        <div className="site-nav-shell lofi-picture-border lofi-border-memory relative mx-auto max-w-[1280px] overflow-hidden rounded-[2rem] sm:rounded-[3.2rem] border border-[#8b5e3c]/25 p-3 sm:p-4 shadow-soft lg:p-5">
+          <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/20 to-black/5" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
+          <div className="relative z-10 flex flex-col gap-2.5 lg:gap-3 xl:flex-row xl:items-center xl:justify-between">
+            <a className="flex items-center gap-2.5 sm:gap-3.5" href="#home" onClick={() => openHomeSection('home')}>
+              <div className="flex h-11 w-11 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-[1rem] sm:rounded-[1.35rem] border border-white/30 bg-white/12 p-1 sm:p-1.5 shadow-sm backdrop-blur-md overflow-hidden">
+                <img src={headerLogoIcon} alt="Lofi Memory Logo" className="h-full w-full rounded-[0.7rem] sm:rounded-[1rem] object-cover" />
               </div>
               <div>
-                <p className="font-display text-2xl font-bold text-sage-900">Lofi Memory</p>
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-sage-700">Chill music, lofi games & journal</p>
+                <p className="font-display text-xl sm:text-2xl font-bold text-white lofi-sharp-text leading-tight">Lofi Memory</p>
+                {isPhoneInterface ? null : (
+                  <p className="lofi-sharp-text-soft text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] sm:tracking-[0.28em] text-white/95">Relaxing games & notes</p>
+                )}
               </div>
             </a>
-            <div className="site-nav-links hidden flex-1 items-center justify-center gap-7 xl:gap-9">
-              {[
-                { id: 'unwind', label: 'Games', icon: Gamepad2 },
-                { id: 'home', label: 'Chill', icon: Headphones },
-                { id: 'write', label: 'Diary', icon: PenLine },
-                { id: 'notes', label: 'Notes', icon: FileText },
-                { id: 'breathe', label: 'Music Room', icon: Wind },
-                { id: 'memories', label: 'Memories', icon: CalendarDays },
-                { id: 'design', label: 'Design', icon: Palette }
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  className={`flex items-center gap-2 text-sm font-extrabold uppercase tracking-widest transition ${activeTab === tab.id ? 'text-sage-950' : 'text-sage-700 hover:text-sage-900'}`}
-                  onClick={() => navigateToTab(tab.id)}
-                >
-                  <tab.icon size={16} /> {tab.label}
-                </button>
-              ))}
-            </div>
-
-            <div className="site-nav-actions flex w-full flex-wrap items-center gap-2 lg:justify-end xl:w-auto xl:max-w-[34rem] xl:flex-none xl:flex-nowrap">
+            <div className={`site-nav-actions flex w-full flex-wrap items-center gap-2 lg:justify-end xl:w-auto xl:max-w-[34rem] xl:flex-none ${isPcInterface ? 'xl:flex-nowrap' : ''}`}>
               {user ? (
-                <div className="flex min-w-[210px] flex-1 items-center justify-between gap-3 rounded-full border border-amber-200/50 bg-white/92 px-4 py-2.5 shadow-lift xl:flex-none">
+                <div className="header-account-pill flex min-w-[160px] sm:min-w-[210px] flex-1 items-center justify-between gap-2 sm:gap-3 rounded-full border border-white/25 bg-white/15 px-3 py-2 sm:px-4 sm:py-2.5 shadow-sm backdrop-blur-md xl:flex-none">
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-extrabold text-sage-950">{user.displayName || user.email}</p>
-                    <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-sage-600">{cloudStatus}</p>
+                    <p className="truncate text-sm font-extrabold text-white lofi-sharp-text">{user.displayName || user.email}</p>
+                    {isPhoneInterface ? null : <p className="lofi-sharp-text-soft text-[11px] font-bold uppercase tracking-[0.18em] text-white/90">{cloudStatus}</p>}
                   </div>
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-sage-100 text-sage-700 shadow-sm">
+                  <div className={`flex shrink-0 items-center justify-center rounded-2xl shadow-sm ${isPhoneInterface ? 'h-8 w-auto gap-1.5 px-2.5 bg-white/18 text-white' : 'h-9 w-9 bg-white/20 text-white'}`}>
                     <ShieldCheck size={15} />
+                    {isPhoneInterface ? <span className="text-[10px] font-black uppercase tracking-[0.16em]">Sync</span> : null}
                   </div>
                 </div>
               ) : (
-                <button className="flex min-w-[208px] flex-1 items-center justify-between gap-3 rounded-full border border-amber-200/50 bg-white/92 px-4 py-2.5 text-left shadow-lift transition hover:-translate-y-0.5 hover:bg-white xl:flex-none" onClick={signInWithGoogle} disabled={authLoading} type="button">
+                <button className="header-account-pill flex min-w-[160px] sm:min-w-[208px] flex-1 items-center justify-between gap-2 sm:gap-3 rounded-full border border-white/25 bg-white/15 px-3 py-2 sm:px-4 sm:py-2.5 text-left shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25 xl:flex-none" onClick={signInWithGoogle} disabled={authLoading} type="button">
                   <div>
-                    <p className="text-sm font-extrabold text-sage-950">{authLoading ? 'Checking login...' : 'Sign in with Google'}</p>
-                    <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-sage-600">Sync across devices</p>
+                    <p className="text-xs sm:text-sm font-extrabold text-white lofi-sharp-text">{authLoading ? '...' : isPhoneInterface ? 'Sign in to sync' : 'Sign in'}</p>
+                    {isPhoneInterface ? null : <p className="lofi-sharp-text-soft text-[9px] sm:text-[11px] font-bold uppercase tracking-[0.16em] text-white/90">Sync</p>}
                   </div>
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-sage-900 text-white shadow-sm">
-                    <ShieldCheck size={15} />
+                  <div className={`flex shrink-0 items-center justify-center rounded-xl sm:rounded-2xl shadow-sm ${isPhoneInterface ? 'h-8 w-8 bg-white/18 text-white' : 'h-7 w-7 sm:h-9 sm:w-9 bg-white text-[#4a3a2d]'}`}>
+                    <ShieldCheck size={14} />
                   </div>
                 </button>
               )}
-              <div className="flex flex-wrap items-center gap-2 rounded-full border border-[#e8dfd5] bg-white/82 p-1.5 shadow-sm xl:flex-nowrap">
+              <div className="header-quick-actions flex flex-wrap items-center gap-1.5 sm:gap-2 rounded-full border border-white/20 bg-black/20 p-1 sm:p-1.5 shadow-sm backdrop-blur-md xl:flex-nowrap">
                 {user && (
-                  <button className="rounded-full border border-amber-200/50 bg-white/90 px-3.5 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:bg-white" onClick={handleSignOut} type="button">
+                  <button className="rounded-full border border-white/30 bg-white/10 px-3 py-1.5 sm:px-3.5 sm:py-2 text-[11px] sm:text-sm font-bold text-white lofi-sharp-chip transition hover:-translate-y-0.5 hover:bg-white/20" onClick={handleSignOut} type="button">
                     Sign out
                   </button>
                 )}
                 {isMasterAdmin && (
-                  <div className="flex overflow-hidden rounded-full border border-amber-200/50 bg-white/90 p-1">
+                  <div className="flex overflow-hidden rounded-full border border-white/25 bg-white/10 p-1">
                     <button
-                      className={`rounded-full px-3.5 py-2 text-sm font-extrabold transition ${adminViewMode === 'master' ? 'bg-sage-900 text-white shadow-sm' : 'text-sage-700 hover:bg-sage-50'}`}
+                      className={`rounded-full px-3.5 py-2 text-sm font-extrabold transition lofi-sharp-chip ${adminViewMode === 'master' ? 'bg-white text-[#4a3a2d] shadow-sm' : 'text-white/90 hover:bg-white/10'}`}
                       onClick={() => setAdminViewMode('master')}
                       type="button"
                     >
                       Master
                     </button>
                     <button
-                      className={`rounded-full px-3.5 py-2 text-sm font-extrabold transition ${adminViewMode === 'user' ? 'bg-sage-900 text-white shadow-sm' : 'text-sage-700 hover:bg-sage-50'}`}
+                      className={`rounded-full px-3.5 py-2 text-sm font-extrabold transition lofi-sharp-chip ${adminViewMode === 'user' ? 'bg-white text-[#4a3a2d] shadow-sm' : 'text-white/90 hover:bg-white/10'}`}
                       onClick={() => setAdminViewMode('user')}
                       type="button"
                     >
@@ -4944,102 +5157,133 @@ function App() {
                   </div>
                 )}
                 {showAdminTools && (
-                  <button className="rounded-full border border-sage-800 bg-sage-900 px-3.5 py-2 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-sage-800" onClick={() => openHomeSection('seo-studio')} type="button">
+                  <button className="rounded-full border border-white/40 bg-white px-3.5 py-2 text-sm font-bold text-[#4a3a2d] transition hover:-translate-y-0.5 hover:bg-[#fff9f0]" onClick={() => openHomeSection('seo-studio')} type="button">
                     SEO studio
                   </button>
                 )}
-                <button className={`rounded-full border px-3.5 py-2 text-sm font-bold transition hover:-translate-y-0.5 ${comfortMode ? 'border-sage-800 bg-sage-900 text-white' : 'border-amber-200/50 bg-white/90 text-sage-800 hover:bg-white'}`} onClick={() => setComfortMode(!comfortMode)} type="button">
-                  Comfort
+                <button className={`inline-flex items-center justify-center gap-1.5 rounded-full border px-3 py-1.5 sm:px-3.5 sm:py-2 text-[11px] sm:text-sm font-bold lofi-sharp-chip transition hover:-translate-y-0.5 ${comfortMode ? 'border-white bg-white text-[#4a3a2d]' : 'border-white/30 bg-white/10 text-white hover:bg-white/20'}`} onClick={() => setComfortMode(!comfortMode)} type="button">
+                  <Cloud size={isPhoneInterface ? 13 : 14} /> {isPhoneInterface ? 'Soft' : 'Comfort'}
                 </button>
-                <button className="rounded-full border border-amber-200/50 bg-white/90 px-3.5 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:bg-white" onClick={() => (hasPin ? setPinSettingsOpen(true) : setLocked(true))} type="button">
-                  {hasPin ? 'Privacy' : 'Set lock'}
+                <button className="inline-flex items-center justify-center gap-1.5 rounded-full border border-white/30 bg-white/10 px-3 py-1.5 sm:px-3.5 sm:py-2 text-[11px] sm:text-sm font-bold text-white lofi-sharp-chip transition hover:-translate-y-0.5 hover:bg-white/20" onClick={() => (hasPin ? setPinSettingsOpen(true) : setLocked(true))} type="button">
+                  <Lock size={isPhoneInterface ? 13 : 14} /> {isPhoneInterface ? 'Private' : hasPin ? 'Privacy' : 'Lock'}
                 </button>
               </div>
             </div>
           </div>
-          <div className="site-nav-links mt-2 hidden flex-wrap items-center justify-center gap-2 rounded-[1.5rem] border border-[#e8dfd5] bg-white/88 p-1.5 2xl:flex">
-            <a className="rounded-full border border-amber-200/50 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#unwind" onClick={() => navigateToTab('unwind')}>Games</a>
-            <a className="rounded-full border border-amber-200/50 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#home" onClick={() => navigateToTab('home')}>Chill</a>
-            <button className="rounded-full border border-amber-200/50 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
-            <a className="rounded-full border border-amber-200/50 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#memories" onClick={() => navigateToTab('memories')}>Memories</a>
-            <a className="rounded-full border border-amber-200/50 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#breathe" onClick={() => navigateToTab('breathe')}>Music</a>
-            <a className="rounded-full border border-amber-200/50 bg-white/95 px-4 py-2 text-sm font-extrabold text-sage-950 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
-          </div>
         </div>
       </nav>
 
-      {showMinimalHomeOverview && (
-      <section id="home" className="mx-auto max-w-[1040px] px-5 pb-20 pt-10 sm:px-7 xl:px-10">
-        <div className="mb-6 text-center">
-          <p className="text-[11px] font-extrabold uppercase tracking-[0.34em] text-[#9a806a]">Choose your chill space</p>
-            <p className="mt-3 text-sm font-semibold leading-7 text-[#7f6a58]">Pick a space.</p>
-        </div>
-        <div className="lofi-glass lofi-picture-border lofi-border-memory rounded-[3rem] border p-3 shadow-soft backdrop-blur-xl sm:p-4">
-          <div className="grid gap-3 md:grid-cols-2">
-            {homeEntryCards.map((card) => (
+      {/* Mobile Bottom Nav */}
+      {!isFullscreen && isPhoneInterface ? (
+      <div className="mobile-bottom-nav fixed bottom-4 left-4 right-4 z-50">
+        <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-full border border-[#8b5e3c]/25 p-1.5 shadow-lift backdrop-blur-2xl transition duration-500 hover:shadow-soft">
+          <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-60" aria-hidden="true" />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/20 to-black/5" />
+          <div className="relative z-10 flex items-center gap-1 overflow-x-auto px-1 custom-scrollbar sm:justify-around sm:px-2">
+            {[
+              { id: 'unwind', label: 'Games', icon: Gamepad2 },
+              { id: 'home', label: 'Chill', icon: Headphones },
+              { id: 'write', label: 'Diary', icon: PenLine },
+              { id: 'notes', label: 'Notes', icon: FileText },
+              { id: 'breathe', label: 'Music', icon: Wind },
+              { id: 'memories', label: 'Archive', icon: CalendarDays }
+            ].map((tab) => (
               <button
-                key={card.id}
-                className="group lofi-glass lofi-picture-border lofi-border-watercolor relative flex min-h-[11rem] w-full flex-col items-start justify-start overflow-hidden rounded-[2.2rem] border px-5 py-5 text-left shadow-[0_10px_26px_rgba(146,126,106,0.07)] transition duration-300 hover:-translate-y-1 hover:border-[#d8c6b2] hover:shadow-[0_16px_34px_rgba(146,126,106,0.1)]"
-                onClick={card.onClick}
-                type="button"
+                key={tab.id}
+                className={`flex shrink-0 flex-col items-center gap-1 rounded-full px-2.5 py-2 transition-all duration-300 ${activeTab === tab.id ? 'bg-white/20 text-white shadow-inner scale-105' : 'text-white/70 hover:text-white'}`}
+                onClick={() => navigateToTab(tab.id)}
               >
-                <img src={card.preview} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" aria-hidden="true" />
-                <div className="absolute inset-0 bg-gradient-to-br from-black/45 via-black/5 to-transparent" />
-                <div className="relative z-10 p-2">
-                  <p className="text-lg font-black tracking-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">{card.title}</p>
-                  <p className="mt-0.5 text-xs font-bold uppercase tracking-widest text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">{card.description}</p>
-                </div>
+                <tab.icon size={18} />
+                <span className="text-[9px] font-black uppercase tracking-wider">{tab.label}</span>
               </button>
             ))}
+            <button
+              className={`flex shrink-0 flex-col items-center gap-1 rounded-full px-2.5 py-2 transition-all duration-300 ${activeTab === 'design' ? 'bg-white/20 text-white shadow-inner scale-105' : 'text-white/70 hover:text-white'}`}
+              onClick={() => navigateToTab('design')}
+            >
+              <Palette size={18} />
+              <span className="text-[9px] font-black uppercase tracking-wider">Design</span>
+            </button>
           </div>
         </div>
+      </div>
+      ) : null}
+
+      {showMinimalHomeOverview && (
+      <section id="home" className="mx-auto max-w-[1220px] px-3 pb-24 pt-6 sm:px-5 sm:pb-20 sm:pt-10 xl:px-10">
+        <div className="mb-6 text-center">
+          <p className="text-[11px] font-extrabold uppercase tracking-[0.34em] text-[#9a806a]">Choose your chill space</p>
+            <p className="mt-3 text-sm font-semibold leading-7 text-[#7f6a58]">Start with games, music, diary, notes, or memories.</p>
+        </div>
+          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-3 shadow-soft sm:p-4">
+            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+              {homeEntryCards.map((card) => (
+                <button
+                  key={card.id}
+                  className="group lofi-picture-border lofi-border-watercolor relative flex min-h-[11.2rem] w-full flex-col items-start justify-start overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/20 px-5 py-5 text-left shadow-sm transition duration-300 hover:-translate-y-1 hover:border-[#8b5e3c]/40 hover:shadow-lift sm:min-h-[12.4rem] sm:px-6 sm:py-6 xl:min-h-[13rem]"
+                  onClick={card.onClick}
+                  type="button"
+                >
+                  <img src={card.preview} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" aria-hidden="true" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/25 to-black/5" />
+                  <div className="relative z-10 w-full">
+                    <p className="lofi-sharp-text text-xl font-black tracking-tight text-white">{card.title}</p>
+                    <p className="lofi-sharp-text-soft mt-1 text-[11px] font-black uppercase tracking-[0.25em] text-white/95">{card.description}</p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
       </section>
       )}
 
       {activeTab === 'home' && activeHomeSection === 'overview' && !showMinimalHomeOverview && (
-      <section id="home" className="mx-auto grid max-w-[1280px] gap-8 px-5 pb-28 pt-10 sm:px-7 lg:grid-cols-12 lg:pb-12 xl:gap-12 xl:px-10">
+      <section id="home" className="mx-auto grid max-w-[1280px] gap-6 px-3 pb-24 pt-6 sm:gap-8 sm:px-5 sm:pb-28 sm:pt-10 lg:grid-cols-12 lg:pb-12 xl:gap-12 xl:px-10">
         <div className="lg:col-span-8">
-          <div className="lofi-glass lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3.2rem] border p-8 shadow-soft backdrop-blur-xl lg:p-10 xl:p-11">
-            <div className="pointer-events-none absolute -left-10 top-12 h-28 w-28 rounded-full bg-[#efe4d8]/55 blur-3xl"></div>
-            <div className="pointer-events-none absolute right-4 top-4 h-32 w-32 rounded-full bg-[#f7eee3]/65 blur-3xl"></div>
-            <div className="relative">
-              <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#eadfce] bg-white/90 px-4 py-2 text-sm font-bold text-[#4a3a2d] shadow-sm">
-                <Headphones size={16} /> Lofi music & chill vibes
+          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[2.2rem] sm:rounded-[3.2rem] border border-[#8b5e3c]/25 p-5 sm:p-8 shadow-[0_32px_90px_rgba(83,62,44,0.18)] lg:p-10 xl:p-11">
+            <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/58 via-black/28 to-black/10" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.20),transparent_20rem)]" />
+            <div className="relative z-10">
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/15 px-3 py-1.5 text-[11px] sm:mb-7 sm:px-4 sm:py-2 sm:text-sm font-bold text-white shadow-sm backdrop-blur-md lofi-sharp-text-soft">
+                <Headphones size={15} /> Relaxing music, games, diary & notes
               </div>
-              <h1 className="max-w-3xl font-display text-5xl font-bold leading-[0.96] tracking-tight text-[#3d3025] md:text-6xl">Lofi Memory — a relaxing place to play games and listen to music.</h1>
-              <p className="mt-5 max-w-3xl text-[1.18rem] font-semibold leading-8 text-[#5d4c3e]">Listen to lofi music, play relaxing browser games, chill, keep a private online diary, and enjoy a cozy music room in one soft online space.</p>
+              <h1 className="lofi-sharp-text max-w-3xl font-display text-3xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl sm:leading-[0.96] md:text-6xl">Lofi Memory is your cozy online space for relaxing games, lofi music, private journaling, and notes.</h1>
+              <p className="lofi-sharp-text-soft mt-4 max-w-3xl text-base font-bold leading-7 text-white/100 sm:mt-5 sm:text-[1.18rem] sm:leading-8">Listen to lofi music, play relaxing browser games, keep a private online diary, save reminders, and settle into a softer music room without bouncing between tabs.</p>
 
-              <div className="lofi-now-playing lofi-glass mt-7 flex flex-col gap-4 rounded-[2.2rem] border p-4 shadow-sm backdrop-blur sm:flex-row sm:items-center sm:justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="lofi-mini-record flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-[#d8c5af] bg-[#3f342c] shadow-[0_14px_28px_rgba(80,61,47,0.14)]">
-                    <div className="h-5 w-5 rounded-full border border-[#d8c5af] bg-[#f3e7d8]" />
+              <div className="lofi-now-playing mt-6 sm:mt-7 flex flex-col gap-4 rounded-[1.8rem] sm:rounded-[2.2rem] border border-white/20 bg-black/15 p-3.5 sm:p-4 shadow-sm backdrop-blur-md sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="lofi-mini-record flex h-14 w-14 sm:h-16 sm:w-16 shrink-0 items-center justify-center rounded-full border border-white/20 bg-[#3f342c] shadow-[0_14px_28px_rgba(0,0,0,0.18)]">
+                    <div className="h-4 w-4 sm:h-5 sm:w-5 rounded-full border border-white/25 bg-[#f3e7d8]" />
                   </div>
-                  <div>
-                    <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-[#9a806a]">Now playing</p>
-                    <p className="mt-1 text-base font-extrabold text-[#3d3025]">Dusk room · rain window · soft study beats</p>
+                  <div className="min-w-0">
+                    <p className="lofi-sharp-text-soft text-[10px] sm:text-[11px] font-extrabold uppercase tracking-[0.24em] text-white/85">Now playing</p>
+                    <p className="lofi-sharp-text mt-0.5 truncate text-sm sm:text-base font-extrabold text-white">Dusk room · rain window · soft study beats</p>
                   </div>
                 </div>
-                <div className="lofi-equalizer" aria-hidden="true"><span /><span /><span /><span /><span /></div>
+                <div className="lofi-equalizer hidden sm:flex" aria-hidden="true"><span /><span /><span /><span /><span /></div>
               </div>
 
-              <div className="mt-9 flex flex-wrap gap-3">
-                <button className="inline-flex items-center gap-2 rounded-full bg-[#4f3f32] px-5 py-3 text-sm font-extrabold text-white shadow-[0_12px_28px_rgba(97,74,56,0.16)] transition hover:-translate-y-1 hover:bg-[#433528]" onClick={() => setIsRadioPlaying(true)} type="button">
-                  <Headphones size={17} /> Start lofi music
+              <div className="mt-7 flex flex-wrap gap-2 sm:mt-9 sm:gap-3">
+                <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full bg-white px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-[#4f3f32] shadow-[0_12px_28px_rgba(0,0,0,0.16)] transition hover:-translate-y-1 hover:bg-[#fff9f0]" onClick={() => setIsRadioPlaying(true)} type="button">
+                  <Headphones size={16} /> Start music
                 </button>
-                <a className="inline-flex items-center gap-2 rounded-full border border-[#e2d3c2] bg-white/92 px-5 py-3 text-sm font-extrabold text-[#4f3f32] shadow-sm transition hover:-translate-y-1 hover:border-[#d3bea8] hover:bg-white" href="#unwind" onClick={() => navigateToTab('unwind')}>
-                  <Leaf size={17} /> Play relaxing games
+                <a className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/30 bg-white/15 px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/25" href="#unwind" onClick={() => navigateToTab('unwind')}>
+                  <Leaf size={16} /> Games
                 </a>
-                <a className="inline-flex items-center gap-2 rounded-full border border-[#e2d3c2] bg-white/92 px-5 py-3 text-sm font-extrabold text-[#4f3f32] shadow-sm transition hover:-translate-y-1 hover:border-[#d3bea8] hover:bg-white" href="#notes" onClick={() => navigateToTab('notes')}>
-                  <FileText size={17} /> Open notes & to-dos
+                <a className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/30 bg-white/15 px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/25" href="#notes" onClick={() => navigateToTab('notes')}>
+                  <FileText size={16} /> Notes
                 </a>
-                <button className="inline-flex items-center gap-2 rounded-full border border-[#e2d3c2] bg-white/92 px-5 py-3 text-sm font-extrabold text-[#4f3f32] shadow-sm transition hover:-translate-y-1 hover:border-[#d3bea8] hover:bg-white" onClick={() => setCustomizerOpen(true)} type="button">
-                  <Palette size={17} /> Choose your theme
+                <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/30 bg-white/15 px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/25" onClick={() => setCustomizerOpen(true)} type="button">
+                  <Palette size={16} /> Design
                 </button>
-                {hasPin && (
-                  <button className="inline-flex items-center gap-2 rounded-full border border-[#e2d3c2] bg-white/92 px-5 py-3 text-sm font-extrabold text-[#4f3f32] shadow-sm transition hover:-translate-y-1 hover:border-[#d3bea8] hover:bg-white" onClick={() => setPinSettingsOpen(true)} type="button">
-                    <Shield size={17} /> Privacy settings
-                  </button>
-                )}
+              </div>
+
+              <div className="mt-5 flex flex-wrap gap-2 text-[11px] font-extrabold uppercase tracking-[0.18em] text-white/90 sm:text-xs">
+                <span className="rounded-full border border-white/20 bg-white/12 px-3 py-2 shadow-sm backdrop-blur-md">Private journal</span>
+                <span className="rounded-full border border-white/20 bg-white/12 px-3 py-2 shadow-sm backdrop-blur-md">Cozy browser games</span>
+                <span className="rounded-full border border-white/20 bg-white/12 px-3 py-2 shadow-sm backdrop-blur-md">Lofi radio</span>
+                <span className="rounded-full border border-white/20 bg-white/12 px-3 py-2 shadow-sm backdrop-blur-md">Notes & reminders</span>
               </div>
 
               <div className="mt-7 grid gap-3 lg:grid-cols-3">
@@ -5069,19 +5313,11 @@ function App() {
               <div className="mt-8 flex flex-wrap items-center gap-3 text-sm">
                 <span className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Popular guides</span>
                 <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-music-room.html">Lofi music room</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-music-website.html">Lofi music website</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/listen-to-lofi-music-online.html">Listen to lofi</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-radio-online.html">Lofi radio</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/relaxing-music-online.html">Relaxing music</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-music-online.html">Chill music</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-music-and-games.html">Music + games</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-study-music.html">Study music</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-vibes.html">Lofi vibes</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-vibes.html">Chill vibes</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/website-to-relax.html">Website to relax</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-place-online.html">Chill place online</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-games.html">Chill games</a>
                 <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/relaxing-browser-games.html">Relaxing browser games</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/daily-journaling-app.html">Daily journaling app</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/write-diary-online.html">Write diary online</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-radio-online.html">Lofi radio</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-place-online.html">Chill place online</a>
               </div>
 
               <div className="mt-8 grid gap-4 sm:grid-cols-3 xl:grid-cols-3">
@@ -5124,8 +5360,8 @@ function App() {
                       </div>
                       <div className="min-w-0 flex-1">
                         <span className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-700">Write</span>
-                        <span className="mt-1 block text-base font-extrabold text-sage-950">Thought drop</span>
-                        <span className="mt-2 block text-sm leading-6 text-sage-700">Write down whatever is on your mind only when you want to keep it, with more room to breathe.</span>
+                        <span className="mt-1 block text-base font-extrabold text-sage-950">Private journal</span>
+                        <span className="mt-2 block text-sm leading-6 text-sage-700">Write down what is on your mind whenever you want to keep the moment, with more room to breathe.</span>
                       </div>
                     </button>
                   </div>
@@ -5224,10 +5460,10 @@ function App() {
 
             <div className="mt-8 rounded-[1.6rem] bg-white/12 px-5 py-5 text-center ring-1 ring-white/12">
               <div className="mx-auto max-w-xl">
-                <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-white/90">Quiet reminder</p>
-                <p className="mt-3 text-sm leading-7 text-white/95">You can leave one small honest note today and return tomorrow. The page will still be here when you are ready.</p>
+                <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft">Quiet reminder</p>
+                <p className="mt-3 text-sm leading-7 text-white/95 lofi-sharp-text-soft">You can leave one small honest note today and return tomorrow. The page will still be here when you are ready.</p>
                 <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
-                  <p className="text-sm font-semibold tracking-[0.08em] text-white/90">{streak > 0 ? `${streak} day${streak === 1 ? '' : 's'} of rhythm` : 'Begin with one gentle page'}</p>
+                  <p className="text-sm font-semibold tracking-[0.08em] text-white/95 lofi-sharp-chip">{streak > 0 ? `${streak} day${streak === 1 ? '' : 's'} of rhythm` : 'Begin with one gentle page'}</p>
                   <a className="inline-flex items-center rounded-full bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.14em] text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50" href="#journal" onClick={() => navigateToTab('write')}>
                     Write now
                   </a>
@@ -5328,6 +5564,14 @@ function App() {
                         + {seoPopularSearches.length - 12} more
                       </button>
                     )}
+                  </div>
+                  <div className="mt-5 grid gap-3 lg:grid-cols-3">
+                    {seoKeywordClusters.map((cluster) => (
+                      <div key={cluster.title} className="rounded-[1.4rem] border border-sage-100 bg-white/70 p-4">
+                        <p className="text-[11px] font-extrabold uppercase tracking-[0.2em] text-sage-600">{cluster.title}</p>
+                        <p className="mt-2 text-sm font-semibold leading-6 text-sage-700">{cluster.text}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -5439,92 +5683,101 @@ function App() {
         </div>
 
         {activeTab === 'write' && (
-        <form className="lofi-picture-border lofi-border-memory rounded-[3rem] border border-[#e8dfd5]/80 bg-white/94 p-4 shadow-soft backdrop-blur sm:p-6 xl:p-8" onSubmit={saveEntry}>
-          <div className="mb-5 overflow-hidden rounded-[2.2rem] border border-[#e8dfd5]/90 bg-gradient-to-r from-white via-sage-50/35 to-white p-4 shadow-sm sm:p-5">
-            <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-              <div className="max-w-3xl">
-                <p className="text-sm font-extrabold uppercase tracking-[0.22em] text-sage-600">Your page for today</p>
-                <h2 className="mt-2 text-[2rem] font-extrabold leading-tight text-ink sm:text-3xl">Keep it simple. Write what feels true.</h2>
-                <p className="mt-2 text-sm leading-7 text-sage-700">This page does not need a polished story. A sentence, a fragment, or a few plain words are already enough.</p>
-              </div>
-              <div className="inline-flex items-center gap-2 self-start rounded-full border border-[#e8dfd5] bg-white/98 px-4 py-2 text-sm font-bold text-sage-700 shadow-sm">
-                <CalendarDays size={16} /> {formatDate(new Date().toISOString())}
-              </div>
-            </div>
-            <div className="mt-4 flex flex-wrap gap-2 text-[11px] font-extrabold uppercase tracking-[0.2em] text-sage-600 sm:text-xs">
-              <span className="rounded-full border border-[#e8dfd5] bg-white/90 px-3 py-2 shadow-sm">{selectedMood} mood</span>
-              <span className="rounded-full border border-[#e8dfd5] bg-white/90 px-3 py-2 shadow-sm">{draftWordCount} words</span>
-              <span className="rounded-full border border-[#e8dfd5] bg-white/90 px-3 py-2 shadow-sm">{completedQuestCount}/{journalQuest.length} ritual steps</span>
-            </div>
-          </div>
-
-          <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
-            <label className="block text-sm font-bold text-sage-800" htmlFor="entry-title">Title, if you want one</label>
-            <p className="text-sm font-semibold text-sage-500">It can stay short, plain, or even blank.</p>
-          </div>
-          <input
-            className="journal-title-input mb-5 w-full rounded-[2.2rem] px-5 py-4 text-lg font-semibold outline-none"
-            id="entry-title"
-            onChange={(event) => setTitle(event.target.value)}
-            placeholder="e.g. The part of today I want to keep"
-            value={title}
-          />
-
-          <div className="mb-4 rounded-[1.6rem] border border-[#e8dfd5]/90 bg-gradient-to-r from-white via-sage-50/45 to-white p-3.5 shadow-sm backdrop-blur-sm sm:p-4">
-            <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
-              <div className="space-y-3">
-                <div>
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-500">Light controls</p>
-                  <p className="mt-1 text-sm font-semibold text-sage-600">Keep only what helps, then let the page stay quiet.</p>
+        <form className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-4 shadow-soft sm:p-6 xl:p-8" onSubmit={saveEntry}>
+          <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/25 to-black/15" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.06),transparent_35rem)]" />
+          <div className="relative z-10">
+            <div className="lofi-picture-border lofi-border-memory relative mb-6 overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/25 p-8 shadow-sm lg:p-10">
+              <img src={diarySectionPreviewImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+              <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
+              <div className="relative z-10">
+                <h1 className="font-display text-5xl font-bold tracking-tight text-white lofi-sharp-text">Diary</h1>
+                <p className="mt-2 text-xs font-black uppercase tracking-[0.3em] text-white/95 lofi-sharp-text-soft">Private Journal</p>
+                <div className="mt-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                  <div className="max-w-xl">
+                    <p className="text-base font-bold text-white lofi-sharp-text-soft">Keep it simple. Write what feels true. A sentence, a fragment, or a few plain words are already enough.</p>
+                  </div>
+                  <div className="inline-flex items-center gap-2 self-start rounded-full border border-white/25 bg-white/12 px-4 py-2 text-sm font-bold text-white lofi-sharp-chip shadow-sm backdrop-blur-md">
+                    <CalendarDays size={16} /> {formatDate(new Date().toISOString())}
+                  </div>
                 </div>
-                <div className="grid gap-3 sm:grid-cols-2 xl:min-w-[31rem] xl:grid-cols-3">
-                  <label className="block text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-500">
-                    Mood
-                    <select className="mt-2 w-full rounded-[1.15rem] border border-[#e8dfd5] bg-white/95 px-3.5 py-3 text-sm font-semibold text-ink outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70" onChange={(event) => setSelectedMood(event.target.value)} value={selectedMood}>
-                      {weatherOptions.map((mood) => (
-                        <option key={mood.label} value={mood.label}>{mood.label}</option>
-                      ))}
-                    </select>
-                  </label>
-                  <label className="block text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-500">
-                    Font
-                    <select className="mt-2 w-full rounded-[1.15rem] border border-[#e8dfd5] bg-white/95 px-3.5 py-3 text-sm font-semibold text-ink outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70" onChange={(event) => setJournalStyle({ ...journalStyle, fontId: event.target.value })} value={journalStyle.fontId}>
-                      {journalFontOptions.map((font) => (
-                        <option key={font.id} value={font.id}>{font.label}</option>
-                      ))}
-                    </select>
-                  </label>
-                  <label className="block text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-500">
-                    Size
-                    <select className="mt-2 w-full rounded-[1.15rem] border border-[#e8dfd5] bg-white/95 px-3.5 py-3 text-sm font-semibold text-ink outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70" onChange={(event) => setJournalStyle({ ...journalStyle, sizeId: event.target.value })} value={journalStyle.sizeId}>
-                      {journalSizeOptions.map((size) => (
-                        <option key={size.id} value={size.id}>{size.label}</option>
-                      ))}
-                    </select>
-                  </label>
+                <div className="mt-6 flex flex-wrap gap-2 text-[11px] font-black uppercase tracking-[0.2em] text-white/90 lofi-sharp-text-soft sm:text-xs">
+                  <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-sm">{selectedMood} mood</span>
+                  <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-sm">{draftWordCount} words</span>
+                  <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-sm">{completedQuestCount}/{journalQuest.length} ritual steps</span>
                 </div>
               </div>
-              <div className="flex flex-wrap items-center gap-2 xl:max-w-[22rem] xl:justify-end">
-                <button className="rounded-full border border-[#e8dfd5] bg-white px-3.5 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-sage-50" onClick={() => toggleBoldText(entryBodyRef, setBody)} title="Bold selected text" type="button">Bold</button>
-                <button className="rounded-full border border-[#e8dfd5] bg-white px-3.5 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-sage-50" onClick={() => toggleUnderlineText(entryBodyRef, setBody)} title="Underline selected text" type="button">Underline</button>
-                <button className="rounded-full border border-[#e8dfd5] bg-white px-3.5 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-sage-50" onClick={() => toggleBulletList(entryBodyRef, setBody)} title="Bullet points" type="button">List</button>
-                {quickEmojis.slice(0, 4).map((emoji) => (
-                  <button key={emoji} className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1.5 text-base shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-sage-50" onClick={() => insertQuickEmoji(emoji)} type="button">
-                    {emoji}
-                  </button>
-                ))}
-                <label className="flex cursor-pointer items-center gap-2 rounded-full border border-[#e8dfd5] bg-white px-3.5 py-2 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-sage-50">
-                  <ImagePlus size={14} /> Photo
-                  <input accept="image/*" className="hidden" onChange={handleEntryImageUpload} type="file" />
-                </label>
-                <button className="rounded-full bg-ink px-4 py-2 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-800" type="submit">Save page</button>
+            </div>
+
+            <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
+              <label className="block text-sm font-bold text-white lofi-sharp-text" htmlFor="entry-title">Title, if you want one</label>
+              <p className="text-sm font-semibold text-white/95 lofi-sharp-text-soft">It can stay short, plain, or even blank.</p>
+            </div>
+            <input
+              className="journal-title-input mb-5 w-full rounded-[2.2rem] border border-white/20 bg-black/15 px-5 py-4 text-lg font-bold text-white placeholder-white/50 outline-none backdrop-blur-md transition focus:border-white/40 focus:bg-black/30"
+              id="entry-title"
+              onChange={(event) => setTitle(event.target.value)}
+              placeholder="e.g. The part of today I want to keep"
+              value={title}
+            />
+
+            <div className="mb-4 rounded-[1.6rem] border border-white/20 bg-white/10 p-3.5 shadow-sm backdrop-blur-md sm:p-4">
+              <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+                <div className="space-y-3">
+                  <div>
+                    <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft">Light controls</p>
+                    <p className="mt-1 text-sm font-bold text-white/95 lofi-sharp-text-soft">Keep only what helps, then let the page stay quiet.</p>
+                  </div>
+                  <div className="grid gap-3 sm:grid-cols-2 xl:min-w-[31rem] xl:grid-cols-3">
+                    <label className="block text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">
+                      Mood
+                      <select className="mt-2 w-full rounded-[1.15rem] border border-white/30 bg-black/20 px-3.5 py-3 text-sm font-bold text-white outline-none backdrop-blur-sm transition focus:border-white/60 focus:bg-black/30" onChange={(event) => setSelectedMood(event.target.value)} value={selectedMood}>
+                        {weatherOptions.map((mood) => (
+                          <option className="text-ink" key={mood.label} value={mood.label}>{mood.label}</option>
+                        ))}
+                      </select>
+                    </label>
+                    <label className="block text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">
+                      Font
+                      <select className="mt-2 w-full rounded-[1.15rem] border border-white/30 bg-black/20 px-3.5 py-3 text-sm font-bold text-white outline-none backdrop-blur-sm transition focus:border-white/60 focus:bg-black/30" onChange={(event) => setJournalStyle({ ...journalStyle, fontId: event.target.value })} value={journalStyle.fontId}>
+                        {journalFontOptions.map((font) => (
+                          <option className="text-ink" key={font.id} value={font.id}>{font.label}</option>
+                        ))}
+                      </select>
+                    </label>
+                    <label className="block text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">
+                      Size
+                      <select className="mt-2 w-full rounded-[1.15rem] border border-white/30 bg-black/20 px-3.5 py-3 text-sm font-bold text-white outline-none backdrop-blur-sm transition focus:border-white/60 focus:bg-black/30" onChange={(event) => setJournalStyle({ ...journalStyle, sizeId: event.target.value })} value={journalStyle.sizeId}>
+                        {journalSizeOptions.map((size) => (
+                          <option className="text-ink" key={size.id} value={size.id}>{size.label}</option>
+                        ))}
+                      </select>
+                    </label>
+                  </div>
+                </div>
+                <div className="flex flex-wrap items-center gap-2 xl:max-w-[22rem] xl:justify-end">
+                  <button className="rounded-full border border-white/30 bg-white/15 px-3.5 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25" onClick={() => toggleBoldText(entryBodyRef, setBody)} title="Bold selected text" type="button">Bold</button>
+                  <button className="rounded-full border border-white/30 bg-white/15 px-3.5 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25" onClick={() => toggleUnderlineText(entryBodyRef, setBody)} title="Underline selected text" type="button">Underline</button>
+                  <button className="rounded-full border border-white/30 bg-white/15 px-3.5 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25" onClick={() => toggleBulletList(entryBodyRef, setBody)} title="Bullet points" type="button">List</button>
+                  {quickEmojis.slice(0, 4).map((emoji) => (
+                    <button key={emoji} className="rounded-full border border-white/30 bg-white/15 px-3 py-1.5 text-base shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25" onClick={() => insertQuickEmoji(emoji)} type="button">
+                      {emoji}
+                    </button>
+                  ))}
+                  <label className="flex cursor-pointer items-center gap-2 rounded-full border border-white/30 bg-white/15 px-3.5 py-2 text-sm font-black text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25">
+                    <ImagePlus size={14} /> Photo
+                    <input accept="image/*" className="hidden" onChange={handleEntryImageUpload} type="file" />
+                  </label>
+                  <button className="rounded-full border border-white/30 bg-white px-4 py-2 text-sm font-black text-[#3d3025] shadow-sm transition hover:-translate-y-0.5 hover:bg-white/90" type="submit">Save page</button>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="journal-editor-shell mt-2 rounded-[3rem] p-3 md:p-4">
-            <div className="journal-editor-ribbon">quiet page</div>
-            <div className="journal-editor-meta journal-editor-top mb-3 flex flex-wrap items-center justify-between gap-2 px-3 text-[11px] font-bold uppercase tracking-[0.22em] text-sage-500 sm:text-xs sm:tracking-[0.24em]">
+            <div className="journal-editor-shell mt-2 rounded-[3rem] p-3 md:p-4 backdrop-blur-md bg-white/5 border border-white/10">
+              <div className="journal-editor-ribbon bg-black/30 text-white/90 border border-white/20">quiet page</div>
+              <div className="journal-editor-meta journal-editor-top mb-3 flex flex-wrap items-center justify-between gap-2 px-3 text-[11px] font-black uppercase tracking-[0.22em] text-white/85 lofi-sharp-text-soft sm:text-xs sm:tracking-[0.24em]">
               <span>{selectedMood} mood · today</span>
               <span>{draftWordCount === 0 ? 'slow is still writing' : `${draftWordCount} words so far`}</span>
             </div>
@@ -5695,90 +5948,105 @@ function App() {
             </div>
 
             <aside className="flex flex-col gap-6 lg:sticky lg:top-28 lg:self-start">
-              <div className={`group relative overflow-hidden rounded-[3rem] border p-6 shadow-lift backdrop-blur transition duration-300 hover:shadow-soft ${selectedMoodGuide.shellClass}`}>
-                <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-sage-50/50 blur-2xl group-hover:bg-sage-100/60"></div>
-                <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Atmosphere</p>
-                <div className="mt-5 flex items-center gap-4">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-[1.5rem] bg-white text-3xl shadow-soft transition group-hover:scale-110">
-                    <WeatherGlyph mood={selectedMoodOption} size="text-2xl" />
+              <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur-xl transition duration-300 hover:shadow-md">
+                <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+                <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+                <div className="relative z-10">
+                  <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Atmosphere</p>
+                  <div className="mt-5 flex items-center gap-4">
+                    <div className="flex h-16 w-16 items-center justify-center rounded-[1.5rem] bg-white/20 text-3xl shadow-sm backdrop-blur-md ring-4 ring-white/10 transition hover:scale-105">
+                      <WeatherGlyph mood={selectedMoodOption} size="text-2xl" />
+                    </div>
+                    <div>
+                      <p className="text-xl font-black text-white lofi-sharp-text">{selectedMoodGuide.title}</p>
+                      <p className="text-sm font-bold text-white/95 lofi-sharp-text-soft">{selectedMoodGuide.summary}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-xl font-extrabold text-ink">{selectedMoodGuide.title}</p>
-                    <p className="text-sm font-semibold text-sage-700">{selectedMoodGuide.summary}</p>
-                  </div>
+                  <p className="mt-5 text-sm font-bold leading-7 text-white/95 lofi-sharp-text-soft">{latestEntry ? `Continuing "${latestEntry.title}".` : selectedMoodGuide.detail}</p>
                 </div>
-                <p className="mt-5 text-sm leading-7 text-sage-700">{latestEntry ? `Continuing "${latestEntry.title}".` : selectedMoodGuide.detail}</p>
               </div>
 
-              <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/78 p-6 shadow-soft backdrop-blur-xl">
-                <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-rose-600">Journey progress</p>
-                <div className="mt-5 flex items-start gap-4">
-                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-[1.5rem] bg-rose-50 text-3xl shadow-sm ring-4 ring-rose-50/50">{nextAchievement.emoji}</div>
-                  <div>
-                    <p className="text-lg font-extrabold text-ink">{nextAchievement.title}</p>
-                    <p className="mt-1 text-sm leading-relaxed text-sage-700">{nextAchievement.hint}</p>
+              <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur-xl">
+                <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+                <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+                <div className="relative z-10">
+                  <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Journey progress</p>
+                  <div className="mt-5 flex items-start gap-4">
+                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-[1.5rem] bg-white/20 text-3xl shadow-sm backdrop-blur-md ring-4 ring-white/10">{nextAchievement.emoji}</div>
+                    <div>
+                      <p className="text-lg font-black text-white lofi-sharp-text">{nextAchievement.title}</p>
+                      <p className="mt-1 text-sm font-bold leading-relaxed text-white/95 lofi-sharp-text-soft">{nextAchievement.hint}</p>
+                    </div>
                   </div>
+                  <div className="mt-5 h-2 w-full overflow-hidden rounded-full bg-black/40 shadow-inner">
+                    <div className="h-full bg-white/90 transition-all duration-700" style={{ width: `${(unlockedAchievementCount / achievementBadges.length) * 100}%` }}></div>
+                  </div>
+                  <p className="mt-4 text-[13px] font-black text-white lofi-sharp-text-soft">{rewardLevel.next}</p>
                 </div>
-                <div className="mt-5 h-2 w-full overflow-hidden rounded-full bg-rose-100/50">
-                  <div className="h-full bg-rose-400 transition-all duration-700" style={{ width: `${(unlockedAchievementCount / achievementBadges.length) * 100}%` }}></div>
-                </div>
-                <p className="mt-4 text-[13px] font-bold text-rose-800">{rewardLevel.next}</p>
               </div>
 
-              <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/95 p-6 shadow-soft">
-                <div className="mb-5 flex items-center justify-between">
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Soft actions</p>
-                  <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-sage-50 text-sage-600 shadow-inner">
-                    <Compass size={14} />
+              <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur-xl">
+                <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+                <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+                <div className="relative z-10">
+                  <div className="mb-5 flex items-center justify-between">
+                    <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Soft actions</p>
+                    <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/20 text-white shadow-sm backdrop-blur-md">
+                      <Compass size={16} />
+                    </div>
                   </div>
+                  <div className="grid gap-3">
+                    {[
+                      { label: 'Name the feeling', icon: Feather, onClick: () => addStarterLine('Today feels') },
+                      { label: 'Open notes', icon: FileText, onClick: () => navigateToTab('notes'), count: openPlannerTodoCount },
+                      { label: 'View check-ins', icon: CalendarDays, onClick: () => navigateToTab('insights'), count: importantDateCount }
+                    ].map((btn) => (
+                      <button key={btn.label} className="group flex items-center justify-between rounded-2xl border border-white/20 bg-white/10 px-5 py-3.5 text-left text-sm font-black text-white shadow-sm backdrop-blur-md transition duration-300 hover:-translate-y-0.5 hover:bg-white/20 hover:shadow-md" onClick={btn.onClick} type="button">
+                        <span className="inline-flex items-center gap-3 lofi-sharp-chip"><btn.icon size={17} /> {btn.label}</span>
+                        {btn.count !== undefined && <span className="rounded-full bg-white/25 px-2.5 py-0.5 text-[10px] shadow-sm backdrop-blur-md">{btn.count}</span>}
+                      </button>
+                    ))}
+                  </div>
+                  <p className="mt-5 border-t border-white/20 pt-5 text-sm font-bold leading-relaxed text-white/95 italic lofi-sharp-text-soft">&ldquo;You do not need to finish the whole story today.&rdquo;</p>
                 </div>
-                <div className="grid gap-3">
-                  {[
-                    { label: 'Name the feeling', icon: Feather, onClick: () => addStarterLine('Today feels'), color: 'text-sage-700' },
-                    { label: 'Open notes', icon: FileText, onClick: () => navigateToTab('notes'), count: openPlannerTodoCount, color: 'text-teal-700' },
-                    { label: 'View check-ins', icon: CalendarDays, onClick: () => navigateToTab('insights'), count: importantDateCount, color: 'text-rose-700' }
-                  ].map((btn) => (
-                    <button key={btn.label} className="group flex items-center justify-between rounded-2xl bg-sage-50/50 px-5 py-3.5 text-left text-sm font-extrabold text-sage-800 ring-1 ring-sage-100/50 transition duration-300 hover:-translate-y-0.5 hover:bg-white hover:shadow-soft hover:ring-white" onClick={btn.onClick} type="button">
-                      <span className={`inline-flex items-center gap-3 ${btn.color}`}><btn.icon size={17} /> {btn.label}</span>
-                      {btn.count !== undefined && <span className="rounded-full bg-white px-2 py-0.5 text-[10px] shadow-inner">{btn.count}</span>}
-                    </button>
-                  ))}
-                </div>
-                <p className="mt-5 border-t border-[#e8dfd5] pt-5 text-sm leading-relaxed text-sage-700 italic">&ldquo;You do not need to finish the whole story today.&rdquo;</p>
               </div>
             </aside>
           </div>
           {saveReward && (
-            <div className="reward-toast mt-5 rounded-3xl border border-[#e8dfd5] bg-sage-900 p-5 font-extrabold leading-7 text-white shadow-soft">
+            <div className="relative z-10 reward-toast mt-5 rounded-3xl border border-[#e8dfd5] bg-sage-900 p-5 font-extrabold leading-7 text-white shadow-soft">
               {saveReward}
             </div>
           )}
+          </div>
         </form>
         )}
 
                         {activeTab === 'unwind' && (
-          <div id="game-library" className="mx-auto max-w-[1280px] px-4 py-8 lg:px-6 lg:py-14 fade-in">
+          <div id="game-library" className="mx-auto max-w-[1280px] px-2 py-5 sm:px-4 sm:py-8 lg:px-6 lg:py-14 fade-in">
             {unwindViewMode === 'detail' && (
-              <div ref={selectedGameInterfaceRef} className="game-detail-reveal mb-16 scroll-mt-24">
-                <button className="mb-5 inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white/88 px-4 py-2 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-x-0.5 hover:bg-white" onClick={returnToGameLibrary} type="button">
-                  <span aria-hidden="true">←</span> Back to games
-                </button>
-                <div className={`lofi-glass lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border p-3 shadow-soft backdrop-blur sm:p-4 lg:p-5 ${gameVisualTheme === 'lofi' ? 'border-[#e8dfd5] bg-[#fffaf2]/85' : ''}`}>
-                  {gameVisualTheme === 'lofi' && (
+              <div className={`game-detail-reveal ${isFullscreen ? 'mb-0 scroll-mt-0' : 'mb-16 scroll-mt-24'}`}>
+                {!isFullscreen && (
+                  <button className="mb-5 inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white/88 px-4 py-2 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-x-0.5 hover:bg-white" onClick={returnToGameLibrary} type="button">
+                    <span aria-hidden="true">←</span> Back to games
+                  </button>
+                )}
+                <div ref={selectedGameInterfaceRef} className={`lofi-glass lofi-picture-border lofi-border-memory relative overflow-hidden backdrop-blur ${isFullscreen ? 'is-fullscreen fixed inset-0 z-[120] flex h-[100dvh] w-screen flex-col overflow-auto rounded-none border-0 bg-[#fff7ec] p-0 shadow-none sm:overflow-hidden' : 'rounded-[3rem] border p-3 shadow-soft sm:p-4 lg:p-5'} ${!isFullscreen && gameVisualTheme === 'lofi' ? 'border-[#e8dfd5] bg-[#fffaf2]/85' : ''}`}>
+                  {!isFullscreen && gameVisualTheme === 'lofi' && (
                     <>
                       <img src={lofiRoomWallpaperImage} alt="" className="pointer-events-none absolute inset-0 h-full w-full scale-105 object-cover opacity-[0.07] blur-[1px]" aria-hidden="true" />
                       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.82),transparent_38%),linear-gradient(135deg,rgba(255,250,242,0.92),rgba(250,237,205,0.7),rgba(255,200,221,0.38))]" />
                     </>
                   )}
+                  {!isFullscreen && (
                   <div className={`relative z-10 rounded-[1.7rem] border p-4 shadow-sm ${gameVisualTheme === 'lofi' ? 'border-amber-200/40 bg-white/60' : 'border-[#e8dfd5] bg-sage-50/55'}`}>
-                    <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
-                      <div>
+                    <div className={`flex flex-col gap-4 ${isFullscreen ? 'lg:flex-row lg:items-start lg:justify-between' : 'xl:flex-row xl:items-center xl:justify-between'}`}>
+                      <div className="min-w-0">
                         <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${gameVisualTheme === 'lofi' ? 'text-amber-800/80' : 'text-sage-600'}`}>Now playing</p>
-                        <h1 className={`mt-2 font-display text-4xl font-bold tracking-tight ${gameVisualTheme === 'lofi' ? 'text-[#3d3025]' : 'text-sage-950'}`}>{selectedUnwindGameConfig.title}</h1>
-                        <p className={`mt-2 max-w-2xl text-sm leading-7 ${gameVisualTheme === 'lofi' ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>{selectedUnwindGameConfig.description}</p>
+                        <h1 className={`mt-2 font-display font-bold tracking-tight ${isFullscreen ? 'text-3xl sm:text-4xl' : 'text-4xl'} ${gameVisualTheme === 'lofi' ? 'text-[#3d3025]' : 'text-sage-950'}`}>{selectedUnwindGameConfig.title}</h1>
+                        <p className={`mt-2 max-w-2xl text-sm leading-7 ${isFullscreen ? 'hidden sm:block' : ''} ${gameVisualTheme === 'lofi' ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>{selectedUnwindGameConfig.description}</p>
                       </div>
-                      <div className="flex w-full flex-col gap-2 xl:max-w-[32rem] xl:items-end">
-                        <div className="flex flex-wrap gap-2 xl:justify-end">
+                      <div className={`flex w-full flex-col gap-2 ${isFullscreen ? 'lg:max-w-[36rem] lg:items-end' : 'xl:max-w-[32rem] xl:items-end'}`}>
+                        <div className={`flex flex-wrap gap-2 ${isFullscreen ? 'lg:justify-end' : 'xl:justify-end'}`}>
                           <div className={`flex h-11 items-center gap-1 rounded-2xl border bg-white p-1 shadow-sm ${gameVisualTheme === 'lofi' ? 'border-amber-200' : 'border-amber-200/50'}`}>
                             {[
                               { id: 'original', label: 'Original', icon: Sparkles },
@@ -5804,7 +6072,7 @@ function App() {
                           </button>
                         </div>
                         <p className={`text-[11px] font-extrabold uppercase tracking-[0.2em] ${gameVisualTheme === 'lofi' ? 'text-amber-800/80' : 'text-sage-600'}`}>Difficulty in-game</p>
-                        <div className="flex flex-wrap gap-2 xl:justify-end">
+                        <div className={`flex flex-wrap gap-2 ${isFullscreen ? 'lg:justify-end' : 'xl:justify-end'}`}>
                           {difficultyOptions.map((difficulty) => (
                             <button
                               key={difficulty.id}
@@ -5813,7 +6081,7 @@ function App() {
                               type="button"
                             >
                               {difficulty.label}
-                              <span className={`ml-2 text-[10px] uppercase tracking-[0.18em] ${selectedGameDifficulty === difficulty.id ? 'text-white/75' : (gameVisualTheme === 'lofi' ? 'text-amber-800/60' : 'text-sage-500')}`}>{difficulty.detail}</span>
+                              <span className={`ml-2 text-[10px] uppercase tracking-[0.18em] ${selectedGameDifficulty === difficulty.id ? 'text-white/90' : (gameVisualTheme === 'lofi' ? 'text-amber-800/70' : 'text-sage-500')}`}>{difficulty.detail}</span>
                             </button>
                           ))}
                         </div>
@@ -5821,7 +6089,8 @@ function App() {
                       </div>
                     </div>
                   </div>
-                  <div className={`relative z-10 mx-auto mt-5 w-full ${isFullscreen ? 'max-w-none' : (selectedUnwindGameConfig.playingSpace || 'max-w-[980px]')}`}>
+                  )}
+                  <div className={`relative z-10 mx-auto w-full ${isFullscreen ? 'flex min-h-0 flex-1 max-w-none overflow-auto' : `mt-5 ${selectedUnwindGameConfig.playingSpace || 'max-w-[980px]'}`}`}>
                     {selectedUnwindGameConfig.component}
                   </div>
                 </div>
@@ -5835,13 +6104,18 @@ function App() {
                   <p className="mt-2 text-sage-600">Pick another one whenever you are ready.</p>
                 </div>
               )}
-              <div className="mb-10 text-center">
+              <div className="mb-14">
                 {unwindViewMode === 'grid' && (
-                  <>
-                    <p className="mb-2 text-sm font-bold uppercase tracking-widest text-sage-600">Games & Play</p>
-                    <h1 className="mb-3 font-display text-4xl font-bold tracking-tight text-sage-950">Pick a relaxing game</h1>
-                    <p className="mx-auto max-w-2xl text-base text-sage-700">Start with cozy Solitaire or Mind Sweeper, then explore more relaxing browser games while the lofi music keeps the page calm.</p>
-                  </>
+                  <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3.2rem] border border-[#8b5e3c]/25 p-8 shadow-[0_32px_90px_rgba(83,62,44,0.18)] lg:p-10 xl:p-12">
+                    <img src={gamesSectionPreviewImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
+                    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
+                    <div className="relative z-10">
+                      <h1 className="font-display text-5xl font-bold tracking-tight text-white lofi-sharp-text md:text-7xl">Games</h1>
+                      <p className="mt-3 text-xs font-black uppercase tracking-[0.34em] text-white/95 lofi-sharp-text-soft">Chill games</p>
+                      <p className="mt-6 max-w-2xl text-base font-bold leading-7 text-white lofi-sharp-text-soft">Start with cozy Solitaire or Mind Sweeper, then explore more relaxing browser games while the lofi music keeps the page calm.</p>
+                    </div>
+                  </div>
                 )}
               </div>
               <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
@@ -5855,121 +6129,33 @@ function App() {
                     <img src={game.preview} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" aria-hidden="true" />
                     <div className="absolute inset-0 bg-gradient-to-br from-black/48 via-black/10 to-transparent" />
                     <div className="relative z-10 p-1">
-                      <p className="text-xs font-black uppercase tracking-[0.24em] text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]">{game.detail}</p>
-                      <h2 className="mt-1 font-display text-2xl font-bold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">{game.title}</h2>
+                      <p className="text-xs font-black uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft">{game.detail}</p>
+                      <h2 className="mt-1 font-display text-2xl font-bold text-white lofi-sharp-text">{game.title}</h2>
                     </div>
-                    <div className="absolute bottom-5 left-5 z-10 text-[10px] font-black uppercase tracking-widest text-white/90 opacity-0 drop-shadow-[0_1px_2px_rgba(0,0,0,0.55)] transition group-hover:opacity-100">
+                    <div className="absolute bottom-5 left-5 z-10 text-[10px] font-black uppercase tracking-widest text-white/95 opacity-0 lofi-sharp-chip transition group-hover:opacity-100">
                       Open game →
                     </div>
                   </button>
                 ))}
               </div>
-              <div className="mt-6 rounded-[2.2rem] border border-[#e8dfd5] bg-white/82 p-5 shadow-sm backdrop-blur">
-                <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-                  <div>
-                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Quick start picks</p>
-                    <h2 className="mt-2 text-2xl font-extrabold text-sage-950">Start with the easiest game for your mood.</h2>
-                  </div>
-                  <p className="max-w-xl text-sm leading-7 text-sage-700">These are the friendliest entry points if you want something that feels simple right away.</p>
-                </div>
-                <div className="mt-4 flex flex-wrap gap-2.5">
-                  {[
-                    { id: 'solitaire', label: 'Solitaire • classic' },
-                    { id: 'mind-sweeper', label: 'Mind Sweeper • logic' },
-                    { id: 'lofi-jigsaw', label: 'Lofi Jigsaw • cozy puzzle' },
-                    { id: 'quiet-wordle', label: 'Wordle • guess the word' },
-                    { id: 'quiet-tiles', label: 'Tiles • tap and merge' }
-                  ].map((item) => (
-                    <button
-                      key={item.id}
-                      className="rounded-full border border-amber-200/50 bg-sage-50/80 px-4 py-2 text-sm font-extrabold text-sage-800 transition hover:bg-white"
-                      onClick={() => selectUnwindGame(item.id)}
-                      type="button"
-                    >
-                      {item.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div className="mt-6 grid gap-5 lg:grid-cols-2">
-                <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-sage-50/55 p-5 shadow-sm backdrop-blur">
-                  <div className="flex items-center gap-3">
-                    <Sparkles className="text-sage-600" size={20} />
-                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Featured relaxing games</p>
-                  </div>
-                  <h2 className="mt-3 text-2xl font-extrabold text-sage-950">Solitaire and Mind Sweeper are ready first.</h2>
-                  <p className="mt-2 text-sm leading-7 text-sage-700">Start with a familiar card game or a calm Minesweeper-style logic board, then keep the lofi music running while you unwind.</p>
-                </div>
-                <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/78 p-5 shadow-sm backdrop-blur">
-                  <div className="flex items-center gap-3">
-                    <PenLine className="text-sage-600" size={20} />
-                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Chill game journal</p>
-                  </div>
-                  <h2 className="mt-3 text-2xl font-extrabold text-sage-950">Play, then write one soft reflection.</h2>
-                  <p className="mt-2 text-sm leading-7 text-sage-700">A calm game can become a journaling prompt: what felt relaxing, what color or sound stayed with you, and what thought became easier to let go.</p>
-                </div>
-              </div>
-              <div className="mt-6 rounded-[2.2rem] border border-[#e8dfd5] bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
-                <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-                  <div>
-                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Stay in the vibe</p>
-                    <h2 className="mt-2 text-2xl font-extrabold text-sage-950">Finish a round, then keep hanging out here.</h2>
-                  </div>
-                  <p className="max-w-2xl text-sm leading-7 text-sage-700">Lofi Memory works best when you can bounce from one calm thing to another — a game, a breath, a quick note, or one sentence of journaling — without needing to leave the same soft space.</p>
-                </div>
-                <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-                  {[
-                    { label: 'Play Solitaire', detail: 'Open the classic card reset first when you want a familiar relaxing game with lofi music nearby.', action: () => selectUnwindGame('solitaire'), icon: Sparkles },
-                    { label: 'Try Mind Sweeper', detail: 'Clear calm logic tiles when you want a Minesweeper-style focus break.', action: () => selectUnwindGame('mind-sweeper'), icon: Grid2x2 },
-                    { label: 'Breathe for a minute', detail: 'Open the breathing screen for a softer reset between rounds.', action: () => navigateToTab('breathe'), icon: Wind },
-                    { label: 'Write one line', detail: 'Catch a thought before it disappears, then come back to the games later.', action: () => navigateToTab('write'), icon: PenLine }
-                  ].map((item) => (
-                    <button key={item.label} className="group rounded-[1.45rem] border border-white/85 bg-sage-50/55 p-4 text-left transition hover:-translate-y-1 hover:border-amber-200/50 hover:bg-white hover:shadow-lift" onClick={item.action} type="button">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-sage-800 shadow-sm transition group-hover:bg-sage-900 group-hover:text-white"><item.icon size={17} /></div>
-                      <h3 className="mt-3 text-base font-extrabold text-sage-950">{item.label}</h3>
-                      <p className="mt-2 text-sm leading-6 text-sage-700">{item.detail}</p>
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)]">
-                <article className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Game-first comfort</p>
-                  <h2 className="mt-3 text-2xl font-extrabold text-sage-950">The games are meant to be the easiest place to begin.</h2>
-                  <p className="mt-3 text-sm leading-7 text-sage-700">If you just want something familiar, start with <span className="font-extrabold text-sage-900">Solitaire</span> for a classic card reset or <span className="font-extrabold text-sage-900">Mind Sweeper</span> for calm Minesweeper-style logic. Prefer other cozy puzzles? <span className="font-extrabold text-sage-900">Lofi Jigsaw</span>, <span className="font-extrabold text-sage-900">Sudoku</span>, <span className="font-extrabold text-sage-900">Wordle</span>, and <span className="font-extrabold text-sage-900">Tiles</span> are easy relaxing games to play while the lofi music stays on.</p>
-                </article>
-                <article className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/84 p-5 shadow-sm backdrop-blur lg:p-6">
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Right now</p>
-                  <h2 className="mt-3 text-2xl font-extrabold text-sage-950">{selectedUnwindGameConfig.title} • {selectedDifficultyConfig.label}</h2>
-                  <p className="mt-3 text-sm leading-7 text-sage-700">{selectedUnwindGameConfig.description}</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    <span className="rounded-full border border-amber-200/50 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Switch anytime</span>
-                    <span className="rounded-full border border-amber-200/50 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Best in short sessions</span>
-                    <span className="rounded-full border border-amber-200/50 bg-sage-50/80 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">Made for quick resets</span>
-                  </div>
-                </article>
-              </div>
-              <div className="mt-6 grid gap-4 xl:grid-cols-3">
-                {chillResearchHighlights.map((item) => (
-                  <article key={item.title} className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/82 p-5 shadow-sm backdrop-blur">
-                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-600">Chill research</p>
-                    <h2 className="mt-3 text-lg font-extrabold text-sage-950">{item.title}</h2>
-                    <p className="mt-3 text-sm leading-7 text-sage-700">{item.text}</p>
-                  </article>
-                ))}
-              </div>
-            </div>
+                          </div>
           </div>
         )}
 
         {activeTab === 'breathe' && (
-          <div className="mx-auto max-w-5xl px-6 py-10 lg:py-16 fade-in">
-            <div className="text-center">
-              <h1 className="mb-2 font-display text-4xl font-bold tracking-tight text-sage-950">Music Room</h1>
-              <p className="mb-14 text-lg text-sage-700">Choose a wallpaper to change the ambient sound and mood.</p>
+          <div className="mx-auto max-w-5xl px-3 py-6 sm:px-6 sm:py-10 lg:py-16 fade-in">
+            <div className="lofi-picture-border lofi-border-memory relative mb-8 sm:mb-14 overflow-hidden rounded-[2.2rem] sm:rounded-[3.2rem] border border-[#8b5e3c]/25 p-5 sm:p-8 shadow-soft lg:p-10 xl:p-12">
+              <img src={musicSectionPreviewImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+              <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
+              <div className="relative z-10">
+                <h1 className="font-display text-5xl font-bold tracking-tight text-white lofi-sharp-text">Music Room</h1>
+                <p className="mt-2 text-xs font-black uppercase tracking-[0.3em] text-white/95 lofi-sharp-text-soft">Sounds & Wallpapers</p>
+                <p className="mt-6 max-w-2xl text-base font-bold leading-7 text-white lofi-sharp-text-soft">Choose a wallpaper to change the ambient sound and mood. Each room brings its own calm energy to your space.</p>
+              </div>
             </div>
             
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-5">
               {breatheRoomOptions.map((option) => {
                 const isSelected = selectedBreatheRoom === option.id;
                 return (
@@ -5981,12 +6167,14 @@ function App() {
                     }`}
                   >
                     <div className={`relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-[3rem] bg-gradient-to-br ${option.gradient} shadow-inner`}>
-                       {option.wallpaper ? <img src={option.wallpaper} alt={`${option.title} wallpaper`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" /> : null}
+                       {option.wallpaper ? <img src={option.wallpaper} alt={`${option.title} wallpaper`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" style={{ objectPosition: option.imagePosition || 'center' }} /> : null}
                        <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-white/10" />
                        <div className="absolute inset-0 opacity-20 transition-opacity group-hover:opacity-30" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)', backgroundSize: '16px 16px', color: 'white' }} />
-                       <div className={`relative z-10 flex flex-col items-center gap-4 transition-transform duration-700 ${isSelected ? 'scale-110' : 'scale-100 group-hover:scale-105'}`}>
-                         <span className="text-4xl drop-shadow">{option.decoration}</span>
-                       </div>
+                       {option.showDecoration === false ? null : (
+                         <div className={`relative z-10 flex flex-col items-center gap-4 transition-transform duration-700 ${isSelected ? 'scale-110' : 'scale-100 group-hover:scale-105'}`}>
+                           <span className="text-4xl drop-shadow">{option.decoration}</span>
+                         </div>
+                       )}
                        {isSelected ? (
                          <div className="absolute bottom-4 flex gap-1">
                            {[
@@ -5999,13 +6187,13 @@ function App() {
                          </div>
                        ) : null}
                     </div>
-                    <div className="p-6 text-left">
-                      <div className="flex items-center justify-between">
-                        <h3 className={`text-xl font-bold ${option.textTone}`}>{option.title}</h3>
-                        {isSelected ? <span className={`text-[10px] font-black uppercase tracking-widest ${option.textTone} opacity-60`}>Active</span> : null}
+                    <div className="rounded-[2.1rem] bg-[#fff8f1]/96 p-6 text-left shadow-[0_-18px_40px_rgba(255,255,255,0.24)]">
+                      <div className="flex items-center justify-between gap-3">
+                        <h3 className="text-xl font-bold text-[#3f3126]">{option.title}</h3>
+                        {isSelected ? <span className="text-[10px] font-black uppercase tracking-widest text-[#7b5d44]/80">Active</span> : null}
                       </div>
-                      <p className={`mt-1 text-xs font-bold uppercase tracking-widest ${option.textTone} opacity-50`}>{option.sound}</p>
-                      <p className="mt-4 text-sm leading-relaxed text-sage-600">{option.description}</p>
+                      <p className="mt-1 text-xs font-bold uppercase tracking-widest text-[#7b5d44]">{option.sound}</p>
+                      <p className="mt-4 text-sm leading-relaxed text-[#6a5444]">{option.description}</p>
                     </div>
                   </button>
                 );
@@ -6066,16 +6254,22 @@ function App() {
         )}
 
         {activeTab === 'notes' && (
-        <div className="mt-6 grid gap-6 pb-28 xl:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)] xl:pb-0">
-          <div className="overflow-hidden rounded-[3rem] border border-[#e8dfd5] bg-white/84 p-6 shadow-soft backdrop-blur xl:p-8">
-            <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-              <div className="max-w-3xl">
-                <p className="text-xs font-bold uppercase tracking-[0.24em] text-sage-600 sm:text-sm sm:tracking-widest">Important things</p>
-                <h2 className="mt-2 text-3xl font-extrabold leading-tight text-ink sm:text-4xl">One cleaner page for reminders, practical notes, and the things you cannot afford to forget.</h2>
-                <p className="mt-3 max-w-2xl text-sm font-semibold leading-7 text-sage-700">Keep your diary reflective, and let this page hold the useful side of life: plans, deadlines, reminders, and little admin details.</p>
-              </div>
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-3xl bg-sage-50 text-sage-700 shadow-sm ring-1 ring-sage-100">
-                <FileText size={20} />
+        <div className="mx-auto max-w-[1280px] px-3 pt-4 sm:px-5 sm:pt-6">
+          <div className="grid gap-6 pb-28 xl:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)] xl:pb-0">
+            <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[2.2rem] sm:rounded-[3rem] border border-[#8b5e3c]/25 p-5 sm:p-8 shadow-soft lg:p-10 xl:p-12">
+            <img src={notesSectionPreviewImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
+            <div className="relative z-10">
+              <h1 className="font-display text-5xl font-bold tracking-tight text-white lofi-sharp-text">Notes</h1>
+              <p className="mt-2 text-xs font-black uppercase tracking-[0.3em] text-white/95 lofi-sharp-text-soft">Important things</p>
+              <div className="mt-8 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+                <div className="max-w-xl">
+                  <p className="text-base font-bold leading-7 text-white lofi-sharp-text-soft">One cleaner page for reminders, practical notes, and the things you cannot afford to forget.</p>
+                </div>
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-3xl border border-white/25 bg-white/15 text-white shadow-sm backdrop-blur-md">
+                  <FileText size={20} />
+                </div>
               </div>
             </div>
 
@@ -6086,9 +6280,12 @@ function App() {
                 { label: 'Completed', value: completedPlannerTodoCount },
                 { label: 'Overdue', value: overduePlannerTodoCount }
               ].map((stat) => (
-                <div key={stat.label} className="rounded-[1.4rem] border border-[#e8dfd5] bg-sage-50/55 px-4 py-4 shadow-sm">
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-sage-500">{stat.label}</p>
-                  <p className="mt-2 text-2xl font-extrabold text-sage-950">{stat.value}</p>
+                <div key={stat.label} className="relative overflow-hidden rounded-[1.4rem] border border-white/20 p-4 shadow-sm">
+                  <div className="absolute inset-0 bg-white/15 backdrop-blur-md" />
+                  <div className="relative z-10">
+                    <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">{stat.label}</p>
+                    <p className="mt-2 text-2xl font-black text-white lofi-sharp-text">{stat.value}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -6141,31 +6338,33 @@ function App() {
           </div>
 
           <aside className="flex flex-col gap-5">
-            <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/78 p-5 shadow-soft backdrop-blur-xl">
-              <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+            <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur-xl">
+              <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+              <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+              <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                 <div>
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">Task board</p>
-                  <p className="mt-1 text-sm font-semibold text-sage-600">Small, clear tasks with priority, status, and optional due dates so the page stays useful without feeling noisy.</p>
+                  <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft">Task board</p>
+                  <p className="mt-1 text-sm font-semibold text-white lofi-sharp-text">Small, clear tasks with priority, status, and optional due dates so the page stays useful without feeling noisy.</p>
                 </div>
-                <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-700">
-                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'all' ? 'border-sage-900 bg-sage-900 text-white' : 'border-[#e8dfd5] bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('all')} type="button">All {plannerTodoCount}</button>
-                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'open' ? 'border-sage-900 bg-sage-900 text-white' : 'border-[#e8dfd5] bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('open')} type="button">Open {openPlannerTodoCount}</button>
-                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'doing' ? 'border-sage-900 bg-sage-900 text-white' : 'border-[#e8dfd5] bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('doing')} type="button">Doing {inProgressPlannerTodoCount}</button>
-                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'done' ? 'border-sage-900 bg-sage-900 text-white' : 'border-[#e8dfd5] bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('done')} type="button">Done {completedPlannerTodoCount}</button>
-                  <button className={`rounded-full border px-3 py-1 transition ${plannerTodoFilter === 'high' ? 'border-sage-900 bg-sage-900 text-white' : 'border-[#e8dfd5] bg-white text-sage-700 hover:bg-sage-50'}`} onClick={() => setPlannerTodoFilter('high')} type="button">High {plannerBoard.todos.filter((todo) => todo.priority === 'high').length}</button>
-                  <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1">{plannerStorageLabel}</span>
+                <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-white lofi-sharp-chip">
+                  <button className={`rounded-full border px-3 py-1 backdrop-blur-md transition ${plannerTodoFilter === 'all' ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white/95 hover:bg-black/40'}`} onClick={() => setPlannerTodoFilter('all')} type="button">All {plannerTodoCount}</button>
+                  <button className={`rounded-full border px-3 py-1 backdrop-blur-md transition ${plannerTodoFilter === 'open' ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white/95 hover:bg-black/40'}`} onClick={() => setPlannerTodoFilter('open')} type="button">Open {openPlannerTodoCount}</button>
+                  <button className={`rounded-full border px-3 py-1 backdrop-blur-md transition ${plannerTodoFilter === 'doing' ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white/95 hover:bg-black/40'}`} onClick={() => setPlannerTodoFilter('doing')} type="button">Doing {inProgressPlannerTodoCount}</button>
+                  <button className={`rounded-full border px-3 py-1 backdrop-blur-md transition ${plannerTodoFilter === 'done' ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white/95 hover:bg-black/40'}`} onClick={() => setPlannerTodoFilter('done')} type="button">Done {completedPlannerTodoCount}</button>
+                  <button className={`rounded-full border px-3 py-1 backdrop-blur-md transition ${plannerTodoFilter === 'high' ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white/95 hover:bg-black/40'}`} onClick={() => setPlannerTodoFilter('high')} type="button">High {plannerBoard.todos.filter((todo) => todo.priority === 'high').length}</button>
+                  <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1 backdrop-blur-md text-white/95">{plannerStorageLabel}</span>
                 </div>
               </div>
 
-              <form className="mt-4 grid gap-3 sm:grid-cols-2" onSubmit={addPlannerTodo}>
+              <form className="relative z-10 mt-4 grid gap-3 sm:grid-cols-2" onSubmit={addPlannerTodo}>
                 <input
-                  className="flex-1 rounded-[1.15rem] border border-[#e8dfd5] bg-white px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70 sm:col-span-2"
+                  className="flex-1 rounded-[1.15rem] border border-white/20 bg-black/20 px-4 py-3 text-sm font-semibold text-white outline-none backdrop-blur-md placeholder:text-white/60 transition focus:border-white/40 focus:ring-4 focus:ring-white/10 sm:col-span-2"
                   onChange={(event) => setPlannerTodoDraft(event.target.value)}
                   placeholder="Add a task"
                   value={plannerTodoDraft}
                 />
                 <select
-                  className="rounded-[1.15rem] border border-[#e8dfd5] bg-white px-4 py-3 text-sm font-semibold text-sage-800 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
+                  className="rounded-[1.15rem] border border-white/20 bg-black/40 px-4 py-3 text-sm font-semibold text-white outline-none backdrop-blur-md transition focus:border-white/40 focus:ring-4 focus:ring-white/10 [&>option]:bg-[#2b231d]"
                   onChange={(event) => setPlannerTodoPriorityDraft(event.target.value)}
                   value={plannerTodoPriorityDraft}
                 >
@@ -6174,14 +6373,14 @@ function App() {
                   <option value="high">High priority</option>
                 </select>
                 <input
-                  className="rounded-[1.15rem] border border-[#e8dfd5] bg-white px-4 py-3 text-sm font-semibold text-sage-800 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
+                  className="rounded-[1.15rem] border border-white/20 bg-black/40 px-4 py-3 text-sm font-semibold text-white outline-none backdrop-blur-md transition focus:border-white/40 focus:ring-4 focus:ring-white/10"
                   min={todayISO()}
                   onChange={(event) => setPlannerTodoDueDateDraft(event.target.value)}
                   type="date"
                   value={plannerTodoDueDateDraft}
                 />
                 <select
-                  className="rounded-[1.15rem] border border-[#e8dfd5] bg-white px-4 py-3 text-sm font-semibold text-sage-800 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
+                  className="rounded-[1.15rem] border border-white/20 bg-black/40 px-4 py-3 text-sm font-semibold text-white outline-none backdrop-blur-md transition focus:border-white/40 focus:ring-4 focus:ring-white/10 [&>option]:bg-[#2b231d]"
                   onChange={(event) => setPlannerTodoRecurrenceDraft(event.target.value)}
                   value={plannerTodoRecurrenceDraft}
                 >
@@ -6190,15 +6389,15 @@ function App() {
                   <option value="weekly">Weekly</option>
                   <option value="monthly">Monthly</option>
                 </select>
-                <button className="inline-flex items-center justify-center rounded-[1.15rem] bg-sage-900 px-4 py-3 text-white shadow-lift transition hover:-translate-y-0.5 hover:bg-sage-800 sm:col-span-2" type="submit">
+                <button className="inline-flex items-center justify-center rounded-[1.15rem] bg-white/20 px-4 py-3 text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/30 sm:col-span-2" type="submit">
                   <Plus size={18} />
                 </button>
               </form>
 
-              <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-500">
+              <div className="relative z-10 mt-4 flex flex-wrap items-center justify-between gap-3 text-[10px] font-black uppercase tracking-[0.18em] text-white/95 lofi-sharp-text-soft">
                 <span>{filteredPlannerTodos.length} shown · {overduePlannerTodoCount} overdue</span>
                 {completedPlannerTodoCount > 0 && (
-                  <button className="rounded-full border border-[#e8dfd5] bg-white px-3 py-2 text-sage-700 transition hover:bg-sage-50" onClick={clearCompletedPlannerTodos} type="button">
+                  <button className="rounded-full border border-white/30 bg-black/20 px-3 py-2 text-white transition backdrop-blur-md hover:bg-black/40" onClick={clearCompletedPlannerTodos} type="button">
                     Clear done tasks
                   </button>
                 )}
@@ -6296,175 +6495,213 @@ function App() {
                     </div>
                   );
                 }) : (
-                  <div className="rounded-[1.4rem] border border-dashed border-amber-200/50 bg-sage-50/45 px-4 py-5 text-sm font-semibold leading-6 text-sage-500">
-                    No tasks match this view yet. Try another filter or add a new task with a priority, due date, or recurring rhythm.
+                  <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[1.4rem] border border-[#8b5e3c]/25 p-5 shadow-sm backdrop-blur-xl">
+                    <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-60" aria-hidden="true" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/25 to-black/15" />
+                    <div className="relative z-10 text-sm font-semibold leading-6 text-white lofi-sharp-text">
+                      No tasks match this view yet. Try another filter or add a new task with a priority, due date, or recurring rhythm.
+                    </div>
                   </div>
                 )}
               </div>
             </div>
 
-            <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/78 p-5 shadow-soft backdrop-blur-xl">
-              <div className="flex items-center justify-between gap-3">
+            <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur-xl">
+              <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+              <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+              <div className="relative z-10 flex items-center justify-between gap-3">
                 <div>
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">Upcoming reminders</p>
-                  <p className="mt-1 text-sm font-semibold text-sage-600">A calm shortlist of the dates that are coming up next.</p>
+                  <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft">Upcoming reminders</p>
+                  <p className="mt-1 text-sm font-semibold text-white lofi-sharp-text">A calm shortlist of the dates that are coming up next.</p>
                 </div>
-                <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-700">
-                  <span className="rounded-full border border-[#e8dfd5] bg-sage-50 px-3 py-1">{upcomingReminderCount} upcoming</span>
-                  <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1">{reminderStorageLabel}</span>
+                <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-white">
+                  <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1 backdrop-blur-md">{upcomingReminderCount} upcoming</span>
+                  <span className="rounded-full border border-white/20 bg-white/20 px-3 py-1 backdrop-blur-md">{reminderStorageLabel}</span>
                 </div>
               </div>
-              <div className="mt-4 space-y-3">
+              <div className="relative z-10 mt-4 space-y-3">
                 {upcomingReminderPreview.length ? upcomingReminderPreview.map((item) => (
-                  <button className="w-full rounded-[1.4rem] border border-[#e8dfd5] bg-sage-50/45 px-4 py-3 text-left transition hover:-translate-y-0.5 hover:bg-white hover:shadow-sm" key={item.dateKey} onClick={() => { setSelectedCalendarDate(item.dateKey); navigateToTab('memories'); }} type="button">
+                  <button className="w-full rounded-[1.4rem] border border-white/20 bg-black/20 px-4 py-3 text-left transition backdrop-blur-md hover:-translate-y-0.5 hover:bg-black/40 hover:shadow-sm" key={item.dateKey} onClick={() => { setSelectedCalendarDate(item.dateKey); navigateToTab('memories'); }} type="button">
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <div className="min-w-0 flex-1">
-                        <p className="text-sm font-extrabold leading-6 text-sage-900">{item.note}</p>
-                        <p className="mt-1 text-xs font-bold uppercase tracking-[0.16em] text-sage-500">{formatDate(item.dateKey)}{item.time ? ` · ${formatReminderTime(item.time)}` : ''}</p>
+                        <p className="text-sm font-bold leading-6 text-white lofi-sharp-text">{item.note}</p>
+                        <p className="mt-1 text-xs font-bold uppercase tracking-[0.16em] text-white/85 lofi-sharp-text-soft">{formatDate(item.dateKey)}{item.time ? ` · ${formatReminderTime(item.time)}` : ''}</p>
                       </div>
-                      <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-700">{item.relativeLabel}</span>
+                      <span className="rounded-full border border-white/30 bg-white/20 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-white lofi-sharp-chip">{item.relativeLabel}</span>
                     </div>
                   </button>
                 )) : (
-                  <div className="rounded-[1.4rem] border border-dashed border-amber-200/50 bg-sage-50/45 px-4 py-5 text-sm font-semibold leading-6 text-sage-500">
-                    No upcoming reminders yet. Mark an important date in the calendar and it will show up here.
+                  <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[1.4rem] border border-[#8b5e3c]/25 p-5 shadow-sm backdrop-blur-xl">
+                    <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-60" aria-hidden="true" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/25 to-black/15" />
+                    <div className="relative z-10 text-sm font-semibold leading-6 text-white lofi-sharp-text">
+                      No upcoming reminders yet. Mark an important date in the calendar and it will show up here.
+                    </div>
                   </div>
                 )}
               </div>
             </div>
 
-            <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/78 p-5 shadow-soft backdrop-blur-xl">
-              <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">Keep it simple</p>
-              <div className="mt-4 space-y-3 text-sm font-semibold leading-7 text-sage-700">
-                <p>Use this page for practical life details, not emotional journaling.</p>
-                <p>Keep the to-do list short enough that it still feels calm to open.</p>
-                <p>Move back to writing when you want reflection instead of admin.</p>
-              </div>
-              <div className="mt-5 flex flex-wrap gap-2">
-                <button className="inline-flex items-center gap-2 rounded-full bg-sage-900 px-4 py-2 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-800" onClick={() => navigateToTab('write')} type="button">
-                  <PenLine size={15} /> Go back to writing
-                </button>
-                <button className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white px-4 py-2 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50" onClick={() => navigateToTab('insights')} type="button">
-                  <CalendarDays size={15} /> Open calendar
-                </button>
+            <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur-xl">
+              <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+              <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+              <div className="relative z-10">
+                <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft">Keep it simple</p>
+                <div className="mt-4 space-y-3 text-sm font-semibold leading-7 text-white lofi-sharp-text">
+                  <p>Use this page for practical life details, not emotional journaling.</p>
+                  <p>Keep the to-do list short enough that it still feels calm to open.</p>
+                  <p>Move back to writing when you want reflection instead of admin.</p>
+                </div>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  <button className="inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/30" onClick={() => navigateToTab('write')} type="button">
+                    <PenLine size={15} /> Go back to writing
+                  </button>
+                  <button className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/20 px-4 py-2 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-black/30" onClick={() => navigateToTab('insights')} type="button">
+                    <CalendarDays size={15} /> Open calendar
+                  </button>
+                </div>
               </div>
             </div>
           </aside>
+          </div>
         </div>
         )}
 
         {activeTab === 'insights' && (
         <div className="mt-6 grid gap-6 pb-28 xl:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] xl:pb-0">
-          <div className="overflow-hidden rounded-[3rem] border border-[#e8dfd5] bg-gradient-to-br from-white/88 via-sage-50/68 to-sand-50/72 p-4 shadow-soft backdrop-blur sm:p-6 xl:p-8">
-            <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-4 shadow-soft backdrop-blur sm:p-6 xl:p-8">
+            <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-85" aria-hidden="true" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+            <div className="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
               <div className="max-w-3xl">
-                <p className="text-xs font-bold uppercase tracking-[0.24em] text-sage-600 sm:text-sm sm:tracking-widest">Reflection pattern</p>
-                <h2 className="mt-2 text-3xl font-extrabold leading-tight text-ink sm:text-4xl">Your recent journal check-ins</h2>
-                <p className="mt-3 text-sm font-semibold leading-7 text-sage-700">See the week in a calmer way: mood shifts, small streaks, and the gentle rhythm you are building by returning.</p>
+                <p className="text-xs font-black uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft sm:text-sm sm:tracking-widest">Reflection pattern</p>
+                <h2 className="mt-2 text-3xl font-extrabold leading-tight text-white lofi-sharp-text sm:text-4xl">Your recent journal check-ins</h2>
+                <p className="mt-3 text-sm font-semibold leading-7 text-white lofi-sharp-text">See the week in a calmer way: mood shifts, small streaks, and the gentle rhythm you are building by returning.</p>
               </div>
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-3xl bg-white text-sage-700 shadow-sm">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-3xl bg-white/20 text-white shadow-sm backdrop-blur-md">
                 <Moon size={20} />
               </div>
             </div>
-            <div className="mt-5 flex flex-wrap gap-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700">
-              <span className="rounded-full border border-[#e8dfd5] bg-white/88 px-3 py-2 shadow-sm">{weeklyCheckIns}/{weeklyGoal} check-ins this week</span>
-              <span className="rounded-full border border-[#e8dfd5] bg-white/88 px-3 py-2 shadow-sm">{entries.length} pages in your archive</span>
-              <span className="rounded-full border border-[#e8dfd5] bg-white/88 px-3 py-2 shadow-sm">{unlockedAchievementCount}/{achievementBadges.length} keepsakes lit</span>
+            <div className="relative z-10 mt-5 flex flex-wrap gap-2 text-xs font-black uppercase tracking-[0.18em] text-white">
+              <span className="rounded-full border border-white/20 bg-black/20 px-3 py-2 shadow-sm backdrop-blur-md">{weeklyCheckIns}/{weeklyGoal} check-ins this week</span>
+              <span className="rounded-full border border-white/20 bg-black/20 px-3 py-2 shadow-sm backdrop-blur-md">{entries.length} pages in your archive</span>
+              <span className="rounded-full border border-white/20 bg-black/20 px-3 py-2 shadow-sm backdrop-blur-md">{unlockedAchievementCount}/{achievementBadges.length} keepsakes lit</span>
             </div>
           </div>
 
-          <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/80 p-6 shadow-soft backdrop-blur xl:p-8">
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-sand-500 sm:text-sm sm:tracking-widest">This week so far</p>
-            <p className="mt-3 text-4xl font-extrabold text-sage-950">{weeklyCheckIns}/{weeklyGoal}</p>
-            <p className="mt-3 text-sm font-semibold leading-7 text-sage-700">{weeklyCheckIns >= weeklyGoal ? 'You already gave yourself enough room this week.' : `${weeklyGoal - weeklyCheckIns} more soft check-ins if you want to fill this week.`}</p>
-            <div className="mt-5 h-2.5 w-full overflow-hidden rounded-full bg-sage-100">
-              <div className="h-full rounded-full bg-gradient-to-r from-sage-500 to-teal-500 transition-all duration-700" style={{ width: `${Math.min((weeklyCheckIns / weeklyGoal) * 100, 100)}%` }}></div>
-            </div>
-            <div className="mt-6 rounded-[2.2rem] bg-gradient-to-br from-rose-50 to-white p-5 shadow-inner">
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-rose-500 sm:text-sm sm:tracking-widest">Keepsake path</p>
-              <div className="mt-3 flex items-center gap-4">
-                <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-white text-3xl shadow-sm">{rewardLevel.emoji}</div>
-                <div>
-                  <p className="text-lg font-extrabold text-sage-950">{rewardLevel.title}</p>
-                  <p className="text-sm font-semibold leading-6 text-sage-700">{entriesToNextReward === 0 ? 'Your next bloom is here.' : `${entriesToNextReward} pages until the next bloom.`}</p>
+          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur xl:p-8">
+            <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+            <div className="relative z-10">
+              <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft sm:text-sm sm:tracking-widest">This week so far</p>
+              <p className="mt-3 text-4xl font-extrabold text-white lofi-sharp-text">{weeklyCheckIns}/{weeklyGoal}</p>
+              <p className="mt-3 text-sm font-semibold leading-7 text-white lofi-sharp-text">{weeklyCheckIns >= weeklyGoal ? 'You already gave yourself enough room this week.' : `${weeklyGoal - weeklyCheckIns} more soft check-ins if you want to fill this week.`}</p>
+              <div className="mt-5 h-2.5 w-full overflow-hidden rounded-full bg-white/10 backdrop-blur-md shadow-inner">
+                <div className="h-full rounded-full bg-gradient-to-r from-white/60 to-white/90 transition-all duration-700" style={{ width: `${Math.min((weeklyCheckIns / weeklyGoal) * 100, 100)}%` }}></div>
+              </div>
+              <div className="mt-6 rounded-[2.2rem] border border-white/20 bg-black/20 p-5 shadow-sm backdrop-blur-md">
+                <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft sm:text-sm sm:tracking-widest">Keepsake path</p>
+                <div className="mt-3 flex items-center gap-4">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-white/20 text-3xl shadow-sm backdrop-blur-md text-white">{rewardLevel.emoji}</div>
+                  <div>
+                    <p className="text-lg font-extrabold text-white lofi-sharp-text">{rewardLevel.title}</p>
+                    <p className="text-sm font-semibold leading-6 text-white/95 lofi-sharp-text-soft">{entriesToNextReward === 0 ? 'Your next bloom is here.' : `${entriesToNextReward} pages until the next bloom.`}</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-[3rem] border border-[#e8dfd5] bg-white/82 p-6 shadow-soft backdrop-blur xl:p-8">
-            <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur xl:p-8">
+            <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-80" aria-hidden="true" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+            <div className="relative z-10 flex flex-wrap items-center justify-between gap-3">
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.22em] text-sage-600 sm:text-sm sm:tracking-widest">Mood garden</p>
-                <p className="mt-2 text-sm font-semibold leading-6 text-sage-700">A softer chart view so the patterns stay readable on both mobile and desktop.</p>
+                <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft sm:text-sm sm:tracking-widest">Mood garden</p>
+                <p className="mt-2 text-sm font-semibold leading-6 text-white lofi-sharp-text">A softer chart view so the patterns stay readable on both mobile and desktop.</p>
               </div>
-              <div className="rounded-full bg-sage-100 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-800">Weekly summary</div>
+              <div className="rounded-full bg-white/20 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-white backdrop-blur-md shadow-sm">Weekly summary</div>
             </div>
-            <div className="mt-5">
+            <div className="relative z-10 mt-5 bg-white/90 rounded-[2rem] p-4 shadow-sm backdrop-blur-md">
               <MoodChart entries={entries} weatherOptions={weatherOptions} />
             </div>
-            <div className="mt-5 rounded-[2.2rem] bg-white p-5 text-sm font-bold leading-7 text-sage-900 shadow-inner">
+            <div className="relative z-10 mt-5 rounded-[2.2rem] border border-white/20 bg-black/20 p-5 text-sm font-bold leading-7 text-white lofi-sharp-text shadow-sm backdrop-blur-md">
               {weeklySummary}
             </div>
           </div>
 
           <div className="grid gap-6">
-            <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/82 p-6 shadow-soft backdrop-blur xl:p-8">
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-teal-600 sm:text-sm sm:tracking-widest">{returnRitual.eyebrow}</p>
-              <p className="mt-2 text-2xl font-extrabold leading-tight text-sage-950">{returnRitual.title}</p>
-              <p className="mt-3 text-sm font-semibold leading-7 text-sage-700">{returnRitual.text}</p>
-              <button className="mt-5 inline-flex items-center gap-2 rounded-full bg-sage-900 px-4 py-2.5 text-sm font-extrabold text-white shadow-lift transition hover:-translate-y-0.5 hover:bg-sage-800" onClick={() => navigateToTab('write')} type="button">
-                <PenLine size={16} /> Return to writing
-              </button>
+            <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur xl:p-8">
+              <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+              <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+              <div className="relative z-10">
+                <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft sm:text-sm sm:tracking-widest">{returnRitual.eyebrow}</p>
+                <p className="mt-2 text-2xl font-extrabold leading-tight text-white lofi-sharp-text">{returnRitual.title}</p>
+                <p className="mt-3 text-sm font-semibold leading-7 text-white lofi-sharp-text">{returnRitual.text}</p>
+                <button className="mt-5 inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2.5 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/30" onClick={() => navigateToTab('write')} type="button">
+                  <PenLine size={16} /> Return to writing
+                </button>
+              </div>
             </div>
 
-            <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/82 p-6 shadow-soft backdrop-blur xl:p-8">
-              <div className="flex items-center justify-between gap-3">
-                <p className="text-xs font-bold uppercase tracking-[0.22em] text-sage-600">Keepsake shelf</p>
-                <div className="rounded-full bg-sage-100 px-3 py-1 text-[10px] font-extrabold text-sage-800">{unlockedAchievementCount}/{achievementBadges.length}</div>
+            <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur xl:p-8">
+              <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-85" aria-hidden="true" />
+              <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+              <div className="relative z-10 flex items-center justify-between gap-3">
+                <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Keepsake shelf</p>
+                <div className="rounded-full bg-white/20 px-3 py-1 text-[10px] font-black text-white shadow-sm backdrop-blur-md">{unlockedAchievementCount}/{achievementBadges.length}</div>
               </div>
-              <div className="mt-4 grid grid-cols-6 gap-2">
+              <div className="relative z-10 mt-4 grid grid-cols-6 gap-2">
                 {achievementBadges.map((badge) => (
-                  <div key={badge.id} className={`flex aspect-square items-center justify-center rounded-2xl text-xl shadow-sm transition-all ${badge.unlocked ? 'bg-white grayscale-0' : 'bg-sage-50/50 opacity-40 grayscale'}`} title={`${badge.title}: ${badge.hint}`}>
+                  <div key={badge.id} className={`flex aspect-square items-center justify-center rounded-2xl text-xl shadow-sm backdrop-blur-md transition-all ${badge.unlocked ? 'bg-white/20 grayscale-0' : 'bg-black/20 opacity-40 grayscale'}`} title={`${badge.title}: ${badge.hint}`}>
                     {badge.emoji}
                   </div>
                 ))}
               </div>
-              <p className="mt-4 text-sm font-semibold leading-7 text-sage-700">Every return adds another little sign that this space is becoming yours.</p>
+              <p className="relative z-10 mt-4 text-sm font-semibold leading-7 text-white/95 lofi-sharp-text-soft">Every return adds another little sign that this space is becoming yours.</p>
             </div>
           </div>
         </div>
         )}
 
         {activeTab === 'memories' && (
-        <div className="mt-6 grid gap-6 pb-24 lg:pb-0">
+        <div className="mx-auto max-w-[1280px] px-3 pt-4 sm:px-5 sm:pt-6">
+          <div className="grid gap-6 pb-24 lg:pb-0">
 
-          <div className="flex flex-wrap items-center justify-center gap-2 rounded-[1.6rem] border border-[#e8dfd5] bg-white/78 p-2 shadow-sm backdrop-blur">
-            <button className={`rounded-full px-5 py-2.5 text-sm font-extrabold transition ${memoriesView === 'calendar' ? 'bg-sage-900 text-white shadow-sm' : 'text-sage-700 hover:bg-sage-50'}`} onClick={() => setMemoriesView('calendar')} type="button">Calendar</button>
-            <button className={`rounded-full px-5 py-2.5 text-sm font-extrabold transition ${memoriesView === 'archive' ? 'bg-sage-900 text-white shadow-sm' : 'text-sage-700 hover:bg-sage-50'}`} onClick={() => setMemoriesView('archive')} type="button">Positivity archive</button>
+          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden flex flex-wrap items-center justify-center gap-2 rounded-[1.6rem] border border-[#8b5e3c]/25 p-2 shadow-sm backdrop-blur-xl">
+            <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+            <div className="relative z-10 flex gap-2">
+              <button className={`rounded-full px-5 py-2.5 text-sm font-extrabold transition backdrop-blur-md ${memoriesView === 'calendar' ? 'bg-white/30 text-white lofi-sharp-chip shadow-sm' : 'bg-black/20 text-white/90 lofi-sharp-chip hover:bg-black/40 hover:text-white'}`} onClick={() => setMemoriesView('calendar')} type="button">Calendar</button>
+              <button className={`rounded-full px-5 py-2.5 text-sm font-extrabold transition backdrop-blur-md ${memoriesView === 'archive' ? 'bg-white/30 text-white lofi-sharp-chip shadow-sm' : 'bg-black/20 text-white/90 lofi-sharp-chip hover:bg-black/40 hover:text-white'}`} onClick={() => setMemoriesView('archive')} type="button">Positivity archive</button>
+            </div>
           </div>
 
           {memoriesView === 'calendar' && (
-          <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/84 p-4 shadow-soft backdrop-blur sm:p-5 lg:p-6">
-            <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.22em] text-sage-600">Journal calendar</p>
-                <h2 className="mt-1 text-2xl font-extrabold text-ink sm:text-3xl">Memories</h2>
-              </div>
-              <div className="flex flex-wrap gap-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-sage-700">
-                <span className="rounded-full border border-[#e8dfd5] bg-sage-50 px-3 py-2">{importantDateCount} saved</span>
-                <span className="rounded-full border border-[#e8dfd5] bg-sage-50 px-3 py-2">{upcomingReminderCount} reminders</span>
-              </div>
-            </div>
-
-            <div className="grid gap-5 xl:grid-cols-[minmax(19rem,29rem)_minmax(0,1fr)] xl:items-start">
-              <div className="rounded-[1.6rem] border border-[#e8dfd5] bg-sage-50/72 p-3 shadow-inner sm:p-4">
-                <div className="mb-3 flex items-center justify-between gap-2 rounded-[1.2rem] bg-white px-2 py-2 shadow-sm">
-                  <button className="rounded-full bg-sage-50 px-3 py-2 text-sm font-extrabold text-sage-800 transition hover:bg-sage-100" onClick={() => setCalendarMonth(shiftMonthKey(calendarMonth, -1))} type="button">‹</button>
-                  <p className="text-center text-sm font-extrabold text-sage-950 sm:text-base">{formatMonthLabel(calendarMonth)}</p>
-                  <button className="rounded-full bg-sage-50 px-3 py-2 text-sm font-extrabold text-sage-800 transition hover:bg-sage-100" onClick={() => setCalendarMonth(shiftMonthKey(calendarMonth, 1))} type="button">›</button>
+          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-8 shadow-soft lg:p-10">
+            <img src={memoriesSectionPreviewImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
+            <div className="relative z-10">
+              <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <h1 className="font-display text-5xl font-bold tracking-tight text-white lofi-sharp-text">Memories</h1>
+                  <p className="mt-2 text-xs font-black uppercase tracking-[0.3em] text-white/95 lofi-sharp-text-soft">Journal calendar</p>
                 </div>
-                <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-extrabold uppercase tracking-[0.12em] text-sage-500">
+                <div className="flex flex-wrap gap-2 text-[11px] font-black uppercase tracking-[0.16em] text-white/95 lofi-sharp-chip">
+                  <span className="rounded-full border border-white/20 bg-black/20 px-3 py-2 backdrop-blur-sm">{importantDateCount} saved</span>
+                  <span className="rounded-full border border-white/20 bg-black/20 px-3 py-2 backdrop-blur-sm">{upcomingReminderCount} reminders</span>
+                </div>
+              </div>
+
+              <div className="mt-8 grid gap-5 xl:grid-cols-[minmax(19rem,29rem)_minmax(0,1fr)] xl:items-start">
+                <div className="rounded-[1.6rem] border border-white/20 bg-black/20 p-3 shadow-inner backdrop-blur-md sm:p-4">
+                <div className="mb-3 flex items-center justify-between gap-2 rounded-[1.2rem] bg-white/20 px-2 py-2 shadow-sm backdrop-blur-md">
+                  <button className="rounded-full bg-black/20 px-3 py-2 text-sm font-extrabold text-white transition hover:bg-black/40" onClick={() => setCalendarMonth(shiftMonthKey(calendarMonth, -1))} type="button">‹</button>
+                  <p className="text-center text-sm font-extrabold text-white lofi-sharp-text sm:text-base">{formatMonthLabel(calendarMonth)}</p>
+                  <button className="rounded-full bg-black/20 px-3 py-2 text-sm font-extrabold text-white transition hover:bg-black/40" onClick={() => setCalendarMonth(shiftMonthKey(calendarMonth, 1))} type="button">›</button>
+                </div>
+                <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-extrabold uppercase tracking-[0.12em] text-white/90 lofi-sharp-text-soft">
                   {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => <div key={day}>{day}</div>)}
                 </div>
                 <div className="mt-2 grid grid-cols-7 gap-1">
@@ -6477,7 +6714,7 @@ function App() {
                     const isToday = day?.dateKey === todayISO();
                     return day ? (
                       <button
-                        className={`relative flex h-11 items-center justify-center rounded-xl border text-xs font-extrabold transition hover:-translate-y-0.5 sm:h-12 sm:text-sm ${isSelected ? 'border-sage-800 bg-sage-900 text-white shadow-lift' : isToday ? 'border-sage-300 bg-white text-sage-900' : 'border-[#e8dfd5] bg-white/92 text-sage-800 hover:bg-white'}`}
+                        className={`relative flex h-11 items-center justify-center rounded-xl border text-xs font-extrabold backdrop-blur-md transition hover:-translate-y-0.5 sm:h-12 sm:text-sm ${isSelected ? 'border-white/60 bg-white/40 text-white lofi-sharp-chip shadow-sm' : isToday ? 'border-white/40 bg-white/20 text-white lofi-sharp-chip' : 'border-white/20 bg-black/20 text-white lofi-sharp-chip hover:bg-black/40'}`}
                         key={day.dateKey}
                         onClick={() => {
                           setSelectedCalendarDate(day.dateKey);
@@ -6486,89 +6723,89 @@ function App() {
                         type="button"
                       >
                         <span>{day.day}</span>
-                        {hasImportantDate && <span className={`absolute right-1.5 top-1 text-[10px] ${isSelected ? 'text-sand-100' : 'text-rose-500'}`}>✦</span>}
+                        {hasImportantDate && <span className={`absolute right-1.5 top-1 text-[10px] ${isSelected ? 'text-white' : 'text-rose-400'}`}>✦</span>}
                         {dayForecast && <span className="absolute bottom-1 right-1 text-[10px] leading-none" title={dayForecastVisuals.label}>{dayForecastVisuals.emoji}</span>}
-                        {dayEntries.length > 0 && <span className={`absolute bottom-1.5 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full ${isSelected ? 'bg-white' : 'bg-sage-700'}`} />}
+                        {dayEntries.length > 0 && <span className={`absolute bottom-1.5 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full ${isSelected ? 'bg-white' : 'bg-white/80'}`} />}
                       </button>
                     ) : <div key={`blank-${index}`} />;
                   })}
                 </div>
-                <button className="mt-3 inline-flex w-full items-center justify-center rounded-full border border-[#e8dfd5] bg-white px-3 py-2 text-xs font-extrabold uppercase tracking-[0.16em] text-sage-700 shadow-sm transition hover:bg-sage-50" onClick={() => { const today = todayISO(); setCalendarMonth(today.slice(0, 7)); setSelectedCalendarDate(today); openImportantDateEditor(today); }} type="button">
+                <button className="mt-3 inline-flex w-full items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-md px-3 py-2 text-xs font-black uppercase tracking-[0.16em] text-white lofi-sharp-chip shadow-sm transition hover:bg-white/20" onClick={() => { const today = todayISO(); setCalendarMonth(today.slice(0, 7)); setSelectedCalendarDate(today); openImportantDateEditor(today); }} type="button">
                   Jump to today
                 </button>
               </div>
 
-              <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/94 p-4 shadow-inner sm:p-5">
+              <div className="rounded-[2.2rem] border border-white/20 bg-black/20 p-4 shadow-sm backdrop-blur-md sm:p-5">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div>
-                    <p className="text-xs font-extrabold uppercase tracking-widest text-sage-600">Selected date</p>
-                    <h3 className="mt-1 text-2xl font-extrabold text-ink">{formatDate(selectedCalendarDate)}</h3>
-                    <p className="mt-1 text-sm font-semibold leading-6 text-sage-600">Click any date, then write a note or reminder here.</p>
+                    <p className="text-xs font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft">Selected date</p>
+                    <h3 className="mt-1 text-2xl font-extrabold text-white lofi-sharp-text">{formatDate(selectedCalendarDate)}</h3>
+                    <p className="mt-1 text-sm font-semibold leading-6 text-white lofi-sharp-text-soft">Click any date, then write a note or reminder here.</p>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    <button className="rounded-full bg-sage-900 px-4 py-2.5 text-sm font-extrabold text-white transition hover:bg-sage-800" onClick={() => openImportantDateEditor(selectedCalendarDate)} type="button">
+                    <button className="rounded-full bg-white/20 px-4 py-2.5 text-sm font-extrabold text-white lofi-sharp-chip backdrop-blur-md shadow-sm transition hover:bg-white/30" onClick={() => openImportantDateEditor(selectedCalendarDate)} type="button">
                       {selectedImportantDate ? 'Edit note' : 'Write note'}
                     </button>
                     {selectedImportantDate && (
-                      <button className="rounded-full bg-rose-100 px-4 py-2.5 text-sm font-extrabold text-rose-700 transition hover:bg-rose-200" onClick={() => deleteImportantDate(selectedCalendarDate)} type="button">
+                      <button className="rounded-full bg-red-500/20 border border-red-400/30 px-4 py-2.5 text-sm font-extrabold text-white lofi-sharp-chip backdrop-blur-md transition hover:bg-red-500/40" onClick={() => deleteImportantDate(selectedCalendarDate)} type="button">
                         Remove
                       </button>
                     )}
                   </div>
                 </div>
 
-                <div className="mt-4 rounded-2xl border border-[#e8dfd5] bg-gradient-to-br from-sage-50/90 to-white p-4 shadow-sm">
+                <div className="mt-4 rounded-2xl border border-white/20 bg-white/10 p-4 shadow-sm backdrop-blur-md">
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-xl shadow-sm">
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white/20 text-white backdrop-blur-md text-xl shadow-sm">
                         {selectedCalendarForecast ? selectedCalendarForecastVisuals.emoji : '📍'}
                       </div>
                       <div>
-                        <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-sage-600">Local weather</p>
+                        <p className="text-xs font-black uppercase tracking-[0.2em] text-white/95 lofi-sharp-text-soft">Local weather</p>
                         {selectedCalendarForecast ? (
-                          <p className="mt-1 text-sm font-extrabold text-sage-950">
+                          <p className="mt-1 text-sm font-extrabold text-white lofi-sharp-text">
                             {selectedCalendarForecastVisuals.label} · {formatForecastTemperature(selectedCalendarForecast.maxTemp)} / {formatForecastTemperature(selectedCalendarForecast.minTemp)}
                           </p>
                         ) : (
-                          <p className="mt-1 text-sm font-semibold leading-6 text-sage-700">{calendarForecastStatus}</p>
+                          <p className="mt-1 text-sm font-semibold leading-6 text-white lofi-sharp-text-soft">{calendarForecastStatus}</p>
                         )}
-                        {selectedCalendarForecast && <p className="mt-1 text-xs font-bold uppercase tracking-[0.14em] text-sage-500">{calendarForecastLocation || 'Your location'} · {selectedCalendarDate}</p>}
+                        {selectedCalendarForecast && <p className="mt-1 text-xs font-bold uppercase tracking-[0.14em] text-white/90 lofi-sharp-text-soft">{calendarForecastLocation || 'Your location'} · {selectedCalendarDate}</p>}
                       </div>
                     </div>
                     {calendarForecastPermission !== 'loading' && (
-                      <button className="rounded-full border border-amber-200/50 bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.14em] text-sage-700 transition hover:bg-sage-50" onClick={loadCalendarForecast} type="button">
+                      <button className="rounded-full border border-white/30 bg-black/20 px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-white lofi-sharp-chip backdrop-blur-md shadow-sm transition hover:bg-black/40" onClick={loadCalendarForecast} type="button">
                         {calendarForecastPermission === 'granted' ? 'Refresh' : 'Use location'}
                       </button>
                     )}
-                    {calendarForecastPermission === 'loading' && <span className="rounded-full border border-[#e8dfd5] bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.14em] text-sage-600">Loading</span>}
+                    {calendarForecastPermission === 'loading' && <span className="rounded-full border border-white/30 bg-black/20 px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-white backdrop-blur-md shadow-sm">Loading</span>}
                   </div>
-                  {selectedCalendarForecast && <p className="mt-3 text-xs font-semibold leading-5 text-sage-600">Forecast uses your browser location and is available for nearby upcoming dates.</p>}
+                  {selectedCalendarForecast && <p className="mt-3 text-xs font-semibold leading-5 text-white/90 lofi-sharp-text-soft">Forecast uses your browser location and is available for nearby upcoming dates.</p>}
                 </div>
 
                 {selectedImportantDate && (
-                  <div className="mt-4 rounded-2xl border border-[#e8dfd5] bg-sage-50/76 p-4">
+                  <div className="mt-4 rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur-md shadow-sm">
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <div className="min-w-0 flex-1">
-                        <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-sage-600">Saved note or reminder</p>
-                        <p className="mt-2 text-base font-extrabold leading-6 text-sage-950">{selectedImportantDate.note}</p>
-                        {selectedImportantDate.details && <p className="mt-2 whitespace-pre-wrap text-sm font-semibold leading-6 text-sage-700">{selectedImportantDate.details}</p>}
+                        <p className="text-xs font-black uppercase tracking-[0.2em] text-white/95 lofi-sharp-text-soft">Saved note or reminder</p>
+                        <p className="mt-2 text-base font-extrabold leading-6 text-white lofi-sharp-text">{selectedImportantDate.note}</p>
+                        {selectedImportantDate.details && <p className="mt-2 whitespace-pre-wrap text-sm font-semibold leading-6 text-white/95 lofi-sharp-text-soft">{selectedImportantDate.details}</p>}
                       </div>
-                      <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.16em] text-sage-700">
-                        {selectedImportantDate.time && <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1.5">{formatReminderTime(selectedImportantDate.time)}</span>}
-                        <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1.5">{selectedImportantDate.remindersEnabled ? 'Reminder on' : 'Note only'}</span>
+                      <div className="flex flex-wrap gap-2 text-[10px] font-black uppercase tracking-[0.16em] text-white">
+                        {selectedImportantDate.time && <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-md shadow-sm">{formatReminderTime(selectedImportantDate.time)}</span>}
+                        <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-md shadow-sm">{selectedImportantDate.remindersEnabled ? 'Reminder on' : 'Note only'}</span>
                       </div>
                     </div>
                   </div>
                 )}
 
                 {importanceModalOpen && (
-                  <div className="mt-4 rounded-[1.6rem] border border-amber-200/50 bg-white p-4 shadow-sm sm:p-5">
-                    <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-700">Add to this date</p>
+                  <div className="mt-4 rounded-[1.6rem] border border-white/20 bg-black/20 p-4 shadow-sm backdrop-blur-md sm:p-5">
+                    <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Add to this date</p>
                     <div className="mt-4 grid gap-3">
                       <label className="block">
-                        <span className="text-sm font-extrabold text-sage-900">Title</span>
+                        <span className="text-sm font-extrabold text-white lofi-sharp-text">Title</span>
                         <input
-                          className="mt-2 w-full rounded-2xl border border-amber-200/50 bg-sage-50/70 px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
+                          className="mt-2 w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm font-semibold text-white outline-none backdrop-blur-md placeholder:text-white/50 transition focus:border-white/40 focus:ring-4 focus:ring-white/10"
                           maxLength={80}
                           onChange={(event) => setImportanceDraft(event.target.value)}
                           placeholder="Exam, birthday, deadline..."
@@ -6576,9 +6813,9 @@ function App() {
                         />
                       </label>
                       <label className="block">
-                        <span className="text-sm font-extrabold text-sage-900">Notes</span>
+                        <span className="text-sm font-extrabold text-white lofi-sharp-text">Notes</span>
                         <textarea
-                          className="mt-2 min-h-[150px] w-full rounded-2xl border border-amber-200/50 bg-sage-50/70 px-4 py-3 text-sm font-semibold leading-6 text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
+                          className="mt-2 min-h-[150px] w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm font-semibold leading-6 text-white outline-none backdrop-blur-md placeholder:text-white/50 transition focus:border-white/40 focus:ring-4 focus:ring-white/10"
                           maxLength={320}
                           onChange={(event) => setImportanceDetailsDraft(event.target.value)}
                           placeholder="Write what you want to remember on this date."
@@ -6588,48 +6825,48 @@ function App() {
                     </div>
                     <div className="mt-3 grid gap-3 sm:grid-cols-[minmax(10rem,14rem)_minmax(0,1fr)]">
                       <label className="block">
-                        <span className="text-sm font-extrabold text-sage-900">Time</span>
+                        <span className="text-sm font-extrabold text-white lofi-sharp-text">Time</span>
                         <input
-                          className="mt-2 w-full rounded-2xl border border-amber-200/50 bg-sage-50/70 px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:bg-white"
+                          className="mt-2 w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm font-semibold text-white outline-none backdrop-blur-md transition focus:border-white/40 focus:ring-4 focus:ring-white/10 [color-scheme:dark]"
                           onChange={(event) => setImportanceTimeDraft(event.target.value)}
                           type="time"
                           value={importanceTimeDraft}
                         />
                       </label>
-                      <label className="flex items-center gap-3 rounded-2xl border border-[#e8dfd5] bg-sage-50/70 px-4 py-3 text-sm font-semibold leading-6 text-sage-800">
-                        <input checked={importanceReminderEnabled} className="h-4 w-4 rounded border-sage-300 text-sage-700 focus:ring-sage-300" onChange={(event) => setImportanceReminderEnabled(event.target.checked)} type="checkbox" />
+                      <label className="flex items-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm font-semibold leading-6 text-white backdrop-blur-md">
+                        <input checked={importanceReminderEnabled} className="h-4 w-4 rounded border-white/30 text-white/50 focus:ring-white/30 accent-black/50" onChange={(event) => setImportanceReminderEnabled(event.target.checked)} type="checkbox" />
                         Remind me if browser notifications are allowed
                       </label>
                     </div>
                     <div className="mt-4 flex flex-wrap gap-3">
-                      <button className="rounded-full bg-sage-900 px-5 py-3 text-sm font-extrabold text-white transition hover:bg-sage-800" onClick={saveImportantDate} type="button">Save</button>
-                      <button className="rounded-full border border-amber-200/50 bg-white px-5 py-3 text-sm font-extrabold text-sage-700 transition hover:bg-sage-50" onClick={() => setImportanceModalOpen(false)} type="button">Cancel</button>
-                      <button className={`rounded-full border px-5 py-3 text-sm font-extrabold transition ${notificationPermission === 'granted' ? 'border-amber-200/50 bg-white text-sage-700 hover:bg-sage-50' : 'border-sage-900 bg-white text-sage-900 hover:bg-sage-50'}`} onClick={requestNotificationPermission} type="button">
+                      <button className="rounded-full bg-white/20 px-5 py-3 text-sm font-extrabold text-white backdrop-blur-md shadow-sm transition hover:bg-white/30" onClick={saveImportantDate} type="button">Save</button>
+                      <button className="rounded-full border border-white/30 bg-black/20 px-5 py-3 text-sm font-extrabold text-white backdrop-blur-md shadow-sm transition hover:bg-black/40" onClick={() => setImportanceModalOpen(false)} type="button">Cancel</button>
+                      <button className={`rounded-full border px-5 py-3 text-sm font-extrabold backdrop-blur-md shadow-sm transition ${notificationPermission === 'granted' ? 'border-white/30 bg-black/20 text-white hover:bg-black/40' : 'border-white/50 bg-white/20 text-white hover:bg-white/30'}`} onClick={requestNotificationPermission} type="button">
                         {notificationPermission === 'granted' ? 'Notifications on' : 'Allow notifications'}
                       </button>
                     </div>
-                    {notificationStatusMessage && <p className="mt-3 rounded-2xl bg-sage-50 px-4 py-3 text-sm font-semibold leading-6 text-sage-700">{notificationStatusMessage}</p>}
+                    {notificationStatusMessage && <p className="mt-3 rounded-2xl bg-black/20 border border-white/20 backdrop-blur-md px-4 py-3 text-sm font-semibold leading-6 text-white/95 lofi-sharp-text-soft">{notificationStatusMessage}</p>}
                   </div>
                 )}
 
                 {selectedDateEntries.length ? (
                   <div className="mt-4 space-y-3">
-                    <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Journal entries on this day</p>
+                    <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Journal entries on this day</p>
                     {selectedDateEntries.map((entry) => (
-                      <button className="w-full rounded-2xl border border-[#e8dfd5] bg-white p-3 text-left transition hover:-translate-y-0.5 hover:bg-sage-50 hover:shadow-sm" key={entry.id} onClick={() => setSelectedEntry(entry)} type="button">
-                        <p className="font-extrabold text-sage-950">{entry.title}</p>
-                        <p className="mt-1 line-clamp-2 text-sm font-semibold leading-6 text-sage-700">{getPlainTextFromHtml(entry.body || entry.prompt || '') || 'Photo entry'}</p>
+                      <button className="w-full rounded-2xl border border-white/20 bg-black/20 p-3 text-left backdrop-blur-md shadow-sm transition hover:-translate-y-0.5 hover:bg-black/40 hover:shadow-md" key={entry.id} onClick={() => setSelectedEntry(entry)} type="button">
+                        <p className="font-extrabold text-white lofi-sharp-text">{entry.title}</p>
+                        <p className="mt-1 line-clamp-2 text-sm font-semibold leading-6 text-white/95 lofi-sharp-text-soft">{getPlainTextFromHtml(entry.body || entry.prompt || '') || 'Photo entry'}</p>
                       </button>
                     ))}
                   </div>
-                ) : <p className="mt-4 rounded-2xl border border-dashed border-amber-200/50 bg-sage-50/50 px-4 py-4 text-sm font-semibold leading-6 text-sage-500">No diary entry for this date yet.</p>}
+                ) : <p className="mt-4 rounded-2xl border border-white/20 bg-black/20 px-4 py-4 text-sm font-semibold leading-6 text-white/95 lofi-sharp-text-soft backdrop-blur-md shadow-sm">No diary entry for this date yet.</p>}
 
                 {upcomingReminderPreview.length > 0 && (
-                  <div className="mt-4 rounded-2xl border border-[#e8dfd5] bg-white p-4">
-                    <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Upcoming</p>
+                  <div className="mt-4 rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur-md shadow-sm">
+                    <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Upcoming</p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       {upcomingReminderPreview.slice(0, 3).map((item) => (
-                        <button className={`rounded-full border px-3 py-2 text-xs font-extrabold transition hover:bg-sage-50 ${item.dateKey === selectedCalendarDate ? 'border-sage-300 bg-sage-50 text-sage-900' : 'border-[#e8dfd5] bg-white text-sage-700'}`} key={item.dateKey} onClick={() => { setSelectedCalendarDate(item.dateKey); openImportantDateEditor(item.dateKey); }} type="button">
+                        <button className={`rounded-full border px-3 py-2 text-xs font-extrabold backdrop-blur-md shadow-sm transition hover:bg-white/30 ${item.dateKey === selectedCalendarDate ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white'}`} key={item.dateKey} onClick={() => { setSelectedCalendarDate(item.dateKey); openImportantDateEditor(item.dateKey); }} type="button">
                           {formatDate(item.dateKey)} · {item.note}
                         </button>
                       ))}
@@ -6639,40 +6876,43 @@ function App() {
               </div>
             </div>
           </div>
-          )}
+        </div>
+        )}
 
           {memoriesView === 'archive' && (
-          <div className="flex h-full flex-col overflow-hidden rounded-[3rem] border border-[#e8dfd5] bg-gradient-to-br from-white/90 via-white/84 to-sand-50/72 p-4 shadow-soft backdrop-blur sm:p-6 lg:p-8">
-            <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden flex h-full flex-col rounded-[3rem] border border-[#8b5e3c]/25 p-4 shadow-soft backdrop-blur sm:p-6 lg:p-8">
+            <img src={memoriesSectionPreviewImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
+            <div className="relative z-10 mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div className="flex items-center gap-3">
-                <CalendarDays className="text-sage-700" size={18} />
+                <CalendarDays className="text-white lofi-sharp-text" size={18} />
                 <div>
-                  <h2 className="text-2xl font-extrabold text-ink sm:text-3xl">Your positivity archive</h2>
-                  <p className="mt-1 text-sm font-semibold leading-7 text-sage-700">Open any page to read the full memory, with a calmer layout that uses the whole panel more gracefully.</p>
+                  <h2 className="text-2xl font-extrabold text-white lofi-sharp-text sm:text-3xl">Your positivity archive</h2>
+                  <p className="mt-1 text-sm font-semibold leading-7 text-white lofi-sharp-text-soft">Open any page to read the full memory, with a calmer layout that uses the whole panel more gracefully.</p>
                 </div>
               </div>
-              <div className="rounded-full bg-sage-100 px-3 py-1 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-700 sm:text-[11px]">
+              <div className="rounded-full bg-black/20 border border-white/20 backdrop-blur-md px-3 py-1 text-xs font-black uppercase tracking-[0.18em] text-white shadow-sm sm:text-[11px]">
                 {entries.length} saved
               </div>
             </div>
-            <div className="flex-1 space-y-4 overflow-y-auto pr-0 min-h-[24rem] sm:min-h-[32rem] sm:pr-2 xl:min-h-0">
-              {!entries.length && <p className="rounded-3xl bg-white p-5 font-semibold leading-7 text-sage-900 shadow-inner">No entries yet. Start with one sentence if that is all you have today.</p>}
+            <div className="relative z-10 flex-1 space-y-4 overflow-y-auto pr-0 min-h-[24rem] sm:min-h-[32rem] sm:pr-2 xl:min-h-0 lofi-scrollbar">
+              {!entries.length && <p className="rounded-3xl border border-white/20 bg-black/20 p-5 font-semibold leading-7 text-white backdrop-blur-md shadow-sm">No entries yet. Start with one sentence if that is all you have today.</p>}
               {entries.map((entry) => {
                 const effectiveMoodLabel = { 'Grounded': 'Happy', 'Soft': 'Calm', 'Okay': 'Neutral', 'Heavy': 'Sad', 'Stormy': 'Anxious' }[entry.mood] || entry.mood;
                 const mood = weatherOptions.find((item) => item.label === effectiveMoodLabel) || weatherOptions.find(m => m.label === entry.mood) || moods[2];
                 return (
                   <article
-                    className="group w-full cursor-pointer rounded-3xl border border-[#e8dfd5] bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-lift sm:p-5"
+                    className="group w-full cursor-pointer rounded-3xl border border-white/20 bg-black/20 p-4 shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-black/30 hover:shadow-md sm:p-5"
                     key={entry.id}
                     onClick={() => setSelectedEntry(entry)}
                   >
                     <div className="flex flex-col gap-1">
-                      <div className="mb-2 flex flex-wrap items-center gap-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-600">
-                        <span className="inline-flex items-center gap-2 rounded-full bg-sage-50 px-3 py-1.5 text-sage-700"><WeatherGlyph mood={mood} size="text-base" /> {entry.mood}</span>
-                        <span className="rounded-full bg-white px-3 py-1.5 ring-1 ring-sage-100">{formatDate(entry.createdAt)}</span>
+                      <div className="mb-2 flex flex-wrap items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-white">
+                        <span className="inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1.5 backdrop-blur-md shadow-sm text-white"><WeatherGlyph mood={mood} size="text-base" /> {entry.mood}</span>
+                        <span className="rounded-full bg-black/20 px-3 py-1.5 shadow-sm border border-white/20 backdrop-blur-md text-white">{formatDate(entry.createdAt)}</span>
                       </div>
-                      <h3 className="text-xl font-extrabold leading-tight text-ink">{entry.title}</h3>
-                      <p className="mt-3 whitespace-pre-line break-words leading-7 text-sage-800">
+                      <h3 className="text-xl font-extrabold leading-tight text-white lofi-sharp-text">{entry.title}</h3>
+                      <p className="mt-3 whitespace-pre-line break-words leading-7 text-white/95 lofi-sharp-text-soft">
                         {(() => {
                           const tempDiv = document.createElement('div');
                           tempDiv.innerHTML = entry.body || entry.prompt || '';
@@ -6700,6 +6940,7 @@ function App() {
             </div>
           </div>
         )}
+        </div>
         </div>
         )}
       </section>
@@ -7030,10 +7271,14 @@ function App() {
       </section>
 
       <section className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-8">
-        <div className="rounded-3xl border border-dashed border-sage-300 bg-white/60 p-8 text-center shadow-lift backdrop-blur">
-          <p className="text-sm font-bold uppercase tracking-widest text-sage-600">Support this project</p>
-          <h2 className="mt-3 text-2xl font-extrabold text-ink">Help keep Lofi Memory free and peaceful</h2>
-          <p className="mx-auto mt-3 max-w-2xl leading-7 text-sage-700">This space may be supported by gentle, non-intrusive advertising after approval. Ads will stay outside the private writing area so journaling remains calm.</p>
+        <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/25 p-8 text-center shadow-soft backdrop-blur">
+          <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+          <div className="relative z-10">
+            <p className="text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft">Support this project</p>
+            <h2 className="mt-3 text-2xl font-extrabold text-white lofi-sharp-text">Help keep Lofi Memory free and peaceful</h2>
+            <p className="mx-auto mt-3 max-w-2xl leading-7 text-white/95 lofi-sharp-text-soft">This space may be supported by gentle, non-intrusive advertising after approval. Ads will stay outside the private writing area so journaling remains calm.</p>
+          </div>
         </div>
       </section>
       </>
@@ -7047,95 +7292,99 @@ function App() {
           text="This panel is only visible when the master email is signed in. It lets you run an AI SEO review from inside the website, keep the API key in your own browser, and work on ideas without exposing admin tools to normal visitors."
         />
         <div className="grid gap-6 xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-          <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/78 p-6 shadow-soft backdrop-blur-xl">
-            <div className="flex items-start justify-between gap-4">
+          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur-xl">
+            <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+            <div className="relative z-10 flex items-start justify-between gap-4">
               <div>
-                <p className="text-sm font-bold uppercase tracking-widest text-sage-600">Master access</p>
-                <h3 className="mt-2 text-2xl font-extrabold text-ink">Signed in as {user?.email}</h3>
-                <p className="mt-3 leading-7 text-sage-700">Normal visitors never see this section. The public journaling flow stays exactly the same unless you later choose to apply changes manually.</p>
+                <p className="text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft">Master access</p>
+                <h3 className="mt-2 text-2xl font-extrabold text-white lofi-sharp-text">Signed in as {user?.email}</h3>
+                <p className="mt-3 leading-7 text-white/95 lofi-sharp-text-soft">Normal visitors never see this section. The public journaling flow stays exactly the same unless you later choose to apply changes manually.</p>
               </div>
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-sage-900 text-white shadow-sm">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/20 text-white shadow-sm backdrop-blur-md">
                 <ShieldCheck size={20} />
               </div>
             </div>
 
-            <div className="mt-6 rounded-[1.5rem] border border-[#e8dfd5] bg-white px-4 py-4 shadow-sm">
-              <p className="text-sm font-extrabold uppercase tracking-[0.22em] text-sage-600">Preview mode</p>
-              <div className="mt-3 flex overflow-hidden rounded-full border border-amber-200/50 bg-sage-50 p-1">
+            <div className="relative z-10 mt-6 rounded-[1.5rem] border border-white/20 bg-black/20 p-4 shadow-sm backdrop-blur-md">
+              <p className="text-sm font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Preview mode</p>
+              <div className="mt-3 flex overflow-hidden rounded-full border border-white/30 bg-white/10 p-1">
                 <button
-                  className={`flex-1 rounded-full px-4 py-2.5 text-sm font-extrabold transition ${adminViewMode === 'master' ? 'bg-sage-900 text-white shadow-sm' : 'text-sage-700 hover:bg-white'}`}
+                  className={`flex-1 rounded-full px-4 py-2.5 text-sm font-black transition backdrop-blur-md lofi-sharp-chip ${adminViewMode === 'master' ? 'bg-white/30 text-white shadow-sm' : 'text-white/90 hover:bg-white/10'}`}
                   onClick={() => setAdminViewMode('master')}
                   type="button"
                 >
                   Master view
                 </button>
                 <button
-                  className={`flex-1 rounded-full px-4 py-2.5 text-sm font-extrabold transition ${adminViewMode === 'user' ? 'bg-sage-900 text-white shadow-sm' : 'text-sage-700 hover:bg-white'}`}
+                  className={`flex-1 rounded-full px-4 py-2.5 text-sm font-black transition backdrop-blur-md lofi-sharp-chip ${adminViewMode === 'user' ? 'bg-white/30 text-white shadow-sm' : 'text-white/90 hover:bg-white/10'}`}
                   onClick={() => setAdminViewMode('user')}
                   type="button"
                 >
                   User view
                 </button>
               </div>
-              <p className="mt-3 text-sm leading-7 text-sage-700">Switch to user view any time to hide admin tools and preview the calmer public experience while staying signed in.</p>
+              <p className="mt-3 text-sm leading-7 text-white/95 lofi-sharp-text-soft">Switch to user view any time to hide admin tools and preview the calmer public experience while staying signed in.</p>
             </div>
 
-            <div className="mt-6 grid gap-3 text-sm leading-7 text-sage-700">
-              <div className="rounded-2xl border border-[#e8dfd5] bg-sage-50/80 px-4 py-4">
-                <p className="font-extrabold text-sage-900">What this first version can do</p>
+            <div className="relative z-10 mt-6 grid gap-3 text-sm leading-7 text-white/95 lofi-sharp-text-soft">
+              <div className="rounded-2xl border border-white/20 bg-black/20 p-4 backdrop-blur-md shadow-sm">
+                <p className="font-extrabold text-white lofi-sharp-text">What this first version can do</p>
                 <p className="mt-2">Run an AI SEO review of the current diary site, suggest safer homepage and guide-page improvements, and draft ideas you can later implement without disrupting users.</p>
               </div>
-              <div className="rounded-2xl border border-[#e8dfd5] bg-white px-4 py-4">
-                <p className="font-extrabold text-sage-900">What it does not auto-publish yet</p>
+              <div className="rounded-2xl border border-white/20 bg-black/20 p-4 backdrop-blur-md shadow-sm">
+                <p className="font-extrabold text-white lofi-sharp-text">What it does not auto-publish yet</p>
                 <p className="mt-2">This version does not silently rewrite the live site on its own. It gives you admin-only guidance and drafts first, which is safer for SEO and much better for preserving tone.</p>
               </div>
             </div>
 
-            <div className="mt-6 rounded-[2.2rem] border border-[#e8dfd5] bg-gradient-to-br from-sage-900 via-sage-800 to-sage-700 p-5 text-white shadow-soft">
-              <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-white/80">Suggested routine</p>
-              <div className="mt-4 grid gap-3 text-sm leading-7 text-white/90">
+            <div className="relative z-10 mt-6 rounded-[2.2rem] border border-white/20 bg-white/20 p-5 text-white shadow-sm backdrop-blur-md">
+              <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft">Suggested routine</p>
+              <div className="mt-4 grid gap-3 text-sm leading-7 text-white/95 lofi-sharp-text-soft">
                 <div>1. Run a fresh AI review when you want new SEO ideas.</div>
                 <div>2. Pick only a few high-impact suggestions at a time.</div>
                 <div>3. Keep the writing experience calm and avoid constant churn.</div>
               </div>
-              <p className="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-white/80">Master email: {MASTER_ADMIN_EMAIL}</p>
+              <p className="mt-4 text-xs font-black uppercase tracking-[0.18em] text-white/95 lofi-sharp-text-soft">Master email: {MASTER_ADMIN_EMAIL}</p>
             </div>
           </div>
 
-          <div className="rounded-[3rem] border border-[#e8dfd5] bg-white/82 p-6 shadow-soft backdrop-blur-xl">
-            <div className="flex flex-wrap items-start justify-between gap-4">
+          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur-xl">
+            <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
+            <div className="relative z-10 flex flex-wrap items-start justify-between gap-4">
               <div>
-                <p className="text-sm font-bold uppercase tracking-widest text-sage-600">Run AI review</p>
-                <h3 className="mt-2 text-2xl font-extrabold text-ink">SEO drafts that stay inside your admin view</h3>
+                <p className="text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft">Run AI review</p>
+                <h3 className="mt-2 text-2xl font-extrabold text-white lofi-sharp-text">SEO drafts that stay inside your admin view</h3>
               </div>
               <div className="flex flex-wrap items-center justify-end gap-2">
-                {seoStudioModelUsed && <span className="rounded-full border border-amber-200/50 bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.2em] text-sage-700">Model · {seoStudioModelUsed}</span>}
-                {seoStudioLastRun && <span className="rounded-full border border-amber-200/50 bg-sage-50 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.2em] text-sage-800">Last run · {seoStudioLastRun}</span>}
+                {seoStudioModelUsed && <span className="rounded-full border border-white/20 bg-black/20 px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-white shadow-sm backdrop-blur-md">Model · {seoStudioModelUsed}</span>}
+                {seoStudioLastRun && <span className="rounded-full border border-white/20 bg-white/20 px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-white shadow-sm backdrop-blur-md">Last run · {seoStudioLastRun}</span>}
               </div>
             </div>
 
-            <div className="mt-6 grid gap-4">
-              <label className="grid gap-2 text-sm font-bold text-sage-900">
+            <div className="relative z-10 mt-6 grid gap-4">
+              <label className="grid gap-2 text-sm font-bold text-white lofi-sharp-text">
                 Gemini API key
                 <div className="flex gap-2">
                   <input
-                    className="w-full rounded-2xl border border-amber-200/50 bg-white px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-400"
+                    className="w-full rounded-2xl border border-white/20 bg-black/20 px-4 py-3 text-sm font-semibold text-white outline-none backdrop-blur-md transition placeholder:text-white/50 focus:border-white/40 focus:ring-4 focus:ring-white/10"
                     onChange={(event) => setSeoStudioApiKey(event.target.value)}
                     placeholder="Paste your Gemini API key"
                     type={showSeoStudioKey ? 'text' : 'password'}
                     value={seoStudioApiKey}
                   />
-                  <button className="rounded-2xl border border-amber-200/50 bg-white px-4 text-sage-800 shadow-sm transition hover:bg-sage-50" onClick={() => setShowSeoStudioKey(!showSeoStudioKey)} type="button">
+                  <button className="rounded-2xl border border-white/20 bg-black/20 px-4 text-white shadow-sm backdrop-blur-md transition hover:bg-black/40" onClick={() => setShowSeoStudioKey(!showSeoStudioKey)} type="button">
                     {showSeoStudioKey ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
-                <span className="text-xs font-semibold text-sage-600">Stored only in this browser for the master email view. Use a browser-restricted key if possible.</span>
+                <span className="text-xs font-semibold text-white/95 lofi-sharp-text-soft">Stored only in this browser for the master email view. Use a browser-restricted key if possible.</span>
               </label>
 
-              <label className="grid gap-2 text-sm font-bold text-sage-900">
+              <label className="grid gap-2 text-sm font-bold text-white lofi-sharp-text">
                 What should the AI focus on?
                 <textarea
-                  className="min-h-[128px] rounded-2xl border border-amber-200/50 bg-white px-4 py-3 text-sm leading-7 text-sage-900 outline-none transition focus:border-sage-400"
+                  className="min-h-[128px] rounded-2xl border border-white/20 bg-black/20 px-4 py-3 text-sm leading-7 text-white outline-none backdrop-blur-md transition placeholder:text-white/50 focus:border-white/40 focus:ring-4 focus:ring-white/10"
                   onChange={(event) => setSeoStudioPrompt(event.target.value)}
                   placeholder="Ask for homepage suggestions, new guide ideas, schema improvements, or calmer SEO fixes."
                   value={seoStudioPrompt}
@@ -7143,33 +7392,33 @@ function App() {
               </label>
 
               <div className="flex flex-wrap gap-3">
-                <button className="inline-flex items-center gap-2 rounded-full bg-sage-900 px-5 py-3 text-sm font-extrabold text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800 disabled:cursor-not-allowed disabled:opacity-60" disabled={seoStudioLoading} onClick={runSeoStudioReview} type="button">
+                <button className="inline-flex items-center gap-2 rounded-full bg-white/20 px-5 py-3 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/30 disabled:cursor-not-allowed disabled:opacity-60" disabled={seoStudioLoading} onClick={runSeoStudioReview} type="button">
                   <Sparkles size={16} /> {seoStudioLoading ? 'Running review...' : 'Run AI SEO review'}
                 </button>
-                <button className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white px-5 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-1 hover:border-sage-300 hover:bg-sage-50 disabled:cursor-not-allowed disabled:opacity-50" disabled={!seoStudioReport.trim()} onClick={copySeoStudioReport} type="button">
+                <button className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/20 px-5 py-3 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:border-white/50 hover:bg-black/40 disabled:cursor-not-allowed disabled:opacity-50" disabled={!seoStudioReport.trim()} onClick={copySeoStudioReport} type="button">
                   <FileText size={16} /> {seoStudioCopied ? 'Copied' : 'Copy report'}
                 </button>
-                <button className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white px-5 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-1 hover:border-sage-300 hover:bg-sage-50" onClick={clearSeoStudioReport} type="button">
+                <button className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/20 px-5 py-3 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:border-white/50 hover:bg-black/40" onClick={clearSeoStudioReport} type="button">
                   Clear
                 </button>
               </div>
 
               {seoStudioError && (
-                <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold leading-7 text-rose-700">
+                <div className="rounded-2xl border border-red-300/50 bg-red-900/40 px-4 py-3 text-sm font-semibold leading-7 text-red-100 backdrop-blur-md shadow-sm">
                   {seoStudioError}
                 </div>
               )}
 
-              <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-sand-50/80 p-4 shadow-inner">
+              <div className="rounded-[2.2rem] border border-white/20 bg-black/20 p-4 shadow-sm backdrop-blur-md">
                 <div className="flex items-center justify-between gap-3">
-                  <p className="text-sm font-extrabold uppercase tracking-[0.22em] text-sage-600">AI report</p>
-                  <span className="text-xs font-bold uppercase tracking-[0.18em] text-sage-500">Admin draft only</span>
+                  <p className="text-sm font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">AI report</p>
+                  <span className="text-xs font-bold uppercase tracking-[0.18em] text-white/90 lofi-sharp-text-soft">Admin draft only</span>
                 </div>
-                <div className="mt-4 max-h-[28rem] overflow-auto rounded-[1.4rem] bg-white p-4 shadow-sm ring-1 ring-sage-100">
+                <div className="mt-4 max-h-[28rem] overflow-auto rounded-[1.4rem] bg-black/30 border border-white/20 p-4 shadow-inner lofi-scrollbar">
                   {seoStudioReport ? (
-                    <pre className="whitespace-pre-wrap text-sm leading-7 text-sage-800">{seoStudioReport}</pre>
+                    <pre className="whitespace-pre-wrap text-sm leading-7 text-white/95 lofi-sharp-text-soft">{seoStudioReport}</pre>
                   ) : (
-                    <p className="text-sm leading-7 text-sage-600">Run the AI SEO review to generate a fresh draft. It will use the current Lofi Memory positioning, homepage framing, guide-page cluster, and privacy-first diary context.</p>
+                    <p className="text-sm leading-7 text-white/90 lofi-sharp-text-soft">Run the AI SEO review to generate a fresh draft. It will use the current Lofi Memory positioning, homepage framing, guide-page cluster, and privacy-first diary context.</p>
                   )}
                 </div>
               </div>
@@ -7180,25 +7429,22 @@ function App() {
       )}
 
       <footer className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 pb-10 pt-6">
-        <div className="lofi-glass rounded-3xl border p-6 text-center text-sm leading-7 text-sage-700 shadow-lift backdrop-blur">
-          <div className="mb-3 flex flex-wrap justify-center gap-4 font-bold text-sage-800">
-            <a href="#home" onClick={() => openHomeSection('home')}>Home</a>
-            <button onClick={() => setCustomizerOpen(true)} type="button">Design</button>
-            <a href="#about" onClick={() => openHomeSection('about')}>About</a>
-            <a href="#resources" onClick={() => openHomeSection('resources')}>Resources</a>
-            <a href="#articles" onClick={() => openHomeSection('articles')}>Articles</a>
-            <a href="#tips" onClick={() => openHomeSection('tips')}>Tips</a>
-            <a href="/blog.html">Blog</a>
-            <a href="/about.html">About</a>
-            <a href="/editorial-policy.html">Editorial Policy</a>
-            <a href="/privacy.html">Privacy</a>
-            <a href="/advertising-policy.html">Advertising</a>
-            <a href="/terms.html">Terms</a>
-            <a href="/cookie-policy.html">Cookies</a>
-            <a href="/disclaimer.html">Disclaimer</a>
-            <a href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
+        <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-white/20 p-8 text-center text-sm leading-7 shadow-soft">
+          <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/25 to-black/5" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.15),transparent_25rem)]" />
+          <div className="relative z-10">
+            <div className="mb-6 flex flex-wrap justify-center gap-x-8 gap-y-3 font-black uppercase tracking-[0.15em] text-white/95 lofi-sharp-chip">
+              <a className="transition hover:text-white" href="#home" onClick={() => openHomeSection('home')}>Home</a>
+              <button className="transition hover:text-white" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
+              <a className="transition hover:text-white" href="#about" onClick={() => openHomeSection('about')}>About</a>
+              <a className="transition hover:text-white" href="/blog.html">Blog</a>
+              <a className="transition hover:text-white" href="/privacy.html">Privacy</a>
+              <a className="transition hover:text-white" href="/terms.html">Terms</a>
+              <a className="transition hover:text-white" href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
+            </div>
+            <p className="font-bold text-white lofi-sharp-text-soft">Lofi Memory is a calm browser space to listen to lofi music, relax, journal, and play chill games.</p>
           </div>
-          Lofi Memory is a soft browser space to listen to lofi music, relax, journal, breathe, and play chill games whenever you want a calmer moment online.
         </div>
       </footer>
       </>
@@ -7218,7 +7464,7 @@ function App() {
       `}</style>
 
       {/* Floating Lofi Radio Player */}
-      <div className={`fixed z-50 ${cookieConsentAccepted ? 'bottom-12 left-4 sm:left-5 lg:bottom-16 xl:left-[max(1rem,calc((100vw-1280px)/2-4.25rem))]' : 'bottom-32 left-4 sm:bottom-28 sm:left-5 lg:bottom-32 xl:left-[max(1rem,calc((100vw-1280px)/2-4.25rem))]'}`}>
+      <div className={`fixed z-50 ${isPhoneInterface ? (cookieConsentAccepted ? 'bottom-[7.25rem] left-4' : 'bottom-[13rem] left-4') : (cookieConsentAccepted ? 'bottom-12 left-4 sm:left-5 lg:bottom-16 xl:left-[max(1rem,calc((100vw-1280px)/2-4.25rem))]' : 'bottom-32 left-4 sm:bottom-28 sm:left-5 lg:bottom-32 xl:left-[max(1rem,calc((100vw-1280px)/2-4.25rem))]')}`}>
 
         <div ref={radioPlayerContainerRef} className="pointer-events-none absolute h-1 w-1 opacity-0" aria-hidden="true" />
         <div className="group relative h-[3.6rem] w-[3.6rem] sm:h-[3.9rem] sm:w-[3.9rem] lg:h-[4.05rem] lg:w-[4.05rem]">
@@ -7469,7 +7715,7 @@ function App() {
       )}
 
       <button
-        className={`fixed z-40 flex h-12 w-12 items-center justify-center rounded-full bg-sage-900 text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800 ${cookieConsentAccepted ? 'bottom-6 right-6' : 'bottom-44 right-4 sm:bottom-36 sm:right-6'}`}
+        className={`fixed z-40 flex h-12 w-12 items-center justify-center rounded-full bg-sage-900 text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800 ${isPhoneInterface ? (cookieConsentAccepted ? 'bottom-[7.25rem] right-4' : 'bottom-[13rem] right-4') : (cookieConsentAccepted ? 'bottom-6 right-6' : 'bottom-6 left-6')}`}
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         type="button"
         aria-label="Back to top"
