@@ -1438,11 +1438,6 @@ input::placeholder {
   width: 100%;
 }
 
-.personalized-site.interface-phone .interface-mode-pill {
-  justify-content: center;
-  text-align: center;
-}
-
 .personalized-site.interface-phone section[id],
 .personalized-site.interface-phone .journal-editor-shell {
   scroll-margin-top: 6rem;
@@ -1478,9 +1473,5 @@ input::placeholder {
 @media (min-width: 1024px) {
   .personalized-site.interface-pc .site-nav-shell {
     padding: 1.1rem 1.25rem !important;
-  }
-
-  .personalized-site.interface-pc .interface-mode-pill {
-    width: auto;
   }
 }

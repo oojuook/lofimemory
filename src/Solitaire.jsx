@@ -97,6 +97,7 @@ function Card({
   onDoubleClick,
   draggable = false,
   onPointerDown,
+  onTouchStart,
   cardRef,
   ghosted = false,
   dropTarget,
@@ -146,8 +147,9 @@ function Card({
       onClick={onClick}
       onDoubleClick={onDoubleClick}
       onPointerDown={draggable ? onPointerDown : undefined}
+      onTouchStart={draggable ? onTouchStart : undefined}
       ref={cardRef}
-      style={cardStyle}
+      style={{ ...cardStyle, touchAction: draggable ? 'none' : cardStyle?.touchAction }}
       type="button"
     >
       <div className="flex items-center leading-none" style={{ gap: '0.04em' }}>
@@ -172,6 +174,7 @@ function WastePile({
   onDoubleClick,
   draggable = false,
   onPointerDown,
+  onTouchStart,
   cardRef,
   ghosted = false,
   dropTarget,
@@ -211,6 +214,7 @@ function WastePile({
               onClick={isTopCard ? onClick : undefined}
               onDoubleClick={isTopCard ? onDoubleClick : undefined}
               onPointerDown={isTopCard ? onPointerDown : undefined}
+              onTouchStart={isTopCard ? onTouchStart : undefined}
             />
           </div>
         );
@@ -336,7 +340,7 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
     const now = Date.now();
     const lastActivation = lastActivationRef.current;
 
-    if (key && lastActivation.key === key && now - lastActivation.time < 360) {
+    if (key && lastActivation.key === key && now - lastActivation.time < 520) {
       lastActivationRef.current = { key: '', time: 0 };
       doubleAction?.();
       return;
@@ -788,8 +792,29 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
       pointerType: event.pointerType,
       startX: event.clientX,
       startY: event.clientY,
+      lastX: event.clientX,
+      lastY: event.clientY,
       offsetX: event.clientX - sourceRect.left,
       offsetY: event.clientY - sourceRect.top,
+      dragging: false
+    };
+  };
+
+  const beginTouchDrag = (event, source) => {
+    if (window.PointerEvent || event.touches.length !== 1) return;
+    const touch = event.touches[0];
+    event.preventDefault();
+    const sourceRect = event.currentTarget.getBoundingClientRect();
+    pendingDragRef.current = {
+      source,
+      pointerId: 'touch-fallback',
+      pointerType: 'touch',
+      startX: touch.clientX,
+      startY: touch.clientY,
+      lastX: touch.clientX,
+      lastY: touch.clientY,
+      offsetX: touch.clientX - sourceRect.left,
+      offsetY: touch.clientY - sourceRect.top,
       dragging: false
     };
   };
@@ -817,6 +842,8 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
       }
 
       event.preventDefault();
+      pending.lastX = event.clientX;
+      pending.lastY = event.clientY;
       updateDragPreviewPositionRef.current?.(event.clientX, event.clientY, pending.source, pending);
       const dropTarget = getPointerDropTargetRef.current?.(event.clientX, event.clientY, pending.source);
       setDragOverTarget(dropTarget?.key ?? null);
@@ -860,6 +887,66 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
     };
   }, []);
 
+  useEffect(() => {
+    const handleTouchMove = (event) => {
+      const pending = pendingDragRef.current;
+      if (!pending || pending.pointerId !== 'touch-fallback') return;
+      const touch = event.touches[0];
+      if (!touch) return;
+
+      const distance = Math.hypot(touch.clientX - pending.startX, touch.clientY - pending.startY);
+      if (!pending.dragging) {
+        if (distance < 3) return;
+        pending.dragging = true;
+        suppressNextClick();
+        setDraggedSelection(pending.source);
+        setSelected(pending.source);
+      }
+
+      event.preventDefault();
+      pending.lastX = touch.clientX;
+      pending.lastY = touch.clientY;
+      updateDragPreviewPositionRef.current?.(touch.clientX, touch.clientY, pending.source, pending);
+      const dropTarget = getPointerDropTargetRef.current?.(touch.clientX, touch.clientY, pending.source);
+      setDragOverTarget(dropTarget?.key ?? null);
+    };
+
+    const finishTouch = () => {
+      const pending = pendingDragRef.current;
+      if (!pending || pending.pointerId !== 'touch-fallback') return;
+      pendingDragRef.current = null;
+
+      if (!pending.dragging) {
+        activateSourceRef.current?.(pending.source);
+        suppressNextClick();
+        return;
+      }
+
+      suppressNextClick();
+      const dropTarget = getPointerDropTargetRef.current?.(pending.lastX, pending.lastY, pending.source);
+      if (dropTarget?.kind === 'tableau') {
+        moveSelectionToTableauRef.current?.(dropTarget.columnIndex, pending.source);
+        return;
+      }
+      if (dropTarget?.kind === 'foundation') {
+        moveSelectionToFoundationRef.current?.(dropTarget.suit, pending.source);
+        return;
+      }
+      setDraggedSelection(null);
+      setDragOverTarget(null);
+      setDragPreview(null);
+    };
+
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchend', finishTouch);
+    window.addEventListener('touchcancel', clearPointerDrag);
+    return () => {
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', finishTouch);
+      window.removeEventListener('touchcancel', clearPointerDrag);
+    };
+  }, []);
+
   const selectedKey = selected ? `${selected.type}-${selected.columnIndex ?? selected.suit ?? 'waste'}-${selected.cardIndex ?? 0}` : '';
 
   const isCardGhosted = () => false;
@@ -882,6 +969,11 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
       zIndex: 80
     };
   };
+
+  const maxCardFontSize = deviceType === 'phone' ? 54 : (isExpandedLayout ? 108 : 96);
+  const fittedCardFontSize = boardDims.w > 0 && boardDims.h > 0
+    ? Math.max(16, Math.min(boardDims.w / 9.4, boardDims.h / 10.8, maxCardFontSize))
+    : 48;
 
   return (
     <div ref={containerRef} data-device-type={deviceType} className={`mx-auto w-full ${isExpandedLayout ? `${isLofi ? 'bg-[#fff7ec]' : 'bg-[#07542f]'} min-h-full p-0 sm:p-2` : 'pb-6 sm:pb-8'}`}>
@@ -921,7 +1013,6 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
               </button>
             ) : null}
             <span className={`rounded-full px-3 py-1.5 sm:px-4 sm:py-2 ${isLofi ? 'border border-[#e8dfd5] bg-white/80 text-[#4a3a2d]' : 'bg-white/13'}`}>Moves {game.moves}</span>
-            <span className={`rounded-full px-3 py-1.5 sm:px-4 sm:py-2 ${isLofi ? 'border border-[#e8dfd5] bg-white/80 text-[#4a3a2d]' : 'bg-white/13'}`}>{deviceType === 'phone' ? 'Phone' : 'PC'}</span>
           </div>
         </div>
 
@@ -968,7 +1059,7 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
     <div 
       ref={playfieldRef} 
       className="relative flex flex-col mx-auto w-full px-2 sm:px-6 max-w-[1400px]"
-      style={{ fontSize: boardDims.w > 0 && boardDims.h > 0 ? `${Math.max(16, Math.min(boardDims.w / 7.5, boardDims.h / 9.5, 240))}px` : '48px',
+      style={{ fontSize: `${fittedCardFontSize}px`,
         gap: "1.5em"
       }}
     >
@@ -1029,6 +1120,7 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
                     onClick={() => handleCardActivation({ type: 'waste' }, selectWaste, doubleClickWaste)}
                     onDoubleClick={undefined}
                     onPointerDown={(event) => beginPointerDrag(event, { type: 'waste' })}
+                    onTouchStart={(event) => beginTouchDrag(event, { type: 'waste' })}
                   />
                   <span className={`mt-1 block font-extrabold uppercase tracking-[0.12em] ${isLofi ? 'text-amber-800/70' : 'text-white/78'}`} style={{ fontSize: '0.18em' }}>Waste</span>
                 </div>
@@ -1056,6 +1148,7 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
                         selected={selected?.type === 'foundation' && selected.suit === suit}
                         onClick={() => selectFoundation(suit)}
                         onPointerDown={topCard ? (event) => beginPointerDrag(event, { type: 'foundation', suit }) : undefined}
+                        onTouchStart={topCard ? (event) => beginTouchDrag(event, { type: 'foundation', suit }) : undefined}
                       />
                       <span className={`mt-1 block font-black ${isRed(suit) ? (isLofi ? 'text-[#ff8fa3]' : 'text-rose-100') : (isLofi ? 'text-[#6e5a4a]' : 'text-white/90')}`} style={{ fontSize: '0.25em' }}>{suit}</span>
                     </div>
@@ -1094,6 +1187,7 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
         )}
         onDoubleClick={undefined}
         onPointerDown={card.faceUp ? (event) => beginPointerDrag(event, { type: 'tableau', columnIndex, cardIndex }) : undefined}
+        onTouchStart={card.faceUp ? (event) => beginTouchDrag(event, { type: 'tableau', columnIndex, cardIndex }) : undefined}
       />
     </div>
   );

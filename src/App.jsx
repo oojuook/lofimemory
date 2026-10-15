@@ -5095,9 +5095,6 @@ function App() {
             </div>
 
             <div className={`site-nav-actions flex w-full flex-wrap items-center gap-2 lg:justify-end xl:w-auto xl:max-w-[34rem] xl:flex-none ${isPcInterface ? 'xl:flex-nowrap' : ''}`}>
-              <span className="interface-mode-pill rounded-full border border-white/18 bg-black/24 px-3 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-white/90 shadow-sm">
-                {isPhoneInterface ? 'Phone UI' : 'PC UI'}
-              </span>
               {user ? (
                 <div className="flex min-w-[160px] sm:min-w-[210px] flex-1 items-center justify-between gap-2 sm:gap-3 rounded-full border border-white/25 bg-white/15 px-3 py-2 sm:px-4 sm:py-2.5 shadow-sm backdrop-blur-md xl:flex-none">
                   <div className="min-w-0">
