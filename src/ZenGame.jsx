@@ -376,13 +376,13 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
           </div>
           <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-3 ${isLofi ? 'rounded-[1.5rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
             {[
-              ['Score', score],
-              ['Best', highScore],
-              ['Pace', levelText]
-            ].map(([label, value]) => (
-              <div key={label} className={`${isLofi ? 'rounded-[1.2rem] bg-[#faedcd] text-[#3d3025]' : 'rounded-[1.15rem] bg-sage-50'} px-4 py-3 text-center`}>
+              { label: 'Score', value: score, compact: false },
+              { label: 'Best', value: highScore, compact: false },
+              { label: 'Pace', value: levelText, compact: true }
+            ].map(({ label, value, compact }) => (
+              <div key={label} className={`${isLofi ? 'rounded-[1.2rem] bg-[#faedcd] text-[#3d3025]' : 'rounded-[1.15rem] bg-sage-50'} min-w-0 px-4 py-3.5 text-center sm:px-5`}>
                 <p className={`text-[10px] font-extrabold uppercase tracking-[0.2em] ${isLofi ? 'text-[#6e5a4a]/70' : 'text-sage-500'}`}>{label}</p>
-                <p className={`mt-2 text-xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>{value}</p>
+                <p className={`mt-2 truncate font-extrabold leading-none ${compact ? 'text-base sm:text-lg' : 'text-xl'} ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>{value}</p>
               </div>
             ))}
           </div>
