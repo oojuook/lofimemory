@@ -12,6 +12,7 @@ import rainWallpaperImage from './assets/rain-wallpaper.png';
 import fireWallpaperImage from './assets/fire-wallpaper.png';
 import lofiRoomWallpaperImage from './assets/lofi-room-wallpaper.png';
 import maplestoryThemeWallpaperImage from './assets/maplestory-theme-wallpaper.png';
+import hogwartsMusicRoomImage from './assets/hogwarts-music-room.png';
 import lofiMemoryHeaderImage from './assets/lofi-memory-header.png';
 import lotusMatchPreviewImage from './assets/lotus-match-preview.png';
 import gamesSectionPreviewImage from './assets/games-section-preview.png';
@@ -785,9 +786,11 @@ const breatheRoomOptions = [
     ringTone: 'ring-violet-200',
     volume: 34,
     decoration: '🏰',
+    showDecoration: false,
     videoId: 'BQrxsyGTztM',
     startSeconds: 8741,
-    wallpaper: lofiRoomWallpaperImage
+    wallpaper: hogwartsMusicRoomImage,
+    imagePosition: 'center 44%'
   }
 ];
 
@@ -6147,12 +6150,14 @@ function App() {
                     }`}
                   >
                     <div className={`relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-[3rem] bg-gradient-to-br ${option.gradient} shadow-inner`}>
-                       {option.wallpaper ? <img src={option.wallpaper} alt={`${option.title} wallpaper`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" /> : null}
+                       {option.wallpaper ? <img src={option.wallpaper} alt={`${option.title} wallpaper`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" style={{ objectPosition: option.imagePosition || 'center' }} /> : null}
                        <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-white/10" />
                        <div className="absolute inset-0 opacity-20 transition-opacity group-hover:opacity-30" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)', backgroundSize: '16px 16px', color: 'white' }} />
-                       <div className={`relative z-10 flex flex-col items-center gap-4 transition-transform duration-700 ${isSelected ? 'scale-110' : 'scale-100 group-hover:scale-105'}`}>
-                         <span className="text-4xl drop-shadow">{option.decoration}</span>
-                       </div>
+                       {option.showDecoration === false ? null : (
+                         <div className={`relative z-10 flex flex-col items-center gap-4 transition-transform duration-700 ${isSelected ? 'scale-110' : 'scale-100 group-hover:scale-105'}`}>
+                           <span className="text-4xl drop-shadow">{option.decoration}</span>
+                         </div>
+                       )}
                        {isSelected ? (
                          <div className="absolute bottom-4 flex gap-1">
                            {[
