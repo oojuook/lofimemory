@@ -374,7 +374,7 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
             <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>A calming float-through game with warm cream skies, pastel obstacles, and quieter feedback for restless thoughts.</p>
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-600'}`}>{config.note}</p>
           </div>
-          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-3 ${isLofi ? 'rounded-[1.5rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
+          <div className={`grid gap-2 p-3 shadow-sm [grid-template-columns:minmax(0,0.9fr)_minmax(0,0.9fr)_minmax(0,1.25fr)] ${isLofi ? 'rounded-[1.5rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
             {[
               { label: 'Score', value: score, compact: false },
               { label: 'Best', value: highScore, compact: false },
@@ -382,7 +382,7 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
             ].map(({ label, value, compact }) => (
               <div key={label} className={`${isLofi ? 'rounded-[1.2rem] bg-[#faedcd] text-[#3d3025]' : 'rounded-[1.15rem] bg-sage-50'} min-w-0 px-3.5 py-3.5 text-center sm:px-4`}>
                 <p className={`text-[10px] font-extrabold uppercase tracking-[0.2em] ${isLofi ? 'text-[#6e5a4a]/70' : 'text-sage-500'}`}>{label}</p>
-                <p className={`mt-2 truncate font-extrabold leading-none ${compact ? 'text-sm sm:text-[0.95rem] lg:text-base' : 'text-lg sm:text-xl'} ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>{value}</p>
+                <p className={`mt-2 font-extrabold leading-none ${compact ? 'whitespace-nowrap text-sm sm:text-base lg:text-[1.05rem]' : 'truncate text-lg sm:text-xl'} ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>{value}</p>
               </div>
             ))}
           </div>
