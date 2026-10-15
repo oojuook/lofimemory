@@ -420,14 +420,21 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
         const rank = RANKS[Math.floor(i / 4)];
         const band = (i % 13) - 6;
         const tier = Math.floor(i / 13);
+        const x = band * 52 + (Math.random() - 0.5) * 18;
+        const y = 160 + tier * 84 - Math.abs(band) * 8 + (Math.random() - 0.5) * 16;
+        const r = band * 6 + (Math.random() - 0.5) * 14;
         cards.push({
           id: `win-${i}`,
           suit,
           rank,
-          x: band * 58 + (Math.random() - 0.5) * 34,
-          y: 180 + tier * 92 + (Math.random() - 0.5) * 28,
-          r: band * 8 + (Math.random() - 0.5) * 22,
-          delay: i * 65
+          x,
+          y,
+          midX: x * 0.62,
+          midY: y * 0.56 - 18,
+          r,
+          midR: r * 0.58,
+          delay: i * 72,
+          scale: 0.58 + tier * 0.035
         });
       }
       setWinCards(cards);
@@ -1041,7 +1048,11 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
                   style={{
                     '--win-x': `${card.x}px`,
                     '--win-y': `${card.y}px`,
+                    '--win-mid-x': `${card.midX}px`,
+                    '--win-mid-y': `${card.midY}px`,
                     '--win-r': `${card.r}deg`,
+                    '--win-mid-r': `${card.midR}deg`,
+                    '--win-scale': `${card.scale}`,
                     animationDelay: `${card.delay}ms`,
                     left: '50%',
                     top: '40%'
