@@ -1210,10 +1210,10 @@ input::placeholder {
 
 @keyframes solitaireCardWin {
   0% {
-    transform: translate(0, 0) rotate(0deg);
+    transform: translate(0, 0) rotate(0deg) scale(0.76);
   }
   100% {
-    transform: translate(var(--win-x), var(--win-y)) rotate(var(--win-r));
+    transform: translate(var(--win-x), var(--win-y)) rotate(var(--win-r)) scale(0.68);
   }
 }
 

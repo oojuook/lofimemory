@@ -1046,7 +1046,7 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
                   }}
                 >
                   
-    <div style={{ width: '1em', height: '1.4em', fontSize: '100px' }} className={`flex flex-col justify-between rounded-[0.4rem] border p-[0.3rem] text-left font-black shadow-lg ${isLofi ? 'border-[#e8dfd5] bg-[#fdfaf5]' : 'border-white/95 bg-[#fffdf8]'} ${cardColor(card, isLofi)}`}>
+    <div style={{ width: '1em', height: '1.4em', fontSize: '82px' }} className={`flex flex-col justify-between rounded-[0.4rem] border p-[0.3rem] text-left font-black shadow-lg ${isLofi ? 'border-[#e8dfd5] bg-[#fdfaf5]' : 'border-white/95 bg-[#fffdf8]'} ${cardColor(card, isLofi)}`}>
       <div className="flex flex-col leading-none">
         <span className="text-sm">{card.rank}</span>
         <span className={`text-xs ${isLofi ? 'opacity-70' : 'opacity-85'}`}>{card.suit}</span>
