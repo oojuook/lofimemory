@@ -966,10 +966,21 @@ function GamePreview({ gameId }) {
   if (gameId === 'drifting-leaf') {
     return (
       <div className={shellClass}>
-        <div className="flex h-20 items-center justify-center rounded-[1rem] bg-gradient-to-br from-emerald-100 via-lime-50 to-white overflow-hidden relative">
-          <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #3a5a48 1px, transparent 0)', backgroundSize: '12px 12px' }}></div>
-          <div className="flex items-center gap-5 text-2xl text-emerald-700 relative animate-bounce" style={{ animationDuration: '3.5s' }}>
-            <span>🍃</span><span className="opacity-40 text-sm">•</span><span>🌰</span>
+        <div className="relative flex h-20 items-center justify-center overflow-hidden rounded-[1rem] bg-gradient-to-br from-[#fffaf4] via-[#faedcd] to-[#f8efe2]">
+          <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #6e5a4a 1px, transparent 0)', backgroundSize: '12px 12px' }} />
+          <div className="absolute left-5 top-4 h-4 w-12 rounded-full bg-white/50 blur-sm" />
+          <div className="absolute right-6 bottom-4 h-5 w-16 rounded-full bg-white/35 blur-sm" />
+          <div className="relative flex items-center justify-center animate-bounce" style={{ animationDuration: '3.8s' }}>
+            <span className="absolute -top-3 h-3.5 w-3.5 rounded-full bg-[#a3b18a] shadow-[0_0_0_2px_rgba(163,177,138,0.22)]" />
+            <span className="absolute -top-6 left-1/2 h-2.5 w-2.5 -translate-x-[1.1rem] rounded-full bg-[#f6d5d8] opacity-90" />
+            <span className="absolute -top-7 left-1/2 h-2.5 w-2.5 -translate-x-[0.2rem] rounded-full bg-[#f6d5d8] opacity-90" />
+            <span className="absolute -top-6 left-1/2 h-2.5 w-2.5 translate-x-[0.7rem] rounded-full bg-[#f6d5d8] opacity-90" />
+            <span className="flex h-10 w-8 items-center justify-center rounded-[999px] border border-[#d9b99b] bg-[#f8efe2] text-[10px] shadow-[0_8px_20px_rgba(83,62,44,0.12)]">
+              <span className="mt-1 flex items-center gap-1 text-[#7f5539]">
+                <span className="h-1.5 w-1.5 rounded-full bg-current" />
+                <span className="h-1.5 w-1.5 rounded-full bg-current" />
+              </span>
+            </span>
           </div>
         </div>
       </div>

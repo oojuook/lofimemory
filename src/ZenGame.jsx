@@ -37,13 +37,26 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
   const config = difficultySettings[difficulty] || difficultySettings.medium;
   const bestScoreKey = `quiet-journal-highscore-${difficulty}`;
 
+  const [viewportSize, setViewportSize] = useState(() => ({
+    width: typeof window === 'undefined' ? 1280 : window.innerWidth,
+    height: typeof window === 'undefined' ? 720 : window.innerHeight
+  }));
+  const isPhoneViewport = viewportSize.width < 768;
+  const isPhonePortraitFullscreen = isExpandedLayout && isPhoneViewport;
+  const canvasWidth = isPhonePortraitFullscreen ? 360 : 600;
+  const canvasHeight = isPhonePortraitFullscreen ? 640 : 400;
+  const initialLeafY = canvasHeight / 2;
+  const playerX = isPhonePortraitFullscreen ? 106 : 100;
+  const gameplayGapSize = isPhonePortraitFullscreen ? config.gapSize + 26 : config.gapSize;
+  const obstacleWidth = isPhonePortraitFullscreen ? 52 : 45;
+
   const canvasRef = useRef(null);
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(() => parseInt(localStorage.getItem(bestScoreKey) || '0', 10));
   const [gameState, setGameState] = useState('start');
 
   const stateRef = useRef({
-    leafY: 200,
+    leafY: initialLeafY,
     velocity: 0,
     obstacles: [],
     frames: 0,
@@ -51,8 +64,18 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
   });
 
   useEffect(() => {
+    const handleResize = () => {
+      setViewportSize({ width: window.innerWidth, height: window.innerHeight });
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
     stateRef.current = {
-      leafY: 200,
+      leafY: initialLeafY,
       velocity: 0,
       obstacles: [],
       frames: 0,
@@ -61,14 +84,14 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
     setScore(0);
     setGameState('start');
     setHighScore(parseInt(localStorage.getItem(bestScoreKey) || '0', 10));
-  }, [bestScoreKey]);
+  }, [bestScoreKey, initialLeafY]);
 
   const jump = useCallback(() => {
     if (gameState === 'playing') {
       stateRef.current.velocity = config.jumpVelocity;
     } else if (gameState === 'start' || gameState === 'over') {
       stateRef.current = {
-        leafY: 200,
+        leafY: initialLeafY,
         velocity: config.jumpVelocity,
         obstacles: [],
         frames: 0,
@@ -77,7 +100,7 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
       setScore(0);
       setGameState('playing');
     }
-  }, [config.jumpVelocity, gameState]);
+  }, [config.jumpVelocity, gameState, initialLeafY]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -102,29 +125,57 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
       ctx.rotate(angle);
 
       if (isLofi) {
-        ctx.fillStyle = '#d4a373';
+        ctx.fillStyle = '#f8efe2';
         ctx.beginPath();
-        ctx.ellipse(0, 2, 13, 19, 0.1, 0, Math.PI * 2);
+        ctx.ellipse(0, 3, 15, 19, 0.08, 0, Math.PI * 2);
         ctx.fill();
-        ctx.strokeStyle = '#8b5e34';
+        ctx.strokeStyle = '#b08968';
         ctx.lineWidth = 2;
         ctx.stroke();
 
-        ctx.fillStyle = '#7f9f68';
+        ctx.fillStyle = '#f6d5d8';
+        [-14, -6, 2, 10].forEach((offsetX, index) => {
+          ctx.beginPath();
+          ctx.ellipse(offsetX, -14 + Math.abs(index - 1.5), 5.2, 8.5, offsetX * 0.04, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        ctx.fillStyle = '#a3b18a';
         ctx.beginPath();
-        ctx.ellipse(10, -11, 8, 15, 0.75, 0, Math.PI * 2);
+        ctx.ellipse(0, -10, 5.5, 10.5, 0, 0, Math.PI * 2);
         ctx.fill();
-        ctx.strokeStyle = '#f5f0df';
-        ctx.lineWidth = 1.2;
+        ctx.strokeStyle = '#6b8f71';
+        ctx.lineWidth = 1.3;
         ctx.beginPath();
-        ctx.moveTo(8, -18);
-        ctx.quadraticCurveTo(12, -10, 15, -2);
+        ctx.moveTo(0, -18);
+        ctx.quadraticCurveTo(1, -10, 0, -2);
         ctx.stroke();
 
-        ctx.fillStyle = '#f6e7c7';
+        ctx.fillStyle = '#3d3025';
         ctx.beginPath();
-        ctx.arc(-4, -4, 3.2, 0, Math.PI * 2);
+        ctx.arc(-4.5, 1, 1.4, 0, Math.PI * 2);
+        ctx.arc(4.5, 1, 1.4, 0, Math.PI * 2);
         ctx.fill();
+
+        ctx.strokeStyle = '#7f5539';
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        ctx.arc(0, 5.5, 4.8, 0.15, Math.PI - 0.15);
+        ctx.stroke();
+
+        ctx.fillStyle = '#ffcad4';
+        ctx.beginPath();
+        ctx.ellipse(-8.5, 5, 3.2, 2.1, 0, 0, Math.PI * 2);
+        ctx.ellipse(8.5, 5, 3.2, 2.1, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = 'rgba(255,255,255,0.82)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(-2, -7);
+        ctx.quadraticCurveTo(0, -1, 0, 13);
+        ctx.stroke();
+
         ctx.restore();
         return;
       }
@@ -154,6 +205,19 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       if (isLofi) {
+        const skyGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+        skyGradient.addColorStop(0, '#fffaf4');
+        skyGradient.addColorStop(0.55, '#faedcd');
+        skyGradient.addColorStop(1, '#f8efe2');
+        ctx.fillStyle = skyGradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = 'rgba(255,255,255,0.45)';
+        ctx.beginPath();
+        ctx.ellipse(canvas.width * 0.2, canvas.height * 0.16, 56, 20, -0.08, 0, Math.PI * 2);
+        ctx.ellipse(canvas.width * 0.72, canvas.height * 0.22, 68, 24, 0.06, 0, Math.PI * 2);
+        ctx.fill();
+
         ctx.fillStyle = 'rgba(74, 58, 45, 0.04)';
         for (let i = 0; i < canvas.width; i += 24) {
           for (let j = 0; j < canvas.height; j += 24) {
@@ -184,7 +248,7 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
         state.leafY += state.velocity;
 
         if (state.frames % config.spawnRate === 0) {
-          const gapTop = Math.random() * (canvas.height - (config.gapSize + 110)) + 55;
+          const gapTop = Math.random() * (canvas.height - (gameplayGapSize + 110)) + 55;
           state.obstacles.push({ x: canvas.width, gapTop, passed: false });
         }
 
@@ -192,7 +256,6 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
           obstacle.x -= config.obstacleSpeed;
 
           ctx.fillStyle = isLofi ? '#faedcd' : '#dcebd3';
-          const obstacleWidth = 45;
 
           ctx.beginPath();
           ctx.roundRect(obstacle.x, -20, obstacleWidth, obstacle.gapTop + 20, 12);
@@ -205,7 +268,7 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
           }
 
           ctx.beginPath();
-          ctx.roundRect(obstacle.x, obstacle.gapTop + config.gapSize, obstacleWidth, canvas.height - obstacle.gapTop - config.gapSize + 20, 12);
+          ctx.roundRect(obstacle.x, obstacle.gapTop + gameplayGapSize, obstacleWidth, canvas.height - obstacle.gapTop - gameplayGapSize + 20, 12);
           ctx.fill();
 
           if (isLofi) {
@@ -213,15 +276,14 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
           }
 
           const leafRadius = 14;
-          const leafX = 100;
-          const hitTop = leafX + leafRadius > obstacle.x && leafX - leafRadius < obstacle.x + obstacleWidth && state.leafY - leafRadius < obstacle.gapTop;
-          const hitBottom = leafX + leafRadius > obstacle.x && leafX - leafRadius < obstacle.x + obstacleWidth && state.leafY + leafRadius > obstacle.gapTop + config.gapSize;
+          const hitTop = playerX + leafRadius > obstacle.x && playerX - leafRadius < obstacle.x + obstacleWidth && state.leafY - leafRadius < obstacle.gapTop;
+          const hitBottom = playerX + leafRadius > obstacle.x && playerX - leafRadius < obstacle.x + obstacleWidth && state.leafY + leafRadius > obstacle.gapTop + gameplayGapSize;
 
           if (hitTop || hitBottom) {
             setGameState('over');
           }
 
-          if (!obstacle.passed && obstacle.x + obstacleWidth < leafX) {
+          if (!obstacle.passed && obstacle.x + obstacleWidth < playerX) {
             obstacle.passed = true;
             state.score += 1;
             setScore(state.score);
@@ -234,11 +296,11 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
           setGameState('over');
         }
       } else if (gameState === 'start') {
-        state.leafY = 200 + Math.sin(Date.now() / 400) * 12;
+        state.leafY = initialLeafY + Math.sin(Date.now() / 400) * 12;
       }
 
       const angle = Math.min(Math.max(state.velocity * 0.08, -0.4), 1.2);
-      drawLeaf(100, state.leafY, angle);
+      drawLeaf(playerX, state.leafY, angle);
 
       state.frames += 1;
       animationId = requestAnimationFrame(draw);
@@ -246,7 +308,7 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
 
     animationId = requestAnimationFrame(draw);
     return () => cancelAnimationFrame(animationId);
-  }, [config.gapSize, config.gravity, config.obstacleSpeed, config.spawnRate, gameState, isLofi]);
+  }, [config.gravity, config.obstacleSpeed, config.spawnRate, gameState, gameplayGapSize, initialLeafY, isLofi, obstacleWidth, playerX]);
 
   useEffect(() => {
     if (gameState === 'over' && score > highScore) {
@@ -259,7 +321,7 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
 
   return (
     <div className={`mx-auto w-full ${isExpandedLayout ? 'h-full flex-1 flex items-center justify-center max-w-none overflow-hidden' : 'mt-12 max-w-3xl pb-12'}`}>
-      <div className={!isExpandedLayout ? `relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-[#e8dfd5]/80 bg-[#fff9f0] shadow-[0_28px_80px_rgba(83,62,44,0.12)]' : 'border-sage-100 bg-gradient-to-br from-white via-sage-50/82 to-sky-50/74'}` : ''}>
+      <div className={isExpandedLayout ? 'relative' : `relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-[#e8dfd5]/80 bg-[#fff9f0] shadow-[0_28px_80px_rgba(83,62,44,0.12)]' : 'border-sage-100 bg-gradient-to-br from-white via-sage-50/82 to-sky-50/74'}`}>
         {isLofi ? (
           <>
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.96),rgba(255,249,240,0.92)_45%,rgba(189,224,254,0.45)_100%)]" />
@@ -292,25 +354,25 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
         </div>
         ) : null}
 
-        <div className={`relative z-10 ${isExpandedLayout ? 'w-full max-w-[min(96vw,1200px)]' : 'mt-5 rounded-[1.5rem] border p-3 shadow-sm sm:p-4'} ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-sage-200 bg-white'}`}>
-          <div className={`relative overflow-hidden ${isExpandedLayout ? 'rounded-[1.2rem]' : 'rounded-[1.5rem] border'} ${isLofi ? (isExpandedLayout ? 'bg-[#fff9f0]' : 'border-[#e8dfd5] bg-[#fff9f0]') : (isExpandedLayout ? 'bg-white' : 'border-sage-200')} shadow-sm`} style={{ aspectRatio: '3/2' }}>
+        <div className={`relative z-10 ${isExpandedLayout ? (isPhonePortraitFullscreen ? 'mx-auto w-full max-w-[min(92vw,430px)]' : 'w-full max-w-[min(96vw,1200px)]') : 'mt-5 rounded-[1.5rem] border p-3 shadow-sm sm:p-4'} ${isExpandedLayout ? (isLofi ? 'rounded-[2rem] border border-[#e8dfd5]/80 bg-white/72 p-3 shadow-[0_22px_50px_rgba(83,62,44,0.12)] backdrop-blur-sm sm:p-4' : 'rounded-[2rem] border border-white/85 bg-white/78 p-3 shadow-soft sm:p-4') : (isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-sage-200 bg-white')}`}>
+          <div className={`relative overflow-hidden ${isExpandedLayout ? (isPhonePortraitFullscreen ? 'rounded-[1.8rem]' : 'rounded-[1.4rem]') : 'rounded-[1.5rem] border'} ${isLofi ? (isExpandedLayout ? 'bg-[#fff9f0]' : 'border-[#e8dfd5] bg-[#fff9f0]') : (isExpandedLayout ? 'bg-white' : 'border-sage-200')} shadow-sm`} style={{ aspectRatio: isPhonePortraitFullscreen ? '9 / 16' : '3 / 2' }}>
             <canvas
               ref={canvasRef}
-              width={600}
-              height={400}
+              width={canvasWidth}
+              height={canvasHeight}
               className="block h-full w-full cursor-pointer touch-none"
               onClick={jump}
             />
             {isExpandedLayout ? (
-              <div className="absolute top-4 right-4 z-50 pointer-events-none sm:top-6 sm:right-6">
-                <div className="flex items-center gap-3 rounded-2xl border border-white/20 bg-black/10 p-2.5 shadow-sm backdrop-blur-md pointer-events-auto">
-                   <div className="border-r border-white/20 px-3 py-1 text-center">
-                     <p className="text-[9px] font-black uppercase tracking-widest text-white/70">Score</p>
-                     <p className="text-lg font-black text-white">{score}</p>
+              <div className={`absolute z-50 pointer-events-none ${isPhonePortraitFullscreen ? 'left-1/2 top-4 -translate-x-1/2 sm:top-5' : 'right-4 top-4 sm:right-6 sm:top-6'}`}>
+                <div className={`flex items-center gap-3 rounded-[1.35rem] border p-2.5 shadow-sm backdrop-blur-md pointer-events-auto ${isLofi ? 'border-[#e8dfd5]/90 bg-white/78 text-[#4a3a2d]' : 'border-white/20 bg-black/10 text-white'}`}>
+                   <div className={`px-3 py-1 text-center ${isLofi ? 'border-r border-[#e8dfd5]/90' : 'border-r border-white/20'}`}>
+                     <p className={`text-[9px] font-black uppercase tracking-widest ${isLofi ? 'text-[#6e5a4a]/70' : 'text-white/70'}`}>Score</p>
+                     <p className="text-lg font-black">{score}</p>
                    </div>
                    <div className="px-3 py-1 text-center">
-                     <p className="text-[9px] font-black uppercase tracking-widest text-white/70">Best</p>
-                     <p className="text-lg font-black text-white">{highScore}</p>
+                     <p className={`text-[9px] font-black uppercase tracking-widest ${isLofi ? 'text-[#6e5a4a]/70' : 'text-white/70'}`}>Best</p>
+                     <p className="text-lg font-black">{highScore}</p>
                    </div>
                 </div>
               </div>
