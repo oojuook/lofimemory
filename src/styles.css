@@ -1211,9 +1211,11 @@ input::placeholder {
 @keyframes solitaireCardWin {
   0% {
     transform: translate(0, 0) rotate(0deg) scale(0.76);
+    opacity: 0.96;
   }
   100% {
     transform: translate(var(--win-x), var(--win-y)) rotate(var(--win-r)) scale(0.68);
+    opacity: 0.32;
   }
 }
 
@@ -1221,7 +1223,7 @@ input::placeholder {
   position: absolute;
   pointer-events: none;
   z-index: 50;
-  animation: solitaireCardWin 1.5s ease-out forwards;
+  animation: solitaireCardWin 2.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .site-ui-fade-in {

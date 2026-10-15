@@ -418,14 +418,16 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
       for (let i = 0; i < 52; i += 1) {
         const suit = suits[i % 4];
         const rank = RANKS[Math.floor(i / 4)];
+        const band = (i % 13) - 6;
+        const tier = Math.floor(i / 13);
         cards.push({
           id: `win-${i}`,
           suit,
           rank,
-          x: (Math.random() - 0.5) * 1200,
-          y: (Math.random() - 0.5) * 800 + 400,
-          r: (Math.random() - 0.5) * 720,
-          delay: i * 50
+          x: band * 58 + (Math.random() - 0.5) * 34,
+          y: 180 + tier * 92 + (Math.random() - 0.5) * 28,
+          r: band * 8 + (Math.random() - 0.5) * 22,
+          delay: i * 65
         });
       }
       setWinCards(cards);
