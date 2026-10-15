@@ -42,13 +42,12 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
     height: typeof window === 'undefined' ? 720 : window.innerHeight
   }));
   const isPhoneViewport = viewportSize.width < 768;
-  const isPhonePortraitFullscreen = isExpandedLayout && isPhoneViewport;
-  const canvasWidth = isPhonePortraitFullscreen ? 360 : 600;
-  const canvasHeight = isPhonePortraitFullscreen ? 640 : 400;
+  const canvasWidth = isPhoneViewport ? 360 : 432;
+  const canvasHeight = isPhoneViewport ? 640 : 768;
   const initialLeafY = canvasHeight / 2;
-  const playerX = isPhonePortraitFullscreen ? 106 : 100;
-  const gameplayGapSize = isPhonePortraitFullscreen ? config.gapSize + 26 : config.gapSize;
-  const obstacleWidth = isPhonePortraitFullscreen ? 52 : 45;
+  const playerX = Math.round(canvasWidth * 0.295);
+  const gameplayGapSize = config.gapSize + (isPhoneViewport ? 26 : 34);
+  const obstacleWidth = isPhoneViewport ? 52 : 60;
 
   const canvasRef = useRef(null);
   const [score, setScore] = useState(0);
@@ -125,56 +124,62 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
       ctx.rotate(angle);
 
       if (isLofi) {
-        ctx.fillStyle = '#f8efe2';
+        const fluffCore = ctx.createRadialGradient(0, -4, 2, 0, -2, 22);
+        fluffCore.addColorStop(0, '#f3c7cb');
+        fluffCore.addColorStop(0.55, '#f7dfdf');
+        fluffCore.addColorStop(1, 'rgba(255,249,244,0)');
+        ctx.fillStyle = fluffCore;
         ctx.beginPath();
-        ctx.ellipse(0, 3, 15, 19, 0.08, 0, Math.PI * 2);
+        ctx.arc(0, -2, 20, 0, Math.PI * 2);
         ctx.fill();
-        ctx.strokeStyle = '#b08968';
-        ctx.lineWidth = 2;
-        ctx.stroke();
 
-        ctx.fillStyle = '#f6d5d8';
-        [-14, -6, 2, 10].forEach((offsetX, index) => {
+        for (let i = 0; i < 28; i += 1) {
+          const theta = (-Math.PI / 2) + (i / 27) * Math.PI * 2;
+          const innerX = Math.cos(theta) * 4;
+          const innerY = -3 + Math.sin(theta) * 4;
+          const outerX = Math.cos(theta) * 20;
+          const outerY = -4 + Math.sin(theta) * 20;
+          ctx.strokeStyle = i % 3 === 0 ? 'rgba(255,250,246,0.92)' : 'rgba(244,212,216,0.82)';
+          ctx.lineWidth = 1.2;
           ctx.beginPath();
-          ctx.ellipse(offsetX, -14 + Math.abs(index - 1.5), 5.2, 8.5, offsetX * 0.04, 0, Math.PI * 2);
+          ctx.moveTo(innerX, innerY);
+          ctx.lineTo(outerX, outerY);
+          ctx.stroke();
+
+          ctx.fillStyle = i % 2 === 0 ? '#fffaf4' : '#f8e8ea';
+          ctx.beginPath();
+          ctx.arc(outerX, outerY, i % 4 === 0 ? 2.2 : 1.6, 0, Math.PI * 2);
           ctx.fill();
-        });
+        }
+
+        ctx.fillStyle = '#6f4b35';
+        ctx.beginPath();
+        ctx.moveTo(0, 5);
+        ctx.lineTo(0, 23);
+        ctx.lineWidth = 2.2;
+        ctx.strokeStyle = '#6f4b35';
+        ctx.stroke();
 
         ctx.fillStyle = '#a3b18a';
         ctx.beginPath();
-        ctx.ellipse(0, -10, 5.5, 10.5, 0, 0, Math.PI * 2);
+        ctx.ellipse(-7, -22, 6.5, 12, -0.72, 0, Math.PI * 2);
+        ctx.ellipse(7, -22, 6.5, 12, 0.72, 0, Math.PI * 2);
         ctx.fill();
-        ctx.strokeStyle = '#6b8f71';
-        ctx.lineWidth = 1.3;
-        ctx.beginPath();
-        ctx.moveTo(0, -18);
-        ctx.quadraticCurveTo(1, -10, 0, -2);
-        ctx.stroke();
-
-        ctx.fillStyle = '#3d3025';
-        ctx.beginPath();
-        ctx.arc(-4.5, 1, 1.4, 0, Math.PI * 2);
-        ctx.arc(4.5, 1, 1.4, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.strokeStyle = '#7f5539';
-        ctx.lineWidth = 1.4;
-        ctx.beginPath();
-        ctx.arc(0, 5.5, 4.8, 0.15, Math.PI - 0.15);
-        ctx.stroke();
-
-        ctx.fillStyle = '#ffcad4';
-        ctx.beginPath();
-        ctx.ellipse(-8.5, 5, 3.2, 2.1, 0, 0, Math.PI * 2);
-        ctx.ellipse(8.5, 5, 3.2, 2.1, 0, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.strokeStyle = 'rgba(255,255,255,0.82)';
+        ctx.strokeStyle = '#718b63';
         ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.moveTo(-2, -7);
-        ctx.quadraticCurveTo(0, -1, 0, 13);
+        ctx.moveTo(0, -20);
+        ctx.lineTo(-6, -27);
+        ctx.moveTo(0, -20);
+        ctx.lineTo(6, -27);
         ctx.stroke();
+
+        ctx.fillStyle = '#6f4b35';
+        ctx.beginPath();
+        ctx.moveTo(0, 22);
+        ctx.quadraticCurveTo(7, 29, 0, 35);
+        ctx.quadraticCurveTo(-7, 29, 0, 22);
+        ctx.fill();
 
         ctx.restore();
         return;
@@ -198,6 +203,15 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
       ctx.restore();
     };
 
+    const drawCloud = (x, y, width, height, tone = 'rgba(255,248,240,0.72)') => {
+      ctx.fillStyle = tone;
+      ctx.beginPath();
+      ctx.ellipse(x - width * 0.18, y + height * 0.08, width * 0.26, height * 0.22, -0.08, 0, Math.PI * 2);
+      ctx.ellipse(x + width * 0.08, y - height * 0.04, width * 0.34, height * 0.28, 0.04, 0, Math.PI * 2);
+      ctx.ellipse(x + width * 0.34, y + height * 0.1, width * 0.24, height * 0.2, 0.08, 0, Math.PI * 2);
+      ctx.fill();
+    };
+
     const draw = () => {
       const state = stateRef.current;
 
@@ -206,27 +220,39 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
 
       if (isLofi) {
         const skyGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-        skyGradient.addColorStop(0, '#fffaf4');
-        skyGradient.addColorStop(0.55, '#faedcd');
-        skyGradient.addColorStop(1, '#f8efe2');
+        skyGradient.addColorStop(0, '#f6c8be');
+        skyGradient.addColorStop(0.48, '#f3d8c6');
+        skyGradient.addColorStop(1, '#f7eadb');
         ctx.fillStyle = skyGradient;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        ctx.fillStyle = 'rgba(255,255,255,0.45)';
+        ctx.fillStyle = 'rgba(255,247,238,0.95)';
         ctx.beginPath();
-        ctx.ellipse(canvas.width * 0.2, canvas.height * 0.16, 56, 20, -0.08, 0, Math.PI * 2);
-        ctx.ellipse(canvas.width * 0.72, canvas.height * 0.22, 68, 24, 0.06, 0, Math.PI * 2);
+        ctx.arc(canvas.width * 0.52, canvas.height * 0.28, Math.min(canvas.width, canvas.height) * 0.16, Math.PI, Math.PI * 2);
         ctx.fill();
 
-        ctx.fillStyle = 'rgba(74, 58, 45, 0.04)';
+        drawCloud(canvas.width * 0.16, canvas.height * 0.2, 124, 62, 'rgba(255,246,237,0.64)');
+        drawCloud(canvas.width * 0.62, canvas.height * 0.13, 150, 70, 'rgba(255,241,231,0.54)');
+        drawCloud(canvas.width * 0.74, canvas.height * 0.32, 136, 66, 'rgba(255,247,240,0.7)');
+
+        ctx.fillStyle = 'rgba(255,250,244,0.55)';
+        for (let i = 0; i < 26; i += 1) {
+          const px = ((i * 73) % (canvas.width + 40)) - 20;
+          const py = ((i * 41) % (canvas.height - 120)) + 26;
+          ctx.beginPath();
+          ctx.arc(px, py, i % 4 === 0 ? 2.2 : 1.4, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        ctx.fillStyle = 'rgba(107, 83, 69, 0.05)';
         for (let i = 0; i < canvas.width; i += 24) {
           for (let j = 0; j < canvas.height; j += 24) {
-            ctx.fillRect(i, j, 1.5, 1.5);
+            ctx.fillRect(i, j, 1.3, 1.3);
           }
         }
       }
 
-      ctx.fillStyle = isLofi ? '#fdfaf5' : '#edf4e8';
+      ctx.fillStyle = isLofi ? '#f7efe3' : '#edf4e8';
       ctx.beginPath();
       ctx.moveTo(0, canvas.height);
       ctx.lineTo(0, canvas.height - 80);
@@ -255,23 +281,32 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
         state.obstacles.forEach((obstacle) => {
           obstacle.x -= config.obstacleSpeed;
 
-          ctx.fillStyle = isLofi ? '#faedcd' : '#dcebd3';
+          if (isLofi) {
+            const obstacleGradient = ctx.createLinearGradient(obstacle.x, 0, obstacle.x + obstacleWidth, 0);
+            obstacleGradient.addColorStop(0, '#f7eadb');
+            obstacleGradient.addColorStop(1, '#f3d8c6');
+            ctx.fillStyle = obstacleGradient;
+          } else {
+            ctx.fillStyle = '#dcebd3';
+          }
 
           ctx.beginPath();
-          ctx.roundRect(obstacle.x, -20, obstacleWidth, obstacle.gapTop + 20, 12);
+          ctx.roundRect(obstacle.x, -20, obstacleWidth, obstacle.gapTop + 20, 18);
           ctx.fill();
 
           if (isLofi) {
-            ctx.strokeStyle = '#e8dfd5';
+            drawCloud(obstacle.x + obstacleWidth * 0.4, obstacle.gapTop - 10, obstacleWidth * 1.55, 44, 'rgba(255,247,240,0.9)');
+            ctx.strokeStyle = '#ecd9ca';
             ctx.lineWidth = 1.5;
             ctx.stroke();
           }
 
           ctx.beginPath();
-          ctx.roundRect(obstacle.x, obstacle.gapTop + gameplayGapSize, obstacleWidth, canvas.height - obstacle.gapTop - gameplayGapSize + 20, 12);
+          ctx.roundRect(obstacle.x, obstacle.gapTop + gameplayGapSize, obstacleWidth, canvas.height - obstacle.gapTop - gameplayGapSize + 20, 18);
           ctx.fill();
 
           if (isLofi) {
+            drawCloud(obstacle.x + obstacleWidth * 0.42, obstacle.gapTop + gameplayGapSize + 12, obstacleWidth * 1.6, 46, 'rgba(255,244,236,0.92)');
             ctx.stroke();
           }
 
@@ -354,8 +389,8 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
         </div>
         ) : null}
 
-        <div className={`relative z-10 ${isExpandedLayout ? (isPhonePortraitFullscreen ? 'mx-auto w-full max-w-[min(92vw,430px)]' : 'w-full max-w-[min(96vw,1200px)]') : 'mt-5 rounded-[1.5rem] border p-3 shadow-sm sm:p-4'} ${isExpandedLayout ? (isLofi ? 'rounded-[2rem] border border-[#e8dfd5]/80 bg-white/72 p-3 shadow-[0_22px_50px_rgba(83,62,44,0.12)] backdrop-blur-sm sm:p-4' : 'rounded-[2rem] border border-white/85 bg-white/78 p-3 shadow-soft sm:p-4') : (isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-sage-200 bg-white')}`}>
-          <div className={`relative overflow-hidden ${isExpandedLayout ? (isPhonePortraitFullscreen ? 'rounded-[1.8rem]' : 'rounded-[1.4rem]') : 'rounded-[1.5rem] border'} ${isLofi ? (isExpandedLayout ? 'bg-[#fff9f0]' : 'border-[#e8dfd5] bg-[#fff9f0]') : (isExpandedLayout ? 'bg-white' : 'border-sage-200')} shadow-sm`} style={{ aspectRatio: isPhonePortraitFullscreen ? '9 / 16' : '3 / 2' }}>
+        <div className={`relative z-10 ${isExpandedLayout ? 'mx-auto w-full max-w-[min(92vw,560px)]' : 'mx-auto mt-5 w-full max-w-[460px] rounded-[1.5rem] border p-3 shadow-sm sm:p-4'} ${isExpandedLayout ? (isLofi ? 'rounded-[2rem] border border-[#e8dfd5]/80 bg-white/72 p-3 shadow-[0_22px_50px_rgba(83,62,44,0.12)] backdrop-blur-sm sm:p-4' : 'rounded-[2rem] border border-white/85 bg-white/78 p-3 shadow-soft sm:p-4') : (isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-sage-200 bg-white')}`}>
+          <div className={`relative overflow-hidden ${isExpandedLayout ? 'rounded-[1.8rem]' : 'rounded-[1.5rem] border'} ${isLofi ? (isExpandedLayout ? 'bg-[#fff9f0]' : 'border-[#e8dfd5] bg-[#fff9f0]') : (isExpandedLayout ? 'bg-white' : 'border-sage-200')} shadow-sm`} style={{ aspectRatio: '9 / 16' }}>
             <canvas
               ref={canvasRef}
               width={canvasWidth}
@@ -364,7 +399,7 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
               onClick={jump}
             />
             {isExpandedLayout ? (
-              <div className={`absolute z-50 pointer-events-none ${isPhonePortraitFullscreen ? 'left-1/2 top-4 -translate-x-1/2 sm:top-5' : 'right-4 top-4 sm:right-6 sm:top-6'}`}>
+              <div className="absolute left-1/2 top-4 z-50 pointer-events-none -translate-x-1/2 sm:top-5">
                 <div className={`flex items-center gap-3 rounded-[1.35rem] border p-2.5 shadow-sm backdrop-blur-md pointer-events-auto ${isLofi ? 'border-[#e8dfd5]/90 bg-white/78 text-[#4a3a2d]' : 'border-white/20 bg-black/10 text-white'}`}>
                    <div className={`px-3 py-1 text-center ${isLofi ? 'border-r border-[#e8dfd5]/90' : 'border-r border-white/20'}`}>
                      <p className={`text-[9px] font-black uppercase tracking-widest ${isLofi ? 'text-[#6e5a4a]/70' : 'text-white/70'}`}>Score</p>
