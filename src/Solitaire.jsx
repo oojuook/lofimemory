@@ -179,18 +179,19 @@ function WastePile({
   isLofi = false
 }) {
   const visibleCards = cards.slice(-Math.max(1, drawCount));
-  const stackWidthClass = '';
+  const wasteSpread = drawCount >= 3 ? 0.42 : 0.34;
+  const stackWidth = 1 + Math.max(0, visibleCards.length - 1) * wasteSpread;
 
   if (visibleCards.length === 0) {
     return <div className="w-[1em] h-[1.4em]"><Card compact isLofi={isLofi} onClick={onClick} /></div>;
   }
 
   return (
-    <div className={`relative w-[1em] h-[1.4em] ${stackWidthClass}`}>
+    <div className="relative h-[1.4em]" style={{ width: `${stackWidth}em` }}>
       {visibleCards.map((card, index) => {
         const isTopCard = index === visibleCards.length - 1;
-        const offsetX = index * (drawCount >= 3 ? 0.15 : 0.1) + 'em';
-        const offsetY = index * (drawCount >= 3 ? 0.05 : 0.04) + 'em';
+        const offsetX = index * wasteSpread + 'em';
+        const offsetY = '0em';
         return (
           <div
             className="absolute left-0 top-0 w-full"
