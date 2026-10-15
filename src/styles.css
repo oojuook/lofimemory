@@ -1431,11 +1431,30 @@ input::placeholder {
 
 .personalized-site.interface-phone .site-nav-actions {
   display: grid !important;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.45rem !important;
 }
 
-.personalized-site.interface-phone .site-nav-actions > * {
+.personalized-site.interface-phone .site-nav-actions .header-account-pill {
+  min-width: 0;
   width: 100%;
+}
+
+.personalized-site.interface-phone .site-nav-actions .header-quick-actions {
+  width: auto;
+  justify-self: end;
+}
+
+@media (max-width: 430px) {
+  .personalized-site.interface-phone .site-nav-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .personalized-site.interface-phone .site-nav-actions .header-quick-actions {
+    width: 100%;
+    justify-self: stretch;
+  }
 }
 
 .personalized-site.interface-phone section[id],

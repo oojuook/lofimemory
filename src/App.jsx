@@ -5090,32 +5090,35 @@ function App() {
               </div>
               <div>
                 <p className="font-display text-xl sm:text-2xl font-bold text-white lofi-sharp-text leading-tight">Lofi Memory</p>
-                <p className="lofi-sharp-text-soft text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] sm:tracking-[0.28em] text-white/95">Relaxing games & notes</p>
+                {isPhoneInterface ? null : (
+                  <p className="lofi-sharp-text-soft text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] sm:tracking-[0.28em] text-white/95">Relaxing games & notes</p>
+                )}
               </div>
             </a>
             <div className={`site-nav-actions flex w-full flex-wrap items-center gap-2 lg:justify-end xl:w-auto xl:max-w-[34rem] xl:flex-none ${isPcInterface ? 'xl:flex-nowrap' : ''}`}>
               {user ? (
-                <div className="flex min-w-[160px] sm:min-w-[210px] flex-1 items-center justify-between gap-2 sm:gap-3 rounded-full border border-white/25 bg-white/15 px-3 py-2 sm:px-4 sm:py-2.5 shadow-sm backdrop-blur-md xl:flex-none">
+                <div className="header-account-pill flex min-w-[160px] sm:min-w-[210px] flex-1 items-center justify-between gap-2 sm:gap-3 rounded-full border border-white/25 bg-white/15 px-3 py-2 sm:px-4 sm:py-2.5 shadow-sm backdrop-blur-md xl:flex-none">
                   <div className="min-w-0">
                     <p className="truncate text-sm font-extrabold text-white lofi-sharp-text">{user.displayName || user.email}</p>
-                    <p className="lofi-sharp-text-soft text-[11px] font-bold uppercase tracking-[0.18em] text-white/90">{cloudStatus}</p>
+                    {isPhoneInterface ? null : <p className="lofi-sharp-text-soft text-[11px] font-bold uppercase tracking-[0.18em] text-white/90">{cloudStatus}</p>}
                   </div>
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-white/20 text-white shadow-sm">
+                  <div className={`flex shrink-0 items-center justify-center rounded-2xl shadow-sm ${isPhoneInterface ? 'h-8 w-auto gap-1.5 px-2.5 bg-white/18 text-white' : 'h-9 w-9 bg-white/20 text-white'}`}>
                     <ShieldCheck size={15} />
+                    {isPhoneInterface ? <span className="text-[10px] font-black uppercase tracking-[0.16em]">Sync</span> : null}
                   </div>
                 </div>
               ) : (
-                <button className="flex min-w-[160px] sm:min-w-[208px] flex-1 items-center justify-between gap-2 sm:gap-3 rounded-full border border-white/25 bg-white/15 px-3 py-2 sm:px-4 sm:py-2.5 text-left shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25 xl:flex-none" onClick={signInWithGoogle} disabled={authLoading} type="button">
+                <button className="header-account-pill flex min-w-[160px] sm:min-w-[208px] flex-1 items-center justify-between gap-2 sm:gap-3 rounded-full border border-white/25 bg-white/15 px-3 py-2 sm:px-4 sm:py-2.5 text-left shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25 xl:flex-none" onClick={signInWithGoogle} disabled={authLoading} type="button">
                   <div>
-                    <p className="text-xs sm:text-sm font-extrabold text-white lofi-sharp-text">{authLoading ? '...' : 'Sign in'}</p>
-                    <p className="lofi-sharp-text-soft text-[9px] sm:text-[11px] font-bold uppercase tracking-[0.16em] text-white/90">Sync</p>
+                    <p className="text-xs sm:text-sm font-extrabold text-white lofi-sharp-text">{authLoading ? '...' : isPhoneInterface ? 'Sign in to sync' : 'Sign in'}</p>
+                    {isPhoneInterface ? null : <p className="lofi-sharp-text-soft text-[9px] sm:text-[11px] font-bold uppercase tracking-[0.16em] text-white/90">Sync</p>}
                   </div>
-                  <div className="flex h-7 w-7 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-xl sm:rounded-2xl bg-white text-[#4a3a2d] shadow-sm">
+                  <div className={`flex shrink-0 items-center justify-center rounded-xl sm:rounded-2xl shadow-sm ${isPhoneInterface ? 'h-8 w-8 bg-white/18 text-white' : 'h-7 w-7 sm:h-9 sm:w-9 bg-white text-[#4a3a2d]'}`}>
                     <ShieldCheck size={14} />
                   </div>
                 </button>
               )}
-              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 rounded-full border border-white/20 bg-black/20 p-1 sm:p-1.5 shadow-sm backdrop-blur-md xl:flex-nowrap">
+              <div className="header-quick-actions flex flex-wrap items-center gap-1.5 sm:gap-2 rounded-full border border-white/20 bg-black/20 p-1 sm:p-1.5 shadow-sm backdrop-blur-md xl:flex-nowrap">
                 {user && (
                   <button className="rounded-full border border-white/30 bg-white/10 px-3 py-1.5 sm:px-3.5 sm:py-2 text-[11px] sm:text-sm font-bold text-white lofi-sharp-chip transition hover:-translate-y-0.5 hover:bg-white/20" onClick={handleSignOut} type="button">
                     Sign out
@@ -5144,11 +5147,11 @@ function App() {
                     SEO studio
                   </button>
                 )}
-                <button className={`rounded-full border px-3 py-1.5 sm:px-3.5 sm:py-2 text-[11px] sm:text-sm font-bold lofi-sharp-chip transition hover:-translate-y-0.5 ${comfortMode ? 'border-white bg-white text-[#4a3a2d]' : 'border-white/30 bg-white/10 text-white hover:bg-white/20'}`} onClick={() => setComfortMode(!comfortMode)} type="button">
-                  Comfort
+                <button className={`inline-flex items-center justify-center gap-1.5 rounded-full border px-3 py-1.5 sm:px-3.5 sm:py-2 text-[11px] sm:text-sm font-bold lofi-sharp-chip transition hover:-translate-y-0.5 ${comfortMode ? 'border-white bg-white text-[#4a3a2d]' : 'border-white/30 bg-white/10 text-white hover:bg-white/20'}`} onClick={() => setComfortMode(!comfortMode)} type="button">
+                  <Cloud size={isPhoneInterface ? 13 : 14} /> {isPhoneInterface ? 'Soft' : 'Comfort'}
                 </button>
-                <button className="rounded-full border border-white/30 bg-white/10 px-3 py-1.5 sm:px-3.5 sm:py-2 text-[11px] sm:text-sm font-bold text-white lofi-sharp-chip transition hover:-translate-y-0.5 hover:bg-white/20" onClick={() => (hasPin ? setPinSettingsOpen(true) : setLocked(true))} type="button">
-                  {hasPin ? 'Privacy' : 'Lock'}
+                <button className="inline-flex items-center justify-center gap-1.5 rounded-full border border-white/30 bg-white/10 px-3 py-1.5 sm:px-3.5 sm:py-2 text-[11px] sm:text-sm font-bold text-white lofi-sharp-chip transition hover:-translate-y-0.5 hover:bg-white/20" onClick={() => (hasPin ? setPinSettingsOpen(true) : setLocked(true))} type="button">
+                  <Lock size={isPhoneInterface ? 13 : 14} /> {isPhoneInterface ? 'Private' : hasPin ? 'Privacy' : 'Lock'}
                 </button>
               </div>
             </div>
@@ -5193,17 +5196,17 @@ function App() {
       ) : null}
 
       {showMinimalHomeOverview && (
-      <section id="home" className="mx-auto max-w-[1040px] px-3 pb-24 pt-6 sm:px-5 sm:pb-20 sm:pt-10 xl:px-10">
+      <section id="home" className="mx-auto max-w-[1220px] px-3 pb-24 pt-6 sm:px-5 sm:pb-20 sm:pt-10 xl:px-10">
         <div className="mb-6 text-center">
           <p className="text-[11px] font-extrabold uppercase tracking-[0.34em] text-[#9a806a]">Choose your chill space</p>
             <p className="mt-3 text-sm font-semibold leading-7 text-[#7f6a58]">Start with games, music, diary, notes, or memories.</p>
         </div>
           <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-3 shadow-soft sm:p-4">
-            <div className="grid gap-3 md:grid-cols-2">
+            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
               {homeEntryCards.map((card) => (
                 <button
                   key={card.id}
-                  className="group lofi-picture-border lofi-border-watercolor relative flex min-h-[12rem] w-full flex-col items-start justify-start overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/20 px-6 py-6 text-left shadow-sm transition duration-300 hover:-translate-y-1 hover:border-[#8b5e3c]/40 hover:shadow-lift"
+                  className="group lofi-picture-border lofi-border-watercolor relative flex min-h-[11.2rem] w-full flex-col items-start justify-start overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/20 px-5 py-5 text-left shadow-sm transition duration-300 hover:-translate-y-1 hover:border-[#8b5e3c]/40 hover:shadow-lift sm:min-h-[12.4rem] sm:px-6 sm:py-6 xl:min-h-[13rem]"
                   onClick={card.onClick}
                   type="button"
                 >
@@ -7447,7 +7450,7 @@ function App() {
       `}</style>
 
       {/* Floating Lofi Radio Player */}
-      <div className={`fixed z-50 ${cookieConsentAccepted ? 'bottom-12 left-4 sm:left-5 lg:bottom-16 xl:left-[max(1rem,calc((100vw-1280px)/2-4.25rem))]' : 'bottom-32 left-4 sm:bottom-28 sm:left-5 lg:bottom-32 xl:left-[max(1rem,calc((100vw-1280px)/2-4.25rem))]'}`}>
+      <div className={`fixed z-50 ${isPhoneInterface ? (cookieConsentAccepted ? 'bottom-[7.25rem] left-4' : 'bottom-[13rem] left-4') : (cookieConsentAccepted ? 'bottom-12 left-4 sm:left-5 lg:bottom-16 xl:left-[max(1rem,calc((100vw-1280px)/2-4.25rem))]' : 'bottom-32 left-4 sm:bottom-28 sm:left-5 lg:bottom-32 xl:left-[max(1rem,calc((100vw-1280px)/2-4.25rem))]')}`}>
 
         <div ref={radioPlayerContainerRef} className="pointer-events-none absolute h-1 w-1 opacity-0" aria-hidden="true" />
         <div className="group relative h-[3.6rem] w-[3.6rem] sm:h-[3.9rem] sm:w-[3.9rem] lg:h-[4.05rem] lg:w-[4.05rem]">
@@ -7698,7 +7701,7 @@ function App() {
       )}
 
       <button
-        className={`fixed z-40 flex h-12 w-12 items-center justify-center rounded-full bg-sage-900 text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800 ${cookieConsentAccepted ? 'bottom-6 right-6' : 'bottom-44 right-4 sm:bottom-36 sm:right-6'}`}
+        className={`fixed z-40 flex h-12 w-12 items-center justify-center rounded-full bg-sage-900 text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800 ${isPhoneInterface ? (cookieConsentAccepted ? 'bottom-[7.25rem] right-4' : 'bottom-[13rem] right-4') : (cookieConsentAccepted ? 'bottom-6 right-6' : 'bottom-6 left-6')}`}
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         type="button"
         aria-label="Back to top"
