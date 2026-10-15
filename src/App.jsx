@@ -772,6 +772,22 @@ const breatheRoomOptions = [
     decoration: '🍁',
     videoId: '3DEkF2uvPoc',
     wallpaper: maplestoryThemeWallpaperImage
+  },
+  {
+    id: 'hogwarts',
+    title: 'Hogwarts Music Room',
+    sound: 'Hogwarts ambience',
+    description: 'A candlelit castle-inspired music room for magical studying, quiet journaling, and cozy late-night focus.',
+    icon: Sparkles,
+    status: 'Hogwarts Music Room selected — the magical study ambience is ready.',
+    gradient: 'from-stone-200 via-amber-100 to-violet-100',
+    textTone: 'text-violet-900',
+    ringTone: 'ring-violet-200',
+    volume: 34,
+    decoration: '🏰',
+    videoId: 'BQrxsyGTztM',
+    startSeconds: 8741,
+    wallpaper: lofiRoomWallpaperImage
   }
 ];
 
@@ -4981,7 +4997,7 @@ function App() {
       radioUnlockedRef.current = true;
       radioPlayerRef.current.loadVideoById({
         videoId: room.videoId,
-        startSeconds: 0,
+        startSeconds: room.startSeconds || 0,
         suggestedQuality: 'small'
       });
       radioPlayerRef.current.unMute?.();
@@ -5133,14 +5149,6 @@ function App() {
                 </button>
               </div>
             </div>
-          </div>
-          <div className={`site-nav-links mt-2.5 ${isPcInterface ? 'hidden xl:flex' : 'hidden'} flex-wrap items-center justify-center gap-3 rounded-[1.8rem] border border-[#8b5e3c]/15 bg-[#f3e6d7]/82 p-2 shadow-[0_18px_40px_rgba(87,62,43,0.12)] backdrop-blur-xl`}>
-            <a className="rounded-full border border-[#cfb49b]/65 bg-[#fffaf3]/92 px-5 py-2.5 text-sm font-black text-[#4a3a2d] shadow-sm transition hover:-translate-y-0.5 hover:border-[#b99578] hover:bg-white lofi-sharp-chip" href="#unwind" onClick={() => navigateToTab('unwind')}>Games</a>
-            <a className="rounded-full border border-[#cfb49b]/65 bg-[#fffaf3]/92 px-5 py-2.5 text-sm font-black text-[#4a3a2d] shadow-sm transition hover:-translate-y-0.5 hover:border-[#b99578] hover:bg-white lofi-sharp-chip" href="#home" onClick={() => navigateToTab('home')}>Chill</a>
-            <button className="rounded-full border border-[#cfb49b]/65 bg-[#fffaf3]/92 px-5 py-2.5 text-sm font-black text-[#4a3a2d] shadow-sm transition hover:-translate-y-0.5 hover:border-[#b99578] hover:bg-white lofi-sharp-chip" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
-            <a className="rounded-full border border-[#cfb49b]/65 bg-[#fffaf3]/92 px-5 py-2.5 text-sm font-black text-[#4a3a2d] shadow-sm transition hover:-translate-y-0.5 hover:border-[#b99578] hover:bg-white lofi-sharp-chip" href="#memories" onClick={() => navigateToTab('memories')}>Memories</a>
-            <a className="rounded-full border border-[#cfb49b]/65 bg-[#fffaf3]/92 px-5 py-2.5 text-sm font-black text-[#4a3a2d] shadow-sm transition hover:-translate-y-0.5 hover:border-[#b99578] hover:bg-white lofi-sharp-chip" href="#breathe" onClick={() => navigateToTab('breathe')}>Music</a>
-            <a className="rounded-full border border-[#cfb49b]/65 bg-[#fffaf3]/92 px-5 py-2.5 text-sm font-black text-[#4a3a2d] shadow-sm transition hover:-translate-y-0.5 hover:border-[#b99578] hover:bg-white lofi-sharp-chip" href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
           </div>
         </div>
       </nav>
@@ -6127,7 +6135,7 @@ function App() {
               </div>
             </div>
             
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-5">
               {breatheRoomOptions.map((option) => {
                 const isSelected = selectedBreatheRoom === option.id;
                 return (
