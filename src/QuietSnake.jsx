@@ -96,7 +96,11 @@ export default function QuietSnake({ difficulty = 'medium', theme = 'lofi', view
     const observer = new ResizeObserver((entries) => {
       const { width, height } = entries[0].contentRect;
       if (width === 0 || height === 0) return;
-      setScale(Math.min(width / nativeBoardWidth, height / nativeBoardHeight, 10.0));
+
+      const availableWidth = Math.max(width - 16, 0);
+      const availableHeight = Math.max(height - 24, 0);
+
+      setScale(Math.min(availableWidth / nativeBoardWidth, availableHeight / nativeBoardHeight, 10.0));
     });
     observer.observe(wrapperRef.current);
     return () => observer.disconnect();
