@@ -970,10 +970,19 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
     };
   };
 
-  const maxCardFontSize = deviceType === 'phone' ? 54 : (isExpandedLayout ? 108 : 96);
+  const faceUpStackOffset = isExpandedLayout ? -0.98 : -0.9;
+  const hiddenStackOffset = isExpandedLayout ? -1.18 : -1.12;
+  const stackStepUnits = (card) => 1.4 + (card.faceUp ? faceUpStackOffset : hiddenStackOffset);
+  const tallestTableauUnits = game.tableau.reduce((maxHeight, column) => {
+    const columnHeight = column.reduce((height, card, cardIndex) => (
+      height + (cardIndex === 0 ? 1.4 : stackStepUnits(card))
+    ), 1.4);
+    return Math.max(maxHeight, columnHeight);
+  }, 1.4);
+  const maxCardFontSize = deviceType === 'phone' ? 46 : (isExpandedLayout ? 86 : 82);
   const fittedCardFontSize = boardDims.w > 0 && boardDims.h > 0
-    ? Math.max(16, Math.min(boardDims.w / 9.4, boardDims.h / 10.8, maxCardFontSize))
-    : 48;
+    ? Math.max(14, Math.min(boardDims.w / (isExpandedLayout ? 13.4 : 11.2), boardDims.h / (tallestTableauUnits + (isExpandedLayout ? 2.2 : 3.2)), maxCardFontSize))
+    : 44;
 
   return (
     <div ref={containerRef} data-device-type={deviceType} className={`mx-auto w-full ${isExpandedLayout ? `${isLofi ? 'bg-[#fff7ec]' : 'bg-[#07542f]'} min-h-full p-0 sm:p-2` : 'pb-6 sm:pb-8'}`}>
@@ -1055,13 +1064,11 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
 
 
           
-  <div ref={boardWrapperRef} className={`relative flex-1 min-h-0 w-full flex items-center justify-center ${isExpandedLayout ? 'min-h-full' : 'h-[65vh] min-h-[400px]'}`}>
+  <div ref={boardWrapperRef} className={`relative flex-1 min-h-0 w-full flex items-start justify-center ${isExpandedLayout ? 'min-h-full' : 'h-[65vh] min-h-[400px]'}`}>
     <div 
       ref={playfieldRef} 
-      className="relative flex flex-col mx-auto w-full px-2 sm:px-6 max-w-[1400px]"
-      style={{ fontSize: `${fittedCardFontSize}px`,
-        gap: "1.5em"
-      }}
+      className="relative mx-auto w-full px-1 sm:px-4 max-w-none"
+      style={{ fontSize: `${fittedCardFontSize}px` }}
     >
 
             <style>
@@ -1097,7 +1104,11 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
             ) : null}
 
             
-            <div className="grid grid-cols-7 w-full justify-items-center" style={{ gap: "0.2em" }}>
+            <div
+              className="grid w-full items-start"
+              style={{ gridTemplateColumns: '1.9em repeat(7, minmax(0, 1fr)) 1.15em', columnGap: '0.36em' }}
+            >
+              <div className="flex w-full flex-col items-center gap-[0.9em]">
                 <div className="text-center w-full flex flex-col items-center">
                   {game.stock.length > 0 ? (
                     <Card card={{ id: 'stock', faceUp: false }} compact isLofi={isLofi} onClick={drawFromStock} />
@@ -1124,13 +1135,52 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
                   />
                   <span className={`mt-1 block font-extrabold uppercase tracking-[0.12em] ${isLofi ? 'text-amber-800/70' : 'text-white/78'}`} style={{ fontSize: '0.18em' }}>Waste</span>
                 </div>
-                <div className="w-full"></div>
+              </div>
+
+              {game.tableau.map((column, columnIndex) => (
+                <div
+                  key={`column-${columnIndex + 1}`}
+                  className={`relative flex min-w-0 flex-col items-center transition w-full pb-[0.5em] ${dragOverTarget === 'tableau-' + columnIndex ? (isLofi ? 'bg-amber-900/10 ring-2 ring-amber-200/50' : 'bg-white/14 ring-2 ring-amber-200/70') : ''}`}
+                  data-drop-target={`tableau-${columnIndex}`}
+                >
+                  {column.length === 0 ? (
+                    <Card compact dropTarget={`tableau-${columnIndex}`} isLofi={isLofi} onClick={() => moveSelectionToTableau(columnIndex)} />
+                  ) : column.map((card, cardIndex) => {
+                    const isSelected = selectedKey === `tableau-${columnIndex}-${cardIndex}`;
+                    return (
+                      <div key={card.id} className={cardIndex > 0 ? 'relative' : ''} style={{ marginTop: cardIndex > 0 ? `${card.faceUp ? faceUpStackOffset : hiddenStackOffset}em` : '0' }}>
+                        <Card
+                          card={card}
+                          compact
+                          isLofi={isLofi}
+                          cardRef={setCardNode({ type: 'tableau', columnIndex, cardIndex })}
+                          draggable={card.faceUp}
+                          cardStyle={getDraggedCardStyle({ type: 'tableau', columnIndex, cardIndex })}
+                          dropTarget={`tableau-${columnIndex}`}
+                          ghosted={isCardGhosted({ type: 'tableau', columnIndex, cardIndex })}
+                          selected={isSelected}
+                          onClick={() => handleCardActivation(
+                            { type: 'tableau', columnIndex, cardIndex },
+                            () => selectTableauCard(columnIndex, cardIndex),
+                            () => doubleClickTableauCard(columnIndex, cardIndex)
+                          )}
+                          onDoubleClick={undefined}
+                          onPointerDown={card.faceUp ? (event) => beginPointerDrag(event, { type: 'tableau', columnIndex, cardIndex }) : undefined}
+                          onTouchStart={card.faceUp ? (event) => beginTouchDrag(event, { type: 'tableau', columnIndex, cardIndex }) : undefined}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+
+              <div className="flex w-full flex-col items-center gap-[0.18em]">
                 {SUITS.map((suit) => {
                   const pile = game.foundations[suit];
                   const topCard = pile[pile.length - 1];
                   const isDragTarget = dragOverTarget === `foundation-${suit}`;
                   return (
-                    <div key={suit} className={`w-full flex flex-col items-center text-center transition rounded-[0.08em] ${isDragTarget ? (isLofi ? 'bg-amber-900/10 ring-2 ring-amber-200/50' : 'bg-white/12 ring-2 ring-amber-200/70') : ''}`}>
+                    <div key={suit} className={`relative w-full flex flex-col items-center text-center transition rounded-[0.08em] ${isDragTarget ? (isLofi ? 'bg-amber-900/10 ring-2 ring-amber-200/50' : 'bg-white/12 ring-2 ring-amber-200/70') : ''}`}>
                       <Card
                         card={topCard}
                         compact
@@ -1150,50 +1200,13 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
                         onPointerDown={topCard ? (event) => beginPointerDrag(event, { type: 'foundation', suit }) : undefined}
                         onTouchStart={topCard ? (event) => beginTouchDrag(event, { type: 'foundation', suit }) : undefined}
                       />
-                      <span className={`mt-1 block font-black ${isRed(suit) ? (isLofi ? 'text-[#ff8fa3]' : 'text-rose-100') : (isLofi ? 'text-[#6e5a4a]' : 'text-white/90')}`} style={{ fontSize: '0.25em' }}>{suit}</span>
+                      {!topCard ? (
+                        <span className={`pointer-events-none absolute inset-0 grid place-items-center font-black ${isRed(suit) ? (isLofi ? 'text-[#ff8fa3]/45' : 'text-rose-100/60') : (isLofi ? 'text-[#6e5a4a]/45' : 'text-white/55')}`} style={{ fontSize: '0.44em' }}>{suit}</span>
+                      ) : null}
                     </div>
                   );
                 })}
-            </div>
-
-            <div className="grid grid-cols-7 w-full justify-items-center" style={{ gap: "0.2em" }}>
-
-              {game.tableau.map((column, columnIndex) => (
-                <div
-                  key={`column-${columnIndex + 1}`}
-                  className={`relative flex flex-col items-center transition w-full pb-[1.5em] ${dragOverTarget === 'tableau-' + columnIndex ? (isLofi ? 'bg-amber-900/10 ring-2 ring-amber-200/50' : 'bg-white/14 ring-2 ring-amber-200/70') : ''}`}
-                  data-drop-target={`tableau-${columnIndex}`}
-                >
-                  {column.length === 0 ? (
-                    <Card compact dropTarget={`tableau-${columnIndex}`} isLofi={isLofi} onClick={() => moveSelectionToTableau(columnIndex)} />
-                  ) : column.map((card, cardIndex) => {
-                    const isSelected = selectedKey === `tableau-${columnIndex}-${cardIndex}`;
-                    return (
-    <div key={card.id} className={cardIndex > 0 ? 'relative' : ''} style={{ marginTop: cardIndex > 0 ? (card.faceUp ? '-0.8em' : '-1.12em') : '0' }}>
-      <Card
-        card={card}
-        compact
-        isLofi={isLofi}
-        cardRef={setCardNode({ type: 'tableau', columnIndex, cardIndex })}
-        draggable={card.faceUp}
-        cardStyle={getDraggedCardStyle({ type: 'tableau', columnIndex, cardIndex })}
-        dropTarget={`tableau-${columnIndex}`}
-        ghosted={isCardGhosted({ type: 'tableau', columnIndex, cardIndex })}
-        selected={isSelected}
-        onClick={() => handleCardActivation(
-          { type: 'tableau', columnIndex, cardIndex },
-          () => selectTableauCard(columnIndex, cardIndex),
-          () => doubleClickTableauCard(columnIndex, cardIndex)
-        )}
-        onDoubleClick={undefined}
-        onPointerDown={card.faceUp ? (event) => beginPointerDrag(event, { type: 'tableau', columnIndex, cardIndex }) : undefined}
-        onTouchStart={card.faceUp ? (event) => beginTouchDrag(event, { type: 'tableau', columnIndex, cardIndex }) : undefined}
-      />
-    </div>
-  );
-                  })}
-                </div>
-              ))}
+              </div>
             </div>
           </div>
         </div>

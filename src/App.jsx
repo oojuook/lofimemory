@@ -5074,26 +5074,6 @@ function App() {
                 <p className="lofi-sharp-text-soft text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] sm:tracking-[0.28em] text-white/95">Relaxing games & notes</p>
               </div>
             </a>
-            <div className={`site-nav-links ${isPcInterface ? 'hidden xl:flex' : 'hidden'} flex-1 items-center justify-center gap-7 xl:gap-9`}>
-              {[
-                { id: 'unwind', label: 'Games', icon: Gamepad2 },
-                { id: 'home', label: 'Chill', icon: Headphones },
-                { id: 'write', label: 'Diary', icon: PenLine },
-                { id: 'notes', label: 'Notes', icon: FileText },
-                { id: 'breathe', label: 'Music Room', icon: Wind },
-                { id: 'memories', label: 'Memories', icon: CalendarDays },
-                { id: 'design', label: 'Design', icon: Palette }
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  className={`flex items-center gap-2 text-sm font-black uppercase tracking-widest transition lofi-sharp-text-soft ${activeTab === tab.id ? 'text-white' : 'text-white/90 hover:text-white'}`}
-                  onClick={() => navigateToTab(tab.id)}
-                >
-                  <tab.icon size={16} /> {tab.label}
-                </button>
-              ))}
-            </div>
-
             <div className={`site-nav-actions flex w-full flex-wrap items-center gap-2 lg:justify-end xl:w-auto xl:max-w-[34rem] xl:flex-none ${isPcInterface ? 'xl:flex-nowrap' : ''}`}>
               {user ? (
                 <div className="flex min-w-[160px] sm:min-w-[210px] flex-1 items-center justify-between gap-2 sm:gap-3 rounded-full border border-white/25 bg-white/15 px-3 py-2 sm:px-4 sm:py-2.5 shadow-sm backdrop-blur-md xl:flex-none">
@@ -5154,7 +5134,7 @@ function App() {
               </div>
             </div>
           </div>
-          <div className={`site-nav-links mt-2.5 ${isPcInterface ? 'hidden 2xl:flex' : 'hidden'} flex-wrap items-center justify-center gap-3 rounded-[1.8rem] border border-[#8b5e3c]/15 bg-[#f3e6d7]/82 p-2 shadow-[0_18px_40px_rgba(87,62,43,0.12)] backdrop-blur-xl`}>
+          <div className={`site-nav-links mt-2.5 ${isPcInterface ? 'hidden xl:flex' : 'hidden'} flex-wrap items-center justify-center gap-3 rounded-[1.8rem] border border-[#8b5e3c]/15 bg-[#f3e6d7]/82 p-2 shadow-[0_18px_40px_rgba(87,62,43,0.12)] backdrop-blur-xl`}>
             <a className="rounded-full border border-[#cfb49b]/65 bg-[#fffaf3]/92 px-5 py-2.5 text-sm font-black text-[#4a3a2d] shadow-sm transition hover:-translate-y-0.5 hover:border-[#b99578] hover:bg-white lofi-sharp-chip" href="#unwind" onClick={() => navigateToTab('unwind')}>Games</a>
             <a className="rounded-full border border-[#cfb49b]/65 bg-[#fffaf3]/92 px-5 py-2.5 text-sm font-black text-[#4a3a2d] shadow-sm transition hover:-translate-y-0.5 hover:border-[#b99578] hover:bg-white lofi-sharp-chip" href="#home" onClick={() => navigateToTab('home')}>Chill</a>
             <button className="rounded-full border border-[#cfb49b]/65 bg-[#fffaf3]/92 px-5 py-2.5 text-sm font-black text-[#4a3a2d] shadow-sm transition hover:-translate-y-0.5 hover:border-[#b99578] hover:bg-white lofi-sharp-chip" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
