@@ -1,0 +1,1004 @@
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { Edit3, RotateCcw, Sparkles } from 'lucide-react';
+
+const BOARD_SIZE = 9;
+const BOX_SIZE = 3;
+const DUPLICATE_GROUP_SIZE = 2;
+const INNER_BORDER_WIDTH = 1;
+const SUBGRID_BORDER_WIDTH = 3;
+const INNER_BORDER_COLOR = '#ffffff';
+const SUBGRID_BORDER_COLOR = '#b8c8c0';
+const DIGITS = Array.from({ length: BOARD_SIZE }, (_, index) => index + 1);
+const MAX_PEN_MISTAKES = 3;
+
+function formatElapsedTime(totalSeconds) {
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+}
+
+const puzzleBank = {
+  easy: [
+    {
+      id: 'easy-morning-window',
+      puzzle: '530070000600195000098000060800060003400803001700020006060000280000419005000080079',
+      solution: '534678912672195348198342567859761423426853791713924856961537284287419635345286179',
+    },
+    {
+      id: 'easy-soft-lamp',
+      puzzle: '003020600900305001001806400008102900700000008006708200002609500800203009005010300',
+      solution: '483921657967345821251876493548132976729564138136798245372689514814253769695417382',
+    },
+    {
+      id: 'easy-porch-breeze',
+      puzzle: '034000012000100340198002000000701400406850090010024056061537084207409030000006100',
+      solution: '534678912672195348198342567859761423426853791713924856961537284287419635345286179',
+    },
+    {
+      id: 'easy-cozy-window',
+      puzzle: '483000600067300001250870403000100900709500138100098040070680004800000700095010300',
+      solution: '483921657967345821251876493548132976729564138136798245372689514814253769695417382',
+    },
+    {
+      id: 'easy-slow-morning',
+      puzzle: '030269700602000003100830502006095000370080010901003028519306070000000000060008009',
+      solution: '435269781682571493197834562826195347374682915951743628519326874248957136763418259',
+    },
+  ],
+  medium: [
+    {
+      id: 'medium-lofi-desk',
+      puzzle: '000260701680070090190004500820100040004602900050003028009300074040050036703018000',
+      solution: '435269781682571493197834562826195347374682915951743628519326874248957136763418259',
+    },
+    {
+      id: 'medium-rain-window',
+      puzzle: '200080300060070084030500209000105408000000000402706000301007040720040060004010003',
+      solution: '245981376169273584837564219976125438513498627482736951391657842728349165654812793',
+    },
+    {
+      id: 'medium-tea-break',
+      puzzle: '045000006109003000037560000900005400503490607082036001000050002700300005054002000',
+      solution: '245981376169273584837564219976125438513498627482736951391657842728349165654812793',
+    },
+    {
+      id: 'medium-quiet-corner',
+      puzzle: '062800050705406003000700420100000005059000048048000000900170034000059001000603000',
+      solution: '462831957795426183381795426173984265659312748248567319926178534834259671517643892',
+    },
+    {
+      id: 'medium-late-afternoon',
+      puzzle: '100300098000000000002008040490085370218070006000000401000000809900061000521000000',
+      solution: '145327698839654127672918543496185372218473956753296481367542819984761235521839764',
+    },
+  ],
+  hard: [
+    {
+      id: 'hard-night-train',
+      puzzle: '000000907000420180000705026100904000050000040000507009920108000034059000507000000',
+      solution: '462831957795426183381795426173984265659312748248567319926178534834259671517643892',
+    },
+    {
+      id: 'hard-midnight-glow',
+      puzzle: '005300000800000020070010500400005300010070006003200080060500009004000030000009700',
+      solution: '145327698839654127672918543496185372218473956753296481367542819984761235521839764',
+    },
+    {
+      id: 'hard-desk-lamp',
+      puzzle: '034670900670000348000042000859700020006003000000000000000007004080000030005200070',
+      solution: '534678912672195348198342567859761423426853791713924856961537284287419635345286179',
+    },
+    {
+      id: 'hard-still-rain',
+      puzzle: '080021600007305000050806003000000070000060038100700000000000004000053700005410000',
+      solution: '483921657967345821251876493548132976729564138136798245372689514814253769695417382',
+    },
+    {
+      id: 'hard-after-midnight',
+      puzzle: '000060780600501000190030000000190007000000000000703020000000800200050030003008209',
+      solution: '435269781682571493197834562826195347374682915951743628519326874248957136763418259',
+    },
+  ],
+  expert: [
+    {
+      id: 'expert-quiet-platform',
+      puzzle: '045000000060000080000060000000000008010000020080030901091007802000049005000010000',
+      solution: '245981376169273584837564219976125438513498627482736951391657842728349165654812793',
+    },
+    {
+      id: 'expert-deep-focus',
+      puzzle: '000801000090000100000700406000004005600012040000067000000000000000200670007600000',
+      solution: '462831957795426183381795426173984265659312748248567319926178534834259671517643892',
+    },
+  ],
+  extreme: [
+    {
+      id: 'extreme-shadow-room',
+      puzzle: '000000000000000000000918500400005300000003056750096000000042000000000000000800060',
+      solution: '145327698839654127672918543496185372218473956753296481367542819984761235521839764',
+    },
+    {
+      id: 'extreme-master-climb',
+      puzzle: '000000000000090000000000000050000400426800090710024006000000080087000600000000000',
+      solution: '534678912672195348198342567859761423426853791713924856961537284287419635345286179',
+    },
+  ],
+};
+
+const difficultySettings = {
+  easy: {
+    label: 'Easy',
+    note: 'More starter numbers and a gentler way into the grid.',
+  },
+  medium: {
+    label: 'Medium',
+    note: 'A balanced Sudoku board when you want a calm logic loop.',
+  },
+  hard: {
+    label: 'Hard',
+    note: 'Fewer clues and a deeper focus stretch for quieter concentration.',
+  },
+  expert: {
+    label: 'Expert',
+    note: 'Sparse clues and more advanced pattern reading, closer to the tougher web sudoku styles.',
+  },
+  extreme: {
+    label: 'Extreme',
+    note: 'The toughest calm grid here — very few clues and a real long-form logic grind.',
+  },
+};
+
+function parseBoardString(value) {
+  return Array.from({ length: BOARD_SIZE }, (_, rowIndex) => (
+    Array.from({ length: BOARD_SIZE }, (_, colIndex) => Number(value[rowIndex * BOARD_SIZE + colIndex]))
+  ));
+}
+
+function cloneBoard(board) {
+  return board.map((row) => [...row]);
+}
+
+function getFirstEditableCell(board) {
+  for (let row = 0; row < BOARD_SIZE; row += 1) {
+    for (let col = 0; col < BOARD_SIZE; col += 1) {
+      if (board[row][col] === 0) {
+        return { row, col };
+      }
+    }
+  }
+
+  return { row: 0, col: 0 };
+}
+
+function getCellId(row, col) {
+  return `${row}-${col}`;
+}
+
+function pickPuzzle(pool, previousId = '') {
+  const choices = pool.filter((entry) => entry.id !== previousId);
+  return choices[Math.floor(Math.random() * choices.length)] || pool[0];
+}
+
+function collectConflicts(board) {
+  const conflicts = new Set();
+
+  const checkGroup = (cells) => {
+    const seen = {};
+
+    cells.forEach(({ row, col }) => {
+      const value = board[row][col];
+      if (!value) {
+        return;
+      }
+
+      if (!seen[value]) {
+        seen[value] = [{ row, col }];
+        return;
+      }
+
+      seen[value].push({ row, col });
+    });
+
+    Object.values(seen).forEach((positions) => {
+      if (positions.length < DUPLICATE_GROUP_SIZE) {
+        return;
+      }
+
+      positions.forEach(({ row, col }) => conflicts.add(getCellId(row, col)));
+    });
+  };
+
+  for (let row = 0; row < BOARD_SIZE; row += 1) {
+    checkGroup(Array.from({ length: BOARD_SIZE }, (_, col) => ({ row, col })));
+  }
+
+  for (let col = 0; col < BOARD_SIZE; col += 1) {
+    checkGroup(Array.from({ length: BOARD_SIZE }, (_, row) => ({ row, col })));
+  }
+
+  for (let boxRow = 0; boxRow < BOARD_SIZE; boxRow += BOX_SIZE) {
+    for (let boxCol = 0; boxCol < BOARD_SIZE; boxCol += BOX_SIZE) {
+      const boxCells = [];
+
+      for (let row = boxRow; row < boxRow + BOX_SIZE; row += 1) {
+        for (let col = boxCol; col < boxCol + BOX_SIZE; col += 1) {
+          boxCells.push({ row, col });
+        }
+      }
+
+      checkGroup(boxCells);
+    }
+  }
+
+  return conflicts;
+}
+
+function boardsMatch(board, solution) {
+  return board.every((row, rowIndex) => (
+    row.every((value, colIndex) => value === solution[rowIndex][colIndex])
+  ));
+}
+
+function removeCellNotes(notesByCell, cellId) {
+  if (!notesByCell[cellId]) {
+    return notesByCell;
+  }
+
+  const nextNotes = { ...notesByCell };
+  delete nextNotes[cellId];
+  return nextNotes;
+}
+
+function toggleCellNote(notesByCell, cellId, value) {
+  const currentNotes = notesByCell[cellId] || [];
+  const alreadyPresent = currentNotes.includes(value);
+  const nextValues = alreadyPresent
+    ? currentNotes.filter((item) => item !== value)
+    : [...currentNotes, value].sort((left, right) => left - right);
+
+  if (nextValues.length === 0) {
+    return removeCellNotes(notesByCell, cellId);
+  }
+
+  return {
+    ...notesByCell,
+    [cellId]: nextValues,
+  };
+}
+
+function getSudokuBoxTone(rowIndex, colIndex) {
+  const boxRow = Math.floor(rowIndex / BOX_SIZE);
+  const boxCol = Math.floor(colIndex / BOX_SIZE);
+  return (boxRow + boxCol) % 2 === 0 ? 'moss' : 'sand';
+}
+
+function getSudokuCellClass({
+  boxTone,
+  checkedWrong,
+  conflict,
+  editable,
+  inSameBox,
+  inSameCol,
+  inSameRow,
+  sameValue,
+  selected,
+  isLofi = false,
+}) {
+  if (!editable) {
+    if (isLofi) {
+      return boxTone === 'moss' ? 'bg-[#efe3d2] text-[#4a3a2d]' : 'bg-[#f8eee3] text-[#4a3a2d]';
+    }
+    return boxTone === 'moss' ? 'bg-[#e8efe5] text-slate-900' : 'bg-[#efe9df] text-slate-900';
+  }
+
+  if (checkedWrong || conflict) {
+    return isLofi ? 'bg-[#f4d6cf] text-[#8d4b45]' : 'bg-rose-100 text-rose-900';
+  }
+
+  if (selected) {
+    return isLofi ? 'bg-[#f5e6d3] text-[#4a3a2d]' : 'bg-sky-200 text-sky-950';
+  }
+
+  if (sameValue) {
+    return isLofi ? 'bg-[#f7e2b7] text-[#7a5227]' : 'bg-amber-100 text-amber-950';
+  }
+
+  if (inSameRow || inSameCol || inSameBox) {
+    if (isLofi) {
+      return boxTone === 'moss' ? 'bg-[#f9f1e5] text-[#4a3a2d]' : 'bg-[#fbf6ee] text-[#4a3a2d]';
+    }
+    return boxTone === 'moss' ? 'bg-sky-100 text-slate-900' : 'bg-[#e8f1fb] text-slate-900';
+  }
+
+  if (isLofi) {
+    return boxTone === 'moss' ? 'bg-[#fffaf4] text-[#4a3a2d]' : 'bg-[#fdf4e8] text-[#4a3a2d]';
+  }
+
+  return boxTone === 'moss' ? 'bg-[#f4f8f1] text-slate-900' : 'bg-[#fbf6ee] text-slate-900';
+}
+
+function SudokuCellButton({ cellClass, cellId, colIndex, isLofi = false, notes, onSelect, rowIndex, selected, value }) {
+  const innerBorderColor = isLofi ? 'rgba(255, 248, 240, 0.92)' : INNER_BORDER_COLOR;
+  const subgridBorderColor = isLofi ? '#d8c4af' : SUBGRID_BORDER_COLOR;
+
+  return (
+    <button
+      key={cellId}
+      className={`flex aspect-square min-h-[2.35rem] items-center justify-center rounded-[0.7rem] border text-base font-extrabold transition sm:min-h-[3.1rem] sm:text-lg ${selected ? (isLofi ? 'border-amber-300 shadow-[0_10px_20px_rgba(83,62,44,0.1)]' : 'border-sky-400 shadow-sm') : (isLofi ? 'border-white/60' : 'border-white/70')} ${cellClass}`}
+      onClick={onSelect}
+      style={{
+        borderTopWidth: rowIndex % BOX_SIZE === 0 ? SUBGRID_BORDER_WIDTH : INNER_BORDER_WIDTH,
+        borderLeftWidth: colIndex % BOX_SIZE === 0 ? SUBGRID_BORDER_WIDTH : INNER_BORDER_WIDTH,
+        borderRightWidth: colIndex === BOARD_SIZE - 1 ? SUBGRID_BORDER_WIDTH : INNER_BORDER_WIDTH,
+        borderBottomWidth: rowIndex === BOARD_SIZE - 1 ? SUBGRID_BORDER_WIDTH : INNER_BORDER_WIDTH,
+        borderTopColor: rowIndex % BOX_SIZE === 0 ? subgridBorderColor : innerBorderColor,
+        borderLeftColor: colIndex % BOX_SIZE === 0 ? subgridBorderColor : innerBorderColor,
+        borderRightColor: colIndex === BOARD_SIZE - 1 ? subgridBorderColor : innerBorderColor,
+        borderBottomColor: rowIndex === BOARD_SIZE - 1 ? subgridBorderColor : innerBorderColor,
+      }}
+      type="button"
+    >
+      {value ? (
+        value
+      ) : (
+        <div className={`grid w-full grid-cols-3 gap-[1px] px-[2px] text-[0.55rem] font-bold leading-none sm:text-[0.65rem] ${isLofi ? 'text-[#8c755f]' : 'text-slate-500'}`}>
+          {DIGITS.map((digit) => (
+            <span key={`${cellId}-${digit}`} className={notes.includes(digit) ? 'opacity-100' : 'opacity-0'}>
+              {digit}
+            </span>
+          ))}
+        </div>
+      )}
+    </button>
+  );
+}
+
+function SudokuBoard({
+  activeValue,
+  board,
+  checkedCells,
+  conflictSet,
+  isEditableCell,
+  isLofi = false,
+  notesByCell,
+  selectedBoxCol,
+  selectedBoxRow,
+  selectedCell,
+  setSelectedCell,
+}) {
+  return (
+    <div className={`rounded-[1.75rem] border p-4 shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/72 backdrop-blur-sm' : 'border-white/80 bg-white/92'}`}>
+      <div className={`grid grid-cols-9 gap-1 rounded-[1.6rem] p-[7px] sm:p-3 ${isLofi ? 'bg-[#e2cfbb]/90' : 'bg-[#c7d2ca]'}`}>
+        {board.map((row, rowIndex) => row.map((value, colIndex) => {
+          const cellId = getCellId(rowIndex, colIndex);
+          const editable = isEditableCell(rowIndex, colIndex);
+          const selected = selectedCell?.row === rowIndex && selectedCell?.col === colIndex;
+          const sameValue = activeValue !== 0 && activeValue === value;
+          const checkedWrong = checkedCells.includes(cellId);
+          const conflict = conflictSet.has(cellId);
+          const inSameRow = selectedCell?.row === rowIndex;
+          const inSameCol = selectedCell?.col === colIndex;
+          const inSameBox = selectedCell
+            && selectedBoxRow === Math.floor(rowIndex / BOX_SIZE)
+            && selectedBoxCol === Math.floor(colIndex / BOX_SIZE);
+          const boxTone = getSudokuBoxTone(rowIndex, colIndex);
+          const cellClass = getSudokuCellClass({
+            boxTone,
+            checkedWrong,
+            conflict,
+            editable,
+            inSameBox,
+            inSameCol,
+            inSameRow,
+            sameValue,
+            selected,
+            isLofi,
+          });
+
+          return (
+            <SudokuCellButton
+              cellClass={cellClass}
+              cellId={cellId}
+              colIndex={colIndex}
+              isLofi={isLofi}
+              key={cellId}
+              notes={editable && value === 0 ? (notesByCell[cellId] || []) : []}
+              onSelect={() => setSelectedCell({ row: rowIndex, col: colIndex })}
+              rowIndex={rowIndex}
+              selected={selected}
+              value={value}
+            />
+          );
+        }))}
+      </div>
+    </div>
+  );
+}
+
+function SudokuHeader({ completedRounds, config, conflictCount, elapsedLabel, isLofi = false, mistakesLeft, notesMode, openCells }) {
+  return (
+    <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+      <div>
+        <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-slate-200 bg-white/88 text-slate-700'}`}>
+          <Sparkles size={14} /> {config.label} sudoku flow
+        </div>
+        <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>Sudoku</h3>
+        <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-700'}`}>
+          A cozy Sudoku board for when you want a familiar logic puzzle that still feels slow, tidy,
+          and easy to settle into.
+        </p>
+        <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-slate-600'}`}>{config.note}</p>
+      </div>
+      <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-2 xl:grid-cols-5 ${isExpandedLayout ? '' : 'lg:min-w-[34rem]'} ${isLofi ? 'rounded-[1.35rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
+        {[
+          ['Solved', completedRounds, null],
+          ['Open cells', openCells, null],
+          ['Conflicts', conflictCount, null],
+          ['Timer', elapsedLabel, null],
+          ['Pen tries left', mistakesLeft, notesMode ? 'Pencil notes on' : 'Pen mode on']
+        ].map(([label, value, note]) => (
+          <div key={label} className={`${isLofi ? 'rounded-[0.95rem] bg-amber-50/90 text-amber-900' : 'rounded-[1.15rem] bg-slate-50'} min-w-0 px-4 py-3.5 text-center sm:px-5`}>
+            <p className={`text-[10px] font-extrabold uppercase tracking-[0.2em] ${isLofi ? 'text-amber-800/60' : 'text-slate-500'}`}>{label}</p>
+            <p className={`mt-2 truncate text-base font-extrabold leading-none sm:text-lg lg:text-xl ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>{value}</p>
+            {note ? <p className={`mt-1 text-[11px] font-semibold ${isLofi ? 'text-amber-800/60' : 'text-slate-500'}`}>{note}</p> : null}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function SudokuSidebar({
+  activeValue,
+  checkBoard,
+  clearSelectedCell,
+  handleDigitInput,
+  isLofi = false,
+  message,
+  mistakesLeft,
+  notesMode,
+  revealSelectedCell,
+  roundStatus,
+  setNotesMode,
+  startFreshPuzzle,
+  startRound,
+}) {
+  return (
+    <div className="space-y-4">
+      <div className={`rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/72 backdrop-blur-sm' : 'border-white/80 bg-white/92'}`}>
+        <div className="flex items-center justify-between gap-3">
+          <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-slate-600'}`}>Soft guidance</p>
+          <button
+            className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.16em] transition ${notesMode ? (isLofi ? 'bg-[#f5e6d3] text-[#4a3a2d]' : 'bg-sky-100 text-sky-950') : (isLofi ? 'border border-amber-200 bg-white text-amber-900 hover:bg-[#fff8f0]' : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-50')}`}
+            onClick={() => setNotesMode((previous) => !previous)}
+            type="button"
+          >
+            <Edit3 size={12} /> {notesMode ? 'Pencil on' : 'Pencil off'}
+          </button>
+        </div>
+        <div className={`mt-4 rounded-[1.25rem] border px-4 py-4 ${isLofi ? 'border-amber-200/60 bg-amber-50/75' : 'border-slate-200 bg-slate-50'}`}>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className={`text-[11px] font-extrabold uppercase tracking-[0.18em] ${isLofi ? 'text-amber-800/70' : 'text-slate-500'}`}>Round control</p>
+              <p className={`mt-2 text-sm font-semibold leading-6 ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-700'}`}>{roundStatus === 'ready' ? 'Press start to begin this Sudoku and start the timer.' : roundStatus === 'playing' ? 'The timer is running — keep going.' : 'This board is finished. Start a new one whenever you want.'}</p>
+            </div>
+            <button
+              className={`inline-flex items-center justify-center rounded-full px-4 py-2.5 text-sm font-extrabold transition ${roundStatus === 'ready' ? (isLofi ? 'bg-[#4a3a2d] text-white hover:bg-[#3d3025]' : 'bg-slate-900 text-white hover:bg-slate-800') : (isLofi ? 'border border-amber-200 bg-white text-amber-400' : 'border border-slate-200 bg-white text-slate-500')}`}
+              disabled={roundStatus !== 'ready'}
+              onClick={startRound}
+              type="button"
+            >
+              Start Sudoku
+            </button>
+          </div>
+        </div>
+        <p className={`mt-3 text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-700'}`}>{message}</p>
+        <p className={`mt-2 text-xs font-semibold ${isLofi ? 'text-amber-800/60' : 'text-slate-500'}`}>Press <span className={`font-extrabold ${isLofi ? 'text-[#4a3a2d]' : 'text-slate-700'}`}>N</span> to toggle pencil marks, then tap 1–9 to add tiny notes. Pen mode gives you {mistakesLeft} of {MAX_PEN_MISTAKES} tries left.</p>
+        <div className="mt-4 grid gap-2 sm:grid-cols-2 xl:grid-cols-1">
+          <button
+            className={`inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-extrabold text-white transition ${isLofi ? 'bg-[#4a3a2d] hover:bg-[#3d3025]' : 'bg-slate-900 hover:bg-slate-800'}`}
+            onClick={checkBoard}
+            type="button"
+          >
+            Check board
+          </button>
+          <button
+            className={`inline-flex items-center justify-center gap-2 rounded-2xl border px-4 py-3 text-sm font-extrabold transition ${isLofi ? 'border-amber-200 bg-amber-50/90 text-amber-900 hover:bg-white' : 'border-slate-200 bg-slate-50 text-slate-800 hover:bg-white'}`}
+            onClick={revealSelectedCell}
+            type="button"
+          >
+            Reveal selected cell
+          </button>
+          <button
+            className={`inline-flex items-center justify-center gap-2 rounded-2xl border px-4 py-3 text-sm font-extrabold transition ${isLofi ? 'border-amber-200 bg-white text-amber-900 hover:bg-[#fff8f0]' : 'border-slate-200 bg-white text-slate-800 hover:bg-slate-50'}`}
+            onClick={clearSelectedCell}
+            type="button"
+          >
+            Clear square
+          </button>
+          <button
+            className={`inline-flex items-center justify-center gap-2 rounded-2xl border px-4 py-3 text-sm font-extrabold transition ${isLofi ? 'border-amber-200 bg-white text-amber-900 hover:bg-[#fff8f0]' : 'border-slate-200 bg-white text-slate-800 hover:bg-slate-50'}`}
+            onClick={startFreshPuzzle}
+            type="button"
+          >
+            <RotateCcw size={16} /> New board
+          </button>
+        </div>
+      </div>
+
+      <div className={`rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/72 backdrop-blur-sm' : 'border-white/80 bg-white/92'}`}>
+        <div className="flex items-center justify-between gap-3">
+          <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-slate-600'}`}>Number pad</p>
+          <span className={`rounded-full px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.16em] ${notesMode ? (isLofi ? 'bg-[#f5e6d3] text-[#4a3a2d]' : 'bg-sky-100 text-sky-900') : (isLofi ? 'bg-amber-50 text-amber-700' : 'bg-slate-100 text-slate-600')}`}>
+            {notesMode ? 'Pencil marks' : 'Fill mode'}
+          </span>
+        </div>
+        <div className="mt-4 grid grid-cols-5 gap-2">
+          {DIGITS.map((number) => (
+            <button
+              key={number}
+              className={`rounded-2xl border px-0 py-3 text-sm font-extrabold transition ${activeValue === number && !notesMode ? (isLofi ? 'border-amber-300 bg-[#f5e6d3] text-[#4a3a2d]' : 'border-sky-300 bg-sky-100 text-sky-950') : (isLofi ? 'border-amber-200 bg-amber-50/90 text-amber-900 hover:bg-white' : 'border-slate-200 bg-slate-50 text-slate-900 hover:bg-white')}`}
+              onClick={() => handleDigitInput(number)}
+              type="button"
+            >
+              {number}
+            </button>
+          ))}
+          <button
+            className={`col-span-5 rounded-2xl border px-4 py-3 text-sm font-extrabold transition ${isLofi ? 'border-amber-200 bg-white text-amber-900 hover:bg-[#fff8f0]' : 'border-slate-200 bg-white text-slate-800 hover:bg-slate-50'}`}
+            onClick={clearSelectedCell}
+            type="button"
+          >
+            {notesMode ? 'Digit taps add or remove pencil marks. Backspace clears the square.' : 'Tap 1–9 or use your keyboard. Backspace clears.'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function QuietSudoku({ difficulty = 'medium', theme = 'lofi', viewportMode = 'embedded' }) {
+  const isLofi = theme === 'lofi';
+  const isExpandedLayout = viewportMode === 'fullscreen';
+  const [scale, setScale] = useState(1);
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    if (!isExpandedLayout || !wrapperRef.current) {
+      setScale(1);
+      return;
+    }
+    const observer = new ResizeObserver((entries) => {
+      const { width, height } = entries[0].contentRect;
+      if (width === 0 || height === 0) return;
+      // We want to scale the native layout up to fit the window.
+      const scaleW = width / 850;
+      const scaleH = height / 850;
+      // For games with responsive layouts, we don't actually want to lock them to a fixed width/height box before scaling.
+      // But if we do use transform: scale, we must lock their unscaled dimensions.
+      // The issue was: the internal div had no height constraint, so it collapsed.
+      setScale(Math.min(scaleW, scaleH, 1.8) * 0.98);
+    });
+    observer.observe(wrapperRef.current);
+    return () => observer.disconnect();
+  }, [isExpandedLayout]);
+
+  const initialDifficulty = puzzleBank[difficulty] ? difficulty : 'medium';
+  const [selectedDifficulty, setSelectedDifficulty] = useState(initialDifficulty);
+
+  const config = difficultySettings[selectedDifficulty] || difficultySettings.medium;
+  const pool = puzzleBank[selectedDifficulty] || puzzleBank.medium;
+  const roundsKey = `quiet-journal-quiet-sudoku-rounds-${selectedDifficulty}`;
+
+  const [activePuzzle, setActivePuzzle] = useState(() => pickPuzzle(pool));
+  const [board, setBoard] = useState(() => parseBoardString(activePuzzle.puzzle));
+  const [selectedCell, setSelectedCell] = useState(() => getFirstEditableCell(parseBoardString(activePuzzle.puzzle)));
+  const [message, setMessage] = useState('Press start when you are ready, then work through the grid one number at a time.');
+  const [checkedCells, setCheckedCells] = useState([]);
+  const [completedRounds, setCompletedRounds] = useState(() => parseInt(localStorage.getItem(roundsKey) || '0', 10));
+  const [roundStatus, setRoundStatus] = useState('ready');
+  const [notesMode, setNotesMode] = useState(false);
+  const [notesByCell, setNotesByCell] = useState({});
+  const [penMistakes, setPenMistakes] = useState(0);
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
+
+  const puzzleBoard = useMemo(() => parseBoardString(activePuzzle.puzzle), [activePuzzle.puzzle]);
+  const solutionBoard = useMemo(() => parseBoardString(activePuzzle.solution), [activePuzzle.solution]);
+  const conflictSet = useMemo(() => collectConflicts(board), [board]);
+  const openCells = useMemo(() => board.flat().filter((value) => value === 0).length, [board]);
+  const elapsedLabel = useMemo(() => formatElapsedTime(elapsedSeconds), [elapsedSeconds]);
+  const mistakesLeft = Math.max(MAX_PEN_MISTAKES - penMistakes, 0);
+
+  useEffect(() => {
+    if (puzzleBank[difficulty]) {
+      setSelectedDifficulty(difficulty);
+    }
+  }, [difficulty]);
+
+  const activeValue = selectedCell ? board[selectedCell.row][selectedCell.col] : 0;
+  const selectedBoxRow = selectedCell ? Math.floor(selectedCell.row / BOX_SIZE) : -1;
+  const selectedBoxCol = selectedCell ? Math.floor(selectedCell.col / BOX_SIZE) : -1;
+
+  const isEditableCell = useCallback((row, col) => puzzleBoard[row][col] === 0, [puzzleBoard]);
+
+  const resetPuzzleState = useCallback((nextPuzzle, nextMessage) => {
+    const nextBoard = parseBoardString(nextPuzzle.puzzle);
+    setActivePuzzle(nextPuzzle);
+    setBoard(nextBoard);
+    setSelectedCell(getFirstEditableCell(nextBoard));
+    setMessage(nextMessage);
+    setCheckedCells([]);
+    setRoundStatus('ready');
+    setNotesMode(false);
+    setNotesByCell({});
+    setPenMistakes(0);
+    setElapsedSeconds(0);
+    setCompletedRounds(parseInt(localStorage.getItem(roundsKey) || '0', 10));
+  }, [roundsKey]);
+
+  useEffect(() => {
+    resetPuzzleState(pickPuzzle(pool), 'Press start when you are ready, then work through the grid one number at a time.');
+  }, [pool, resetPuzzleState]);
+
+  const startRound = useCallback(() => {
+    if (roundStatus !== 'ready') {
+      return;
+    }
+
+    setRoundStatus('playing');
+    setMessage('Timer started — keep the logic steady and the pen entries clean.');
+  }, [roundStatus]);
+
+  useEffect(() => {
+    if (roundStatus !== 'playing') {
+      return undefined;
+    }
+
+    const intervalId = window.setInterval(() => {
+      setElapsedSeconds((previous) => previous + 1);
+    }, 1000);
+
+    return () => window.clearInterval(intervalId);
+  }, [roundStatus, activePuzzle.id]);
+
+  const clearCellNotes = useCallback((cellId) => {
+    setNotesByCell((previous) => removeCellNotes(previous, cellId));
+  }, []);
+
+  const placeValue = useCallback((value) => {
+    if (!selectedCell || roundStatus !== 'playing') {
+      return;
+    }
+
+    const { row, col } = selectedCell;
+    if (!isEditableCell(row, col)) {
+      setMessage('That square is part of the starter pattern. Pick an open one.');
+      return;
+    }
+
+    const cellId = getCellId(row, col);
+
+    if (value === 0) {
+      setBoard((previousBoard) => {
+        const nextBoard = cloneBoard(previousBoard);
+        nextBoard[row][col] = 0;
+        return nextBoard;
+      });
+      clearCellNotes(cellId);
+      setCheckedCells((previous) => previous.filter((currentCellId) => currentCellId !== cellId));
+      setMessage('Square cleared — take another look whenever you want.');
+      return;
+    }
+
+    if (value !== solutionBoard[row][col]) {
+      setCheckedCells((previous) => Array.from(new Set([...previous, cellId])));
+      setPenMistakes((previous) => {
+        const nextMistakes = previous + 1;
+        if (nextMistakes >= MAX_PEN_MISTAKES) {
+          setRoundStatus('over');
+          setMessage('Three pen mistakes reached. This round is over — start a fresh board when you are ready.');
+        } else {
+          setMessage(`That pen entry does not fit. ${MAX_PEN_MISTAKES - nextMistakes} tries left.`);
+        }
+        return nextMistakes;
+      });
+      return;
+    }
+
+    setBoard((previousBoard) => {
+      const nextBoard = cloneBoard(previousBoard);
+      nextBoard[row][col] = value;
+      return nextBoard;
+    });
+    clearCellNotes(cellId);
+    setCheckedCells((previous) => previous.filter((currentCellId) => currentCellId !== cellId));
+    setMessage('Nice — that number fits cleanly.');
+  }, [clearCellNotes, isEditableCell, roundStatus, selectedCell, solutionBoard]);
+
+  const toggleSelectedNote = useCallback((value) => {
+    if (!selectedCell || roundStatus !== 'playing') {
+      return;
+    }
+
+    const { row, col } = selectedCell;
+    if (!isEditableCell(row, col)) {
+      setMessage('Starter squares do not need pencil marks.');
+      return;
+    }
+
+    if (board[row][col] !== 0) {
+      setMessage('Clear the square first if you want to leave pencil marks there.');
+      return;
+    }
+
+    const cellId = getCellId(row, col);
+    const alreadyPresent = (notesByCell[cellId] || []).includes(value);
+    setNotesByCell((previous) => toggleCellNote(previous, cellId, value));
+    setCheckedCells((previous) => previous.filter((currentCellId) => currentCellId !== cellId));
+    setMessage(alreadyPresent ? `Pencil mark ${value} removed.` : `Pencil mark ${value} added.`);
+  }, [board, isEditableCell, notesByCell, roundStatus, selectedCell]);
+
+  const handleDigitInput = useCallback((value) => {
+    if (notesMode) {
+      toggleSelectedNote(value);
+      return;
+    }
+
+    placeValue(value);
+  }, [notesMode, placeValue, toggleSelectedNote]);
+
+  const clearSelectedCell = useCallback(() => {
+    placeValue(0);
+  }, [placeValue]);
+
+  const startFreshPuzzle = useCallback(() => {
+    resetPuzzleState(pickPuzzle(pool, activePuzzle.id), 'Fresh board, same soft logic mood.');
+  }, [activePuzzle.id, pool, resetPuzzleState]);
+
+  const checkBoard = useCallback(() => {
+    if (roundStatus === 'solved') {
+      setMessage('Already solved — enjoy the quiet little win.');
+      return;
+    }
+
+    if (roundStatus === 'over') {
+      setMessage('This round is over after three pen mistakes. Start a fresh board to try again.');
+      return;
+    }
+
+    const wrongCells = [];
+    board.forEach((row, rowIndex) => {
+      row.forEach((value, colIndex) => {
+        if (!value || value === solutionBoard[rowIndex][colIndex]) {
+          return;
+        }
+
+        wrongCells.push(getCellId(rowIndex, colIndex));
+      });
+    });
+
+    setCheckedCells(wrongCells);
+    if (wrongCells.length) {
+      setMessage('A few squares want another look. The red ones are worth revisiting.');
+      return;
+    }
+
+    if (conflictSet.size) {
+      setMessage('You are close — there are still a few row, column, or box conflicts to smooth out.');
+      return;
+    }
+
+    setMessage(openCells === 0 ? 'Everything looks clean.' : 'So far so good — keep filling the quiet gaps.');
+  }, [board, conflictSet.size, openCells, roundStatus, solutionBoard]);
+
+  const revealSelectedCell = useCallback(() => {
+    if (roundStatus === 'over') {
+      setMessage('That round has ended. Start a fresh board to keep going.');
+      return;
+    }
+
+    if (!selectedCell) {
+      setMessage('Pick a square first and I can reveal that one.');
+      return;
+    }
+
+    const { row, col } = selectedCell;
+    if (!isEditableCell(row, col)) {
+      setMessage('That square is already given to you.');
+      return;
+    }
+
+    const cellId = getCellId(row, col);
+    setBoard((previousBoard) => {
+      const nextBoard = cloneBoard(previousBoard);
+      nextBoard[row][col] = solutionBoard[row][col];
+      return nextBoard;
+    });
+    clearCellNotes(cellId);
+    setCheckedCells((previous) => previous.filter((currentCellId) => currentCellId !== cellId));
+    setMessage('One square revealed — let the rest unfold from there.');
+  }, [clearCellNotes, isEditableCell, selectedCell, solutionBoard]);
+
+  useEffect(() => {
+    if (roundStatus === 'solved' || roundStatus === 'over' || conflictSet.size > 0) {
+      return;
+    }
+
+    if (!boardsMatch(board, solutionBoard)) {
+      return;
+    }
+
+    const nextRounds = completedRounds + 1;
+    setRoundStatus('solved');
+    setCompletedRounds(nextRounds);
+    localStorage.setItem(roundsKey, String(nextRounds));
+    setMessage('Sudoku complete — soft win, nice and steady.');
+  }, [board, completedRounds, conflictSet, roundStatus, roundsKey, solutionBoard]);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (!selectedCell || event.metaKey || event.ctrlKey || event.altKey) {
+        return;
+      }
+
+      if (event.key.toLowerCase() === 'n') {
+        event.preventDefault();
+        setNotesMode((previous) => {
+          const next = !previous;
+          setMessage(next ? 'Pencil marks on — tap digits to leave tiny notes.' : 'Pencil marks off — digits will fill the square again.');
+          return next;
+        });
+        return;
+      }
+
+      if (event.key >= '1' && event.key <= '9') {
+        event.preventDefault();
+        handleDigitInput(Number(event.key));
+        return;
+      }
+
+      if (event.key === 'Backspace' || event.key === 'Delete' || event.key === '0') {
+        event.preventDefault();
+        clearSelectedCell();
+        return;
+      }
+
+      const movement = {
+        ArrowUp: [-1, 0],
+        ArrowDown: [1, 0],
+        ArrowLeft: [0, -1],
+        ArrowRight: [0, 1],
+      };
+
+      const nextMove = movement[event.key];
+      if (!nextMove) {
+        return;
+      }
+
+      event.preventDefault();
+      setSelectedCell((previous) => ({
+        row: Math.min(BOARD_SIZE - 1, Math.max(0, previous.row + nextMove[0])),
+        col: Math.min(BOARD_SIZE - 1, Math.max(0, previous.col + nextMove[1])),
+      }));
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [clearSelectedCell, handleDigitInput, selectedCell]);
+
+  return (
+    <div ref={wrapperRef} className={`mx-auto w-full ${isExpandedLayout ? 'h-full flex-1 flex items-center justify-center max-w-none overflow-hidden' : 'mt-12 max-w-[1040px] pb-12'}`}>
+      <div style={isExpandedLayout ? { transform: `scale(${scale})`, transformOrigin: 'center center', width: '100%', maxWidth: '850px' } : {}} className={isExpandedLayout ? "flex justify-center" : ""}>
+        <div className="w-full">
+      <div className={!isExpandedLayout ? `relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-amber-200/50 bg-[#fff7ec] shadow-[0_28px_90px_rgba(83,62,44,0.12)]' : 'border-sage-100 bg-gradient-to-br from-white via-slate-50/80 to-sand-50/80'}` : ""}>
+        {isLofi && (
+          <>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.95),rgba(255,247,236,0.9)_45%,rgba(250,237,205,0.84)_100%)]" />
+            <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #7a6250 1px, transparent 0)', backgroundSize: '18px 18px' }} />
+          </>
+        )}
+        <div className="relative z-10">
+          <SudokuHeader
+            completedRounds={completedRounds}
+            config={config}
+            conflictCount={conflictSet.size}
+            elapsedLabel={elapsedLabel}
+            isLofi={isLofi}
+            mistakesLeft={mistakesLeft}
+            notesMode={notesMode}
+            openCells={openCells}
+          />
+
+          <div className={`mt-5 rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/88'}`}>
+            <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+              <div>
+                <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-slate-600'}`}>Sudoku level</p>
+                <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-700'}`}>Choose from easy through extreme, inspired by the tougher web Sudoku ladder.</p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {Object.entries(difficultySettings).map(([level, levelConfig]) => (
+                  <button
+                    key={level}
+                    className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${selectedDifficulty === level ? (isLofi ? 'bg-[#4a3a2d] text-white shadow-sm' : 'bg-slate-900 text-white shadow-sm') : (isLofi ? 'border border-amber-200 bg-white text-amber-900 hover:bg-[#fff8f0]' : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-50')}`}
+                    onClick={() => setSelectedDifficulty(level)}
+                    type="button"
+                  >
+                    {levelConfig.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <p className={`mt-3 text-sm leading-7 ${isLofi ? 'text-[#8c755f]' : 'text-slate-600'}`}>{config.note}</p>
+          </div>
+
+          <div className="mt-6 grid gap-5 xl:grid-cols-[minmax(0,1fr)_280px]">
+            <div className="relative">
+              <SudokuBoard
+                activeValue={activeValue}
+                board={board}
+                checkedCells={checkedCells}
+                conflictSet={conflictSet}
+                isEditableCell={isEditableCell}
+                isLofi={isLofi}
+                notesByCell={notesByCell}
+                selectedBoxCol={selectedBoxCol}
+                selectedBoxRow={selectedBoxRow}
+                selectedCell={selectedCell}
+                setSelectedCell={setSelectedCell}
+              />
+              {roundStatus === 'ready' && (
+                <div className={`absolute inset-0 flex items-center justify-center rounded-[1.75rem] p-4 backdrop-blur-[3px] ${isLofi ? 'bg-white/52' : 'bg-white/76'}`}>
+                  <div className={`w-full max-w-sm rounded-[1.5rem] border p-5 text-center shadow-soft ${isLofi ? 'border-[#e8dfd5]/80 bg-white/82 backdrop-blur-md' : 'border-white/85 bg-white/92'}`}>
+                    <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-slate-500'}`}>Ready when you are</p>
+                    <h4 className={`mt-3 text-3xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>Press start to begin</h4>
+                    <p className={`mt-3 text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-600'}`}>Pick a level, then start the board when you want the timer to begin.</p>
+                    <button
+                      className={`mt-5 inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#4a3a2d] hover:bg-[#3d3025]' : 'bg-slate-900 hover:bg-slate-800'}`}
+                      onClick={startRound}
+                      type="button"
+                    >
+                      Start Sudoku
+                    </button>
+                  </div>
+                </div>
+              )}
+              {roundStatus === 'over' && (
+                <div className={`absolute inset-0 flex items-center justify-center rounded-[1.75rem] p-4 backdrop-blur-[3px] ${isLofi ? 'bg-white/56' : 'bg-white/82'}`}>
+                  <div className={`w-full max-w-sm rounded-[1.5rem] border p-5 text-center shadow-soft ${isLofi ? 'border-[#e8dfd5]/80 bg-white/82 backdrop-blur-md' : 'border-white/85 bg-white/92'}`}>
+                    <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-[#8d4b45]' : 'text-rose-500'}`}>Round over</p>
+                    <h4 className={`mt-3 text-3xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>Three pen mistakes</h4>
+                    <p className={`mt-3 text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-600'}`}>You used all {MAX_PEN_MISTAKES} pen tries in {elapsedLabel}. Start a fresh board whenever you want another calm round.</p>
+                    <button
+                      className={`mt-5 inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#4a3a2d] hover:bg-[#3d3025]' : 'bg-slate-900 hover:bg-slate-800'}`}
+                      onClick={startFreshPuzzle}
+                      type="button"
+                    >
+                      <RotateCcw size={16} /> New board
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+            <SudokuSidebar
+              activeValue={activeValue}
+              checkBoard={checkBoard}
+              clearSelectedCell={clearSelectedCell}
+              handleDigitInput={handleDigitInput}
+              isLofi={isLofi}
+              message={message}
+              mistakesLeft={mistakesLeft}
+              notesMode={notesMode}
+              revealSelectedCell={revealSelectedCell}
+              roundStatus={roundStatus}
+              setNotesMode={setNotesMode}
+              startFreshPuzzle={startFreshPuzzle}
+              startRound={startRound}
+            />
+          </div>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+  );
+}

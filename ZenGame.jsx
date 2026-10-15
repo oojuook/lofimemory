@@ -42,13 +42,12 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
     height: typeof window === 'undefined' ? 720 : window.innerHeight
   }));
   const isPhoneViewport = viewportSize.width < 768;
-  const isPhonePortraitFullscreen = isExpandedLayout && isPhoneViewport;
-  const canvasWidth = isPhonePortraitFullscreen ? 360 : 600;
-  const canvasHeight = isPhonePortraitFullscreen ? 640 : 400;
+  const canvasWidth = isPhoneViewport ? 360 : 432;
+  const canvasHeight = isPhoneViewport ? 640 : 768;
   const initialLeafY = canvasHeight / 2;
-  const playerX = isPhonePortraitFullscreen ? 106 : 100;
-  const gameplayGapSize = isPhonePortraitFullscreen ? config.gapSize + 26 : config.gapSize;
-  const obstacleWidth = isPhonePortraitFullscreen ? 52 : 45;
+  const playerX = Math.round(canvasWidth * 0.295);
+  const gameplayGapSize = config.gapSize + (isPhoneViewport ? 26 : 34);
+  const obstacleWidth = isPhoneViewport ? 52 : 60;
 
   const canvasRef = useRef(null);
   const [score, setScore] = useState(0);
@@ -377,21 +376,21 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
           </div>
           <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-3 ${isLofi ? 'rounded-[1.5rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
             {[
-              ['Score', score],
-              ['Best', highScore],
-              ['Pace', levelText]
-            ].map(([label, value]) => (
-              <div key={label} className={`${isLofi ? 'rounded-[1.2rem] bg-[#faedcd] text-[#3d3025]' : 'rounded-[1.15rem] bg-sage-50'} px-4 py-3 text-center`}>
+              { label: 'Score', value: score, compact: false },
+              { label: 'Best', value: highScore, compact: false },
+              { label: 'Pace', value: levelText, compact: true }
+            ].map(({ label, value, compact }) => (
+              <div key={label} className={`${isLofi ? 'rounded-[1.2rem] bg-[#faedcd] text-[#3d3025]' : 'rounded-[1.15rem] bg-sage-50'} min-w-0 px-3.5 py-3.5 text-center sm:px-4`}>
                 <p className={`text-[10px] font-extrabold uppercase tracking-[0.2em] ${isLofi ? 'text-[#6e5a4a]/70' : 'text-sage-500'}`}>{label}</p>
-                <p className={`mt-2 text-xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>{value}</p>
+                <p className={`mt-2 truncate font-extrabold leading-none ${compact ? 'text-sm sm:text-[0.95rem] lg:text-base' : 'text-lg sm:text-xl'} ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>{value}</p>
               </div>
             ))}
           </div>
         </div>
         ) : null}
 
-        <div className={`relative z-10 ${isExpandedLayout ? (isPhonePortraitFullscreen ? 'mx-auto w-full max-w-[min(92vw,430px)]' : 'w-full max-w-[min(96vw,1200px)]') : 'mt-5 rounded-[1.5rem] border p-3 shadow-sm sm:p-4'} ${isExpandedLayout ? (isLofi ? 'rounded-[2rem] border border-[#e8dfd5]/80 bg-white/72 p-3 shadow-[0_22px_50px_rgba(83,62,44,0.12)] backdrop-blur-sm sm:p-4' : 'rounded-[2rem] border border-white/85 bg-white/78 p-3 shadow-soft sm:p-4') : (isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-sage-200 bg-white')}`}>
-          <div className={`relative overflow-hidden ${isExpandedLayout ? (isPhonePortraitFullscreen ? 'rounded-[1.8rem]' : 'rounded-[1.4rem]') : 'rounded-[1.5rem] border'} ${isLofi ? (isExpandedLayout ? 'bg-[#fff9f0]' : 'border-[#e8dfd5] bg-[#fff9f0]') : (isExpandedLayout ? 'bg-white' : 'border-sage-200')} shadow-sm`} style={{ aspectRatio: isPhonePortraitFullscreen ? '9 / 16' : '3 / 2' }}>
+        <div className={`relative z-10 ${isExpandedLayout ? 'mx-auto w-full max-w-[min(92vw,560px)]' : 'mx-auto mt-5 w-full max-w-[460px] rounded-[1.5rem] border p-3 shadow-sm sm:p-4'} ${isExpandedLayout ? (isLofi ? 'rounded-[2rem] border border-[#e8dfd5]/80 bg-white/72 p-3 shadow-[0_22px_50px_rgba(83,62,44,0.12)] backdrop-blur-sm sm:p-4' : 'rounded-[2rem] border border-white/85 bg-white/78 p-3 shadow-soft sm:p-4') : (isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-sage-200 bg-white')}`}>
+          <div className={`relative overflow-hidden ${isExpandedLayout ? 'rounded-[1.8rem]' : 'rounded-[1.5rem] border'} ${isLofi ? (isExpandedLayout ? 'bg-[#fff9f0]' : 'border-[#e8dfd5] bg-[#fff9f0]') : (isExpandedLayout ? 'bg-white' : 'border-sage-200')} shadow-sm`} style={{ aspectRatio: '9 / 16' }}>
             <canvas
               ref={canvasRef}
               width={canvasWidth}
@@ -400,7 +399,7 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
               onClick={jump}
             />
             {isExpandedLayout ? (
-              <div className={`absolute z-50 pointer-events-none ${isPhonePortraitFullscreen ? 'left-1/2 top-4 -translate-x-1/2 sm:top-5' : 'right-4 top-4 sm:right-6 sm:top-6'}`}>
+              <div className="absolute left-1/2 top-4 z-50 pointer-events-none -translate-x-1/2 sm:top-5">
                 <div className={`flex items-center gap-3 rounded-[1.35rem] border p-2.5 shadow-sm backdrop-blur-md pointer-events-auto ${isLofi ? 'border-[#e8dfd5]/90 bg-white/78 text-[#4a3a2d]' : 'border-white/20 bg-black/10 text-white'}`}>
                    <div className={`px-3 py-1 text-center ${isLofi ? 'border-r border-[#e8dfd5]/90' : 'border-r border-white/20'}`}>
                      <p className={`text-[9px] font-black uppercase tracking-widest ${isLofi ? 'text-[#6e5a4a]/70' : 'text-white/70'}`}>Score</p>

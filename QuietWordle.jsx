@@ -1,0 +1,520 @@
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { RotateCcw, Sparkles } from 'lucide-react';
+
+const difficultyPools = {
+  easy: [
+    { word: 'CALM', hint: 'A peaceful feeling' },
+    { word: 'SOFT', hint: 'Gentle in mood or touch' },
+    { word: 'GLOW', hint: 'A warm, soft light' },
+    { word: 'REST', hint: 'What a slow evening gives you' },
+    { word: 'MOSS', hint: 'Something soft and green outdoors' },
+    { word: 'COZY', hint: 'Warm, safe, and comfortable' },
+    { word: 'LOFI', hint: 'A mellow musical mood' },
+    { word: 'POND', hint: 'A still little body of water' },
+    { word: 'LILY', hint: 'A flower that fits the pad theme' },
+    { word: 'MINT', hint: 'A cool little green leaf' },
+    { word: 'DUSK', hint: 'The soft light after sunset' },
+    { word: 'RAIN', hint: 'Gentle weather at the window' },
+    { word: 'HUSH', hint: 'A very quiet kind of sound' },
+    { word: 'WAVE', hint: 'A moving line of water' },
+    { word: 'SAGE', hint: 'A calm green shade' },
+    { word: 'NEST', hint: 'A sheltered little place' },
+    { word: 'FERN', hint: 'A leafy forest plant' },
+    { word: 'DEEP', hint: 'A fuller kind of breath' },
+    { word: 'TIDE', hint: 'Water rising and falling' },
+    { word: 'GLEN', hint: 'A quiet little valley' },
+  ],
+  medium: [
+    { word: 'DREAM', hint: 'A wandering thought or night story' },
+    { word: 'CLOUD', hint: 'Something soft overhead' },
+    { word: 'NOTES', hint: 'Short things you jot down' },
+    { word: 'PLANT', hint: 'A quiet little desk companion' },
+    { word: 'COAST', hint: 'A calm place near the sea' },
+    { word: 'LIGHT', hint: 'A soft glow in the room' },
+    { word: 'EMBER', hint: 'A small warm glow in the ashes' },
+    { word: 'STONE', hint: 'Something grounded and solid' },
+    { word: 'SHORE', hint: 'Where water meets land' },
+    { word: 'GROVE', hint: 'A cluster of quiet trees' },
+    { word: 'BLOOM', hint: 'What flowers begin to do' },
+    { word: 'STILL', hint: 'Not moving much at all' },
+    { word: 'LATTE', hint: 'A warm café drink' },
+    { word: 'RIVER', hint: 'A flowing line of water' },
+    { word: 'DRIFT', hint: 'To move slowly with the current' },
+    { word: 'GLEAM', hint: 'A quick soft shine' },
+    { word: 'QUIET', hint: 'A softer kind of sound level' },
+    { word: 'MUSIC', hint: 'What fills the page with mood' },
+    { word: 'BROOK', hint: 'A small calm stream' },
+    { word: 'PETAL', hint: 'Part of a flower bloom' },
+  ],
+  hard: [
+    { word: 'BREEZY', hint: 'Light and airy in mood' },
+    { word: 'MEADOW', hint: 'An open grassy field' },
+    { word: 'SETTLE', hint: 'What your mind starts to do when it quiets' },
+    { word: 'SUNLIT', hint: 'Filled with gentle light' },
+    { word: 'MELLOW', hint: 'Relaxed, soft, and unhurried' },
+    { word: 'GARDEN', hint: 'A quiet green place to wander' },
+    { word: 'WILLOW', hint: 'A tree with long hanging branches' },
+    { word: 'RIPPLE', hint: 'A tiny wave pattern on water' },
+    { word: 'CANDLE', hint: 'A small warm light source' },
+    { word: 'POCKET', hint: 'A little place that holds things' },
+    { word: 'VELVET', hint: 'A texture that feels rich and soft' },
+    { word: 'WANDER', hint: 'To move without much hurry' },
+    { word: 'BLOOMS', hint: 'Flowers opening up' },
+    { word: 'SILVER', hint: 'A cool bright metal tone' },
+    { word: 'THRIVE', hint: 'To grow well and feel alive' },
+    { word: 'LAGOON', hint: 'A sheltered pool of water' },
+    { word: 'AURORA', hint: 'A glowing sky display' },
+    { word: 'HARBOR', hint: 'A sheltered water stop' },
+    { word: 'GENTLE', hint: 'Soft, calm, and kind' },
+    { word: 'TENDER', hint: 'Soft in feeling or touch' },
+  ],
+};
+
+const difficultySettings = {
+  easy: {
+    label: 'Easy',
+    wordLength: 4,
+    maxGuesses: 7,
+    note: 'Four-letter words and one extra guess for the gentlest start.',
+  },
+  medium: {
+    label: 'Medium',
+    wordLength: 5,
+    maxGuesses: 6,
+    note: 'Classic five-letter word guessing with a calm pace.',
+  },
+  hard: {
+    label: 'Hard',
+    wordLength: 6,
+    maxGuesses: 5,
+    note: 'Longer words with one fewer guess so the pressure change is easier to feel.',
+  },
+};
+
+const keyboardRows = [
+  ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+  ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+  ['ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '⌫'],
+];
+
+const statusPriority = {
+  absent: 1,
+  present: 2,
+  correct: 3,
+};
+
+const positionLabels = ['one', 'two', 'three', 'four', 'five', 'six', 'seven'];
+
+function pickWord(pool, previousWord = '') {
+  const choices = pool.filter((entry) => entry.word !== previousWord);
+  return choices[Math.floor(Math.random() * choices.length)] || pool[0];
+}
+
+function evaluateGuess(guess, target) {
+  const result = Array.from({ length: guess.length }, () => 'absent');
+  const remainingLetters = target.split('');
+
+  guess.split('').forEach((letter, index) => {
+    if (letter === target[index]) {
+      result[index] = 'correct';
+      remainingLetters[index] = null;
+    }
+  });
+
+  guess.split('').forEach((letter, index) => {
+    if (result[index] === 'correct') {
+      return;
+    }
+
+    const matchIndex = remainingLetters.indexOf(letter);
+    if (matchIndex !== -1) {
+      result[index] = 'present';
+      remainingLetters[matchIndex] = null;
+    }
+  });
+
+  return result;
+}
+
+function getTileClass(status, filled, isLofi = false) {
+  if (status === 'correct') {
+    return isLofi ? 'border-[#ccd5ae] bg-[#ccd5ae] text-[#3d3025]' : 'border-emerald-300 bg-emerald-200/90 text-emerald-950';
+  }
+  if (status === 'present') {
+    return isLofi ? 'border-[#faedcd] bg-[#faedcd] text-[#3d3025]' : 'border-amber-300 bg-amber-100 text-amber-950';
+  }
+  if (status === 'absent') {
+    return isLofi ? 'border-[#ffc8dd] bg-[#fff3f7] text-[#6e5a4a]' : 'border-slate-200 bg-slate-200/85 text-slate-700';
+  }
+  if (filled) {
+    return isLofi ? 'border-[#e8dfd5] bg-white text-[#4a3a2d]' : 'border-sage-300 bg-white text-sage-950';
+  }
+  return isLofi ? 'border-[#e8dfd5] bg-[#fff9f0] text-[#c7ad92]' : 'border-sage-100 bg-[#fbf7f1] text-sage-300';
+}
+
+function getKeyboardKeyClass(status, isLofi = false) {
+  if (status === 'correct') {
+    return isLofi ? 'border-[#ccd5ae] bg-[#ccd5ae] text-[#3d3025]' : 'border-emerald-300 bg-emerald-200/90 text-emerald-950';
+  }
+  if (status === 'present') {
+    return isLofi ? 'border-[#faedcd] bg-[#faedcd] text-[#3d3025]' : 'border-amber-300 bg-amber-100 text-amber-950';
+  }
+  if (status === 'absent') {
+    return isLofi ? 'border-[#ffc8dd] bg-[#fff3f7] text-[#6e5a4a]' : 'border-slate-200 bg-slate-200/85 text-slate-700';
+  }
+  return isLofi ? 'border-[#e8dfd5] bg-white text-[#4a3a2d] hover:bg-[#fff9f0]' : 'border-sage-200 bg-white text-sage-900 hover:bg-sage-50';
+}
+
+export default function QuietWordle({ difficulty = 'medium', theme = 'lofi', viewportMode = 'embedded' }) {
+  const isLofi = theme === 'lofi';
+  const isExpandedLayout = viewportMode === 'fullscreen';
+  const [scale, setScale] = useState(1);
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    if (!isExpandedLayout || !wrapperRef.current) {
+      setScale(1);
+      return;
+    }
+    const observer = new ResizeObserver((entries) => {
+      const { width, height } = entries[0].contentRect;
+      if (width === 0 || height === 0) return;
+      // We want to scale the native layout up to fit the window.
+      const scaleW = width / 850;
+      const scaleH = height / 800;
+      // For games with responsive layouts, we don't actually want to lock them to a fixed width/height box before scaling.
+      // But if we do use transform: scale, we must lock their unscaled dimensions.
+      // The issue was: the internal div had no height constraint, so it collapsed.
+      setScale(Math.min(scaleW, scaleH, 1.8) * 0.98);
+    });
+    observer.observe(wrapperRef.current);
+    return () => observer.disconnect();
+  }, [isExpandedLayout]);
+
+  const config = difficultySettings[difficulty] || difficultySettings.medium;
+  const pool = difficultyPools[difficulty] || difficultyPools.medium;
+  const bestKey = `quiet-journal-quiet-wordle-best-${difficulty}`;
+  const winsKey = `quiet-journal-quiet-wordle-wins-${difficulty}`;
+
+  const [targetEntry, setTargetEntry] = useState(() => pickWord(pool));
+  const [guesses, setGuesses] = useState([]);
+  const [currentGuess, setCurrentGuess] = useState('');
+  const [message, setMessage] = useState('Guess the word a letter at a time — no rush.');
+  const [roundStatus, setRoundStatus] = useState('playing');
+  const [streak, setStreak] = useState(0);
+  const [bestStreak, setBestStreak] = useState(() => parseInt(localStorage.getItem(bestKey) || '0', 10));
+  const [wins, setWins] = useState(() => parseInt(localStorage.getItem(winsKey) || '0', 10));
+
+  useEffect(() => {
+    setTargetEntry(pickWord(pool));
+    setGuesses([]);
+    setCurrentGuess('');
+    setMessage('Guess the word a letter at a time — no rush.');
+    setRoundStatus('playing');
+    setStreak(0);
+    setBestStreak(parseInt(localStorage.getItem(bestKey) || '0', 10));
+    setWins(parseInt(localStorage.getItem(winsKey) || '0', 10));
+  }, [bestKey, pool, winsKey]);
+
+  const guessEvaluations = useMemo(
+    () => guesses.map((guess) => evaluateGuess(guess, targetEntry.word)),
+    [guesses, targetEntry.word],
+  );
+
+  const keyboardStatuses = useMemo(() => {
+    const nextStatuses = {};
+
+    guesses.forEach((guess, guessIndex) => {
+      const statuses = guessEvaluations[guessIndex] || [];
+      guess.split('').forEach((letter, letterIndex) => {
+        const status = statuses[letterIndex];
+        if (!status) {
+          return;
+        }
+
+        const previousStatus = nextStatuses[letter];
+        if (!previousStatus || statusPriority[status] > statusPriority[previousStatus]) {
+          nextStatuses[letter] = status;
+        }
+      });
+    });
+
+    return nextStatuses;
+  }, [guessEvaluations, guesses]);
+
+  const loadNextWord = useCallback((resetStreak = false) => {
+    setTargetEntry((previous) => pickWord(pool, previous.word));
+    setGuesses([]);
+    setCurrentGuess('');
+    setRoundStatus('playing');
+    setMessage('Fresh board, another cozy word — no daily cap.');
+    if (resetStreak) {
+      setStreak(0);
+    }
+  }, [pool]);
+
+  const addLetter = useCallback((letter) => {
+    if (roundStatus !== 'playing' || currentGuess.length >= config.wordLength) {
+      return;
+    }
+
+    setCurrentGuess((previous) => `${previous}${letter}`);
+  }, [config.wordLength, currentGuess.length, roundStatus]);
+
+  const removeLetter = useCallback(() => {
+    if (roundStatus !== 'playing') {
+      return;
+    }
+
+    setCurrentGuess((previous) => previous.slice(0, -1));
+  }, [roundStatus]);
+
+  const submitGuess = useCallback(() => {
+    if (roundStatus !== 'playing') {
+      return;
+    }
+
+    if (currentGuess.length !== config.wordLength) {
+      setMessage(`Finish the ${config.wordLength}-letter word first.`);
+      return;
+    }
+
+    const normalizedGuess = currentGuess.toUpperCase();
+    const nextGuesses = [...guesses, normalizedGuess];
+    setGuesses(nextGuesses);
+    setCurrentGuess('');
+
+    if (normalizedGuess === targetEntry.word) {
+      const nextStreak = streak + 1;
+      const nextWins = wins + 1;
+      setRoundStatus('won');
+      setMessage('You got it — soft win, nice and steady.');
+      setStreak(nextStreak);
+      setWins(nextWins);
+      localStorage.setItem(winsKey, String(nextWins));
+
+      if (nextStreak > bestStreak) {
+        setBestStreak(nextStreak);
+        localStorage.setItem(bestKey, String(nextStreak));
+      }
+      return;
+    }
+
+    const guessesLeft = config.maxGuesses - nextGuesses.length;
+    if (guessesLeft === 0) {
+      setRoundStatus('lost');
+      setStreak(0);
+      setMessage(`Round complete — the word was ${targetEntry.word}.`);
+      return;
+    }
+
+    setMessage(`Not quite yet — ${guessesLeft} guess${guessesLeft === 1 ? '' : 'es'} left.`);
+  }, [bestKey, bestStreak, config.maxGuesses, config.wordLength, currentGuess, guesses, roundStatus, streak, targetEntry.word, wins, winsKey]);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (roundStatus !== 'playing' || event.metaKey || event.ctrlKey || event.altKey) {
+        return;
+      }
+
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        submitGuess();
+        return;
+      }
+
+      if (event.key === 'Backspace') {
+        event.preventDefault();
+        removeLetter();
+        return;
+      }
+
+      if (/^[a-zA-Z]$/.test(event.key)) {
+        event.preventDefault();
+        addLetter(event.key.toUpperCase());
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [addLetter, removeLetter, roundStatus, submitGuess]);
+
+  const rows = Array.from({ length: config.maxGuesses }, (_, rowIndex) => {
+    const buildCells = (letters, statuses, rowId) => letters.map((letter, letterIndex) => ({
+      id: `${rowId}-${positionLabels[letterIndex] || `slot-${letterIndex + 1}`}`,
+      letter,
+      status: statuses[letterIndex],
+    }));
+
+    if (rowIndex < guesses.length) {
+      const guess = guesses[rowIndex];
+      const rowId = `guess-${rowIndex}`;
+      return {
+        id: rowId,
+        cells: buildCells(guess.split(''), guessEvaluations[rowIndex], rowId),
+      };
+    }
+
+    if (rowIndex === guesses.length && roundStatus === 'playing') {
+      const paddedGuess = currentGuess.padEnd(config.wordLength, ' ');
+      const rowId = `current-${rowIndex}`;
+      return {
+        id: rowId,
+        cells: buildCells(paddedGuess.split(''), Array.from({ length: config.wordLength }, () => 'idle'), rowId),
+      };
+    }
+
+    const rowId = `empty-${rowIndex}`;
+    return {
+      id: rowId,
+      cells: buildCells(Array.from({ length: config.wordLength }, () => ' '), Array.from({ length: config.wordLength }, () => 'idle'), rowId),
+    };
+  });
+
+  return (
+    <div ref={wrapperRef} className={`mx-auto w-full ${isExpandedLayout ? 'h-full flex-1 flex items-center justify-center max-w-none overflow-hidden' : 'mt-12 max-w-[980px] pb-12'}`}>
+      <div style={isExpandedLayout ? { transform: `scale(${scale})`, transformOrigin: 'center center', width: '100%', maxWidth: '850px' } : {}} className={isExpandedLayout ? "flex justify-center" : ""}>
+        <div className="w-full">
+      <div className={!isExpandedLayout ? `relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-amber-200/50 bg-[#fff7ec] shadow-[0_28px_80px_rgba(83,62,44,0.12)]' : 'border-sage-100 bg-gradient-to-br from-white via-sage-50/82 to-sky-50/72'}` : ""}>
+        {isLofi && (
+          <>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.95),rgba(255,247,236,0.9)_45%,rgba(250,237,205,0.84)_100%)]" />
+            <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #7a6250 1px, transparent 0)', backgroundSize: '18px 18px' }} />
+          </>
+        )}
+        {!isExpandedLayout && (
+<div className="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+          <div>
+            <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-sage-200 bg-white/88 text-sage-700'}`}>
+              <Sparkles size={14} /> {config.label} word guess
+            </div>
+            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>Wordle</h3>
+            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>A cozy Wordle-style puzzle for when you want a familiar word-guessing game without losing the soft relaxed mood of the page. Type or tap letters, read the color hints, and keep playing through unlimited cozy rounds.</p>
+            <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-sage-600'}`}>{config.note}</p>
+          </div>
+          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-3 ${isExpandedLayout ? '' : 'lg:min-w-[23rem]'} ${isLofi ? 'rounded-[1.35rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
+            {[
+              ['Streak', streak],
+              ['Best', bestStreak],
+              ['Wins', wins]
+            ].map(([label, value]) => (
+              <div key={label} className={`${isLofi ? 'rounded-[0.95rem] bg-amber-50/90 text-amber-900' : 'rounded-[1.15rem] bg-sage-50'} min-w-0 px-4 py-3.5 text-center sm:px-5`}>
+                <p className={`text-[10px] font-extrabold uppercase tracking-[0.2em] ${isLofi ? 'text-amber-800/60' : 'text-sage-500'}`}>{label}</p>
+                <p className={`mt-2 truncate text-base font-extrabold leading-none sm:text-lg lg:text-xl ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>{value}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+)}
+<div className="relative z-10 mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(280px,0.92fr)]">
+          <div className={`rounded-[1.5rem] border p-5 shadow-inner lg:p-6 ${isLofi ? 'border-amber-200/60 bg-[linear-gradient(145deg,rgba(253,250,245,0.98),rgba(250,237,205,0.92))]' : 'border-sage-100 bg-[#f7f1e7]'}`}>
+            <div className={`rounded-[1.5rem] border px-4 py-4 text-sm font-semibold shadow-sm ${isLofi ? 'border-white/70 bg-white/72 text-[#6e5a4a] backdrop-blur-sm' : 'border-white/80 bg-white/78 text-sage-700'}`}>
+              Hint: {targetEntry.hint}
+            </div>
+
+            <div className="mt-5 grid gap-2">
+              {rows.map((row) => (
+                <div key={row.id} className="grid gap-2" style={{ gridTemplateColumns: `repeat(${config.wordLength}, minmax(0, 1fr))` }}>
+                  {row.cells.map((cell) => {
+                    const filled = cell.letter.trim().length > 0;
+                    return (
+                      <div
+                        key={cell.id}
+                        className={`flex aspect-square items-center justify-center rounded-[1.1rem] border text-xl font-extrabold uppercase shadow-sm transition ${getTileClass(cell.status, filled, isLofi)} ${isLofi ? 'shadow-[0_10px_22px_rgba(83,62,44,0.08)]' : ''}`}
+                      >
+                        {cell.letter}
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className={`flex flex-col gap-4 rounded-[1.5rem] border p-4 shadow-sm lg:p-5 ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/74'}`}>
+            <div className={`rounded-[1.4rem] border p-4 ${isLofi ? 'border-amber-200/60 bg-amber-50/75' : 'border-sage-100 bg-sage-50/70'}`}>
+              <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-sage-500'}`}>How the colors work</p>
+              <div className={`mt-3 grid gap-2 text-sm font-semibold ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>
+                <p><span className={`mr-2 inline-flex rounded-full px-2 py-1 text-xs font-extrabold uppercase tracking-[0.18em] ${isLofi ? 'bg-[#ccd5ae] text-[#3d3025]' : 'bg-emerald-200 text-emerald-950'}`}>Exact</span> right letter, right spot</p>
+                <p><span className={`mr-2 inline-flex rounded-full px-2 py-1 text-xs font-extrabold uppercase tracking-[0.18em] ${isLofi ? 'bg-[#faedcd] text-[#3d3025]' : 'bg-amber-100 text-amber-950'}`}>Close</span> right letter, wrong spot</p>
+                <p><span className={`mr-2 inline-flex rounded-full px-2 py-1 text-xs font-extrabold uppercase tracking-[0.18em] ${isLofi ? 'bg-[#fff3f7] text-[#6e5a4a]' : 'bg-slate-200 text-slate-700'}`}>Miss</span> not in the word</p>
+              </div>
+            </div>
+
+            <div className={`rounded-[1.4rem] border p-4 shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/78 backdrop-blur-sm' : 'border-sage-100 bg-white'}`}>
+              <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-sage-500'}`}>Round status</p>
+              <p className={`mt-3 text-sm font-semibold leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>{message}</p>
+              <p className={`mt-3 text-xs font-bold uppercase tracking-[0.2em] ${isLofi ? 'text-amber-800/60' : 'text-sage-500'}`}>{config.wordLength} letters • {config.maxGuesses} tries</p>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              <button
+                className={`rounded-full px-5 py-3 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'bg-[#4a3a2d] hover:bg-[#3d3025]' : 'bg-sage-900 hover:bg-sage-800'}`}
+                onClick={submitGuess}
+                type="button"
+              >
+                Check word
+              </button>
+              <button
+                className={`rounded-full border px-5 py-3 text-sm font-extrabold shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'border-amber-200 bg-white text-amber-900' : 'border-sage-200 bg-white text-sage-900'}`}
+                onClick={() => loadNextWord(roundStatus !== 'won')}
+                type="button"
+              >
+                New word
+              </button>
+              <button
+                className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-extrabold shadow-sm transition hover:-translate-y-0.5 ${isLofi ? 'border border-white/70 bg-[#fdfaf5] text-[#4a3a2d]' : 'bg-white text-sage-900'}`}
+                onClick={() => {
+                  setGuesses([]);
+                  setCurrentGuess('');
+                  setRoundStatus('playing');
+                  setStreak(0);
+                  setMessage('Fresh board, same calm pace.');
+                }}
+                type="button"
+              >
+                <RotateCcw size={16} /> Reset streak
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className={`relative z-10 mt-5 rounded-[1.5rem] border p-4 shadow-sm ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-white/80 bg-white/72'}`}>
+          <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-sage-500'}`}>Tap or type letters</p>
+          <div className="mt-4 grid gap-2">
+            {keyboardRows.map((row) => (
+              <div key={`keyboard-row-${row.join('')}`} className="flex flex-wrap justify-center gap-2">
+                {row.map((keyLabel) => {
+                  const isSpecialKey = keyLabel === 'ENTER' || keyLabel === '⌫';
+                  const status = keyboardStatuses[keyLabel];
+                  return (
+                    <button
+                      key={keyLabel}
+                      className={`rounded-2xl border px-3 py-3 text-sm font-extrabold uppercase shadow-sm transition hover:-translate-y-0.5 ${isSpecialKey ? 'min-w-[4.5rem]' : 'min-w-[2.8rem]'} ${getKeyboardKeyClass(status, isLofi)}`}
+                      onClick={() => {
+                        if (keyLabel === 'ENTER') {
+                          submitGuess();
+                          return;
+                        }
+                        if (keyLabel === '⌫') {
+                          removeLetter();
+                          return;
+                        }
+                        addLetter(keyLabel);
+                      }}
+                      type="button"
+                    >
+                      {keyLabel}
+                    </button>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+  );
+}
