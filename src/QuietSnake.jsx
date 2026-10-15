@@ -296,7 +296,7 @@ export default function QuietSnake({ difficulty = 'medium', theme = 'lofi', view
         )}
 <div className={isExpandedLayout ? "grid justify-center" : "mt-6 grid gap-5 xl:grid-cols-[minmax(0,1fr)_240px]"}>
           <div>
-            <div className={`relative mx-auto ${isExpandedLayout ? 'w-fit p-0' : 'w-full max-w-[26rem] p-4 sm:p-5'} ${isLofi ? 'rounded-[1.5rem] border border-[#e8dfd5] bg-[#fff9f0] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.8),0_18px_40px_rgba(83,62,44,0.12)]' : 'border-[10px] border-[#5f7754] bg-[#9abf88] shadow-[inset_0_0_0_2px_rgba(20,20,20,0.08)]'}`}>
+            <div className={`relative mx-auto ${isExpandedLayout ? 'w-fit overflow-hidden rounded-none border-0 p-0 shadow-none' : 'w-full max-w-[26rem] p-4 sm:p-5'} ${!isExpandedLayout ? (isLofi ? 'rounded-[1.5rem] border border-[#e8dfd5] bg-[#fff9f0] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.8),0_18px_40px_rgba(83,62,44,0.12)]' : 'border-[10px] border-[#5f7754] bg-[#9abf88] shadow-[inset_0_0_0_2px_rgba(20,20,20,0.08)]') : (isLofi ? 'bg-[#fff9f0]' : 'bg-[#9abf88]')}`}>
               <div className={`grid ${isLofi ? 'bg-[linear-gradient(135deg,#fffaf4,#faedcd)]' : 'bg-[#9abf88]'}`} style={{ gridTemplateColumns: `repeat(${config.boardWidth}, minmax(0, 1fr))` }}>
                 {cells.map((cell) => (
                   <div
