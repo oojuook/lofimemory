@@ -2203,6 +2203,7 @@ function App() {
   const [adminViewMode, setAdminViewMode] = useState(() => localStorage.getItem(ADMIN_VIEW_MODE_STORAGE_KEY) || 'master');
   const [seoStudioModelUsed, setSeoStudioModelUsed] = useState('');
   const [showAllSearches, setShowAllSearches] = useState(false);
+  const [interfaceMode, setInterfaceMode] = useState('pc');
   const entryBodyRef = useRef(null);
   const companionMediaRef = useRef(null);
   const plannerBoardRef = useRef(plannerBoard);
@@ -2443,6 +2444,8 @@ function App() {
   const selectedUnwindGameConfig = unwindGames.find((game) => game.id === selectedUnwindGame) || unwindGames[0];
   const transitioningGameConfig = unwindGames.find((game) => game.id === activeTransitionGameId) || null;
   const selectedDifficultyConfig = difficultyOptions.find((difficulty) => difficulty.id === selectedGameDifficulty) || difficultyOptions[1];
+  const isPhoneInterface = interfaceMode === 'phone';
+  const isPcInterface = interfaceMode === 'pc';
 
     const selectUnwindGame = (gameId) => {
 
@@ -2607,6 +2610,27 @@ function App() {
     };
     document.addEventListener('fullscreenchange', handleFsChange);
     return () => document.removeEventListener('fullscreenchange', handleFsChange);
+  }, []);
+
+  useEffect(() => {
+    const detectInterfaceMode = () => {
+      const userAgent = navigator.userAgent || '';
+      const isMobileAgent = /Android|iPhone|iPad|iPod|Mobile/i.test(userAgent);
+      const hasCoarsePointer = window.matchMedia?.('(pointer: coarse)').matches;
+      const hasFinePointer = window.matchMedia?.('(pointer: fine)').matches;
+      const isNarrowScreen = window.matchMedia?.('(max-width: 767px)').matches;
+      const nextMode = isMobileAgent || (hasCoarsePointer && !hasFinePointer) || (hasCoarsePointer && isNarrowScreen) ? 'phone' : 'pc';
+      setInterfaceMode(nextMode);
+      document.documentElement.dataset.interfaceMode = nextMode;
+    };
+
+    detectInterfaceMode();
+    window.addEventListener('resize', detectInterfaceMode);
+    window.addEventListener('orientationchange', detectInterfaceMode);
+    return () => {
+      window.removeEventListener('resize', detectInterfaceMode);
+      window.removeEventListener('orientationchange', detectInterfaceMode);
+    };
   }, []);
 
   function navigateToTab(tabId) {
@@ -4976,7 +5000,7 @@ function App() {
   }
 
   return (
-    <main className={`personalized-site lofi-vibe ${wallpaperImage ? 'wallpaper-active' : ''} design-${selectedDesign} ${comfortMode ? 'comfort-mode' : ''} isolate min-h-screen overflow-hidden bg-sand-50 pb-24 text-ink lg:pb-0`} style={themeStyle}>
+    <main data-interface-mode={interfaceMode} data-device-type={interfaceMode} className={`personalized-site lofi-vibe interface-${interfaceMode} ${isPhoneInterface ? 'phone-interface pb-28' : 'pc-interface pb-10 lg:pb-0'} ${wallpaperImage ? 'wallpaper-active' : ''} design-${selectedDesign} ${comfortMode ? 'comfort-mode' : ''} isolate min-h-screen overflow-hidden bg-sand-50 text-ink`} style={themeStyle}>
       {isGameTransitioning && <GameSplash game={transitioningGameConfig} />}
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[#fffaf2]">
         <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-[0.35] blur-[1px] transition-opacity duration-1000" aria-hidden="true" />
@@ -5050,7 +5074,7 @@ function App() {
                 <p className="lofi-sharp-text-soft text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] sm:tracking-[0.28em] text-white/95">Relaxing games & notes</p>
               </div>
             </a>
-            <div className="site-nav-links hidden flex-1 items-center justify-center gap-7 xl:gap-9">
+            <div className={`site-nav-links ${isPcInterface ? 'hidden xl:flex' : 'hidden'} flex-1 items-center justify-center gap-7 xl:gap-9`}>
               {[
                 { id: 'unwind', label: 'Games', icon: Gamepad2 },
                 { id: 'home', label: 'Chill', icon: Headphones },
@@ -5070,7 +5094,10 @@ function App() {
               ))}
             </div>
 
-            <div className="site-nav-actions flex w-full flex-wrap items-center gap-2 lg:justify-end xl:w-auto xl:max-w-[34rem] xl:flex-none xl:flex-nowrap">
+            <div className={`site-nav-actions flex w-full flex-wrap items-center gap-2 lg:justify-end xl:w-auto xl:max-w-[34rem] xl:flex-none ${isPcInterface ? 'xl:flex-nowrap' : ''}`}>
+              <span className="interface-mode-pill rounded-full border border-white/18 bg-black/24 px-3 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-white/90 shadow-sm">
+                {isPhoneInterface ? 'Phone UI' : 'PC UI'}
+              </span>
               {user ? (
                 <div className="flex min-w-[160px] sm:min-w-[210px] flex-1 items-center justify-between gap-2 sm:gap-3 rounded-full border border-white/25 bg-white/15 px-3 py-2 sm:px-4 sm:py-2.5 shadow-sm backdrop-blur-md xl:flex-none">
                   <div className="min-w-0">
@@ -5130,7 +5157,7 @@ function App() {
               </div>
             </div>
           </div>
-          <div className="site-nav-links mt-2.5 hidden flex-wrap items-center justify-center gap-3 rounded-[1.8rem] border border-[#8b5e3c]/15 bg-[#f3e6d7]/82 p-2 shadow-[0_18px_40px_rgba(87,62,43,0.12)] backdrop-blur-xl 2xl:flex">
+          <div className={`site-nav-links mt-2.5 ${isPcInterface ? 'hidden 2xl:flex' : 'hidden'} flex-wrap items-center justify-center gap-3 rounded-[1.8rem] border border-[#8b5e3c]/15 bg-[#f3e6d7]/82 p-2 shadow-[0_18px_40px_rgba(87,62,43,0.12)] backdrop-blur-xl`}>
             <a className="rounded-full border border-[#cfb49b]/65 bg-[#fffaf3]/92 px-5 py-2.5 text-sm font-black text-[#4a3a2d] shadow-sm transition hover:-translate-y-0.5 hover:border-[#b99578] hover:bg-white lofi-sharp-chip" href="#unwind" onClick={() => navigateToTab('unwind')}>Games</a>
             <a className="rounded-full border border-[#cfb49b]/65 bg-[#fffaf3]/92 px-5 py-2.5 text-sm font-black text-[#4a3a2d] shadow-sm transition hover:-translate-y-0.5 hover:border-[#b99578] hover:bg-white lofi-sharp-chip" href="#home" onClick={() => navigateToTab('home')}>Chill</a>
             <button className="rounded-full border border-[#cfb49b]/65 bg-[#fffaf3]/92 px-5 py-2.5 text-sm font-black text-[#4a3a2d] shadow-sm transition hover:-translate-y-0.5 hover:border-[#b99578] hover:bg-white lofi-sharp-chip" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
@@ -5142,8 +5169,8 @@ function App() {
       </nav>
 
       {/* Mobile Bottom Nav */}
-      {!isFullscreen && (
-      <div className="mobile-bottom-nav fixed bottom-4 left-4 right-4 z-50 xl:hidden">
+      {!isFullscreen && isPhoneInterface ? (
+      <div className="mobile-bottom-nav fixed bottom-4 left-4 right-4 z-50">
         <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-full border border-[#8b5e3c]/25 p-1.5 shadow-lift backdrop-blur-2xl transition duration-500 hover:shadow-soft">
           <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-60" aria-hidden="true" />
           <div className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/20 to-black/5" />
@@ -5175,7 +5202,7 @@ function App() {
           </div>
         </div>
       </div>
-      )}
+      ) : null}
 
       {showMinimalHomeOverview && (
       <section id="home" className="mx-auto max-w-[1040px] px-3 pb-24 pt-6 sm:px-5 sm:pb-20 sm:pt-10 xl:px-10">

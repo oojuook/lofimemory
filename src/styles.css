@@ -1418,3 +1418,69 @@ input::placeholder {
     gap: 0.35rem !important;
   }
 }
+
+/* Explicit phone vs PC interface modes */
+.personalized-site.interface-phone {
+  --interface-bottom-safe-area: calc(6.5rem + env(safe-area-inset-bottom, 0px));
+}
+
+.personalized-site.interface-phone .site-nav-shell {
+  border-radius: 1.8rem !important;
+  padding: 0.7rem !important;
+}
+
+.personalized-site.interface-phone .site-nav-actions {
+  display: grid !important;
+  grid-template-columns: 1fr;
+}
+
+.personalized-site.interface-phone .site-nav-actions > * {
+  width: 100%;
+}
+
+.personalized-site.interface-phone .interface-mode-pill {
+  justify-content: center;
+  text-align: center;
+}
+
+.personalized-site.interface-phone section[id],
+.personalized-site.interface-phone .journal-editor-shell {
+  scroll-margin-top: 6rem;
+}
+
+.personalized-site.interface-phone input,
+.personalized-site.interface-phone textarea,
+.personalized-site.interface-phone select,
+.personalized-site.interface-phone button {
+  touch-action: manipulation;
+}
+
+.personalized-site.interface-phone .mobile-bottom-nav {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.personalized-site.interface-pc .site-nav-links {
+  align-items: center;
+}
+
+.personalized-site.interface-pc .site-nav-actions {
+  justify-content: flex-end;
+}
+
+.personalized-site.interface-pc .mobile-bottom-nav {
+  display: none !important;
+}
+
+.personalized-site.interface-pc section[id] {
+  scroll-margin-top: 8rem;
+}
+
+@media (min-width: 1024px) {
+  .personalized-site.interface-pc .site-nav-shell {
+    padding: 1.1rem 1.25rem !important;
+  }
+
+  .personalized-site.interface-pc .interface-mode-pill {
+    width: auto;
+  }
+}
