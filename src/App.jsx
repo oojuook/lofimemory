@@ -761,16 +761,16 @@ const breatheRoomOptions = [
   {
     id: 'maple',
     title: 'MapleStory Theme',
-    sound: 'Login theme',
-    description: 'A nostalgic MapleStory login theme with a dreamy lofi wallpaper for cozy focus and late-night desk vibes.',
+    sound: 'MapleStory music',
+    description: 'A nostalgic MapleStory-inspired YouTube track with a dreamy lofi wallpaper for cozy focus and late-night desk vibes.',
     icon: Headphones,
-    status: 'MapleStory Theme selected — nostalgic login music is ready.',
+    status: 'MapleStory Theme selected — the updated YouTube song is ready.',
     gradient: 'from-amber-100 via-orange-50 to-rose-50',
     textTone: 'text-amber-900',
     ringTone: 'ring-amber-200',
     volume: 32,
     decoration: '🍁',
-    videoId: '0qj4hgJeSe4',
+    videoId: '3DEkF2uvPoc',
     wallpaper: maplestoryThemeWallpaperImage
   }
 ];

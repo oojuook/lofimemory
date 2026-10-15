@@ -93,7 +93,6 @@ function canMoveToFoundation(card, foundation) {
 function Card({
   card,
   selected = false,
-  compact = false,
   onClick,
   onDoubleClick,
   draggable = false,
@@ -158,9 +157,9 @@ function Card({
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <span className="opacity-90" style={{ fontSize: "0.65em" }}>{card.suit}</span>
       </div>
-      {isLofi && (
+      {isLofi ? (
         <div className="absolute inset-0 rounded-[0.08em] bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
-      )}
+      ) : null}
     </button>
   );
 }
@@ -180,7 +179,6 @@ function WastePile({
   isLofi = false
 }) {
   const visibleCards = cards.slice(-Math.max(1, drawCount));
-  const compactHeight = 'aspect-[2.5/3.5] w-full';
   const stackWidthClass = '';
 
   if (visibleCards.length === 0) {
@@ -233,6 +231,7 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
   const moveSelectionToTableauRef = useRef(null);
   const updateDragPreviewPositionRef = useRef(null);
   const getPointerDropTargetRef = useRef(null);
+  const activateSourceRef = useRef(null);
   const triggerAutoFinishRef = useRef(null);
   const pendingDragRef = useRef(null);
   const suppressClickUntilRef = useRef(0);
@@ -248,6 +247,26 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
   const isExpandedLayout = isParentFullscreen || isFullscreen;
   const [boardDims, setBoardDims] = useState({ w: 0, h: 0 });
   const boardWrapperRef = useRef(null);
+  const lastActivationRef = useRef({ key: '', time: 0 });
+  const [deviceType, setDeviceType] = useState('pc');
+
+  useEffect(() => {
+    const detectDeviceType = () => {
+      const userAgent = navigator.userAgent || '';
+      const isTouchFirst = window.matchMedia?.('(pointer: coarse)').matches;
+      const isNarrowScreen = window.matchMedia?.('(max-width: 767px)').matches;
+      const isMobileAgent = /Android|iPhone|iPad|iPod|Mobile/i.test(userAgent);
+      setDeviceType(isMobileAgent || (isTouchFirst && isNarrowScreen) ? 'phone' : 'pc');
+    };
+
+    detectDeviceType();
+    window.addEventListener('resize', detectDeviceType);
+    window.addEventListener('orientationchange', detectDeviceType);
+    return () => {
+      window.removeEventListener('resize', detectDeviceType);
+      window.removeEventListener('orientationchange', detectDeviceType);
+    };
+  }, []);
 
   useEffect(() => {
     if (!boardWrapperRef.current) return;
@@ -308,6 +327,22 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
       return `foundation-${source.suit}`;
     }
     return source.type;
+  };
+
+  const handleCardActivation = (source, singleAction, doubleAction, { ignoreSuppression = false } = {}) => {
+    if (!ignoreSuppression && isClickSuppressed()) return;
+    const key = getSelectionKey(source);
+    const now = Date.now();
+    const lastActivation = lastActivationRef.current;
+
+    if (key && lastActivation.key === key && now - lastActivation.time < 360) {
+      lastActivationRef.current = { key: '', time: 0 };
+      doubleAction?.();
+      return;
+    }
+
+    lastActivationRef.current = { key, time: now };
+    singleAction?.();
   };
 
   const setCardNode = (source) => (node) => {
@@ -670,6 +705,26 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
     tryAutoFoundation({ type: 'tableau', columnIndex, cardIndex });
   };
 
+  const activateSource = (source) => {
+    if (!source) return;
+    if (source.type === 'waste') {
+      handleCardActivation(source, selectWaste, doubleClickWaste, { ignoreSuppression: true });
+      return;
+    }
+    if (source.type === 'foundation') {
+      selectFoundation(source.suit);
+      return;
+    }
+    if (source.type === 'tableau') {
+      handleCardActivation(
+        source,
+        () => selectTableauCard(source.columnIndex, source.cardIndex),
+        () => doubleClickTableauCard(source.columnIndex, source.cardIndex),
+        { ignoreSuppression: true }
+      );
+    }
+  };
+
   const updateDragPreviewPosition = (clientX, clientY, source = draggedSelection, pointerMeta = pendingDragRef.current) => {
     if (!source || clientX === null || clientX === undefined || clientY === null || clientY === undefined) return;
     setDragPreview({
@@ -719,14 +774,17 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
   moveSelectionToTableauRef.current = moveSelectionToTableau;
   updateDragPreviewPositionRef.current = updateDragPreviewPosition;
   getPointerDropTargetRef.current = getPointerDropTarget;
+  activateSourceRef.current = activateSource;
 
   const beginPointerDrag = (event, source) => {
-    if (event.button !== 0) return;
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
     event.preventDefault();
+    event.currentTarget.setPointerCapture?.(event.pointerId);
     const sourceRect = event.currentTarget.getBoundingClientRect();
     pendingDragRef.current = {
       source,
       pointerId: event.pointerId,
+      pointerType: event.pointerType,
       startX: event.clientX,
       startY: event.clientY,
       offsetX: event.clientX - sourceRect.left,
@@ -748,8 +806,9 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
       if (!pending || pending.pointerId !== event.pointerId) return;
 
       const distance = Math.hypot(event.clientX - pending.startX, event.clientY - pending.startY);
+      const dragThreshold = pending.pointerType === 'touch' ? 3 : 6;
       if (!pending.dragging) {
-        if (distance < 6) return;
+        if (distance < dragThreshold) return;
         pending.dragging = true;
         suppressNextClick();
         setDraggedSelection(pending.source);
@@ -767,7 +826,13 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
       if (!pending || pending.pointerId !== event.pointerId) return;
       pendingDragRef.current = null;
 
-      if (!pending.dragging) return;
+      if (!pending.dragging) {
+        if (pending.pointerType !== 'mouse') {
+          activateSourceRef.current?.(pending.source);
+          suppressNextClick();
+        }
+        return;
+      }
 
       suppressNextClick();
       const dropTarget = getPointerDropTargetRef.current?.(event.clientX, event.clientY, pending.source);
@@ -818,7 +883,7 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
   };
 
   return (
-    <div ref={containerRef} className={`mx-auto w-full ${isExpandedLayout ? `${isLofi ? 'bg-[#fff7ec]' : 'bg-[#07542f]'} min-h-full p-0 sm:p-2` : 'pb-6 sm:pb-8'}`}>
+    <div ref={containerRef} data-device-type={deviceType} className={`mx-auto w-full ${isExpandedLayout ? `${isLofi ? 'bg-[#fff7ec]' : 'bg-[#07542f]'} min-h-full p-0 sm:p-2` : 'pb-6 sm:pb-8'}`}>
       <div className={`overflow-hidden rounded-[2rem] border shadow-[0_22px_50px_rgba(83,62,44,0.12)] ${isLofi ? 'border-[#e8dfd5]/80 bg-[#fff7ec]' : 'border-emerald-950/25 bg-[#0b6f3c]'} ${isExpandedLayout ? 'flex min-h-full flex-col' : ''}`}>
         <div className={`flex flex-wrap items-center justify-between gap-4 border-b px-4 py-4 sm:px-6 ${isLofi ? 'border-[#e8dfd5]/80 bg-white/72 text-[#3d3025] backdrop-blur-sm' : 'border-white/10 bg-[#086133] text-white'}`}>
           <div className="flex items-center gap-3">
@@ -855,14 +920,15 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
               </button>
             ) : null}
             <span className={`rounded-full px-3 py-1.5 sm:px-4 sm:py-2 ${isLofi ? 'border border-[#e8dfd5] bg-white/80 text-[#4a3a2d]' : 'bg-white/13'}`}>Moves {game.moves}</span>
+            <span className={`rounded-full px-3 py-1.5 sm:px-4 sm:py-2 ${isLofi ? 'border border-[#e8dfd5] bg-white/80 text-[#4a3a2d]' : 'bg-white/13'}`}>{deviceType === 'phone' ? 'Phone' : 'PC'}</span>
           </div>
         </div>
 
         <div className={`relative min-h-0 flex-1 flex flex-col overflow-auto p-1.5 sm:p-4 md:p-6 lg:p-8 ${isLofi ? 'bg-[#fff7ec]' : 'bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.18),transparent_38%),linear-gradient(135deg,#0b7c43,#075b33)]'}`}>
           <div className={`pointer-events-none absolute inset-0 opacity-[0.06] ${isLofi ? 'hidden' : ''}`} style={{ backgroundImage: 'repeating-linear-gradient(45deg, #ffffff 0 1px, transparent 1px 12px)' }} />
-          {isLofi && (
+          {isLofi ? (
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(74,58,45,0.04),transparent_70%)] opacity-40 pointer-events-none" />
-          )}
+          ) : null}
           
           {hasWon ? (
             <div className="pointer-events-none absolute inset-0 z-50 overflow-hidden">
@@ -959,8 +1025,8 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
                     dropTarget="waste"
                     ghosted={isCardGhosted({ type: 'waste' })}
                     selected={selected?.type === 'waste'}
-                    onClick={selectWaste}
-                    onDoubleClick={doubleClickWaste}
+                    onClick={() => handleCardActivation({ type: 'waste' }, selectWaste, doubleClickWaste)}
+                    onDoubleClick={undefined}
                     onPointerDown={(event) => beginPointerDrag(event, { type: 'waste' })}
                   />
                   <span className={`mt-1 block font-extrabold uppercase tracking-[0.12em] ${isLofi ? 'text-amber-800/70' : 'text-white/78'}`} style={{ fontSize: '0.18em' }}>Waste</span>
@@ -1020,8 +1086,12 @@ export default function Solitaire({ difficulty = 'medium', theme = 'lofi', viewp
         dropTarget={`tableau-${columnIndex}`}
         ghosted={isCardGhosted({ type: 'tableau', columnIndex, cardIndex })}
         selected={isSelected}
-        onClick={() => selectCard({ type: 'tableau', columnIndex, cardIndex })}
-        onDoubleClick={() => doubleClickTableau(columnIndex, cardIndex)}
+        onClick={() => handleCardActivation(
+          { type: 'tableau', columnIndex, cardIndex },
+          () => selectTableauCard(columnIndex, cardIndex),
+          () => doubleClickTableauCard(columnIndex, cardIndex)
+        )}
+        onDoubleClick={undefined}
         onPointerDown={card.faceUp ? (event) => beginPointerDrag(event, { type: 'tableau', columnIndex, cardIndex }) : undefined}
       />
     </div>
