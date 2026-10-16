@@ -445,6 +445,11 @@ const seoLandingBlocks = [
     href: '/aesthetic-student-diary.html'
   },
   {
+    title: 'Mindful reflection guide',
+    text: 'Read a student-friendly guide for post-study check-ins, gentle game resets, floating-thought capture, and weekly mood awareness.',
+    href: '/mindful-reflection-guide.html'
+  },
+  {
     title: 'Read the Lofi Memory blog',
     text: 'Start with a curated reading hub that explains the product more clearly and links to the strongest original articles first.',
     href: '/blog.html'
@@ -2323,10 +2328,10 @@ function App() {
     },
     {
       id: 'quiet-snake',
-      title: 'Snake',
+      title: 'Aesthetic Snake',
       detail: 'Classic arcade loop',
       isNew: true,
-      description: 'A cozy snake run with clear turns, quick rounds, and a gentle retro feel.',
+      description: 'A cozy snake run with clear turns and a gentle lofi feel, perfect for a short focus reset.',
       icon: SnakeIcon,
       tone: 'from-emerald-100 to-lime-50 text-emerald-700',
       preview: gameSnakePreview,
@@ -2391,9 +2396,9 @@ function App() {
     },
     {
       id: 'quiet-tiles',
-      title: 'Tiles',
+      title: 'Aesthetic Tiles',
       detail: 'Cozy 2048-style merge',
-      description: 'Slide matching numbers together for the kind of calm puzzle loop people love in relaxing tile games.',
+      description: 'Slide matching numbers together in a calm aesthetic puzzle loop for mindful study breaks.',
       icon: Grid2x2,
       tone: 'from-violet-100 to-slate-50 text-violet-700',
       preview: gameTilesPreview,
@@ -2413,9 +2418,9 @@ function App() {
     },
     {
       id: 'quiet-slide',
-      title: 'Slide',
+      title: 'Aesthetic Slide',
       detail: 'Cozy sliding puzzle',
-      description: 'Move tiles into place for the kind of familiar low-pressure sliding puzzle people love as a quick reset.',
+      description: 'Move tiles into place in a soft visual puzzle for a quiet study break reset.',
       icon: Puzzle,
       tone: 'from-amber-100 to-stone-50 text-amber-700',
       preview: gameSlidePreview,
@@ -2446,9 +2451,9 @@ function App() {
     },
     {
       id: 'quiet-words',
-      title: 'Words',
+      title: 'Aesthetic Words',
       detail: 'Calm word scramble',
-      description: 'Unscramble soft words for a familiar word-game loop that keeps the focus light and relaxing.',
+      description: 'Unscramble soft words in a light, aesthetic word loop for cozy focus breaks.',
       icon: Type,
       tone: 'from-fuchsia-100 to-rose-50 text-fuchsia-700',
       preview: gameWordsPreview,
@@ -6133,25 +6138,32 @@ function App() {
                   </div>
                 )}
               </div>
-              <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-                {unwindGames.map((game) => (
-                  <button
-                    key={game.id}
-                    className={`group relative flex min-h-[14rem] flex-col items-start justify-start overflow-hidden rounded-[3rem] border px-5 py-5 text-left transition duration-300 hover:-translate-y-1 ${selectedUnwindGame === game.id ? 'border-sage-400 ring-2 ring-sage-100' : 'border-amber-200/50 bg-white/78'}`}
-                    onClick={() => selectUnwindGame(game.id)}
-                    type="button"
-                  >
-                    <img src={game.preview} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" aria-hidden="true" />
-                    <div className="absolute inset-0 bg-gradient-to-br from-black/48 via-black/10 to-transparent" />
-                    <div className="relative z-10 p-1">
-                      <p className="text-xs font-black uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft">{game.detail}</p>
-                      <h2 className="mt-1 font-display text-2xl font-bold text-white lofi-sharp-text">{game.title}</h2>
-                    </div>
-                    <div className="absolute bottom-5 left-5 z-10 text-[10px] font-black uppercase tracking-widest text-white/95 opacity-0 lofi-sharp-chip transition group-hover:opacity-100">
-                      Open game →
-                    </div>
-                  </button>
-                ))}
+              <div className="mb-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+                {unwindGames.map((game) => {
+                  const isSelected = selectedUnwindGame === game.id;
+                  return (
+                    <button
+                      key={game.id}
+                      className={`group relative flex flex-col overflow-hidden rounded-[2.7rem] border p-1 text-left transition-all duration-500 hover:-translate-y-1.5 ${
+                        isSelected ? 'border-amber-200 bg-white ring-4 ring-amber-100 ring-offset-4 ring-offset-[#fff7ec]' : 'border-white/70 bg-white/44 hover:bg-white/66'
+                      }`}
+                      onClick={() => selectUnwindGame(game.id)}
+                      type="button"
+                    >
+                      <div className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-[2.45rem] bg-gradient-to-br shadow-inner">
+                        <img src={game.preview} alt={`${game.title} preview`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/44 via-black/8 to-white/8" />
+                        {isSelected ? (
+                          <span className="absolute bottom-4 right-4 rounded-full bg-white/88 px-3 py-1 text-[10px] font-black uppercase tracking-widest text-[#6e543c] shadow-sm backdrop-blur-sm">Active</span>
+                        ) : null}
+                      </div>
+                      <div className="w-full rounded-[2.15rem] bg-[#fff8f1]/96 p-5 shadow-[0_-16px_36px_rgba(255,255,255,0.24)]">
+                        <h2 className="font-display text-xl font-bold text-[#3f3126]">{game.title}</h2>
+                        <p className="mt-1 text-[10px] font-black uppercase tracking-[0.22em] text-[#7b5d44]/85">{game.detail}</p>
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
                           </div>
           </div>
