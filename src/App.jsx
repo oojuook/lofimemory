@@ -7466,16 +7466,25 @@ function App() {
           <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/25 to-black/5" />
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.15),transparent_25rem)]" />
           <div className="relative z-10">
-            <div className="mb-6 flex flex-wrap justify-center gap-x-8 gap-y-3 font-black uppercase tracking-[0.15em] text-white/95 lofi-sharp-chip">
+            <div className="mb-4 flex flex-wrap justify-center gap-x-8 gap-y-3 font-black uppercase tracking-[0.15em] text-white/95 lofi-sharp-chip">
               <a className="transition hover:text-white" href="#home" onClick={() => openHomeSection('home')}>Home</a>
               <button className="transition hover:text-white" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
               <a className="transition hover:text-white" href="#about" onClick={() => openHomeSection('about')}>About</a>
               <a className="transition hover:text-white" href="/blog.html">Blog</a>
+              <a className="transition hover:text-white" href="/contact.html">Contact</a>
               <a className="transition hover:text-white" href="/privacy.html">Privacy</a>
               <a className="transition hover:text-white" href="/terms.html">Terms</a>
               <a className="transition hover:text-white" href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
             </div>
-            <p className="font-bold text-white lofi-sharp-text-soft">Lofi Memory is a calm browser space to listen to lofi music, relax, journal, and play chill games.</p>
+            <div className="mb-5 flex flex-wrap justify-center gap-x-6 gap-y-2 text-[11px] font-black uppercase tracking-[0.18em] text-white/85 lofi-sharp-text-soft">
+              <a className="transition hover:text-white" href="/editorial-policy.html">Editorial policy</a>
+              <a className="transition hover:text-white" href="/advertising-policy.html">Advertising policy</a>
+              <a className="transition hover:text-white" href="/content-quality-policy.html">Content quality</a>
+              <a className="transition hover:text-white" href="/disclaimer.html">Disclaimer</a>
+              <a className="transition hover:text-white" href="/cookie-policy.html">Cookie policy</a>
+            </div>
+            <p className="font-bold text-white lofi-sharp-text-soft">Lofi Memory is a calm browser space for students and gentle routines: lofi music, relaxing games, private journaling, notes, reminders, and family-friendly study breaks in one tab.</p>
+            <p className="mt-3 text-xs font-semibold leading-6 text-white/85 lofi-sharp-text-soft">Original product pages and core support pages stay indexable. Lower-value or overlapping utility pages are reduced for search and advertising review quality.</p>
           </div>
         </div>
       </footer>
