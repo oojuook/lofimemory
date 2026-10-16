@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Edit3, RotateCcw, Sparkles } from 'lucide-react';
 
 const BOARD_SIZE = 9;
@@ -415,17 +415,16 @@ function SudokuBoard({
   );
 }
 
-function SudokuHeader({ completedRounds, config, conflictCount, elapsedLabel, isLofi = false, mistakesLeft, notesMode, openCells }) {
+function SudokuHeader({ completedRounds, config, conflictCount, elapsedLabel, isLofi = false, isExpandedLayout = false, mistakesLeft, notesMode, openCells }) {
   return (
     <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
       <div>
         <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-slate-200 bg-white/88 text-slate-700'}`}>
           <Sparkles size={14} /> {config.label} sudoku flow
         </div>
-        <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>Sudoku</h3>
+        <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>Aesthetic Sudoku</h3>
         <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-700'}`}>
-          A cozy Sudoku board for when you want a familiar logic puzzle that still feels slow, tidy,
-          and easy to settle into.
+          A cozy Sudoku board built for mindful study breaks. Solve a balanced logic puzzle without leaving your study room, and find your rhythm with lofi focus music.
         </p>
         <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-slate-600'}`}>{config.note}</p>
       </div>
@@ -437,9 +436,9 @@ function SudokuHeader({ completedRounds, config, conflictCount, elapsedLabel, is
           ['Timer', elapsedLabel, null],
           ['Pen tries left', mistakesLeft, notesMode ? 'Pencil notes on' : 'Pen mode on']
         ].map(([label, value, note]) => (
-          <div key={label} className={`${isLofi ? 'rounded-[0.95rem] bg-amber-50/90 text-amber-900' : 'rounded-[1.15rem] bg-slate-50'} px-4 py-3 text-center`}>
+          <div key={label} className={`${isLofi ? 'rounded-[0.95rem] bg-amber-50/90 text-amber-900' : 'rounded-[1.15rem] bg-slate-50'} min-w-0 px-4 py-3.5 text-center sm:px-5`}>
             <p className={`text-[10px] font-extrabold uppercase tracking-[0.2em] ${isLofi ? 'text-amber-800/60' : 'text-slate-500'}`}>{label}</p>
-            <p className={`mt-2 text-xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>{value}</p>
+            <p className={`mt-2 truncate text-base font-extrabold leading-none sm:text-lg lg:text-xl ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>{value}</p>
             {note ? <p className={`mt-1 text-[11px] font-semibold ${isLofi ? 'text-amber-800/60' : 'text-slate-500'}`}>{note}</p> : null}
           </div>
         ))}
@@ -890,13 +889,13 @@ export default function QuietSudoku({ difficulty = 'medium', theme = 'lofi', vie
     <div ref={wrapperRef} className={`mx-auto w-full ${isExpandedLayout ? 'h-full flex-1 flex items-center justify-center max-w-none overflow-hidden' : 'mt-12 max-w-[1040px] pb-12'}`}>
       <div style={isExpandedLayout ? { transform: `scale(${scale})`, transformOrigin: 'center center', width: '100%', maxWidth: '850px' } : {}} className={isExpandedLayout ? "flex justify-center" : ""}>
         <div className="w-full">
-      <div className={!isExpandedLayout ? `relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-amber-200/50 bg-[#fff7ec] shadow-[0_28px_90px_rgba(83,62,44,0.12)]' : 'border-sage-100 bg-gradient-to-br from-white via-slate-50/80 to-sand-50/80'}` : ""}>
-        {isLofi && (
+      <div className={!isExpandedLayout ? `relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-8 ${isLofi ? 'border-[#e8dfd5]/80 bg-[#fff9f0] shadow-[0_32px_90px_rgba(83,62,44,0.12)]' : 'border-sage-100 bg-gradient-to-br from-white via-slate-50/80 to-sand-50/80'}` : ""}>
+        {isLofi ? (
           <>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.95),rgba(255,247,236,0.9)_45%,rgba(250,237,205,0.84)_100%)]" />
-            <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #7a6250 1px, transparent 0)', backgroundSize: '18px 18px' }} />
+            <div className="absolute inset-0 bg-[#fff9f0]/95" />
+            <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #4a3a2d 1px, transparent 0)', backgroundSize: '16px 16px' }} />
           </>
-        )}
+        ) : null}
         <div className="relative z-10">
           <SudokuHeader
             completedRounds={completedRounds}
@@ -904,6 +903,7 @@ export default function QuietSudoku({ difficulty = 'medium', theme = 'lofi', vie
             conflictCount={conflictSet.size}
             elapsedLabel={elapsedLabel}
             isLofi={isLofi}
+            isExpandedLayout={isExpandedLayout}
             mistakesLeft={mistakesLeft}
             notesMode={notesMode}
             openCells={openCells}

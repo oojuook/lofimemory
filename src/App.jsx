@@ -2410,8 +2410,8 @@ function App() {
     {
       id: 'quiet-sudoku',
       title: 'Sudoku',
-      detail: 'Soft sudoku logic',
-      description: 'Settle into a cozy Sudoku board with gentle checking, reveal help, and a familiar number puzzle rhythm.',
+      detail: 'Aesthetic logic puzzle',
+      description: 'Settle into a cozy Sudoku board with gentle checking and lofi visuals, built for mindful study breaks.',
       icon: SudokuImageIcon,
       tone: 'from-cyan-100 to-blue-50 text-cyan-700',
       preview: gameSudokuPreview,
@@ -2442,9 +2442,9 @@ function App() {
     },
     {
       id: 'typing-speed-test',
-      title: 'Typing Speed Test',
-      detail: 'Gentle typing flow',
-      description: 'Practice typing with calm prompts and find your own comfortable rhythm.',
+      title: 'Typing Pace',
+      detail: 'Aesthetic typing test',
+      description: 'Improve your typing pace with calm visuals and gentle lofi rhythms during your study breaks.',
       icon: Keyboard,
       tone: 'from-sky-100 to-indigo-50 text-sky-700',
       preview: gameTypingPreview,
