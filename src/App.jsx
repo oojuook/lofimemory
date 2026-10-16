@@ -319,9 +319,9 @@ const tips = [
 ];
 
 const wellnessArticles = [
-  { title: 'Why daily word puzzles make relaxing breaks easier', read: 'Article • 4 min read', body: 'See why daily word puzzles feel so satisfying during short breaks and how a calm Wordle-style game can fit naturally into a relaxing online routine.', href: '/article-daily-word-puzzles-relax.html' },
+  { title: 'Why daily word puzzles make relaxing breaks easier', read: 'Article • 4 min read', body: 'See why daily word puzzles feel so satisfying during short breaks and how a calm five-letter word game can fit naturally into a relaxing online routine.', href: '/article-daily-word-puzzles-relax.html' },
 
-  { title: 'Why word guessing games feel good when your mind is busy', read: 'Article • 4 min read', body: 'Understand why guess-the-word games feel grounding when your mind is overloaded and how a calm Wordle-style round can become a simple reset.', href: '/article-word-guessing-games-busy-mind.html' },
+  { title: 'Why word guessing games feel good when your mind is busy', read: 'Article • 4 min read', body: 'Understand why guess-the-word games feel grounding when your mind is overloaded and how a calm word puzzle round can become a simple reset.', href: '/article-word-guessing-games-busy-mind.html' },
 
   { title: 'How gentle memory games provide cognitive relief before writing', read: 'Article • 4 min read', body: 'Understand why playing a simple memory match game can help organize your thoughts and reduce brain fog before journaling.', href: '/article-memory-games-cognitive-relief.html' },
 
@@ -603,7 +603,7 @@ const seoPopularSearches = [
   { label: 'Solitaire online', href: '/solitaire-online.html' },
   { label: 'Minesweeper online', href: '/minesweeper-online.html' },
   { label: 'Snake game online', href: '/snake-game-online.html' },
-  { label: 'Wordle online', href: '/wordle-online.html' },
+  { label: 'Daily word puzzle', href: '/daily-word-puzzle.html' },
   { label: 'Sudoku online', href: '/sudoku-online.html' },
   { label: 'Typing test online', href: '/typing-test-online.html' },
   { label: 'Lofi radio online', href: '/lofi-radio-online.html' },
@@ -911,7 +911,7 @@ function SudokuImageIcon(props) {
 }
 
 function WordleImageIcon(props) {
-  return <ImageGameIcon {...props} alt="Wordle icon" src={wordleIconImage} />;
+  return <ImageGameIcon {...props} alt="Daily word puzzle icon" src={wordleIconImage} />;
 }
 
 function DinoDashImageIcon(props) {
@@ -966,21 +966,24 @@ function GamePreview({ gameId }) {
   if (gameId === 'drifting-leaf') {
     return (
       <div className={shellClass}>
-        <div className="relative flex h-20 items-center justify-center overflow-hidden rounded-[1rem] bg-gradient-to-br from-[#fffaf4] via-[#faedcd] to-[#f8efe2]">
-          <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #6e5a4a 1px, transparent 0)', backgroundSize: '12px 12px' }} />
-          <div className="absolute left-5 top-4 h-4 w-12 rounded-full bg-white/50 blur-sm" />
-          <div className="absolute right-6 bottom-4 h-5 w-16 rounded-full bg-white/35 blur-sm" />
+        <div className="relative flex h-20 items-center justify-center overflow-hidden rounded-[1rem] bg-gradient-to-b from-[#f6c8be] via-[#f3d8c6] to-[#f7eadb]">
+          <div className="absolute inset-0 opacity-15" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #6e5a4a 1px, transparent 0)', backgroundSize: '12px 12px' }} />
+          <div className="absolute left-1/2 top-3 h-5 w-10 -translate-x-1/2 rounded-full bg-[#fff7ef]/90 blur-sm" />
+          <div className="absolute left-6 top-5 h-4 w-10 rounded-full bg-white/35 blur-sm" />
+          <div className="absolute right-7 bottom-5 h-5 w-14 rounded-full bg-white/35 blur-sm" />
           <div className="relative flex items-center justify-center animate-bounce" style={{ animationDuration: '3.8s' }}>
-            <span className="absolute -top-3 h-3.5 w-3.5 rounded-full bg-[#a3b18a] shadow-[0_0_0_2px_rgba(163,177,138,0.22)]" />
-            <span className="absolute -top-6 left-1/2 h-2.5 w-2.5 -translate-x-[1.1rem] rounded-full bg-[#f6d5d8] opacity-90" />
-            <span className="absolute -top-7 left-1/2 h-2.5 w-2.5 -translate-x-[0.2rem] rounded-full bg-[#f6d5d8] opacity-90" />
-            <span className="absolute -top-6 left-1/2 h-2.5 w-2.5 translate-x-[0.7rem] rounded-full bg-[#f6d5d8] opacity-90" />
-            <span className="flex h-10 w-8 items-center justify-center rounded-[999px] border border-[#d9b99b] bg-[#f8efe2] text-[10px] shadow-[0_8px_20px_rgba(83,62,44,0.12)]">
-              <span className="mt-1 flex items-center gap-1 text-[#7f5539]">
-                <span className="h-1.5 w-1.5 rounded-full bg-current" />
-                <span className="h-1.5 w-1.5 rounded-full bg-current" />
-              </span>
-            </span>
+            {[-18, -12, -6, 0, 6, 12, 18].map((offset, index) => (
+              <span
+                key={offset}
+                className="absolute h-5 w-[1px] origin-bottom rounded-full bg-[#fffaf4]/90"
+                style={{ transform: `translateY(-0.45rem) rotate(${offset}deg)`, opacity: index % 2 === 0 ? 1 : 0.82 }}
+              />
+            ))}
+            <span className="absolute h-6 w-6 rounded-full bg-[radial-gradient(circle,#f3c7cb_0%,#f7dfdf_55%,rgba(255,249,244,0)_100%)]" />
+            <span className="absolute -top-4 -left-1 h-5 w-2.5 rounded-full bg-[#a3b18a] rotate-[-35deg]" />
+            <span className="absolute -top-4 left-1 h-5 w-2.5 rounded-full bg-[#a3b18a] rotate-[35deg]" />
+            <span className="absolute top-2 h-5 w-[2px] rounded-full bg-[#6f4b35]" />
+            <span className="absolute top-6 h-3.5 w-3.5 rounded-full bg-[#6f4b35]" style={{ clipPath: 'polygon(50% 100%, 0% 35%, 50% 0%, 100% 35%)' }} />
           </div>
         </div>
       </div>
@@ -2417,9 +2420,9 @@ function App() {
     },
     {
       id: 'quiet-wordle',
-      title: 'Wordle',
-      detail: 'Soft Wordle-style puzzle',
-      description: 'Guess a cozy word in a gentle Wordle-style round when you want something familiar, tidy, and easy to replay.',
+      title: 'Daily Word Puzzle',
+      detail: 'Gentle five-letter word game',
+      description: 'Guess a cozy word in a gentle five-letter challenge when you want something familiar, tidy, and easy to replay.',
       icon: WordleImageIcon,
       tone: 'from-teal-100 to-sky-50 text-teal-700',
       preview: gameWordlePreview,

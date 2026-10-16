@@ -4,7 +4,7 @@ Search findings show repeated demand patterns around privacy-first journaling, d
 
 Additional diary-oriented searches show demand for low-friction writing phrases such as "private diary online no signup," "free online diary," "auto-saved in your browser," "daily journal," "mood tracking," and "gratitude prompts." The strongest match for Lofi Memory is to target the low-friction privacy angle without overstating security promises::cite[523].
 
-For games, recurring high-intent phrases include "free browser games," "no download," "no signup," "single player games," "relaxing browser games," "games to play when bored," and exact game modifiers such as "Solitaire online," "Minesweeper online," "Snake game online," "Wordle online," and "Sudoku online." These queries match Lofi Memory's game room and should be represented in the homepage, sitemap, schema, and internal links::cite[493].
+For games, recurring high-intent phrases include "free browser games," "no download," "no signup," "single player games," "relaxing browser games," "games to play when bored," and exact game modifiers such as "Solitaire online," "Minesweeper online," "Snake game online," "daily word puzzle," and "Sudoku online." These queries match Lofi Memory's game room and should be represented in the homepage, sitemap, schema, and internal links::cite[493].
 
 Relaxing-game search pages commonly frame the need as soothing puzzles, calming simulations, tranquil play, and no-download installation-free games. Lofi Memory should use "calming games online" and "relaxing games online" in dedicated content while avoiding medical/anxiety claims that sound too strong::cite[363].
 

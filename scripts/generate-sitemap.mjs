@@ -50,7 +50,7 @@ const pinnedPages = [
   'fullscreen-solitaire-online.html',
   'minesweeper-online.html',
   'snake-game-online.html',
-  'wordle-online.html',
+  'daily-word-puzzle.html',
   'typing-test-online.html',
   'sudoku-online.html',
   'daily-journaling-app.html',
@@ -75,7 +75,8 @@ const pinnedPages = [
 const excludedPages = new Set([
   'logo-preview.html',
   'google5226abd8d86c0ece.html',
-  'googled1931b3f15730e0b.html'
+  'googled1931b3f15730e0b.html',
+  'wordle-online.html'
 ]);
 
 function getPriority(fileName) {
