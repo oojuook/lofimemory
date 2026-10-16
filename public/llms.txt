@@ -6,13 +6,15 @@ Lofi Memory is a cozy browser space for no-download relaxing games, lofi radio, 
 - Private journaling hub, gratitude journal online, aesthetic online journal, brain dump journal online, online diary for students, private memory calendar, private diary online no signup, free online diary, digital diary app, private online diary, online diary with lock, private journal app, daily journaling app, mood tracker journal, journal prompts for self discovery
 - Relaxing games hub, family-friendly browser games, relaxing games before bed, cozy games for study breaks, calming games online, single player browser games, cozy browser games, relaxing browser games, no download browser games, games to play when bored, relaxing games with music
 - Solitaire online, Minesweeper online, Snake game online, Daily word puzzle, Sudoku online, Typing test online
-- Aesthetic study breaks, lofi study room online, aesthetic student diary, lofi study breaks, lofi focus hub, pomodoro timer with lofi, cute notes app online, online notes with reminders, daily planner with journal, self-care reminder app, study timer with music, lofi study timer, focus music online, writing with lofi music, lofi radio online, lofi music for studying, focus music, chill music, lofi music room for writing, hogwarts music room, magical study ambience, castle lofi
+- Aesthetic study breaks, lofi study room online, aesthetic student diary, mindful reflection guide for students, study break games and journal, lofi study breaks, lofi focus hub, pomodoro timer with lofi, cute notes app online, online notes with reminders, daily planner with journal, self-care reminder app, study timer with music, lofi study timer, focus music online, writing with lofi music, lofi radio online, lofi music for studying, focus music, chill music, lofi music room for writing, hogwarts music room, magical study ambience, castle lofi
 
 ## Primary pages
 - Home: https://lofimemory.vercel.app/
 - Aesthetic study breaks: https://lofimemory.vercel.app/aesthetic-study-breaks.html
 - Lofi study room: https://lofimemory.vercel.app/lofi-study-room.html
 - Aesthetic student diary: https://lofimemory.vercel.app/aesthetic-student-diary.html
+- Mindful reflection guide: https://lofimemory.vercel.app/mindful-reflection-guide.html
+- Study break games and journal: https://lofimemory.vercel.app/study-break-games-and-journal.html
 - HTML sitemap: https://lofimemory.vercel.app/sitemap.html
 - Private journaling hub: https://lofimemory.vercel.app/private-journaling-hub.html
 - Relaxing games hub: https://lofimemory.vercel.app/relaxing-games-hub.html

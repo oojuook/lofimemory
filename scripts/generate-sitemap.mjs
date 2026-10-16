@@ -13,6 +13,8 @@ const pinnedPages = [
   'aesthetic-study-breaks.html',
   'lofi-study-room.html',
   'aesthetic-student-diary.html',
+  'mindful-reflection-guide.html',
+  'study-break-games-and-journal.html',
   'blog.html',
   'sitemap.html',
   'private-journaling-hub.html',
@@ -84,7 +86,7 @@ const excludedPages = new Set([
 
 function getPriority(fileName) {
   if (fileName === 'index.html') return '1.0';
-  if (['blog.html', 'sitemap.html', 'aesthetic-study-breaks.html', 'lofi-study-room.html', 'aesthetic-student-diary.html', 'private-journaling-hub.html', 'relaxing-games-hub.html', 'lofi-focus-hub.html', 'gratitude-journal-online.html', 'aesthetic-online-journal.html', 'pomodoro-timer-with-lofi.html', 'cozy-games-for-study-breaks.html', 'online-notes-with-reminders.html', 'private-memory-calendar.html', 'daily-planner-with-journal.html', 'self-care-reminder-app.html', 'online-diary-for-students.html', 'cute-notes-app-online.html', 'relaxing-games-before-bed.html', 'brain-dump-journal-online.html', 'family-friendly-browser-games.html', 'content-quality-policy.html', 'about.html', 'privacy.html', 'terms.html', 'contact.html'].includes(fileName)) return '0.9';
+  if (['blog.html', 'sitemap.html', 'aesthetic-study-breaks.html', 'lofi-study-room.html', 'aesthetic-student-diary.html', 'mindful-reflection-guide.html', 'study-break-games-and-journal.html', 'private-journaling-hub.html', 'relaxing-games-hub.html', 'lofi-focus-hub.html', 'gratitude-journal-online.html', 'aesthetic-online-journal.html', 'pomodoro-timer-with-lofi.html', 'cozy-games-for-study-breaks.html', 'online-notes-with-reminders.html', 'private-memory-calendar.html', 'daily-planner-with-journal.html', 'self-care-reminder-app.html', 'online-diary-for-students.html', 'cute-notes-app-online.html', 'relaxing-games-before-bed.html', 'brain-dump-journal-online.html', 'family-friendly-browser-games.html', 'content-quality-policy.html', 'about.html', 'privacy.html', 'terms.html', 'contact.html'].includes(fileName)) return '0.9';
   if (fileName.startsWith('article-')) return '0.74';
   if (fileName.includes('journal') || fileName.includes('diary')) return '0.86';
   if (fileName.includes('game') || fileName.includes('solitaire') || fileName.includes('minesweeper') || fileName.includes('snake') || fileName.includes('wordle') || fileName.includes('sudoku') || fileName.includes('typing')) return '0.86';

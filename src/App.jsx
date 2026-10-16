@@ -450,6 +450,11 @@ const seoLandingBlocks = [
     href: '/mindful-reflection-guide.html'
   },
   {
+    title: 'Study break games and journal',
+    text: 'Use cozy browser games, lofi music, notes, reminders, and a private journal as one simple study break system.',
+    href: '/study-break-games-and-journal.html'
+  },
+  {
     title: 'Read the Lofi Memory blog',
     text: 'Start with a curated reading hub that explains the product more clearly and links to the strongest original articles first.',
     href: '/blog.html'
@@ -5236,19 +5241,19 @@ function App() {
             <p className="mt-3 text-sm font-semibold leading-7 text-[#7f6a58]">Start with games, music, diary, notes, or memories.</p>
         </div>
           <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-3 shadow-soft sm:p-4">
-            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {homeEntryCards.map((card) => (
                 <button
                   key={card.id}
-                  className="group lofi-picture-border lofi-border-watercolor relative flex min-h-[11.2rem] w-full flex-col items-start justify-start overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/20 px-5 py-5 text-left shadow-sm transition duration-300 hover:-translate-y-1 hover:border-[#8b5e3c]/40 hover:shadow-lift sm:min-h-[12.4rem] sm:px-6 sm:py-6 xl:min-h-[13rem]"
+                  className="group relative flex min-h-[16rem] w-full flex-col justify-end overflow-hidden rounded-[2.5rem] border border-white/70 bg-white/45 p-1 text-left shadow-sm transition duration-500 hover:-translate-y-1.5 hover:bg-white/65 hover:shadow-lift sm:min-h-[18rem] xl:min-h-[19rem]"
                   onClick={card.onClick}
                   type="button"
                 >
                   <img src={card.preview} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" aria-hidden="true" />
-                  <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/25 to-black/5" />
-                  <div className="relative z-10 w-full">
-                    <p className="lofi-sharp-text text-xl font-black tracking-tight text-white">{card.title}</p>
-                    <p className="lofi-sharp-text-soft mt-1 text-[11px] font-black uppercase tracking-[0.25em] text-white/95">{card.description}</p>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/58 via-black/12 to-white/8" />
+                  <div className="relative z-10 m-2 rounded-[2rem] border border-white/20 bg-[#fff8f1]/92 p-5 shadow-[0_-18px_42px_rgba(255,255,255,0.18)] backdrop-blur-md">
+                    <p className="font-display text-2xl font-bold tracking-tight text-[#3f3126]">{card.title}</p>
+                    <p className="mt-1 text-[10px] font-black uppercase tracking-[0.24em] text-[#7b5d44]/85">{card.description}</p>
                   </div>
                 </button>
               ))}
@@ -5266,10 +5271,10 @@ function App() {
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.20),transparent_20rem)]" />
             <div className="relative z-10">
               <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/15 px-3 py-1.5 text-[11px] sm:mb-7 sm:px-4 sm:py-2 sm:text-sm font-bold text-white shadow-sm backdrop-blur-md lofi-sharp-text-soft">
-                <Headphones size={15} /> Relaxing music, games, diary & notes
+                <Headphones size={15} /> Aesthetic lofi study room for students
               </div>
-              <h1 className="lofi-sharp-text max-w-3xl font-display text-3xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl sm:leading-[0.96] md:text-6xl">Lofi Memory is your cozy online space for relaxing games, lofi music, private journaling, and notes.</h1>
-              <p className="lofi-sharp-text-soft mt-4 max-w-3xl text-base font-bold leading-7 text-white/100 sm:mt-5 sm:text-[1.18rem] sm:leading-8">Listen to lofi music, play relaxing browser games, keep a private online diary, save reminders, and settle into a softer music room without bouncing between tabs.</p>
+              <h1 className="lofi-sharp-text max-w-3xl font-display text-3xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl sm:leading-[0.96] md:text-6xl">Build your cozy study room with lofi music, relaxing games, private journal, and notes.</h1>
+              <p className="lofi-sharp-text-soft mt-4 max-w-3xl text-base font-bold leading-7 text-white/100 sm:mt-5 sm:text-[1.18rem] sm:leading-8">Designed for students and young adults who want one calm browser tab for focus music, aesthetic study breaks, daily reflection, reminders, and no-download cozy games.</p>
 
               <div className="lofi-now-playing mt-6 sm:mt-7 flex flex-col gap-4 rounded-[1.8rem] sm:rounded-[2.2rem] border border-white/20 bg-black/15 p-3.5 sm:p-4 shadow-sm backdrop-blur-md sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-3 sm:gap-4">
