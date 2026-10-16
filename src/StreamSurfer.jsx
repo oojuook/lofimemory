@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Play, RotateCcw, ArrowLeft, ArrowRight, Sparkles } from 'lucide-react';
 
 const randomBetween = (min, max) => Math.random() * (max - min) + min;
@@ -33,6 +33,9 @@ const difficultySettings = {
   }
 };
 
+const laneWidth = 200;
+const getLaneCenter = (lane) => lane * laneWidth + laneWidth / 2;
+
 export default function StreamSurfer({ difficulty = 'medium', theme = 'lofi', viewportMode = 'embedded' }) {
   const isLofi = theme === 'lofi';
   const isExpandedLayout = viewportMode === 'fullscreen';
@@ -58,9 +61,6 @@ export default function StreamSurfer({ difficulty = 'medium', theme = 'lofi', vi
     hitObstacle: null
   });
 
-  const laneWidth = 200;
-  const getLaneCenter = (lane) => lane * laneWidth + laneWidth / 2;
-
   useEffect(() => {
     gameStateRef.current = gameState;
   }, [gameState]);
@@ -82,9 +82,9 @@ export default function StreamSurfer({ difficulty = 'medium', theme = 'lofi', vi
     setScore(0);
     setGameState('start');
     setHighScore(parseInt(localStorage.getItem(highScoreKey) || '0', 10));
-  }, [config.startSpeed, highScoreKey]);
+  }, [config.startSpeed, config.spawnBase, highScoreKey]);
 
-  const handleMove = (direction) => {
+  const handleMove = useCallback((direction) => {
     if (gameStateRef.current !== 'playing') {
       return;
     }
@@ -99,7 +99,25 @@ export default function StreamSurfer({ difficulty = 'medium', theme = 'lofi', vi
     state.lane = nextLane;
     const targetX = getLaneCenter(nextLane);
     state.visualX += (targetX - state.visualX) * 0.68;
-  };
+  }, []);
+
+  const startGame = useCallback(() => {
+    stateRef.current = {
+      lane: 1,
+      visualX: 300,
+      speed: config.startSpeed,
+      obstacles: [],
+      frames: 0,
+      score: 0,
+      waterOffset: 0,
+      spawnCooldown: config.spawnBase,
+      hitFrames: 0,
+      hitObstacle: null
+    };
+    gameStateRef.current = 'playing';
+    setScore(0);
+    setGameState('playing');
+  }, [config.startSpeed, config.spawnBase]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -116,25 +134,7 @@ export default function StreamSurfer({ difficulty = 'medium', theme = 'lofi', vi
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [gameState, config.startSpeed]);
-
-  const startGame = () => {
-    stateRef.current = {
-      lane: 1,
-      visualX: 300,
-      speed: config.startSpeed,
-      obstacles: [],
-      frames: 0,
-      score: 0,
-      waterOffset: 0,
-      spawnCooldown: config.spawnBase,
-      hitFrames: 0,
-      hitObstacle: null
-    };
-    gameStateRef.current = 'playing';
-    setScore(0);
-    setGameState('playing');
-  };
+  }, [gameState, handleMove, startGame]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -390,19 +390,19 @@ export default function StreamSurfer({ difficulty = 'medium', theme = 'lofi', vi
   return (
     <div className={`mx-auto w-full ${isExpandedLayout ? 'min-h-full max-w-none' : 'mt-12 max-w-2xl pb-12'}`}>
       <div className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-amber-200/50 bg-[#fff7ec] shadow-[0_28px_80px_rgba(83,62,44,0.12)]' : 'border-teal-200 bg-gradient-to-br from-white via-teal-50/70 to-sky-50/78'}`}>
-        {isLofi && (
+        {isLofi ? (
           <>
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.95),rgba(255,247,236,0.9)_45%,rgba(220,236,243,0.78)_100%)]" />
             <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #7a6250 1px, transparent 0)', backgroundSize: '18px 18px' }} />
           </>
-        )}
+        ) : null}
         <div className="relative z-10 mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-teal-200 bg-white/88 text-teal-700'}`}>
               <Sparkles size={14} /> {config.label} current
             </div>
-            <h3 className={`mt-3 text-2xl font-bold ${isLofi ? 'text-[#3d3025]' : 'text-teal-900'}`}>Lilypad Hopper</h3>
-            <p className={`text-sm font-semibold ${isLofi ? 'text-[#6e5a4a]' : 'text-teal-700'}`}>{isLofi ? 'A lofi pond dodge with pastel water, warm glass controls, and a softer arcade rhythm.' : 'A frog-themed 3-lane pond dodge that feels lighter on mobile.'}</p>
+            <h3 className={`mt-3 text-2xl font-bold ${isLofi ? 'text-[#3d3025]' : 'text-teal-900'}`}>Aesthetic Lilypad Hopper</h3>
+            <p className={`text-sm font-semibold ${isLofi ? 'text-[#6e5a4a]' : 'text-teal-700'}`}>{isLofi ? 'A lofi pond dodge for cozy study breaks, with pastel water, warm glass controls, and a softer arcade rhythm.' : 'A frog-themed 3-lane pond dodge that feels lighter on mobile.'}</p>
             <p className={`mt-1 text-sm ${isLofi ? 'text-[#8c755f]' : 'text-teal-600'}`}>{config.note}</p>
           </div>
           <div className={`flex flex-wrap gap-3 text-sm font-extrabold uppercase tracking-widest ${isLofi ? 'text-amber-900' : 'text-teal-700'}`}>

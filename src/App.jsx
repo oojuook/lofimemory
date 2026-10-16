@@ -435,6 +435,16 @@ const seoLandingBlocks = [
     href: '/aesthetic-study-breaks.html'
   },
   {
+    title: 'Lofi study room for students',
+    text: 'Explore an aesthetic study room built around lofi ambience, gentle focus breaks, notes, reminders, and private student reflection.',
+    href: '/lofi-study-room.html'
+  },
+  {
+    title: 'Aesthetic student diary',
+    text: 'Use a private online diary for students to reflect after class, track moods, and keep your study journey soft and personal.',
+    href: '/aesthetic-student-diary.html'
+  },
+  {
     title: 'Read the Lofi Memory blog',
     text: 'Start with a curated reading hub that explains the product more clearly and links to the strongest original articles first.',
     href: '/blog.html'
@@ -2336,10 +2346,10 @@ function App() {
     },
     {
       id: 'drifting-leaf',
-      title: 'Drifting Seed',
+      title: 'Aesthetic Drifting Seed',
       detail: 'Soft endless glide',
       isNew: true,
-      description: 'A slow, floaty game for clearing your head before you write.',
+      description: 'A slow, floaty game for clearing your head and aesthetic focus during study breaks.',
       icon: SeedIcon,
       tone: 'from-emerald-100 to-sage-50 text-emerald-700',
       preview: gameDriftingSeedPreview,
@@ -2348,9 +2358,9 @@ function App() {
     },
     {
       id: 'stream-surfer',
-      title: 'Lilypad Hopper',
+      title: 'Aesthetic Lilypad Hopper',
       detail: 'Gentle pond dodging',
-      description: 'Hop through a calm lily-pad run when you want a little movement without the noise.',
+      description: 'Hop through a calm lofi lily-pad run for a mindful reset between study blocks.',
       icon: FrogIcon,
       tone: 'from-sky-100 to-cyan-50 text-sky-700',
       preview: gameLilypadPreview,

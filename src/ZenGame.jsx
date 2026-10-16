@@ -366,23 +366,23 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
 
         {!isExpandedLayout ? (
           <div className="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-          <div>
+          <div className="lg:max-w-[54%]">
             <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/85 text-amber-800' : 'border-sage-200 bg-white/88 text-sage-700'}`}>
               <Sparkles size={14} /> {levelText} drift
             </div>
-            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-sage-900'}`}>Drifting Seed</h3>
-            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>A calming float-through game with warm cream skies, pastel obstacles, and quieter feedback for restless thoughts.</p>
+            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-sage-900'}`}>Aesthetic Drifting Seed</h3>
+            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>A calming float-through game for aesthetic study breaks, with warm cream skies, pastel obstacles, and quieter feedback for restless focus.</p>
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-600'}`}>{config.note}</p>
           </div>
-          <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-3 ${isLofi ? 'rounded-[1.5rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
+          <div className={`grid w-full max-w-[420px] gap-1.5 p-2.5 shadow-sm sm:max-w-[460px] [grid-template-columns:minmax(0,0.85fr)_minmax(0,0.85fr)_minmax(0,1.45fr)] lg:max-w-[500px] lg:flex-1 ${isLofi ? 'rounded-[1.5rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
             {[
               { label: 'Score', value: score, compact: false },
               { label: 'Best', value: highScore, compact: false },
               { label: 'Pace', value: levelText, compact: true }
             ].map(({ label, value, compact }) => (
-              <div key={label} className={`${isLofi ? 'rounded-[1.2rem] bg-[#faedcd] text-[#3d3025]' : 'rounded-[1.15rem] bg-sage-50'} min-w-0 px-4 py-3.5 text-center sm:px-5`}>
-                <p className={`text-[10px] font-extrabold uppercase tracking-[0.2em] ${isLofi ? 'text-[#6e5a4a]/70' : 'text-sage-500'}`}>{label}</p>
-                <p className={`mt-2 truncate font-extrabold leading-none ${compact ? 'text-base sm:text-lg' : 'text-xl'} ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>{value}</p>
+              <div key={label} className={`${isLofi ? 'rounded-[1.2rem] bg-[#faedcd] text-[#3d3025]' : 'rounded-[1.15rem] bg-sage-50'} min-w-0 px-3 py-3 text-center sm:px-3.5`}>
+                <p className={`text-[9px] font-extrabold uppercase tracking-[0.18em] ${isLofi ? 'text-[#6e5a4a]/70' : 'text-sage-500'}`}>{label}</p>
+                <p className={`mt-1.5 font-extrabold leading-none ${compact ? 'whitespace-nowrap text-[0.78rem] sm:text-[0.92rem] lg:text-[0.98rem]' : 'truncate text-base sm:text-lg'} ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>{value}</p>
               </div>
             ))}
           </div>
