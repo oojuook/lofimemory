@@ -237,14 +237,20 @@ export default function LotusMatch({ difficulty = 'medium', theme = 'lofi', view
 
   return (
     <div className={`mx-auto w-full ${isExpandedLayout ? 'min-h-full max-w-none' : 'mt-12 max-w-[900px] pb-12'}`}>
-      <div className={`rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-amber-200/50 bg-[#fff7ec]' : 'border-sage-100 bg-gradient-to-br from-white via-sage-50/82 to-sand-50/82'}`}>
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+      <div className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-8 ${isLofi ? 'border-[#e8dfd5]/80 bg-[#fff9f0] shadow-[0_32px_90px_rgba(83,62,44,0.12)]' : 'border-sage-100 bg-gradient-to-br from-white via-sage-50/82 to-sand-50/82'}`}>
+        {isLofi ? (
+          <>
+            <div className="absolute inset-0 bg-[#fff9f0]/95" />
+            <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #4a3a2d 1px, transparent 0)', backgroundSize: '16px 16px' }} />
+          </>
+        ) : null}
+        <div className="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-sage-200 bg-white/88 text-sage-700'}`}>
               <Sparkles size={14} /> {label} memory flow
             </div>
-            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>Lotus Match</h3>
-            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>A soft memory game for quiet focus. Watch the poker cards flip, remember where they rest, and match the pairs at your own pace.</p>
+            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>Aesthetic Lotus Match</h3>
+            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>A soft memory game for aesthetic study breaks and quiet focus. Watch the cards flip, remember where they rest, and match the pairs while finding your rhythm with lofi focus music.</p>
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-sage-600'}`}>{note}</p>
             <p className={`mt-2 text-xs font-semibold uppercase tracking-[0.18em] ${isLofi ? 'text-amber-800/60' : 'text-sage-500'}`}>{pairCount} pairs • {previewLabel} preview • {mismatchLabel} reset</p>
           </div>
@@ -255,15 +261,15 @@ export default function LotusMatch({ difficulty = 'medium', theme = 'lofi', view
               ['Preview', previewLabel],
               ['Best', bestScore || '—']
             ].map(([statLabel, value]) => (
-              <div key={statLabel} className={`px-4 py-3 text-center ${isLofi ? 'rounded-[1.2rem] bg-[#faedcd] text-[#3d3025]' : 'rounded-[1.15rem] bg-sage-50'}`}>
+              <div key={statLabel} className={`min-w-0 px-4 py-3.5 text-center sm:px-5 ${isLofi ? 'rounded-[1.2rem] bg-[#faedcd] text-[#3d3025]' : 'rounded-[1.15rem] bg-sage-50'}`}>
                 <p className={`text-[10px] font-extrabold uppercase tracking-[0.2em] ${isLofi ? 'text-amber-800/60' : 'text-sage-500'}`}>{statLabel}</p>
-                <p className={`mt-2 text-xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>{value}</p>
+                <p className={`mt-2 truncate text-base font-extrabold leading-none sm:text-lg lg:text-xl ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>{value}</p>
               </div>
             ))}
           </div>
         </div>
 
-        <div className={`mt-5 flex flex-col gap-3 rounded-[1.5rem] border p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between ${isLofi ? 'border-white/70 bg-white/65' : 'border-white/80 bg-white/72'}`}>
+        <div className={`relative z-10 mt-5 flex flex-col gap-3 rounded-[1.5rem] border p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between ${isLofi ? 'border-[#e8dfd5]/80 bg-white/72 backdrop-blur-sm' : 'border-white/80 bg-white/72'}`}>
           <p className={`text-sm font-semibold ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>{statusMessage}</p>
           <div className="flex flex-wrap gap-2">
             <button

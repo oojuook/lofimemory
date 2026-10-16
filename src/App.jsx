@@ -430,6 +430,11 @@ const wellnessArticles = [
 
 const seoLandingBlocks = [
   {
+    title: 'Aesthetic study breaks',
+    text: 'Open a calm study-break guide for lofi focus music, cozy browser games, private journaling, notes, and reminders in one tab.',
+    href: '/aesthetic-study-breaks.html'
+  },
+  {
     title: 'Read the Lofi Memory blog',
     text: 'Start with a curated reading hub that explains the product more clearly and links to the strongest original articles first.',
     href: '/blog.html'
@@ -2354,9 +2359,9 @@ function App() {
     },
     {
       id: 'lofi-jigsaw',
-      title: 'Lofi Jigsaw Puzzle',
+      title: 'Aesthetic Lofi Jigsaw',
       detail: 'Cozy picture puzzle',
-      description: 'Slide a soft lofi scene back together for a relaxing puzzle break before journaling.',
+      description: 'Slide a soft lofi scene back together for a relaxing puzzle break before journaling or between study sessions.',
       icon: ImagePlus,
       tone: 'from-emerald-100 via-amber-50 to-rose-50 text-emerald-700',
       preview: gameJigsawPreview,
@@ -2365,9 +2370,9 @@ function App() {
     },
     {
       id: 'lotus-match',
-      title: 'Lotus Match',
+      title: 'Aesthetic Lotus Match',
       detail: 'Quiet memory reset',
-      description: 'Flip calm cards and settle in before journaling or just hanging out for a bit.',
+      description: 'Flip calm cards and settle your focus during an aesthetic study break or a quiet afternoon.',
       icon: Heart,
       tone: 'from-rose-100 to-orange-50 text-rose-700',
       preview: gameLotusPreview,

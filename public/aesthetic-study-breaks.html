@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aesthetic Study Breaks - Lofi Music, Cozy Games & Private Journal | Lofi Memory</title>
+    <meta name="description" content="Take aesthetic study breaks with lofi music, cozy browser games, notes, reminders, and a private journal in one calm no-download study room." />
+    <meta name="keywords" content="aesthetic study breaks, lofi study breaks, cozy study games, aesthetic study room, lofi focus music, private journal for students" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://lofimemory.vercel.app/aesthetic-study-breaks.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Aesthetic Study Breaks - Lofi Music, Cozy Games & Private Journal" />
+    <meta property="og:description" content="A calm study-break room with lofi focus music, gentle browser games, notes, reminders, and private journaling." />
+    <meta property="og:url" content="https://lofimemory.vercel.app/aesthetic-study-breaks.html" />
+    <meta property="og:site_name" content="Lofi Memory" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <style>
+      :root { color-scheme: light; --cream: #fff9f0; --sand: #faedcd; --rose: #f4c2c2; --sage: #dbead7; --ink: #34281f; --muted: #6e5a4a; --line: rgba(89, 67, 47, 0.14); --card: rgba(255, 255, 255, 0.78); --shadow: 0 26px 70px rgba(83, 62, 44, 0.13); }
+      * { box-sizing: border-box; }
+      body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); background: radial-gradient(circle at top left, rgba(244, 194, 194, 0.55), transparent 34%), radial-gradient(circle at top right, rgba(219, 234, 215, 0.72), transparent 32%), linear-gradient(180deg, var(--cream) 0%, #f5eadc 100%); line-height: 1.7; }
+      body::before { content: ""; position: fixed; inset: 0; pointer-events: none; opacity: 0.045; background-image: radial-gradient(circle at 2px 2px, #4a3a2d 1px, transparent 0); background-size: 18px 18px; }
+      a { color: inherit; }
+      .shell { width: min(1120px, calc(100% - 32px)); margin: 0 auto; position: relative; }
+      .topbar { padding: 18px 0 0; }
+      .topbar-inner { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+      .brand { font-weight: 900; letter-spacing: .04em; text-decoration: none; }
+      .nav { display: flex; gap: 10px; flex-wrap: wrap; }
+      .chip, .button { display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; text-decoration: none; font-weight: 850; }
+      .chip { border: 1px solid var(--line); background: rgba(255,255,255,.65); padding: 9px 13px; color: var(--muted); font-size: 13px; }
+      .hero { padding: 54px 0 30px; }
+      .hero-card, .card, .routine, .faq { border: 1px solid rgba(255,255,255,.78); background: var(--card); border-radius: 32px; box-shadow: var(--shadow); backdrop-filter: blur(16px); }
+      .hero-card { padding: clamp(28px, 5vw, 52px); overflow: hidden; position: relative; }
+      .hero-card::after { content: "✦"; position: absolute; right: clamp(24px, 6vw, 70px); top: 28px; font-size: 96px; color: rgba(183, 132, 83, .16); }
+      .eyebrow { display: inline-flex; border-radius: 999px; background: rgba(250,237,205,.86); border: 1px solid rgba(183,132,83,.22); color: #8b5e34; padding: 8px 14px; font-size: 12px; font-weight: 900; letter-spacing: .18em; text-transform: uppercase; }
+      h1 { max-width: 780px; margin: 20px 0 14px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.5rem, 6vw, 5rem); line-height: .96; letter-spacing: -.045em; }
+      h2 { margin: 0 0 12px; font-size: clamp(1.7rem, 3vw, 2.5rem); line-height: 1.05; }
+      h3 { margin: 0 0 8px; }
+      p { margin: 0; }
+      .lead { max-width: 760px; color: var(--muted); font-size: 1.12rem; }
+      .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+      .button { padding: 13px 19px; }
+      .button-primary { background: #3d3025; color: white; }
+      .button-secondary { background: rgba(255,255,255,.8); border: 1px solid var(--line); color: var(--ink); }
+      main { padding: 16px 0 64px; }
+      .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+      .section { margin-top: 26px; }
+      .card { padding: 24px; }
+      .card p, .routine p, .faq p { color: var(--muted); }
+      .mini { display: inline-flex; margin-bottom: 13px; border-radius: 999px; padding: 7px 11px; background: rgba(250,237,205,.76); color: #7a542f; font-size: 11px; font-weight: 900; letter-spacing: .15em; text-transform: uppercase; }
+      .routine { padding: 30px; }
+      .steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 18px; }
+      .step { border: 1px solid var(--line); border-radius: 24px; background: rgba(255,255,255,.62); padding: 18px; }
+      .step strong { display: block; margin-bottom: 7px; }
+      .link-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+      .link-list a { border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,.66); padding: 13px 15px; text-decoration: none; font-weight: 800; }
+      .faq details { border-top: 1px solid var(--line); padding: 16px 0; }
+      .faq details:first-of-type { border-top: 0; }
+      .faq summary { cursor: pointer; font-weight: 900; }
+      .footer-note { margin-top: 24px; color: var(--muted); font-size: 14px; }
+      @media (max-width: 900px) { .grid, .steps, .link-list { grid-template-columns: 1fr; } .hero { padding-top: 34px; } .hero-card, .card, .routine { padding: 22px; } }
+    </style>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Aesthetic Study Breaks - Lofi Memory",
+        "url": "https://lofimemory.vercel.app/aesthetic-study-breaks.html",
+        "description": "A calm guide to using Lofi Memory for aesthetic study breaks with lofi music, cozy games, notes, reminders, and private journaling.",
+        "isPartOf": { "@type": "WebSite", "name": "Lofi Memory", "url": "https://lofimemory.vercel.app/" },
+        "about": ["aesthetic study breaks", "lofi focus music", "cozy browser games", "private journaling", "student study routine"]
+      }
+    </script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="shell topbar-inner">
+        <a class="brand" href="/">Lofi Memory</a>
+        <nav class="nav" aria-label="Related pages">
+          <a class="chip" href="/lofi-focus-hub.html">Lofi focus</a>
+          <a class="chip" href="/cozy-games-for-study-breaks.html">Cozy study games</a>
+          <a class="chip" href="/online-diary-for-students.html">Student diary</a>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <section class="hero">
+        <div class="shell">
+          <div class="hero-card">
+            <span class="eyebrow">Aesthetic study break room</span>
+            <h1>Take a softer study break without leaving your focus tab.</h1>
+            <p class="lead">Lofi Memory combines lofi focus music, cozy no-download games, private journaling, notes, reminders, and mood check-ins so your break feels calm instead of noisy.</p>
+            <div class="actions">
+              <a class="button button-primary" href="/">Open Lofi Memory</a>
+              <a class="button button-secondary" href="/cozy-games-for-study-breaks.html">Explore cozy study games</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="shell">
+        <section class="grid" aria-label="Aesthetic study break features">
+          <article class="card"><span class="mini">Listen</span><h3>Lofi focus music</h3><p>Keep a gentle background rhythm while you pause, write quick notes, or transition into your next study block.</p></article>
+          <article class="card"><span class="mini">Play</span><h3>Cozy browser games</h3><p>Choose a short round of Sudoku, Sweeper, Clues, Lotus Match, Lofi Jigsaw, or another calm game with no download required.</p></article>
+          <article class="card"><span class="mini">Reflect</span><h3>Private journal space</h3><p>Close the break with a short diary line, mood check-in, reminder, or memory note so the reset feels complete.</p></article>
+        </section>
+
+        <section class="section routine">
+          <span class="mini">Simple routine</span>
+          <h2>A four-step aesthetic study break.</h2>
+          <p>Use this rhythm when your attention feels crowded but you do not want to fall into social feeds or a long distraction loop.</p>
+          <div class="steps">
+            <div class="step"><strong>1. Start music</strong><p>Open a lofi room and let the background settle before switching tasks.</p></div>
+            <div class="step"><strong>2. Pick one game</strong><p>Play one gentle round instead of bouncing between tabs.</p></div>
+            <div class="step"><strong>3. Write one line</strong><p>Capture what you need next in the private journal or notes area.</p></div>
+            <div class="step"><strong>4. Return softly</strong><p>Use a reminder or timer to come back to your next study block.</p></div>
+          </div>
+        </section>
+
+        <section class="section grid">
+          <article class="card"><h3>Best for students</h3><p>Lofi Memory is shaped for evening study sessions, between-class resets, solo desk time, and low-pressure focus routines.</p></article>
+          <article class="card"><h3>Designed to stay calm</h3><p>The games are single-player, family-friendly, and built around soft visuals rather than competitive pressure or endless scrolling.</p></article>
+          <article class="card"><h3>Useful after the break</h3><p>Notes, reminders, journals, and memories make the break practical, not just pretty, so you can keep track of what matters.</p></article>
+        </section>
+
+        <section class="section card">
+          <span class="mini">Explore more</span>
+          <h2>Related study and focus pages.</h2>
+          <div class="link-list">
+            <a href="/lofi-music-for-studying.html">Lofi music for studying</a>
+            <a href="/study-timer-with-music.html">Study timer with music</a>
+            <a href="/relaxing-study-break.html">Relaxing study break guide</a>
+            <a href="/chill-study-games.html">Chill study games</a>
+            <a href="/aesthetic-online-journal.html">Aesthetic online journal</a>
+            <a href="/online-notes-with-reminders.html">Online notes with reminders</a>
+          </div>
+        </section>
+
+        <section class="section faq card">
+          <span class="mini">FAQ</span>
+          <h2>Aesthetic study break questions.</h2>
+          <details open><summary>What is an aesthetic study break?</summary><p>An aesthetic study break is a short pause that feels visually calm and intentional, often using cozy ambience, music, simple games, or light reflection instead of noisy feeds.</p></details>
+          <details><summary>Can I use Lofi Memory while studying?</summary><p>Yes. You can keep lofi music running, use the timer or reminders, take quick notes, and play a short single-player game when you need a softer reset.</p></details>
+          <details><summary>Is Lofi Memory a download?</summary><p>No. Lofi Memory runs in the browser, so the music rooms, games, notes, reminders, and journaling tools are available without installing a separate app.</p></details>
+        </section>
+
+        <p class="footer-note">Lofi Memory offers wellness-adjacent reflection and focus tools, but it is not medical care or a replacement for professional support.</p>
+      </div>
+    </main>
+  </body>
+</html>

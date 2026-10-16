@@ -6,6 +6,7 @@
     <description>Latest Lofi Memory pages for private journaling, lofi music, cozy browser games, study focus, mood tracking, notes, and reminders.</description>
     <language>en</language>
     <atom:link href="https://lofimemory.vercel.app/feed.xml" rel="self" type="application/rss+xml" />
+    <item><title>Aesthetic study breaks</title><link>https://lofimemory.vercel.app/aesthetic-study-breaks.html</link><description>A calm study-break landing page for lofi music, cozy browser games, private journaling, notes, reminders, and student focus routines.</description></item>
     <item><title>Hogwarts music room</title><link>https://lofimemory.vercel.app/hogwarts-music-room.html</link><description>A magical study ambience page for cozy castle lofi, journaling, browser games, and calm focus sessions.</description></item>
     <item><title>Fullscreen Solitaire online</title><link>https://lofimemory.vercel.app/fullscreen-solitaire-online.html</link><description>A fullscreen Solitaire page focused on readable cards, mobile-friendly controls, cozy lofi vibes, and calm no-download play.</description></item>
     <item><title>Private journaling hub</title><link>https://lofimemory.vercel.app/private-journaling-hub.html</link><description>A topic hub for private diary, free online diary, digital diary, mood tracking, and self-discovery prompts.</description></item>
