@@ -153,20 +153,20 @@ export default function QuietClues({ difficulty = 'medium', theme = 'lofi', view
 
   return (
     <div className={`mx-auto w-full ${isExpandedLayout ? 'min-h-full max-w-none' : 'mt-12 max-w-[940px] pb-12'}`}>
-      <div className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-amber-200/50 bg-[#fff7ec] shadow-[0_26px_80px_rgba(83,62,44,0.12)]' : 'border-stone-100 bg-gradient-to-br from-white via-stone-50/76 to-sand-50/78'}`}>
-        {isLofi && (
+      <div className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-8 ${isLofi ? 'border-[#e8dfd5]/80 bg-[#fff9f0] shadow-[0_32px_90px_rgba(83,62,44,0.12)]' : 'border-stone-100 bg-gradient-to-br from-white via-stone-50/76 to-sand-50/78'}`}>
+        {isLofi ? (
           <>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.95),rgba(255,247,236,0.9)_45%,rgba(250,237,205,0.84)_100%)]" />
-            <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #7a6250 1px, transparent 0)', backgroundSize: '19px 19px' }} />
+            <div className="absolute inset-0 bg-[#fff9f0]/95" />
+            <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #4a3a2d 1px, transparent 0)', backgroundSize: '16px 16px' }} />
           </>
-        )}
+        ) : null}
         <div className="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-stone-200 bg-white/88 text-stone-700'}`}>
-              <Sparkles size={14} /> {config.label} clue flow
+              <Sparkles size={14} /> {config.label} word focus
             </div>
-            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-stone-950'}`}>Clues</h3>
-            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-stone-700'}`}>A beginner-friendly crossword-style game built around short clues and soft words. It keeps the crossword mood without the intimidation of a full puzzle grid, so it is easy to pick up even when your brain feels tired.</p>
+            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-stone-950'}`}>Aesthetic Clues</h3>
+            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-stone-700'}`}>A beginner-friendly clue game for quiet study breaks. Solve short, cozy word prompts with soft feedback and a calm crossword mood, without the pressure of a full puzzle grid.</p>
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-stone-600'}`}>{config.note}</p>
             <div className={`mt-3 inline-flex rounded-full px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] shadow-sm ${isLofi ? 'border border-white/70 bg-white/72 text-amber-900 backdrop-blur-sm' : 'bg-white text-stone-700'}`}>{config.sessionLabel}</div>
           </div>
@@ -176,9 +176,9 @@ export default function QuietClues({ difficulty = 'medium', theme = 'lofi', view
               ['Best run', bestRound],
               ['Clears', clears]
             ].map(([label, value]) => (
-              <div key={label} className={`${isLofi ? 'rounded-[0.95rem] bg-amber-50/90 text-amber-900' : 'rounded-[1.15rem] bg-stone-50'} px-4 py-3 text-center`}>
+              <div key={label} className={`${isLofi ? 'rounded-[0.95rem] bg-amber-50/90 text-amber-900' : 'rounded-[1.15rem] bg-stone-50'} min-w-0 px-4 py-3.5 text-center sm:px-5`}>
                 <p className={`text-[10px] font-extrabold uppercase tracking-[0.2em] ${isLofi ? 'text-amber-800/60' : 'text-stone-500'}`}>{label}</p>
-                <p className={`mt-2 text-xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-stone-950'}`}>{value}</p>
+                <p className={`mt-2 truncate text-base font-extrabold leading-none sm:text-lg lg:text-xl ${isLofi ? 'text-[#3d3025]' : 'text-stone-950'}`}>{value}</p>
               </div>
             ))}
           </div>
@@ -197,7 +197,7 @@ export default function QuietClues({ difficulty = 'medium', theme = 'lofi', view
         </div>
 
         <div className="relative z-10 mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_260px]">
-          <div className={`rounded-[1.5rem] border p-5 shadow-inner lg:p-6 ${isLofi ? 'border-amber-200/60 bg-[linear-gradient(145deg,rgba(253,250,245,0.98),rgba(250,237,205,0.92))]' : 'border-stone-100 bg-[#f5ede1]'}`}>
+          <div className={`rounded-[1.5rem] border p-5 shadow-inner lg:p-6 ${isLofi ? 'border-[#e8dfd5]/80 bg-white/74 backdrop-blur-sm' : 'border-stone-100 bg-[#f5ede1]'}`}>
             <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${isLofi ? 'text-amber-800/70' : 'text-stone-500'}`}>Current clue</p>
             <h2 className={`mt-3 text-2xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-stone-950'}`}>{activeClue.clue}</h2>
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-[#8c755f]' : 'text-stone-600'}`}>Answer length: {activeClue.answer.length} letters</p>

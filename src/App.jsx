@@ -2320,9 +2320,9 @@ function App() {
     },
     {
       id: 'mind-sweeper',
-      title: 'Mind Sweeper',
-      detail: 'Soft Minesweeper logic',
-      description: 'A cozy Minesweeper-style board for a relaxing logic break when you want to chill, focus, and clear your head tile by tile.',
+      title: 'Sweeper',
+      detail: 'Aesthetic logic reset',
+      description: 'Clear soft logic tiles in a cozy sweeper board designed for mindful study breaks.',
       icon: MinesweeperImageIcon,
       tone: 'from-lime-100 to-emerald-50 text-emerald-700',
       preview: gameMindSweeperPreview,
@@ -2454,8 +2454,8 @@ function App() {
     {
       id: 'quiet-clues',
       title: 'Clues',
-      detail: 'Mini crossword-style clues',
-      description: 'Solve one soft clue at a time for a beginner-friendly crossword mood without the stress of a full puzzle grid.',
+      detail: 'Aesthetic word focus',
+      description: 'Solve short cozy clues in a soft crossword-inspired flow for gentle focus breaks.',
       icon: Map,
       tone: 'from-amber-100 to-rose-50 text-amber-700',
       preview: gameCluesPreview,

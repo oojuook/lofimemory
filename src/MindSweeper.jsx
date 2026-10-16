@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Sparkles } from 'lucide-react';
 
 const difficultySettings = {
@@ -274,15 +274,21 @@ export default function MindSweeper({ difficulty = 'medium', theme = 'lofi', vie
     <div ref={wrapperRef} className={`mx-auto w-full ${isExpandedLayout ? 'h-full flex-1 flex items-center justify-center max-w-none overflow-hidden' : 'mt-6 sm:mt-12 max-w-[980px] pb-8 sm:pb-12'}`}>
       <div style={isExpandedLayout ? { transform: `scale(${scale})`, transformOrigin: 'center center', width: '100%', maxWidth: '980px' } : {}} className={isExpandedLayout ? "flex justify-center" : ""}>
         <div className="w-full">
-      <div className={`rounded-[1.5rem] sm:rounded-[2rem] border p-2 sm:p-4 lg:p-5 ${isLofi ? 'border-amber-200/60 bg-[#fff7ec] shadow-[0_26px_70px_rgba(83,62,44,0.13)]' : 'border-[4px] border-[#16191b] bg-[#2b2f31] shadow-[0_18px_45px_rgba(18,22,20,0.22)]'}`}>
-        <div className={`rounded-[1.2rem] sm:rounded-[1.5rem] border p-2.5 sm:p-4 lg:p-5 ${isLofi ? 'border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'border-t-[3px] border-l-[3px] border-[#50565a] border-r-[3px] border-b-[3px] border-r-[#111315] border-b-[#111315] bg-[#383d40]'}`}>
+      <div className={`relative overflow-hidden rounded-[1.5rem] sm:rounded-[2rem] border p-2 sm:p-4 lg:p-5 ${isLofi ? 'border-[#e8dfd5]/70 bg-[#fff9f0] shadow-[0_32px_90px_rgba(83,62,44,0.12)]' : 'border-[4px] border-[#16191b] bg-[#2b2f31] shadow-[0_18px_45px_rgba(18,22,20,0.22)]'}`}>
+        {isLofi ? (
+          <>
+            <div className="absolute inset-0 bg-[#fff9f0]/95" />
+            <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #4a3a2d 1px, transparent 0)', backgroundSize: '16px 16px' }} />
+          </>
+        ) : null}
+        <div className={`relative z-10 rounded-[1.2rem] sm:rounded-[1.5rem] border p-2.5 sm:p-4 lg:p-5 ${isLofi ? 'border-[#e8dfd5]/80 bg-white/72 backdrop-blur-sm' : 'border-t-[3px] border-l-[3px] border-[#50565a] border-r-[3px] border-b-[3px] border-r-[#111315] border-b-[#111315] bg-[#383d40]'}`}>
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             <div>
               <div className={`inline-flex items-center gap-2 rounded-full border px-2.5 py-1 text-[9px] sm:text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-[#5d6468] bg-[#2b2f31] text-[#d9e0df]'}`}>
-                <Sparkles size={13} /> {label} sweep
+                <Sparkles size={13} /> {label} logic reset
               </div>
-              <h3 className={`mt-3 sm:mt-4 text-xl sm:text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-[#f1f5f3]'}`}>Mind Sweeper</h3>
-              <p className={`mt-1.5 sm:mt-2 max-w-2xl text-xs sm:text-sm leading-6 sm:leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-[#c1cbc7]'}`}>{isLofi ? 'A cozy board with soft biscuit tiles.' : 'Classic dark Minesweeper tiles.'}</p>
+              <h3 className={`mt-3 sm:mt-4 text-xl sm:text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-[#f1f5f3]'}`}>Aesthetic Logic Sweeper</h3>
+              <p className={`mt-1.5 sm:mt-2 max-w-2xl text-xs sm:text-sm leading-6 sm:leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-[#c1cbc7]'}`}>{isLofi ? 'A cozy logic board with soft biscuit tiles, built for mindful study breaks.' : 'Classic dark Minesweeper tiles.'}</p>
               <div className="mt-3 flex flex-wrap gap-1.5 sm:gap-2">
                 <span className={`rounded-full border px-2.5 py-1 text-[9px] sm:text-xs font-extrabold uppercase tracking-[0.18em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-[#5d6468] bg-[#2b2f31] text-[#d9e0df]'}`}>{densityLabel}</span>
               </div>
@@ -294,9 +300,9 @@ export default function MindSweeper({ difficulty = 'medium', theme = 'lofi', vie
                 ['Flags', flagCount],
                 ['Wins', wins]
               ].map(([statLabel, value]) => (
-                <div key={statLabel} className={`px-2 py-2 sm:px-4 sm:py-3 text-center ${isLofi ? 'rounded-[1rem] bg-[#faedcd] text-[#3d3025]' : 'rounded-[0.55rem] bg-[#1d2022]'}`}>
+                <div key={statLabel} className={`min-w-0 px-2 py-2 text-center sm:px-4 sm:py-3 ${isLofi ? 'rounded-[1rem] bg-[#faedcd] text-[#3d3025]' : 'rounded-[0.55rem] bg-[#1d2022]'}`}>
                   <p className={`text-[8px] sm:text-[10px] font-extrabold uppercase tracking-[0.2em] ${isLofi ? 'text-amber-800/60' : 'text-[#9fa9a5]'}`}>{statLabel}</p>
-                  <p className={`mt-1 sm:mt-2 text-base sm:text-xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-[#f1f5f3]'}`}>{value}</p>
+                  <p className={`mt-1 truncate text-sm font-extrabold leading-none sm:mt-2 sm:text-lg lg:text-xl ${isLofi ? 'text-[#3d3025]' : 'text-[#f1f5f3]'}`}>{value}</p>
                 </div>
               ))}
             </div>
