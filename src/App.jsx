@@ -5296,14 +5296,14 @@ function App() {
                 </div>
               </div>
 
-              <div className="mt-8 flex flex-wrap items-center gap-3 text-sm">
-                <span className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Original articles</span>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/blog.html">Lofi Memory Blog</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/student-focus-kit.html">Student Focus Kit</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/article-psychology-of-journaling.html">Psychology of journaling</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/article-protect-privacy-journaling-online.html">Privacy when journaling</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/article-how-to-start-journaling-habit.html">Start a writing habit</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/article-benefits-of-private-online-diary.html">Benefits of online diary</a>
+              <div className="mt-8 flex flex-wrap items-center gap-3 rounded-[1.7rem] border border-white/30 bg-[#1f2f29]/82 p-4 text-sm shadow-[0_18px_42px_rgba(31,47,41,0.26)] backdrop-blur-md">
+                <span className="rounded-full bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.22em] text-[#284a3a] shadow-sm">Original articles</span>
+                <a className="rounded-full border border-white/70 bg-[#fffaf0] px-4 py-2 font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/blog.html">Lofi Memory Blog</a>
+                <a className="rounded-full border border-white/70 bg-[#fffaf0] px-4 py-2 font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/student-focus-kit.html">Student Focus Kit</a>
+                <a className="rounded-full border border-white/70 bg-[#fffaf0] px-4 py-2 font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-psychology-of-journaling.html">Psychology of journaling</a>
+                <a className="rounded-full border border-white/70 bg-[#fffaf0] px-4 py-2 font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-protect-privacy-journaling-online.html">Privacy when journaling</a>
+                <a className="rounded-full border border-white/70 bg-[#fffaf0] px-4 py-2 font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-how-to-start-journaling-habit.html">Start a writing habit</a>
+                <a className="rounded-full border border-white/70 bg-[#fffaf0] px-4 py-2 font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-benefits-of-private-online-diary.html">Benefits of online diary</a>
               </div>
 
               <div className="mt-8 grid gap-4 sm:grid-cols-3 xl:grid-cols-3">
