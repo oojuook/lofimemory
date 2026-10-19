@@ -1,12 +1,26 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Leaf, RotateCcw, Timer, TreePine } from 'lucide-react';
+import { CheckCircle2, Leaf, Moon, RotateCcw, Sparkles, Timer, TreePine } from 'lucide-react';
 
 const growthStages = [
-  { minutes: 0, label: 'Seedling', height: 64, canopy: 50, note: 'Arrive slowly. Put your phone away, open your notes, and let the room become quiet.' },
-  { minutes: 3, label: 'Young sprout', height: 92, canopy: 70, note: 'Your focus tree is waking up. Stay with one task and keep the lofi room open.' },
-  { minutes: 8, label: 'Little tree', height: 126, canopy: 92, note: 'A steady study break is forming. Keep reading, writing, or revising without switching tabs.' },
-  { minutes: 15, label: 'Focus tree', height: 160, canopy: 118, note: 'Nice rhythm. Your tree is growing with the time you stay in this calm room.' },
-  { minutes: 25, label: 'Deep focus tree', height: 198, canopy: 145, note: 'A full focus block is blooming. When you stop, write one sentence about what helped.' }
+  { minutes: 0, label: 'Seedling', height: 64, canopy: 50, glow: 0.2, note: 'Arrive slowly. Put your phone away, open your notes, and let the room become quiet.' },
+  { minutes: 3, label: 'Young sprout', height: 92, canopy: 70, glow: 0.28, note: 'Your focus tree is waking up. Stay with one task and keep the lofi room open.' },
+  { minutes: 8, label: 'Little tree', height: 126, canopy: 92, glow: 0.36, note: 'A steady study break is forming. Keep reading, writing, or revising without switching tabs.' },
+  { minutes: 15, label: 'Focus tree', height: 160, canopy: 118, glow: 0.45, note: 'Nice rhythm. Your tree is growing with the time you stay in this calm room.' },
+  { minutes: 25, label: 'Deep focus tree', height: 198, canopy: 145, glow: 0.56, note: 'A full focus block is blooming. When you stop, write one sentence about what helped.' }
+];
+
+const focusMilestones = [
+  { seconds: 180, label: '3 min', text: 'settled in' },
+  { seconds: 480, label: '8 min', text: 'steady rhythm' },
+  { seconds: 900, label: '15 min', text: 'deepening focus' },
+  { seconds: 1500, label: '25 min', text: 'full focus block' }
+];
+
+const focusPrompts = [
+  'One tab. One task. One gentle block.',
+  'Let the page stay quiet while your attention warms up.',
+  'If your mind wanders, come back to the next small step.',
+  'You do not need a perfect session. Staying is already progress.'
 ];
 
 function formatTime(totalSeconds) {
@@ -23,6 +37,7 @@ function getStage(totalSeconds) {
 export default function FocusTreeRoom() {
   const [seconds, setSeconds] = useState(0);
   const [isGrowing, setIsGrowing] = useState(true);
+  const [focusIntention, setFocusIntention] = useState('');
   const [isPageVisible, setIsPageVisible] = useState(() => (typeof document === 'undefined' ? true : !document.hidden));
 
   useEffect(() => {
@@ -50,24 +65,39 @@ export default function FocusTreeRoom() {
 
   const stage = useMemo(() => getStage(seconds), [seconds]);
   const progressToMature = Math.min(seconds / (25 * 60), 1);
+  const activePrompt = focusPrompts[Math.floor(seconds / 180) % focusPrompts.length];
   const leaves = useMemo(() => ['leaf-1', 'leaf-2', 'leaf-3', 'leaf-4', 'leaf-5', 'leaf-6'], []);
+  const fireflies = useMemo(() => ['glow-1', 'glow-2', 'glow-3', 'glow-4', 'glow-5', 'glow-6', 'glow-7'], []);
 
   return (
-    <div className="mx-auto max-w-5xl px-3 py-6 sm:px-6 sm:py-10 lg:py-16 fade-in">
-      <section className="relative overflow-hidden rounded-[2.5rem] border border-emerald-200/70 bg-gradient-to-br from-[#eff8ee] via-[#f8f4e9] to-[#e1efd9] p-5 shadow-soft sm:p-8 lg:p-10">
-        <div className="absolute inset-0 opacity-50" aria-hidden="true">
+    <div className="mx-auto max-w-6xl px-3 py-6 sm:px-6 sm:py-10 lg:py-16 fade-in">
+      <section className="relative overflow-hidden rounded-[2.5rem] border border-emerald-200/70 bg-gradient-to-br from-[#eef8ee] via-[#fbf4e9] to-[#dcebd5] p-4 shadow-soft sm:p-7 lg:p-9">
+        <div className="absolute inset-0 opacity-60" aria-hidden="true">
           <div className="absolute -left-12 top-12 h-48 w-48 rounded-full bg-lime-200 blur-3xl" />
           <div className="absolute bottom-0 right-0 h-64 w-64 rounded-full bg-emerald-200 blur-3xl" />
+          <div className="absolute left-1/2 top-0 h-40 w-40 -translate-x-1/2 rounded-full bg-amber-100 blur-3xl" />
         </div>
-        <div className="relative z-10 grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-stretch">
-          <div className="rounded-[2rem] border border-white/80 bg-white/75 p-5 shadow-sm backdrop-blur">
-            <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-emerald-700">Focus room</p>
-            <h1 className="mt-3 font-display text-4xl font-black leading-none tracking-tight text-sage-950 sm:text-5xl">Stay here and grow a quiet tree.</h1>
-            <p className="mt-4 text-sm font-semibold leading-7 text-sage-700">This is not a game you need to win. The tree only grows while this Focus Tree page is open and visible, so switching to another browser tab or another Lofi Memory room pauses growth automatically.</p>
+        <div className="relative z-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-stretch">
+          <div className="rounded-[2rem] border border-white/80 bg-white/78 p-5 shadow-sm backdrop-blur md:p-6">
+            <p className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.22em] text-emerald-700"><Moon size={14} /> Focus room</p>
+            <h1 className="mt-4 font-display text-4xl font-black leading-none tracking-tight text-sage-950 sm:text-5xl">Stay on this page and grow a quiet tree.</h1>
+            <p className="mt-4 text-sm font-semibold leading-7 text-sage-700">The tree only grows while this Focus Tree page is open and visible. Switching browser tabs or leaving the Focus room pauses growth automatically, so the timer rewards real presence instead of background time.</p>
 
-            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+            <label className="mt-5 block rounded-[1.4rem] border border-emerald-100 bg-white/86 p-4 shadow-sm">
+              <span className="flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-emerald-700"><Sparkles size={14} /> Session intention</span>
+              <input
+                className="mt-3 w-full rounded-2xl border border-emerald-100 bg-emerald-50/50 px-4 py-3 text-sm font-bold text-sage-950 outline-none transition placeholder:text-sage-500 focus:border-emerald-300 focus:bg-white"
+                maxLength={70}
+                onChange={(event) => setFocusIntention(event.target.value)}
+                placeholder="What are you gently focusing on?"
+                type="text"
+                value={focusIntention}
+              />
+            </label>
+
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
               <div className="rounded-[1.4rem] border border-emerald-100 bg-emerald-50/80 p-4">
-                <div className="flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-emerald-700"><Timer size={15} /> Time here</div>
+                <div className="flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-emerald-700"><Timer size={15} /> Visible time here</div>
                 <p className="mt-2 text-4xl font-black text-sage-950">{formatTime(seconds)}</p>
               </div>
               <div className="rounded-[1.4rem] border border-amber-100 bg-amber-50/80 p-4">
@@ -76,7 +106,7 @@ export default function FocusTreeRoom() {
               </div>
             </div>
 
-            <div className="mt-5 rounded-[1.4rem] border border-white/80 bg-white/70 p-4">
+            <div className="mt-5 rounded-[1.4rem] border border-white/80 bg-white/72 p-4">
               <div className="flex justify-between text-xs font-black uppercase tracking-[0.18em] text-sage-600"><span>Growth</span><span>{Math.round(progressToMature * 100)}%</span></div>
               <div className="mt-3 h-3 overflow-hidden rounded-full bg-emerald-100">
                 <div className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-lime-400 transition-all duration-500" style={{ width: `${progressToMature * 100}%` }} />
@@ -88,6 +118,10 @@ export default function FocusTreeRoom() {
               {canGrow ? 'Growing now — keep this Focus page visible.' : 'Growth paused — return to this Focus page to keep growing.'}
             </div>
 
+            <div className="mt-4 rounded-[1.2rem] border border-sage-100 bg-sage-50/80 px-4 py-3 text-sm font-semibold leading-6 text-sage-800">
+              {focusIntention.trim() ? `For this block: ${focusIntention.trim()}` : activePrompt}
+            </div>
+
             <div className="mt-5 flex flex-wrap gap-3">
               <button type="button" onClick={() => setIsGrowing((value) => !value)} className="rounded-full bg-sage-900 px-5 py-3 text-sm font-black text-white shadow-lift transition hover:-translate-y-0.5">
                 {isGrowing ? 'Pause tree' : 'Resume tree'}
@@ -96,11 +130,31 @@ export default function FocusTreeRoom() {
                 <RotateCcw size={16} /> Reset
               </button>
             </div>
+
+            <div className="mt-5 grid gap-2 sm:grid-cols-4">
+              {focusMilestones.map((milestone) => {
+                const reached = seconds >= milestone.seconds;
+                return (
+                  <div key={milestone.label} className={`rounded-2xl border px-3 py-3 text-center text-xs font-black ${reached ? 'border-emerald-200 bg-emerald-50 text-emerald-800' : 'border-sage-100 bg-white/76 text-sage-500'}`}>
+                    <div className="flex items-center justify-center gap-1"><CheckCircle2 size={13} /> {milestone.label}</div>
+                    <p className="mt-1 font-bold normal-case tracking-normal">{milestone.text}</p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
-          <div className="relative min-h-[520px] overflow-hidden rounded-[2rem] border border-white/70 bg-[#16271d] p-5 shadow-lift">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(194,255,176,0.25),transparent_18rem)]" aria-hidden="true" />
-            <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#0f1c14] to-transparent" aria-hidden="true" />
+          <div className="relative min-h-[560px] overflow-hidden rounded-[2rem] border border-white/70 bg-[#14251b] p-5 shadow-lift">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_16%,rgba(214,255,183,0.30),transparent_18rem)]" aria-hidden="true" />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(33,62,45,0.08),rgba(8,15,10,0.72))]" aria-hidden="true" />
+            <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-[#0d1811] to-transparent" aria-hidden="true" />
+            {fireflies.map((glow, index) => (
+              <span
+                key={glow}
+                className="absolute rounded-full bg-lime-100 shadow-[0_0_18px_rgba(217,249,157,0.9)]"
+                style={{ width: 4 + (index % 3), height: 4 + (index % 3), left: `${10 + index * 12}%`, top: `${14 + (index % 4) * 15}%`, opacity: 0.25 + stage.glow }}
+              />
+            ))}
             {leaves.map((leaf, index) => (
               <Leaf
                 key={leaf}
@@ -111,9 +165,14 @@ export default function FocusTreeRoom() {
             ))}
 
             <div className="relative z-10 flex h-full flex-col items-center justify-end pb-10 text-center">
-              <div className="relative flex flex-col items-center transition-all duration-700" style={{ minHeight: 280 }}>
+              <div className="mb-auto w-full rounded-[1.5rem] border border-white/10 bg-white/10 px-5 py-4 text-left text-white backdrop-blur">
+                <p className="text-xs font-black uppercase tracking-[0.22em] text-lime-100">Room rule</p>
+                <p className="mt-2 text-sm font-semibold leading-6 text-emerald-50/85">Only visible focus counts. Leave the tab, and the tree rests with you.</p>
+              </div>
+
+              <div className="relative flex flex-col items-center transition-all duration-700" style={{ minHeight: 300 }}>
                 <div
-                  className="absolute bottom-[88px] rounded-full bg-gradient-to-br from-lime-200 via-emerald-300 to-emerald-700 shadow-[0_0_60px_rgba(132,204,22,0.35)] transition-all duration-700"
+                  className="absolute bottom-[88px] rounded-full bg-gradient-to-br from-lime-200 via-emerald-300 to-emerald-700 shadow-[0_0_70px_rgba(132,204,22,0.42)] transition-all duration-700"
                   style={{ width: stage.canopy, height: stage.canopy, transform: `translateY(${(1 - progressToMature) * 20}px)` }}
                 />
                 <div

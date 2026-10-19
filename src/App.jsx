@@ -768,7 +768,7 @@ function getInitialActiveTab() {
   if (hash === 'diary') return 'write';
   const params = new URLSearchParams(window.location.search);
   const requestedTab = params.get('tab') || '';
-  const allowedTabs = new Set(['home', 'write', 'notes', 'memories', 'breathe', 'insights', 'design']);
+  const allowedTabs = new Set(['home', 'unwind', 'focus', 'write', 'notes', 'memories', 'breathe', 'insights', 'design']);
   if (allowedTabs.has(requestedTab)) return requestedTab;
   if (/^\d{4}-\d{2}-\d{2}$/.test(params.get('date') || '')) return 'memories';
   return 'home';
