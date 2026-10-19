@@ -2165,7 +2165,7 @@ function App() {
   const [activeTransitionGameId, setActiveTransitionGameId] = useState(null);
   const [memoriesView, setMemoriesView] = useState('calendar');
   const [gameVisualTheme, setGameVisualTheme] = useState('lofi');
-  const showMinimalHomeOverview = activeTab === 'home' && activeHomeSection === 'overview';
+  const showMinimalHomeOverview = false; // Always show full descriptive overview for better SEO and initial Bot review
   const homeEntryCards = [
     { id: 'unwind', title: 'Games', description: 'Chill games', icon: Gamepad2, iconTone: 'bg-[#d8dbff] text-violet-700', onClick: () => navigateToTab('unwind'), preview: gamesSectionPreviewImage },
     { id: 'write', title: 'Diary', description: 'Write only when it helps', icon: PenLine, iconTone: 'bg-[#dbead9] text-sage-700', onClick: () => navigateToTab('write'), preview: diarySectionPreviewImage },
@@ -5359,13 +5359,12 @@ function App() {
               </div>
 
               <div className="mt-8 flex flex-wrap items-center gap-3 text-sm">
-                <span className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Popular guides</span>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-music-room.html">Lofi music room</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/relaxing-browser-games.html">Relaxing browser games</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/daily-journaling-app.html">Daily journaling app</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/write-diary-online.html">Write diary online</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/lofi-radio-online.html">Lofi radio</a>
-                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/chill-place-online.html">Chill place online</a>
+                <span className="text-xs font-extrabold uppercase tracking-[0.22em] text-sage-600">Original articles</span>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/blog.html">Lofi Memory Blog</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/article-psychology-of-journaling.html">Psychology of journaling</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/article-protect-privacy-journaling-online.html">Privacy when journaling</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/article-how-to-start-journaling-habit.html">Start a writing habit</a>
+                <a className="rounded-full border border-amber-200/50 bg-white/92 px-4 py-2 font-bold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href="/article-benefits-of-private-online-diary.html">Benefits of online diary</a>
               </div>
 
               <div className="mt-8 grid gap-4 sm:grid-cols-3 xl:grid-cols-3">
@@ -7112,8 +7111,8 @@ function App() {
               <h4 className="mt-3 text-2xl font-extrabold leading-tight text-ink">A stable place for future recommendations, without interrupting the journal.</h4>
               <p className="mt-3 max-w-2xl leading-8 text-sage-800">This area sits outside the main writing flow, so future recommendations can live here without covering prompts, shifting the editor, or making the journaling experience feel crowded on mobile or desktop.</p>
               <div className="mt-5 flex flex-wrap gap-3">
-                <a className="inline-flex items-center justify-center rounded-full bg-sage-900 px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-sage-800" href="/private-online-diary.html">Open private diary guide</a>
-                <a className="inline-flex items-center justify-center rounded-full border border-amber-200/50 bg-white px-5 py-3 text-sm font-bold text-sage-900 transition hover:-translate-y-0.5 hover:border-sage-300" href="/journal-prompts.html">Browse prompts</a>
+                <a className="inline-flex items-center justify-center rounded-full bg-sage-900 px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-sage-800" href="/article-benefits-of-private-online-diary.html">Open private diary guide</a>
+                <a className="inline-flex items-center justify-center rounded-full border border-amber-200/50 bg-white px-5 py-3 text-sm font-bold text-sage-900 transition hover:-translate-y-0.5 hover:border-sage-300" href="/article-journaling-prompts-self-discovery.html">Browse prompts</a>
               </div>
             </div>
             <div className="rounded-3xl border border-[#e8dfd5]/80 bg-white/85 p-6 shadow-lift backdrop-blur">
@@ -7157,9 +7156,9 @@ function App() {
       {activeHomeSection === 'articles' && (
       <section id="articles" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
         <SectionHeader
-          eyebrow="Wellness Library"
-          title="Articles and reflections for a gentler journaling practice."
-          text="These guides and short reflections help visitors begin private journaling with more clarity, kindness, and curiosity."
+          eyebrow="Original Articles"
+          title="Articles for a gentler journaling practice."
+          text="These guides and short reflections help visitors begin private journaling with more clarity and curiosity."
         />
         <div className="grid gap-5 md:grid-cols-2">
           {wellnessArticles.map((article, index) => (
@@ -7500,11 +7499,18 @@ function App() {
               <a className="transition hover:text-white" href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
             </div>
             <div className="mb-5 flex flex-wrap justify-center gap-x-6 gap-y-2 text-[11px] font-black uppercase tracking-[0.18em] text-white/85 lofi-sharp-text-soft">
+              <a className="transition hover:text-white" href="/">Home</a>
+              <a className="transition hover:text-white" href="/blog.html">Blog</a>
+              <a className="transition hover:text-white" href="/about.html">About</a>
+              <a className="transition hover:text-white" href="/contact.html">Contact</a>
+              <a className="transition hover:text-white" href="/privacy.html">Privacy</a>
+              <a className="transition hover:text-white" href="/terms.html">Terms</a>
               <a className="transition hover:text-white" href="/editorial-policy.html">Editorial policy</a>
               <a className="transition hover:text-white" href="/advertising-policy.html">Advertising policy</a>
               <a className="transition hover:text-white" href="/content-quality-policy.html">Content quality</a>
               <a className="transition hover:text-white" href="/disclaimer.html">Disclaimer</a>
               <a className="transition hover:text-white" href="/cookie-policy.html">Cookie policy</a>
+              <a className="transition hover:text-white" href="/sitemap.html">Sitemap</a>
             </div>
             <p className="font-bold text-white lofi-sharp-text-soft">Lofi Memory is a calm browser space for students and gentle routines: lofi music, relaxing games, private journaling, notes, reminders, and family-friendly study breaks in one tab.</p>
             <p className="mt-3 text-xs font-semibold leading-6 text-white/85 lofi-sharp-text-soft">Original product pages and core support pages stay indexable. Lower-value or overlapping utility pages are reduced for search and advertising review quality.</p>

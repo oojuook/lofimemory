@@ -3,5 +3,5 @@ Allow: /
 
 User-agent: *
 Allow: /
-Host: https://lofimemory.vercel.app
+Host: lofimemory.vercel.app
 Sitemap: https://lofimemory.vercel.app/sitemap.xml
