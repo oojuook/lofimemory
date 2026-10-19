@@ -1,0 +1,79 @@
+# Lofi Memory
+
+Lofi Memory is a cozy browser space for no-download relaxing games, lofi radio, private journaling, mood tracking, notes, reminders, memories, and calm daily reflection.
+
+## Keyword clusters
+- Private journaling hub, gratitude journal online, aesthetic online journal, brain dump journal online, online diary for students, private memory calendar, private diary online no signup, free online diary, digital diary app, private online diary, online diary with lock, private journal app, daily journaling app, mood tracker journal, journal prompts for self discovery
+- Relaxing games hub, family-friendly browser games, relaxing games before bed, cozy games for study breaks, calming games online, single player browser games, cozy browser games, relaxing browser games, no download browser games, games to play when bored, relaxing games with music
+- Solitaire online, Minesweeper online, Snake game online, Daily word puzzle, Sudoku online, Typing test online
+- Aesthetic study breaks, lofi study room online, aesthetic student diary, mindful reflection guide for students, study break games and journal, lofi study breaks, lofi focus hub, pomodoro timer with lofi, cute notes app online, online notes with reminders, daily planner with journal, self-care reminder app, study timer with music, lofi study timer, focus music online, writing with lofi music, lofi radio online, lofi music for studying, focus music, chill music, lofi music room for writing, hogwarts music room, magical study ambience, castle lofi
+
+## Primary pages
+- Home: https://lofimemory.vercel.app/
+- Aesthetic study breaks: https://lofimemory.vercel.app/aesthetic-study-breaks.html
+- Lofi study room: https://lofimemory.vercel.app/lofi-study-room.html
+- Aesthetic student diary: https://lofimemory.vercel.app/aesthetic-student-diary.html
+- Mindful reflection guide: https://lofimemory.vercel.app/mindful-reflection-guide.html
+- Study break games and journal: https://lofimemory.vercel.app/study-break-games-and-journal.html
+- HTML sitemap: https://lofimemory.vercel.app/sitemap.html
+- Private journaling hub: https://lofimemory.vercel.app/private-journaling-hub.html
+- Relaxing games hub: https://lofimemory.vercel.app/relaxing-games-hub.html
+- Lofi focus hub: https://lofimemory.vercel.app/lofi-focus-hub.html
+- Gratitude journal online: https://lofimemory.vercel.app/gratitude-journal-online.html
+- Aesthetic online journal: https://lofimemory.vercel.app/aesthetic-online-journal.html
+- Pomodoro timer with lofi: https://lofimemory.vercel.app/pomodoro-timer-with-lofi.html
+- Cozy games for study breaks: https://lofimemory.vercel.app/cozy-games-for-study-breaks.html
+- Online notes with reminders: https://lofimemory.vercel.app/online-notes-with-reminders.html
+- Daily planner with journal: https://lofimemory.vercel.app/daily-planner-with-journal.html
+- Self-care reminder app: https://lofimemory.vercel.app/self-care-reminder-app.html
+- Private memory calendar: https://lofimemory.vercel.app/private-memory-calendar.html
+- Online diary for students: https://lofimemory.vercel.app/online-diary-for-students.html
+- Cute notes app online: https://lofimemory.vercel.app/cute-notes-app-online.html
+- Relaxing games before bed: https://lofimemory.vercel.app/relaxing-games-before-bed.html
+- Brain dump journal online: https://lofimemory.vercel.app/brain-dump-journal-online.html
+- Family-friendly browser games: https://lofimemory.vercel.app/family-friendly-browser-games.html
+- Content quality policy: https://lofimemory.vercel.app/content-quality-policy.html
+- Blog: https://lofimemory.vercel.app/blog.html
+- About: https://lofimemory.vercel.app/about.html
+- Lofi music room: https://lofimemory.vercel.app/lofi-music-room.html
+- Hogwarts music room: https://lofimemory.vercel.app/hogwarts-music-room.html
+- Lofi radio online: https://lofimemory.vercel.app/lofi-radio-online.html
+- Listen to lofi music online: https://lofimemory.vercel.app/listen-to-lofi-music-online.html
+- Lofi music for studying: https://lofimemory.vercel.app/lofi-music-for-studying.html
+- Study timer with music: https://lofimemory.vercel.app/study-timer-with-music.html
+- Focus music online: https://lofimemory.vercel.app/focus-music-online.html
+- Writing with lofi music: https://lofimemory.vercel.app/writing-with-lofi-music.html
+- Relaxing browser games: https://lofimemory.vercel.app/relaxing-browser-games.html
+- Calming games online: https://lofimemory.vercel.app/calming-games-online.html
+- Cozy browser games: https://lofimemory.vercel.app/cozy-browser-games.html
+- No download browser games: https://lofimemory.vercel.app/no-download-browser-games.html
+- Games to play when bored: https://lofimemory.vercel.app/games-to-play-when-bored.html
+- Single player browser games: https://lofimemory.vercel.app/single-player-browser-games.html
+- Games to relax: https://lofimemory.vercel.app/games-to-relax.html
+- Free online diary: https://lofimemory.vercel.app/free-online-diary.html
+- Private diary online no signup: https://lofimemory.vercel.app/private-diary-no-signup.html
+- Digital diary app: https://lofimemory.vercel.app/digital-diary-app.html
+- Private journal app: https://lofimemory.vercel.app/private-journal-app.html
+- Private online diary: https://lofimemory.vercel.app/private-online-diary.html
+- Online diary with lock: https://lofimemory.vercel.app/online-diary-with-lock.html
+- Daily journaling app: https://lofimemory.vercel.app/daily-journaling-app.html
+- Journal prompts: https://lofimemory.vercel.app/journal-prompts.html
+- Journal prompts for self discovery: https://lofimemory.vercel.app/journal-prompts-self-discovery.html
+- Mood journal: https://lofimemory.vercel.app/mood-journal.html
+- Mood tracker journal: https://lofimemory.vercel.app/mood-tracker-journal.html
+- Mental health journal online: https://lofimemory.vercel.app/mental-health-journal-online.html
+
+## Game pages
+- Solitaire online: https://lofimemory.vercel.app/solitaire-online.html
+- Fullscreen Solitaire online: https://lofimemory.vercel.app/fullscreen-solitaire-online.html
+- Minesweeper online: https://lofimemory.vercel.app/minesweeper-online.html
+- Snake game online: https://lofimemory.vercel.app/snake-game-online.html
+- Daily word puzzle: https://lofimemory.vercel.app/daily-word-puzzle.html
+- Sudoku online: https://lofimemory.vercel.app/sudoku-online.html
+- Typing test online: https://lofimemory.vercel.app/typing-test-online.html
+
+## Discovery
+- HTML sitemap: https://lofimemory.vercel.app/sitemap.html
+- XML Sitemap: https://lofimemory.vercel.app/sitemap.xml
+- RSS feed: https://lofimemory.vercel.app/feed.xml
+- OpenSearch: https://lofimemory.vercel.app/opensearch.xml
