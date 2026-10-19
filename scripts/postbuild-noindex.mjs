@@ -21,7 +21,8 @@ const coreIndexedPages = new Set([
   'sitemap.html'
 ]);
 
-const alwaysIgnored = new Set([
+const alwaysKept = new Set([
+  '404.html',
   'google5226abd8d86c0ece.html',
   'googled1931b3f15730e0b.html'
 ]);
@@ -30,8 +31,11 @@ const noindexMeta = '<meta name="robots" content="noindex, follow" />';
 const adsenseScriptPattern = /\s*<script\s+async\s+src=["']https:\/\/pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js\?client=[^"']+["'][^>]*><\/script>\s*/gi;
 
 function shouldIndex(fileName) {
-  if (alwaysIgnored.has(fileName)) return true;
   return coreIndexedPages.has(fileName) || fileName.startsWith('article-');
+}
+
+function shouldKeepFile(fileName) {
+  return shouldIndex(fileName) || alwaysKept.has(fileName);
 }
 
 function stripAdSenseFromLowValuePages(html, fileName) {
@@ -65,8 +69,15 @@ async function main() {
   const htmlFiles = entries.filter((entry) => entry.isFile() && entry.name.endsWith('.html'));
 
   let updatedCount = 0;
+  let removedCount = 0;
   for (const entry of htmlFiles) {
     const filePath = path.join(distDir, entry.name);
+    if (!shouldKeepFile(entry.name)) {
+      await fs.unlink(filePath);
+      removedCount += 1;
+      continue;
+    }
+
     const original = await fs.readFile(filePath, 'utf8');
     const updated = stripAdSenseFromLowValuePages(upsertRobotsMeta(original, entry.name), entry.name);
     if (updated !== original) {
@@ -75,7 +86,7 @@ async function main() {
     }
   }
 
-  console.log(`[postbuild-noindex] Processed ${htmlFiles.length} html files, updated ${updatedCount}.`);
+  console.log(`[postbuild-noindex] Processed ${htmlFiles.length} html files, updated ${updatedCount}, removed ${removedCount} low-value html files from dist.`);
 }
 
 main().catch((error) => {
