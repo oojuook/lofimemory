@@ -27,6 +27,7 @@ Lofi Memory is a cozy browser app for lofi music, no-download relaxing games, pr
 - Privacy when journaling online: https://lofimemory.vercel.app/article-protect-privacy-journaling-online.html
 - Psychology of journaling: https://lofimemory.vercel.app/article-psychology-of-journaling.html
 - Aesthetic study break routine for students: https://lofimemory.vercel.app/article-study-break-routine-students.html
+- Student Focus Kit: https://lofimemory.vercel.app/student-focus-kit.html
 - Word guessing games for busy minds: https://lofimemory.vercel.app/article-word-guessing-games-busy-mind.html
 
 ## Discovery

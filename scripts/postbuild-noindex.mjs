@@ -32,6 +32,7 @@ const approvedArticlePages = new Set([
   'article-protect-privacy-journaling-online.html',
   'article-psychology-of-journaling.html',
   'article-study-break-routine-students.html',
+  'student-focus-kit.html',
   'article-word-guessing-games-busy-mind.html'
 ]);
 
