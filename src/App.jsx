@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import radioVinylIcon from './assets/lofi-radio-vinyl.png';
-import headerLogoIcon from './assets/lofi-header-logo.png';
 import minesweeperIconImage from './assets/minesweeper-icon.png';
 import solitaireIconImage from './assets/solitaire-icon.png';
 import solitairePreviewImage from './assets/solitaire-preview.png';
@@ -100,7 +99,7 @@ import QuietSudoku from './QuietSudoku';
 import QuietSnake from './QuietSnake';
 import Solitaire from './Solitaire';
 import LofiJigsaw from './LofiJigsaw';
-import StudySprintGarden from './StudySprintGarden';
+import FocusTreeRoom from './FocusTreeRoom';
 import { auth, db, getMessagingIfSupported, googleProvider } from './firebase';
 
 const STORAGE_KEY = 'quiet-harbor-journal-v1';
@@ -540,7 +539,7 @@ const seoGuidePages = [
   { label: 'Helpful read', title: 'Journaling prompts for self-discovery', text: 'Use gentler prompts that help you begin without turning the page into a performance.', href: '/article-journaling-prompts-self-discovery.html' },
   { label: 'Helpful read', title: 'Memory games before writing', text: 'Read why a short puzzle break can help your attention settle before reflection.', href: '/article-memory-games-cognitive-relief.html' },
   { label: 'Helpful read', title: 'Daily word puzzles for relaxing breaks', text: 'See why familiar word loops can feel grounding when you want a tidy reset.', href: '/article-daily-word-puzzles-relax.html' },
-  { label: 'Helpful read', title: 'Aesthetic study break routine for students', text: 'Use lofi music, Study Sprint Garden, private journaling, and tiny game resets as one calm study loop.', href: '/article-study-break-routine-students.html' },
+  { label: 'Helpful read', title: 'Aesthetic study break routine for students', text: 'Use lofi music, the Focus Tree room, private journaling, and tiny game resets as one calm study loop.', href: '/article-study-break-routine-students.html' },
   { label: 'Helpful read', title: 'Word guessing games when your mind is busy', text: 'Learn how small pattern-recognition wins can provide relief without demanding too much energy.', href: '/article-word-guessing-games-busy-mind.html' }
 ];
 
@@ -2094,7 +2093,7 @@ function App() {
   const [editingPlannerTodoRecurrence, setEditingPlannerTodoRecurrence] = useState('none');
   const [draggedPlannerTodoId, setDraggedPlannerTodoId] = useState(null);
   const [saveReward, setSaveReward] = useState('');
-  const [selectedUnwindGame, setSelectedUnwindGame] = useState('study-sprint-garden');
+  const [selectedUnwindGame, setSelectedUnwindGame] = useState('solitaire');
   const [unwindViewMode, setUnwindViewMode] = useState('grid');
   const [isGameTransitioning, setIsGameTransitioning] = useState(false);
   const [activeTransitionGameId, setActiveTransitionGameId] = useState(null);
@@ -2103,6 +2102,7 @@ function App() {
   const showMinimalHomeOverview = false; // Always show full descriptive overview for better SEO and initial Bot review
   const homeEntryCards = [
     { id: 'unwind', title: 'Games', description: 'Chill games', icon: Gamepad2, iconTone: 'bg-[#d8dbff] text-violet-700', onClick: () => navigateToTab('unwind'), preview: gamesSectionPreviewImage },
+    { id: 'focus', title: 'Focus Tree', description: 'Grow while studying', icon: Leaf, iconTone: 'bg-[#dbead9] text-emerald-700', onClick: () => navigateToTab('focus'), preview: musicSectionPreviewImage },
     { id: 'write', title: 'Diary', description: 'Write only when it helps', icon: PenLine, iconTone: 'bg-[#dbead9] text-sage-700', onClick: () => navigateToTab('write'), preview: diarySectionPreviewImage },
     { id: 'notes', title: 'Notes', description: 'Keep important things nearby', icon: FileText, iconTone: 'bg-[#d8f0ec] text-teal-700', onClick: () => navigateToTab('notes'), preview: notesSectionPreviewImage },
     { id: 'breathe', title: 'Music Room', description: 'Sounds & Wallpapers', icon: Wind, iconTone: 'bg-[#dbe8f8] text-sky-700', onClick: () => navigateToTab('breathe'), preview: musicSectionPreviewImage },
@@ -2255,18 +2255,6 @@ function App() {
     }
   ];
   const unwindGames = [
-    {
-      id: 'study-sprint-garden',
-      title: 'Study Sprint Garden',
-      detail: 'Plan a cute focus block',
-      isNew: true,
-      description: 'A unique lofi study-break game for students: plant tiny setup seeds, build a focus ritual, then start a cleaner study sprint before journaling.',
-      icon: CalendarDays,
-      tone: 'from-emerald-700 to-lime-700 text-white',
-      preview: gamesSectionPreviewImage,
-      playingSpace: 'max-w-[1200px]',
-      component: <StudySprintGarden difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
-    },
     {
       id: 'solitaire',
       title: 'Solitaire',
@@ -5039,8 +5027,8 @@ function App() {
                   <div className="absolute inset-[9px] rounded-full border border-white/10 bg-[radial-gradient(circle,#3b2d22_0%,#17110d_72%)]" />
                   <img src={radioVinylIcon} alt="" className="relative h-14 w-14 object-contain opacity-95 sm:h-16 sm:w-16" aria-hidden="true" />
                 </div>
-                <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-[1.8rem] border border-white/18 bg-white/10 p-2 shadow-[0_14px_34px_rgba(0,0,0,0.16)] sm:h-24 sm:w-24">
-                  <img src={headerLogoIcon} alt="Lofi Memory logo" className="h-full w-full rounded-[1.35rem] object-cover" />
+                <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-[1.8rem] border border-white/18 bg-[#4f3f32]/80 p-2 text-2xl font-black text-white shadow-[0_14px_34px_rgba(0,0,0,0.16)] sm:h-24 sm:w-24">
+                  LM
                 </div>
               </div>
 
@@ -5071,8 +5059,8 @@ function App() {
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
           <div className="relative z-10 flex flex-col gap-2.5 lg:gap-3 xl:flex-row xl:items-center xl:justify-between">
             <a className="flex items-center gap-2.5 sm:gap-3.5" href="#home" onClick={() => openHomeSection('home')}>
-              <div className="flex h-11 w-11 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-[1rem] sm:rounded-[1.35rem] border border-white/30 bg-white/12 p-1 sm:p-1.5 shadow-sm backdrop-blur-md overflow-hidden">
-                <img src={headerLogoIcon} alt="Lofi Memory Logo" className="h-full w-full rounded-[0.7rem] sm:rounded-[1rem] object-cover" />
+              <div className="flex h-11 w-11 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-[1rem] sm:rounded-[1.35rem] border border-white/30 bg-[#4f3f32] p-1 sm:p-1.5 text-sm sm:text-base font-black text-white shadow-sm backdrop-blur-md overflow-hidden">
+                LM
               </div>
               <div>
                 <p className="font-display text-xl sm:text-2xl font-bold text-white lofi-sharp-text leading-tight">Lofi Memory</p>
@@ -5084,10 +5072,11 @@ function App() {
             <div className="hidden flex-wrap items-center gap-2 rounded-full border border-white/20 bg-black/20 p-1.5 shadow-sm backdrop-blur-md lg:flex">
               {[
                 { id: 'unwind', label: 'Games' },
+                { id: 'focus', label: 'Focus' },
                 { id: 'write', label: 'Diary' },
                 { id: 'notes', label: 'Notes' },
                 { id: 'breathe', label: 'Music' },
-                { id: 'memories', label: 'Memory' }
+                { id: 'memories', label: 'Dates' }
               ].map((tab) => (
                 <button
                   key={`desktop-nav-${tab.id}`}
@@ -5172,6 +5161,7 @@ function App() {
           <div className="relative z-10 flex items-center gap-1 overflow-x-auto px-1 custom-scrollbar sm:justify-around sm:px-2">
             {[
               { id: 'unwind', label: 'Games', icon: Gamepad2 },
+              { id: 'focus', label: 'Focus', icon: Leaf },
               { id: 'home', label: 'Chill', icon: Headphones },
               { id: 'write', label: 'Diary', icon: PenLine },
               { id: 'notes', label: 'Notes', icon: FileText },
@@ -5237,7 +5227,7 @@ function App() {
         <div className="lg:col-span-8">
           <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[2.2rem] sm:rounded-[3.2rem] border border-[#8b5e3c]/25 p-5 sm:p-8 shadow-[0_32px_90px_rgba(83,62,44,0.18)] lg:p-10 xl:p-11">
             <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
-            <div className="absolute inset-0 bg-gradient-to-br from-black/58 via-black/28 to-black/10" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-black/30" />
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.20),transparent_20rem)]" />
             <div className="relative z-10">
               <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/15 px-3 py-1.5 text-[11px] sm:mb-7 sm:px-4 sm:py-2 sm:text-sm font-bold text-white shadow-sm backdrop-blur-md lofi-sharp-text-soft">
@@ -5263,22 +5253,22 @@ function App() {
                 <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full bg-white px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-[#4f3f32] shadow-[0_12px_28px_rgba(0,0,0,0.16)] transition hover:-translate-y-1 hover:bg-[#fff9f0]" onClick={() => setIsRadioPlaying(true)} type="button">
                   <Headphones size={16} /> Start music
                 </button>
-                <a className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/30 bg-white/15 px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/25" href="#unwind" onClick={() => navigateToTab('unwind')}>
+                <a className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/45 bg-[#4f3f32] px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-[#3f3026]" href="#unwind" onClick={() => navigateToTab('unwind')}>
                   <Leaf size={16} /> Games
                 </a>
-                <a className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/30 bg-white/15 px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/25" href="#notes" onClick={() => navigateToTab('notes')}>
+                <a className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/45 bg-[#4f3f32] px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-[#3f3026]" href="#notes" onClick={() => navigateToTab('notes')}>
                   <FileText size={16} /> Notes
                 </a>
-                <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/30 bg-white/15 px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/25" onClick={() => setCustomizerOpen(true)} type="button">
+                <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/45 bg-[#4f3f32] px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-[#3f3026]" onClick={() => setCustomizerOpen(true)} type="button">
                   <Palette size={16} /> Design
                 </button>
               </div>
 
-              <div className="mt-5 flex flex-wrap gap-2 text-[11px] font-extrabold uppercase tracking-[0.18em] text-white/90 sm:text-xs">
-                <span className="rounded-full border border-white/20 bg-white/12 px-3 py-2 shadow-sm backdrop-blur-md">Private journal</span>
-                <span className="rounded-full border border-white/20 bg-white/12 px-3 py-2 shadow-sm backdrop-blur-md">Cozy browser games</span>
-                <span className="rounded-full border border-white/20 bg-white/12 px-3 py-2 shadow-sm backdrop-blur-md">Lofi radio</span>
-                <span className="rounded-full border border-white/20 bg-white/12 px-3 py-2 shadow-sm backdrop-blur-md">Notes & reminders</span>
+              <div className="mt-5 flex flex-wrap gap-2 text-[11px] font-extrabold uppercase tracking-[0.18em] text-white sm:text-xs">
+                <span className="rounded-full border border-white/30 bg-[#4f3f32]/80 px-3 py-2 shadow-sm backdrop-blur-md">Private journal</span>
+                <span className="rounded-full border border-white/30 bg-[#4f3f32]/80 px-3 py-2 shadow-sm backdrop-blur-md">Cozy browser games</span>
+                <span className="rounded-full border border-white/30 bg-[#4f3f32]/80 px-3 py-2 shadow-sm backdrop-blur-md">Lofi radio</span>
+                <span className="rounded-full border border-white/30 bg-[#4f3f32]/80 px-3 py-2 shadow-sm backdrop-blur-md">Notes & reminders</span>
               </div>
 
               <div className="mt-7 grid gap-3 lg:grid-cols-3">
@@ -6107,7 +6097,7 @@ function App() {
                     <div className="relative z-10">
                       <h1 className="font-display text-5xl font-bold tracking-tight text-white lofi-sharp-text md:text-7xl">Games</h1>
                       <p className="mt-3 text-xs font-black uppercase tracking-[0.34em] text-white/95 lofi-sharp-text-soft">Chill games</p>
-                      <p className="mt-6 max-w-2xl text-base font-bold leading-7 text-white lofi-sharp-text-soft">Start with Study Sprint Garden for a cute focus ritual, then explore cozy Solitaire, Mind Sweeper, and more relaxing browser games while the lofi music keeps the page calm.</p>
+                      <p className="mt-6 max-w-2xl text-base font-bold leading-7 text-white lofi-sharp-text-soft">Start with cozy Solitaire or Mind Sweeper, then explore more relaxing browser games while the lofi music keeps the page calm.</p>
                     </div>
                   </div>
                 )}
@@ -6142,6 +6132,8 @@ function App() {
                           </div>
           </div>
         )}
+
+        {activeTab === 'focus' && <FocusTreeRoom />}
 
         {activeTab === 'breathe' && (
           <div className="mx-auto max-w-5xl px-3 py-6 sm:px-6 sm:py-10 lg:py-16 fade-in">
@@ -7606,9 +7598,10 @@ function App() {
       )}
 
       <div className="fixed inset-x-3 bottom-3 z-30 mx-auto max-w-lg rounded-[1.7rem] border lofi-glass p-1.5 shadow-soft backdrop-blur-xl lg:hidden">
-        <div className="grid grid-cols-7 gap-1">
+        <div className="grid grid-cols-8 gap-1">
         {[
           { id: 'unwind', label: 'Games', icon: Gamepad2 },
+          { id: 'focus', label: 'Focus', icon: Leaf },
           { id: 'home', label: 'Chill', icon: Headphones },
           { id: 'write', label: 'Diary', icon: PenLine },
           { id: 'notes', label: 'Notes', icon: FileText },

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Lofi Memory Updates</title>
+    <link>https://lofimemory.vercel.app/</link>
+    <description>Latest Lofi Memory pages for private journaling, lofi music, cozy browser games, study breaks, notes, and reminders.</description>
+    <language>en</language>
+    <atom:link href="https://lofimemory.vercel.app/feed.xml" rel="self" type="application/rss+xml" />
+    <item><title>Lofi Memory Blog</title><link>https://lofimemory.vercel.app/blog.html</link><description>Original reads for private journaling, digital calm, study breaks, and cozy browser games.</description></item>
+    <item><title>Aesthetic study break routine for students</title><link>https://lofimemory.vercel.app/article-study-break-routine-students.html</link><description>A lofi study-break loop with the Focus Tree room, private journaling, and tiny reset rituals.</description></item>
+    <item><title>Privacy when journaling online</title><link>https://lofimemory.vercel.app/article-protect-privacy-journaling-online.html</link><description>Practical privacy notes for keeping a personal online journal.</description></item>
+    <item><title>How to start a journaling habit</title><link>https://lofimemory.vercel.app/article-how-to-start-journaling-habit.html</link><description>Small routines, prompts, and cues that make writing easier to keep.</description></item>
+    <item><title>Benefits of a private online diary</title><link>https://lofimemory.vercel.app/article-benefits-of-private-online-diary.html</link><description>Why a private online diary can be flexible, organized, and easy to revisit.</description></item>
+    <item><title>Brain dumping before sleep</title><link>https://lofimemory.vercel.app/article-brain-dumping-sleep.html</link><description>A simple evening writing routine for a busy mind.</description></item>
+    <item><title>Daily word puzzles and relaxing breaks</title><link>https://lofimemory.vercel.app/article-daily-word-puzzles-relax.html</link><description>Why familiar word loops can make short breaks feel cleaner.</description></item>
+    <item><title>Content quality policy</title><link>https://lofimemory.vercel.app/content-quality-policy.html</link><description>Lofi Memory standards for original content, family-friendly pages, privacy-aware advertising, and site quality.</description></item>
+  </channel>
+</rss>
