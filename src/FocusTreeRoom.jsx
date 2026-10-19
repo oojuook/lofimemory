@@ -23,14 +23,30 @@ function getStage(totalSeconds) {
 export default function FocusTreeRoom() {
   const [seconds, setSeconds] = useState(0);
   const [isGrowing, setIsGrowing] = useState(true);
+  const [isPageVisible, setIsPageVisible] = useState(() => (typeof document === 'undefined' ? true : !document.hidden));
 
   useEffect(() => {
-    if (!isGrowing) return undefined;
+    const syncVisibility = () => setIsPageVisible(!document.hidden);
+    syncVisibility();
+    document.addEventListener('visibilitychange', syncVisibility);
+    window.addEventListener('focus', syncVisibility);
+    window.addEventListener('blur', syncVisibility);
+    return () => {
+      document.removeEventListener('visibilitychange', syncVisibility);
+      window.removeEventListener('focus', syncVisibility);
+      window.removeEventListener('blur', syncVisibility);
+    };
+  }, []);
+
+  const canGrow = isGrowing && isPageVisible;
+
+  useEffect(() => {
+    if (!canGrow) return undefined;
     const timer = window.setInterval(() => {
       setSeconds((current) => current + 1);
     }, 1000);
     return () => window.clearInterval(timer);
-  }, [isGrowing]);
+  }, [canGrow]);
 
   const stage = useMemo(() => getStage(seconds), [seconds]);
   const progressToMature = Math.min(seconds / (25 * 60), 1);
@@ -47,7 +63,7 @@ export default function FocusTreeRoom() {
           <div className="rounded-[2rem] border border-white/80 bg-white/75 p-5 shadow-sm backdrop-blur">
             <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-emerald-700">Focus room</p>
             <h1 className="mt-3 font-display text-4xl font-black leading-none tracking-tight text-sage-950 sm:text-5xl">Stay here and grow a quiet tree.</h1>
-            <p className="mt-4 text-sm font-semibold leading-7 text-sage-700">This is not a game you need to win. The longer you stay in the Focus Tree room, the taller your tree grows — perfect for students who want a gentle lofi study timer without pressure.</p>
+            <p className="mt-4 text-sm font-semibold leading-7 text-sage-700">This is not a game you need to win. The tree only grows while this Focus Tree page is open and visible, so switching to another browser tab or another Lofi Memory room pauses growth automatically.</p>
 
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
               <div className="rounded-[1.4rem] border border-emerald-100 bg-emerald-50/80 p-4">
@@ -66,6 +82,10 @@ export default function FocusTreeRoom() {
                 <div className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-lime-400 transition-all duration-500" style={{ width: `${progressToMature * 100}%` }} />
               </div>
               <p className="mt-3 text-sm font-semibold leading-6 text-sage-700">{stage.note}</p>
+            </div>
+
+            <div className={`mt-4 rounded-[1.2rem] border px-4 py-3 text-sm font-bold ${canGrow ? 'border-emerald-200 bg-emerald-50 text-emerald-800' : 'border-amber-200 bg-amber-50 text-amber-800'}`}>
+              {canGrow ? 'Growing now — keep this Focus page visible.' : 'Growth paused — return to this Focus page to keep growing.'}
             </div>
 
             <div className="mt-5 flex flex-wrap gap-3">
@@ -113,7 +133,7 @@ export default function FocusTreeRoom() {
               <div className="mt-8 rounded-[1.5rem] border border-white/15 bg-white/10 px-5 py-4 text-white backdrop-blur">
                 <p className="text-xs font-black uppercase tracking-[0.22em] text-lime-100">Current tree</p>
                 <p className="mt-1 text-2xl font-black">{stage.label}</p>
-                <p className="mt-2 max-w-md text-sm font-semibold leading-6 text-emerald-50/80">Keep this room open while studying, writing, or listening to lofi. Your tree grows quietly in the background.</p>
+                <p className="mt-2 max-w-md text-sm font-semibold leading-6 text-emerald-50/80">Keep this Focus page open while studying or listening to lofi. If you switch tabs, the tree waits for you instead of growing in the background.</p>
               </div>
             </div>
           </div>
