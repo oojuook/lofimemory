@@ -63,7 +63,7 @@ function getChangeFreq(fileName) {
 async function main() {
   const entries = await fs.readdir(publicDir, { withFileTypes: true });
   const htmlFiles = new Set(entries.filter((entry) => entry.isFile() && entry.name.endsWith('.html')).map((entry) => entry.name));
-  const pages = [...coreIndexedPages, ...approvedArticlePages].filter((fileName, index, list) => htmlFiles.has(fileName) && !alwaysIgnored.has(fileName) && list.indexOf(fileName) === index);
+  const pages = [...coreIndexedPages, ...approvedArticlePages].filter((fileName, index, list) => (fileName === 'index.html' || htmlFiles.has(fileName)) && !alwaysIgnored.has(fileName) && list.indexOf(fileName) === index);
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages
     .map((fileName) => {
