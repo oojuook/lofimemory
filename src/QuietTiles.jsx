@@ -257,19 +257,19 @@ export default function QuietTiles({ difficulty = 'medium', theme = 'lofi', view
   return (
     <div className={`mx-auto w-full ${isExpandedLayout ? 'min-h-full max-w-none' : 'mt-12 max-w-[900px] pb-12'}`}>
       <div className={`relative overflow-hidden rounded-[2rem] border p-5 shadow-soft lg:p-6 ${isLofi ? 'border-amber-200/50 bg-[#fff7ec] shadow-[0_26px_80px_rgba(83,62,44,0.12)]' : 'border-sage-100 bg-gradient-to-br from-white via-slate-50/80 to-sand-50/80'}`}>
-        {isLofi && (
+        {isLofi ? (
           <>
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.94),rgba(255,247,236,0.9)_48%,rgba(250,237,205,0.86))]" />
             <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #8b6b52 1px, transparent 0)', backgroundSize: '20px 20px' }} />
           </>
-        )}
+        ) : null}
         <div className="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-slate-200 bg-white/88 text-slate-700'}`}>
               <Sparkles size={14} /> {config.label} merge flow
             </div>
-            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>Tiles</h3>
-            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-700'}`}>A cozy number-merge puzzle inspired by the satisfying rhythm people love in 2048-style games. Slide the board, combine matching tiles, and let the repetition do the relaxing.</p>
+            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>Aesthetic Tiles</h3>
+            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-700'}`}>A cozy number-merge puzzle for aesthetic study breaks. Slide the board, combine matching tiles, and let the warm repetition settle your focus before your next task.</p>
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-slate-600'}`}>{config.note}</p>
           </div>
           <div className={`grid gap-2 p-3 shadow-sm sm:grid-cols-3 ${isExpandedLayout ? '' : 'lg:min-w-[23rem]'} ${isLofi ? 'rounded-[1.35rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>
@@ -278,9 +278,9 @@ export default function QuietTiles({ difficulty = 'medium', theme = 'lofi', view
               ['Best', bestScore],
               ['Target', config.target]
             ].map(([label, value]) => (
-              <div key={label} className={`${isLofi ? 'rounded-[0.95rem] bg-amber-50/90 text-amber-900' : 'rounded-[1.15rem] bg-slate-50'} px-4 py-3 text-center`}>
+              <div key={label} className={`${isLofi ? 'rounded-[0.95rem] bg-amber-50/90 text-amber-900' : 'rounded-[1.15rem] bg-slate-50'} min-w-0 px-4 py-3.5 text-center sm:px-5`}>
                 <p className={`text-[10px] font-extrabold uppercase tracking-[0.2em] ${isLofi ? 'text-amber-800/60' : 'text-slate-500'}`}>{label}</p>
-                <p className={`mt-2 text-xl font-extrabold ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>{value}</p>
+                <p className={`mt-2 truncate text-base font-extrabold leading-none sm:text-lg lg:text-xl ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>{value}</p>
               </div>
             ))}
           </div>
@@ -305,7 +305,7 @@ export default function QuietTiles({ difficulty = 'medium', theme = 'lofi', view
 
         <div className="relative z-10 mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_180px]">
           <div className={`relative rounded-[1.5rem] border p-4 shadow-inner lg:p-5 ${isLofi ? 'border-amber-200/60 bg-[linear-gradient(145deg,rgba(253,250,245,0.98),rgba(250,237,205,0.92))]' : 'border-slate-100 bg-[#efe4d8]'}`}>
-            {isLofi && <div className="pointer-events-none absolute inset-0 rounded-[1.8rem] bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.35),transparent_60%)]" />}
+            {isLofi ? <div className="pointer-events-none absolute inset-0 rounded-[1.8rem] bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.35),transparent_60%)]" /> : null}
             <div className="relative z-10 grid gap-3" style={{ gridTemplateColumns: `repeat(${BOARD_SIZE}, minmax(0, 1fr))` }}>
               {boardCoordinates.map(({ row, col }) => {
                 const value = board[row][col];
