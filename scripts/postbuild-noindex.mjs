@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const distDir = path.resolve(__dirname, '../dist');
 
-const indexedPages = new Set([
+const coreIndexedPages = new Set([
   'index.html',
   'blog.html',
   'about.html',
@@ -18,32 +18,7 @@ const indexedPages = new Set([
   'editorial-policy.html',
   'advertising-policy.html',
   'content-quality-policy.html',
-  'sitemap.html',
-  'aesthetic-study-breaks.html',
-  'lofi-study-room.html',
-  'aesthetic-student-diary.html',
-  'mindful-reflection-guide.html',
-  'study-break-games-and-journal.html',
-  'private-journaling-hub.html',
-  'relaxing-games-hub.html',
-  'lofi-focus-hub.html',
-  'online-diary-for-students.html',
-  'aesthetic-online-journal.html',
-  'online-notes-with-reminders.html',
-  'private-memory-calendar.html',
-  'daily-planner-with-journal.html',
-  'self-care-reminder-app.html',
-  'pomodoro-timer-with-lofi.html',
-  'cozy-games-for-study-breaks.html',
-  'relaxing-browser-games.html',
-  'solitaire-online.html',
-  'minesweeper-online.html',
-  'snake-game-online.html',
-  'daily-word-puzzle.html',
-  'sudoku-online.html',
-  'typing-test-online.html',
-  'lofi-music-for-studying.html',
-  'study-timer-with-music.html'
+  'sitemap.html'
 ]);
 
 const alwaysIgnored = new Set([
@@ -56,7 +31,7 @@ const adsenseScriptPattern = /\s*<script\s+async\s+src=["']https:\/\/pagead2\.go
 
 function shouldIndex(fileName) {
   if (alwaysIgnored.has(fileName)) return true;
-  return indexedPages.has(fileName);
+  return coreIndexedPages.has(fileName) || fileName.startsWith('article-');
 }
 
 function stripAdSenseFromLowValuePages(html, fileName) {

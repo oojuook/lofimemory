@@ -5134,6 +5134,24 @@ function App() {
                 )}
               </div>
             </a>
+            <div className="hidden flex-wrap items-center gap-2 rounded-full border border-white/20 bg-black/20 p-1.5 shadow-sm backdrop-blur-md lg:flex">
+              {[
+                { id: 'unwind', label: 'Games' },
+                { id: 'write', label: 'Diary' },
+                { id: 'notes', label: 'Notes' },
+                { id: 'breathe', label: 'Music' },
+                { id: 'memories', label: 'Memory' }
+              ].map((tab) => (
+                <button
+                  key={`desktop-nav-${tab.id}`}
+                  className={`rounded-full px-3.5 py-2 text-sm font-extrabold transition lofi-sharp-chip ${activeTab === tab.id ? 'bg-white text-[#4a3a2d] shadow-sm' : 'text-white/90 hover:bg-white/12'}`}
+                  onClick={() => navigateToTab(tab.id)}
+                  type="button"
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
             <div className={`site-nav-actions flex w-full flex-wrap items-center gap-2 lg:justify-end xl:w-auto xl:max-w-[34rem] xl:flex-none ${isPcInterface ? 'xl:flex-nowrap' : ''}`}>
               {user ? (
                 <div className="header-account-pill flex min-w-[160px] sm:min-w-[210px] flex-1 items-center justify-between gap-2 sm:gap-3 rounded-full border border-white/25 bg-white/15 px-3 py-2 sm:px-4 sm:py-2.5 shadow-sm backdrop-blur-md xl:flex-none">
@@ -5234,11 +5252,16 @@ function App() {
       </div>
       ) : null}
 
-      {showMinimalHomeOverview && (
+      {showMinimalHomeOverview ? (
       <section id="home" className="mx-auto max-w-[1220px] px-3 pb-24 pt-6 sm:px-5 sm:pb-20 sm:pt-10 xl:px-10">
         <div className="mb-6 text-center">
-          <p className="text-[11px] font-extrabold uppercase tracking-[0.34em] text-[#9a806a]">Choose your chill space</p>
-            <p className="mt-3 text-sm font-semibold leading-7 text-[#7f6a58]">Start with games, music, diary, notes, or memories.</p>
+          <p className="text-[11px] font-extrabold uppercase tracking-[0.34em] text-[#9a806a]">Aesthetic lofi study room</p>
+          <h1 className="mx-auto mt-3 max-w-4xl font-display text-3xl font-bold leading-tight tracking-tight text-[#3f3126] sm:text-5xl">
+            Relax with lofi music, cozy study games, a private journal, notes, reminders, and memories in one calm browser tab.
+          </h1>
+          <p className="mx-auto mt-4 max-w-3xl text-base font-semibold leading-8 text-[#6f5948]">
+            Lofi Memory is built for students and young adults who want useful breaks without noisy feeds: open a relaxing game, write a private reflection, keep study notes, save reminders, or settle into a soft music room.
+          </p>
         </div>
           <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-3 shadow-soft sm:p-4">
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -5260,9 +5283,9 @@ function App() {
             </div>
           </div>
       </section>
-      )}
+      ) : null}
 
-      {activeTab === 'home' && activeHomeSection === 'overview' && !showMinimalHomeOverview && (
+      {activeTab === 'home' && activeHomeSection === 'overview' && !showMinimalHomeOverview ? (
       <section id="home" className="mx-auto grid max-w-[1280px] gap-6 px-3 pb-24 pt-6 sm:gap-8 sm:px-5 sm:pb-28 sm:pt-10 lg:grid-cols-12 lg:pb-12 xl:gap-12 xl:px-10">
         <div className="lg:col-span-8">
           <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[2.2rem] sm:rounded-[3.2rem] border border-[#8b5e3c]/25 p-5 sm:p-8 shadow-[0_32px_90px_rgba(83,62,44,0.18)] lg:p-10 xl:p-11">
@@ -5498,9 +5521,9 @@ function App() {
           </div>
         </aside>
       </section>
-      )}
+      ) : null}
 
-      {activeTab === 'home' && !showMinimalHomeOverview && (
+      {activeTab === 'home' && !showMinimalHomeOverview ? (
       <section className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-4">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="flex-1">
@@ -5639,7 +5662,7 @@ function App() {
           </aside>
         </div>
       </section>
-      )}
+      ) : null}
 
       <ThemeStudio
         customColor={customColor}
