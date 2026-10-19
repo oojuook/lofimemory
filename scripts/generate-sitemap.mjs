@@ -33,6 +33,7 @@ const approvedArticlePages = [
   'article-memory-games-cognitive-relief.html',
   'article-protect-privacy-journaling-online.html',
   'article-psychology-of-journaling.html',
+  'article-study-break-routine-students.html',
   'article-word-guessing-games-busy-mind.html'
 ];
 

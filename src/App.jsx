@@ -100,6 +100,7 @@ import QuietSudoku from './QuietSudoku';
 import QuietSnake from './QuietSnake';
 import Solitaire from './Solitaire';
 import LofiJigsaw from './LofiJigsaw';
+import StudySprintGarden from './StudySprintGarden';
 import { auth, db, getMessagingIfSupported, googleProvider } from './firebase';
 
 const STORAGE_KEY = 'quiet-harbor-journal-v1';
@@ -539,6 +540,7 @@ const seoGuidePages = [
   { label: 'Helpful read', title: 'Journaling prompts for self-discovery', text: 'Use gentler prompts that help you begin without turning the page into a performance.', href: '/article-journaling-prompts-self-discovery.html' },
   { label: 'Helpful read', title: 'Memory games before writing', text: 'Read why a short puzzle break can help your attention settle before reflection.', href: '/article-memory-games-cognitive-relief.html' },
   { label: 'Helpful read', title: 'Daily word puzzles for relaxing breaks', text: 'See why familiar word loops can feel grounding when you want a tidy reset.', href: '/article-daily-word-puzzles-relax.html' },
+  { label: 'Helpful read', title: 'Aesthetic study break routine for students', text: 'Use lofi music, Study Sprint Garden, private journaling, and tiny game resets as one calm study loop.', href: '/article-study-break-routine-students.html' },
   { label: 'Helpful read', title: 'Word guessing games when your mind is busy', text: 'Learn how small pattern-recognition wins can provide relief without demanding too much energy.', href: '/article-word-guessing-games-busy-mind.html' }
 ];
 
@@ -556,7 +558,7 @@ const seoGuideGroups = [
   {
     title: 'Explore calmer game-break reads',
     description: 'Best for visitors who like the music-and-games side of Lofi Memory but still want article-level value before they click around.',
-    links: seoGuidePages.filter((page) => ['Memory games before writing', 'Daily word puzzles for relaxing breaks', 'Word guessing games when your mind is busy'].includes(page.title))
+    links: seoGuidePages.filter((page) => ['Aesthetic study break routine for students', 'Memory games before writing', 'Daily word puzzles for relaxing breaks', 'Word guessing games when your mind is busy'].includes(page.title))
   }
 ];
 
@@ -575,6 +577,7 @@ const seoPopularSearches = [
   { label: 'Brain dumping before sleep', href: '/article-brain-dumping-sleep.html' },
   { label: 'Journaling prompts for self-discovery', href: '/article-journaling-prompts-self-discovery.html' },
   { label: 'Word guessing games', href: '/article-word-guessing-games-busy-mind.html' },
+  { label: 'Aesthetic study break routine', href: '/article-study-break-routine-students.html' },
   { label: 'Daily word puzzles', href: '/article-daily-word-puzzles-relax.html' }
 ];
 
@@ -2091,7 +2094,7 @@ function App() {
   const [editingPlannerTodoRecurrence, setEditingPlannerTodoRecurrence] = useState('none');
   const [draggedPlannerTodoId, setDraggedPlannerTodoId] = useState(null);
   const [saveReward, setSaveReward] = useState('');
-  const [selectedUnwindGame, setSelectedUnwindGame] = useState('drifting-leaf');
+  const [selectedUnwindGame, setSelectedUnwindGame] = useState('study-sprint-garden');
   const [unwindViewMode, setUnwindViewMode] = useState('grid');
   const [isGameTransitioning, setIsGameTransitioning] = useState(false);
   const [activeTransitionGameId, setActiveTransitionGameId] = useState(null);
@@ -2252,6 +2255,18 @@ function App() {
     }
   ];
   const unwindGames = [
+    {
+      id: 'study-sprint-garden',
+      title: 'Study Sprint Garden',
+      detail: 'Plan a cute focus block',
+      isNew: true,
+      description: 'A unique lofi study-break game for students: plant tiny setup seeds, build a focus ritual, then start a cleaner study sprint before journaling.',
+      icon: CalendarDays,
+      tone: 'from-emerald-700 to-lime-700 text-white',
+      preview: gamesSectionPreviewImage,
+      playingSpace: 'max-w-[1200px]',
+      component: <StudySprintGarden difficulty={selectedGameDifficulty} theme={gameVisualTheme} viewportMode={isFullscreen ? 'fullscreen' : 'embedded'} />
+    },
     {
       id: 'solitaire',
       title: 'Solitaire',
@@ -6092,7 +6107,7 @@ function App() {
                     <div className="relative z-10">
                       <h1 className="font-display text-5xl font-bold tracking-tight text-white lofi-sharp-text md:text-7xl">Games</h1>
                       <p className="mt-3 text-xs font-black uppercase tracking-[0.34em] text-white/95 lofi-sharp-text-soft">Chill games</p>
-                      <p className="mt-6 max-w-2xl text-base font-bold leading-7 text-white lofi-sharp-text-soft">Start with cozy Solitaire or Mind Sweeper, then explore more relaxing browser games while the lofi music keeps the page calm.</p>
+                      <p className="mt-6 max-w-2xl text-base font-bold leading-7 text-white lofi-sharp-text-soft">Start with Study Sprint Garden for a cute focus ritual, then explore cozy Solitaire, Mind Sweeper, and more relaxing browser games while the lofi music keeps the page calm.</p>
                     </div>
                   </div>
                 )}
