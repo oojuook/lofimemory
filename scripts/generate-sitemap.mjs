@@ -23,21 +23,34 @@ const coreIndexedPages = [
   'sitemap.html'
 ];
 
+const approvedArticlePages = [
+  'article-benefits-of-private-online-diary.html',
+  'article-brain-dumping-sleep.html',
+  'article-daily-word-puzzles-relax.html',
+  'article-digital-journal-distractions.html',
+  'article-how-to-start-journaling-habit.html',
+  'article-journaling-prompts-self-discovery.html',
+  'article-memory-games-cognitive-relief.html',
+  'article-protect-privacy-journaling-online.html',
+  'article-psychology-of-journaling.html',
+  'article-word-guessing-games-busy-mind.html'
+];
+
 const alwaysIgnored = new Set([
+  '404.html',
   'google5226abd8d86c0ece.html',
   'googled1931b3f15730e0b.html'
 ]);
 
 function getLastMod(fileName) {
   if (fileName === 'index.html') return new Date().toISOString();
-  if (fileName.startsWith('article-')) return '2026-10-19T00:00:00.000Z';
   return '2026-10-19T00:00:00.000Z';
 }
 
 function getPriority(fileName) {
   if (fileName === 'index.html') return '1.0';
   if (fileName === 'blog.html') return '0.92';
-  if (fileName.startsWith('article-')) return '0.86';
+  if (approvedArticlePages.includes(fileName)) return '0.86';
   if (['about.html', 'contact.html', 'privacy.html', 'terms.html'].includes(fileName)) return '0.84';
   return '0.72';
 }
@@ -50,8 +63,7 @@ function getChangeFreq(fileName) {
 async function main() {
   const entries = await fs.readdir(publicDir, { withFileTypes: true });
   const htmlFiles = new Set(entries.filter((entry) => entry.isFile() && entry.name.endsWith('.html')).map((entry) => entry.name));
-  const articlePages = [...htmlFiles].filter((fileName) => fileName.startsWith('article-')).sort();
-  const pages = [...coreIndexedPages, ...articlePages].filter((fileName, index, list) => htmlFiles.has(fileName) && !alwaysIgnored.has(fileName) && list.indexOf(fileName) === index);
+  const pages = [...coreIndexedPages, ...approvedArticlePages].filter((fileName, index, list) => htmlFiles.has(fileName) && !alwaysIgnored.has(fileName) && list.indexOf(fileName) === index);
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages
     .map((fileName) => {

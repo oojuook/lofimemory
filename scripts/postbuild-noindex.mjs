@@ -21,6 +21,19 @@ const coreIndexedPages = new Set([
   'sitemap.html'
 ]);
 
+const approvedArticlePages = new Set([
+  'article-benefits-of-private-online-diary.html',
+  'article-brain-dumping-sleep.html',
+  'article-daily-word-puzzles-relax.html',
+  'article-digital-journal-distractions.html',
+  'article-how-to-start-journaling-habit.html',
+  'article-journaling-prompts-self-discovery.html',
+  'article-memory-games-cognitive-relief.html',
+  'article-protect-privacy-journaling-online.html',
+  'article-psychology-of-journaling.html',
+  'article-word-guessing-games-busy-mind.html'
+]);
+
 const alwaysKept = new Set([
   '404.html',
   'google5226abd8d86c0ece.html',
@@ -31,7 +44,7 @@ const noindexMeta = '<meta name="robots" content="noindex, follow" />';
 const adsenseScriptPattern = /\s*<script\s+async\s+src=["']https:\/\/pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js\?client=[^"']+["'][^>]*><\/script>\s*/gi;
 
 function shouldIndex(fileName) {
-  return coreIndexedPages.has(fileName) || fileName.startsWith('article-');
+  return coreIndexedPages.has(fileName) || approvedArticlePages.has(fileName);
 }
 
 function shouldKeepFile(fileName) {
