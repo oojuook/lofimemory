@@ -40,6 +40,7 @@ const approvedArticlePages = [
   'stop-scrolling-and-start-studying.html',
   'journaling-games-long-tail-seo.html',
   'how-does-journaling-help-with-thinking.html',
+  'how-does-journaling-help-mental-health.html',
   'how-journaling-makes-you-better.html',
   'journaling-pros-and-cons.html',
   'journaling-for-students-who-overthink.html',

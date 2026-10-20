@@ -64,6 +64,7 @@ import {
   Map,
   Keyboard,
   Moon,
+  Music2,
   Newspaper,
   Palette,
   PenLine,
@@ -606,11 +607,11 @@ const COMFORT_MODE_STORAGE_KEY = 'quiet-journal-comfort-mode-v1';
 const WALLPAPER_STORAGE_KEY = 'quiet-journal-wallpaper-v1';
 
 const colorThemes = [
-  { id: 'sage', name: 'Lofi Vinyl', accent: '#4f6b45', soft: '#edf4e8', glow: '#b8d4aa' },
-  { id: 'lavender', name: 'Midnight Jazz', accent: '#6651a6', soft: '#f0ecfb', glow: '#c6b7ec' },
-  { id: 'ocean', name: 'Cassette Blue', accent: '#336f8b', soft: '#e7f3f8', glow: '#a6d4e2' },
-  { id: 'sunrise', name: 'Sunset Radio', accent: '#b46c3d', soft: '#fff0df', glow: '#edbd8c' },
-  { id: 'rose', name: 'Rose Piano', accent: '#9f6278', soft: '#fbebf0', glow: '#e6b5c6' }
+  { id: 'sage', name: 'Lofi Vinyl', accent: '#4f6b45', soft: '#edf4e8', glow: '#b8d4aa', image: radioVinylIcon, imageTone: 'from-[#172217]/55 via-transparent to-[#4f6b45]/50' },
+  { id: 'lavender', name: 'Midnight Jazz', accent: '#6651a6', soft: '#f0ecfb', glow: '#c6b7ec', image: hogwartsMusicRoomImage, imageTone: 'from-[#151223]/62 via-[#392f68]/12 to-[#6651a6]/58' },
+  { id: 'ocean', name: 'Cassette Blue', accent: '#336f8b', soft: '#e7f3f8', glow: '#a6d4e2', image: rainWallpaperImage, imageTone: 'from-[#0f2d3a]/58 via-transparent to-[#336f8b]/58' },
+  { id: 'sunrise', name: 'Sunset Radio', accent: '#b46c3d', soft: '#fff0df', glow: '#edbd8c', image: fireWallpaperImage, imageTone: 'from-[#3a2112]/58 via-transparent to-[#b46c3d]/62' },
+  { id: 'rose', name: 'Rose Piano', accent: '#9f6278', soft: '#fbebf0', glow: '#e6b5c6', image: lofiRoomWallpaperImage, imageTone: 'from-[#311924]/58 via-transparent to-[#9f6278]/58' }
 ];
 
 const designStyles = [
@@ -678,11 +679,11 @@ const journalAtmospherePresets = [
 const breatheRoomOptions = [
   {
     id: 'rain',
-    title: 'Rain Window',
-    sound: 'Rain ambience',
-    description: 'A blue-green wallpaper with soft rain for slower breathing and calm focus.',
+    title: 'Rainy Lofi Window',
+    sound: 'Rainy music + soft ambience',
+    description: 'Rainy lofi music with a blue-green wallpaper for slower breathing, calm focus, and late-night writing.',
     icon: CloudRain,
-    status: 'Rain wallpaper selected — soft rain ambience is ready.',
+    status: 'Rainy lofi window selected — rain music ambience is ready.',
     gradient: 'from-sky-100 via-cyan-50 to-sage-50',
     textTone: 'text-sky-800',
     ringTone: 'ring-sky-200',
@@ -693,11 +694,11 @@ const breatheRoomOptions = [
   },
   {
     id: 'fire',
-    title: 'Fireplace Nook',
-    sound: 'Wood burning',
-    description: 'A warm hearth wallpaper with gentle crackle for a cozy writing reset.',
+    title: 'Fireplace Lofi Nook',
+    sound: 'Fire burning music',
+    description: 'Warm fire crackle music with a hearth wallpaper for cozy journaling, reading, and study resets.',
     icon: Flame,
-    status: 'Fireplace wallpaper selected — wood-burning ambience is ready.',
+    status: 'Fireplace lofi nook selected — fire burning music is ready.',
     gradient: 'from-orange-100 via-amber-50 to-rose-50',
     textTone: 'text-orange-800',
     ringTone: 'ring-orange-200',
@@ -1669,14 +1670,21 @@ function ThemeStudio({
               <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-5">
                 {colorThemes.map((theme) => (
                   <button
-                    className={`custom-option rounded-3xl border p-4 text-left shadow-sm backdrop-blur-md transition hover:-translate-y-1 ${selectedTheme === theme.id ? 'is-selected border-white/60 bg-white/30 shadow-[0_0_24px_rgba(255,255,255,0.25)]' : 'border-white/20 bg-white/10 hover:bg-white/20'}`}
+                    className={`custom-option group rounded-3xl border p-4 text-left shadow-sm backdrop-blur-md transition hover:-translate-y-1 ${selectedTheme === theme.id ? 'is-selected border-white/60 bg-white/30 shadow-[0_0_24px_rgba(255,255,255,0.25)]' : 'border-white/20 bg-white/10 hover:bg-white/20'}`}
                     key={theme.id}
                     onClick={() => {
                       onThemeChange(theme.id);
                     }}
                     type="button"
                   >
-                    <span className="mb-3 block h-9 w-full rounded-2xl shadow-inner" style={{ background: `linear-gradient(135deg, ${theme.soft}, ${theme.accent})` }} />
+                    <span className="relative mb-3 block h-20 w-full overflow-hidden rounded-2xl border border-white/20 shadow-inner">
+                      <img src={theme.image} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105" aria-hidden="true" />
+                      <span className={`absolute inset-0 bg-gradient-to-br ${theme.imageTone}`} />
+                      <span className="absolute bottom-2 left-2 right-2 flex items-center justify-between gap-2">
+                        <span className="h-2.5 w-2.5 rounded-full border border-white/70 shadow-sm" style={{ background: theme.accent }} />
+                        <Music2 size={13} className="text-white/90 drop-shadow" />
+                      </span>
+                    </span>
                     <span className="block text-sm font-extrabold text-white lofi-sharp-text">{theme.name}</span>
                   </button>
                 ))}
@@ -5330,6 +5338,7 @@ function App() {
                 <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/blog.html">Blog hub</a>
                 <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/private-journaling-hub.html">Journal hub</a>
                 <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/journaling-games-long-tail-seo.html">100 topics</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/how-does-journaling-help-mental-health.html">Mental health journaling</a>
                 <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/student-focus-kit.html">Student Kit</a>
                 <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-psychology-of-journaling.html">Psychology</a>
                 <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-protect-privacy-journaling-online.html">Privacy guide</a>
@@ -6178,7 +6187,7 @@ function App() {
               <div className="relative z-10">
                 <h1 className="font-display text-5xl font-bold tracking-tight text-white lofi-sharp-text">Music Room</h1>
                 <p className="mt-2 text-xs font-black uppercase tracking-[0.3em] text-white/95 lofi-sharp-text-soft">Sounds & Wallpapers</p>
-                <p className="mt-6 max-w-2xl text-base font-bold leading-7 text-white lofi-sharp-text-soft">Choose a wallpaper to change the ambient sound and mood. Each room brings its own calm energy to your space.</p>
+                <p className="mt-6 max-w-2xl text-base font-bold leading-7 text-white lofi-sharp-text-soft">Choose a music mood to change the ambient sound, wallpaper, and room energy. Rainy lofi, fire burning music, cozy radio, and magical study ambience all live here.</p>
               </div>
             </div>
             
