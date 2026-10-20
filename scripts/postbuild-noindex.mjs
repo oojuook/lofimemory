@@ -36,6 +36,13 @@ const approvedArticlePages = new Set([
   'private-journaling-hub.html',
   'lofi-study-room-focus-tree-timer.html',
   'stop-scrolling-and-start-studying.html',
+  'journaling-games-long-tail-seo.html',
+  'how-does-journaling-help-with-thinking.html',
+  'how-journaling-makes-you-better.html',
+  'journaling-pros-and-cons.html',
+  'journaling-for-students-who-overthink.html',
+  'games-to-play-when-your-brain-is-tired.html',
+  'relaxing-games-with-lofi-music-and-journaling.html',
   'article-word-guessing-games-busy-mind.html'
 ]);
 
