@@ -64,7 +64,6 @@ import {
   Map,
   Keyboard,
   Moon,
-  Music2,
   Newspaper,
   Palette,
   PenLine,
@@ -602,6 +601,7 @@ const seoKeywordClusters = [
 const THEME_STORAGE_KEY = 'quiet-journal-theme-v1';
 const DESIGN_STORAGE_KEY = 'quiet-journal-design-v1';
 const CUSTOM_COLOR_STORAGE_KEY = 'quiet-journal-custom-color-v1';
+const CUSTOM_CD_IMAGE_STORAGE_KEY = 'quiet-journal-custom-cd-image-v1';
 const QUOTE_BG_STORAGE_KEY = 'quiet-journal-quote-bg-v1';
 const COMFORT_MODE_STORAGE_KEY = 'quiet-journal-comfort-mode-v1';
 const WALLPAPER_STORAGE_KEY = 'quiet-journal-wallpaper-v1';
@@ -1623,6 +1623,7 @@ function ThemeStudio({
   customWeatherName,
   customWeatherEmoji,
   customWeatherImage,
+  customCdImage,
   customWeathers,
   wallpaperImage,
   isOpen,
@@ -1635,6 +1636,8 @@ function ThemeStudio({
   onCustomWeatherNameChange,
   onCustomWeatherEmojiChange,
   onCustomWeatherImageUpload,
+  onCustomCdImageUpload,
+  onCustomCdImageRemove,
   onWallpaperImageUpload,
   onWallpaperRemove,
   onAddCustomWeather,
@@ -1657,8 +1660,8 @@ function ThemeStudio({
             </div>
             <div className="relative z-10 mt-auto pt-32 lg:pt-0">
               <p className="text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft">Customize your space</p>
-              <h2 className="mt-3 font-display text-4xl font-bold leading-tight text-white lofi-sharp-text">Choose the music mood that fits today.</h2>
-              <p className="mt-4 font-bold leading-7 text-white lofi-sharp-text-soft">Visitors can personalize the room with music-inspired colors and style. Their choice is saved only in their own browser.</p>
+              <h2 className="mt-3 font-display text-4xl font-bold leading-tight text-white lofi-sharp-text">Choose the design that fits today.</h2>
+              <p className="mt-4 font-bold leading-7 text-white lofi-sharp-text-soft">Visitors can personalize the room with design cards, CD art, colors, and style. Their choice is saved only in their own browser.</p>
             </div>
           </div>
           <div className="space-y-7 bg-[#2b231d] p-7 lg:col-span-8 lg:p-10">
@@ -1666,7 +1669,7 @@ function ThemeStudio({
               <button className="rounded-full border border-white/25 bg-white/10 px-6 py-2.5 text-sm font-extrabold text-white lofi-sharp-chip shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/20" onClick={onClose} type="button">Done</button>
             </div>
             <div>
-              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft"><Headphones size={16} /> Music mood theme</div>
+              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft"><Palette size={16} /> Design</div>
               <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-5">
                 {colorThemes.map((theme) => (
                   <button
@@ -1677,17 +1680,39 @@ function ThemeStudio({
                     }}
                     type="button"
                   >
-                    <span className="relative mb-3 block h-20 w-full overflow-hidden rounded-2xl border border-white/20 shadow-inner">
-                      <img src={theme.image} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105" aria-hidden="true" />
-                      <span className={`absolute inset-0 bg-gradient-to-br ${theme.imageTone}`} />
-                      <span className="absolute bottom-2 left-2 right-2 flex items-center justify-between gap-2">
-                        <span className="h-2.5 w-2.5 rounded-full border border-white/70 shadow-sm" style={{ background: theme.accent }} />
-                        <Music2 size={13} className="text-white/90 drop-shadow" />
+                    <span className="relative mb-3 block h-24 w-full overflow-hidden rounded-2xl border border-white/20 shadow-inner" style={{ background: `linear-gradient(135deg, ${theme.soft}, ${theme.accent})` }}>
+                      <span className="absolute inset-0 opacity-35" style={{ backgroundImage: `radial-gradient(circle at 20% 20%, rgba(255,255,255,0.9), transparent 1.6rem), linear-gradient(135deg, transparent, ${theme.accent})` }} />
+                      <span className="absolute left-1/2 top-1/2 h-[4.5rem] w-[4.5rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/55 shadow-[0_10px_22px_rgba(0,0,0,0.22)]" style={{ background: `conic-gradient(from 30deg, rgba(255,255,255,0.88), ${theme.glow}, rgba(255,255,255,0.72), ${theme.accent}, rgba(255,255,255,0.88))` }}>
+                        <img src={customCdImage || theme.image} alt="" className="absolute inset-[0.7rem] h-[calc(100%-1.4rem)] w-[calc(100%-1.4rem)] rounded-full object-cover" aria-hidden="true" />
+                        <span className="absolute left-1/2 top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/70 bg-[#2b231d]/80 shadow-inner" />
+                        <span className="absolute inset-0 rounded-full border border-white/30" />
                       </span>
+                      <span className="absolute bottom-2 left-2 h-2.5 w-2.5 rounded-full border border-white/70 shadow-sm" style={{ background: theme.accent }} />
                     </span>
                     <span className="block text-sm font-extrabold text-white lofi-sharp-text">{theme.name}</span>
                   </button>
                 ))}
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-white/20 bg-white/10 p-5 shadow-sm backdrop-blur-md">
+              <div className="mb-3 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft"><ImagePlus size={16} /> Custom CD design</div>
+              <p className="text-sm font-bold leading-6 text-white/95 lofi-sharp-text-soft">Upload your own picture to place it on the CD label. It stays local in this browser and updates the design cards.</p>
+              <div className="mt-4 grid gap-4 md:grid-cols-[minmax(0,1fr)_10rem] md:items-center">
+                <label className="flex cursor-pointer items-center justify-center gap-2 rounded-2xl border border-dashed border-white/30 bg-white/10 px-4 py-4 text-sm font-bold text-white transition hover:bg-white/20">
+                  <ImagePlus size={18} /> Upload CD art
+                  <input accept="image/*" className="hidden" onChange={onCustomCdImageUpload} type="file" />
+                </label>
+                <button className="rounded-2xl border border-white/20 bg-white/10 px-4 py-4 text-sm font-extrabold text-white transition hover:bg-white/20 disabled:cursor-not-allowed disabled:opacity-45" disabled={!customCdImage} onClick={onCustomCdImageRemove} type="button">
+                  <Trash2 size={15} className="mr-1 inline" /> Reset CD
+                </button>
+              </div>
+              <div className="mt-4 flex items-center gap-4 rounded-3xl border border-white/15 bg-black/10 p-4">
+                <span className="relative block h-20 w-20 shrink-0 rounded-full border border-white/50 shadow-[0_12px_28px_rgba(0,0,0,0.24)]" style={{ background: 'conic-gradient(from 25deg, rgba(255,255,255,0.9), rgba(184,212,170,0.9), rgba(255,255,255,0.74), rgba(79,107,69,0.88), rgba(255,255,255,0.9))' }}>
+                  <img src={customCdImage || radioVinylIcon} alt="" className="absolute inset-[0.85rem] h-[calc(100%-1.7rem)] w-[calc(100%-1.7rem)] rounded-full object-cover" aria-hidden="true" />
+                  <span className="absolute left-1/2 top-1/2 h-5 w-5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/70 bg-[#2b231d]/80 shadow-inner" />
+                </span>
+                <p className="text-sm font-bold leading-6 text-white/90 lofi-sharp-text-soft">{customCdImage ? 'Custom CD art is active across the design cards.' : 'Default lofi CD art is active. Upload a picture to personalize the disc.'}</p>
               </div>
             </div>
 
@@ -2184,6 +2209,7 @@ function App() {
   const [selectedTheme, setSelectedTheme] = useState(() => localStorage.getItem(THEME_STORAGE_KEY) || 'sage');
   const [selectedDesign, setSelectedDesign] = useState(() => localStorage.getItem(DESIGN_STORAGE_KEY) || 'editorial');
   const [customColor, setCustomColor] = useState(() => localStorage.getItem(CUSTOM_COLOR_STORAGE_KEY) || '#587f49');
+  const [customCdImage, setCustomCdImage] = useState(() => localStorage.getItem(CUSTOM_CD_IMAGE_STORAGE_KEY) || '');
   const [quoteBg, setQuoteBg] = useState(() => localStorage.getItem(QUOTE_BG_STORAGE_KEY) || '#45643b');
   const [wallpaperImage, setWallpaperImage] = useState(() => localStorage.getItem(WALLPAPER_STORAGE_KEY) || '');
   const [customizerOpen, setCustomizerOpen] = useState(false);
@@ -3174,9 +3200,10 @@ function App() {
     localStorage.setItem(THEME_STORAGE_KEY, selectedTheme);
     localStorage.setItem(DESIGN_STORAGE_KEY, selectedDesign);
     localStorage.setItem(CUSTOM_COLOR_STORAGE_KEY, customColor);
+    localStorage.setItem(CUSTOM_CD_IMAGE_STORAGE_KEY, customCdImage);
     localStorage.setItem(QUOTE_BG_STORAGE_KEY, quoteBg);
     localStorage.setItem(WALLPAPER_STORAGE_KEY, wallpaperImage);
-  }, [selectedTheme, selectedDesign, customColor, quoteBg, wallpaperImage]);
+  }, [selectedTheme, selectedDesign, customColor, customCdImage, quoteBg, wallpaperImage]);
 
   useEffect(() => {
     localStorage.setItem(COMFORT_MODE_STORAGE_KEY, String(comfortMode));
@@ -4146,6 +4173,42 @@ function App() {
     reader.readAsDataURL(file);
   }
 
+  function handleCustomCdImageUpload(event) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const rawImage = String(reader.result || '');
+      if (!rawImage || file.type === 'image/gif') {
+        setCustomCdImage(rawImage);
+        return;
+      }
+      const image = new Image();
+      image.onload = () => {
+        const maxSide = 720;
+        const scale = Math.min(1, maxSide / Math.max(image.width, image.height));
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.max(1, Math.round(image.width * scale));
+        canvas.height = Math.max(1, Math.round(image.height * scale));
+        const context = canvas.getContext('2d');
+        if (!context) {
+          setCustomCdImage(rawImage);
+          return;
+        }
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        setCustomCdImage(canvas.toDataURL('image/jpeg', 0.88));
+      };
+      image.onerror = () => setCustomCdImage(rawImage);
+      image.src = rawImage;
+    };
+    reader.readAsDataURL(file);
+    event.target.value = '';
+  }
+
+  function removeCustomCdImage() {
+    setCustomCdImage('');
+  }
+
   function handleWallpaperImageUpload(event) {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -5036,7 +5099,7 @@ function App() {
               <div className="mt-5 flex items-center justify-center gap-3 sm:gap-4">
                 <div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-white/16 bg-black/18 shadow-[0_14px_34px_rgba(0,0,0,0.18)] sm:h-24 sm:w-24">
                   <div className="absolute inset-[9px] rounded-full border border-white/10 bg-[radial-gradient(circle,#3b2d22_0%,#17110d_72%)]" />
-                  <img src={radioVinylIcon} alt="" className="relative h-14 w-14 object-contain opacity-95 sm:h-16 sm:w-16" aria-hidden="true" />
+                  <img src={customCdImage || radioVinylIcon} alt="" className="relative h-14 w-14 rounded-full object-cover opacity-95 sm:h-16 sm:w-16" aria-hidden="true" />
                 </div>
                 <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-[1.8rem] border border-white/18 bg-[#4f3f32]/80 p-2 text-2xl font-black text-white shadow-[0_14px_34px_rgba(0,0,0,0.16)] sm:h-24 sm:w-24">
                   LM
@@ -5647,6 +5710,7 @@ function App() {
         customColor={customColor}
         customWeatherEmoji={customWeatherEmoji}
         customWeatherImage={customWeatherImage}
+        customCdImage={customCdImage}
         customWeatherName={customWeatherName}
         customWeathers={customWeathers}
         isOpen={customizerOpen}
@@ -5655,6 +5719,8 @@ function App() {
         onAddCustomWeather={addCustomWeather}
         onClose={() => setCustomizerOpen(false)}
         onCustomColorChange={setCustomColor}
+        onCustomCdImageRemove={removeCustomCdImage}
+        onCustomCdImageUpload={handleCustomCdImageUpload}
         onCustomWeatherEmojiChange={setCustomWeatherEmoji}
         onCustomWeatherImageUpload={handleWeatherImageUpload}
         onCustomWeatherNameChange={setCustomWeatherName}
