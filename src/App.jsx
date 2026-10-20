@@ -65,7 +65,6 @@ import {
   Keyboard,
   Moon,
   Newspaper,
-  Paintbrush,
   Palette,
   PenLine,
   Plus,
@@ -607,11 +606,11 @@ const COMFORT_MODE_STORAGE_KEY = 'quiet-journal-comfort-mode-v1';
 const WALLPAPER_STORAGE_KEY = 'quiet-journal-wallpaper-v1';
 
 const colorThemes = [
-  { id: 'sage', name: 'Sage Calm', accent: '#587f49', soft: '#edf4e8', glow: '#bfd8b0' },
-  { id: 'lavender', name: 'Lavender Rest', accent: '#7c6aa6', soft: '#f0ecfb', glow: '#c9bce8' },
-  { id: 'ocean', name: 'Ocean Breath', accent: '#387f8f', soft: '#e7f5f7', glow: '#a8d8df' },
-  { id: 'sunrise', name: 'Warm Sunrise', accent: '#b97843', soft: '#fff0df', glow: '#edc194' },
-  { id: 'rose', name: 'Rose Kindness', accent: '#a96b76', soft: '#fbebee', glow: '#e8bbc3' }
+  { id: 'sage', name: 'Lofi Vinyl', accent: '#4f6b45', soft: '#edf4e8', glow: '#b8d4aa' },
+  { id: 'lavender', name: 'Midnight Jazz', accent: '#6651a6', soft: '#f0ecfb', glow: '#c6b7ec' },
+  { id: 'ocean', name: 'Cassette Blue', accent: '#336f8b', soft: '#e7f3f8', glow: '#a6d4e2' },
+  { id: 'sunrise', name: 'Sunset Radio', accent: '#b46c3d', soft: '#fff0df', glow: '#edbd8c' },
+  { id: 'rose', name: 'Rose Piano', accent: '#9f6278', soft: '#fbebf0', glow: '#e6b5c6' }
 ];
 
 const designStyles = [
@@ -1657,8 +1656,8 @@ function ThemeStudio({
             </div>
             <div className="relative z-10 mt-auto pt-32 lg:pt-0">
               <p className="text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft">Customize your space</p>
-              <h2 className="mt-3 font-display text-4xl font-bold leading-tight text-white lofi-sharp-text">Choose the look that feels right today.</h2>
-              <p className="mt-4 font-bold leading-7 text-white lofi-sharp-text-soft">Visitors can personalize colors and style. Their choice is saved only in their own browser.</p>
+              <h2 className="mt-3 font-display text-4xl font-bold leading-tight text-white lofi-sharp-text">Choose the music mood that fits today.</h2>
+              <p className="mt-4 font-bold leading-7 text-white lofi-sharp-text-soft">Visitors can personalize the room with music-inspired colors and style. Their choice is saved only in their own browser.</p>
             </div>
           </div>
           <div className="space-y-7 bg-[#2b231d] p-7 lg:col-span-8 lg:p-10">
@@ -1666,7 +1665,7 @@ function ThemeStudio({
               <button className="rounded-full border border-white/25 bg-white/10 px-6 py-2.5 text-sm font-extrabold text-white lofi-sharp-chip shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/20" onClick={onClose} type="button">Done</button>
             </div>
             <div>
-              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft"><Paintbrush size={16} /> Color theme</div>
+              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft"><Headphones size={16} /> Music mood theme</div>
               <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-5">
                 {colorThemes.map((theme) => (
                   <button
