@@ -10,7 +10,7 @@
   --lofi-surface-soft: rgba(255, 252, 247, 0.78);
   --lofi-border: rgba(74, 58, 45, 0.08);
   --lofi-border-subtle: rgba(70, 110, 82, 0.12);
-  --lofi-shadow: 0 14px 44px rgba(86, 62, 47, 0.07);
+  --lofi-shadow: 0 10px 30px rgba(86, 62, 47, 0.05);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

@@ -5194,7 +5194,7 @@ function App() {
       ) : null}
 
       {showMinimalHomeOverview ? (
-      <section id="home" className="mx-auto max-w-[1180px] px-3 pb-20 pt-5 sm:px-5 sm:pb-16 sm:pt-8 xl:px-8">
+      <section id="home" className="mx-auto max-w-[1120px] px-3 pb-[4.5rem] pt-4 sm:px-5 sm:pb-14 sm:pt-7 xl:px-6">
         <div className="mb-6 text-center">
           <p className="text-[11px] font-extrabold uppercase tracking-[0.34em] text-[#9a806a]">Aesthetic lofi study room</p>
           <h1 className="mx-auto mt-3 max-w-4xl font-display text-3xl font-bold leading-tight tracking-tight text-[#3f3126] sm:text-5xl">
@@ -5204,28 +5204,28 @@ function App() {
             Lofi Memory is built for students and young adults who want useful breaks without noisy feeds: open a relaxing game, write a private reflection, keep study notes, save reminders, or settle into a soft music room.
           </p>
         </div>
-          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[1.2rem] border border-[#8b5e3c]/12 p-1.5 shadow-sm sm:rounded-[1.4rem] sm:p-2">
-            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[1.1rem] border border-[#8b5e3c]/10 p-1 shadow-sm sm:rounded-[1.25rem] sm:p-1.5">
+            <div className="grid gap-2 sm:gap-2.5 md:grid-cols-2 xl:grid-cols-3">
               {homeEntryCards.map((card) => (
                 <button
                   key={card.id}
-                  className="group relative flex min-h-[12.5rem] w-full flex-col justify-end overflow-hidden rounded-[1.2rem] border border-white/60 bg-white/50 p-1 text-left shadow-sm transition duration-300 hover:-translate-y-0.5 hover:bg-white/70 hover:shadow-[0_12px_28px_rgba(79,62,48,0.08)] sm:min-h-[14rem] sm:rounded-[1.4rem] xl:min-h-[14.5rem]"
+                  className="group relative flex min-h-[11.25rem] w-full flex-col justify-end overflow-hidden rounded-[1rem] border border-white/55 bg-white/50 p-0.5 text-left shadow-sm transition duration-300 hover:-translate-y-0.5 hover:bg-white/70 hover:shadow-[0_10px_24px_rgba(79,62,48,0.07)] sm:min-h-[12.75rem] sm:rounded-[1.2rem] xl:min-h-[13.25rem]"
                   onClick={card.onClick}
                   type="button"
                 >
                   <img src={card.preview} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" aria-hidden="true" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/68 via-black/18 to-white/10" />
-                  <div className="relative z-10 m-2 rounded-[1.2rem] border border-white/30 bg-[#fff8f1]/94 p-4 shadow-[0_-14px_34px_rgba(255,255,255,0.14)] backdrop-blur-md sm:m-2.5 sm:rounded-[1.4rem] sm:p-5">
+                  <div className="relative z-10 m-1.5 rounded-[0.95rem] border border-white/30 bg-[#fff8f1]/94 p-3.5 shadow-sm backdrop-blur-md sm:m-2 sm:rounded-[1.1rem] sm:p-4">
                     <div className="flex items-start justify-between gap-3">
                       <div>
-                        <p className="font-display text-xl font-bold tracking-tight text-[#3f3126] sm:text-2xl">{card.title}</p>
-                        <p className="mt-1 text-[9px] font-black uppercase tracking-[0.24em] text-[#7b5d44]/85 sm:text-[10px]">{card.description}</p>
+                        <p className="font-display text-lg font-bold tracking-tight text-[#3f3126] sm:text-xl">{card.title}</p>
+                        <p className="mt-0.5 text-[8.5px] font-black uppercase tracking-[0.24em] text-[#7b5d44]/80 sm:text-[9px]">{card.description}</p>
                       </div>
-                      <span className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl shadow-sm sm:h-11 sm:w-11 sm:rounded-2xl ${card.iconTone}`}>
-                        <card.icon size={16} />
+                      <span className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg shadow-sm sm:h-9 sm:w-9 sm:rounded-xl ${card.iconTone}`}>
+                        <card.icon size={14} />
                       </span>
                     </div>
-                    <span className="mt-3.5 inline-flex rounded-full bg-[#3f3126] px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.18em] text-white sm:mt-4 sm:px-3 sm:py-1.5 sm:text-[10px]">Open room</span>
+                    <span className="mt-3 inline-flex rounded-full bg-[#3f3126] px-2 py-1 text-[8.5px] font-black uppercase tracking-[0.18em] text-white sm:mt-3.5 sm:px-2.5 sm:text-[9px]">Open room</span>
                   </div>
                 </button>
               ))}
@@ -5245,8 +5245,8 @@ function App() {
               <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/15 px-3 py-1.5 text-[11px] sm:mb-7 sm:px-4 sm:py-2 sm:text-sm font-bold text-white shadow-sm backdrop-blur-md lofi-sharp-text-soft">
                 <Headphones size={15} /> Aesthetic lofi study room for students
               </div>
-              <h1 className="lofi-sharp-text max-w-3xl font-display text-3xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl sm:leading-[0.96] md:text-6xl">Your cozy lofi study room for focus, calm breaks, journaling, and notes.</h1>
-              <p className="lofi-sharp-text-soft mt-4 max-w-3xl text-base font-bold leading-7 text-white/100 sm:mt-5 sm:text-[1.18rem] sm:leading-8">Designed for students and cozy-study users who want one relaxing browser tab: grow the Focus Tree, play soft music, write a private reflection, and take small no-download game breaks without opening noisy feeds.</p>
+              <h1 className="lofi-sharp-text max-w-3xl font-display text-3xl font-bold leading-[1.05] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.25rem]">Your cozy lofi study room for focus, calm breaks, journaling, and notes.</h1>
+              <p className="lofi-sharp-text-soft mt-4 max-w-2xl text-sm font-semibold leading-7 text-white/95 sm:mt-5 sm:text-[1.05rem] sm:leading-8">Designed for students and cozy-study users who want one relaxing browser tab: grow the Focus Tree, play soft music, write a private reflection, and take small no-download game breaks without opening noisy feeds.</p>
 
               <div className="lofi-now-playing mt-6 sm:mt-7 flex flex-col gap-4 rounded-[1.8rem] sm:rounded-[2.2rem] border border-white/20 bg-black/15 p-3.5 sm:p-4 shadow-sm backdrop-blur-md sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-3 sm:gap-4">
@@ -5324,16 +5324,16 @@ function App() {
                 </div>
               </div>
 
-              <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-4 rounded-[1.4rem] border border-white/30 bg-[#1f2f29]/80 p-4 text-sm shadow-sm backdrop-blur-md sm:p-5">
-                <span className="rounded-full bg-white px-3.5 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#284a3a] shadow-sm">Original articles</span>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-3.5 py-1.5 text-xs font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/stop-scrolling-and-start-studying.html">Stop scrolling and study</a>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-3.5 py-1.5 text-xs font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/lofi-study-room-focus-tree-timer.html">Lofi study room with Focus Tree timer</a>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-3.5 py-1.5 text-xs font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/blog.html">Lofi Memory Blog</a>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-3.5 py-1.5 text-xs font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/student-focus-kit.html">Student Focus Kit</a>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-3.5 py-1.5 text-xs font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-psychology-of-journaling.html">Psychology of journaling</a>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-3.5 py-1.5 text-xs font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-protect-privacy-journaling-online.html">Privacy when journaling</a>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-3.5 py-1.5 text-xs font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-how-to-start-journaling-habit.html">Start a writing habit</a>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-3.5 py-1.5 text-xs font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-benefits-of-private-online-diary.html">Benefits of online diary</a>
+              <div className="mt-8 flex flex-wrap items-center gap-x-2.5 gap-y-3 rounded-[1.2rem] border border-white/30 bg-[#1f2f29]/80 p-3.5 text-xs shadow-sm backdrop-blur-md sm:p-4">
+                <span className="rounded-full bg-white px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.2em] text-[#284a3a] shadow-sm">Original articles</span>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/stop-scrolling-and-start-studying.html">Stop scrolling and study</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/lofi-study-room-focus-tree-timer.html">Lofi room & tree</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/blog.html">Blog hub</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/student-focus-kit.html">Student Kit</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-psychology-of-journaling.html">Psychology</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-protect-privacy-journaling-online.html">Privacy guide</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-how-to-start-journaling-habit.html">Writing habit</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-benefits-of-private-online-diary.html">Benefits</a>
               </div>
 
               <div className="mt-8 grid gap-4 grid-cols-2 md:grid-cols-3 xl:grid-cols-3">
