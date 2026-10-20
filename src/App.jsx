@@ -77,6 +77,7 @@ import {
   Sparkles,
   Sunrise,
   Trash2,
+  TreePine,
   Type,
   Waves,
   Wind,
@@ -540,6 +541,7 @@ const seoGuidePages = [
   { label: 'Helpful read', title: 'Memory games before writing', text: 'Read why a short puzzle break can help your attention settle before reflection.', href: '/article-memory-games-cognitive-relief.html' },
   { label: 'Helpful read', title: 'Daily word puzzles for relaxing breaks', text: 'See why familiar word loops can feel grounding when you want a tidy reset.', href: '/article-daily-word-puzzles-relax.html' },
   { label: 'Helpful read', title: 'Aesthetic study break routine for students', text: 'Use lofi music, the Focus Tree room, private journaling, and tiny game resets as one calm study loop.', href: '/article-study-break-routine-students.html' },
+  { label: 'Long-tail SEO', title: 'Lofi study room with Focus Tree timer', text: 'A targeted guide for students looking for lofi music, a visible-page focus timer, private journaling, notes, and cozy browser breaks.', href: '/lofi-study-room-focus-tree-timer.html' },
   { label: 'ICP kit', title: 'Student Focus Kit', text: 'Open a student-facing kit with Focus Tree positioning, cozy study loops, and practical ways to share the room with classmates.', href: '/student-focus-kit.html' },
   { label: 'Helpful read', title: 'Word guessing games when your mind is busy', text: 'Learn how small pattern-recognition wins can provide relief without demanding too much energy.', href: '/article-word-guessing-games-busy-mind.html' }
 ];
@@ -558,7 +560,7 @@ const seoGuideGroups = [
   {
     title: 'Explore calmer game-break reads',
     description: 'Best for visitors who like the music-and-games side of Lofi Memory but still want article-level value before they click around.',
-    links: seoGuidePages.filter((page) => ['Student Focus Kit', 'Aesthetic study break routine for students', 'Memory games before writing', 'Daily word puzzles for relaxing breaks', 'Word guessing games when your mind is busy'].includes(page.title))
+    links: seoGuidePages.filter((page) => ['Lofi study room with Focus Tree timer', 'Student Focus Kit', 'Aesthetic study break routine for students', 'Memory games before writing', 'Daily word puzzles for relaxing breaks', 'Word guessing games when your mind is busy'].includes(page.title))
   }
 ];
 
@@ -5056,7 +5058,7 @@ function App() {
       <nav className="sticky top-0 z-20 px-3 pt-3 sm:px-5 sm:pt-5 xl:px-10">
         <div className="site-nav-shell lofi-picture-border lofi-border-memory relative mx-auto max-w-[1280px] overflow-hidden rounded-[2rem] sm:rounded-[3.2rem] border border-[#8b5e3c]/25 p-3 sm:p-4 shadow-soft lg:p-5">
           <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
-          <div className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/20 to-black/5" />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/68 via-black/38 to-black/18" />
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
           <div className="relative z-10 flex flex-col gap-2.5 lg:gap-3 xl:flex-row xl:items-center xl:justify-between">
             <a className="flex items-center gap-2.5 sm:gap-3.5" href="#home" onClick={() => openHomeSection('home')}>
@@ -5081,7 +5083,7 @@ function App() {
               ].map((tab) => (
                 <button
                   key={`desktop-nav-${tab.id}`}
-                  className={`rounded-full px-3.5 py-2 text-sm font-extrabold transition lofi-sharp-chip ${activeTab === tab.id ? 'bg-white text-[#4a3a2d] shadow-sm' : 'text-white/90 hover:bg-white/12'}`}
+                  className={`rounded-full px-3.5 py-2 text-sm font-extrabold transition lofi-sharp-chip ${activeTab === tab.id ? 'bg-white text-[#4a3a2d] shadow-sm' : 'bg-white/8 text-white/95 hover:bg-white/16'}`}
                   onClick={() => navigateToTab(tab.id)}
                   type="button"
                 >
@@ -5102,10 +5104,10 @@ function App() {
                   </div>
                 </div>
               ) : (
-                <button className="header-account-pill flex min-w-[160px] sm:min-w-[208px] flex-1 items-center justify-between gap-2 sm:gap-3 rounded-full border border-white/25 bg-white/15 px-3 py-2 sm:px-4 sm:py-2.5 text-left shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25 xl:flex-none" onClick={signInWithGoogle} disabled={authLoading} type="button">
+                <button className="header-account-pill flex min-w-[148px] sm:min-w-[196px] flex-1 items-center justify-between gap-2 sm:gap-3 rounded-full border border-white/35 bg-white/20 px-3 py-2 sm:px-4 sm:py-2.5 text-left shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/28 xl:flex-none" onClick={signInWithGoogle} disabled={authLoading} type="button">
                   <div>
                     <p className="text-xs sm:text-sm font-extrabold text-white lofi-sharp-text">{authLoading ? '...' : isPhoneInterface ? 'Sign in to sync' : 'Sign in'}</p>
-                    {isPhoneInterface ? null : <p className="lofi-sharp-text-soft text-[9px] sm:text-[11px] font-bold uppercase tracking-[0.16em] text-white/90">Sync</p>}
+                    {isPhoneInterface ? null : <p className="lofi-sharp-text-soft text-[9px] sm:text-[11px] font-bold uppercase tracking-[0.16em] text-white/90">Cloud sync</p>}
                   </div>
                   <div className={`flex shrink-0 items-center justify-center rounded-xl sm:rounded-2xl shadow-sm ${isPhoneInterface ? 'h-8 w-8 bg-white/18 text-white' : 'h-7 w-7 sm:h-9 sm:w-9 bg-white text-[#4a3a2d]'}`}>
                     <ShieldCheck size={14} />
@@ -5158,7 +5160,7 @@ function App() {
       <div className="mobile-bottom-nav fixed bottom-4 left-4 right-4 z-50">
         <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-full border border-[#8b5e3c]/25 p-1.5 shadow-lift backdrop-blur-2xl transition duration-500 hover:shadow-soft">
           <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-60" aria-hidden="true" />
-          <div className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/20 to-black/5" />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/68 via-black/38 to-black/18" />
           <div className="relative z-10 flex items-center gap-1 overflow-x-auto px-1 custom-scrollbar sm:justify-around sm:px-2">
             {[
               { id: 'unwind', label: 'Games', icon: Gamepad2 },
@@ -5211,10 +5213,18 @@ function App() {
                   type="button"
                 >
                   <img src={card.preview} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" aria-hidden="true" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/58 via-black/12 to-white/8" />
-                  <div className="relative z-10 m-2 rounded-[2rem] border border-white/20 bg-[#fff8f1]/92 p-5 shadow-[0_-18px_42px_rgba(255,255,255,0.18)] backdrop-blur-md">
-                    <p className="font-display text-2xl font-bold tracking-tight text-[#3f3126]">{card.title}</p>
-                    <p className="mt-1 text-[10px] font-black uppercase tracking-[0.24em] text-[#7b5d44]/85">{card.description}</p>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/68 via-black/18 to-white/10" />
+                  <div className="relative z-10 m-2 rounded-[2rem] border border-white/30 bg-[#fff8f1]/94 p-5 shadow-[0_-18px_42px_rgba(255,255,255,0.18)] backdrop-blur-md">
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <p className="font-display text-2xl font-bold tracking-tight text-[#3f3126]">{card.title}</p>
+                        <p className="mt-1 text-[10px] font-black uppercase tracking-[0.24em] text-[#7b5d44]/85">{card.description}</p>
+                      </div>
+                      <span className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl shadow-sm ${card.iconTone}`}>
+                        <card.icon size={18} />
+                      </span>
+                    </div>
+                    <span className="mt-4 inline-flex rounded-full bg-[#3f3126] px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.18em] text-white">Open room</span>
                   </div>
                 </button>
               ))}
@@ -5234,8 +5244,8 @@ function App() {
               <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/15 px-3 py-1.5 text-[11px] sm:mb-7 sm:px-4 sm:py-2 sm:text-sm font-bold text-white shadow-sm backdrop-blur-md lofi-sharp-text-soft">
                 <Headphones size={15} /> Aesthetic lofi study room for students
               </div>
-              <h1 className="lofi-sharp-text max-w-3xl font-display text-3xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl sm:leading-[0.96] md:text-6xl">Build your cozy study room with lofi music, relaxing games, private journal, and notes.</h1>
-              <p className="lofi-sharp-text-soft mt-4 max-w-3xl text-base font-bold leading-7 text-white/100 sm:mt-5 sm:text-[1.18rem] sm:leading-8">Designed for students and young adults who want one calm browser tab for focus music, aesthetic study breaks, daily reflection, reminders, and no-download cozy games.</p>
+              <h1 className="lofi-sharp-text max-w-3xl font-display text-3xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl sm:leading-[0.96] md:text-6xl">Your cozy lofi study room for focus, calm breaks, journaling, and notes.</h1>
+              <p className="lofi-sharp-text-soft mt-4 max-w-3xl text-base font-bold leading-7 text-white/100 sm:mt-5 sm:text-[1.18rem] sm:leading-8">Designed for students and cozy-study users who want one relaxing browser tab: grow the Focus Tree, play soft music, write a private reflection, and take small no-download game breaks without opening noisy feeds.</p>
 
               <div className="lofi-now-playing mt-6 sm:mt-7 flex flex-col gap-4 rounded-[1.8rem] sm:rounded-[2.2rem] border border-white/20 bg-black/15 p-3.5 sm:p-4 shadow-sm backdrop-blur-md sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-3 sm:gap-4">
@@ -5251,7 +5261,10 @@ function App() {
               </div>
 
               <div className="mt-7 flex flex-wrap gap-2 sm:mt-9 sm:gap-3">
-                <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full bg-white px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-[#4f3f32] shadow-[0_12px_28px_rgba(0,0,0,0.16)] transition hover:-translate-y-1 hover:bg-[#fff9f0]" onClick={() => setIsRadioPlaying(true)} type="button">
+                <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full bg-white px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-[#4f3f32] shadow-[0_12px_28px_rgba(0,0,0,0.16)] transition hover:-translate-y-1 hover:bg-[#fff9f0]" onClick={() => navigateToTab('focus')} type="button">
+                  <TreePine size={16} /> Grow Focus Tree
+                </button>
+                <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/45 bg-[#4f3f32] px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-[#3f3026]" onClick={() => setIsRadioPlaying(true)} type="button">
                   <Headphones size={16} /> Start music
                 </button>
                 <a className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/45 bg-[#4f3f32] px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-[#3f3026]" href="#unwind" onClick={() => navigateToTab('unwind')}>
@@ -5266,10 +5279,24 @@ function App() {
               </div>
 
               <div className="mt-5 flex flex-wrap gap-2 text-[11px] font-extrabold uppercase tracking-[0.18em] text-white sm:text-xs">
+                <span className="rounded-full border border-white/30 bg-[#4f3f32]/80 px-3 py-2 shadow-sm backdrop-blur-md">Focus Tree</span>
                 <span className="rounded-full border border-white/30 bg-[#4f3f32]/80 px-3 py-2 shadow-sm backdrop-blur-md">Private journal</span>
                 <span className="rounded-full border border-white/30 bg-[#4f3f32]/80 px-3 py-2 shadow-sm backdrop-blur-md">Cozy browser games</span>
                 <span className="rounded-full border border-white/30 bg-[#4f3f32]/80 px-3 py-2 shadow-sm backdrop-blur-md">Lofi radio</span>
                 <span className="rounded-full border border-white/30 bg-[#4f3f32]/80 px-3 py-2 shadow-sm backdrop-blur-md">Notes & reminders</span>
+              </div>
+
+              <div className="mt-6 grid gap-3 rounded-[1.8rem] border border-white/25 bg-white/12 p-3 text-white shadow-sm backdrop-blur-md sm:grid-cols-3">
+                {[
+                  { icon: Headphones, title: 'Set the room', copy: 'Start music or pick a wallpaper.' },
+                  { icon: TreePine, title: 'Stay present', copy: 'Grow the Focus Tree only while visible.' },
+                  { icon: PenLine, title: 'Close gently', copy: 'End with one diary note or reminder.' }
+                ].map((step) => (
+                  <div key={step.title} className="rounded-[1.2rem] border border-white/20 bg-[#2f3f32]/72 p-3">
+                    <div className="flex items-center gap-2 text-sm font-black"><step.icon size={15} /> {step.title}</div>
+                    <p className="mt-1 text-xs font-semibold leading-5 text-white/82">{step.copy}</p>
+                  </div>
+                ))}
               </div>
 
               <div className="mt-7 grid gap-3 lg:grid-cols-3">
@@ -5298,6 +5325,7 @@ function App() {
 
               <div className="mt-8 flex flex-wrap items-center gap-3 rounded-[1.7rem] border border-white/30 bg-[#1f2f29]/82 p-4 text-sm shadow-[0_18px_42px_rgba(31,47,41,0.26)] backdrop-blur-md">
                 <span className="rounded-full bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.22em] text-[#284a3a] shadow-sm">Original articles</span>
+                <a className="rounded-full border border-white/70 bg-[#fffaf0] px-4 py-2 font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/lofi-study-room-focus-tree-timer.html">Lofi study room with Focus Tree timer</a>
                 <a className="rounded-full border border-white/70 bg-[#fffaf0] px-4 py-2 font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/blog.html">Lofi Memory Blog</a>
                 <a className="rounded-full border border-white/70 bg-[#fffaf0] px-4 py-2 font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/student-focus-kit.html">Student Focus Kit</a>
                 <a className="rounded-full border border-white/70 bg-[#fffaf0] px-4 py-2 font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-psychology-of-journaling.html">Psychology of journaling</a>
@@ -7569,8 +7597,8 @@ function App() {
             </span>
           </button>
           {radioNeedsInteraction && (
-            <div className="pointer-events-none absolute -top-10 left-0 w-max max-w-[10rem] rounded-2xl border border-[#e8dfd5] bg-white/92 px-3 py-1.5 text-center text-[10px] font-extrabold uppercase tracking-[0.14em] text-sage-700 shadow-sm backdrop-blur-xl">
-              Tap once for sound
+            <div className="pointer-events-none absolute -top-12 left-1/2 w-max max-w-[11rem] -translate-x-1/2 rounded-2xl border border-[#d9c7b3] bg-[#fffaf0]/96 px-3 py-2 text-center text-[10px] font-extrabold uppercase tracking-[0.14em] text-sage-800 shadow-[0_10px_24px_rgba(72,55,40,0.14)] backdrop-blur-xl">
+              Turn on sound
             </div>
           )}
           <div className={`pointer-events-none absolute -bottom-2 left-1/2 -translate-x-1/2 rounded-full border border-white/75 bg-white/88 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-sage-600 shadow-sm backdrop-blur-xl transition duration-300 ${isRadioDialFeedbackVisible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'}`}>
