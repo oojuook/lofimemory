@@ -541,6 +541,7 @@ const seoGuidePages = [
   { label: 'Helpful read', title: 'Memory games before writing', text: 'Read why a short puzzle break can help your attention settle before reflection.', href: '/article-memory-games-cognitive-relief.html' },
   { label: 'Helpful read', title: 'Daily word puzzles for relaxing breaks', text: 'See why familiar word loops can feel grounding when you want a tidy reset.', href: '/article-daily-word-puzzles-relax.html' },
   { label: 'Helpful read', title: 'Aesthetic study break routine for students', text: 'Use lofi music, the Focus Tree room, private journaling, and tiny game resets as one calm study loop.', href: '/article-study-break-routine-students.html' },
+  { label: 'Painkiller guide', title: 'Stop scrolling and start studying', text: 'A practical guide for students who lose study time to scrolling and need a calmer focus anchor.', href: '/stop-scrolling-and-start-studying.html' },
   { label: 'Long-tail SEO', title: 'Lofi study room with Focus Tree timer', text: 'A targeted guide for students looking for lofi music, a visible-page focus timer, private journaling, notes, and cozy browser breaks.', href: '/lofi-study-room-focus-tree-timer.html' },
   { label: 'ICP kit', title: 'Student Focus Kit', text: 'Open a student-facing kit with Focus Tree positioning, cozy study loops, and practical ways to share the room with classmates.', href: '/student-focus-kit.html' },
   { label: 'Helpful read', title: 'Word guessing games when your mind is busy', text: 'Learn how small pattern-recognition wins can provide relief without demanding too much energy.', href: '/article-word-guessing-games-busy-mind.html' }
@@ -560,7 +561,7 @@ const seoGuideGroups = [
   {
     title: 'Explore calmer game-break reads',
     description: 'Best for visitors who like the music-and-games side of Lofi Memory but still want article-level value before they click around.',
-    links: seoGuidePages.filter((page) => ['Lofi study room with Focus Tree timer', 'Student Focus Kit', 'Aesthetic study break routine for students', 'Memory games before writing', 'Daily word puzzles for relaxing breaks', 'Word guessing games when your mind is busy'].includes(page.title))
+    links: seoGuidePages.filter((page) => ['Stop scrolling and start studying', 'Lofi study room with Focus Tree timer', 'Student Focus Kit', 'Aesthetic study break routine for students', 'Memory games before writing', 'Daily word puzzles for relaxing breaks', 'Word guessing games when your mind is busy'].includes(page.title))
   }
 ];
 
@@ -5325,6 +5326,7 @@ function App() {
 
               <div className="mt-8 flex flex-wrap items-center gap-3 rounded-[1.7rem] border border-white/30 bg-[#1f2f29]/82 p-4 text-sm shadow-[0_18px_42px_rgba(31,47,41,0.26)] backdrop-blur-md">
                 <span className="rounded-full bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.22em] text-[#284a3a] shadow-sm">Original articles</span>
+                <a className="rounded-full border border-white/70 bg-[#fffaf0] px-4 py-2 font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/stop-scrolling-and-start-studying.html">Stop scrolling and study</a>
                 <a className="rounded-full border border-white/70 bg-[#fffaf0] px-4 py-2 font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/lofi-study-room-focus-tree-timer.html">Lofi study room with Focus Tree timer</a>
                 <a className="rounded-full border border-white/70 bg-[#fffaf0] px-4 py-2 font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/blog.html">Lofi Memory Blog</a>
                 <a className="rounded-full border border-white/70 bg-[#fffaf0] px-4 py-2 font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/student-focus-kit.html">Student Focus Kit</a>

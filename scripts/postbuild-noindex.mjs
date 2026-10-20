@@ -34,6 +34,7 @@ const approvedArticlePages = new Set([
   'article-study-break-routine-students.html',
   'student-focus-kit.html',
   'lofi-study-room-focus-tree-timer.html',
+  'stop-scrolling-and-start-studying.html',
   'article-word-guessing-games-busy-mind.html'
 ]);
 
