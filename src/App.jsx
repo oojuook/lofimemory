@@ -5194,7 +5194,7 @@ function App() {
       ) : null}
 
       {showMinimalHomeOverview ? (
-      <section id="home" className="mx-auto max-w-[1220px] px-3 pb-24 pt-6 sm:px-5 sm:pb-20 sm:pt-10 xl:px-10">
+      <section id="home" className="mx-auto max-w-[1180px] px-3 pb-20 pt-5 sm:px-5 sm:pb-16 sm:pt-8 xl:px-8">
         <div className="mb-6 text-center">
           <p className="text-[11px] font-extrabold uppercase tracking-[0.34em] text-[#9a806a]">Aesthetic lofi study room</p>
           <h1 className="mx-auto mt-3 max-w-4xl font-display text-3xl font-bold leading-tight tracking-tight text-[#3f3126] sm:text-5xl">
@@ -5204,28 +5204,28 @@ function App() {
             Lofi Memory is built for students and young adults who want useful breaks without noisy feeds: open a relaxing game, write a private reflection, keep study notes, save reminders, or settle into a soft music room.
           </p>
         </div>
-          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-3 shadow-soft sm:p-4">
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[1.2rem] border border-[#8b5e3c]/12 p-1.5 shadow-sm sm:rounded-[1.4rem] sm:p-2">
+            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
               {homeEntryCards.map((card) => (
                 <button
                   key={card.id}
-                  className="group relative flex min-h-[16rem] w-full flex-col justify-end overflow-hidden rounded-[2.5rem] border border-white/70 bg-white/45 p-1 text-left shadow-sm transition duration-500 hover:-translate-y-1.5 hover:bg-white/65 hover:shadow-lift sm:min-h-[18rem] xl:min-h-[19rem]"
+                  className="group relative flex min-h-[12.5rem] w-full flex-col justify-end overflow-hidden rounded-[1.2rem] border border-white/60 bg-white/50 p-1 text-left shadow-sm transition duration-300 hover:-translate-y-0.5 hover:bg-white/70 hover:shadow-[0_12px_28px_rgba(79,62,48,0.08)] sm:min-h-[14rem] sm:rounded-[1.4rem] xl:min-h-[14.5rem]"
                   onClick={card.onClick}
                   type="button"
                 >
                   <img src={card.preview} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" aria-hidden="true" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/68 via-black/18 to-white/10" />
-                  <div className="relative z-10 m-2 rounded-[2rem] border border-white/30 bg-[#fff8f1]/94 p-5 shadow-[0_-18px_42px_rgba(255,255,255,0.18)] backdrop-blur-md">
+                  <div className="relative z-10 m-2 rounded-[1.2rem] border border-white/30 bg-[#fff8f1]/94 p-4 shadow-[0_-14px_34px_rgba(255,255,255,0.14)] backdrop-blur-md sm:m-2.5 sm:rounded-[1.4rem] sm:p-5">
                     <div className="flex items-start justify-between gap-3">
                       <div>
-                        <p className="font-display text-2xl font-bold tracking-tight text-[#3f3126]">{card.title}</p>
-                        <p className="mt-1 text-[10px] font-black uppercase tracking-[0.24em] text-[#7b5d44]/85">{card.description}</p>
+                        <p className="font-display text-xl font-bold tracking-tight text-[#3f3126] sm:text-2xl">{card.title}</p>
+                        <p className="mt-1 text-[9px] font-black uppercase tracking-[0.24em] text-[#7b5d44]/85 sm:text-[10px]">{card.description}</p>
                       </div>
-                      <span className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl shadow-sm ${card.iconTone}`}>
-                        <card.icon size={18} />
+                      <span className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl shadow-sm sm:h-11 sm:w-11 sm:rounded-2xl ${card.iconTone}`}>
+                        <card.icon size={16} />
                       </span>
                     </div>
-                    <span className="mt-4 inline-flex rounded-full bg-[#3f3126] px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.18em] text-white">Open room</span>
+                    <span className="mt-3.5 inline-flex rounded-full bg-[#3f3126] px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.18em] text-white sm:mt-4 sm:px-3 sm:py-1.5 sm:text-[10px]">Open room</span>
                   </div>
                 </button>
               ))}
@@ -5261,7 +5261,7 @@ function App() {
                 <div className="lofi-equalizer hidden sm:flex" aria-hidden="true"><span /><span /><span /><span /><span /></div>
               </div>
 
-              <div className="mt-7 flex flex-wrap gap-2 sm:mt-9 sm:gap-3">
+              <div className="mt-7 flex flex-wrap gap-2 sm:mt-8 sm:gap-3">
                 <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full bg-white px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-[#4f3f32] shadow-[0_12px_28px_rgba(0,0,0,0.16)] transition hover:-translate-y-1 hover:bg-[#fff9f0]" onClick={() => navigateToTab('focus')} type="button">
                   <TreePine size={16} /> Grow Focus Tree
                 </button>
@@ -5324,19 +5324,19 @@ function App() {
                 </div>
               </div>
 
-              <div className="mt-8 flex flex-wrap items-center gap-3 rounded-[1.7rem] border border-white/30 bg-[#1f2f29]/82 p-4 text-sm shadow-[0_18px_42px_rgba(31,47,41,0.26)] backdrop-blur-md">
-                <span className="rounded-full bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.22em] text-[#284a3a] shadow-sm">Original articles</span>
-                <a className="rounded-full border border-white/70 bg-[#fffaf0] px-4 py-2 font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/stop-scrolling-and-start-studying.html">Stop scrolling and study</a>
-                <a className="rounded-full border border-white/70 bg-[#fffaf0] px-4 py-2 font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/lofi-study-room-focus-tree-timer.html">Lofi study room with Focus Tree timer</a>
-                <a className="rounded-full border border-white/70 bg-[#fffaf0] px-4 py-2 font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/blog.html">Lofi Memory Blog</a>
-                <a className="rounded-full border border-white/70 bg-[#fffaf0] px-4 py-2 font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/student-focus-kit.html">Student Focus Kit</a>
-                <a className="rounded-full border border-white/70 bg-[#fffaf0] px-4 py-2 font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-psychology-of-journaling.html">Psychology of journaling</a>
-                <a className="rounded-full border border-white/70 bg-[#fffaf0] px-4 py-2 font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-protect-privacy-journaling-online.html">Privacy when journaling</a>
-                <a className="rounded-full border border-white/70 bg-[#fffaf0] px-4 py-2 font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-how-to-start-journaling-habit.html">Start a writing habit</a>
-                <a className="rounded-full border border-white/70 bg-[#fffaf0] px-4 py-2 font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-benefits-of-private-online-diary.html">Benefits of online diary</a>
+              <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-4 rounded-[1.4rem] border border-white/30 bg-[#1f2f29]/80 p-4 text-sm shadow-sm backdrop-blur-md sm:p-5">
+                <span className="rounded-full bg-white px-3.5 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#284a3a] shadow-sm">Original articles</span>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-3.5 py-1.5 text-xs font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/stop-scrolling-and-start-studying.html">Stop scrolling and study</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-3.5 py-1.5 text-xs font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/lofi-study-room-focus-tree-timer.html">Lofi study room with Focus Tree timer</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-3.5 py-1.5 text-xs font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/blog.html">Lofi Memory Blog</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-3.5 py-1.5 text-xs font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/student-focus-kit.html">Student Focus Kit</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-3.5 py-1.5 text-xs font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-psychology-of-journaling.html">Psychology of journaling</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-3.5 py-1.5 text-xs font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-protect-privacy-journaling-online.html">Privacy when journaling</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-3.5 py-1.5 text-xs font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-how-to-start-journaling-habit.html">Start a writing habit</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-3.5 py-1.5 text-xs font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-benefits-of-private-online-diary.html">Benefits of online diary</a>
               </div>
 
-              <div className="mt-8 grid gap-4 sm:grid-cols-3 xl:grid-cols-3">
+              <div className="mt-8 grid gap-4 grid-cols-2 md:grid-cols-3 xl:grid-cols-3">
                 <StatCard icon={BookOpen} label="Entries" value={entries.length} tone="bg-sage-100 text-sage-800" />
                 <StatCard icon={Sunrise} label="Current streak" value={`${streak} day${streak === 1 ? '' : 's'}`} tone="bg-sand-100 text-sand-500" />
                 <StatCard icon={HeartHandshake} label="Average mood" value={averageMood} tone="bg-teal-100 text-teal-700" />

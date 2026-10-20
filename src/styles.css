@@ -8,9 +8,9 @@
   --lofi-surface: rgba(255, 250, 242, 0.88);
   --lofi-surface-strong: rgba(255, 247, 236, 0.94);
   --lofi-surface-soft: rgba(255, 252, 247, 0.78);
-  --lofi-border: rgba(232, 223, 213, 0.94);
-  --lofi-border-subtle: rgba(251, 191, 36, 0.22);
-  --lofi-shadow: 0 24px 70px rgba(86, 62, 47, 0.10);
+  --lofi-border: rgba(74, 58, 45, 0.08);
+  --lofi-border-subtle: rgba(70, 110, 82, 0.12);
+  --lofi-shadow: 0 14px 44px rgba(86, 62, 47, 0.07);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -1501,5 +1501,67 @@ input::placeholder {
 @media (min-width: 1024px) {
   .personalized-site.interface-pc .site-nav-shell {
     padding: 1.1rem 1.25rem !important;
+  }
+}
+
+/* Whole-site polish: warmer readability, calmer interactions, and clearer keyboard focus. */
+.personalized-site :is(button, a, input, textarea, select):focus-visible {
+  outline: 3px solid rgba(70, 110, 82, 0.42);
+  outline-offset: 3px;
+}
+
+.personalized-site .site-nav-shell {
+  box-shadow: 0 22px 70px rgba(50, 35, 24, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.personalized-site .lofi-glass {
+  background: rgba(255, 250, 242, 0.88);
+  border-color: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(18px);
+}
+
+.personalized-site .lofi-picture-border {
+  box-shadow: 0 24px 70px rgba(64, 47, 36, 0.13);
+}
+
+@media (max-width: 640px) {
+  .personalized-site .site-nav-actions {
+    gap: 0.45rem;
+  }
+
+  .personalized-site .header-account-pill {
+    min-width: min(100%, 10.25rem);
+  }
+}
+
+/* Clean + responsive pass: reduce chunky cards on laptop and mobile. */
+.personalized-site .lofi-picture-border {
+  box-shadow: 0 14px 40px rgba(64, 47, 36, 0.08);
+}
+
+.personalized-site .shadow-soft,
+.personalized-site .shadow-lift {
+  box-shadow: 0 14px 38px rgba(64, 47, 36, 0.09) !important;
+}
+
+.personalized-site .lofi-glass {
+  box-shadow: 0 10px 28px rgba(78, 61, 45, 0.07);
+}
+
+@media (max-width: 768px) {
+  .personalized-site .lofi-now-playing {
+    border-radius: 1.35rem;
+  }
+
+  .personalized-site .mobile-bottom-nav {
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.75rem;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1366px) {
+  .personalized-site .site-nav-shell {
+    max-width: 1160px;
   }
 }
