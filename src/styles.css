@@ -820,7 +820,7 @@ input::placeholder {
   inset: 0;
   padding: 1px;
   border-radius: inherit;
-  background-image: url('./assets/lofi-border-watercolor.png');
+  background-image: url('./assets/optimized/lofi-border-watercolor.webp');
   background-size: 400px 400px;
   opacity: 0.3;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -868,15 +868,15 @@ input::placeholder {
 }
 
 .lofi-border-floral {
-  --lofi-border-image: url('./assets/lofi-border-floral.png');
+  --lofi-border-image: url('./assets/optimized/lofi-border-floral.webp');
 }
 
 .lofi-border-watercolor {
-  --lofi-border-image: url('./assets/lofi-border-watercolor.png');
+  --lofi-border-image: url('./assets/optimized/lofi-border-watercolor.webp');
 }
 
 .lofi-border-memory {
-  --lofi-border-image: url('./assets/lofi-memory-header.png');
+  --lofi-border-image: url('./assets/optimized/lofi-memory-header.webp');
   --lofi-border-size: cover;
   --lofi-border-opacity: 0.82;
 }
