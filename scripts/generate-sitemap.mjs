@@ -35,6 +35,7 @@ const approvedArticlePages = [
   'article-psychology-of-journaling.html',
   'article-study-break-routine-students.html',
   'student-focus-kit.html',
+  'private-journaling-hub.html',
   'lofi-study-room-focus-tree-timer.html',
   'stop-scrolling-and-start-studying.html',
   'article-word-guessing-games-busy-mind.html'

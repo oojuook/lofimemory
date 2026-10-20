@@ -5245,8 +5245,8 @@ function App() {
               <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/15 px-3 py-1.5 text-[11px] sm:mb-7 sm:px-4 sm:py-2 sm:text-sm font-bold text-white shadow-sm backdrop-blur-md lofi-sharp-text-soft">
                 <Headphones size={15} /> Aesthetic lofi study room for students
               </div>
-              <h1 className="lofi-sharp-text max-w-3xl font-display text-3xl font-bold leading-[1.05] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.25rem]">Your cozy lofi study room for focus, calm breaks, journaling, and notes.</h1>
-              <p className="lofi-sharp-text-soft mt-4 max-w-2xl text-sm font-semibold leading-7 text-white/95 sm:mt-5 sm:text-[1.05rem] sm:leading-8">Designed for students and cozy-study users who want one relaxing browser tab: grow the Focus Tree, play soft music, write a private reflection, and take small no-download game breaks without opening noisy feeds.</p>
+              <h1 className="lofi-sharp-text max-w-3xl font-display text-3xl font-bold leading-[1.05] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.25rem]">Your private journal and cozy lofi study room for focus, calm breaks, moods, and notes.</h1>
+              <p className="lofi-sharp-text-soft mt-4 max-w-2xl text-sm font-semibold leading-7 text-white/95 sm:mt-5 sm:text-[1.05rem] sm:leading-8">Designed for students and cozy-study users who want one relaxing browser tab: write a private journal entry, track a mood, grow the Focus Tree, play soft music, and take small no-download game breaks without opening noisy feeds.</p>
 
               <div className="lofi-now-playing mt-6 sm:mt-7 flex flex-col gap-4 rounded-[1.8rem] sm:rounded-[2.2rem] border border-white/20 bg-black/15 p-3.5 sm:p-4 shadow-sm backdrop-blur-md sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-3 sm:gap-4">
@@ -5329,6 +5329,7 @@ function App() {
                 <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/stop-scrolling-and-start-studying.html">Stop scrolling and study</a>
                 <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/lofi-study-room-focus-tree-timer.html">Lofi room & tree</a>
                 <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/blog.html">Blog hub</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/private-journaling-hub.html">Journal hub</a>
                 <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/student-focus-kit.html">Student Kit</a>
                 <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-psychology-of-journaling.html">Psychology</a>
                 <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-protect-privacy-journaling-online.html">Privacy guide</a>

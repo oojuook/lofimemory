@@ -17,6 +17,7 @@ Lofi Memory is a cozy browser app for lofi music, no-download relaxing games, pr
 - HTML sitemap: https://lofimemory.vercel.app/sitemap.html
 
 ## Original articles
+- Private Journaling Hub: https://lofimemory.vercel.app/private-journaling-hub.html
 - Benefits of a private online diary: https://lofimemory.vercel.app/article-benefits-of-private-online-diary.html
 - Brain dumping before sleep: https://lofimemory.vercel.app/article-brain-dumping-sleep.html
 - Daily word puzzles and relaxing breaks: https://lofimemory.vercel.app/article-daily-word-puzzles-relax.html
