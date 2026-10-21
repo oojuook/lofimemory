@@ -1300,7 +1300,14 @@ function buildForecastByDate(dailyForecast = {}) {
 function getInitialEntries() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : [];
+    if (!saved) return [];
+    const parsed = JSON.parse(saved);
+    return Array.isArray(parsed)
+      ? parsed.map((entry) => ({
+          ...entry,
+          entryType: entry?.entryType === 'journal' ? 'journal' : 'diary'
+        }))
+      : [];
   } catch {
     return [];
   }
@@ -2113,6 +2120,20 @@ function App() {
   const initialActiveTab = getInitialActiveTab();
   const initialCalendarDate = getInitialSelectedCalendarDate();
   const [activeTab, setActiveTab] = useState(initialActiveTab);
+  const [writingCategory, setWritingCategory] = useState('diary');
+  const [memoriesCategoryFilter, setMemoriesCategoryFilter] = useState('all');
+  const entryTypeMeta = {
+    diary: {
+      label: 'Diary entry',
+      shortLabel: 'Diary',
+      helper: 'For what happened, what you finished, and what you want to remember.'
+    },
+    journal: {
+      label: 'Journal entry',
+      shortLabel: 'Journal',
+      helper: 'For reflection, feelings, patterns, and gentle self-check-ins.'
+    }
+  };
   const [activeHomeSection, setActiveHomeSection] = useState(getInitialHomeSection);
   const [showEntryTransition, setShowEntryTransition] = useState(false);
   const [entryTransitionClosing, setEntryTransitionClosing] = useState(false);
@@ -2892,7 +2913,14 @@ function App() {
     const unsubscribe = onSnapshot(
       entriesQuery,
       (snapshot) => {
-        setEntries(snapshot.docs.map((entryDoc) => ({ id: entryDoc.id, ...entryDoc.data() })));
+        setEntries(snapshot.docs.map((entryDoc) => {
+          const data = entryDoc.data();
+          return {
+            id: entryDoc.id,
+            ...data,
+            entryType: data?.entryType === 'journal' ? 'journal' : 'diary'
+          };
+        }));
         setCloudStatus('Cloud sync on');
       },
       (error) => {
@@ -3274,6 +3302,11 @@ function App() {
   }, {}), [entries]);
   const calendarDays = useMemo(() => buildCalendarDays(calendarMonth), [calendarMonth]);
   const selectedDateEntries = entriesByDate[selectedCalendarDate] || [];
+  const selectedDateDiaryEntries = selectedDateEntries.filter((entry) => (entry.entryType || 'diary') === 'diary');
+  const selectedDateJournalEntries = selectedDateEntries.filter((entry) => (entry.entryType || 'diary') === 'journal');
+  const archiveEntries = useMemo(() => entries.filter((entry) => memoriesCategoryFilter === 'all' || (entry.entryType || 'diary') === memoriesCategoryFilter), [entries, memoriesCategoryFilter]);
+  const archiveDiaryEntries = archiveEntries.filter((entry) => (entry.entryType || 'diary') === 'diary');
+  const archiveJournalEntries = archiveEntries.filter((entry) => (entry.entryType || 'diary') === 'journal');
   const selectedImportantDate = importantDates[selectedCalendarDate] || null;
   const selectedCalendarForecast = calendarForecastByDate[selectedCalendarDate] || null;
   const selectedCalendarForecastVisuals = getForecastVisuals(selectedCalendarForecast);
@@ -3967,6 +4000,7 @@ function App() {
       body: body.trim(),
       mood: selectedMood,
       prompt: activePrompt,
+      entryType: writingCategory,
       createdAt: new Date().toISOString()
     };
     if (user) {
@@ -4153,7 +4187,8 @@ function App() {
       ...selectedEntry,
       title: editTitle.trim() || 'Untitled moment',
       body: finalBody,
-      mood: editMood
+      mood: editMood,
+      entryType: selectedEntry.entryType || 'diary'
     };
     setEntries((currentEntries) => currentEntries.map((entry) => entry.id === selectedEntry.id ? updated : entry));
     setSelectedEntry(updated);
@@ -5801,6 +5836,7 @@ function App() {
                   </div>
                 </div>
                 <div className="mt-6 flex flex-wrap gap-2 text-[11px] font-black uppercase tracking-[0.2em] text-white/90 lofi-sharp-text-soft sm:text-xs">
+                  <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-sm">{entryTypeMeta[writingCategory].shortLabel}</span>
                   <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-sm">{selectedMood} mood</span>
                   <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-sm">{draftWordCount} words</span>
                   <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-sm">{completedQuestCount}/{journalQuest.length} ritual steps</span>
@@ -5825,7 +5861,11 @@ function App() {
                 <div className="space-y-3">
                   <div>
                     <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft">Light controls</p>
-                    <p className="mt-1 text-sm font-bold text-white/95 lofi-sharp-text-soft">Keep only what helps, then let the page stay quiet.</p>
+                    <div className="mt-2.5 flex flex-wrap gap-2">
+                      <button className={`rounded-full border px-4 py-2 text-[10px] font-black uppercase tracking-widest transition shadow-sm backdrop-blur-md ${writingCategory === 'diary' ? 'bg-white border-white text-sage-900' : 'bg-white/10 border-white/20 text-white hover:bg-white/20'}`} onClick={() => setWritingCategory('diary')} type="button">Diary Log</button>
+                      <button className={`rounded-full border px-4 py-2 text-[10px] font-black uppercase tracking-widest transition shadow-sm backdrop-blur-md ${writingCategory === 'journal' ? 'bg-white border-white text-sage-900' : 'bg-white/10 border-white/20 text-white hover:bg-white/20'}`} onClick={() => setWritingCategory('journal')} type="button">Journal Reflection</button>
+                    </div>
+                    <p className="mt-2.5 text-xs font-bold leading-5 text-white/90 lofi-sharp-text-soft">{entryTypeMeta[writingCategory].helper}</p>
                   </div>
                   <div className="grid gap-3 sm:grid-cols-2 xl:min-w-[31rem] xl:grid-cols-3">
                     <label className="block text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">
@@ -6955,17 +6995,38 @@ function App() {
                   </div>
                 )}
 
-                {selectedDateEntries.length ? (
-                  <div className="mt-4 space-y-3">
-                    <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Journal entries on this day</p>
-                    {selectedDateEntries.map((entry) => (
-                      <button className="w-full rounded-2xl border border-white/20 bg-black/20 p-3 text-left backdrop-blur-md shadow-sm transition hover:-translate-y-0.5 hover:bg-black/40 hover:shadow-md" key={entry.id} onClick={() => setSelectedEntry(entry)} type="button">
-                        <p className="font-extrabold text-white lofi-sharp-text">{entry.title}</p>
-                        <p className="mt-1 line-clamp-2 text-sm font-semibold leading-6 text-white/95 lofi-sharp-text-soft">{getPlainTextFromHtml(entry.body || entry.prompt || '') || 'Photo entry'}</p>
-                      </button>
-                    ))}
+                {(selectedDateDiaryEntries.length || selectedDateJournalEntries.length) ? (
+                  <div className="mt-4 space-y-4">
+                    {selectedDateDiaryEntries.length > 0 && (
+                      <div className="space-y-3">
+                        <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Diary entries on this day</p>
+                        {selectedDateDiaryEntries.map((entry) => (
+                          <button className="w-full rounded-2xl border border-white/20 bg-black/20 p-3 text-left backdrop-blur-md shadow-sm transition hover:-translate-y-0.5 hover:bg-black/40 hover:shadow-md" key={entry.id} onClick={() => setSelectedEntry(entry)} type="button">
+                            <div className="flex items-center gap-2">
+                              <span className="rounded-full border border-white/20 bg-white/10 px-2 py-0.5 text-[9px] font-black uppercase tracking-widest text-white/90 lofi-sharp-text-soft">Diary</span>
+                              <p className="font-extrabold text-white lofi-sharp-text">{entry.title}</p>
+                            </div>
+                            <p className="mt-1 line-clamp-2 text-sm font-semibold leading-6 text-white/95 lofi-sharp-text-soft">{getPlainTextFromHtml(entry.body || entry.prompt || '') || 'Photo entry'}</p>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                    {selectedDateJournalEntries.length > 0 && (
+                      <div className="space-y-3">
+                        <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Journal reflections on this day</p>
+                        {selectedDateJournalEntries.map((entry) => (
+                          <button className="w-full rounded-2xl border border-white/20 bg-black/20 p-3 text-left backdrop-blur-md shadow-sm transition hover:-translate-y-0.5 hover:bg-black/40 hover:shadow-md" key={entry.id} onClick={() => setSelectedEntry(entry)} type="button">
+                            <div className="flex items-center gap-2">
+                              <span className="rounded-full border border-white/20 bg-white/10 px-2 py-0.5 text-[9px] font-black uppercase tracking-widest text-white/90 lofi-sharp-text-soft">Journal</span>
+                              <p className="font-extrabold text-white lofi-sharp-text">{entry.title}</p>
+                            </div>
+                            <p className="mt-1 line-clamp-2 text-sm font-semibold leading-6 text-white/95 lofi-sharp-text-soft">{getPlainTextFromHtml(entry.body || entry.prompt || '') || 'Photo entry'}</p>
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                ) : <p className="mt-4 rounded-2xl border border-white/20 bg-black/20 px-4 py-4 text-sm font-semibold leading-6 text-white/95 lofi-sharp-text-soft backdrop-blur-md shadow-sm">No diary entry for this date yet.</p>}
+                ) : <p className="mt-4 rounded-2xl border border-white/20 bg-black/20 px-4 py-4 text-sm font-semibold leading-6 text-white/95 lofi-sharp-text-soft backdrop-blur-md shadow-sm">No diary or journal entry for this date yet.</p>}
 
                 {upcomingReminderPreview.length > 0 && (
                   <div className="mt-4 rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur-md shadow-sm">
@@ -6997,13 +7058,20 @@ function App() {
                   <p className="mt-1 text-sm font-semibold leading-7 text-white lofi-sharp-text-soft">Open any page to read the full memory, with a calmer layout that uses the whole panel more gracefully.</p>
                 </div>
               </div>
-              <div className="rounded-full bg-black/20 border border-white/20 backdrop-blur-md px-3 py-1 text-xs font-black uppercase tracking-[0.18em] text-white shadow-sm sm:text-[11px]">
-                {entries.length} saved
+              <div className="flex flex-col items-end gap-3">
+                <div className="rounded-full bg-black/20 border border-white/20 backdrop-blur-md px-3 py-1 text-xs font-black uppercase tracking-[0.18em] text-white shadow-sm sm:text-[11px]">
+                  {archiveEntries.length} saved
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <button className={`rounded-full border px-3 py-1.5 text-[10px] font-black uppercase tracking-widest transition shadow-sm backdrop-blur-md ${memoriesCategoryFilter === 'all' ? 'bg-white border-white text-sage-900' : 'bg-black/20 border-white/20 text-white hover:bg-black/40'}`} onClick={() => setMemoriesCategoryFilter('all')} type="button">All</button>
+                  <button className={`rounded-full border px-3 py-1.5 text-[10px] font-black uppercase tracking-widest transition shadow-sm backdrop-blur-md ${memoriesCategoryFilter === 'diary' ? 'bg-white border-white text-sage-900' : 'bg-black/20 border-white/20 text-white hover:bg-black/40'}`} onClick={() => setMemoriesCategoryFilter('diary')} type="button">Diary</button>
+                  <button className={`rounded-full border px-3 py-1.5 text-[10px] font-black uppercase tracking-widest transition shadow-sm backdrop-blur-md ${memoriesCategoryFilter === 'journal' ? 'bg-white border-white text-sage-900' : 'bg-black/20 border-white/20 text-white hover:bg-black/40'}`} onClick={() => setMemoriesCategoryFilter('journal')} type="button">Journal</button>
+                </div>
               </div>
             </div>
             <div className="relative z-10 flex-1 space-y-4 overflow-y-auto pr-0 min-h-[24rem] sm:min-h-[32rem] sm:pr-2 xl:min-h-0 lofi-scrollbar">
-              {!entries.length && <p className="rounded-3xl border border-white/20 bg-black/20 p-5 font-semibold leading-7 text-white backdrop-blur-md shadow-sm">No entries yet. Start with one sentence if that is all you have today.</p>}
-              {entries.map((entry) => {
+              {!archiveEntries.length && <p className="rounded-3xl border border-white/20 bg-black/20 p-5 font-semibold leading-7 text-white backdrop-blur-md shadow-sm">No {memoriesCategoryFilter === 'all' ? '' : memoriesCategoryFilter} entries yet. Start with one sentence if that is all you have today.</p>}
+              {archiveEntries.map((entry) => {
                 const effectiveMoodLabel = { 'Grounded': 'Happy', 'Soft': 'Calm', 'Okay': 'Neutral', 'Heavy': 'Sad', 'Stormy': 'Anxious' }[entry.mood] || entry.mood;
                 const mood = weatherOptions.find((item) => item.label === effectiveMoodLabel) || weatherOptions.find(m => m.label === entry.mood) || moods[2];
                 return (
@@ -7014,6 +7082,7 @@ function App() {
                   >
                     <div className="flex flex-col gap-1">
                       <div className="mb-2 flex flex-wrap items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-white">
+                        <span className="rounded-full border border-white/20 bg-white/10 px-2 py-1 text-[9px] font-black uppercase tracking-widest text-white/90 lofi-sharp-text-soft">{entryTypeMeta[entry.entryType || 'diary'].shortLabel}</span>
                         <span className="inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1.5 backdrop-blur-md shadow-sm text-white"><WeatherGlyph mood={mood} size="text-base" /> {entry.mood}</span>
                         <span className="rounded-full bg-black/20 px-3 py-1.5 shadow-sm border border-white/20 backdrop-blur-md text-white">{formatDate(entry.createdAt)}</span>
                       </div>
@@ -7770,7 +7839,7 @@ function App() {
                     ))}
                   </div>
                 ) : (
-                  <div className="text-sm font-bold uppercase tracking-widest text-sage-600">{selectedEntry.mood} · {formatDate(selectedEntry.createdAt)}</div>
+                  <div className="text-sm font-bold uppercase tracking-widest text-sage-600 flex flex-wrap items-center gap-2"><span>{selectedEntry.mood} · {formatDate(selectedEntry.createdAt)}</span><span className="rounded-full border border-sage-200 bg-sage-100 px-2 py-0.5 text-[10px] font-black uppercase tracking-widest text-sage-900">{entryTypeMeta[selectedEntry.entryType || 'diary'].shortLabel}</span></div>
                 )}
                 {isEditingEntry ? (
                   <input
