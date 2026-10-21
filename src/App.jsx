@@ -7548,7 +7548,8 @@ function App() {
               <a className="transition hover:text-white" href="/contact.html">Contact</a>
               <a className="transition hover:text-white" href="/privacy.html">Privacy</a>
               <a className="transition hover:text-white" href="/terms.html">Terms</a>
-              <a className="transition hover:text-white" href="#diary" onClick={() => navigateToTab('write')}>Diary</a>
+              <a className="transition hover:text-white" href="#diary" onClick={() => navigateToTab('write')}>Diary & Journal</a>
+              <a className="transition hover:text-white" href="/private-journaling-hub.html">Journaling Hub</a>
             </div>
             <div className="mb-5 flex flex-wrap justify-center gap-x-6 gap-y-2 text-[11px] font-black uppercase tracking-[0.18em] text-white/85 lofi-sharp-text-soft">
               <a className="transition hover:text-white" href="/">Home</a>

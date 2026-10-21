@@ -66,7 +66,8 @@ const approvedArticlePages = [
   'relaxing-puzzle-games-for-overthinking.html',
   'study-break-games-that-dont-waste-time.html',
   'relaxing-games-with-lofi-music-and-journaling.html',
-  'article-word-guessing-games-busy-mind.html'
+  'article-word-guessing-games-busy-mind.html',
+  'difference-between-journal-and-diary.html'
 ];
 
 const alwaysIgnored = new Set([
