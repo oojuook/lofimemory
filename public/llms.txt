@@ -17,7 +17,7 @@ Lofi Memory is a cozy browser app for lofi music, no-download relaxing games, pr
 - HTML sitemap: https://lofimemory.vercel.app/sitemap.html
 
 ## Original articles
-- 100 Journaling and Cozy Game Topics: https://lofimemory.vercel.app/journaling-games-long-tail-seo.html
+- 100 journaling and cozy game questions answered: https://lofimemory.vercel.app/journaling-games-long-tail-seo.html
 - How does journaling help mental health?: https://lofimemory.vercel.app/how-does-journaling-help-mental-health.html
 - How does journaling help with thinking?: https://lofimemory.vercel.app/how-does-journaling-help-with-thinking.html
 - How journaling makes you better: https://lofimemory.vercel.app/how-journaling-makes-you-better.html

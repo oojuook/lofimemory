@@ -541,7 +541,8 @@ const seoGuidePages = [
   { label: 'Helpful read', title: 'Daily word puzzles for relaxing breaks', text: 'See why familiar word loops can feel grounding when you want a tidy reset.', href: '/article-daily-word-puzzles-relax.html' },
   { label: 'Helpful read', title: 'Aesthetic study break routine for students', text: 'Use lofi music, the Focus Tree room, private journaling, and tiny game resets as one calm study loop.', href: '/article-study-break-routine-students.html' },
   { label: 'Painkiller guide', title: 'Stop scrolling and start studying', text: 'A practical guide for students who lose study time to scrolling and need a calmer focus anchor.', href: '/stop-scrolling-and-start-studying.html' },
-  { label: 'Long-tail SEO', title: 'Lofi study room with Focus Tree timer', text: 'A targeted guide for students looking for lofi music, a visible-page focus timer, private journaling, notes, and cozy browser breaks.', href: '/lofi-study-room-focus-tree-timer.html' },
+  { label: 'Study guide', title: 'Lofi study room with a Focus Tree timer for students', text: 'A practical guide for students who want lofi music, a visible-page Focus Tree timer, private journaling, notes, and calm breaks in one room.', href: '/lofi-study-room-focus-tree-timer.html' },
+  { label: 'Answer hub', title: '100 journaling and cozy game questions answered', text: 'Direct answers for overthinking, study stress, private journaling, tired brains, and calm game breaks in one readable guide.', href: '/journaling-games-long-tail-seo.html' },
   { label: 'ICP kit', title: 'Student Focus Kit', text: 'Open a student-facing kit with Focus Tree positioning, cozy study loops, and practical ways to share the room with classmates.', href: '/student-focus-kit.html' },
   { label: 'Helpful read', title: 'Word guessing games when your mind is busy', text: 'Learn how small pattern-recognition wins can provide relief without demanding too much energy.', href: '/article-word-guessing-games-busy-mind.html' }
 ];
@@ -560,7 +561,7 @@ const seoGuideGroups = [
   {
     title: 'Explore calmer game-break reads',
     description: 'Best for visitors who like the music-and-games side of Lofi Memory but still want article-level value before they click around.',
-    links: seoGuidePages.filter((page) => ['Stop scrolling and start studying', 'Lofi study room with Focus Tree timer', 'Student Focus Kit', 'Aesthetic study break routine for students', 'Memory games before writing', 'Daily word puzzles for relaxing breaks', 'Word guessing games when your mind is busy'].includes(page.title))
+    links: seoGuidePages.filter((page) => ['Stop scrolling and start studying', 'Lofi study room with a Focus Tree timer for students', '100 journaling and cozy game questions answered', 'Student Focus Kit', 'Aesthetic study break routine for students', 'Memory games before writing', 'Daily word puzzles for relaxing breaks', 'Word guessing games when your mind is busy'].includes(page.title))
   }
 ];
 
@@ -1643,6 +1644,9 @@ function ThemeStudio({
   onAddCustomWeather,
   onDeleteCustomWeather
 }) {
+  const activeThemePreview = colorThemes.find((theme) => theme.id === selectedTheme) || colorThemes[0];
+  const currentCdArt = customCdImage || activeThemePreview.image || radioVinylIcon;
+
   return (
     <div className={`customizer-shell fixed inset-y-0 right-0 z-30 flex transition ${isOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}>
       <div className={`fixed inset-0 bg-ink/20 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`} onClick={onClose} />
@@ -1697,7 +1701,7 @@ function ThemeStudio({
 
             <div className="rounded-3xl border border-white/20 bg-white/10 p-5 shadow-sm backdrop-blur-md">
               <div className="mb-3 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft"><ImagePlus size={16} /> Custom CD design</div>
-              <p className="text-sm font-bold leading-6 text-white/95 lofi-sharp-text-soft">Upload your own picture to place it on the CD label. It stays local in this browser and updates the design cards.</p>
+              <p className="text-sm font-bold leading-6 text-white/95 lofi-sharp-text-soft">Upload your own picture to place it on the CD label. It stays local in this browser and updates the design cards and player disc.</p>
               <div className="mt-4 grid gap-4 md:grid-cols-[minmax(0,1fr)_10rem] md:items-center">
                 <label className="flex cursor-pointer items-center justify-center gap-2 rounded-2xl border border-dashed border-white/30 bg-white/10 px-4 py-4 text-sm font-bold text-white transition hover:bg-white/20">
                   <ImagePlus size={18} /> Upload CD art
@@ -1709,10 +1713,10 @@ function ThemeStudio({
               </div>
               <div className="mt-4 flex items-center gap-4 rounded-3xl border border-white/15 bg-black/10 p-4">
                 <span className="relative block h-20 w-20 shrink-0 rounded-full border border-white/50 shadow-[0_12px_28px_rgba(0,0,0,0.24)]" style={{ background: 'conic-gradient(from 25deg, rgba(255,255,255,0.9), rgba(184,212,170,0.9), rgba(255,255,255,0.74), rgba(79,107,69,0.88), rgba(255,255,255,0.9))' }}>
-                  <img src={customCdImage || radioVinylIcon} alt="" className="absolute inset-[0.85rem] h-[calc(100%-1.7rem)] w-[calc(100%-1.7rem)] rounded-full object-cover" aria-hidden="true" />
+                  <img src={currentCdArt} alt="" className="absolute inset-[0.85rem] h-[calc(100%-1.7rem)] w-[calc(100%-1.7rem)] rounded-full object-cover" aria-hidden="true" />
                   <span className="absolute left-1/2 top-1/2 h-5 w-5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/70 bg-[#2b231d]/80 shadow-inner" />
                 </span>
-                <p className="text-sm font-bold leading-6 text-white/90 lofi-sharp-text-soft">{customCdImage ? 'Custom CD art is active across the design cards.' : 'Default lofi CD art is active. Upload a picture to personalize the disc.'}</p>
+                <p className="text-sm font-bold leading-6 text-white/90 lofi-sharp-text-soft">{customCdImage ? 'Custom CD art is active across the design cards and player disc.' : `${activeThemePreview.name} is active on the design cards and player disc.`}</p>
               </div>
             </div>
 
@@ -5099,7 +5103,7 @@ function App() {
               <div className="mt-5 flex items-center justify-center gap-3 sm:gap-4">
                 <div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-white/16 bg-black/18 shadow-[0_14px_34px_rgba(0,0,0,0.18)] sm:h-24 sm:w-24">
                   <div className="absolute inset-[9px] rounded-full border border-white/10 bg-[radial-gradient(circle,#3b2d22_0%,#17110d_72%)]" />
-                  <img src={customCdImage || radioVinylIcon} alt="" className="relative h-14 w-14 rounded-full object-cover opacity-95 sm:h-16 sm:w-16" aria-hidden="true" />
+                  <img src={customCdImage || activeTheme.image || radioVinylIcon} alt="" className="relative h-14 w-14 rounded-full object-cover opacity-95 sm:h-16 sm:w-16" aria-hidden="true" />
                 </div>
                 <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-[1.8rem] border border-white/18 bg-[#4f3f32]/80 p-2 text-2xl font-black text-white shadow-[0_14px_34px_rgba(0,0,0,0.16)] sm:h-24 sm:w-24">
                   LM
@@ -5400,7 +5404,7 @@ function App() {
                 <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/lofi-study-room-focus-tree-timer.html">Lofi room & tree</a>
                 <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/blog.html">Blog hub</a>
                 <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/private-journaling-hub.html">Journal hub</a>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/journaling-games-long-tail-seo.html">100 topics</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/journaling-games-long-tail-seo.html">100 answers</a>
                 <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/how-does-journaling-help-mental-health.html">Mental health journaling</a>
                 <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/student-focus-kit.html">Student Kit</a>
                 <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-psychology-of-journaling.html">Psychology</a>
@@ -7666,7 +7670,7 @@ function App() {
               <img
                 alt="Lofi radio vinyl icon"
                 className={`h-full w-full rounded-full object-cover transition duration-300 ${isRadioPlaying ? 'opacity-100 saturate-110' : 'opacity-90 saturate-75'}`}
-                src={radioVinylIcon}
+                src={customCdImage || activeTheme.image || radioVinylIcon}
               />
               <span className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle_at_32%_24%,rgba(255,255,255,0.42),transparent_28%),radial-gradient(circle_at_70%_72%,rgba(0,0,0,0.18),transparent_34%)]" />
               <span className="pointer-events-none absolute flex h-4 w-4 items-center justify-center rounded-full border border-amber-200/50 bg-sage-950/85 shadow-[0_0_0_3px_rgba(255,255,255,0.35)]">
