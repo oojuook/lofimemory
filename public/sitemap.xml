@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://lofimemory.vercel.app/</loc>
-    <lastmod>2026-10-21T07:41:51.437Z</lastmod>
+    <lastmod>2026-10-21T08:45:39.830Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -332,6 +332,48 @@
   </url>
   <url>
     <loc>https://lofimemory.vercel.app/difference-between-journal-and-diary.html</loc>
+    <lastmod>2026-10-19T00:00:00.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/how-journaling-helps-you-understand-yourself.html</loc>
+    <lastmod>2026-10-19T00:00:00.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/how-often-should-you-journal.html</loc>
+    <lastmod>2026-10-19T00:00:00.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/best-time-to-journal.html</loc>
+    <lastmod>2026-10-19T00:00:00.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/journal-on-paper-or-online.html</loc>
+    <lastmod>2026-10-19T00:00:00.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/what-should-i-write-in-my-journal.html</loc>
+    <lastmod>2026-10-19T00:00:00.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/how-long-should-a-study-break-be.html</loc>
+    <lastmod>2026-10-19T00:00:00.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/why-do-relaxing-games-help-focus.html</loc>
     <lastmod>2026-10-19T00:00:00.000Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.86</priority>

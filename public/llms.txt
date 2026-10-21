@@ -23,6 +23,13 @@ Lofi Memory is a cozy browser app for lofi music, no-download relaxing games, pr
 - How journaling makes you better: https://lofimemory.vercel.app/how-journaling-makes-you-better.html
 - Journaling pros and cons: https://lofimemory.vercel.app/journaling-pros-and-cons.html
 - Difference between journal and diary: https://lofimemory.vercel.app/difference-between-journal-and-diary.html
+- How journaling helps you understand yourself: https://lofimemory.vercel.app/how-journaling-helps-you-understand-yourself.html
+- How often should you journal?: https://lofimemory.vercel.app/how-often-should-you-journal.html
+- Best time to journal: https://lofimemory.vercel.app/best-time-to-journal.html
+- Paper or online journal: https://lofimemory.vercel.app/journal-on-paper-or-online.html
+- What should I write in my journal?: https://lofimemory.vercel.app/what-should-i-write-in-my-journal.html
+- How long should a study break be?: https://lofimemory.vercel.app/how-long-should-a-study-break-be.html
+- Why do relaxing games help focus?: https://lofimemory.vercel.app/why-do-relaxing-games-help-focus.html
 - Journaling for students who overthink: https://lofimemory.vercel.app/journaling-for-students-who-overthink.html
 - How journaling helps with overthinking: https://lofimemory.vercel.app/how-journaling-helps-with-overthinking.html
 - How journaling helps clear your head: https://lofimemory.vercel.app/how-journaling-helps-clear-your-head.html

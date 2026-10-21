@@ -65,7 +65,14 @@ const approvedArticlePages = new Set([
   'study-break-games-that-dont-waste-time.html',
   'relaxing-games-with-lofi-music-and-journaling.html',
   'article-word-guessing-games-busy-mind.html',
-  'difference-between-journal-and-diary.html'
+  'difference-between-journal-and-diary.html',
+  'how-journaling-helps-you-understand-yourself.html',
+  'how-often-should-you-journal.html',
+  'best-time-to-journal.html',
+  'journal-on-paper-or-online.html',
+  'what-should-i-write-in-my-journal.html',
+  'how-long-should-a-study-break-be.html',
+  'why-do-relaxing-games-help-focus.html'
 ]);
 
 const alwaysKept = new Set([
