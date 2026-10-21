@@ -30,10 +30,20 @@ Lofi Memory is a cozy browser app for lofi music, no-download relaxing games, pr
 - What to write when you feel overwhelmed: https://lofimemory.vercel.app/what-to-write-when-you-feel-overwhelmed.html
 - Is online journaling safe?: https://lofimemory.vercel.app/is-online-journaling-safe.html
 - How to journal when you do not know what to write: https://lofimemory.vercel.app/how-to-journal-when-you-dont-know-what-to-write.html
+- How journaling improves your thoughts: https://lofimemory.vercel.app/how-journaling-improves-your-thoughts.html
+- Benefits of writing down your thoughts: https://lofimemory.vercel.app/benefits-of-writing-down-your-thoughts.html
+- How journaling helps decision making: https://lofimemory.vercel.app/how-journaling-helps-decision-making.html
+- Daily journal prompts for students: https://lofimemory.vercel.app/daily-journal-prompts-for-students.html
+- Journaling to stop procrastinating: https://lofimemory.vercel.app/journaling-to-stop-procrastinating.html
 - Games to play when your brain is tired: https://lofimemory.vercel.app/games-to-play-when-your-brain-is-tired.html
 - No-download games for study breaks: https://lofimemory.vercel.app/no-download-games-for-study-breaks.html
 - Browser games for short breaks: https://lofimemory.vercel.app/browser-games-for-short-breaks.html
 - Games to play when bored but not distracted: https://lofimemory.vercel.app/games-to-play-when-bored-but-not-distracted.html
+- Games that help you relax after studying: https://lofimemory.vercel.app/games-that-help-you-relax-after-studying.html
+- Quick games to reset your brain: https://lofimemory.vercel.app/quick-games-to-reset-your-brain.html
+- Calming games before journaling: https://lofimemory.vercel.app/calming-games-before-journaling.html
+- Relaxing puzzle games for overthinking: https://lofimemory.vercel.app/relaxing-puzzle-games-for-overthinking.html
+- Study break games that do not waste time: https://lofimemory.vercel.app/study-break-games-that-dont-waste-time.html
 - Relaxing games with lofi music and journaling: https://lofimemory.vercel.app/relaxing-games-with-lofi-music-and-journaling.html
 - Private Journaling Hub: https://lofimemory.vercel.app/private-journaling-hub.html
 - Benefits of a private online diary: https://lofimemory.vercel.app/article-benefits-of-private-online-diary.html

@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://lofimemory.vercel.app/</loc>
-    <lastmod>2026-10-21T01:52:40.313Z</lastmod>
+    <lastmod>2026-10-21T03:11:58.475Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -235,6 +235,36 @@
     <priority>0.86</priority>
   </url>
   <url>
+    <loc>https://lofimemory.vercel.app/how-journaling-improves-your-thoughts.html</loc>
+    <lastmod>2026-10-19T00:00:00.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/benefits-of-writing-down-your-thoughts.html</loc>
+    <lastmod>2026-10-19T00:00:00.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/how-journaling-helps-decision-making.html</loc>
+    <lastmod>2026-10-19T00:00:00.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/daily-journal-prompts-for-students.html</loc>
+    <lastmod>2026-10-19T00:00:00.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/journaling-to-stop-procrastinating.html</loc>
+    <lastmod>2026-10-19T00:00:00.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
     <loc>https://lofimemory.vercel.app/games-to-play-when-your-brain-is-tired.html</loc>
     <lastmod>2026-10-19T00:00:00.000Z</lastmod>
     <changefreq>monthly</changefreq>
@@ -254,6 +284,36 @@
   </url>
   <url>
     <loc>https://lofimemory.vercel.app/games-to-play-when-bored-but-not-distracted.html</loc>
+    <lastmod>2026-10-19T00:00:00.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/games-that-help-you-relax-after-studying.html</loc>
+    <lastmod>2026-10-19T00:00:00.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/quick-games-to-reset-your-brain.html</loc>
+    <lastmod>2026-10-19T00:00:00.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/calming-games-before-journaling.html</loc>
+    <lastmod>2026-10-19T00:00:00.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/relaxing-puzzle-games-for-overthinking.html</loc>
+    <lastmod>2026-10-19T00:00:00.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/study-break-games-that-dont-waste-time.html</loc>
     <lastmod>2026-10-19T00:00:00.000Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.86</priority>
