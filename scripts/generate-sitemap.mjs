@@ -39,6 +39,7 @@ const approvedArticlePages = [
   'lofi-study-room-focus-tree-timer.html',
   'stop-scrolling-and-start-studying.html',
   'journaling-games-long-tail-seo.html',
+  '1000-journaling-games-music-questions.html',
   'how-does-journaling-help-with-thinking.html',
   'how-does-journaling-help-mental-health.html',
   'how-journaling-makes-you-better.html',
