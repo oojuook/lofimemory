@@ -275,7 +275,7 @@ export default function QuietSnake({ difficulty = 'medium', theme = 'lofi', view
             <div className={`inline-flex items-center gap-2 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'rounded-full border border-amber-200 bg-white/80 text-amber-800' : 'border-2 border-[#111111] bg-[#111111] text-[#f3f6ea] shadow-[4px_4px_0_rgba(17,17,17,0.14)]'}`}>
               <Sparkles size={14} /> {config.label} snake flow
             </div>
-            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-[#111111]'}`}>Aesthetic Snake</h3>
+            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-[#111111]'}`}>Snake Flow</h3>
             <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-[#30412a]'}`}>A cozy snake flow for short study breaks, with pastel board cues, wrap-around edges, and a calmer arcade rhythm that feels softer in lofi mode.</p>
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-[#466038]'}`}>{config.note}</p>
           </div>

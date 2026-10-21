@@ -287,7 +287,7 @@ export default function MindSweeper({ difficulty = 'medium', theme = 'lofi', vie
               <div className={`inline-flex items-center gap-2 rounded-full border px-2.5 py-1 text-[9px] sm:text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-[#5d6468] bg-[#2b2f31] text-[#d9e0df]'}`}>
                 <Sparkles size={13} /> {label} logic reset
               </div>
-              <h3 className={`mt-3 sm:mt-4 text-xl sm:text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-[#f1f5f3]'}`}>Aesthetic Logic Sweeper</h3>
+              <h3 className={`mt-3 sm:mt-4 text-xl sm:text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-[#f1f5f3]'}`}>Logic Sweeper</h3>
               <p className={`mt-1.5 sm:mt-2 max-w-2xl text-xs sm:text-sm leading-6 sm:leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-[#c1cbc7]'}`}>{isLofi ? 'A cozy logic board with soft biscuit tiles, built for mindful study breaks.' : 'Classic dark Minesweeper tiles.'}</p>
               <div className="mt-3 flex flex-wrap gap-1.5 sm:gap-2">
                 <span className={`rounded-full border px-2.5 py-1 text-[9px] sm:text-xs font-extrabold uppercase tracking-[0.18em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-[#5d6468] bg-[#2b2f31] text-[#d9e0df]'}`}>{densityLabel}</span>

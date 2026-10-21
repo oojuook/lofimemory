@@ -401,7 +401,7 @@ export default function StreamSurfer({ difficulty = 'medium', theme = 'lofi', vi
             <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-teal-200 bg-white/88 text-teal-700'}`}>
               <Sparkles size={14} /> {config.label} current
             </div>
-            <h3 className={`mt-3 text-2xl font-bold ${isLofi ? 'text-[#3d3025]' : 'text-teal-900'}`}>Aesthetic Lilypad Hopper</h3>
+            <h3 className={`mt-3 text-2xl font-bold ${isLofi ? 'text-[#3d3025]' : 'text-teal-900'}`}>Lilypad Hopper</h3>
             <p className={`text-sm font-semibold ${isLofi ? 'text-[#6e5a4a]' : 'text-teal-700'}`}>{isLofi ? 'A lofi pond dodge for cozy study breaks, with pastel water, warm glass controls, and a softer arcade rhythm.' : 'A frog-themed 3-lane pond dodge that feels lighter on mobile.'}</p>
             <p className={`mt-1 text-sm ${isLofi ? 'text-[#8c755f]' : 'text-teal-600'}`}>{config.note}</p>
           </div>

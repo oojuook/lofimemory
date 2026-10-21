@@ -23,7 +23,17 @@ Lofi Memory is a cozy browser app for lofi music, no-download relaxing games, pr
 - How journaling makes you better: https://lofimemory.vercel.app/how-journaling-makes-you-better.html
 - Journaling pros and cons: https://lofimemory.vercel.app/journaling-pros-and-cons.html
 - Journaling for students who overthink: https://lofimemory.vercel.app/journaling-for-students-who-overthink.html
+- How journaling helps with overthinking: https://lofimemory.vercel.app/how-journaling-helps-with-overthinking.html
+- How journaling helps clear your head: https://lofimemory.vercel.app/how-journaling-helps-clear-your-head.html
+- How journaling helps students focus: https://lofimemory.vercel.app/how-journaling-helps-students-focus.html
+- How to journal before studying: https://lofimemory.vercel.app/how-to-journal-before-studying.html
+- What to write when you feel overwhelmed: https://lofimemory.vercel.app/what-to-write-when-you-feel-overwhelmed.html
+- Is online journaling safe?: https://lofimemory.vercel.app/is-online-journaling-safe.html
+- How to journal when you do not know what to write: https://lofimemory.vercel.app/how-to-journal-when-you-dont-know-what-to-write.html
 - Games to play when your brain is tired: https://lofimemory.vercel.app/games-to-play-when-your-brain-is-tired.html
+- No-download games for study breaks: https://lofimemory.vercel.app/no-download-games-for-study-breaks.html
+- Browser games for short breaks: https://lofimemory.vercel.app/browser-games-for-short-breaks.html
+- Games to play when bored but not distracted: https://lofimemory.vercel.app/games-to-play-when-bored-but-not-distracted.html
 - Relaxing games with lofi music and journaling: https://lofimemory.vercel.app/relaxing-games-with-lofi-music-and-journaling.html
 - Private Journaling Hub: https://lofimemory.vercel.app/private-journaling-hub.html
 - Benefits of a private online diary: https://lofimemory.vercel.app/article-benefits-of-private-online-diary.html
@@ -35,7 +45,7 @@ Lofi Memory is a cozy browser app for lofi music, no-download relaxing games, pr
 - Memory games before writing: https://lofimemory.vercel.app/article-memory-games-cognitive-relief.html
 - Privacy when journaling online: https://lofimemory.vercel.app/article-protect-privacy-journaling-online.html
 - Psychology of journaling: https://lofimemory.vercel.app/article-psychology-of-journaling.html
-- Aesthetic study break routine for students: https://lofimemory.vercel.app/article-study-break-routine-students.html
+- Calm study break routine for students: https://lofimemory.vercel.app/article-study-break-routine-students.html
 - Stop scrolling and start studying: https://lofimemory.vercel.app/stop-scrolling-and-start-studying.html
 - Student Focus Kit: https://lofimemory.vercel.app/student-focus-kit.html
 - Lofi study room with Focus Tree timer: https://lofimemory.vercel.app/lofi-study-room-focus-tree-timer.html

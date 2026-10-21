@@ -476,8 +476,8 @@ export default function TypingSpeedTest({ difficulty = 'medium', theme = 'lofi',
             <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-sky-200 bg-white/88 text-sky-700'}`}>
               <Sparkles size={14} /> {config.label} typing pace
             </div>
-            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>Aesthetic Typing Pace</h3>
-            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-700'}`}>Improve your focus and typing speed during study breaks. Settle into a calm typing rhythm with aesthetic visuals and gentle feedback, built for a mindful focus session.</p>
+            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>Typing Pace</h3>
+            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-700'}`}>Improve your focus and typing speed during study breaks. Settle into a calm typing rhythm with soft visuals and gentle feedback, built for a mindful focus session.</p>
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-slate-600'}`}>{config.note}</p>
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-[#8b5e34]' : 'text-sky-700'}`}>{modeConfig.modeNote}</p>
             <div className="mt-4 flex flex-wrap items-center gap-2.5">

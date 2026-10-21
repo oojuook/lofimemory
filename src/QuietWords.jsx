@@ -216,8 +216,8 @@ export default function QuietWords({ difficulty = 'medium', theme = 'lofi', view
             <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-sage-200 bg-white/88 text-sage-700'}`}>
               <Sparkles size={14} /> {config.label} word reset
             </div>
-            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>Aesthetic Words</h3>
-            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>A cozy word scramble for aesthetic study breaks — simple, familiar, and easy to play for a few minutes when you want a calmer word loop.</p>
+            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>Word Scramble</h3>
+            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>A cozy word scramble for calm study breaks — simple, familiar, and easy to play for a few minutes when you want a calmer word loop.</p>
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-sage-600'}`}>{config.note}</p>
             <div className="mt-3 flex flex-wrap gap-2">
               <span className={`rounded-full px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] shadow-sm ${isLofi ? 'border border-white/70 bg-white/70 text-amber-900 backdrop-blur-sm' : 'bg-white text-sage-700'}`}>{config.complexityLabel}</span>

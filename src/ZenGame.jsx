@@ -370,8 +370,8 @@ export default function ZenGame({ difficulty = 'medium', theme = 'lofi', viewpor
             <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/85 text-amber-800' : 'border-sage-200 bg-white/88 text-sage-700'}`}>
               <Sparkles size={14} /> {levelText} drift
             </div>
-            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-sage-900'}`}>Aesthetic Drifting Seed</h3>
-            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>A calming float-through game for aesthetic study breaks, with warm cream skies, pastel obstacles, and quieter feedback for restless focus.</p>
+            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-sage-900'}`}>Drifting Seed</h3>
+            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>A calming float-through game for calm study breaks, with warm cream skies, pastel obstacles, and quieter feedback for restless focus.</p>
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-600'}`}>{config.note}</p>
           </div>
           <div className={`grid w-full max-w-[420px] gap-1.5 p-2.5 shadow-sm sm:max-w-[460px] [grid-template-columns:minmax(0,0.85fr)_minmax(0,0.85fr)_minmax(0,1.45fr)] lg:max-w-[500px] lg:flex-1 ${isLofi ? 'rounded-[1.5rem] border border-[#e8dfd5]/80 bg-white/70 backdrop-blur-sm' : 'rounded-[1.5rem] border border-white/85 bg-white/80'}`}>

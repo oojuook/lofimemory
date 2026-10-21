@@ -42,7 +42,17 @@ const approvedArticlePages = new Set([
   'how-journaling-makes-you-better.html',
   'journaling-pros-and-cons.html',
   'journaling-for-students-who-overthink.html',
+  'how-journaling-helps-with-overthinking.html',
+  'how-journaling-helps-clear-your-head.html',
+  'how-journaling-helps-students-focus.html',
+  'how-to-journal-before-studying.html',
+  'what-to-write-when-you-feel-overwhelmed.html',
+  'is-online-journaling-safe.html',
+  'how-to-journal-when-you-dont-know-what-to-write.html',
   'games-to-play-when-your-brain-is-tired.html',
+  'no-download-games-for-study-breaks.html',
+  'browser-games-for-short-breaks.html',
+  'games-to-play-when-bored-but-not-distracted.html',
   'relaxing-games-with-lofi-music-and-journaling.html',
   'article-word-guessing-games-busy-mind.html'
 ]);

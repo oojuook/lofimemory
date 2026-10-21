@@ -422,7 +422,7 @@ function SudokuHeader({ completedRounds, config, conflictCount, elapsedLabel, is
         <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-slate-200 bg-white/88 text-slate-700'}`}>
           <Sparkles size={14} /> {config.label} sudoku flow
         </div>
-        <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>Aesthetic Sudoku</h3>
+        <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-slate-950'}`}>Sudoku</h3>
         <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-slate-700'}`}>
           A cozy Sudoku board built for mindful study breaks. Solve a balanced logic puzzle without leaving your study room, and find your rhythm with lofi focus music.
         </p>

@@ -257,8 +257,8 @@ export default function LofiJigsaw({ difficulty = 'medium', theme = 'lofi', view
             <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-sage-200 bg-white/88 text-sage-700'}`}>
               <Sparkles size={14} /> {label} lofi jigsaw
             </div>
-            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>Aesthetic Lofi Jigsaw</h3>
-            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>Slide soft image pieces back into place and rebuild a tiny lofi landscape. It is a cozy puzzle for aesthetic study breaks, relaxing browser play, and quiet journal moments.</p>
+            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>Lofi Jigsaw</h3>
+            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>Slide soft image pieces back into place and rebuild a tiny lofi landscape. It is a cozy puzzle for calm study breaks, relaxing browser play, and quiet journal moments.</p>
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-sage-600'}`}>{note}</p>
             <p className={`mt-2 text-xs font-semibold uppercase tracking-[0.18em] ${isLofi ? 'text-amber-800/60' : 'text-sage-500'}`}>{size}×{size} board • {totalTiles} picture pieces • relaxing sliding puzzle</p>
           </div>

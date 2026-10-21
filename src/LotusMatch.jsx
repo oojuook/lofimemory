@@ -249,8 +249,8 @@ export default function LotusMatch({ difficulty = 'medium', theme = 'lofi', view
             <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-sage-200 bg-white/88 text-sage-700'}`}>
               <Sparkles size={14} /> {label} memory flow
             </div>
-            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>Aesthetic Lotus Match</h3>
-            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>A soft memory game for aesthetic study breaks and quiet focus. Watch the cards flip, remember where they rest, and match the pairs while finding your rhythm with lofi focus music.</p>
+            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-sage-950'}`}>Lotus Match</h3>
+            <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>A soft memory game for calm study breaks and quiet focus. Watch the cards flip, remember where they rest, and match the pairs while finding your rhythm with lofi focus music.</p>
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-sage-600'}`}>{note}</p>
             <p className={`mt-2 text-xs font-semibold uppercase tracking-[0.18em] ${isLofi ? 'text-amber-800/60' : 'text-sage-500'}`}>{pairCount} pairs • {previewLabel} preview • {mismatchLabel} reset</p>
           </div>

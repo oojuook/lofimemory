@@ -2309,7 +2309,7 @@ function App() {
     },
     {
       id: 'quiet-snake',
-      title: 'Aesthetic Snake',
+      title: 'Snake Flow',
       detail: 'Classic arcade loop',
       isNew: true,
       description: 'A cozy snake run with clear turns and a gentle lofi feel, perfect for a short focus reset.',
@@ -2322,7 +2322,7 @@ function App() {
     {
       id: 'mind-sweeper',
       title: 'Sweeper',
-      detail: 'Aesthetic logic reset',
+      detail: 'Logic reset',
       description: 'Clear soft logic tiles in a cozy sweeper board designed for mindful study breaks.',
       icon: MinesweeperImageIcon,
       tone: 'from-lime-100 to-emerald-50 text-emerald-700',
@@ -2332,10 +2332,10 @@ function App() {
     },
     {
       id: 'drifting-leaf',
-      title: 'Aesthetic Drifting Seed',
+      title: 'Drifting Seed',
       detail: 'Soft endless glide',
       isNew: true,
-      description: 'A slow, floaty game for clearing your head and aesthetic focus during study breaks.',
+      description: 'A slow, floaty game for clearing your head and settling into gentle focus during study breaks.',
       icon: SeedIcon,
       tone: 'from-emerald-100 to-sage-50 text-emerald-700',
       preview: gameDriftingSeedPreview,
@@ -2344,7 +2344,7 @@ function App() {
     },
     {
       id: 'stream-surfer',
-      title: 'Aesthetic Lilypad Hopper',
+      title: 'Lilypad Hopper',
       detail: 'Gentle pond dodging',
       description: 'Hop through a calm lofi lily-pad run for a mindful reset between study blocks.',
       icon: FrogIcon,
@@ -2355,7 +2355,7 @@ function App() {
     },
     {
       id: 'lofi-jigsaw',
-      title: 'Aesthetic Lofi Jigsaw',
+      title: 'Lofi Jigsaw',
       detail: 'Cozy picture puzzle',
       description: 'Slide a soft lofi scene back together for a relaxing puzzle break before journaling or between study sessions.',
       icon: ImagePlus,
@@ -2366,9 +2366,9 @@ function App() {
     },
     {
       id: 'lotus-match',
-      title: 'Aesthetic Lotus Match',
+      title: 'Lotus Match',
       detail: 'Quiet memory reset',
-      description: 'Flip calm cards and settle your focus during an aesthetic study break or a quiet afternoon.',
+      description: 'Flip calm cards and settle your focus during a quiet study break or a calm afternoon.',
       icon: Heart,
       tone: 'from-rose-100 to-orange-50 text-rose-700',
       preview: gameLotusPreview,
@@ -2377,9 +2377,9 @@ function App() {
     },
     {
       id: 'quiet-tiles',
-      title: 'Aesthetic Tiles',
+      title: 'Tiles Flow',
       detail: 'Cozy 2048-style merge',
-      description: 'Slide matching numbers together in a calm aesthetic puzzle loop for mindful study breaks.',
+      description: 'Slide matching numbers together in a calm puzzle loop for mindful study breaks.',
       icon: Grid2x2,
       tone: 'from-violet-100 to-slate-50 text-violet-700',
       preview: gameTilesPreview,
@@ -2399,7 +2399,7 @@ function App() {
     },
     {
       id: 'quiet-slide',
-      title: 'Aesthetic Slide',
+      title: 'Slide Flow',
       detail: 'Cozy sliding puzzle',
       description: 'Move tiles into place in a soft visual puzzle for a quiet study break reset.',
       icon: Puzzle,
@@ -2411,7 +2411,7 @@ function App() {
     {
       id: 'quiet-sudoku',
       title: 'Sudoku',
-      detail: 'Aesthetic logic puzzle',
+      detail: 'Logic puzzle',
       description: 'Settle into a cozy Sudoku board with gentle checking and lofi visuals, built for mindful study breaks.',
       icon: SudokuImageIcon,
       tone: 'from-cyan-100 to-blue-50 text-cyan-700',
@@ -2432,9 +2432,9 @@ function App() {
     },
     {
       id: 'quiet-words',
-      title: 'Aesthetic Words',
+      title: 'Word Scramble',
       detail: 'Calm word scramble',
-      description: 'Unscramble soft words in a light, aesthetic word loop for cozy focus breaks.',
+      description: 'Unscramble soft words in a light, calm word loop for cozy focus breaks.',
       icon: Type,
       tone: 'from-fuchsia-100 to-rose-50 text-fuchsia-700',
       preview: gameWordsPreview,
@@ -2444,7 +2444,7 @@ function App() {
     {
       id: 'typing-speed-test',
       title: 'Typing Pace',
-      detail: 'Aesthetic typing test',
+      detail: 'Typing test',
       description: 'Improve your typing pace with calm visuals and gentle lofi rhythms during your study breaks.',
       icon: Keyboard,
       tone: 'from-sky-100 to-indigo-50 text-sky-700',
@@ -2455,7 +2455,7 @@ function App() {
     {
       id: 'quiet-clues',
       title: 'Clues',
-      detail: 'Aesthetic word focus',
+      detail: 'Word focus',
       description: 'Solve short cozy clues in a soft crossword-inspired flow for gentle focus breaks.',
       icon: Map,
       tone: 'from-amber-100 to-rose-50 text-amber-700',
@@ -5270,7 +5270,7 @@ function App() {
       {showMinimalHomeOverview ? (
       <section id="home" className="mx-auto max-w-[1120px] px-3 pb-[4.5rem] pt-4 sm:px-5 sm:pb-14 sm:pt-7 xl:px-6">
         <div className="mb-6 text-center">
-          <p className="text-[11px] font-extrabold uppercase tracking-[0.34em] text-[#9a806a]">Aesthetic lofi study room</p>
+          <p className="text-[11px] font-extrabold uppercase tracking-[0.34em] text-[#9a806a]">Calm lofi study room</p>
           <h1 className="mx-auto mt-3 max-w-4xl font-display text-3xl font-bold leading-tight tracking-tight text-[#3f3126] sm:text-5xl">
             Relax with lofi music, cozy study games, a private journal, notes, reminders, and memories in one calm browser tab.
           </h1>
@@ -5317,7 +5317,7 @@ function App() {
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.20),transparent_20rem)]" />
             <div className="relative z-10">
               <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/15 px-3 py-1.5 text-[11px] sm:mb-7 sm:px-4 sm:py-2 sm:text-sm font-bold text-white shadow-sm backdrop-blur-md lofi-sharp-text-soft">
-                <Headphones size={15} /> Aesthetic lofi study room for students
+                <Headphones size={15} /> Calm lofi study room for students
               </div>
               <h1 className="lofi-sharp-text max-w-3xl font-display text-3xl font-bold leading-[1.05] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.25rem]">Your private journal and cozy lofi study room for focus, calm breaks, moods, and notes.</h1>
               <p className="lofi-sharp-text-soft mt-4 max-w-2xl text-sm font-semibold leading-7 text-white/95 sm:mt-5 sm:text-[1.05rem] sm:leading-8">Designed for students and cozy-study users who want one relaxing browser tab: write a private journal entry, track a mood, grow the Focus Tree, play soft music, and take small no-download game breaks without opening noisy feeds.</p>

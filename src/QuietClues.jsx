@@ -165,7 +165,7 @@ export default function QuietClues({ difficulty = 'medium', theme = 'lofi', view
             <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] shadow-sm ${isLofi ? 'border-amber-200 bg-white/80 text-amber-800' : 'border-stone-200 bg-white/88 text-stone-700'}`}>
               <Sparkles size={14} /> {config.label} word focus
             </div>
-            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-stone-950'}`}>Aesthetic Clues</h3>
+            <h3 className={`mt-4 text-3xl font-bold tracking-tight ${isLofi ? 'text-[#3d3025]' : 'text-stone-950'}`}>Clues</h3>
             <p className={`mt-2 max-w-2xl text-sm leading-7 ${isLofi ? 'text-[#6e5a4a]' : 'text-stone-700'}`}>A beginner-friendly clue game for quiet study breaks. Solve short, cozy word prompts with soft feedback and a calm crossword mood, without the pressure of a full puzzle grid.</p>
             <p className={`mt-2 text-sm font-semibold ${isLofi ? 'text-amber-700' : 'text-stone-600'}`}>{config.note}</p>
             <div className={`mt-3 inline-flex rounded-full px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.18em] shadow-sm ${isLofi ? 'border border-white/70 bg-white/72 text-amber-900 backdrop-blur-sm' : 'bg-white text-stone-700'}`}>{config.sessionLabel}</div>
