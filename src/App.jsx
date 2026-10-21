@@ -7303,7 +7303,7 @@ function App() {
             This site may use Google AdSense to show ads. Google and its partners may use cookies or similar technologies to serve and measure ads based on visits to this and other websites. Visitors can manage ad personalization through Google Ads Settings.
           </InfoCard>
           <InfoCard icon={Mail} title="Contact for privacy questions">
-            For privacy questions, feedback, or requests, contact the site owner at atastymealy@gmail.com.
+            For privacy questions, feedback, or requests, contact the site owner at tze.ng@bytedance.com.
           </InfoCard>
         </div>
       </section>
@@ -7335,7 +7335,7 @@ function App() {
             The site may show third-party ads to support free access. Ad providers may set cookies or use similar technologies according to their own policies.
           </InfoCard>
           <InfoCard icon={Mail} title="Questions about these terms">
-            Contact atastymealy@gmail.com if you have questions about the site, privacy, or these terms.
+            Contact tze.ng@bytedance.com if you have questions about the site, privacy, or these terms.
           </InfoCard>
         </div>
       </section>
@@ -7356,8 +7356,8 @@ function App() {
               <div className="grid gap-4">
                 <div className="rounded-3xl bg-white/95 p-6 text-ink shadow-lift">
                   <p className="text-sm font-bold uppercase tracking-widest text-sage-600">Site owner email</p>
-                  <a className="mt-3 block break-words text-2xl font-extrabold text-sage-900 underline decoration-sage-300 underline-offset-4" href="mailto:atastymealy@gmail.com">
-                    atastymealy@gmail.com
+                  <a className="mt-3 block break-words text-2xl font-extrabold text-sage-900 underline decoration-sage-300 underline-offset-4" href="mailto:tze.ng@bytedance.com">
+                    tze.ng@bytedance.com
                   </a>
                 </div>
                 <div className="rounded-3xl border border-white/15 bg-white/8 p-6 text-white shadow-inner backdrop-blur">
