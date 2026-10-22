@@ -5815,6 +5815,12 @@ function App() {
         </div>
 
         {activeTab === 'write' && (
+        <>
+          {saveReward && (
+            <div className="fixed top-12 left-1/2 z-[9999] w-max max-w-[90vw] -translate-x-1/2 rounded-full border border-sage-800/20 bg-sage-900 px-6 py-4 text-center text-sm font-extrabold text-white shadow-2xl transition-all" role="alert" aria-live="assertive">
+              {saveReward}
+            </div>
+          )}
         <form className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-4 shadow-soft sm:p-6 xl:p-8" onSubmit={saveEntry}>
           <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
           <div className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/25 to-black/15" />
@@ -6149,13 +6155,9 @@ function App() {
               </div>
             </aside>
           </div>
-          {saveReward && (
-            <div className="relative z-10 reward-toast mt-5 rounded-3xl border border-[#e8dfd5] bg-sage-900 p-5 font-extrabold leading-7 text-white shadow-soft">
-              {saveReward}
-            </div>
-          )}
           </div>
         </form>
+        </>
         )}
 
                         {activeTab === 'unwind' && (
@@ -7853,7 +7855,10 @@ function App() {
               </div>
               <div className="flex shrink-0 items-center gap-2">
                 {!isEditingEntry ? (
-                  <button className="rounded-full bg-sage-100 px-4 py-2 text-sm font-extrabold text-sage-900 transition hover:bg-sage-200" onClick={startEditingEntry} type="button">Edit</button>
+                  <>
+                    <button className="rounded-full bg-sage-100 px-4 py-2 text-sm font-extrabold text-sage-900 transition hover:bg-sage-200" onClick={startEditingEntry} type="button">Edit</button>
+                    <button className="rounded-full bg-rose-100 px-4 py-2 text-sm font-extrabold text-rose-900 transition hover:bg-rose-200" onClick={() => { if(window.confirm('Delete this entry?')) deleteEntry(selectedEntry.id); }} type="button">Delete</button>
+                  </>
                 ) : (
                   <>
                     <button className="rounded-full bg-sage-100 px-4 py-2 text-sm font-extrabold text-sage-900 transition hover:bg-sage-200" onClick={() => setIsEditingEntry(false)} type="button">Cancel</button>
