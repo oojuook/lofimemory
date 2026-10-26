@@ -21,7 +21,8 @@ const coreIndexedPages = [
   'advertising-policy.html',
   'content-quality-policy.html',
   'sitemap.html',
-  'lofi-memory.html'
+  'lofi-memory.html',
+  'relax-focus-journal.html'
 ];
 
 const approvedArticlePages = [

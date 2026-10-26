@@ -466,6 +466,11 @@ const seoLandingBlocks = [
     href: '/lofi-memory.html'
   },
   {
+    title: 'Relax, focus, journal, and write thoughts',
+    text: 'See how Lofi Memory combines relaxation, focus support, private thought capture, lofi music, notes, reminders, and calm games in one space.',
+    href: '/relax-focus-journal.html'
+  },
+  {
     title: 'Benefits of online diaries',
     text: 'Explore when a browser-based diary can feel more flexible and organized than scattered digital notes.',
     href: '/article-benefits-of-private-online-diary.html'

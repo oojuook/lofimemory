@@ -19,7 +19,8 @@ const coreIndexedPages = new Set([
   'advertising-policy.html',
   'content-quality-policy.html',
   'sitemap.html',
-  'lofi-memory.html'
+  'lofi-memory.html',
+  'relax-focus-journal.html'
 ]);
 
 const approvedArticlePages = new Set([
