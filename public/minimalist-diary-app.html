@@ -2,53 +2,110 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-    <title>Minimalist diary app - Lofi Memory</title>
-    <meta name="description" content="A clutter-free, minimalist diary app for those who want a focused, distraction-free environment to write down their thoughts." />
-    <meta name="keywords" content="minimalist diary app, simple journal app, clutter free diary, distraction free journal, minimal writing app, minimal online diary" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minimalist Diary App | Focused, Clutter-Free Writing | Lofi Memory</title>
+    <meta name="description" content="Try Lofi Memory, a minimalist diary app for focused, distraction-free writing. A private online journal with mood check-ins, lofi music, notes, and calm breaks." />
+    <meta name="keywords" content="minimalist diary app, minimalist journal app, clutter free diary, distraction free journal, simple online diary, private writing app" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
     <link rel="canonical" href="https://lofimemory.vercel.app/minimalist-diary-app.html" />
-    <meta property="og:title" content="Minimalist diary app - Lofi Memory" />
-    <meta property="og:description" content="A clutter-free, minimalist diary app for those who want a focused, distraction-free environment to write down their thoughts." />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Lofi Memory" />
+    <meta property="og:title" content="Minimalist Diary App for Focused Writing | Lofi Memory" />
+    <meta property="og:description" content="A focused, distraction-free minimalist diary app for private reflections, lofi music, and calm writing breaks." />
     <meta property="og:url" content="https://lofimemory.vercel.app/minimalist-diary-app.html" />
-    <meta property="og:type" content="website" />
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <meta property="og:image" content="https://lofimemory.vercel.app/logo.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Minimalist Diary App for Focused Writing | Lofi Memory" />
+    <meta name="twitter:description" content="Distraction-free private journaling, mood check-ins, and lofi music in one cozy browser space." />
+    <meta name="twitter:image" content="https://lofimemory.vercel.app/logo.png" />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6094559377350805" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Article",
+            "@id": "https://lofimemory.vercel.app/minimalist-diary-app.html#article",
+            "headline": "A Minimalist Diary App for Focused Writing",
+            "description": "Lofi Memory is a minimalist diary app designed to remove distractions, helping you focus entirely on your thoughts with private writing, mood check-ins, and lofi music.",
+            "url": "https://lofimemory.vercel.app/minimalist-diary-app.html",
+            "inLanguage": "en",
+            "author": { "@id": "https://lofimemory.vercel.app/#organization" },
+            "publisher": { "@id": "https://lofimemory.vercel.app/#organization" },
+            "about": { "@id": "https://lofimemory.vercel.app/#software" }
+          },
+          {
+            "@type": "SoftwareApplication",
+            "@id": "https://lofimemory.vercel.app/#software",
+            "name": "Lofi Memory",
+            "applicationCategory": "LifestyleApplication",
+            "operatingSystem": "Web browser",
+            "url": "https://lofimemory.vercel.app/",
+            "isAccessibleForFree": true,
+            "description": "Lofi Memory is a minimalist diary app and cozy browser space to relax, focus, journal, and write down thoughts with mood tracking, notes, reminders, and lofi music.",
+            "featureList": ["Minimalist writing room", "Private diary", "Mood check-ins", "Lofi music background", "Notes and reminders", "Calm browser games"],
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+            "publisher": { "@id": "https://lofimemory.vercel.app/#organization" }
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://lofimemory.vercel.app/#organization",
+            "name": "Lofi Memory",
+            "url": "https://lofimemory.vercel.app/",
+            "logo": "https://lofimemory.vercel.app/logo.png"
+          }
+        ]
+      }
+    </script>
     <style>
-      body { font-family: 'Inter', sans-serif; background-color: #f7f9f7; color: #1e2926; margin: 0; padding: 0; }
-      .landing-container { max-width: 800px; margin: 0 auto; padding: 60px 20px; text-align: center; }
-      h1 { font-size: 2.5rem; font-weight: 800; color: #1e2926; margin-bottom: 20px; }
-      p { font-size: 1.125rem; line-height: 1.8; color: #3b5049; margin-bottom: 30px; }
-      .cta-btn { display: inline-block; padding: 15px 30px; background-color: #1e2926; color: #ffffff; text-decoration: none; border-radius: 9999px; font-weight: 700; font-size: 1rem; transition: background-color 0.2s; }
-      .cta-btn:hover { background-color: #2f3a37; }
-      .article-content { text-align: left; margin-top: 50px; padding: 40px; background: white; border-radius: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
-      .article-content h2 { font-size: 1.5rem; margin-top: 30px; margin-bottom: 15px; color: #1e2926; }
-      .article-content p { font-size: 1.05rem; margin-bottom: 20px; color: #4b635a; }
+      :root{color-scheme:light;--bg:#f8faf8;--card:#ffffff;--ink:#1e2926;--muted:#4b635a;--sage:#2e4b3c;--sage-light:#e8f0e9;--shadow:0 12px 34px rgba(45,63,53,.07);--line:rgba(46,75,60,.12)}
+      body{margin:0;font-family:Inter,ui-sans-serif,sans-serif;background-color:var(--bg);color:var(--ink);line-height:1.75}
+      .shell{max-width:820px;margin:0 auto;padding:62px 20px}.hero{text-align:center;margin-bottom:48px}
+      h1{font-size:clamp(2.5rem,5vw,3.8rem);font-weight:800;letter-spacing:-.045em;margin-bottom:18px}
+      .lead{font-size:1.18rem;color:var(--muted);margin-bottom:34px}
+      .btn{display:inline-block;padding:15px 34px;background-color:var(--sage);color:#fff;text-decoration:none;border-radius:999px;font-weight:800;transition:opacity .2s}.btn:hover{opacity:.9}
+      .section{background:var(--card);border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);padding:38px;margin-bottom:22px}
+      h2{font-size:1.6rem;margin-bottom:14px;letter-spacing:-.02em}
+      p{margin-bottom:20px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+      .feature{border:1px solid var(--line);border-radius:22px;padding:22px;background:var(--sage-light)}
+      h3{margin-top:0;font-size:1.12rem;margin-bottom:8px}
+      .footer{text-align:center;margin-top:48px;color:var(--muted);font-size:.92rem}
     </style>
   </head>
   <body>
-    <div class="landing-container">
-      <h1>Minimalist diary app</h1>
-      <p>A clutter-free, minimalist diary app for those who want a focused, distraction-free environment to write down their thoughts.</p>
-      <a href="/" class="cta-btn">Start your journal today</a>
-
-      <div class="article-content">
-        <h2>Why choosing a minimalist diary app helps your daily routine</h2>
-        <p>Keeping a regular writing habit can feel overwhelming when the tools we use are loud, cluttered, or complicated. A minimalist diary app is designed to remove those barriers, giving you a clean, quiet space to focus entirely on your thoughts.</p>
-
-        <h2>A gentle approach to writing</h2>
-        <p>Whether you're writing down a few words in the morning, taking a deep breath after a stressful day, or just organizing your scattered thoughts, having a dedicated space online makes it easier. You don't have to worry about carrying a physical notebook or keeping it safe from prying eyes.</p>
-
-        <h2>Your private, safe space</h2>
-        <p>Privacy is the most important part of being honest with yourself. When you use an online journal, you know that your entries are locked behind your secure account. This allows you to write without a filter, exploring your feelings authentically.</p>
-
-        <div style="text-align: center; margin-top: 40px;">
-          <a href="/" class="cta-btn" style="background-color: #587f49;">Try Lofi Memory</a>
-        </div>
-      </div>
+    <div class="shell">
+      <header class="hero">
+        <h1>Minimalist diary app</h1>
+        <p class="lead">Lofi Memory is a clutter-free, minimalist diary app designed to remove mental and digital noise. A private online journal with mood check-ins, gentle lofi music, notes, reminders, and calm breaks in one tab.</p>
+        <a href="/" class="btn">Start your journal today</a>
+      </header>
+      <main>
+        <section class="section">
+          <h2>Why choosing a minimalist diary app helps</h2>
+          <p>A minimalist diary app is designed to remove the barriers to writing. When the tools we use are loud, cluttered, or complicated, a writing habit can feel like extra work. Lofi Memory removes those distractions, giving you a clean, quiet space to focus entirely on your thoughts.</p>
+          <div class="grid">
+            <div class="feature"><h3>Focused writing room</h3><p>No noisy feeds or busy sidebars—just your words, a mood check, and lofi music.</p></div>
+            <div class="feature"><h3>Privacy by design</h3><p>Online writing needs room to be honest. Entries are private, with an optional lock for extra security.</p></div>
+          </div>
+        </section>
+        <section class="section">
+          <h2>More than a blank page</h2>
+          <p>Whether you're writing down a few words in the morning, reflecting after a long day, or organizing scattered thoughts into notes and reminders, Lofi Memory supports your routine without adding pressure.</p>
+          <ul style="margin:0;padding-left:1.2rem;display:grid;gap:12px;">
+            <li><strong>Lofi music atmosphere:</strong> sets a calm background for deeper reflection.</li>
+            <li><strong>Mood check-ins:</strong> name the feeling before you begin writing.</li>
+            <li><strong>Private journaling:</strong> a secure place for honest memories and thoughts.</li>
+            <li><strong>Calm breaks:</strong> short browser games for a mental reset between entries.</li>
+          </ul>
+        </section>
+        <section class="section" style="text-align:center;">
+          <h2>Quiet your mind and start writing</h2>
+          <p>Write one sentence, log one mood, or capture one memory today.</p>
+          <a href="/" class="btn">Open Lofi Memory free</a>
+        </section>
+      </main>
+      <footer class="footer"><p>Lofi Memory is an independent cozy browser space for focused writing, focus tree sessions, and calm reflection. Part of the Lofi Memory relax focus journal project.</p></footer>
     </div>
-      <script src="/cookie-consent.js"></script>
+    <script src="/cookie-consent.js"></script>
   </body>
 </html>
