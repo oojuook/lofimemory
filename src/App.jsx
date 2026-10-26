@@ -462,7 +462,7 @@ const seoLandingBlocks = [
   },
   {
     title: 'What is Lofi Memory?',
-    text: 'Read the product definition: Lofi Memory is a browser-based private journal, online diary, lofi study room, mood tracker, notes space, and calm game break app.',
+    text: 'Read the product definition: Lofi Memory is a cozy browser space to relax, focus, journal, write down your thoughts, listen to lofi music, and take calm game breaks.',
     href: '/lofi-memory.html'
   },
   {
@@ -475,7 +475,7 @@ const seoLandingBlocks = [
 const seoFaqs = [
   {
     question: 'What is Lofi Memory?',
-    answer: 'Lofi Memory is a browser-based private journal, online diary, and lofi study room. It combines journaling, diary entries, mood tracking, notes, reminders, lofi music, Focus Tree sessions, and calm browser games in one gentle web app.'
+    answer: 'Lofi Memory is a cozy browser space to relax, focus, journal, and write down your thoughts. It combines lofi music, private writing, mood tracking, notes, reminders, Focus Tree sessions, and calm browser games in one gentle web app.'
   },
   {
     question: 'Can I use Lofi Memory as a private online diary?',
@@ -5307,10 +5307,10 @@ function App() {
         <div className="mb-6 text-center">
           <p className="text-[11px] font-extrabold uppercase tracking-[0.34em] text-[#9a806a]">Calm lofi study room</p>
           <h1 className="mx-auto mt-3 max-w-4xl font-display text-3xl font-bold leading-tight tracking-tight text-[#3f3126] sm:text-5xl">
-            Relax with lofi music, cozy study games, a private journal, notes, reminders, and memories in one calm browser tab.
+            Relax, focus, journal, and write down your thoughts in one calm browser tab with lofi music, cozy games, notes, reminders, and memories.
           </h1>
           <p className="mx-auto mt-4 max-w-3xl text-base font-semibold leading-8 text-[#6f5948]">
-            Lofi Memory is built for students and young adults who want useful breaks without noisy feeds: open a relaxing game, write a private reflection, keep study notes, save reminders, or settle into a soft music room.
+            Lofi Memory is built for students and anyone who wants one soft place to relax, focus, and write: open a calming game, capture your thoughts, keep study notes, save reminders, or settle into a gentle music room.
           </p>
         </div>
           <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[1.1rem] border border-[#8b5e3c]/10 p-1 shadow-sm sm:rounded-[1.25rem] sm:p-1.5">
@@ -5352,10 +5352,10 @@ function App() {
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.20),transparent_20rem)]" />
             <div className="relative z-10">
               <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/15 px-3 py-1.5 text-[11px] sm:mb-7 sm:px-4 sm:py-2 sm:text-sm font-bold text-white shadow-sm backdrop-blur-md lofi-sharp-text-soft">
-                <Headphones size={15} /> Calm lofi study room for students
+                <Headphones size={15} /> Relax · focus · journal · write your thoughts
               </div>
-              <h1 className="lofi-sharp-text max-w-3xl font-display text-3xl font-bold leading-[1.05] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.25rem]">Your private journal and cozy lofi study room for focus, calm breaks, moods, and notes.</h1>
-              <p className="lofi-sharp-text-soft mt-4 max-w-2xl text-sm font-semibold leading-7 text-white/95 sm:mt-5 sm:text-[1.05rem] sm:leading-8">Designed for students and cozy-study users who want one relaxing browser tab: write a private journal entry, track a mood, grow the Focus Tree, play soft music, and take small no-download game breaks without opening noisy feeds.</p>
+              <h1 className="lofi-sharp-text max-w-3xl font-display text-3xl font-bold leading-[1.05] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.25rem]">Your cozy place to relax, focus, journal, and write down your thoughts.</h1>
+              <p className="lofi-sharp-text-soft mt-4 max-w-2xl text-sm font-semibold leading-7 text-white/95 sm:mt-5 sm:text-[1.05rem] sm:leading-8">Designed for students, overthinkers, and cozy-study users who want one relaxing browser tab: listen to soft music, focus with the Focus Tree, write a private thought, track a mood, and take small no-download game breaks without opening noisy feeds.</p>
 
               <div className="lofi-now-playing mt-6 sm:mt-7 flex flex-col gap-4 rounded-[1.8rem] sm:rounded-[2.2rem] border border-white/20 bg-black/15 p-3.5 sm:p-4 shadow-sm backdrop-blur-md sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-3 sm:gap-4">
