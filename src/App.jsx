@@ -461,9 +461,9 @@ const seoLandingBlocks = [
     href: '/privacy.html'
   },
   {
-    title: 'About Lofi Memory',
-    text: 'Learn what the product includes, why the experience is intentionally calm, and how journaling, music, and games fit together.',
-    href: '/about.html'
+    title: 'What is Lofi Memory?',
+    text: 'Read the product definition: Lofi Memory is a browser-based private journal, online diary, lofi study room, mood tracker, notes space, and calm game break app.',
+    href: '/lofi-memory.html'
   },
   {
     title: 'Benefits of online diaries',
@@ -475,7 +475,7 @@ const seoLandingBlocks = [
 const seoFaqs = [
   {
     question: 'What is Lofi Memory?',
-    answer: 'Lofi Memory is a calm online space for journaling, breathing, private reflection, and chill browser games when you want to relax for a while.'
+    answer: 'Lofi Memory is a browser-based private journal, online diary, and lofi study room. It combines journaling, diary entries, mood tracking, notes, reminders, lofi music, Focus Tree sessions, and calm browser games in one gentle web app.'
   },
   {
     question: 'Can I use Lofi Memory as a private online diary?',
@@ -495,7 +495,7 @@ const seoFaqs = [
   },
   {
     question: 'Where can I write a diary online?',
-    answer: 'Lofi Memory gives you a calm browser space to write, unwind, track moods, and jump into a chill game before coming back to your thoughts.'
+    answer: 'Lofi Memory gives you a browser-based private journal and online diary for writing personal entries, tracking moods, saving memories, and returning to your thoughts after a calm study or game break.'
   },
   {
     question: 'How do I start writing a diary?',

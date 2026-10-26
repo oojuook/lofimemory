@@ -6,6 +6,7 @@
     <description>Latest Lofi Memory pages for private journaling, lofi music, cozy browser games, study breaks, notes, and reminders.</description>
     <language>en</language>
     <atom:link href="https://lofimemory.vercel.app/feed.xml" rel="self" type="application/rss+xml" />
+    <item><title>What is Lofi Memory?</title><link>https://lofimemory.vercel.app/lofi-memory.html</link><description>A clear product guide explaining Lofi Memory as a browser-based private journal, online diary, lofi study room, mood tracker, notes space, and calm game break app.</description></item>
     <item><title>Journaling, games, music, and lofi questions answered</title><link>https://lofimemory.vercel.app/questions-about-journaling-games-music.html</link><description>An expanded question library with detailed answers about journaling benefits, stress relief, study breaks, nostalgic games, music, and lofi beats.</description></item>
     <item><title>How journaling helps you understand yourself</title><link>https://lofimemory.vercel.app/how-journaling-helps-you-understand-yourself.html</link><description>A deeper self-awareness guide covering patterns, emotions, values, identity, and private reflection.</description></item>
     <item><title>How often should you journal?</title><link>https://lofimemory.vercel.app/how-often-should-you-journal.html</link><description>A practical answer for beginners, students, and overthinkers building a private writing habit.</description></item>

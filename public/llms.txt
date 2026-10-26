@@ -1,10 +1,11 @@
 # Lofi Memory
 
-Lofi Memory is a cozy browser app for lofi music, no-download relaxing games, private journaling, notes, reminders, and calm study breaks.
+Lofi Memory is a browser-based private journal, online diary, lofi study room, mood tracker, notes space, reminder helper, and calm browser game break app.
 
 ## Primary pages
 - Home: https://lofimemory.vercel.app/
 - Blog: https://lofimemory.vercel.app/blog.html
+- What is Lofi Memory?: https://lofimemory.vercel.app/lofi-memory.html
 - About: https://lofimemory.vercel.app/about.html
 - Contact: https://lofimemory.vercel.app/contact.html
 - Privacy policy: https://lofimemory.vercel.app/privacy.html
