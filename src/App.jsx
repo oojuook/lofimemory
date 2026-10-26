@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import radioVinylIcon from './assets/optimized/lofi-radio-vinyl.webp';
 import minesweeperIconImage from './assets/optimized/minesweeper-icon.webp';
 import solitaireIconImage from './assets/optimized/solitaire-icon.webp';
@@ -83,23 +83,24 @@ import {
   Zap,
   Flame,
 } from 'lucide-react';
-import ZenGame from './ZenGame';
-import StreamSurfer from './StreamSurfer';
-import LotusMatch from './LotusMatch';
-import DinosaurDash from './DinosaurDash';
-import MindSweeper from './MindSweeper';
-import QuietTiles from './QuietTiles';
-import QuietTetris from './QuietTetris';
-import QuietSlide from './QuietSlide';
-import QuietWords from './QuietWords';
-import TypingSpeedTest from './TypingSpeedTest';
-import QuietClues from './QuietClues';
-import QuietWordle from './QuietWordle';
-import QuietSudoku from './QuietSudoku';
-import QuietSnake from './QuietSnake';
-import Solitaire from './Solitaire';
-import LofiJigsaw from './LofiJigsaw';
-import FocusTreeRoom from './FocusTreeRoom';
+// Lazy load large game components to reduce initial bundle size
+const ZenGame = lazy(() => import('./ZenGame'));
+const StreamSurfer = lazy(() => import('./StreamSurfer'));
+const LotusMatch = lazy(() => import('./LotusMatch'));
+const DinosaurDash = lazy(() => import('./DinosaurDash'));
+const MindSweeper = lazy(() => import('./MindSweeper'));
+const QuietTiles = lazy(() => import('./QuietTiles'));
+const QuietTetris = lazy(() => import('./QuietTetris'));
+const QuietSlide = lazy(() => import('./QuietSlide'));
+const QuietWords = lazy(() => import('./QuietWords'));
+const TypingSpeedTest = lazy(() => import('./TypingSpeedTest'));
+const QuietClues = lazy(() => import('./QuietClues'));
+const QuietWordle = lazy(() => import('./QuietWordle'));
+const QuietSudoku = lazy(() => import('./QuietSudoku'));
+const QuietSnake = lazy(() => import('./QuietSnake'));
+const Solitaire = lazy(() => import('./Solitaire'));
+const LofiJigsaw = lazy(() => import('./LofiJigsaw'));
+const FocusTreeRoom = lazy(() => import('./FocusTreeRoom'));
 import { auth, db, getMessagingIfSupported, googleProvider } from './firebase';
 
 const STORAGE_KEY = 'quiet-harbor-journal-v1';
@@ -2172,12 +2173,12 @@ function App() {
   const [gameVisualTheme, setGameVisualTheme] = useState('lofi');
   const showMinimalHomeOverview = false; // Always show full descriptive overview for better SEO and initial Bot review
   const homeEntryCards = [
-    { id: 'unwind', title: 'Games', description: 'Chill games', icon: Gamepad2, iconTone: 'bg-[#d8dbff] text-violet-700', onClick: () => navigateToTab('unwind'), preview: gamesSectionPreviewImage },
+    { id: 'write', title: 'Journal', description: 'Write one thought privately', icon: PenLine, iconTone: 'bg-[#dbead9] text-sage-700', onClick: () => navigateToTab('write'), preview: diarySectionPreviewImage },
     { id: 'focus', title: 'Focus Tree', description: 'Grow while studying', icon: Leaf, iconTone: 'bg-[#dbead9] text-emerald-700', onClick: () => navigateToTab('focus'), preview: musicSectionPreviewImage },
-    { id: 'write', title: 'Diary', description: 'Write only when it helps', icon: PenLine, iconTone: 'bg-[#dbead9] text-sage-700', onClick: () => navigateToTab('write'), preview: diarySectionPreviewImage },
-    { id: 'notes', title: 'Notes', description: 'Keep important things nearby', icon: FileText, iconTone: 'bg-[#d8f0ec] text-teal-700', onClick: () => navigateToTab('notes'), preview: notesSectionPreviewImage },
-    { id: 'breathe', title: 'Music Room', description: 'Sounds & Wallpapers', icon: Wind, iconTone: 'bg-[#dbe8f8] text-sky-700', onClick: () => navigateToTab('breathe'), preview: musicSectionPreviewImage },
-    { id: 'memories', title: 'Memories', description: 'Save dates and local weather', icon: CalendarDays, iconTone: 'bg-[#efe6d8] text-sand-700', onClick: () => navigateToTab('memories'), preview: memoriesSectionPreviewImage },
+    { id: 'breathe', title: 'Music Room', description: 'Play soft lofi sounds', icon: Wind, iconTone: 'bg-[#dbe8f8] text-sky-700', onClick: () => navigateToTab('breathe'), preview: musicSectionPreviewImage },
+    { id: 'unwind', title: 'Games', description: 'Calm browser breaks', icon: Gamepad2, iconTone: 'bg-[#d8dbff] text-violet-700', onClick: () => navigateToTab('unwind'), preview: gamesSectionPreviewImage },
+    { id: 'notes', title: 'Notes', description: 'Quick tasks & reminders', icon: FileText, iconTone: 'bg-[#d8f0ec] text-teal-700', onClick: () => navigateToTab('notes'), preview: notesSectionPreviewImage },
+    { id: 'memories', title: 'Memories', description: 'Save dates and moods', icon: CalendarDays, iconTone: 'bg-[#efe6d8] text-sand-700', onClick: () => navigateToTab('memories'), preview: memoriesSectionPreviewImage },
     { id: 'design', title: 'Design', description: 'Customize your space', icon: Palette, iconTone: 'bg-[#f4dce7] text-rose-700', onClick: () => navigateToTab('design'), preview: designSectionPreviewImage }
   ];
   const [selectedGameDifficulty, setSelectedGameDifficulty] = useState('medium');
@@ -6249,7 +6250,16 @@ function App() {
                   </div>
                   )}
                   <div className={`relative z-10 mx-auto w-full ${isFullscreen ? 'flex min-h-0 flex-1 max-w-none overflow-auto' : `mt-5 ${selectedUnwindGameConfig.playingSpace || 'max-w-[980px]'}`}`}>
-                    {selectedUnwindGameConfig.component}
+                    <Suspense fallback={
+                      <div className="flex min-h-[320px] items-center justify-center rounded-[2rem] border border-[#c4b8a7]/40 bg-white/80 text-[#6f5948] backdrop-blur">
+                        <div className="text-center">
+                          <Leaf className="mx-auto mb-3 h-7 w-7 animate-pulse text-[#8e7159]" />
+                          <p className="text-sm font-bold">Loading calm game...</p>
+                        </div>
+                      </div>
+                    }>
+                      {selectedUnwindGameConfig.component}
+                    </Suspense>
                   </div>
                 </div>
               </div>
@@ -6307,7 +6317,18 @@ function App() {
           </div>
         )}
 
-        {activeTab === 'focus' && <FocusTreeRoom />}
+        {activeTab === 'focus' && (
+          <Suspense fallback={
+            <div className="flex min-h-[320px] items-center justify-center text-[#6f5948]">
+              <div className="text-center">
+                <TreePine className="mx-auto mb-3 h-7 w-7 animate-pulse text-[#8e7159]" />
+                <p className="text-sm font-bold">Preparing your Focus Tree...</p>
+              </div>
+            </div>
+          }>
+            <FocusTreeRoom />
+          </Suspense>
+        )}
 
         {activeTab === 'breathe' && (
           <div className="mx-auto max-w-5xl px-3 py-6 sm:px-6 sm:py-10 lg:py-16 fade-in">
