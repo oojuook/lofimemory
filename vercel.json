@@ -1,0 +1,24 @@
+{
+  "redirects": [
+    {
+      "source": "/lofi-memory",
+      "destination": "/lofi-memory.html",
+      "permanent": true
+    },
+    {
+      "source": "/lofi-memory/",
+      "destination": "/lofi-memory.html",
+      "permanent": true
+    },
+    {
+      "source": "/relax-focus-journal",
+      "destination": "/relax-focus-journal.html",
+      "permanent": true
+    },
+    {
+      "source": "/relax-focus-journal/",
+      "destination": "/relax-focus-journal.html",
+      "permanent": true
+    }
+  ]
+}
