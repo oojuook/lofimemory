@@ -1,6 +1,26 @@
 {
   "redirects": [
     {
+      "source": "/journal-app-for-anxiety",
+      "destination": "/journal-app-for-anxiety.html",
+      "permanent": true
+    },
+    {
+      "source": "/journal-app-for-anxiety/",
+      "destination": "/journal-app-for-anxiety.html",
+      "permanent": true
+    },
+    {
+      "source": "/minimalist-diary-app",
+      "destination": "/minimalist-diary-app.html",
+      "permanent": true
+    },
+    {
+      "source": "/minimalist-diary-app/",
+      "destination": "/minimalist-diary-app.html",
+      "permanent": true
+    },
+    {
       "source": "/free-cozy-focus-journal-app",
       "destination": "/free-cozy-focus-journal-app.html",
       "permanent": true

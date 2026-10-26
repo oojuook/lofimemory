@@ -76,7 +76,21 @@ const approvedArticlePages = new Set([
   'journal-on-paper-or-online.html',
   'what-should-i-write-in-my-journal.html',
   'how-long-should-a-study-break-be.html',
-  'why-do-relaxing-games-help-focus.html'
+  'why-do-relaxing-games-help-focus.html',
+  'journal-app-for-anxiety.html',
+  'minimalist-diary-app.html',
+  'aesthetic-journal-app.html',
+  'aesthetic-online-journal.html',
+  'aesthetic-student-diary.html',
+  'aesthetic-study-breaks.html',
+  'calm-diary-app.html',
+  'cozy-journal-app.html',
+  'daily-journal-app.html',
+  'daily-journaling-app.html',
+  'digital-diary-app.html',
+  'calm-website.html',
+  'chill-website-for-study-breaks.html',
+  'cozy-website-for-music-games-journaling.html'
 ]);
 
 const alwaysKept = new Set([
