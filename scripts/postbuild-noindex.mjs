@@ -20,7 +20,8 @@ const coreIndexedPages = new Set([
   'content-quality-policy.html',
   'sitemap.html',
   'lofi-memory.html',
-  'relax-focus-journal.html'
+  'relax-focus-journal.html',
+  'free-cozy-focus-journal-app.html'
 ]);
 
 const approvedArticlePages = new Set([

@@ -461,6 +461,11 @@ const seoLandingBlocks = [
     href: '/privacy.html'
   },
   {
+    title: 'Free cozy focus journal app',
+    text: 'A clearer landing page for search visitors: focus sessions, lofi music, private writing, notes, reminders, mood tracking, and calm games in one free browser tab.',
+    href: '/free-cozy-focus-journal-app.html'
+  },
+  {
     title: 'What is Lofi Memory?',
     text: 'Read the product definition: Lofi Memory is a cozy browser space to relax, focus, journal, write down your thoughts, listen to lofi music, and take calm game breaks.',
     href: '/lofi-memory.html'

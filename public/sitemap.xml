@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://lofimemory.vercel.app/</loc>
-    <lastmod>2026-10-26T02:16:29.640Z</lastmod>
+    <lastmod>2026-10-26T02:40:28.255Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -80,6 +80,12 @@
   </url>
   <url>
     <loc>https://lofimemory.vercel.app/relax-focus-journal.html</loc>
+    <lastmod>2026-10-19T00:00:00.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.72</priority>
+  </url>
+  <url>
+    <loc>https://lofimemory.vercel.app/free-cozy-focus-journal-app.html</loc>
     <lastmod>2026-10-19T00:00:00.000Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.72</priority>

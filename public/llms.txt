@@ -5,6 +5,7 @@ Lofi Memory is a cozy browser space to relax, focus, journal, and write down you
 ## Primary pages
 - Home: https://lofimemory.vercel.app/
 - Blog: https://lofimemory.vercel.app/blog.html
+- Free cozy focus journal app: https://lofimemory.vercel.app/free-cozy-focus-journal-app.html
 - What is Lofi Memory?: https://lofimemory.vercel.app/lofi-memory.html
 - Relax, focus, journal, and write thoughts: https://lofimemory.vercel.app/relax-focus-journal.html
 - About: https://lofimemory.vercel.app/about.html
