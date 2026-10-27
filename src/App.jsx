@@ -4654,7 +4654,7 @@ function App() {
                 <div className="rounded-full border border-[#dbc7b1] bg-[#fffaf2]/92 px-3 py-1.5 text-center font-bold shadow-sm backdrop-blur">Lofi music included</div>
                 <div className="rounded-full border border-[#dbc7b1] bg-[#fffaf2]/92 px-3 py-1.5 text-center font-bold shadow-sm backdrop-blur">Private writing room</div>
               </div>
-              <div className="mt-7 flex flex-wrap gap-2 sm:mt-8 sm:gap-3">
+              <div className="mt-7 flex flex-wrap items-center justify-center gap-2 sm:mt-8 sm:gap-3">
                 <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full bg-white px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-[#4f3f32] shadow-[0_12px_28px_rgba(0,0,0,0.16)] transition hover:-translate-y-1 hover:bg-[#fff9f0]" onClick={() => navigateToTab('write')} type="button">
                   <FileText size={16} /> Open journal and write
                 </button>
@@ -4667,20 +4667,6 @@ function App() {
                 <a className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/45 bg-[#4f3f32] px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-[#3f3026]" href="#unwind" onClick={() => navigateToTab('unwind')}>
                   <Leaf size={16} /> Calm games
                 </a>
-                <a className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/45 bg-[#4f3f32] px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-[#3f3026]" href="#notes" onClick={() => navigateToTab('notes')}>
-                  <FileText size={16} /> Notes
-                </a>
-                <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/45 bg-[#4f3f32] px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-[#3f3026]" onClick={() => setCustomizerOpen(true)} type="button">
-                  <Palette size={16} /> Design
-                </button>
-              </div>
-
-              <div className="mt-5 flex flex-wrap gap-2 text-[11px] font-extrabold uppercase tracking-[0.18em] text-white sm:text-xs">
-                <span className="rounded-full border border-white/30 bg-[#4f3f32]/80 px-3 py-2 shadow-sm backdrop-blur-md">Focus Tree</span>
-                <span className="rounded-full border border-white/30 bg-[#4f3f32]/80 px-3 py-2 shadow-sm backdrop-blur-md">Private journal</span>
-                <span className="rounded-full border border-white/30 bg-[#4f3f32]/80 px-3 py-2 shadow-sm backdrop-blur-md">Cozy browser games</span>
-                <span className="rounded-full border border-white/30 bg-[#4f3f32]/80 px-3 py-2 shadow-sm backdrop-blur-md">Lofi radio</span>
-                <span className="rounded-full border border-white/30 bg-[#4f3f32]/80 px-3 py-2 shadow-sm backdrop-blur-md">Notes & reminders</span>
               </div>
 
               <div className="mt-6 grid gap-3 rounded-[1.8rem] border border-white/25 bg-white/12 p-3 text-white shadow-sm backdrop-blur-md sm:grid-cols-3">
@@ -5156,6 +5142,8 @@ function App() {
           setTitle={setTitle}
           setWritingCategory={setWritingCategory}
           streak={streak}
+          title={title}
+          body={body}
           toggleBoldText={toggleBoldText}
           toggleBulletList={toggleBulletList}
           toggleUnderlineText={toggleUnderlineText}
