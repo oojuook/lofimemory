@@ -1553,12 +1553,79 @@ function showImportantReminderNotification({ title, body, dateKey, reminderType,
   return Promise.resolve();
 }
 
-function getPlainTextFromHtml(html = '') {
+function sanitizeJournalHtml(html = '') {
+  const raw = String(html || '');
+  if (!raw) return '';
   if (typeof document === 'undefined') {
-    return html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    return raw
+      .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '')
+      .replace(/ on\w+="[^"]*"/gi, '')
+      .replace(/javascript:/gi, '');
+  }
+
+  const allowedTags = new Set(['P', 'BR', 'STRONG', 'B', 'U', 'UL', 'OL', 'LI', 'IMG']);
+  const template = document.createElement('template');
+  template.innerHTML = raw;
+
+  const sanitizeNode = (node) => {
+    if (node.nodeType === Node.TEXT_NODE) {
+      return document.createTextNode(node.textContent || '');
+    }
+    if (node.nodeType !== Node.ELEMENT_NODE) {
+      return document.createDocumentFragment();
+    }
+
+    const tag = node.tagName.toUpperCase();
+    const fragment = document.createDocumentFragment();
+
+    if (!allowedTags.has(tag)) {
+      Array.from(node.childNodes).forEach((child) => {
+        fragment.appendChild(sanitizeNode(child));
+      });
+      return fragment;
+    }
+
+    const safeEl = document.createElement(tag.toLowerCase());
+
+    if (tag === 'IMG') {
+      const src = node.getAttribute('src') || '';
+      const safeSrc = /^(data:image\/|https?:\/\/|blob:)/i.test(src) ? src : '';
+      if (!safeSrc) return fragment;
+      safeEl.setAttribute('src', safeSrc);
+      safeEl.setAttribute('alt', node.getAttribute('alt') || 'Journal photo');
+      safeEl.setAttribute('class', 'journal-inline-img');
+      safeEl.draggable = false;
+      safeEl.style.maxWidth = '100%';
+      safeEl.style.height = 'auto';
+      safeEl.style.display = 'block';
+      safeEl.style.margin = '1rem auto';
+      safeEl.style.borderRadius = '1rem';
+      safeEl.style.position = 'relative';
+      safeEl.style.transform = 'translate(0px, 0px)';
+      return safeEl;
+    }
+
+    Array.from(node.childNodes).forEach((child) => {
+      safeEl.appendChild(sanitizeNode(child));
+    });
+
+    return safeEl;
+  };
+
+  const container = document.createElement('div');
+  Array.from(template.content.childNodes).forEach((child) => {
+    container.appendChild(sanitizeNode(child));
+  });
+  return container.innerHTML;
+}
+
+function getPlainTextFromHtml(html = '') {
+  const safeHtml = sanitizeJournalHtml(html);
+  if (typeof document === 'undefined') {
+    return safeHtml.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
   }
   const tempDiv = document.createElement('div');
-  tempDiv.innerHTML = html;
+  tempDiv.innerHTML = safeHtml;
   return (tempDiv.textContent || tempDiv.innerText || '').replace(/\s+/g, ' ').trim();
 }
 
@@ -1974,7 +2041,7 @@ function PrivacyGate({ hasPin, onUnlock, onCreatePin }) {
               <Lock size={25} />
             </div>
             <h2 className="text-3xl font-extrabold text-ink">{hasPin ? 'Welcome back' : 'Create your soft lock'}</h2>
-            <p className="mt-3 leading-7 text-sage-700">{hasPin ? 'Enter your private PIN to open your journal.' : 'Set a simple PIN for this browser. It is a light privacy step for your personal writing space.'}</p>
+            <p className="mt-3 leading-7 text-sage-700">{hasPin ? 'Enter your private PIN to open your journal. Keep it somewhere safe — this local lock does not have a recovery option yet.' : 'Set a simple PIN for this browser. It is a light privacy step for your personal writing space, and it currently has no recovery flow if you forget it.'}</p>
             <div className="relative mt-8">
               <input
                 className="w-full rounded-2xl border border-amber-200/50 bg-white px-5 py-4 pr-16 text-lg font-semibold tracking-widest outline-none transition focus:border-sage-500 focus:ring-4 focus:ring-sage-100"
@@ -2058,7 +2125,7 @@ function PinSettingsDialog({ isOpen, onClose, onChangePin, onRemovePin }) {
           <div>
             <p className="text-sm font-bold uppercase tracking-widest text-sage-600">Privacy</p>
             <h3 className="mt-2 text-3xl font-extrabold text-ink">Manage your lock PIN</h3>
-            <p className="mt-3 max-w-xl leading-7 text-sage-700">Change the current PIN for this browser or remove the lock completely if you no longer want the journal gated.</p>
+            <p className="mt-3 max-w-xl leading-7 text-sage-700">Change the current PIN for this browser or remove the lock completely if you no longer want the journal gated. Keep the PIN written down somewhere safe because there is no recovery flow yet.</p>
           </div>
           <button className="rounded-full border border-amber-200/50 bg-white px-4 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50" onClick={onClose} type="button">
             Done
@@ -3199,10 +3266,12 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (activeTab !== 'write' || !entryBodyRef.current || !body) return;
+    if (!entryBodyRef.current) return;
+    const safeBody = sanitizeJournalHtml(body);
     const currentHtml = entryBodyRef.current.innerHTML.trim();
-    if (!currentHtml || currentHtml === '<br>') entryBodyRef.current.innerHTML = body;
-  }, [activeTab, body]);
+    if (safeBody !== body) setBody(safeBody);
+    if (!currentHtml || currentHtml === '<br>') entryBodyRef.current.innerHTML = safeBody;
+  }, [body]);
 
   useEffect(() => {
     if (isEditingEntry) {
@@ -3894,12 +3963,9 @@ function App() {
       ].join('\n');
 
       const modelCandidates = [
-        'gemini-2.5-flash',
         'gemini-2.0-flash',
         'gemini-1.5-flash-latest',
-        'gemini-1.5-flash',
-        'gemini-1.5-pro-latest',
-        'gemini-3.8-flash'
+        'gemini-1.5-pro-latest'
       ];
 
       let lastErrorMessage = 'The AI review could not be completed.';
@@ -4004,11 +4070,13 @@ function App() {
 
   async function saveEntry(event) {
     event.preventDefault();
-    if (!body.trim() && !title.trim()) return;
+    const safeBody = sanitizeJournalHtml(body);
+    const safeBodyText = getPlainTextFromHtml(safeBody);
+    if (!safeBodyText && !title.trim()) return;
     const entry = {
       id: crypto.randomUUID(),
       title: title.trim() || activePrompt,
-      body: body.trim(),
+      body: safeBody,
       mood: selectedMood,
       prompt: activePrompt,
       entryType: writingCategory,
@@ -4180,12 +4248,12 @@ function App() {
   function startEditingEntry() {
     if (!selectedEntry) return;
     setEditTitle(selectedEntry.title);
-    setEditBody(selectedEntry.body || '');
+    setEditBody(sanitizeJournalHtml(selectedEntry.body || ''));
     setEditMood(selectedEntry.mood);
     setIsEditingEntry(true);
     window.setTimeout(() => {
       if (editBodyRef.current) {
-        editBodyRef.current.innerHTML = selectedEntry.body || '';
+        editBodyRef.current.innerHTML = sanitizeJournalHtml(selectedEntry.body || '');
       }
     }, 0);
   }
@@ -4193,7 +4261,7 @@ function App() {
   async function saveEditedEntry() {
     if (!selectedEntry) return;
     const editor = editBodyRef.current;
-    const finalBody = editor?.innerHTML ?? editBody;
+    const finalBody = sanitizeJournalHtml(editor?.innerHTML ?? editBody);
     const updated = {
       ...selectedEntry,
       title: editTitle.trim() || 'Untitled moment',
@@ -4423,7 +4491,7 @@ function App() {
   }
 
   function renderJournalContent(content) {
-    return <div className="prose-journal" dangerouslySetInnerHTML={{ __html: String(content || '') }} />;
+    return <div className="prose-journal" dangerouslySetInnerHTML={{ __html: sanitizeJournalHtml(content) }} />;
   }
 
   function enableImageResize(editorRef, updateBody) {
@@ -5368,24 +5436,24 @@ function App() {
               <h1 className="lofi-sharp-text max-w-3xl font-display text-3xl font-bold leading-[1.05] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.25rem]">One cozy, free browser tab to relax, focus, journal, and clear your mind.</h1>
               <p className="lofi-sharp-text-soft mt-4 max-w-2xl text-sm font-semibold leading-7 text-white/95 sm:mt-5 sm:text-[1.05rem] sm:leading-8">Designed for students, overthinkers, and cozy-study users who want one relaxing browser tab: listen to soft music, focus with the Focus Tree, write a private thought, track a mood, and take small no-download game breaks without opening noisy feeds.</p>
 
-              <div className="lofi-now-playing mt-6 sm:mt-7 flex flex-col gap-4 rounded-[1.8rem] sm:rounded-[2.2rem] border border-white/20 bg-black/15 p-3.5 sm:p-4 shadow-sm backdrop-blur-md sm:flex-row sm:items-center sm:justify-between">
+              <div className="lofi-now-playing mt-6 sm:mt-7 flex flex-col gap-4 rounded-[1.8rem] sm:rounded-[2.2rem] border border-white/22 bg-[#213128]/55 p-3.5 sm:p-4 shadow-sm backdrop-blur-md sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-3 sm:gap-4">
                   <div className="lofi-mini-record flex h-14 w-14 sm:h-16 sm:w-16 shrink-0 items-center justify-center rounded-full border border-white/20 bg-[#3f342c] shadow-[0_14px_28px_rgba(0,0,0,0.18)]">
                     <div className="h-4 w-4 sm:h-5 sm:w-5 rounded-full border border-white/25 bg-[#f3e7d8]" />
                   </div>
                   <div className="min-w-0">
-                    <p className="lofi-sharp-text-soft text-[10px] sm:text-[11px] font-extrabold uppercase tracking-[0.24em] text-white/85">Now playing</p>
+                    <p className="lofi-sharp-text-soft text-[10px] sm:text-[11px] font-extrabold uppercase tracking-[0.24em] text-white/92">Now playing</p>
                     <p className="lofi-sharp-text mt-0.5 truncate text-sm sm:text-base font-extrabold text-white">Dusk room · rain window · soft study beats</p>
                   </div>
                 </div>
                 <div className="lofi-equalizer hidden sm:flex" aria-hidden="true"><span /><span /><span /><span /><span /></div>
               </div>
 
-              <div className="mt-5 grid grid-cols-2 gap-2 text-xs text-white/92 sm:mt-6 sm:grid-cols-4 sm:text-sm">
-                <div className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 font-bold text-center backdrop-blur">100% browser</div>
-                <div className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 font-bold text-center backdrop-blur">Free to open</div>
-                <div className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 font-bold text-center backdrop-blur">Lofi music included</div>
-                <div className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 font-bold text-center backdrop-blur">Private writing room</div>
+              <div className="mt-5 grid grid-cols-2 gap-2 text-xs text-[#22362e] sm:mt-6 sm:grid-cols-4 sm:text-sm">
+                <div className="rounded-full border border-[#dbc7b1] bg-[#fffaf2]/92 px-3 py-1.5 text-center font-bold shadow-sm backdrop-blur">100% browser</div>
+                <div className="rounded-full border border-[#dbc7b1] bg-[#fffaf2]/92 px-3 py-1.5 text-center font-bold shadow-sm backdrop-blur">Free to open</div>
+                <div className="rounded-full border border-[#dbc7b1] bg-[#fffaf2]/92 px-3 py-1.5 text-center font-bold shadow-sm backdrop-blur">Lofi music included</div>
+                <div className="rounded-full border border-[#dbc7b1] bg-[#fffaf2]/92 px-3 py-1.5 text-center font-bold shadow-sm backdrop-blur">Private writing room</div>
               </div>
               <div className="mt-7 flex flex-wrap gap-2 sm:mt-8 sm:gap-3">
                 <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full bg-white px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-[#4f3f32] shadow-[0_12px_28px_rgba(0,0,0,0.16)] transition hover:-translate-y-1 hover:bg-[#fff9f0]" onClick={() => navigateToTab('write')} type="button">
@@ -5444,11 +5512,11 @@ function App() {
                 ))}
               </div>
 
-              <div className="mt-7 flex flex-wrap gap-3 text-sm font-semibold text-sage-900">
-                <div className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white/92 px-4 py-2.5 shadow-sm">
+              <div className="mt-7 flex flex-wrap gap-3 text-sm font-semibold text-[#22362e]">
+                <div className="inline-flex items-center gap-2 rounded-full border border-[#dbc7b1] bg-[#fffaf2] px-4 py-2.5 shadow-sm">
                   <ShieldCheck size={16} /> {hasPin ? 'Private when you want it' : 'Add privacy any time'}
                 </div>
-                <div className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white/92 px-4 py-2.5 shadow-sm">
+                <div className="inline-flex items-center gap-2 rounded-full border border-[#dbc7b1] bg-[#fffaf2] px-4 py-2.5 shadow-sm">
                   <Sparkles size={16} /> {user ? `${entries.length} saved moments · ${cloudStatus}` : `${entries.length} saved moments · Local-first chill space`}
                 </div>
               </div>
@@ -5950,7 +6018,7 @@ function App() {
               contentEditable
               suppressContentEditableWarning
               style={{ fontFamily: activeJournalFont, fontSize: activeJournalSize, lineHeight: 1.95, color: '#24312e', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
-              onInput={(e) => setBody(e.currentTarget.innerHTML)}
+              onInput={(e) => setBody(sanitizeJournalHtml(e.currentTarget.innerHTML))}
               data-placeholder="Start with one true sentence."
             />
             <div className="journal-editor-meta journal-editor-bottom mt-4 flex flex-wrap items-center justify-between gap-2 px-3 text-[11px] font-bold uppercase tracking-[0.22em] text-sage-500 sm:text-xs sm:tracking-[0.24em]">
@@ -7791,7 +7859,7 @@ function App() {
             </span>
           </button>
           {radioNeedsInteraction && (
-            <div className="pointer-events-none absolute -top-12 left-1/2 w-max max-w-[11rem] -translate-x-1/2 rounded-2xl border border-[#d9c7b3] bg-[#fffaf0]/96 px-3 py-2 text-center text-[10px] font-extrabold uppercase tracking-[0.14em] text-sage-800 shadow-[0_10px_24px_rgba(72,55,40,0.14)] backdrop-blur-xl">
+            <div className="pointer-events-none absolute -top-14 left-1/2 w-max max-w-[11.5rem] -translate-x-1/2 rounded-2xl border border-[#d9c7b3] bg-[#fffaf0] px-3.5 py-2.5 text-center text-[11px] font-extrabold uppercase tracking-[0.14em] text-[#22362e] shadow-[0_12px_26px_rgba(72,55,40,0.16)] backdrop-blur-xl">
               Turn on sound
             </div>
           )}
@@ -7940,7 +8008,7 @@ function App() {
                     contentEditable
                     suppressContentEditableWarning
                     style={{ fontFamily: activeJournalFont, fontSize: activeJournalSize, lineHeight: 1.95, color: '#24312e', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
-                    onInput={(e) => setEditBody(e.currentTarget.innerHTML)}
+                    onInput={(e) => setEditBody(sanitizeJournalHtml(e.currentTarget.innerHTML))}
                     data-placeholder=""
                   />
                 </div>
