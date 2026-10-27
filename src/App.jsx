@@ -101,7 +101,19 @@ const QuietSnake = lazy(() => import('./QuietSnake'));
 const Solitaire = lazy(() => import('./Solitaire'));
 const LofiJigsaw = lazy(() => import('./LofiJigsaw'));
 const FocusTreeRoom = lazy(() => import('./FocusTreeRoom'));
+const WriteTab = lazy(() => import('./components/WriteTab'));
+const NotesTab = lazy(() => import('./components/NotesTab'));
+const MemoriesTab = lazy(() => import('./components/MemoriesTab'));
+const BreatheTab = lazy(() => import('./components/BreatheTab'));
+const InsightsTab = lazy(() => import('./components/InsightsTab'));
+const UnwindTab = lazy(() => import('./components/UnwindTab'));
+const HomeDesignPanel = lazy(() => import('./components/HomeDesignPanel'));
+const ThemeStudio = lazy(() => import('./components/ThemeStudio'));
+const PrivacyGate = lazy(() => import('./components/PrivacyGate'));
+const PinSettingsDialog = lazy(() => import('./components/PinSettingsDialog'));
+const GameSplash = lazy(() => import('./components/GameSplash'));
 import { auth, db, getMessagingIfSupported, googleProvider } from './firebase';
+import { StatCard, WeatherGlyph } from './components/SmallComponents.jsx';
 
 const STORAGE_KEY = 'quiet-harbor-journal-v1';
 const PIN_KEY = 'quiet-harbor-pin-v1';
@@ -906,303 +918,6 @@ function DinosaurIcon({ size = 18 }) {
   );
 }
 
-function GameSplash({ game, isClosing = false }) {
-  const Icon = game?.icon || Gamepad2;
-  return (
-    <div className={`fixed inset-0 z-[100] flex items-center justify-center bg-[#fffaf2] transition-all duration-[800ms] ease-in-out ${isClosing ? 'scale-110 opacity-0 pointer-events-none' : 'scale-100 opacity-100'}`}>
-      {game?.preview && (
-        <img src={game.preview} alt="" className="absolute inset-0 h-full w-full object-cover opacity-[0.08] blur-[2px]" aria-hidden="true" />
-      )}
-      <div className="absolute inset-0 opacity-[0.03] grayscale pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/pinstriped-suit.png")' }}></div>
-      <div className="relative text-center">
-        <div className={`mx-auto mb-10 flex h-36 w-44 items-center justify-center rounded-[3rem] bg-gradient-to-br shadow-soft overflow-hidden relative ${game?.tone || 'from-sage-100 to-white'}`}>
-          {game?.preview ? (
-            <img src={game.preview} alt={`${game.title} preview`} className="absolute inset-0 h-full w-full object-cover transition duration-700" />
-          ) : (
-            <Icon size={56} className="animate-pulse" />
-          )}
-        </div>
-        <p className="text-[11px] font-extrabold uppercase tracking-[0.45em] text-sage-500">Launching your space</p>
-        <h2 className="mt-4 font-display text-6xl font-bold tracking-tight text-sage-950">{game?.title}</h2>
-        <div className="mt-12 flex flex-col items-center gap-4">
-          <div className="h-1 w-48 overflow-hidden rounded-full bg-sage-100">
-            <div className="h-full bg-sage-600 transition-all duration-[1200ms] ease-out w-full" style={{ animation: 'gameSplashProgress 1.4s ease-in-out infinite' }} />
-          </div>
-          <p className="text-xs font-semibold italic text-sage-400">Arriving softly...</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function GamePreview({ gameId }) {
-  const shellClass = 'mt-4 overflow-hidden rounded-[1.35rem] border border-[#e8dfd5] bg-sage-50/80 p-3 shadow-inner';
-
-  if (gameId === 'drifting-leaf') {
-    return (
-      <div className={shellClass}>
-        <div className="relative flex h-20 items-center justify-center overflow-hidden rounded-[1rem] bg-gradient-to-b from-[#f6c8be] via-[#f3d8c6] to-[#f7eadb]">
-          <div className="absolute inset-0 opacity-15" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #6e5a4a 1px, transparent 0)', backgroundSize: '12px 12px' }} />
-          <div className="absolute left-1/2 top-3 h-5 w-10 -translate-x-1/2 rounded-full bg-[#fff7ef]/90 blur-sm" />
-          <div className="absolute left-6 top-5 h-4 w-10 rounded-full bg-white/35 blur-sm" />
-          <div className="absolute right-7 bottom-5 h-5 w-14 rounded-full bg-white/35 blur-sm" />
-          <div className="relative flex items-center justify-center animate-bounce" style={{ animationDuration: '3.8s' }}>
-            {[-18, -12, -6, 0, 6, 12, 18].map((offset, index) => (
-              <span
-                key={offset}
-                className="absolute h-5 w-[1px] origin-bottom rounded-full bg-[#fffaf4]/90"
-                style={{ transform: `translateY(-0.45rem) rotate(${offset}deg)`, opacity: index % 2 === 0 ? 1 : 0.82 }}
-              />
-            ))}
-            <span className="absolute h-6 w-6 rounded-full bg-[radial-gradient(circle,#f3c7cb_0%,#f7dfdf_55%,rgba(255,249,244,0)_100%)]" />
-            <span className="absolute -top-4 -left-1 h-5 w-2.5 rounded-full bg-[#a3b18a] rotate-[-35deg]" />
-            <span className="absolute -top-4 left-1 h-5 w-2.5 rounded-full bg-[#a3b18a] rotate-[35deg]" />
-            <span className="absolute top-2 h-5 w-[2px] rounded-full bg-[#6f4b35]" />
-            <span className="absolute top-6 h-3.5 w-3.5 rounded-full bg-[#6f4b35]" style={{ clipPath: 'polygon(50% 100%, 0% 35%, 50% 0%, 100% 35%)' }} />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (gameId === 'stream-surfer') {
-    return (
-      <div className={shellClass}>
-        <div className="grid h-20 gap-2 rounded-[1rem] bg-gradient-to-b from-sky-100 to-cyan-50 p-2 relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-1 bg-white/40 animate-pulse"></div>
-          {[0, 1, 2].map((lane) => (
-            <div key={lane} className="relative rounded-full bg-white/40 border border-white/20 h-4">
-              {lane === 1 && <span className="absolute left-4 top-1/2 -translate-y-1/2 text-lg">🐸</span>}
-              {lane !== 1 && <span className={`absolute ${lane === 0 ? 'right-6' : 'left-8'} top-1/2 -translate-y-1/2 text-sm opacity-60`}>🪷</span>}
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  if (gameId === 'lofi-jigsaw') {
-    return (
-      <div className={shellClass}>
-        <div className="grid h-20 grid-cols-4 gap-1 rounded-[1rem] bg-sage-100 p-2 overflow-hidden relative">
-          {[0, 1, 2, 3, 4, '', 5, 6, 7, 8, 9, 10].map((tile, i) => {
-            const row = tile === '' ? 1 : Math.floor(tile / 4);
-            const col = tile === '' ? 1 : tile % 4;
-            return (
-              <div
-                key={i}
-                className={`rounded-md border ${tile === '' ? 'border-dashed border-amber-200/50 bg-white/30' : 'border-amber-200/50 bg-cover shadow-sm'} flex items-center justify-center text-[8px] font-black text-white transition-transform duration-1000 ease-in-out`}
-                style={tile === '' ? {} : {
-                  backgroundImage: 'url(/lofi-jigsaw-wallpaper.png)',
-                  backgroundSize: '400% 300%',
-                  backgroundPosition: `${col * 33.33}% ${row * 50}%`,
-                  animation: tile === 4 ? 'jigsawTileNudge 3s infinite ease-in-out' : (tile === 5 ? 'jigsawTileNudge 3s infinite ease-in-out reverse' : undefined)
-                }}
-              />
-            );
-          })}
-        </div>
-      </div>
-    );
-  }
-
-  if (gameId === 'lotus-match') {
-    return (
-      <div className={shellClass}>
-        <div className="relative h-20 overflow-hidden rounded-[1rem] bg-rose-100">
-          <img src={lotusMatchPreviewImage} alt="Lotus Match preview" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-transparent to-black/10" />
-          <div className="absolute bottom-2 left-2 flex gap-1.5">
-            {['A♠', 'K♥', 'Q♦'].map((card) => (
-              <span key={card} className="flex h-8 w-6 items-center justify-center rounded-md border border-amber-200/50 bg-white/86 text-[10px] font-black text-rose-800 shadow-sm">{card}</span>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (gameId === 'quiet-tiles') {
-    return (
-      <div className={shellClass}>
-        <div className="grid h-20 grid-cols-4 gap-1.5 rounded-[1rem] bg-gradient-to-br from-violet-100 to-slate-50 p-2">
-          {[2, 4, 8, 16, '', 32, '', 64].map((val, i) => (
-            <div key={i} className={`flex h-full items-center justify-center rounded-lg ${val ? 'bg-white shadow-sm text-violet-700 font-bold' : 'bg-white/30'} text-[9px]`}>
-              {val}
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  if (gameId === 'quiet-tetris') {
-    return (
-      <div className={shellClass}>
-        <div className="relative h-20 rounded-[1rem] bg-gradient-to-br from-indigo-100 to-sky-50 p-2 overflow-hidden">
-          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-0.5">
-            <div className="w-4 h-4 bg-indigo-400 rounded-sm"></div>
-            <div className="w-4 h-4 bg-indigo-400 rounded-sm shadow-sm"></div>
-            <div className="w-4 h-4 bg-indigo-400 rounded-sm"></div>
-          </div>
-          <div className="absolute top-2 right-6 w-4 h-8 bg-sky-400 rounded-sm animate-bounce" style={{ animationDuration: '2.5s' }}></div>
-        </div>
-      </div>
-    );
-  }
-
-  if (gameId === 'quiet-slide') {
-    return (
-      <div className={shellClass}>
-        <div className="grid h-20 grid-cols-3 gap-1 rounded-[1rem] bg-gradient-to-br from-amber-100 to-stone-50 p-1.5 shadow-inner">
-          {[1, 2, 3, 4, '', 5, 6, 7, 8].map((v, i) => (
-            <div key={i} className={`flex h-full items-center justify-center rounded-md ${v ? 'bg-white shadow-sm text-amber-700 font-bold' : 'bg-transparent'} text-[10px]`}>
-              {v}
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  if (gameId === 'quiet-words') {
-    return (
-      <div className={shellClass}>
-        <div className="flex h-20 items-center justify-center rounded-[1rem] bg-gradient-to-br from-fuchsia-100 to-rose-50 p-2 relative overflow-hidden">
-          <div className="flex gap-2">
-             <div className="w-12 h-14 bg-white rounded-lg shadow-sm border border-fuchsia-100 rotate-[-4deg] flex items-center justify-center text-xl font-display text-fuchsia-800">A</div>
-             <div className="w-12 h-14 bg-white rounded-lg shadow-sm border border-fuchsia-100 rotate-[3deg] flex items-center justify-center text-xl font-display text-fuchsia-800">B</div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (gameId === 'typing-speed-test') {
-    return (
-      <div className={shellClass}>
-        <div className="flex h-20 flex-col justify-center gap-2 rounded-[1rem] bg-gradient-to-br from-sky-100 to-indigo-50 p-3 overflow-hidden">
-          <div className="h-1.5 w-full bg-white/70 rounded-full"></div>
-          <div className="h-1.5 w-[85%] bg-white/70 rounded-full"></div>
-          <div className="h-1.5 w-[65%] bg-sky-500 rounded-full relative">
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-0.5 h-3 bg-indigo-600 animate-pulse"></div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (gameId === 'quiet-clues') {
-    return (
-      <div className={shellClass}>
-        <div className="flex h-20 items-center justify-center rounded-[1rem] bg-gradient-to-br from-amber-100 to-rose-50 p-2">
-           <div className="w-full bg-white/90 p-2 rounded border border-amber-200 shadow-sm space-y-1.5">
-             <div className="h-1 w-full bg-amber-100 rounded-full opacity-60"></div>
-             <div className="h-1 w-3/4 bg-amber-100 rounded-full opacity-60"></div>
-             <div className="flex gap-1 pt-1">
-               <div className="w-4 h-4 border border-amber-300 rounded-sm flex items-center justify-center text-[8px] font-bold text-amber-700 bg-amber-50">1</div>
-               <div className="w-4 h-4 border border-amber-200 rounded-sm bg-amber-50/30"></div>
-               <div className="w-4 h-4 border border-amber-200 rounded-sm bg-amber-50/30"></div>
-             </div>
-           </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (gameId === 'quiet-wordle') {
-    return (
-      <div className={shellClass}>
-        <div className="flex h-20 flex-col items-center justify-center gap-1.5 rounded-[1rem] bg-gradient-to-br from-teal-100 to-sky-50 p-2">
-          <div className="flex gap-1">
-            {['C', 'O', 'Z', 'Y'].map((l, i) => (
-              <div key={i} className={`w-7 h-7 rounded border flex items-center justify-center text-[11px] font-bold ${i < 2 ? 'bg-teal-500 border-teal-600 text-white shadow-sm' : 'bg-white border-teal-200 text-teal-700'}`}>{l}</div>
-            ))}
-          </div>
-          <div className="flex gap-1 opacity-40">
-            {[0, 1, 2, 3].map((i) => <div key={i} className="w-7 h-7 rounded border border-teal-100 bg-white"></div>)}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (gameId === 'quiet-sudoku') {
-    return (
-      <div className={shellClass}>
-        <div className="flex h-20 items-center justify-center rounded-[1rem] bg-gradient-to-br from-cyan-100 to-blue-50 p-2">
-           <div className="grid grid-cols-3 grid-rows-3 gap-0.5 border border-cyan-200 p-0.5 bg-white rounded shadow-sm">
-             {[1,'',3,'',5,'',7,'',9].map((v, i) => (
-               <div key={i} className="w-4 h-4 flex items-center justify-center text-[9px] text-cyan-800 font-bold border border-cyan-50">{v}</div>
-             ))}
-           </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (gameId === 'mind-sweeper') {
-    return (
-      <div className={shellClass}>
-        <div className="flex h-20 items-center justify-center rounded-[1rem] bg-gradient-to-br from-lime-100 to-emerald-50 p-2">
-           <div className="grid grid-cols-4 gap-1 bg-white/70 p-1.5 rounded-lg border border-lime-200 shadow-sm">
-             {[0,1,2,3,4,5,6,7].map((i) => (
-               <div key={i} className={`w-4 h-4 rounded-sm border ${i === 2 ? 'bg-emerald-100 border-emerald-300' : 'bg-white border-lime-100 shadow-tiny'} flex items-center justify-center text-[8px] font-bold`}>
-                 {i === 2 ? '🚩' : (i === 5 ? '1' : '')}
-               </div>
-             ))}
-           </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (gameId === 'quiet-snake') {
-    return (
-      <div className={shellClass}>
-        <div className="relative h-20 rounded-[1rem] bg-gradient-to-br from-emerald-100 to-lime-50 p-2 overflow-hidden">
-          <div className="absolute top-4 left-6 flex flex-col gap-0.5 rotate-[15deg]">
-            <div className="w-3 h-3 bg-emerald-600 rounded-sm"></div>
-            <div className="w-3 h-3 bg-emerald-500 rounded-sm"></div>
-            <div className="w-3 h-3 bg-emerald-400 rounded-sm shadow-sm"></div>
-            <div className="w-3 h-3 bg-emerald-300 rounded-sm"></div>
-          </div>
-          <div className="absolute bottom-6 right-10 w-3 h-3 bg-rose-400 rounded-full animate-pulse shadow-[0_0_10px_rgba(244,63,94,0.5)]"></div>
-        </div>
-      </div>
-    );
-  }
-
-  if (gameId === 'solitaire') {
-    return (
-      <div className={shellClass}>
-        <div className="relative h-20 overflow-hidden rounded-[1rem] bg-gradient-to-br from-emerald-800 to-teal-900 shadow-inner">
-          <img alt="Solitaire preview" className="h-full w-full object-cover" src={solitairePreviewImage} />
-          <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/35 via-transparent to-white/10" />
-        </div>
-      </div>
-    );
-  }
-
-  if (gameId === 'dinosaur-dash') {
-    return (
-      <div className={shellClass}>
-        <div className="relative h-20 overflow-hidden rounded-[1rem] bg-gradient-to-br from-orange-100 to-yellow-50 shadow-inner">
-          <img alt="Dinosaur Dash preview" className="h-full w-full object-cover" src={dinoDashPreviewImage} />
-          <div className="absolute inset-0 bg-gradient-to-t from-orange-950/10 via-transparent to-white/10" />
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className={shellClass}>
-      <div className="relative h-20 rounded-[1rem] bg-gradient-to-b from-stone-100 to-amber-50 p-3 flex items-center justify-center">
-        <Gamepad2 className="text-stone-300" size={34} />
-      </div>
-    </div>
-  );
-}
 
 function getForecastVisuals(forecast) {
   const weatherCode = typeof forecast === 'object' ? forecast?.weatherCode : forecast;
@@ -1655,543 +1370,19 @@ function clampCompanionPosition(size, x, y, containerWidth, containerHeight, isV
   };
 }
 
-function StatCard({ icon: Icon, label, value, tone }) {
+function CozyPanelFallback({ label = 'Loading cozy space...' }) {
   return (
-    <div className="group lofi-glass rounded-[2.2rem] border border-[#e8dfd5] bg-gradient-to-br from-white/95 to-white/75 p-5 text-center shadow-lift backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-soft">
-      <div className="flex flex-col items-center gap-3">
-        <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl shadow-sm ${tone}`}>
-          <Icon size={21} />
-        </div>
-        <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-sage-800">{label}</p>
-      </div>
-      <p className="mt-4 break-words text-2xl font-extrabold leading-tight tracking-tight text-ink">{value}</p>
-    </div>
-  );
-}
-
-function WeatherGlyph({ mood, size = 'text-3xl' }) {
-  if (mood?.image) {
-    return <img alt={mood.label} className="inline-block h-9 w-9 rounded-2xl object-cover shadow-sm" src={mood.image} />;
-  }
-  return <span className={`inline-block ${size}`} aria-label={mood?.label}>{mood?.emoji || '🌙'}</span>;
-}
-
-function SectionHeader({ eyebrow, title, text }) {
-  return (
-    <div className="mx-auto mb-9 max-w-3xl text-center">
-      <p className="text-sm font-bold uppercase tracking-widest text-sage-600">{eyebrow}</p>
-      <h2 className="mt-3 font-display text-5xl font-bold leading-tight text-sage-950">{title}</h2>
-      {text && <p className="mt-4 text-lg leading-8 text-sage-800">{text}</p>}
-    </div>
-  );
-}
-
-function InfoCard({ icon: Icon, title, children }) {
-  return (
-    <article className="customizable-card rounded-3xl border border-amber-200/50 bg-white/75 p-6 shadow-lift backdrop-blur transition hover:-translate-y-1 hover:bg-white/90">
-      <div className="theme-icon mb-5 flex h-12 w-12 items-center justify-center rounded-3xl bg-sage-100 text-sage-800">
-        <Icon size={22} />
-      </div>
-      <h3 className="text-2xl font-extrabold text-ink">{title}</h3>
-      <div className="mt-3 leading-7 text-sage-800">{children}</div>
-    </article>
-  );
-}
-
-
-function ThemeStudio({
-  selectedTheme,
-  selectedDesign,
-  customColor,
-  quoteBg,
-  journalStyle,
-  quoteStyle,
-  customWeatherName,
-  customWeatherEmoji,
-  customWeatherImage,
-  customCdImage,
-  customWeathers,
-  wallpaperImage,
-  isOpen,
-  onClose,
-  onThemeChange,
-  onDesignChange,
-  onCustomColorChange,
-  onQuoteBgChange,
-  onAtmosphereApply,
-  onCustomWeatherNameChange,
-  onCustomWeatherEmojiChange,
-  onCustomWeatherImageUpload,
-  onCustomCdImageUpload,
-  onCustomCdImageRemove,
-  onWallpaperImageUpload,
-  onWallpaperRemove,
-  onAddCustomWeather,
-  onDeleteCustomWeather
-}) {
-  const activeThemePreview = colorThemes.find((theme) => theme.id === selectedTheme) || colorThemes[0];
-  const currentCdArt = customCdImage || activeThemePreview.image || radioVinylIcon;
-
-  return (
-    <div className={`customizer-shell fixed inset-y-0 right-0 z-30 flex transition ${isOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}>
-      <div className={`fixed inset-0 bg-ink/20 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`} onClick={onClose} />
-      <aside id="design" className={`relative h-full w-screen max-w-5xl overflow-y-auto bg-[#2b231d] shadow-[0_0_60px_rgba(0,0,0,0.6)] backdrop-blur-3xl transition duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-        <div className="grid min-h-full lg:grid-cols-12">
-          <div className="theme-panel relative flex flex-col p-7 text-white lg:col-span-4 lg:p-10">
-            <div className="absolute inset-0 z-0 h-full w-full overflow-hidden">
-              <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover object-center" aria-hidden="true" />
-              <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/80" />
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.08),transparent_35rem)]" />
-            </div>
-            <div className="relative z-10 flex items-start justify-between gap-4">
-              <Palette className="text-white lofi-sharp-text" size={34} />
-              <button className="rounded-full border border-white/30 bg-white/20 px-4 py-2 text-sm font-bold text-white lofi-sharp-chip shadow-sm backdrop-blur-md transition hover:bg-white/30 lg:hidden" onClick={onClose} type="button">Done</button>
-            </div>
-            <div className="relative z-10 mt-auto pt-32 lg:pt-0">
-              <p className="text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft">Customize your space</p>
-              <h2 className="mt-3 font-display text-4xl font-bold leading-tight text-white lofi-sharp-text">Choose the design that fits today.</h2>
-              <p className="mt-4 font-bold leading-7 text-white lofi-sharp-text-soft">Visitors can personalize the room with design cards, CD art, colors, and style. Their choice is saved only in their own browser.</p>
-            </div>
-          </div>
-          <div className="space-y-7 bg-[#2b231d] p-7 lg:col-span-8 lg:p-10">
-            <div className="hidden lg:flex lg:justify-end">
-              <button className="rounded-full border border-white/25 bg-white/10 px-6 py-2.5 text-sm font-extrabold text-white lofi-sharp-chip shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/20" onClick={onClose} type="button">Done</button>
-            </div>
-            <div>
-              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft"><Palette size={16} /> Design</div>
-              <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-5">
-                {colorThemes.map((theme) => (
-                  <button
-                    className={`custom-option group rounded-3xl border p-4 text-left shadow-sm backdrop-blur-md transition hover:-translate-y-1 ${selectedTheme === theme.id ? 'is-selected border-white/60 bg-white/30 shadow-[0_0_24px_rgba(255,255,255,0.25)]' : 'border-white/20 bg-white/10 hover:bg-white/20'}`}
-                    key={theme.id}
-                    onClick={() => {
-                      onThemeChange(theme.id);
-                    }}
-                    type="button"
-                  >
-                    <span className="relative mb-3 block h-24 w-full overflow-hidden rounded-2xl border border-white/20 shadow-inner" style={{ background: `linear-gradient(135deg, ${theme.soft}, ${theme.accent})` }}>
-                      <span className="absolute inset-0 opacity-35" style={{ backgroundImage: `radial-gradient(circle at 20% 20%, rgba(255,255,255,0.9), transparent 1.6rem), linear-gradient(135deg, transparent, ${theme.accent})` }} />
-                      <span className="absolute left-1/2 top-1/2 h-[4.5rem] w-[4.5rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/55 shadow-[0_10px_22px_rgba(0,0,0,0.22)]" style={{ background: `conic-gradient(from 30deg, rgba(255,255,255,0.88), ${theme.glow}, rgba(255,255,255,0.72), ${theme.accent}, rgba(255,255,255,0.88))` }}>
-                        <img src={customCdImage || theme.image} alt="" className="absolute inset-[0.7rem] h-[calc(100%-1.4rem)] w-[calc(100%-1.4rem)] rounded-full object-cover" aria-hidden="true" />
-                        <span className="absolute left-1/2 top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/70 bg-[#2b231d]/80 shadow-inner" />
-                        <span className="absolute inset-0 rounded-full border border-white/30" />
-                      </span>
-                      <span className="absolute bottom-2 left-2 h-2.5 w-2.5 rounded-full border border-white/70 shadow-sm" style={{ background: theme.accent }} />
-                    </span>
-                    <span className="block text-sm font-extrabold text-white lofi-sharp-text">{theme.name}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-3xl border border-white/20 bg-white/10 p-5 shadow-sm backdrop-blur-md">
-              <div className="mb-3 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft"><ImagePlus size={16} /> Custom CD design</div>
-              <p className="text-sm font-bold leading-6 text-white/95 lofi-sharp-text-soft">Upload your own picture to place it on the CD label. It stays local in this browser and updates the design cards and player disc.</p>
-              <div className="mt-4 grid gap-4 md:grid-cols-[minmax(0,1fr)_10rem] md:items-center">
-                <label className="flex cursor-pointer items-center justify-center gap-2 rounded-2xl border border-dashed border-white/30 bg-white/10 px-4 py-4 text-sm font-bold text-white transition hover:bg-white/20">
-                  <ImagePlus size={18} /> Upload CD art
-                  <input accept="image/*" className="hidden" onChange={onCustomCdImageUpload} type="file" />
-                </label>
-                <button className="rounded-2xl border border-white/20 bg-white/10 px-4 py-4 text-sm font-extrabold text-white transition hover:bg-white/20 disabled:cursor-not-allowed disabled:opacity-45" disabled={!customCdImage} onClick={onCustomCdImageRemove} type="button">
-                  <Trash2 size={15} className="mr-1 inline" /> Reset CD
-                </button>
-              </div>
-              <div className="mt-4 flex items-center gap-4 rounded-3xl border border-white/15 bg-black/10 p-4">
-                <span className="relative block h-20 w-20 shrink-0 rounded-full border border-white/50 shadow-[0_12px_28px_rgba(0,0,0,0.24)]" style={{ background: 'conic-gradient(from 25deg, rgba(255,255,255,0.9), rgba(184,212,170,0.9), rgba(255,255,255,0.74), rgba(79,107,69,0.88), rgba(255,255,255,0.9))' }}>
-                  <img src={currentCdArt} alt="" className="absolute inset-[0.85rem] h-[calc(100%-1.7rem)] w-[calc(100%-1.7rem)] rounded-full object-cover" aria-hidden="true" />
-                  <span className="absolute left-1/2 top-1/2 h-5 w-5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/70 bg-[#2b231d]/80 shadow-inner" />
-                </span>
-                <p className="text-sm font-bold leading-6 text-white/90 lofi-sharp-text-soft">{customCdImage ? 'Custom CD art is active across the design cards and player disc.' : `${activeThemePreview.name} is active on the design cards and player disc.`}</p>
-              </div>
-            </div>
-
-            <div className="grid gap-5 lg:grid-cols-3">
-              <label className="custom-option rounded-3xl border border-white/20 bg-white/10 p-5 shadow-sm backdrop-blur-md lg:col-span-1 block">
-                <span className="mb-3 block text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft">Custom color</span>
-                <input
-                  aria-label="Choose a custom accent color"
-                  className="h-12 w-full cursor-pointer rounded-2xl border border-white/30 bg-black/20 p-1 backdrop-blur"
-                  onChange={(event) => {
-                    onCustomColorChange(event.target.value);
-                    onThemeChange('custom');
-                  }}
-                  type="color"
-                  value={customColor}
-                />
-                <span className="mt-3 block text-sm font-bold text-white/95 lofi-sharp-text-soft">Pick any accent color.</span>
-              </label>
-              <div className="grid gap-3 lg:col-span-2">
-                {designStyles.map((style) => (
-                  <button
-                    className={`custom-option flex items-center justify-between rounded-3xl border p-4 text-left shadow-sm backdrop-blur-md transition hover:-translate-y-1 ${selectedDesign === style.id ? 'is-selected border-white/60 bg-white/30 shadow-[0_0_24px_rgba(255,255,255,0.25)]' : 'border-white/20 bg-white/10 hover:bg-white/20'}`}
-                    key={style.id}
-                    onClick={() => {
-                      onDesignChange(style.id);
-                    }}
-                    type="button"
-                  >
-                    <span>
-                      <span className="block font-extrabold text-white lofi-sharp-text">{style.name}</span>
-                      <span className="text-sm font-bold text-white/95 lofi-sharp-text-soft">{style.description}</span>
-                    </span>
-                    <span className="theme-dot h-8 w-8 rounded-full border border-white/30 shadow-inner" />
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-3xl border border-white/20 bg-white/10 p-5 shadow-sm backdrop-blur-md">
-              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft"><ImagePlus size={16} /> Wallpaper</div>
-              <p className="text-sm leading-6 text-sage-700">Import your own calm wallpaper. It stays soft behind the app with a blur overlay so the page still feels minimal and easy to read.</p>
-              <div className="mt-4 grid gap-4 md:grid-cols-[minmax(0,1fr)_14rem] md:items-center">
-                <label className="flex cursor-pointer items-center justify-center gap-2 rounded-2xl border border-dashed border-sage-300 bg-sage-50/80 px-4 py-4 text-sm font-bold text-sage-800 transition hover:bg-sage-100">
-                  <ImagePlus size={18} /> Import wallpaper
-                  <input accept="image/*" className="hidden" onChange={onWallpaperImageUpload} type="file" />
-                </label>
-                <button className="rounded-2xl border border-amber-200/50 bg-white px-4 py-4 text-sm font-extrabold text-sage-700 transition hover:bg-sage-50 disabled:cursor-not-allowed disabled:opacity-50" disabled={!wallpaperImage} onClick={onWallpaperRemove} type="button">
-                  Remove wallpaper
-                </button>
-              </div>
-              {wallpaperImage && (
-                <div className="mt-4 overflow-hidden rounded-3xl border border-[#e8dfd5] bg-sage-50 p-3">
-                  <div className="h-36 rounded-2xl bg-cover bg-center shadow-inner" style={{ backgroundImage: `url(${wallpaperImage})` }} />
-                  <p className="mt-3 text-sm font-semibold leading-6 text-sage-700">Wallpaper applied. The app automatically keeps it muted so it does not clutter the interface.</p>
-                </div>
-              )}
-            </div>
-
-            <div className="rounded-3xl border border-white/20 bg-white/10 p-5 shadow-sm backdrop-blur-md">
-              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft"><Sparkles size={16} /> Atmosphere presets</div>
-              <p className="text-sm font-bold leading-6 text-white/95 lofi-sharp-text-soft">Pick a ready-made mood and let the design drawer handle the look for you instead of crowding the writing area.</p>
-              <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-                {journalAtmospherePresets.map((preset) => {
-                  const isPresetActive = selectedTheme === preset.themeId && selectedDesign === preset.designId && journalStyle.fontId === preset.journalFontId && quoteStyle.fontId === preset.quoteFontId;
-                  return (
-                    <button
-                      className={`flex flex-col rounded-[1.4rem] border p-4 text-left shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:shadow-md ${isPresetActive ? 'border-white/60 bg-white/30 shadow-[0_0_24px_rgba(255,255,255,0.25)]' : 'border-white/20 bg-white/10 hover:bg-white/20'}`}
-                      key={preset.id}
-                      onClick={() => onAtmosphereApply(preset)}
-                      type="button"
-                    >
-                      <span className="text-sm font-extrabold text-white lofi-sharp-text">{preset.name}</span>
-                      <span className="mt-2 text-sm font-bold leading-6 text-white/95 lofi-sharp-text-soft">{preset.note}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="rounded-3xl border border-white/20 bg-white/10 p-5 shadow-sm backdrop-blur-md">
-              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft"><Quote size={16} /> Quote card color</div>
-              <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6">
-                {quoteCardColors.map((color) => (
-                  <button
-                    className={`custom-option rounded-2xl border p-3 text-left shadow-sm backdrop-blur-sm transition hover:-translate-y-1 ${quoteBg.toLowerCase() === color.value.toLowerCase() ? 'is-selected border-white/60 bg-white/30 shadow-[0_0_24px_rgba(255,255,255,0.25)]' : 'border-white/20 bg-white/10 hover:bg-white/20'}`}
-                    key={color.value}
-                    onClick={() => {
-                      onQuoteBgChange(color.value);
-                    }}
-                    type="button"
-                  >
-                    <span className="mb-2 block h-10 rounded-xl shadow-inner" style={{ background: color.value }} />
-                    <span className="text-sm font-extrabold text-white lofi-sharp-text">{color.name}</span>
-                  </button>
-                ))}
-              </div>
-              <label className="mt-4 block rounded-2xl border border-white/20 bg-black/20 p-4 backdrop-blur-md">
-                <span className="mb-3 block text-sm font-bold text-white/95 lofi-sharp-text-soft">Or pick any quote card color</span>
-                <input className="h-11 w-full cursor-pointer rounded-xl border border-white/30 bg-white/10 p-1" onChange={(event) => onQuoteBgChange(event.target.value)} type="color" value={quoteBg} />
-              </label>
-            </div>
-
-            <div className="rounded-3xl border border-white/20 bg-white/10 p-5 shadow-sm backdrop-blur-md">
-              <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft"><ImagePlus size={16} /> Custom emotion</div>
-              <p className="text-sm font-bold leading-6 text-white/95 lofi-sharp-text-soft">Keep personal moods in the design drawer instead of the writing page. They still appear in your mood picker after you save them.</p>
-              <div className="mt-5 grid gap-3 md:grid-cols-5">
-                <input
-                  className="rounded-2xl border border-white/30 bg-black/20 px-4 py-3 font-semibold text-white outline-none backdrop-blur-sm transition focus:border-white/60 focus:bg-black/30 placeholder-white/50"
-                  onChange={(event) => onCustomWeatherNameChange(event.target.value)}
-                  placeholder="Name"
-                  value={customWeatherName}
-                />
-                <input
-                  className="rounded-2xl border border-white/30 bg-black/20 px-4 py-3 font-semibold text-white outline-none backdrop-blur-sm transition focus:border-white/60 focus:bg-black/30 placeholder-white/50"
-                  maxLength={4}
-                  onChange={(event) => onCustomWeatherEmojiChange(event.target.value)}
-                  placeholder="Emoji"
-                  value={customWeatherEmoji}
-                />
-                <label className="flex cursor-pointer items-center justify-center gap-2 rounded-2xl border border-dashed border-white/30 bg-white/5 px-4 py-3 text-sm font-bold text-white shadow-sm backdrop-blur-sm transition hover:bg-white/10 md:col-span-2">
-                  <ImagePlus size={18} /> Upload image
-                  <input accept="image/*" className="hidden" onChange={onCustomWeatherImageUpload} type="file" />
-                </label>
-                <button className="rounded-2xl border border-white/20 bg-white/20 px-4 py-3 font-bold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/30" onClick={onAddCustomWeather} type="button">
-                  Add emotion
-                </button>
-              </div>
-              {customWeatherImage && (
-                <div className="mt-4 flex items-center gap-3 rounded-2xl border border-white/20 bg-black/20 p-3 text-sm font-semibold text-white/95 backdrop-blur-md lofi-sharp-text-soft">
-                  <img alt="Custom weather preview" className="h-12 w-12 rounded-2xl object-cover" src={customWeatherImage} />
-                  Image ready — add a name, then save it as a custom emotion.
-                </div>
-              )}
-              {customWeathers.length > 0 && (
-                <div className="mt-4">
-                  <p className="text-xs font-black uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft">Saved custom moods</p>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {customWeathers.map((weather) => (
-                      <div key={weather.id} className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm backdrop-blur-md">
-                        {weather.image ? <img alt={weather.label} className="h-6 w-6 rounded-full object-cover" src={weather.image} /> : <span>{weather.emoji}</span>}
-                        <span>{weather.label}</span>
-                        <button className="text-white/50 transition hover:text-white" onClick={() => onDeleteCustomWeather(weather.label)} type="button">×</button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </aside>
-    </div>
-  );
-}
-
-function MoodChart({ entries, weatherOptions }) {
-  const recent = useMemo(() => entries.slice(0, 7).reverse(), [entries]);
-  const legacyMoodMap = {
-    'Grounded': 'Happy',
-    'Soft': 'Calm',
-    'Okay': 'Neutral',
-    'Heavy': 'Sad',
-    'Stormy': 'Anxious'
-  };
-
-  if (!recent.length) {
-    return (
-      <div className="flex min-h-56 items-center justify-center rounded-3xl border border-dashed border-amber-200/50 bg-sage-50/70 p-8 text-center text-sage-700">
-        Your mood garden is waiting for its first check-in.
-      </div>
-    );
-  }
-
-  return (
-    <div className="overflow-hidden rounded-3xl bg-gradient-to-br from-white to-sage-50 px-3 pb-3 pt-6 shadow-inner sm:p-5">
-      <div className="flex h-40 items-end gap-1.5 px-0.5 sm:h-64 sm:gap-3 sm:px-2">
-        {recent.map((entry) => {
-          const effectiveMoodLabel = legacyMoodMap[entry.mood] || entry.mood;
-          const mood = weatherOptions.find((item) => item.label === effectiveMoodLabel) || weatherOptions.find(m => m.label === entry.mood) || weatherOptions[2] || moods[2];
-          const heightClass = ['h-9 sm:h-12', 'h-12 sm:h-16', 'h-16 sm:h-24', 'h-24 sm:h-32', 'h-32 sm:h-44', 'h-36 sm:h-52'][mood.value - 1] || 'h-20 sm:h-28';
-          const entryDate = new Date(entry.createdAt);
-          return (
-            <div className="flex min-w-0 flex-1 flex-col items-center gap-2 sm:gap-3" key={entry.id}>
-              <div className="flex h-32 w-full items-end justify-center overflow-hidden rounded-2xl bg-white/50 p-1 shadow-inner backdrop-blur-sm sm:h-52 sm:p-1.5">
-                <div className={`w-full rounded-xl ${mood.color || ''} ${heightClass} shadow-md transition-all hover:scale-105 hover:shadow-lg`} style={mood.color ? undefined : { background: mood.hex || '#739f62' }} />
-              </div>
-              <WeatherGlyph mood={mood} size="text-base sm:text-xl" />
-              <div className="flex flex-col items-center gap-0.5 text-center">
-                <span className="text-[9px] font-bold uppercase tracking-tight text-sage-400 sm:text-[10px]">{entryDate.toLocaleDateString('en', { month: 'short', day: 'numeric' })}</span>
-                <span className="text-[10px] font-extrabold text-sage-700 sm:text-xs">{entryDate.toLocaleDateString('en', { weekday: 'short' })}</span>
-              </div>
-            </div>
-          );
-        })}
+    <div className="flex min-h-[220px] items-center justify-center rounded-[2rem] border border-[#e8dfd5] bg-white/75 px-6 py-10 text-[#6f5948] shadow-sm backdrop-blur">
+      <div className="inline-flex items-center gap-3 rounded-full border border-amber-200/50 bg-[#fffaf2] px-5 py-3 text-sm font-extrabold shadow-sm">
+        <Leaf className="h-5 w-5 animate-pulse text-[#8e7159]" />
+        {label}
       </div>
     </div>
   );
 }
 
-function PrivacyGate({ hasPin, onUnlock, onCreatePin }) {
-  const [pin, setPin] = useState('');
-  const [error, setError] = useState('');
-  const [showPin, setShowPin] = useState(false);
-
-  function submit(event) {
-    event.preventDefault();
-    if (!pin.trim()) return;
-    if (!hasPin) {
-      onCreatePin(pin.trim());
-      return;
-    }
-    const saved = getSavedPin();
-    if (pin.trim() === saved) onUnlock();
-    else setError('That PIN did not match. Try again gently.');
-  }
-
-  return (
-    <main className="relative min-h-screen overflow-hidden bg-sand-50 text-ink">
-      <div className="absolute left-10 top-10 h-64 w-64 rounded-full bg-sage-200/60 blur-3xl" />
-      <div className="absolute bottom-10 right-10 h-80 w-80 rounded-full bg-sand-200/70 blur-3xl" />
-      <section className="relative mx-auto flex min-h-screen max-w-5xl items-center justify-center px-6 py-16">
-        <div className="grid overflow-hidden rounded-3xl border border-[#e8dfd5] bg-white/75 shadow-soft backdrop-blur md:grid-cols-2">
-          <div className="flex flex-col justify-between bg-gradient-to-br from-sage-100 via-mist to-sand-100 p-10">
-            <div>
-              <div className="mb-8 inline-flex items-center gap-2 rounded-full bg-white/70 px-4 py-2 text-sm font-bold text-sage-800 shadow-lift">
-                <ShieldCheck size={18} /> Private by default
-              </div>
-              <h1 className="font-display text-5xl font-bold leading-tight text-sage-900">Lofi Memory</h1>
-              <p className="mt-5 text-lg leading-8 text-sage-800">A calm space for private diary writing, daily reflection, and gentle mood check-ins you can keep returning to.</p>
-            </div>
-            <div className="mt-12 flex items-center gap-3 rounded-3xl bg-white/65 p-4 text-sm text-sage-800">
-              <Lock size={19} /> Entries stay in this browser using local storage.
-            </div>
-          </div>
-          <form className="p-10" onSubmit={submit}>
-            <div className="mb-8 flex h-14 w-14 items-center justify-center rounded-3xl bg-sage-100 text-sage-700">
-              <Lock size={25} />
-            </div>
-            <h2 className="text-3xl font-extrabold text-ink">{hasPin ? 'Welcome back' : 'Create your soft lock'}</h2>
-            <p className="mt-3 leading-7 text-sage-700">{hasPin ? 'Enter your private PIN to open your journal. Keep it somewhere safe — this local lock does not have a recovery option yet.' : 'Set a simple PIN for this browser. It is a light privacy step for your personal writing space, and it currently has no recovery flow if you forget it.'}</p>
-            <div className="relative mt-8">
-              <input
-                className="w-full rounded-2xl border border-amber-200/50 bg-white px-5 py-4 pr-16 text-lg font-semibold tracking-widest outline-none transition focus:border-sage-500 focus:ring-4 focus:ring-sage-100"
-                maxLength={12}
-                onChange={(event) => setPin(event.target.value)}
-                placeholder="Your PIN"
-                type={showPin ? 'text' : 'password'}
-                value={pin}
-              />
-              <button
-                aria-label={showPin ? 'Hide PIN' : 'Show PIN'}
-                className="absolute right-3 top-1/2 inline-flex -translate-y-1/2 items-center justify-center rounded-xl p-2 text-sage-600 transition hover:bg-sage-50 hover:text-sage-900"
-                onClick={() => setShowPin((current) => !current)}
-                type="button"
-              >
-                {showPin ? <EyeOff size={18} /> : <Eye size={18} />}
-              </button>
-            </div>
-            {error && <p className="mt-3 text-sm font-semibold text-rose-600">{error}</p>}
-            <button className="mt-6 w-full rounded-2xl bg-ink px-5 py-4 font-bold text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800" type="submit">
-              {hasPin ? 'Unlock journal' : 'Begin gently'}
-            </button>
-          </form>
-        </div>
-      </section>
-    </main>
-  );
-}
-
-function PinSettingsDialog({ isOpen, onClose, onChangePin, onRemovePin }) {
-  const [currentPin, setCurrentPin] = useState('');
-  const [newPin, setNewPin] = useState('');
-  const [showCurrentPin, setShowCurrentPin] = useState(false);
-  const [showNewPin, setShowNewPin] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-
-  useEffect(() => {
-    if (!isOpen) {
-      setCurrentPin('');
-      setNewPin('');
-      setShowCurrentPin(false);
-      setShowNewPin(false);
-      setError('');
-      setSuccess('');
-    }
-  }, [isOpen]);
-
-  if (!isOpen) return null;
-
-  const handleChangePin = (event) => {
-    event.preventDefault();
-    const result = onChangePin(currentPin, newPin);
-    if (result.ok) {
-      setSuccess(result.message);
-      setError('');
-      setCurrentPin('');
-      setNewPin('');
-      return;
-    }
-    setError(result.message);
-    setSuccess('');
-  };
-
-  const handleRemovePin = () => {
-    const result = onRemovePin(currentPin);
-    if (result.ok) {
-      setSuccess('');
-      setError('');
-      onClose();
-      return;
-    }
-    setError(result.message);
-    setSuccess('');
-  };
-
-  return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-ink/25 px-6 backdrop-blur-sm">
-      <div className="w-full max-w-2xl rounded-[3rem] border border-[#e8dfd5] bg-[#fffaf2]/95 p-8 shadow-soft">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <p className="text-sm font-bold uppercase tracking-widest text-sage-600">Privacy</p>
-            <h3 className="mt-2 text-3xl font-extrabold text-ink">Manage your lock PIN</h3>
-            <p className="mt-3 max-w-xl leading-7 text-sage-700">Change the current PIN for this browser or remove the lock completely if you no longer want the journal gated. Keep the PIN written down somewhere safe because there is no recovery flow yet.</p>
-          </div>
-          <button className="rounded-full border border-amber-200/50 bg-white px-4 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50" onClick={onClose} type="button">
-            Done
-          </button>
-        </div>
-
-        <form className="mt-8 grid gap-5" onSubmit={handleChangePin}>
-          <label className="block text-sm font-bold text-sage-800">
-            Current PIN
-            <div className="relative mt-2">
-              <input
-                className="w-full rounded-2xl border border-amber-200/50 bg-white px-4 py-3 pr-14 text-base outline-none transition focus:border-sage-500 focus:ring-4 focus:ring-sage-100"
-                maxLength={12}
-                onChange={(event) => setCurrentPin(event.target.value)}
-                placeholder="Enter current PIN"
-                type={showCurrentPin ? 'text' : 'password'}
-                value={currentPin}
-              />
-              <button
-                aria-label={showCurrentPin ? 'Hide current PIN' : 'Show current PIN'}
-                className="absolute right-3 top-1/2 inline-flex -translate-y-1/2 items-center justify-center rounded-xl p-2 text-sage-600 transition hover:bg-sage-50 hover:text-sage-900"
-                onClick={() => setShowCurrentPin((current) => !current)}
-                type="button"
-              >
-                {showCurrentPin ? <EyeOff size={18} /> : <Eye size={18} />}
-              </button>
-            </div>
-          </label>
-
-          <label className="block text-sm font-bold text-sage-800">
-            New PIN
-            <div className="relative mt-2">
-              <input
-                className="w-full rounded-2xl border border-amber-200/50 bg-white px-4 py-3 pr-14 text-base outline-none transition focus:border-sage-500 focus:ring-4 focus:ring-sage-100"
-                maxLength={12}
-                onChange={(event) => setNewPin(event.target.value)}
-                placeholder="Choose a new PIN"
-                type={showNewPin ? 'text' : 'password'}
-                value={newPin}
-              />
-              <button
-                aria-label={showNewPin ? 'Hide new PIN' : 'Show new PIN'}
-                className="absolute right-3 top-1/2 inline-flex -translate-y-1/2 items-center justify-center rounded-xl p-2 text-sage-600 transition hover:bg-sage-50 hover:text-sage-900"
-                onClick={() => setShowNewPin((current) => !current)}
-                type="button"
-              >
-                {showNewPin ? <EyeOff size={18} /> : <Eye size={18} />}
-              </button>
-            </div>
-          </label>
-
-          {error && <p className="text-sm font-semibold text-rose-600">{error}</p>}
-          {success && <p className="text-sm font-semibold text-sage-700">{success}</p>}
-
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <button className="rounded-2xl bg-ink px-5 py-3 font-bold text-white shadow-lift transition hover:-translate-y-0.5 hover:bg-sage-800" type="submit">
-              Update PIN
-            </button>
-            <button className="inline-flex items-center justify-center gap-2 rounded-2xl bg-rose-50 px-5 py-3 font-bold text-rose-700 transition hover:-translate-y-0.5 hover:bg-rose-100" onClick={handleRemovePin} type="button">
-              <Trash2 size={18} /> Remove lock
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  );
+function LazyTabPanel({ children, label }) {
+  return <Suspense fallback={<CozyPanelFallback label={label} />}>{children}</Suspense>;
 }
 
 function App() {
@@ -5181,12 +4372,20 @@ function App() {
   };
 
   if (locked) {
-    return <PrivacyGate hasPin={hasPin} onCreatePin={createPin} onUnlock={() => setLocked(false)} />;
+    return (
+      <Suspense fallback={<CozyPanelFallback label="Opening private journal..." />} >
+        <PrivacyGate hasPin={hasPin} onCreatePin={createPin} onUnlock={() => setLocked(false)} />
+      </Suspense>
+    );
   }
 
   return (
     <main data-interface-mode={interfaceMode} data-device-type={interfaceMode} className={`personalized-site lofi-vibe interface-${interfaceMode} ${isPhoneInterface ? 'phone-interface pb-28' : 'pc-interface pb-10 lg:pb-0'} ${wallpaperImage ? 'wallpaper-active' : ''} design-${selectedDesign} ${comfortMode ? 'comfort-mode' : ''} isolate min-h-screen overflow-hidden bg-sand-50 text-ink`} style={themeStyle}>
-      {isGameTransitioning && <GameSplash game={transitioningGameConfig} />}
+      {isGameTransitioning && (
+        <Suspense fallback={null}>
+          <GameSplash game={transitioningGameConfig} />
+        </Suspense>
+      )}
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[#fffaf2]">
         <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-[0.35] blur-[1px] transition-opacity duration-1000" aria-hidden="true" />
         {wallpaperImage && <div className="lofi-user-wallpaper absolute inset-0 z-10" style={{ backgroundImage: `url(${wallpaperImage})` }} />}
@@ -5833,43 +5032,51 @@ function App() {
       </section>
       ) : null}
 
-      <ThemeStudio
-        customColor={customColor}
-        customWeatherEmoji={customWeatherEmoji}
-        customWeatherImage={customWeatherImage}
-        customCdImage={customCdImage}
-        customWeatherName={customWeatherName}
-        customWeathers={customWeathers}
-        isOpen={customizerOpen}
-        journalStyle={journalStyle}
-        onAtmosphereApply={applyJournalAtmosphere}
-        onAddCustomWeather={addCustomWeather}
-        onClose={() => setCustomizerOpen(false)}
-        onCustomColorChange={setCustomColor}
-        onCustomCdImageRemove={removeCustomCdImage}
-        onCustomCdImageUpload={handleCustomCdImageUpload}
-        onCustomWeatherEmojiChange={setCustomWeatherEmoji}
-        onCustomWeatherImageUpload={handleWeatherImageUpload}
-        onCustomWeatherNameChange={setCustomWeatherName}
-        onDeleteCustomWeather={deleteCustomWeather}
-        onDesignChange={setSelectedDesign}
-        onQuoteBgChange={setQuoteBg}
-        onThemeChange={setSelectedTheme}
-        onWallpaperImageUpload={handleWallpaperImageUpload}
-        onWallpaperRemove={removeWallpaperImage}
-        quoteBg={quoteBg}
-        quoteStyle={quoteStyle}
-        selectedDesign={selectedDesign}
-        selectedTheme={selectedTheme}
-        wallpaperImage={wallpaperImage}
-      />
+{customizerOpen && (
+        <Suspense fallback={<CozyPanelFallback label="Opening design studio..." />}>
+              <ThemeStudio
+                customColor={customColor}
+                customWeatherEmoji={customWeatherEmoji}
+                customWeatherImage={customWeatherImage}
+                customCdImage={customCdImage}
+                customWeatherName={customWeatherName}
+                customWeathers={customWeathers}
+                isOpen={customizerOpen}
+                journalStyle={journalStyle}
+                onAtmosphereApply={applyJournalAtmosphere}
+                onAddCustomWeather={addCustomWeather}
+                onClose={() => setCustomizerOpen(false)}
+                onCustomColorChange={setCustomColor}
+                onCustomCdImageRemove={removeCustomCdImage}
+                onCustomCdImageUpload={handleCustomCdImageUpload}
+                onCustomWeatherEmojiChange={setCustomWeatherEmoji}
+                onCustomWeatherImageUpload={handleWeatherImageUpload}
+                onCustomWeatherNameChange={setCustomWeatherName}
+                onDeleteCustomWeather={deleteCustomWeather}
+                onDesignChange={setSelectedDesign}
+                onQuoteBgChange={setQuoteBg}
+                onThemeChange={setSelectedTheme}
+                onWallpaperImageUpload={handleWallpaperImageUpload}
+                onWallpaperRemove={removeWallpaperImage}
+                quoteBg={quoteBg}
+                quoteStyle={quoteStyle}
+                selectedDesign={selectedDesign}
+                selectedTheme={selectedTheme}
+                wallpaperImage={wallpaperImage}
+              />
+        </Suspense>
+      )}
 
-      <PinSettingsDialog
-        isOpen={pinSettingsOpen}
-        onChangePin={changePin}
-        onClose={() => setPinSettingsOpen(false)}
-        onRemovePin={removePin}
-      />
+{pinSettingsOpen && (
+        <Suspense fallback={null}>
+              <PinSettingsDialog
+                isOpen={pinSettingsOpen}
+                onChangePin={changePin}
+                onClose={() => setPinSettingsOpen(false)}
+                onRemovePin={removePin}
+              />
+        </Suspense>
+      )}
 
       <section id="journal" className="relative z-10 mx-auto -mt-1 max-w-[1280px] px-5 py-9 pb-28 sm:px-7 lg:-mt-4 lg:pb-10 xl:px-10">
         <div className="lofi-picture-border lofi-border-watercolor mb-6 overflow-hidden rounded-[3rem] border border-white/85 bg-gradient-to-r from-white/88 via-sage-50/78 to-sand-50/75 p-3 shadow-soft backdrop-blur xl:p-4">
@@ -5902,487 +5109,84 @@ function App() {
           </div>
         </div>
 
-        {activeTab === 'write' && (
-        <>
-          {saveReward && (
-            <div className="fixed top-12 left-1/2 z-[9999] w-max max-w-[90vw] -translate-x-1/2 rounded-full border border-sage-800/20 bg-sage-900 px-6 py-4 text-center text-sm font-extrabold text-white shadow-2xl transition-all" role="alert" aria-live="assertive">
-              {saveReward}
-            </div>
-          )}
-        <form className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-4 shadow-soft sm:p-6 xl:p-8" onSubmit={saveEntry}>
-          <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
-          <div className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/25 to-black/15" />
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.06),transparent_35rem)]" />
-          <div className="relative z-10">
-            <div className="lofi-picture-border lofi-border-memory relative mb-6 overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/25 p-8 shadow-sm lg:p-10">
-              <img src={diarySectionPreviewImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
-              <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
-              <div className="relative z-10">
-                <h1 className="font-display text-5xl font-bold tracking-tight text-white lofi-sharp-text">Diary</h1>
-                <p className="mt-2 text-xs font-black uppercase tracking-[0.3em] text-white/95 lofi-sharp-text-soft">Private Journal</p>
-                <div className="mt-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-                  <div className="max-w-xl">
-                    <p className="text-base font-bold text-white lofi-sharp-text-soft">Keep it simple. Write what feels true. A sentence, a fragment, or a few plain words are already enough.</p>
-                  </div>
-                  <div className="inline-flex items-center gap-2 self-start rounded-full border border-white/25 bg-white/12 px-4 py-2 text-sm font-bold text-white lofi-sharp-chip shadow-sm backdrop-blur-md">
-                    <CalendarDays size={16} /> {formatDate(new Date().toISOString())}
-                  </div>
-                </div>
-                <div className="mt-6 flex flex-wrap gap-2 text-[11px] font-black uppercase tracking-[0.2em] text-white/90 lofi-sharp-text-soft sm:text-xs">
-                  <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-sm">{entryTypeMeta[writingCategory].shortLabel}</span>
-                  <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-sm">{selectedMood} mood</span>
-                  <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-sm">{draftWordCount} words</span>
-                  <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-sm">{completedQuestCount}/{journalQuest.length} ritual steps</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
-              <label className="block text-sm font-bold text-white lofi-sharp-text" htmlFor="entry-title">Title, if you want one</label>
-              <p className="text-sm font-semibold text-white/95 lofi-sharp-text-soft">It can stay short, plain, or even blank.</p>
-            </div>
-            <input
-              className="journal-title-input mb-5 w-full rounded-[2.2rem] border border-white/20 bg-black/15 px-5 py-4 text-lg font-bold text-white placeholder-white/50 outline-none backdrop-blur-md transition focus:border-white/40 focus:bg-black/30"
-              id="entry-title"
-              onChange={(event) => setTitle(event.target.value)}
-              placeholder="e.g. The part of today I want to keep"
-              value={title}
+{activeTab === 'write' && (
+          <LazyTabPanel label="Opening your quiet page...">
+            <WriteTab
+          achievementBadges={achievementBadges}
+          activeJournalFont={activeJournalFont}
+          activeJournalSize={activeJournalSize}
+          activePrompt={activePrompt}
+          addStarterLine={addStarterLine}
+          companion={companion}
+          companionIsUploadedMedia={companionIsUploadedMedia}
+          completedQuestCount={completedQuestCount}
+          draftWordCount={draftWordCount}
+          entries={entries}
+          entriesToNextReward={entriesToNextReward}
+          entryBodyRef={entryBodyRef}
+          entryTypeMeta={entryTypeMeta}
+          formatDate={formatDate}
+          handleEntryImageUpload={handleEntryImageUpload}
+          importantDateCount={importantDateCount}
+          insertQuickEmoji={insertQuickEmoji}
+          journalFontOptions={journalFontOptions}
+          journalNudge={journalNudge}
+          journalQuest={journalQuest}
+          journalSizeOptions={journalSizeOptions}
+          journalStyle={journalStyle}
+          latestEntry={latestEntry}
+          moodStarterPrompts={moodStarterPrompts}
+          navigateToTab={navigateToTab}
+          nextAchievement={nextAchievement}
+          openPlannerTodoCount={openPlannerTodoCount}
+          prompts={prompts}
+          quickEmojis={quickEmojis}
+          returnRitual={returnRitual}
+          rewardLevel={rewardLevel}
+          sanitizeJournalHtml={sanitizeJournalHtml}
+          saveEntry={saveEntry}
+          saveReward={saveReward}
+          selectedMood={selectedMood}
+          selectedMoodGuide={selectedMoodGuide}
+          selectedMoodOption={selectedMoodOption}
+          setActivePrompt={setActivePrompt}
+          setBody={setBody}
+          setJournalStyle={setJournalStyle}
+          setSelectedMood={setSelectedMood}
+          setTitle={setTitle}
+          setWritingCategory={setWritingCategory}
+          streak={streak}
+          toggleBoldText={toggleBoldText}
+          toggleBulletList={toggleBulletList}
+          toggleUnderlineText={toggleUnderlineText}
+          unlockedAchievementCount={unlockedAchievementCount}
+          weatherOptions={weatherOptions}
+          weeklyCheckIns={weeklyCheckIns}
+          weeklyGoal={weeklyGoal}
+          writingCategory={writingCategory}
             />
-
-            <div className="mb-4 rounded-[1.6rem] border border-white/20 bg-white/10 p-3.5 shadow-sm backdrop-blur-md sm:p-4">
-              <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
-                <div className="space-y-3">
-                  <div>
-                    <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft">Light controls</p>
-                    <div className="mt-2.5 flex flex-wrap gap-2">
-                      <button className={`rounded-full border px-4 py-2 text-[10px] font-black uppercase tracking-widest transition shadow-sm backdrop-blur-md ${writingCategory === 'diary' ? 'bg-white border-white text-sage-900' : 'bg-white/10 border-white/20 text-white hover:bg-white/20'}`} onClick={() => setWritingCategory('diary')} type="button">Diary Log</button>
-                      <button className={`rounded-full border px-4 py-2 text-[10px] font-black uppercase tracking-widest transition shadow-sm backdrop-blur-md ${writingCategory === 'journal' ? 'bg-white border-white text-sage-900' : 'bg-white/10 border-white/20 text-white hover:bg-white/20'}`} onClick={() => setWritingCategory('journal')} type="button">Journal Reflection</button>
-                    </div>
-                    <p className="mt-2.5 text-xs font-bold leading-5 text-white/90 lofi-sharp-text-soft">{entryTypeMeta[writingCategory].helper}</p>
-                  </div>
-                  <div className="grid gap-3 sm:grid-cols-2 xl:min-w-[31rem] xl:grid-cols-3">
-                    <label className="block text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">
-                      Mood
-                      <select className="mt-2 w-full rounded-[1.15rem] border border-white/30 bg-black/20 px-3.5 py-3 text-sm font-bold text-white outline-none backdrop-blur-sm transition focus:border-white/60 focus:bg-black/30" onChange={(event) => setSelectedMood(event.target.value)} value={selectedMood}>
-                        {weatherOptions.map((mood) => (
-                          <option className="text-ink" key={mood.label} value={mood.label}>{mood.label}</option>
-                        ))}
-                      </select>
-                    </label>
-                    <label className="block text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">
-                      Font
-                      <select className="mt-2 w-full rounded-[1.15rem] border border-white/30 bg-black/20 px-3.5 py-3 text-sm font-bold text-white outline-none backdrop-blur-sm transition focus:border-white/60 focus:bg-black/30" onChange={(event) => setJournalStyle({ ...journalStyle, fontId: event.target.value })} value={journalStyle.fontId}>
-                        {journalFontOptions.map((font) => (
-                          <option className="text-ink" key={font.id} value={font.id}>{font.label}</option>
-                        ))}
-                      </select>
-                    </label>
-                    <label className="block text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">
-                      Size
-                      <select className="mt-2 w-full rounded-[1.15rem] border border-white/30 bg-black/20 px-3.5 py-3 text-sm font-bold text-white outline-none backdrop-blur-sm transition focus:border-white/60 focus:bg-black/30" onChange={(event) => setJournalStyle({ ...journalStyle, sizeId: event.target.value })} value={journalStyle.sizeId}>
-                        {journalSizeOptions.map((size) => (
-                          <option className="text-ink" key={size.id} value={size.id}>{size.label}</option>
-                        ))}
-                      </select>
-                    </label>
-                  </div>
-                </div>
-                <div className="flex flex-wrap items-center gap-2 xl:max-w-[22rem] xl:justify-end">
-                  <button className="rounded-full border border-white/30 bg-white/15 px-3.5 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25" onClick={() => toggleBoldText(entryBodyRef, setBody)} title="Bold selected text" type="button">Bold</button>
-                  <button className="rounded-full border border-white/30 bg-white/15 px-3.5 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25" onClick={() => toggleUnderlineText(entryBodyRef, setBody)} title="Underline selected text" type="button">Underline</button>
-                  <button className="rounded-full border border-white/30 bg-white/15 px-3.5 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25" onClick={() => toggleBulletList(entryBodyRef, setBody)} title="Bullet points" type="button">List</button>
-                  {quickEmojis.slice(0, 4).map((emoji) => (
-                    <button key={emoji} className="rounded-full border border-white/30 bg-white/15 px-3 py-1.5 text-base shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25" onClick={() => insertQuickEmoji(emoji)} type="button">
-                      {emoji}
-                    </button>
-                  ))}
-                  <label className="flex cursor-pointer items-center gap-2 rounded-full border border-white/30 bg-white/15 px-3.5 py-2 text-sm font-black text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25">
-                    <ImagePlus size={14} /> Photo
-                    <input accept="image/*" className="hidden" onChange={handleEntryImageUpload} type="file" />
-                  </label>
-                  <button className="rounded-full border border-white/30 bg-white px-4 py-2 text-sm font-black text-[#3d3025] shadow-sm transition hover:-translate-y-0.5 hover:bg-white/90" type="submit">Save page</button>
-                </div>
-              </div>
-            </div>
-
-            <div className="journal-editor-shell mt-2 rounded-[3rem] p-3 md:p-4 backdrop-blur-md bg-white/5 border border-white/10">
-              <div className="journal-editor-ribbon bg-black/30 text-white/90 border border-white/20">quiet page</div>
-              <div className="journal-editor-meta journal-editor-top mb-3 flex flex-wrap items-center justify-between gap-2 px-3 text-[11px] font-black uppercase tracking-[0.22em] text-white/85 lofi-sharp-text-soft sm:text-xs sm:tracking-[0.24em]">
-              <span>{selectedMood} mood · today</span>
-              <span>{draftWordCount === 0 ? 'slow is still writing' : `${draftWordCount} words so far`}</span>
-            </div>
-            <div
-              ref={entryBodyRef}
-              className="journal-editor journal-editor-soft min-h-[24rem] w-full overflow-auto rounded-[2.2rem] px-6 py-6 outline-none sm:min-h-[30rem]"
-              contentEditable
-              suppressContentEditableWarning
-              style={{ fontFamily: activeJournalFont, fontSize: activeJournalSize, lineHeight: 1.95, color: '#24312e', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
-              onInput={(e) => setBody(sanitizeJournalHtml(e.currentTarget.innerHTML))}
-              data-placeholder="Start with one true sentence."
-            />
-            <div className="journal-editor-meta journal-editor-bottom mt-4 flex flex-wrap items-center justify-between gap-2 px-3 text-[11px] font-bold uppercase tracking-[0.22em] text-sage-500 sm:text-xs sm:tracking-[0.24em]">
-              <span>A few clear lines are enough for today.</span>
-              <span>{streak} day{streak === 1 ? '' : 's'} of returning</span>
-            </div>
-          </div>
-          <div className="mt-5 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-            <div className="rounded-[1.2rem] border border-[#e8dfd5] bg-white/85 px-4 py-3 text-sm font-semibold leading-6 text-sage-700 shadow-sm">
-              {journalNudge}
-            </div>
-            <button className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-7 py-4 font-bold text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800 sm:w-auto" type="submit">
-              <Plus size={19} /> Save page
-            </button>
-          </div>
-
-          <div className="mt-6 rounded-[2.2rem] border border-[#e8dfd5] bg-gradient-to-r from-sage-50/60 via-white to-sand-50/40 p-4 shadow-inner ring-1 ring-white/70 sm:p-6">
-            <div className="grid gap-6 lg:grid-cols-12">
-              <div className="lg:col-span-7">
-                <div className="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-sage-700"><Feather size={16} /> If you want a starting line</div>
-                <p className="max-w-2xl font-display text-2xl font-bold leading-relaxed text-sage-950">{activePrompt}</p>
-                <p className="mt-3 text-sm font-semibold text-sage-700">Use the prompt if it helps, or leave it and begin exactly where your mind already is.</p>
-                <button className="mt-5 inline-flex items-center gap-2 rounded-full border border-[#e8dfd5] bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-1 hover:border-amber-200/50 hover:bg-sage-50" onClick={() => setActivePrompt(prompts[(prompts.indexOf(activePrompt) + 1) % prompts.length])} type="button">
-                  <Sparkles size={15} /> New prompt
-                </button>
-              </div>
-
-              <div className="flex flex-col gap-4 lg:col-span-5">
-                <div className="rounded-3xl bg-white/82 p-4 shadow-sm ring-1 ring-sage-100/70">
-                  <div className="flex items-start gap-3">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sage-100 text-xl shadow-sm">
-                      {companionIsUploadedMedia ? <HeartHandshake size={20} className="text-sage-700" /> : <span>{companion.character || '💛'}</span>}
-                    </div>
-                    <div>
-                      <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">Diary start</p>
-                      <h3 className="mt-2 text-lg font-extrabold leading-tight text-sage-950">Write it the way it happened, felt, or stayed with you.</h3>
-                      <p className="mt-2 text-sm leading-7 text-sage-700">Try “Today felt…”, “I keep coming back to…”, or “Right now I need…”.</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="rounded-3xl bg-white/82 p-4 shadow-sm ring-1 ring-sage-100/70">
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">Little markers</p>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {quickEmojis.slice(0, 8).map((emoji) => (
-                      <button
-                        key={emoji}
-                        className="flex h-10 w-10 items-center justify-center rounded-2xl border border-[#e8dfd5] bg-white text-xl shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:shadow-md"
-                        onClick={() => addStarterLine(emoji)}
-                        type="button"
-                      >
-                        {emoji}
-                      </button>
-                    ))}
-                  </div>
-                  <p className="mt-3 text-[11px] font-bold text-sage-600">Tap one if you want a tiny bit of texture on the page.</p>
-                </div>
-
-                <div className="rounded-3xl bg-white/82 p-4 shadow-sm ring-1 ring-sage-100/70">
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">Small ways to begin</p>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {moodStarterPrompts.map((starter) => (
-                      <button key={starter} className="rounded-full border border-[#e8dfd5] bg-white px-3.5 py-2 text-sm font-bold text-sage-700 transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-sage-50" onClick={() => addStarterLine(starter)} type="button">
-                        {starter}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="rounded-[2.2rem] border border-[#e8dfd5] bg-white/88 p-5 shadow-sm ring-1 ring-sage-100/70">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-700">Kept gently</p>
-                      <h3 className="mt-2 text-xl font-extrabold leading-tight text-sage-950">A quiet record is forming.</h3>
-                    </div>
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sage-50 text-2xl text-sage-800 shadow-sm">{rewardLevel.emoji}</div>
-                  </div>
-                  <div className="mt-5 grid grid-cols-2 gap-3">
-                    <div className="rounded-2xl border border-[#e8dfd5] bg-sage-50/60 p-3">
-                      <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-sage-600">Pages saved</p>
-                      <p className="mt-2 text-2xl font-extrabold text-sage-950">{entries.length}</p>
-                    </div>
-                    <div className="rounded-2xl border border-[#e8dfd5] bg-sage-50/60 p-3">
-                      <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-sage-600">Current rhythm</p>
-                      <p className="mt-2 text-2xl font-extrabold text-sage-950">{streak}</p>
-                    </div>
-                  </div>
-                  <div className="mt-4 rounded-2xl border border-[#e8dfd5] bg-sage-50/55 px-4 py-3 text-sm leading-7 text-sage-700">
-                    {weeklyCheckIns >= weeklyGoal ? 'This week already has enough gentle attention in it.' : `${weeklyGoal - weeklyCheckIns} more check-in${weeklyGoal - weeklyCheckIns === 1 ? '' : 's'} if you want to fill this week softly.`}
-                  </div>
-                  <button className="mt-4 inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50" onClick={() => navigateToTab('memories')} type="button">
-                    <BookOpen size={15} /> Visit your memories
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1.25fr)_minmax(260px,0.85fr)] xl:grid-cols-[1.3fr_0.9fr]">
-            <div className="grid gap-4 lg:grid-cols-3">
-              <div className="rounded-3xl border border-[#e8dfd5] bg-white p-5 shadow-sm lg:col-span-3">
-                <div className="flex items-center justify-between gap-3">
-                  <div>
-                    <p className="text-xs font-extrabold uppercase tracking-widest text-sage-600">Soft landing</p>
-                    <h3 className="mt-2 text-xl font-extrabold text-ink">Three gentle ways in</h3>
-                  </div>
-                  <div className="rounded-full bg-sage-100 px-3 py-2 text-sm font-extrabold text-sage-800">{completedQuestCount}/3 felt natural</div>
-                </div>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {journalQuest.map((step) => (
-                    <div key={step.label} className={`rounded-full px-4 py-2 text-sm font-bold transition ${step.done ? 'bg-sage-900 text-white shadow-lift' : 'border border-[#e8dfd5] bg-sage-50 text-sage-700'}`}>
-                      {step.done ? '✓' : '○'} {step.label}
-                    </div>
-                  ))}
-                </div>
-                <p className="mt-4 text-sm font-semibold leading-7 text-sage-800">{journalNudge}</p>
-              </div>
-              <div className="rounded-3xl border border-[#e8dfd5] bg-gradient-to-br from-sand-50 to-white p-5 shadow-sm">
-                <p className="text-xs font-extrabold uppercase tracking-widest text-sand-500">This week so far</p>
-                <p className="mt-2 text-3xl font-extrabold text-sage-950">{weeklyCheckIns}/{weeklyGoal}</p>
-                <p className="mt-2 text-sm font-semibold leading-6 text-sage-700">{weeklyCheckIns >= weeklyGoal ? 'You already gave yourself enough room this week.' : `${weeklyGoal - weeklyCheckIns} more soft check-in${weeklyGoal - weeklyCheckIns === 1 ? '' : 's'} if you want to fill this week.`}</p>
-              </div>
-              <div className="rounded-3xl border border-[#e8dfd5] bg-gradient-to-br from-rose-50 to-white p-5 shadow-sm">
-                <p className="text-xs font-extrabold uppercase tracking-widest text-rose-500">Keepsake path</p>
-                <p className="mt-2 text-3xl font-extrabold text-sage-950">{rewardLevel.emoji}</p>
-                <p className="mt-2 text-base font-extrabold text-sage-900">{entriesToNextReward === 0 ? 'Your next bloom is already here.' : `${entriesToNextReward} more ${entriesToNextReward === 1 ? 'page' : 'pages'} until the next bloom.`}</p>
-                <p className="mt-2 text-sm font-semibold leading-6 text-sage-700">A few honest pages slowly turn into a quiet little collection.</p>
-              </div>
-              <div className="rounded-3xl border border-[#e8dfd5] bg-gradient-to-br from-sage-50 to-white p-5 shadow-sm">
-                <p className="text-xs font-extrabold uppercase tracking-widest text-sage-500">{returnRitual.eyebrow}</p>
-                <p className="mt-2 text-xl font-extrabold text-sage-950">{returnRitual.title}</p>
-                <p className="mt-3 text-sm leading-7 text-sage-700">{returnRitual.text}</p>
-                <p className="mt-3 text-xs font-bold uppercase tracking-[0.24em] text-sage-500">{latestEntry ? `${latestEntry.mood} mood kept nearby` : 'A gentle habit can start today'}</p>
-              </div>
-              <div className="rounded-3xl border border-[#e8dfd5] bg-white p-5 shadow-sm lg:col-span-3">
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                  <div>
-                    <p className="text-xs font-extrabold uppercase tracking-widest text-sage-600">Keepsake shelf</p>
-                    <h3 className="mt-2 text-xl font-extrabold text-ink">{unlockedAchievementCount}/{achievementBadges.length} keepsakes collected</h3>
-                    <p className="mt-2 text-sm leading-6 text-sage-700">Little keepsakes make the page feel alive without turning your writing into homework.</p>
-                  </div>
-                  <div className="rounded-full bg-sage-100 px-4 py-2 text-sm font-extrabold text-sage-800">Next: {nextAchievement.emoji} {nextAchievement.title}</div>
-                </div>
-                <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-                  {achievementBadges.map((badge) => (
-                    <div key={badge.id} className={`rounded-[1.5rem] border p-4 transition ${badge.unlocked ? 'border-amber-200/50 bg-sage-50 shadow-sm' : 'border-[#e8dfd5] bg-white'}`}>
-                      <div className="flex items-start gap-3">
-                        <div className={`flex h-12 w-12 items-center justify-center rounded-2xl text-2xl ${badge.unlocked ? 'bg-white shadow-sm' : 'bg-sage-50 opacity-70'}`}>{badge.emoji}</div>
-                        <div>
-                          <p className="text-base font-extrabold text-ink">{badge.title}</p>
-                          <p className="mt-1 text-sm leading-6 text-sage-700">{badge.hint}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <aside className="flex flex-col gap-6 lg:sticky lg:top-28 lg:self-start">
-              <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur-xl transition duration-300 hover:shadow-md">
-                <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
-                <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
-                <div className="relative z-10">
-                  <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Atmosphere</p>
-                  <div className="mt-5 flex items-center gap-4">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-[1.5rem] bg-white/20 text-3xl shadow-sm backdrop-blur-md ring-4 ring-white/10 transition hover:scale-105">
-                      <WeatherGlyph mood={selectedMoodOption} size="text-2xl" />
-                    </div>
-                    <div>
-                      <p className="text-xl font-black text-white lofi-sharp-text">{selectedMoodGuide.title}</p>
-                      <p className="text-sm font-bold text-white/95 lofi-sharp-text-soft">{selectedMoodGuide.summary}</p>
-                    </div>
-                  </div>
-                  <p className="mt-5 text-sm font-bold leading-7 text-white/95 lofi-sharp-text-soft">{latestEntry ? `Continuing "${latestEntry.title}".` : selectedMoodGuide.detail}</p>
-                </div>
-              </div>
-
-              <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur-xl">
-                <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
-                <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
-                <div className="relative z-10">
-                  <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Journey progress</p>
-                  <div className="mt-5 flex items-start gap-4">
-                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-[1.5rem] bg-white/20 text-3xl shadow-sm backdrop-blur-md ring-4 ring-white/10">{nextAchievement.emoji}</div>
-                    <div>
-                      <p className="text-lg font-black text-white lofi-sharp-text">{nextAchievement.title}</p>
-                      <p className="mt-1 text-sm font-bold leading-relaxed text-white/95 lofi-sharp-text-soft">{nextAchievement.hint}</p>
-                    </div>
-                  </div>
-                  <div className="mt-5 h-2 w-full overflow-hidden rounded-full bg-black/40 shadow-inner">
-                    <div className="h-full bg-white/90 transition-all duration-700" style={{ width: `${(unlockedAchievementCount / achievementBadges.length) * 100}%` }}></div>
-                  </div>
-                  <p className="mt-4 text-[13px] font-black text-white lofi-sharp-text-soft">{rewardLevel.next}</p>
-                </div>
-              </div>
-
-              <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur-xl">
-                <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
-                <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
-                <div className="relative z-10">
-                  <div className="mb-5 flex items-center justify-between">
-                    <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Soft actions</p>
-                    <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/20 text-white shadow-sm backdrop-blur-md">
-                      <Compass size={16} />
-                    </div>
-                  </div>
-                  <div className="grid gap-3">
-                    {[
-                      { label: 'Name the feeling', icon: Feather, onClick: () => addStarterLine('Today feels') },
-                      { label: 'Open notes', icon: FileText, onClick: () => navigateToTab('notes'), count: openPlannerTodoCount },
-                      { label: 'View check-ins', icon: CalendarDays, onClick: () => navigateToTab('insights'), count: importantDateCount }
-                    ].map((btn) => (
-                      <button key={btn.label} className="group flex items-center justify-between rounded-2xl border border-white/20 bg-white/10 px-5 py-3.5 text-left text-sm font-black text-white shadow-sm backdrop-blur-md transition duration-300 hover:-translate-y-0.5 hover:bg-white/20 hover:shadow-md" onClick={btn.onClick} type="button">
-                        <span className="inline-flex items-center gap-3 lofi-sharp-chip"><btn.icon size={17} /> {btn.label}</span>
-                        {btn.count !== undefined && <span className="rounded-full bg-white/25 px-2.5 py-0.5 text-[10px] shadow-sm backdrop-blur-md">{btn.count}</span>}
-                      </button>
-                    ))}
-                  </div>
-                  <p className="mt-5 border-t border-white/20 pt-5 text-sm font-bold leading-relaxed text-white/95 italic lofi-sharp-text-soft">&ldquo;You do not need to finish the whole story today.&rdquo;</p>
-                </div>
-              </div>
-            </aside>
-          </div>
-          </div>
-        </form>
-        </>
+          </LazyTabPanel>
         )}
 
-                        {activeTab === 'unwind' && (
-          <div id="game-library" className="mx-auto max-w-[1280px] px-2 py-5 sm:px-4 sm:py-8 lg:px-6 lg:py-14 fade-in">
-            {unwindViewMode === 'detail' && (
-              <div className={`game-detail-reveal ${isFullscreen ? 'mb-0 scroll-mt-0' : 'mb-16 scroll-mt-24'}`}>
-                {!isFullscreen && (
-                  <button className="mb-5 inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white/88 px-4 py-2 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-x-0.5 hover:bg-white" onClick={returnToGameLibrary} type="button">
-                    <span aria-hidden="true">←</span> Back to games
-                  </button>
-                )}
-                <div ref={selectedGameInterfaceRef} className={`lofi-glass lofi-picture-border lofi-border-memory relative overflow-hidden backdrop-blur ${isFullscreen ? 'is-fullscreen fixed inset-0 z-[120] flex h-[100dvh] w-screen flex-col overflow-auto rounded-none border-0 bg-[#fff7ec] p-0 shadow-none sm:overflow-hidden' : 'rounded-[3rem] border p-3 shadow-soft sm:p-4 lg:p-5'} ${!isFullscreen && gameVisualTheme === 'lofi' ? 'border-[#e8dfd5] bg-[#fffaf2]/85' : ''}`}>
-                  {!isFullscreen && gameVisualTheme === 'lofi' && (
-                    <>
-                      <img src={lofiRoomWallpaperImage} alt="" className="pointer-events-none absolute inset-0 h-full w-full scale-105 object-cover opacity-[0.07] blur-[1px]" aria-hidden="true" />
-                      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.82),transparent_38%),linear-gradient(135deg,rgba(255,250,242,0.92),rgba(250,237,205,0.7),rgba(255,200,221,0.38))]" />
-                    </>
-                  )}
-                  {!isFullscreen && (
-                  <div className={`relative z-10 rounded-[1.7rem] border p-4 shadow-sm ${gameVisualTheme === 'lofi' ? 'border-amber-200/40 bg-white/60' : 'border-[#e8dfd5] bg-sage-50/55'}`}>
-                    <div className={`flex flex-col gap-4 ${isFullscreen ? 'lg:flex-row lg:items-start lg:justify-between' : 'xl:flex-row xl:items-center xl:justify-between'}`}>
-                      <div className="min-w-0">
-                        <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${gameVisualTheme === 'lofi' ? 'text-amber-800/80' : 'text-sage-600'}`}>Now playing</p>
-                        <h1 className={`mt-2 font-display font-bold tracking-tight ${isFullscreen ? 'text-3xl sm:text-4xl' : 'text-4xl'} ${gameVisualTheme === 'lofi' ? 'text-[#3d3025]' : 'text-sage-950'}`}>{selectedUnwindGameConfig.title}</h1>
-                        <p className={`mt-2 max-w-2xl text-sm leading-7 ${isFullscreen ? 'hidden sm:block' : ''} ${gameVisualTheme === 'lofi' ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>{selectedUnwindGameConfig.description}</p>
-                      </div>
-                      <div className={`flex w-full flex-col gap-2 ${isFullscreen ? 'lg:max-w-[36rem] lg:items-end' : 'xl:max-w-[32rem] xl:items-end'}`}>
-                        <div className={`flex flex-wrap gap-2 ${isFullscreen ? 'lg:justify-end' : 'xl:justify-end'}`}>
-                          <div className={`flex h-11 items-center gap-1 rounded-2xl border bg-white p-1 shadow-sm ${gameVisualTheme === 'lofi' ? 'border-amber-200' : 'border-amber-200/50'}`}>
-                            {[
-                              { id: 'original', label: 'Original', icon: Sparkles },
-                              { id: 'lofi', label: 'Lofi', icon: Moon }
-                            ].map((t) => (
-                              <button
-                                key={t.id}
-                                onClick={() => setGameVisualTheme(t.id)}
-                                className={`flex items-center gap-2 rounded-xl px-3 py-1.5 text-xs font-black uppercase tracking-widest transition ${gameVisualTheme === t.id ? (t.id === 'lofi' ? 'bg-[#4a3a2d] text-white shadow-sm' : 'bg-sage-900 text-white shadow-sm') : 'text-sage-500 hover:bg-sage-50'}`}
-                                type="button"
-                              >
-                                <t.icon size={13} /> {t.label}
-                              </button>
-                            ))}
-                          </div>
-                          <button onClick={toggleFullscreen} className={`flex h-11 items-center gap-2 rounded-2xl border bg-white px-5 text-sm font-bold shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50 ${gameVisualTheme === 'lofi' ? 'border-amber-200 text-[#4a3a2d]' : 'border-amber-200/50 text-sage-700'}`} type="button">
-                            {isFullscreen ? <ArrowUp size={16} className="rotate-180" /> : <ArrowUp size={16} />}
-                            {isFullscreen ? 'Exit full' : 'Full screen'}
-                          </button>
-                          <button onClick={returnToGameLibrary} className={`flex h-11 items-center gap-2 rounded-2xl border bg-white px-5 text-sm font-bold shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50 ${gameVisualTheme === 'lofi' ? 'border-amber-200 text-[#4a3a2d]' : 'border-amber-200/50 text-sage-700'}`} type="button">
-                            <Gamepad2 size={16} />
-                            Back to games
-                          </button>
-                        </div>
-                        <p className={`text-[11px] font-extrabold uppercase tracking-[0.2em] ${gameVisualTheme === 'lofi' ? 'text-amber-800/80' : 'text-sage-600'}`}>Difficulty in-game</p>
-                        <div className={`flex flex-wrap gap-2 ${isFullscreen ? 'lg:justify-end' : 'xl:justify-end'}`}>
-                          {difficultyOptions.map((difficulty) => (
-                            <button
-                              key={difficulty.id}
-                              className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${selectedGameDifficulty === difficulty.id ? (gameVisualTheme === 'lofi' ? 'bg-[#4a3a2d] text-white shadow-sm' : 'bg-sage-900 text-white shadow-sm') : `border bg-white hover:bg-sage-50 ${gameVisualTheme === 'lofi' ? 'border-amber-200 text-[#4a3a2d]' : 'border-amber-200/50 text-sage-800'}`}`}
-                              onClick={() => setSelectedGameDifficulty(difficulty.id)}
-                              type="button"
-                            >
-                              {difficulty.label}
-                              <span className={`ml-2 text-[10px] uppercase tracking-[0.18em] ${selectedGameDifficulty === difficulty.id ? 'text-white/90' : (gameVisualTheme === 'lofi' ? 'text-amber-800/70' : 'text-sage-500')}`}>{difficulty.detail}</span>
-                            </button>
-                          ))}
-                        </div>
-                        <p className={`text-xs font-semibold ${gameVisualTheme === 'lofi' ? 'text-[#6e5a4a]' : 'text-sage-600'}`}>Current setting: {selectedDifficultyConfig.label} — {selectedDifficultyConfig.detail}</p>
-                      </div>
-                    </div>
-                  </div>
-                  )}
-                  <div className={`relative z-10 mx-auto w-full ${isFullscreen ? 'flex min-h-0 flex-1 max-w-none overflow-auto' : `mt-5 ${selectedUnwindGameConfig.playingSpace || 'max-w-[980px]'}`}`}>
-                    <Suspense fallback={
-                      <div className="flex min-h-[320px] items-center justify-center rounded-[2rem] border border-[#c4b8a7]/40 bg-white/80 text-[#6f5948] backdrop-blur">
-                        <div className="text-center">
-                          <Leaf className="mx-auto mb-3 h-7 w-7 animate-pulse text-[#8e7159]" />
-                          <p className="text-sm font-bold">Loading calm game...</p>
-                        </div>
-                      </div>
-                    }>
-                      {selectedUnwindGameConfig.component}
-                    </Suspense>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            <div className={unwindViewMode === 'detail' ? 'mt-24 opacity-80 pt-16 border-t border-[#e8dfd5] site-ui-fade-in' : 'game-library-enter'}>
-              {unwindViewMode === 'detail' && (
-                <div className="mb-10 text-center">
-                  <h2 className="font-display text-3xl font-bold tracking-tight text-sage-950">Discover more games</h2>
-                  <p className="mt-2 text-sage-600">Pick another one whenever you are ready.</p>
-                </div>
-              )}
-              <div className="mb-14">
-                {unwindViewMode === 'grid' && (
-                  <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3.2rem] border border-[#8b5e3c]/25 p-8 shadow-[0_32px_90px_rgba(83,62,44,0.18)] lg:p-10 xl:p-12">
-                    <img src={gamesSectionPreviewImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
-                    <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
-                    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
-                    <div className="relative z-10">
-                      <h1 className="font-display text-5xl font-bold tracking-tight text-white lofi-sharp-text md:text-7xl">Games</h1>
-                      <p className="mt-3 text-xs font-black uppercase tracking-[0.34em] text-white/95 lofi-sharp-text-soft">Chill games</p>
-                      <p className="mt-6 max-w-2xl text-base font-bold leading-7 text-white lofi-sharp-text-soft">Start with cozy Solitaire or Mind Sweeper, then explore more relaxing browser games while the lofi music keeps the page calm.</p>
-                    </div>
-                  </div>
-                )}
-              </div>
-              <div className="mb-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-                {unwindGames.map((game) => {
-                  const isSelected = selectedUnwindGame === game.id;
-                  return (
-                    <button
-                      key={game.id}
-                      className={`group relative flex flex-col overflow-hidden rounded-[2.7rem] border p-1 text-left transition-all duration-500 hover:-translate-y-1.5 ${
-                        isSelected ? 'border-amber-200 bg-white ring-4 ring-amber-100 ring-offset-4 ring-offset-[#fff7ec]' : 'border-white/70 bg-white/44 hover:bg-white/66'
-                      }`}
-                      onClick={() => selectUnwindGame(game.id)}
-                      type="button"
-                    >
-                      <div className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-[2.45rem] bg-gradient-to-br shadow-inner">
-                        <img src={game.preview} alt={`${game.title} preview`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/44 via-black/8 to-white/8" />
-                        {isSelected ? (
-                          <span className="absolute bottom-4 right-4 rounded-full bg-white/88 px-3 py-1 text-[10px] font-black uppercase tracking-widest text-[#6e543c] shadow-sm backdrop-blur-sm">Active</span>
-                        ) : null}
-                      </div>
-                      <div className="w-full rounded-[2.15rem] bg-[#fff8f1]/96 p-5 shadow-[0_-16px_36px_rgba(255,255,255,0.24)]">
-                        <h2 className="font-display text-xl font-bold text-[#3f3126]">{game.title}</h2>
-                        <p className="mt-1 text-[10px] font-black uppercase tracking-[0.22em] text-[#7b5d44]/85">{game.detail}</p>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-                          </div>
-          </div>
+{activeTab === 'unwind' && (
+          <LazyTabPanel label="Loading the game room...">
+            <UnwindTab
+          difficultyOptions={difficultyOptions}
+          gameVisualTheme={gameVisualTheme}
+          isFullscreen={isFullscreen}
+          returnToGameLibrary={returnToGameLibrary}
+          selectedDifficultyConfig={selectedDifficultyConfig}
+          selectedGameDifficulty={selectedGameDifficulty}
+          selectedGameInterfaceRef={selectedGameInterfaceRef}
+          selectedUnwindGame={selectedUnwindGame}
+          selectedUnwindGameConfig={selectedUnwindGameConfig}
+          setGameVisualTheme={setGameVisualTheme}
+          setSelectedGameDifficulty={setSelectedGameDifficulty}
+          toggleFullscreen={toggleFullscreen}
+          unwindGames={unwindGames}
+          unwindViewMode={unwindViewMode}
+            />
+          </LazyTabPanel>
         )}
 
         {activeTab === 'focus' && (
@@ -6398,1359 +5202,214 @@ function App() {
           </Suspense>
         )}
 
-        {activeTab === 'breathe' && (
-          <div className="mx-auto max-w-5xl px-3 py-6 sm:px-6 sm:py-10 lg:py-16 fade-in">
-            <div className="lofi-picture-border lofi-border-memory relative mb-8 sm:mb-14 overflow-hidden rounded-[2.2rem] sm:rounded-[3.2rem] border border-[#8b5e3c]/25 p-5 sm:p-8 shadow-soft lg:p-10 xl:p-12">
-              <img src={musicSectionPreviewImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
-              <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
-              <div className="relative z-10">
-                <h1 className="font-display text-5xl font-bold tracking-tight text-white lofi-sharp-text">Music Room</h1>
-                <p className="mt-2 text-xs font-black uppercase tracking-[0.3em] text-white/95 lofi-sharp-text-soft">Sounds & Wallpapers</p>
-                <p className="mt-6 max-w-2xl text-base font-bold leading-7 text-white lofi-sharp-text-soft">Choose a music mood to change the ambient sound, wallpaper, and room energy. Rainy lofi, fire burning music, cozy radio, and magical study ambience all live here.</p>
-              </div>
-            </div>
-            
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-5">
-              {breatheRoomOptions.map((option) => {
-                const isSelected = selectedBreatheRoom === option.id;
-                return (
-                  <button
-                    key={option.id}
-                    onClick={() => applyBreatheRoom(option.id)}
-                    className={`group relative flex flex-col overflow-hidden rounded-[2.5rem] border p-1 transition-all duration-500 hover:-translate-y-1.5 ${
-                      isSelected ? `bg-white ${option.ringTone} ring-4 ring-offset-4 ring-offset-sage-50` : 'border-white/60 bg-white/40 hover:bg-white/60'
-                    }`}
-                  >
-                    <div className={`relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-[3rem] bg-gradient-to-br ${option.gradient} shadow-inner`}>
-                       {option.wallpaper ? <img src={option.wallpaper} alt={`${option.title} wallpaper`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" style={{ objectPosition: option.imagePosition || 'center' }} /> : null}
-                       <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-white/10" />
-                       <div className="absolute inset-0 opacity-20 transition-opacity group-hover:opacity-30" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)', backgroundSize: '16px 16px', color: 'white' }} />
-                       {option.showDecoration === false ? null : (
-                         <div className={`relative z-10 flex flex-col items-center gap-4 transition-transform duration-700 ${isSelected ? 'scale-110' : 'scale-100 group-hover:scale-105'}`}>
-                           <span className="text-4xl drop-shadow">{option.decoration}</span>
-                         </div>
-                       )}
-                       {isSelected ? (
-                         <div className="absolute bottom-4 flex gap-1">
-                           {[
-                             { id: 'first', delay: 0 },
-                             { id: 'second', delay: 0.15 },
-                             { id: 'third', delay: 0.3 }
-                           ].map((dot) => (
-                             <div key={dot.id} className={`h-1.5 w-1.5 rounded-full ${option.textTone} animate-bounce`} style={{ animationDelay: `${dot.delay}s` }} />
-                           ))}
-                         </div>
-                       ) : null}
-                    </div>
-                    <div className="rounded-[2.1rem] bg-[#fff8f1]/96 p-6 text-left shadow-[0_-18px_40px_rgba(255,255,255,0.24)]">
-                      <div className="flex items-center justify-between gap-3">
-                        <h3 className="text-xl font-bold text-[#3f3126]">{option.title}</h3>
-                        {isSelected ? <span className="text-[10px] font-black uppercase tracking-widest text-[#7b5d44]/80">Active</span> : null}
-                      </div>
-                      <p className="mt-1 text-xs font-bold uppercase tracking-widest text-[#7b5d44]">{option.sound}</p>
-                      <p className="mt-4 text-sm leading-relaxed text-[#6a5444]">{option.description}</p>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="mt-16 flex flex-col items-center justify-center">
-              <div className={`relative flex h-72 w-72 items-center justify-center transition-all duration-700`}>
-                <div className={`absolute inset-0 rounded-[4rem] border border-white/60 bg-white/40 shadow-soft backdrop-blur-md transition-all duration-[4000ms] ease-in-out ${
-                  breathePhase === 0 ? 'scale-105 opacity-60' : 
-                  breathePhase === 1 ? 'scale-105 opacity-90' : 
-                  breathePhase === 2 ? 'scale-90 opacity-40' : 
-                  'scale-90 opacity-70'
-                }`} />
-                <div className="relative z-10 flex flex-col items-center text-center">
-                  <div className="font-display text-3xl font-bold tracking-wide text-sage-900 transition-opacity duration-1000">
-                    {['Inhale', 'Hold', 'Exhale', 'Hold'][breathePhase]}
-                  </div>
-                  <p className={`mt-2 text-[10px] font-black uppercase tracking-[0.2em] opacity-40 ${activeBreatheRoom.textTone}`}>{selectedBreatheRoom} mode</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-16 rounded-[3rem] border border-[#e8dfd5] bg-white/60 p-10 shadow-soft backdrop-blur-md transition hover:bg-white/80">
-              <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
-                <div className="max-w-md">
-                  <h3 className="text-2xl font-bold text-sage-950 tracking-tight">Focus Timer</h3>
-                  <p className="mt-3 text-sage-600 leading-relaxed">Set a gentle timer to keep yourself completely focused on your thoughts without distractions.</p>
-                </div>
-                
-                <div className="flex flex-col items-center gap-6">
-                  {focusActive ? (
-                    <div className="flex flex-col items-center">
-                      <div className="font-display text-7xl font-extrabold tabular-nums tracking-tighter text-sage-800">
-                        {formatTime(focusTimer)}
-                      </div>
-                      <button onClick={() => setFocusActive(false)} className="mt-6 rounded-full border border-amber-200/50 bg-white px-8 py-3 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50">
-                        Pause timer
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="flex flex-wrap justify-center gap-4">
-                      {[5, 10, 15].map((mins) => (
-                        <button key={mins} onClick={() => startFocusSession(mins)} className="flex h-16 w-32 items-center justify-center rounded-2xl bg-sage-900 text-lg font-bold text-white shadow-sm transition hover:-translate-y-1 hover:bg-sage-800">
-                          {mins}m
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-            
-            <p className="mt-12 text-center text-[11px] font-bold uppercase tracking-[0.25em] text-sage-400">
-              {breatheRoomStatus}
-            </p>
-          </div>
+{activeTab === 'breathe' && (
+          <LazyTabPanel label="Loading the music room...">
+            <BreatheTab
+          activeBreatheRoom={activeBreatheRoom}
+          applyBreatheRoom={applyBreatheRoom}
+          breathePhase={breathePhase}
+          breatheRoomOptions={breatheRoomOptions}
+          breatheRoomStatus={breatheRoomStatus}
+          focusActive={focusActive}
+          focusTimer={focusTimer}
+          formatTime={formatTime}
+          selectedBreatheRoom={selectedBreatheRoom}
+          setFocusActive={setFocusActive}
+          startFocusSession={startFocusSession}
+            />
+          </LazyTabPanel>
         )}
 
-        {activeTab === 'notes' && (
-        <div className="mx-auto max-w-[1280px] px-3 pt-4 sm:px-5 sm:pt-6">
-          <div className="grid gap-6 pb-28 xl:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)] xl:pb-0">
-            <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[2.2rem] sm:rounded-[3rem] border border-[#8b5e3c]/25 p-5 sm:p-8 shadow-soft lg:p-10 xl:p-12">
-            <img src={notesSectionPreviewImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
-            <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
-            <div className="relative z-10">
-              <h1 className="font-display text-5xl font-bold tracking-tight text-white lofi-sharp-text">Notes</h1>
-              <p className="mt-2 text-xs font-black uppercase tracking-[0.3em] text-white/95 lofi-sharp-text-soft">Important things</p>
-              <div className="mt-8 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-                <div className="max-w-xl">
-                  <p className="text-base font-bold leading-7 text-white lofi-sharp-text-soft">One cleaner page for reminders, practical notes, and the things you cannot afford to forget.</p>
-                </div>
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-3xl border border-white/25 bg-white/15 text-white shadow-sm backdrop-blur-md">
-                  <FileText size={20} />
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-6 grid gap-3 sm:grid-cols-4">
-              {[
-                { label: 'Open tasks', value: openPlannerTodoCount },
-                { label: 'In progress', value: inProgressPlannerTodoCount },
-                { label: 'Completed', value: completedPlannerTodoCount },
-                { label: 'Overdue', value: overduePlannerTodoCount }
-              ].map((stat) => (
-                <div key={stat.label} className="relative overflow-hidden rounded-[1.4rem] border border-white/20 p-4 shadow-sm">
-                  <div className="absolute inset-0 bg-white/15 backdrop-blur-md" />
-                  <div className="relative z-10">
-                    <p className="text-[11px] font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">{stat.label}</p>
-                    <p className="mt-2 text-2xl font-black text-white lofi-sharp-text">{stat.value}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-6 rounded-[2.2rem] border border-[#e8dfd5]/80 bg-sage-50/45 p-5 shadow-sm">
-              <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-                <div>
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-500">Important notes</p>
-                  <p className="mt-1 text-sm font-semibold text-sage-600">Keep deadlines, reminders, shopping needs, travel details, or anything else you want in one calmer place.</p>
-                </div>
-                <div className="flex flex-wrap items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sage-700">
-                  <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1">{plannerNoteWordCount} words</span>
-                  <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1">{plannerNoteLineCount} lines</span>
-                  <span className="rounded-full border border-[#e8dfd5] bg-white px-3 py-1">{plannerStorageLabel}</span>
-                </div>
-              </div>
-              <div className="mt-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-                <div className="flex flex-wrap gap-2">
-                  {plannerQuickTemplates.map((template) => (
-                    <button
-                      key={template}
-                      className="rounded-full border border-[#e8dfd5] bg-white px-3 py-2 text-xs font-extrabold text-sage-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-100"
-                      onClick={() => setPlannerBoard((current) => ({ ...current, text: current.text.trim() ? `${current.text.trim()}\n\n${template}` : template }))}
-                      type="button"
-                    >
-                      {template.split('\n')[0].replace('## ', '')}
-                    </button>
-                  ))}
-                </div>
-                <div className="flex items-center gap-2 rounded-full border border-[#e8dfd5] bg-white px-3 py-2 shadow-sm">
-                  <input
-                    className="w-40 bg-transparent text-sm font-semibold text-sage-800 outline-none placeholder:text-sage-400"
-                    onChange={(event) => setPlannerNoteSearch(event.target.value)}
-                    placeholder="Find in notes"
-                    value={plannerNoteSearch}
-                  />
-                  {plannerNoteSearch.trim() && (
-                    <span className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-sage-500">{plannerNoteSearchCount} hits</span>
-                  )}
-                </div>
-              </div>
-              <textarea
-                className="mt-4 min-h-[22rem] w-full rounded-[1.5rem] border border-[#e8dfd5] bg-white px-5 py-4 text-sm leading-7 text-sage-900 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
-                onChange={(event) => setPlannerBoard((current) => ({ ...current, text: event.target.value }))}
-                placeholder="Keep important things here: dates, calls, shopping needs, ideas, and practical details you want nearby."
-                value={plannerBoard.text}
-              />
-              <p className="mt-3 text-xs font-semibold text-sage-500">Tip: use the quick chips above to drop in neat little sections instead of staring at a blank notes page.</p>
-            </div>
-          </div>
-
-          <aside className="flex flex-col gap-5">
-            <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur-xl">
-              <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
-              <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
-              <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-                <div>
-                  <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft">Task board</p>
-                  <p className="mt-1 text-sm font-semibold text-white lofi-sharp-text">Small, clear tasks with priority, status, and optional due dates so the page stays useful without feeling noisy.</p>
-                </div>
-                <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-white lofi-sharp-chip">
-                  <button className={`rounded-full border px-3 py-1 backdrop-blur-md transition ${plannerTodoFilter === 'all' ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white/95 hover:bg-black/40'}`} onClick={() => setPlannerTodoFilter('all')} type="button">All {plannerTodoCount}</button>
-                  <button className={`rounded-full border px-3 py-1 backdrop-blur-md transition ${plannerTodoFilter === 'open' ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white/95 hover:bg-black/40'}`} onClick={() => setPlannerTodoFilter('open')} type="button">Open {openPlannerTodoCount}</button>
-                  <button className={`rounded-full border px-3 py-1 backdrop-blur-md transition ${plannerTodoFilter === 'doing' ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white/95 hover:bg-black/40'}`} onClick={() => setPlannerTodoFilter('doing')} type="button">Doing {inProgressPlannerTodoCount}</button>
-                  <button className={`rounded-full border px-3 py-1 backdrop-blur-md transition ${plannerTodoFilter === 'done' ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white/95 hover:bg-black/40'}`} onClick={() => setPlannerTodoFilter('done')} type="button">Done {completedPlannerTodoCount}</button>
-                  <button className={`rounded-full border px-3 py-1 backdrop-blur-md transition ${plannerTodoFilter === 'high' ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white/95 hover:bg-black/40'}`} onClick={() => setPlannerTodoFilter('high')} type="button">High {plannerBoard.todos.filter((todo) => todo.priority === 'high').length}</button>
-                  <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1 backdrop-blur-md text-white/95">{plannerStorageLabel}</span>
-                </div>
-              </div>
-
-              <form className="relative z-10 mt-4 grid gap-3 sm:grid-cols-2" onSubmit={addPlannerTodo}>
-                <input
-                  className="flex-1 rounded-[1.15rem] border border-white/20 bg-black/20 px-4 py-3 text-sm font-semibold text-white outline-none backdrop-blur-md placeholder:text-white/60 transition focus:border-white/40 focus:ring-4 focus:ring-white/10 sm:col-span-2"
-                  onChange={(event) => setPlannerTodoDraft(event.target.value)}
-                  placeholder="Add a task"
-                  value={plannerTodoDraft}
-                />
-                <select
-                  className="rounded-[1.15rem] border border-white/20 bg-black/40 px-4 py-3 text-sm font-semibold text-white outline-none backdrop-blur-md transition focus:border-white/40 focus:ring-4 focus:ring-white/10 [&>option]:bg-[#2b231d]"
-                  onChange={(event) => setPlannerTodoPriorityDraft(event.target.value)}
-                  value={plannerTodoPriorityDraft}
-                >
-                  <option value="low">Low priority</option>
-                  <option value="medium">Medium priority</option>
-                  <option value="high">High priority</option>
-                </select>
-                <input
-                  className="rounded-[1.15rem] border border-white/20 bg-black/40 px-4 py-3 text-sm font-semibold text-white outline-none backdrop-blur-md transition focus:border-white/40 focus:ring-4 focus:ring-white/10"
-                  min={todayISO()}
-                  onChange={(event) => setPlannerTodoDueDateDraft(event.target.value)}
-                  type="date"
-                  value={plannerTodoDueDateDraft}
-                />
-                <select
-                  className="rounded-[1.15rem] border border-white/20 bg-black/40 px-4 py-3 text-sm font-semibold text-white outline-none backdrop-blur-md transition focus:border-white/40 focus:ring-4 focus:ring-white/10 [&>option]:bg-[#2b231d]"
-                  onChange={(event) => setPlannerTodoRecurrenceDraft(event.target.value)}
-                  value={plannerTodoRecurrenceDraft}
-                >
-                  <option value="none">One-time</option>
-                  <option value="daily">Daily</option>
-                  <option value="weekly">Weekly</option>
-                  <option value="monthly">Monthly</option>
-                </select>
-                <button className="inline-flex items-center justify-center rounded-[1.15rem] bg-white/20 px-4 py-3 text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/30 sm:col-span-2" type="submit">
-                  <Plus size={18} />
-                </button>
-              </form>
-
-              <div className="relative z-10 mt-4 flex flex-wrap items-center justify-between gap-3 text-[10px] font-black uppercase tracking-[0.18em] text-white/95 lofi-sharp-text-soft">
-                <span>{filteredPlannerTodos.length} shown · {overduePlannerTodoCount} overdue</span>
-                {completedPlannerTodoCount > 0 && (
-                  <button className="rounded-full border border-white/30 bg-black/20 px-3 py-2 text-white transition backdrop-blur-md hover:bg-black/40" onClick={clearCompletedPlannerTodos} type="button">
-                    Clear done tasks
-                  </button>
-                )}
-              </div>
-
-              <div className="mt-4 space-y-3">
-                {filteredPlannerTodos.length ? filteredPlannerTodos.map((todo) => {
-                  const statusTone = todo.status === 'done'
-                    ? 'border-sage-700 bg-sage-700 text-white'
-                    : todo.status === 'doing'
-                      ? 'border-teal-200 bg-teal-50 text-teal-700'
-                      : 'border-amber-200/50 bg-white text-sage-500 hover:border-sage-300 hover:text-sage-600';
-                  const priorityTone = todo.priority === 'high'
-                    ? 'border-rose-200 bg-rose-50 text-rose-700'
-                    : todo.priority === 'low'
-                      ? 'border-[#e8dfd5] bg-sage-50 text-sage-600'
-                      : 'border-amber-200 bg-amber-50 text-amber-700';
-                  const isEditingTodo = editingPlannerTodoId === todo.id;
-                  return (
-                    <div
-                      key={todo.id}
-                      className={`rounded-[1.4rem] border bg-white px-4 py-3 shadow-sm transition ${draggedPlannerTodoId === todo.id ? 'border-teal-200 opacity-60' : 'border-[#e8dfd5]'}`}
-                      draggable={!isEditingTodo}
-                      onDragEnd={() => setDraggedPlannerTodoId(null)}
-                      onDragOver={(event) => event.preventDefault()}
-                      onDragStart={() => setDraggedPlannerTodoId(todo.id)}
-                      onDrop={(event) => { event.preventDefault(); reorderPlannerTodo(draggedPlannerTodoId, todo.id); setDraggedPlannerTodoId(null); }}
-                    >
-                      <div className="flex items-start gap-3">
-                        <button
-                          className={`mt-0.5 flex min-h-[2.4rem] min-w-[2.4rem] shrink-0 items-center justify-center rounded-full border px-2 text-[10px] font-extrabold uppercase tracking-[0.14em] transition ${statusTone}`}
-                          onClick={() => cyclePlannerTodoStatus(todo.id)}
-                          type="button"
-                        >
-                          {todo.status === 'done' ? 'Done' : todo.status === 'doing' ? 'Doing' : 'To do'}
-                        </button>
-                        <div className="min-w-0 flex-1">
-                          {isEditingTodo ? (
-                            <div className="space-y-3">
-                              <input
-                                className="w-full rounded-2xl border border-[#e8dfd5] bg-sage-50/60 px-4 py-3 text-sm font-semibold text-sage-900 outline-none transition focus:border-sage-300 focus:ring-4 focus:ring-sage-100/70"
-                                onChange={(event) => setEditingPlannerTodoText(event.target.value)}
-                                value={editingPlannerTodoText}
-                              />
-                              <div className="grid gap-2 sm:grid-cols-3">
-                                <select className="rounded-2xl border border-[#e8dfd5] bg-white px-3 py-2 text-xs font-bold text-sage-700 outline-none" onChange={(event) => setEditingPlannerTodoPriority(event.target.value)} value={editingPlannerTodoPriority}>
-                                  <option value="low">Low priority</option>
-                                  <option value="medium">Medium priority</option>
-                                  <option value="high">High priority</option>
-                                </select>
-                                <input className="rounded-2xl border border-[#e8dfd5] bg-white px-3 py-2 text-xs font-bold text-sage-700 outline-none" min={todayISO()} onChange={(event) => setEditingPlannerTodoDueDate(event.target.value)} type="date" value={editingPlannerTodoDueDate} />
-                                <select className="rounded-2xl border border-[#e8dfd5] bg-white px-3 py-2 text-xs font-bold text-sage-700 outline-none" onChange={(event) => setEditingPlannerTodoRecurrence(event.target.value)} value={editingPlannerTodoRecurrence}>
-                                  <option value="none">One-time</option>
-                                  <option value="daily">Daily</option>
-                                  <option value="weekly">Weekly</option>
-                                  <option value="monthly">Monthly</option>
-                                </select>
-                              </div>
-                              <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em]">
-                                <button className="rounded-full bg-sage-900 px-3 py-2 text-white transition hover:bg-sage-800" onClick={() => savePlannerTodoEdit(todo.id)} type="button">Save edit</button>
-                                <button className="rounded-full border border-[#e8dfd5] bg-white px-3 py-2 text-sage-600 transition hover:bg-sage-50" onClick={cancelEditingPlannerTodo} type="button">Cancel</button>
-                              </div>
-                            </div>
-                          ) : (
-                            <div className="flex items-start justify-between gap-3">
-                              <div>
-                                <p className={`text-sm font-semibold leading-6 ${todo.status === 'done' ? 'text-sage-400 line-through' : 'text-sage-800'}`}>{todo.text}</p>
-                                <div className="mt-2 flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.16em]">
-                                  <span className={`rounded-full border px-2.5 py-1 ${todo.status === 'done' ? 'border-amber-200/50 bg-white text-sage-500' : 'border-[#e8dfd5] bg-white text-sage-600'}`}>{getPlannerStatusLabel(todo.status)}</span>
-                                  <button className={`rounded-full border px-2.5 py-1 transition ${priorityTone}`} onClick={() => cyclePlannerTodoPriority(todo.id)} type="button">
-                                    {getPlannerPriorityLabel(todo.priority)} priority
-                                  </button>
-                                  {todo.dueDate ? <span className={`rounded-full border px-2.5 py-1 ${isPlannerTodoOverdue(todo) ? 'border-rose-200 bg-rose-50 text-rose-700' : 'border-[#e8dfd5] bg-white text-sage-600'}`}>{isPlannerTodoOverdue(todo) ? 'Overdue' : 'Due'} {formatShortDate(todo.dueDate)}</span> : null}
-                                  <span className="rounded-full border border-teal-100 bg-teal-50 px-2.5 py-1 text-teal-700">{getPlannerRecurrenceLabel(todo.recurrence)}</span>
-                                </div>
-                              </div>
-                              <div className="flex shrink-0 flex-col gap-2 text-sage-400">
-                                <button className="rounded-full border border-[#e8dfd5] bg-white p-1.5 transition hover:text-sage-700" onClick={() => startEditingPlannerTodo(todo)} type="button" aria-label="Edit task">
-                                  <PenLine size={15} />
-                                </button>
-                                <button className="rounded-full border border-[#e8dfd5] bg-white p-1.5 transition hover:text-sage-700" onClick={() => movePlannerTodo(todo.id, -1)} type="button" aria-label="Move task up">
-                                  <ArrowUp size={15} />
-                                </button>
-                                <button className="rounded-full border border-[#e8dfd5] bg-white p-1.5 text-xs font-black transition hover:text-sage-700" onClick={() => movePlannerTodo(todo.id, 1)} type="button" aria-label="Move task down">
-                                  ↓
-                                </button>
-                                <button className="rounded-full border border-[#e8dfd5] bg-white p-1.5 transition hover:text-rose-500" onClick={() => deletePlannerTodo(todo.id)} type="button" aria-label="Delete task">
-                                  <Trash2 size={15} />
-                                </button>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                }) : (
-                  <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[1.4rem] border border-[#8b5e3c]/25 p-5 shadow-sm backdrop-blur-xl">
-                    <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-60" aria-hidden="true" />
-                    <div className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/25 to-black/15" />
-                    <div className="relative z-10 text-sm font-semibold leading-6 text-white lofi-sharp-text">
-                      No tasks match this view yet. Try another filter or add a new task with a priority, due date, or recurring rhythm.
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur-xl">
-              <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
-              <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
-              <div className="relative z-10 flex items-center justify-between gap-3">
-                <div>
-                  <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft">Upcoming reminders</p>
-                  <p className="mt-1 text-sm font-semibold text-white lofi-sharp-text">A calm shortlist of the dates that are coming up next.</p>
-                </div>
-                <div className="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-white">
-                  <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1 backdrop-blur-md">{upcomingReminderCount} upcoming</span>
-                  <span className="rounded-full border border-white/20 bg-white/20 px-3 py-1 backdrop-blur-md">{reminderStorageLabel}</span>
-                </div>
-              </div>
-              <div className="relative z-10 mt-4 space-y-3">
-                {upcomingReminderPreview.length ? upcomingReminderPreview.map((item) => (
-                  <button className="w-full rounded-[1.4rem] border border-white/20 bg-black/20 px-4 py-3 text-left transition backdrop-blur-md hover:-translate-y-0.5 hover:bg-black/40 hover:shadow-sm" key={item.dateKey} onClick={() => { setSelectedCalendarDate(item.dateKey); navigateToTab('memories'); }} type="button">
-                    <div className="flex flex-wrap items-start justify-between gap-3">
-                      <div className="min-w-0 flex-1">
-                        <p className="text-sm font-bold leading-6 text-white lofi-sharp-text">{item.note}</p>
-                        <p className="mt-1 text-xs font-bold uppercase tracking-[0.16em] text-white/85 lofi-sharp-text-soft">{formatDate(item.dateKey)}{item.time ? ` · ${formatReminderTime(item.time)}` : ''}</p>
-                      </div>
-                      <span className="rounded-full border border-white/30 bg-white/20 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-white lofi-sharp-chip">{item.relativeLabel}</span>
-                    </div>
-                  </button>
-                )) : (
-                  <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[1.4rem] border border-[#8b5e3c]/25 p-5 shadow-sm backdrop-blur-xl">
-                    <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-60" aria-hidden="true" />
-                    <div className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/25 to-black/15" />
-                    <div className="relative z-10 text-sm font-semibold leading-6 text-white lofi-sharp-text">
-                      No upcoming reminders yet. Mark an important date in the calendar and it will show up here.
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur-xl">
-              <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
-              <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
-              <div className="relative z-10">
-                <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft">Keep it simple</p>
-                <div className="mt-4 space-y-3 text-sm font-semibold leading-7 text-white lofi-sharp-text">
-                  <p>Use this page for practical life details, not emotional journaling.</p>
-                  <p>Keep the to-do list short enough that it still feels calm to open.</p>
-                  <p>Move back to writing when you want reflection instead of admin.</p>
-                </div>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  <button className="inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/30" onClick={() => navigateToTab('write')} type="button">
-                    <PenLine size={15} /> Go back to writing
-                  </button>
-                  <button className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/20 px-4 py-2 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-black/30" onClick={() => navigateToTab('insights')} type="button">
-                    <CalendarDays size={15} /> Open calendar
-                  </button>
-                </div>
-              </div>
-            </div>
-          </aside>
-          </div>
-        </div>
+{activeTab === 'notes' && (
+          <LazyTabPanel label="Loading notes...">
+            <NotesTab
+          addPlannerTodo={addPlannerTodo}
+          cancelEditingPlannerTodo={cancelEditingPlannerTodo}
+          clearCompletedPlannerTodos={clearCompletedPlannerTodos}
+          completedPlannerTodoCount={completedPlannerTodoCount}
+          cyclePlannerTodoPriority={cyclePlannerTodoPriority}
+          cyclePlannerTodoStatus={cyclePlannerTodoStatus}
+          deletePlannerTodo={deletePlannerTodo}
+          draggedPlannerTodoId={draggedPlannerTodoId}
+          editingPlannerTodoDueDate={editingPlannerTodoDueDate}
+          editingPlannerTodoId={editingPlannerTodoId}
+          editingPlannerTodoPriority={editingPlannerTodoPriority}
+          editingPlannerTodoRecurrence={editingPlannerTodoRecurrence}
+          editingPlannerTodoText={editingPlannerTodoText}
+          filteredPlannerTodos={filteredPlannerTodos}
+          formatDate={formatDate}
+          formatReminderTime={formatReminderTime}
+          formatShortDate={formatShortDate}
+          getPlannerPriorityLabel={getPlannerPriorityLabel}
+          getPlannerRecurrenceLabel={getPlannerRecurrenceLabel}
+          getPlannerStatusLabel={getPlannerStatusLabel}
+          inProgressPlannerTodoCount={inProgressPlannerTodoCount}
+          isPlannerTodoOverdue={isPlannerTodoOverdue}
+          movePlannerTodo={movePlannerTodo}
+          navigateToTab={navigateToTab}
+          openPlannerTodoCount={openPlannerTodoCount}
+          overduePlannerTodoCount={overduePlannerTodoCount}
+          plannerBoard={plannerBoard}
+          plannerNoteLineCount={plannerNoteLineCount}
+          plannerNoteSearch={plannerNoteSearch}
+          plannerNoteSearchCount={plannerNoteSearchCount}
+          plannerNoteWordCount={plannerNoteWordCount}
+          plannerQuickTemplates={plannerQuickTemplates}
+          plannerStorageLabel={plannerStorageLabel}
+          plannerTodoCount={plannerTodoCount}
+          plannerTodoDraft={plannerTodoDraft}
+          plannerTodoDueDateDraft={plannerTodoDueDateDraft}
+          plannerTodoFilter={plannerTodoFilter}
+          plannerTodoPriorityDraft={plannerTodoPriorityDraft}
+          plannerTodoRecurrenceDraft={plannerTodoRecurrenceDraft}
+          reminderStorageLabel={reminderStorageLabel}
+          reorderPlannerTodo={reorderPlannerTodo}
+          savePlannerTodoEdit={savePlannerTodoEdit}
+          setDraggedPlannerTodoId={setDraggedPlannerTodoId}
+          setEditingPlannerTodoDueDate={setEditingPlannerTodoDueDate}
+          setEditingPlannerTodoPriority={setEditingPlannerTodoPriority}
+          setEditingPlannerTodoRecurrence={setEditingPlannerTodoRecurrence}
+          setEditingPlannerTodoText={setEditingPlannerTodoText}
+          setPlannerBoard={setPlannerBoard}
+          setPlannerNoteSearch={setPlannerNoteSearch}
+          setPlannerTodoDraft={setPlannerTodoDraft}
+          setPlannerTodoDueDateDraft={setPlannerTodoDueDateDraft}
+          setPlannerTodoFilter={setPlannerTodoFilter}
+          setPlannerTodoPriorityDraft={setPlannerTodoPriorityDraft}
+          setPlannerTodoRecurrenceDraft={setPlannerTodoRecurrenceDraft}
+          setSelectedCalendarDate={setSelectedCalendarDate}
+          startEditingPlannerTodo={startEditingPlannerTodo}
+          todayISO={todayISO}
+          upcomingReminderCount={upcomingReminderCount}
+          upcomingReminderPreview={upcomingReminderPreview}
+            />
+          </LazyTabPanel>
         )}
 
-        {activeTab === 'insights' && (
-        <div className="mt-6 grid gap-6 pb-28 xl:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] xl:pb-0">
-          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-4 shadow-soft backdrop-blur sm:p-6 xl:p-8">
-            <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-85" aria-hidden="true" />
-            <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
-            <div className="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-              <div className="max-w-3xl">
-                <p className="text-xs font-black uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft sm:text-sm sm:tracking-widest">Reflection pattern</p>
-                <h2 className="mt-2 text-3xl font-extrabold leading-tight text-white lofi-sharp-text sm:text-4xl">Your recent journal check-ins</h2>
-                <p className="mt-3 text-sm font-semibold leading-7 text-white lofi-sharp-text">See the week in a calmer way: mood shifts, small streaks, and the gentle rhythm you are building by returning.</p>
-              </div>
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-3xl bg-white/20 text-white shadow-sm backdrop-blur-md">
-                <Moon size={20} />
-              </div>
-            </div>
-            <div className="relative z-10 mt-5 flex flex-wrap gap-2 text-xs font-black uppercase tracking-[0.18em] text-white">
-              <span className="rounded-full border border-white/20 bg-black/20 px-3 py-2 shadow-sm backdrop-blur-md">{weeklyCheckIns}/{weeklyGoal} check-ins this week</span>
-              <span className="rounded-full border border-white/20 bg-black/20 px-3 py-2 shadow-sm backdrop-blur-md">{entries.length} pages in your archive</span>
-              <span className="rounded-full border border-white/20 bg-black/20 px-3 py-2 shadow-sm backdrop-blur-md">{unlockedAchievementCount}/{achievementBadges.length} keepsakes lit</span>
-            </div>
-          </div>
-
-          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur xl:p-8">
-            <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
-            <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
-            <div className="relative z-10">
-              <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft sm:text-sm sm:tracking-widest">This week so far</p>
-              <p className="mt-3 text-4xl font-extrabold text-white lofi-sharp-text">{weeklyCheckIns}/{weeklyGoal}</p>
-              <p className="mt-3 text-sm font-semibold leading-7 text-white lofi-sharp-text">{weeklyCheckIns >= weeklyGoal ? 'You already gave yourself enough room this week.' : `${weeklyGoal - weeklyCheckIns} more soft check-ins if you want to fill this week.`}</p>
-              <div className="mt-5 h-2.5 w-full overflow-hidden rounded-full bg-white/10 backdrop-blur-md shadow-inner">
-                <div className="h-full rounded-full bg-gradient-to-r from-white/60 to-white/90 transition-all duration-700" style={{ width: `${Math.min((weeklyCheckIns / weeklyGoal) * 100, 100)}%` }}></div>
-              </div>
-              <div className="mt-6 rounded-[2.2rem] border border-white/20 bg-black/20 p-5 shadow-sm backdrop-blur-md">
-                <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft sm:text-sm sm:tracking-widest">Keepsake path</p>
-                <div className="mt-3 flex items-center gap-4">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-white/20 text-3xl shadow-sm backdrop-blur-md text-white">{rewardLevel.emoji}</div>
-                  <div>
-                    <p className="text-lg font-extrabold text-white lofi-sharp-text">{rewardLevel.title}</p>
-                    <p className="text-sm font-semibold leading-6 text-white/95 lofi-sharp-text-soft">{entriesToNextReward === 0 ? 'Your next bloom is here.' : `${entriesToNextReward} pages until the next bloom.`}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur xl:p-8">
-            <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-80" aria-hidden="true" />
-            <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
-            <div className="relative z-10 flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft sm:text-sm sm:tracking-widest">Mood garden</p>
-                <p className="mt-2 text-sm font-semibold leading-6 text-white lofi-sharp-text">A softer chart view so the patterns stay readable on both mobile and desktop.</p>
-              </div>
-              <div className="rounded-full bg-white/20 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-white backdrop-blur-md shadow-sm">Weekly summary</div>
-            </div>
-            <div className="relative z-10 mt-5 bg-white/90 rounded-[2rem] p-4 shadow-sm backdrop-blur-md">
-              <MoodChart entries={entries} weatherOptions={weatherOptions} />
-            </div>
-            <div className="relative z-10 mt-5 rounded-[2.2rem] border border-white/20 bg-black/20 p-5 text-sm font-bold leading-7 text-white lofi-sharp-text shadow-sm backdrop-blur-md">
-              {weeklySummary}
-            </div>
-          </div>
-
-          <div className="grid gap-6">
-            <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur xl:p-8">
-              <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
-              <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
-              <div className="relative z-10">
-                <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft sm:text-sm sm:tracking-widest">{returnRitual.eyebrow}</p>
-                <p className="mt-2 text-2xl font-extrabold leading-tight text-white lofi-sharp-text">{returnRitual.title}</p>
-                <p className="mt-3 text-sm font-semibold leading-7 text-white lofi-sharp-text">{returnRitual.text}</p>
-                <button className="mt-5 inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2.5 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/30" onClick={() => navigateToTab('write')} type="button">
-                  <PenLine size={16} /> Return to writing
-                </button>
-              </div>
-            </div>
-
-            <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur xl:p-8">
-              <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-85" aria-hidden="true" />
-              <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
-              <div className="relative z-10 flex items-center justify-between gap-3">
-                <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Keepsake shelf</p>
-                <div className="rounded-full bg-white/20 px-3 py-1 text-[10px] font-black text-white shadow-sm backdrop-blur-md">{unlockedAchievementCount}/{achievementBadges.length}</div>
-              </div>
-              <div className="relative z-10 mt-4 grid grid-cols-6 gap-2">
-                {achievementBadges.map((badge) => (
-                  <div key={badge.id} className={`flex aspect-square items-center justify-center rounded-2xl text-xl shadow-sm backdrop-blur-md transition-all ${badge.unlocked ? 'bg-white/20 grayscale-0' : 'bg-black/20 opacity-40 grayscale'}`} title={`${badge.title}: ${badge.hint}`}>
-                    {badge.emoji}
-                  </div>
-                ))}
-              </div>
-              <p className="relative z-10 mt-4 text-sm font-semibold leading-7 text-white/95 lofi-sharp-text-soft">Every return adds another little sign that this space is becoming yours.</p>
-            </div>
-          </div>
-        </div>
+{activeTab === 'insights' && (
+          <LazyTabPanel label="Loading insights...">
+            <InsightsTab
+          achievementBadges={achievementBadges}
+          entries={entries}
+          entriesToNextReward={entriesToNextReward}
+          navigateToTab={navigateToTab}
+          returnRitual={returnRitual}
+          rewardLevel={rewardLevel}
+          unlockedAchievementCount={unlockedAchievementCount}
+          weatherOptions={weatherOptions}
+          weeklyCheckIns={weeklyCheckIns}
+          weeklyGoal={weeklyGoal}
+          weeklySummary={weeklySummary}
+            />
+          </LazyTabPanel>
         )}
 
-        {activeTab === 'memories' && (
-        <div className="mx-auto max-w-[1280px] px-3 pt-4 sm:px-5 sm:pt-6">
-          <div className="grid gap-6 pb-24 lg:pb-0">
-
-          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden flex flex-wrap items-center justify-center gap-2 rounded-[1.6rem] border border-[#8b5e3c]/25 p-2 shadow-sm backdrop-blur-xl">
-            <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
-            <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
-            <div className="relative z-10 flex gap-2">
-              <button className={`rounded-full px-5 py-2.5 text-sm font-extrabold transition backdrop-blur-md ${memoriesView === 'calendar' ? 'bg-white/30 text-white lofi-sharp-chip shadow-sm' : 'bg-black/20 text-white/90 lofi-sharp-chip hover:bg-black/40 hover:text-white'}`} onClick={() => setMemoriesView('calendar')} type="button">Calendar</button>
-              <button className={`rounded-full px-5 py-2.5 text-sm font-extrabold transition backdrop-blur-md ${memoriesView === 'archive' ? 'bg-white/30 text-white lofi-sharp-chip shadow-sm' : 'bg-black/20 text-white/90 lofi-sharp-chip hover:bg-black/40 hover:text-white'}`} onClick={() => setMemoriesView('archive')} type="button">Positivity archive</button>
-            </div>
-          </div>
-
-          {memoriesView === 'calendar' && (
-          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-8 shadow-soft lg:p-10">
-            <img src={memoriesSectionPreviewImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
-            <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
-            <div className="relative z-10">
-              <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                  <h1 className="font-display text-5xl font-bold tracking-tight text-white lofi-sharp-text">Memories</h1>
-                  <p className="mt-2 text-xs font-black uppercase tracking-[0.3em] text-white/95 lofi-sharp-text-soft">Journal calendar</p>
-                </div>
-                <div className="flex flex-wrap gap-2 text-[11px] font-black uppercase tracking-[0.16em] text-white/95 lofi-sharp-chip">
-                  <span className="rounded-full border border-white/20 bg-black/20 px-3 py-2 backdrop-blur-sm">{importantDateCount} saved</span>
-                  <span className="rounded-full border border-white/20 bg-black/20 px-3 py-2 backdrop-blur-sm">{upcomingReminderCount} reminders</span>
-                </div>
-              </div>
-
-              <div className="mt-8 grid gap-5 xl:grid-cols-[minmax(19rem,29rem)_minmax(0,1fr)] xl:items-start">
-                <div className="rounded-[1.6rem] border border-white/20 bg-black/20 p-3 shadow-inner backdrop-blur-md sm:p-4">
-                <div className="mb-3 flex items-center justify-between gap-2 rounded-[1.2rem] bg-white/20 px-2 py-2 shadow-sm backdrop-blur-md">
-                  <button className="rounded-full bg-black/20 px-3 py-2 text-sm font-extrabold text-white transition hover:bg-black/40" onClick={() => setCalendarMonth(shiftMonthKey(calendarMonth, -1))} type="button">‹</button>
-                  <p className="text-center text-sm font-extrabold text-white lofi-sharp-text sm:text-base">{formatMonthLabel(calendarMonth)}</p>
-                  <button className="rounded-full bg-black/20 px-3 py-2 text-sm font-extrabold text-white transition hover:bg-black/40" onClick={() => setCalendarMonth(shiftMonthKey(calendarMonth, 1))} type="button">›</button>
-                </div>
-                <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-extrabold uppercase tracking-[0.12em] text-white/90 lofi-sharp-text-soft">
-                  {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => <div key={day}>{day}</div>)}
-                </div>
-                <div className="mt-2 grid grid-cols-7 gap-1">
-                  {calendarDays.map((day, index) => {
-                    const dayEntries = day ? entriesByDate[day.dateKey] || [] : [];
-                    const hasImportantDate = day ? Boolean(importantDates[day.dateKey]) : false;
-                    const dayForecast = day ? calendarForecastByDate[day.dateKey] : null;
-                    const dayForecastVisuals = getForecastVisuals(dayForecast);
-                    const isSelected = day?.dateKey === selectedCalendarDate;
-                    const isToday = day?.dateKey === todayISO();
-                    return day ? (
-                      <button
-                        className={`relative flex h-11 items-center justify-center rounded-xl border text-xs font-extrabold backdrop-blur-md transition hover:-translate-y-0.5 sm:h-12 sm:text-sm ${isSelected ? 'border-white/60 bg-white/40 text-white lofi-sharp-chip shadow-sm' : isToday ? 'border-white/40 bg-white/20 text-white lofi-sharp-chip' : 'border-white/20 bg-black/20 text-white lofi-sharp-chip hover:bg-black/40'}`}
-                        key={day.dateKey}
-                        onClick={() => {
-                          setSelectedCalendarDate(day.dateKey);
-                          openImportantDateEditor(day.dateKey);
-                        }}
-                        type="button"
-                      >
-                        <span>{day.day}</span>
-                        {hasImportantDate && <span className={`absolute right-1.5 top-1 text-[10px] ${isSelected ? 'text-white' : 'text-rose-400'}`}>✦</span>}
-                        {dayForecast && <span className="absolute bottom-1 right-1 text-[10px] leading-none" title={dayForecastVisuals.label}>{dayForecastVisuals.emoji}</span>}
-                        {dayEntries.length > 0 && <span className={`absolute bottom-1.5 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full ${isSelected ? 'bg-white' : 'bg-white/80'}`} />}
-                      </button>
-                    ) : <div key={`blank-${index}`} />;
-                  })}
-                </div>
-                <button className="mt-3 inline-flex w-full items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-md px-3 py-2 text-xs font-black uppercase tracking-[0.16em] text-white lofi-sharp-chip shadow-sm transition hover:bg-white/20" onClick={() => { const today = todayISO(); setCalendarMonth(today.slice(0, 7)); setSelectedCalendarDate(today); openImportantDateEditor(today); }} type="button">
-                  Jump to today
-                </button>
-              </div>
-
-              <div className="rounded-[2.2rem] border border-white/20 bg-black/20 p-4 shadow-sm backdrop-blur-md sm:p-5">
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                  <div>
-                    <p className="text-xs font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft">Selected date</p>
-                    <h3 className="mt-1 text-2xl font-extrabold text-white lofi-sharp-text">{formatDate(selectedCalendarDate)}</h3>
-                    <p className="mt-1 text-sm font-semibold leading-6 text-white lofi-sharp-text-soft">Click any date, then write a note or reminder here.</p>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    <button className="rounded-full bg-white/20 px-4 py-2.5 text-sm font-extrabold text-white lofi-sharp-chip backdrop-blur-md shadow-sm transition hover:bg-white/30" onClick={() => openImportantDateEditor(selectedCalendarDate)} type="button">
-                      {selectedImportantDate ? 'Edit note' : 'Write note'}
-                    </button>
-                    {selectedImportantDate && (
-                      <button className="rounded-full bg-red-500/20 border border-red-400/30 px-4 py-2.5 text-sm font-extrabold text-white lofi-sharp-chip backdrop-blur-md transition hover:bg-red-500/40" onClick={() => deleteImportantDate(selectedCalendarDate)} type="button">
-                        Remove
-                      </button>
-                    )}
-                  </div>
-                </div>
-
-                <div className="mt-4 rounded-2xl border border-white/20 bg-white/10 p-4 shadow-sm backdrop-blur-md">
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white/20 text-white backdrop-blur-md text-xl shadow-sm">
-                        {selectedCalendarForecast ? selectedCalendarForecastVisuals.emoji : '📍'}
-                      </div>
-                      <div>
-                        <p className="text-xs font-black uppercase tracking-[0.2em] text-white/95 lofi-sharp-text-soft">Local weather</p>
-                        {selectedCalendarForecast ? (
-                          <p className="mt-1 text-sm font-extrabold text-white lofi-sharp-text">
-                            {selectedCalendarForecastVisuals.label} · {formatForecastTemperature(selectedCalendarForecast.maxTemp)} / {formatForecastTemperature(selectedCalendarForecast.minTemp)}
-                          </p>
-                        ) : (
-                          <p className="mt-1 text-sm font-semibold leading-6 text-white lofi-sharp-text-soft">{calendarForecastStatus}</p>
-                        )}
-                        {selectedCalendarForecast && <p className="mt-1 text-xs font-bold uppercase tracking-[0.14em] text-white/90 lofi-sharp-text-soft">{calendarForecastLocation || 'Your location'} · {selectedCalendarDate}</p>}
-                      </div>
-                    </div>
-                    {calendarForecastPermission !== 'loading' && (
-                      <button className="rounded-full border border-white/30 bg-black/20 px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-white lofi-sharp-chip backdrop-blur-md shadow-sm transition hover:bg-black/40" onClick={loadCalendarForecast} type="button">
-                        {calendarForecastPermission === 'granted' ? 'Refresh' : 'Use location'}
-                      </button>
-                    )}
-                    {calendarForecastPermission === 'loading' && <span className="rounded-full border border-white/30 bg-black/20 px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-white backdrop-blur-md shadow-sm">Loading</span>}
-                  </div>
-                  {selectedCalendarForecast && <p className="mt-3 text-xs font-semibold leading-5 text-white/90 lofi-sharp-text-soft">Forecast uses your browser location and is available for nearby upcoming dates.</p>}
-                </div>
-
-                {selectedImportantDate && (
-                  <div className="mt-4 rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur-md shadow-sm">
-                    <div className="flex flex-wrap items-start justify-between gap-3">
-                      <div className="min-w-0 flex-1">
-                        <p className="text-xs font-black uppercase tracking-[0.2em] text-white/95 lofi-sharp-text-soft">Saved note or reminder</p>
-                        <p className="mt-2 text-base font-extrabold leading-6 text-white lofi-sharp-text">{selectedImportantDate.note}</p>
-                        {selectedImportantDate.details && <p className="mt-2 whitespace-pre-wrap text-sm font-semibold leading-6 text-white/95 lofi-sharp-text-soft">{selectedImportantDate.details}</p>}
-                      </div>
-                      <div className="flex flex-wrap gap-2 text-[10px] font-black uppercase tracking-[0.16em] text-white">
-                        {selectedImportantDate.time && <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-md shadow-sm">{formatReminderTime(selectedImportantDate.time)}</span>}
-                        <span className="rounded-full border border-white/20 bg-black/20 px-3 py-1.5 backdrop-blur-md shadow-sm">{selectedImportantDate.remindersEnabled ? 'Reminder on' : 'Note only'}</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {importanceModalOpen && (
-                  <div className="mt-4 rounded-[1.6rem] border border-white/20 bg-black/20 p-4 shadow-sm backdrop-blur-md sm:p-5">
-                    <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Add to this date</p>
-                    <div className="mt-4 grid gap-3">
-                      <label className="block">
-                        <span className="text-sm font-extrabold text-white lofi-sharp-text">Title</span>
-                        <input
-                          className="mt-2 w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm font-semibold text-white outline-none backdrop-blur-md placeholder:text-white/50 transition focus:border-white/40 focus:ring-4 focus:ring-white/10"
-                          maxLength={80}
-                          onChange={(event) => setImportanceDraft(event.target.value)}
-                          placeholder="Exam, birthday, deadline..."
-                          value={importanceDraft}
-                        />
-                      </label>
-                      <label className="block">
-                        <span className="text-sm font-extrabold text-white lofi-sharp-text">Notes</span>
-                        <textarea
-                          className="mt-2 min-h-[150px] w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm font-semibold leading-6 text-white outline-none backdrop-blur-md placeholder:text-white/50 transition focus:border-white/40 focus:ring-4 focus:ring-white/10"
-                          maxLength={320}
-                          onChange={(event) => setImportanceDetailsDraft(event.target.value)}
-                          placeholder="Write what you want to remember on this date."
-                          value={importanceDetailsDraft}
-                        />
-                      </label>
-                    </div>
-                    <div className="mt-3 grid gap-3 sm:grid-cols-[minmax(10rem,14rem)_minmax(0,1fr)]">
-                      <label className="block">
-                        <span className="text-sm font-extrabold text-white lofi-sharp-text">Time</span>
-                        <input
-                          className="mt-2 w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm font-semibold text-white outline-none backdrop-blur-md transition focus:border-white/40 focus:ring-4 focus:ring-white/10 [color-scheme:dark]"
-                          onChange={(event) => setImportanceTimeDraft(event.target.value)}
-                          type="time"
-                          value={importanceTimeDraft}
-                        />
-                      </label>
-                      <label className="flex items-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm font-semibold leading-6 text-white backdrop-blur-md">
-                        <input checked={importanceReminderEnabled} className="h-4 w-4 rounded border-white/30 text-white/50 focus:ring-white/30 accent-black/50" onChange={(event) => setImportanceReminderEnabled(event.target.checked)} type="checkbox" />
-                        Remind me if browser notifications are allowed
-                      </label>
-                    </div>
-                    <div className="mt-4 flex flex-wrap gap-3">
-                      <button className="rounded-full bg-white/20 px-5 py-3 text-sm font-extrabold text-white backdrop-blur-md shadow-sm transition hover:bg-white/30" onClick={saveImportantDate} type="button">Save</button>
-                      <button className="rounded-full border border-white/30 bg-black/20 px-5 py-3 text-sm font-extrabold text-white backdrop-blur-md shadow-sm transition hover:bg-black/40" onClick={() => setImportanceModalOpen(false)} type="button">Cancel</button>
-                      <button className={`rounded-full border px-5 py-3 text-sm font-extrabold backdrop-blur-md shadow-sm transition ${notificationPermission === 'granted' ? 'border-white/30 bg-black/20 text-white hover:bg-black/40' : 'border-white/50 bg-white/20 text-white hover:bg-white/30'}`} onClick={requestNotificationPermission} type="button">
-                        {notificationPermission === 'granted' ? 'Notifications on' : 'Allow notifications'}
-                      </button>
-                    </div>
-                    {notificationStatusMessage && <p className="mt-3 rounded-2xl bg-black/20 border border-white/20 backdrop-blur-md px-4 py-3 text-sm font-semibold leading-6 text-white/95 lofi-sharp-text-soft">{notificationStatusMessage}</p>}
-                  </div>
-                )}
-
-                {(selectedDateDiaryEntries.length || selectedDateJournalEntries.length) ? (
-                  <div className="mt-4 space-y-4">
-                    {selectedDateDiaryEntries.length > 0 && (
-                      <div className="space-y-3">
-                        <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Diary entries on this day</p>
-                        {selectedDateDiaryEntries.map((entry) => (
-                          <button className="w-full rounded-2xl border border-white/20 bg-black/20 p-3 text-left backdrop-blur-md shadow-sm transition hover:-translate-y-0.5 hover:bg-black/40 hover:shadow-md" key={entry.id} onClick={() => setSelectedEntry(entry)} type="button">
-                            <div className="flex items-center gap-2">
-                              <span className="rounded-full border border-white/20 bg-white/10 px-2 py-0.5 text-[9px] font-black uppercase tracking-widest text-white/90 lofi-sharp-text-soft">Diary</span>
-                              <p className="font-extrabold text-white lofi-sharp-text">{entry.title}</p>
-                            </div>
-                            <p className="mt-1 line-clamp-2 text-sm font-semibold leading-6 text-white/95 lofi-sharp-text-soft">{getPlainTextFromHtml(entry.body || entry.prompt || '') || 'Photo entry'}</p>
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                    {selectedDateJournalEntries.length > 0 && (
-                      <div className="space-y-3">
-                        <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Journal reflections on this day</p>
-                        {selectedDateJournalEntries.map((entry) => (
-                          <button className="w-full rounded-2xl border border-white/20 bg-black/20 p-3 text-left backdrop-blur-md shadow-sm transition hover:-translate-y-0.5 hover:bg-black/40 hover:shadow-md" key={entry.id} onClick={() => setSelectedEntry(entry)} type="button">
-                            <div className="flex items-center gap-2">
-                              <span className="rounded-full border border-white/20 bg-white/10 px-2 py-0.5 text-[9px] font-black uppercase tracking-widest text-white/90 lofi-sharp-text-soft">Journal</span>
-                              <p className="font-extrabold text-white lofi-sharp-text">{entry.title}</p>
-                            </div>
-                            <p className="mt-1 line-clamp-2 text-sm font-semibold leading-6 text-white/95 lofi-sharp-text-soft">{getPlainTextFromHtml(entry.body || entry.prompt || '') || 'Photo entry'}</p>
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ) : <p className="mt-4 rounded-2xl border border-white/20 bg-black/20 px-4 py-4 text-sm font-semibold leading-6 text-white/95 lofi-sharp-text-soft backdrop-blur-md shadow-sm">No diary or journal entry for this date yet.</p>}
-
-                {upcomingReminderPreview.length > 0 && (
-                  <div className="mt-4 rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur-md shadow-sm">
-                    <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Upcoming</p>
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      {upcomingReminderPreview.slice(0, 3).map((item) => (
-                        <button className={`rounded-full border px-3 py-2 text-xs font-extrabold backdrop-blur-md shadow-sm transition hover:bg-white/30 ${item.dateKey === selectedCalendarDate ? 'border-white/40 bg-white/30 text-white' : 'border-white/20 bg-black/20 text-white'}`} key={item.dateKey} onClick={() => { setSelectedCalendarDate(item.dateKey); openImportantDateEditor(item.dateKey); }} type="button">
-                          {formatDate(item.dateKey)} · {item.note}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-        )}
-
-          {memoriesView === 'archive' && (
-          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden flex h-full flex-col rounded-[3rem] border border-[#8b5e3c]/25 p-4 shadow-soft backdrop-blur sm:p-6 lg:p-8">
-            <img src={memoriesSectionPreviewImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
-            <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/25 to-black/5" />
-            <div className="relative z-10 mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-              <div className="flex items-center gap-3">
-                <CalendarDays className="text-white lofi-sharp-text" size={18} />
-                <div>
-                  <h2 className="text-2xl font-extrabold text-white lofi-sharp-text sm:text-3xl">Your positivity archive</h2>
-                  <p className="mt-1 text-sm font-semibold leading-7 text-white lofi-sharp-text-soft">Open any page to read the full memory, with a calmer layout that uses the whole panel more gracefully.</p>
-                </div>
-              </div>
-              <div className="flex flex-col items-end gap-3">
-                <div className="rounded-full bg-black/20 border border-white/20 backdrop-blur-md px-3 py-1 text-xs font-black uppercase tracking-[0.18em] text-white shadow-sm sm:text-[11px]">
-                  {archiveEntries.length} saved
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  <button className={`rounded-full border px-3 py-1.5 text-[10px] font-black uppercase tracking-widest transition shadow-sm backdrop-blur-md ${memoriesCategoryFilter === 'all' ? 'bg-white border-white text-sage-900' : 'bg-black/20 border-white/20 text-white hover:bg-black/40'}`} onClick={() => setMemoriesCategoryFilter('all')} type="button">All</button>
-                  <button className={`rounded-full border px-3 py-1.5 text-[10px] font-black uppercase tracking-widest transition shadow-sm backdrop-blur-md ${memoriesCategoryFilter === 'diary' ? 'bg-white border-white text-sage-900' : 'bg-black/20 border-white/20 text-white hover:bg-black/40'}`} onClick={() => setMemoriesCategoryFilter('diary')} type="button">Diary</button>
-                  <button className={`rounded-full border px-3 py-1.5 text-[10px] font-black uppercase tracking-widest transition shadow-sm backdrop-blur-md ${memoriesCategoryFilter === 'journal' ? 'bg-white border-white text-sage-900' : 'bg-black/20 border-white/20 text-white hover:bg-black/40'}`} onClick={() => setMemoriesCategoryFilter('journal')} type="button">Journal</button>
-                </div>
-              </div>
-            </div>
-            <div className="relative z-10 flex-1 space-y-4 overflow-y-auto pr-0 min-h-[24rem] sm:min-h-[32rem] sm:pr-2 xl:min-h-0 lofi-scrollbar">
-              {!archiveEntries.length && <p className="rounded-3xl border border-white/20 bg-black/20 p-5 font-semibold leading-7 text-white backdrop-blur-md shadow-sm">No {memoriesCategoryFilter === 'all' ? '' : memoriesCategoryFilter} entries yet. Start with one sentence if that is all you have today.</p>}
-              {archiveEntries.map((entry) => {
-                const effectiveMoodLabel = { 'Grounded': 'Happy', 'Soft': 'Calm', 'Okay': 'Neutral', 'Heavy': 'Sad', 'Stormy': 'Anxious' }[entry.mood] || entry.mood;
-                const mood = weatherOptions.find((item) => item.label === effectiveMoodLabel) || weatherOptions.find(m => m.label === entry.mood) || moods[2];
-                return (
-                  <article
-                    className="group w-full cursor-pointer rounded-3xl border border-white/20 bg-black/20 p-4 shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-black/30 hover:shadow-md sm:p-5"
-                    key={entry.id}
-                    onClick={() => setSelectedEntry(entry)}
-                  >
-                    <div className="flex flex-col gap-1">
-                      <div className="mb-2 flex flex-wrap items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-white">
-                        <span className="rounded-full border border-white/20 bg-white/10 px-2 py-1 text-[9px] font-black uppercase tracking-widest text-white/90 lofi-sharp-text-soft">{entryTypeMeta[entry.entryType || 'diary'].shortLabel}</span>
-                        <span className="inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1.5 backdrop-blur-md shadow-sm text-white"><WeatherGlyph mood={mood} size="text-base" /> {entry.mood}</span>
-                        <span className="rounded-full bg-black/20 px-3 py-1.5 shadow-sm border border-white/20 backdrop-blur-md text-white">{formatDate(entry.createdAt)}</span>
-                      </div>
-                      <h3 className="text-xl font-extrabold leading-tight text-white lofi-sharp-text">{entry.title}</h3>
-                      <p className="mt-3 whitespace-pre-line break-words leading-7 text-white/95 lofi-sharp-text-soft">
-                        {(() => {
-                          const tempDiv = document.createElement('div');
-                          tempDiv.innerHTML = entry.body || entry.prompt || '';
-                          const images = tempDiv.querySelectorAll('img');
-                          let preview = tempDiv.textContent || tempDiv.innerText || '';
-                          if (images.length > 0) preview = '📷 ' + preview;
-                          preview = preview.trim();
-                          return preview.length > 180 ? `${preview.slice(0, 180).trim()}…` : preview;
-                        })()}
-                      </p>
-                      <div className="mt-5 flex items-center justify-between gap-4 border-t border-sage-50 pt-4">
-                        <div className="flex flex-wrap items-center gap-2 text-xs font-extrabold uppercase tracking-[0.18em] text-sage-500">
-                          <span className="rounded-full bg-sage-50 px-3 py-1">Open full page</span>
-                          {entry.prompt && <span className="rounded-full bg-rose-50 px-3 py-1 text-rose-700">Prompt kept</span>}
-                          {entry.image && <span className="rounded-full bg-sand-50 px-3 py-1 text-sand-700">Photo saved</span>}
-                        </div>
-                        <button className="shrink-0 rounded-full p-2 text-sage-300 opacity-60 transition hover:bg-rose-50 hover:text-rose-500 group-hover:opacity-100" onClick={(event) => { event.stopPropagation(); deleteEntry(entry.id); }} type="button" aria-label="Delete entry">
-                          <Trash2 size={18} />
-                        </button>
-                      </div>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
-          </div>
-        )}
-        </div>
-        </div>
+{activeTab === 'memories' && (
+          <LazyTabPanel label="Loading memories...">
+            <MemoriesTab
+          archiveEntries={archiveEntries}
+          calendarDays={calendarDays}
+          calendarForecastByDate={calendarForecastByDate}
+          calendarForecastLocation={calendarForecastLocation}
+          calendarForecastPermission={calendarForecastPermission}
+          calendarForecastStatus={calendarForecastStatus}
+          calendarMonth={calendarMonth}
+          deleteEntry={deleteEntry}
+          deleteImportantDate={deleteImportantDate}
+          entries={entries}
+          entriesByDate={entriesByDate}
+          entryTypeMeta={entryTypeMeta}
+          formatDate={formatDate}
+          formatForecastTemperature={formatForecastTemperature}
+          formatMonthLabel={formatMonthLabel}
+          formatReminderTime={formatReminderTime}
+          getForecastVisuals={getForecastVisuals}
+          getPlainTextFromHtml={getPlainTextFromHtml}
+          importanceDetailsDraft={importanceDetailsDraft}
+          importanceDraft={importanceDraft}
+          importanceModalOpen={importanceModalOpen}
+          importanceReminderEnabled={importanceReminderEnabled}
+          importanceTimeDraft={importanceTimeDraft}
+          importantDateCount={importantDateCount}
+          importantDates={importantDates}
+          loadCalendarForecast={loadCalendarForecast}
+          memoriesCategoryFilter={memoriesCategoryFilter}
+          memoriesView={memoriesView}
+          notificationPermission={notificationPermission}
+          notificationStatusMessage={notificationStatusMessage}
+          openImportantDateEditor={openImportantDateEditor}
+          requestNotificationPermission={requestNotificationPermission}
+          saveImportantDate={saveImportantDate}
+          selectedCalendarDate={selectedCalendarDate}
+          selectedCalendarForecast={selectedCalendarForecast}
+          selectedCalendarForecastVisuals={selectedCalendarForecastVisuals}
+          selectedDateDiaryEntries={selectedDateDiaryEntries}
+          selectedDateJournalEntries={selectedDateJournalEntries}
+          selectedImportantDate={selectedImportantDate}
+          setCalendarMonth={setCalendarMonth}
+          setImportanceDetailsDraft={setImportanceDetailsDraft}
+          setImportanceDraft={setImportanceDraft}
+          setImportanceModalOpen={setImportanceModalOpen}
+          setImportanceReminderEnabled={setImportanceReminderEnabled}
+          setImportanceTimeDraft={setImportanceTimeDraft}
+          setMemoriesCategoryFilter={setMemoriesCategoryFilter}
+          setMemoriesView={setMemoriesView}
+          setSelectedCalendarDate={setSelectedCalendarDate}
+          setSelectedEntry={setSelectedEntry}
+          shiftMonthKey={shiftMonthKey}
+          todayISO={todayISO}
+          upcomingReminderCount={upcomingReminderCount}
+          upcomingReminderPreview={upcomingReminderPreview}
+          weatherOptions={weatherOptions}
+            />
+          </LazyTabPanel>
         )}
       </section>
 
-      {activeTab === 'home' && (
-      <>
-      {activeHomeSection === 'overview' && !showMinimalHomeOverview && (
-      <section className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-4">
-        <div className="quote-card quote-card-premium rounded-3xl border border-amber-200/50 p-8 shadow-soft">
-          <Quote className="mb-8 opacity-80" size={34} />
-          <p className="quote-main-text font-bold leading-tight" style={{ fontFamily: activeQuoteFont, fontSize: activeQuoteSize, color: quoteStyle.textColor, lineHeight: 1.45 }}>“{quoteLibrary[quoteIndex % quoteLibrary.length]}”</p>
-          <button className="quote-button mt-8 rounded-full bg-white px-5 py-3 text-sm font-extrabold shadow-lift transition hover:-translate-y-1 hover:bg-sage-50" onClick={() => setQuoteIndex((quoteIndex + 1) % quoteLibrary.length)}>
-            Another calming quote
-          </button>
-        </div>
-      </section>
-      )}
-
-      {activeHomeSection === 'about' && (
-      <section id="about" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
-        <SectionHeader
-          eyebrow="About Lofi Memory"
-          title="A private online diary designed to feel calm, personal, and easy to return to."
-          text="Lofi Memory is a private online diary built to make journaling feel light, repeatable, and emotionally safe — a softer place to notice your thoughts, moods, and everyday life."
-        />
-        <div className="grid gap-5 md:grid-cols-3">
-          <InfoCard icon={Lock} title="Private by design">
-            Your entries are saved to your Google-linked account when you sign in, or only in your browser when you do not. Other visitors opening the site will see their own journal, not yours.
-          </InfoCard>
-          <InfoCard icon={Leaf} title="Calm, minimal rhythm">
-            The interface uses soft colors, spacious cards, and tiny prompts so the experience feels more like exhaling than checking off a task.
-          </InfoCard>
-          <InfoCard icon={Compass} title="Built for daily understanding">
-            Mood tracking and prompts help you notice patterns over time, without turning emotions into a scorecard.
-          </InfoCard>
-          <InfoCard icon={ImagePlus} title="Custom emotions">
-            Create custom moods with your own words, emoji, or uploaded images so your check-ins feel personal and expressive.
-          </InfoCard>
-          <InfoCard icon={Palette} title="A look that fits you">
-            Choose color themes, card styles, and quote-card colors. Each visitor can make the space feel like their own.
-          </InfoCard>
-          <InfoCard icon={HeartHandshake} title="Positive self-awareness">
-            The site offers journaling guidance and reflection tools for everyday self-understanding, small wins, and clearer personal direction.
-          </InfoCard>
-        </div>
-      </section>
-      )}
-
-      {activeHomeSection === 'guides' && (
-      <section id="seo-landing" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-10">
-        <SectionHeader
-          eyebrow="Chill guides & calm routines"
-          title="Find the kind of game, reset, or journaling support that fits what you need today."
-          text="Some people want a private diary, some want an online journal, and some are simply looking for cozy browser games or easy ways to relax after a long day. These pages help readers find the calmest place to begin."
-        />
-        <div className="mb-6 rounded-[2.2rem] border border-[#e8dfd5] bg-white/82 p-5 shadow-lift backdrop-blur">
-          <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-            <div>
-              <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-sage-700">Popular calm reads</p>
-              <h3 className="mt-2 text-2xl font-extrabold text-ink">Jump straight to the page that fits what you want to explore.</h3>
-            </div>
-            <p className="max-w-xl text-sm leading-7 text-sage-800">These quick links keep the reading area easy to scan and point visitors to the pages that stay live in the curated review surface.</p>
-          </div>
-          <div className="mt-4 flex flex-wrap gap-2.5">
-            {seoPopularSearches.map((item) => (
-              <a className="rounded-full border border-amber-200/50 bg-sage-50/70 px-4 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href={item.href} key={item.href}>{item.label}</a>
-            ))}
-          </div>
-        </div>
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {seoLandingBlocks.slice(0, 8).map((item) => (
-            <article className="customizable-card rounded-3xl border border-amber-200/50 bg-white/80 p-6 shadow-lift backdrop-blur transition hover:-translate-y-1 hover:bg-white/95" key={item.title}>
-              <div className="rounded-full bg-sage-100 px-3 py-1 text-xs font-extrabold uppercase tracking-widest text-sage-800">Reader guide</div>
-              <h3 className="mt-4 text-2xl font-extrabold leading-tight text-ink">{item.title}</h3>
-              <p className="mt-4 leading-8 text-sage-800">{item.text}</p>
-              <a className="mt-5 inline-flex text-sm font-bold text-sage-900 underline decoration-sage-300 underline-offset-4" href={item.href}>Open guide</a>
-            </article>
-          ))}
-        </div>
-        <div className="mt-8 rounded-[3rem] border border-white/75 bg-white/80 p-6 shadow-lift backdrop-blur lg:p-8">
-          <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-            <div>
-              <p className="text-sm font-extrabold uppercase tracking-[0.3em] text-sage-700">Keep exploring</p>
-              <h3 className="mt-3 text-3xl font-extrabold text-ink">Read the page that matches the calmer routine you want right now.</h3>
-              <p className="mt-3 max-w-3xl leading-8 text-sage-800">Whether you want better privacy, a simpler writing habit, a calmer evening routine, or a small puzzle break before journaling, these pages give visitors something useful to read before they begin.</p>
-            </div>
-            <a className="inline-flex items-center justify-center rounded-full bg-sage-900 px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-sage-800" href="/blog.html">
-              Browse guides
-            </a>
-          </div>
-          <div className="mt-6 grid gap-5 lg:grid-cols-2">
-            {seoGuideGroups.map((group) => (
-              <article className="rounded-[2.2rem] border border-[#e8dfd5]/80 bg-sand-50/70 p-5 shadow-sm" key={group.title}>
-                <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-sage-700">Guide collection</p>
-                <h4 className="mt-3 text-2xl font-extrabold leading-tight text-ink">{group.title}</h4>
-                <p className="mt-3 text-sm leading-7 text-sage-800">{group.description}</p>
-                <div className="mt-5 grid gap-2">
-                  {group.links.map((page) => (
-                    <a className="group flex items-start justify-between gap-3 rounded-2xl border border-[#e8dfd5] bg-white/82 px-4 py-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-white" href={page.href} key={page.href}>
-                      <span>
-                        <span className="block text-sm font-extrabold text-sage-950 group-hover:text-sage-800">{page.title}</span>
-                        <span className="mt-1 block text-xs font-semibold leading-5 text-sage-600">{page.text}</span>
-                      </span>
-                      <span className="shrink-0 rounded-full bg-sage-100 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-sage-700">Read</span>
-                    </a>
-                  ))}
-                </div>
-              </article>
-            ))}
-          </div>
-          <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1.2fr)_minmax(280px,0.8fr)]">
-            <div className="rounded-3xl border border-[#e8dfd5] bg-gradient-to-br from-white/95 to-sand-50/85 p-6 shadow-lift backdrop-blur">
-              <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-sage-700">Quiet reader space</p>
-              <h4 className="mt-3 text-2xl font-extrabold leading-tight text-ink">A stable place for future recommendations, without interrupting the journal.</h4>
-              <p className="mt-3 max-w-2xl leading-8 text-sage-800">This area sits outside the main writing flow, so future recommendations can live here without covering prompts, shifting the editor, or making the journaling experience feel crowded on mobile or desktop.</p>
-              <div className="mt-5 flex flex-wrap gap-3">
-                <a className="inline-flex items-center justify-center rounded-full bg-sage-900 px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-sage-800" href="/article-benefits-of-private-online-diary.html">Open private diary guide</a>
-                <a className="inline-flex items-center justify-center rounded-full border border-amber-200/50 bg-white px-5 py-3 text-sm font-bold text-sage-900 transition hover:-translate-y-0.5 hover:border-sage-300" href="/article-journaling-prompts-self-discovery.html">Browse prompts</a>
-              </div>
-            </div>
-            <div className="rounded-3xl border border-[#e8dfd5]/80 bg-white/85 p-6 shadow-lift backdrop-blur">
-              <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-sage-700">Why this reader area stays separate</p>
-              <ul className="mt-4 space-y-3 text-sm leading-7 text-sage-800">
-                <li>• Future recommendations can live here without interrupting the writing screen.</li>
-                <li>• Your diary, memories, and prompts stay stable instead of shifting around.</li>
-                <li>• Mobile visitors get a clean block to explore, rather than overlays or crowded panels.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-      )}
-
-      {activeHomeSection === 'resources' && (
-      <section id="resources" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
-        <SectionHeader
-          eyebrow="Positive reflection tools"
-          title="Small practices that make journaling easier."
-          text="Use these when you want a softer entry, a little gratitude, or a calmer way to close the day."
-        />
-        <div className="mb-6 grid gap-5 md:grid-cols-2">
-          <InfoCard icon={ShieldCheck} title="A clear mind moment">
-            Pause before you write: take one slow breath, notice your current state, and choose one word that describes what you want more of today.
-          </InfoCard>
-          <InfoCard icon={Mail} title="Share the good when you want">
-            If a journal entry helps you understand yourself, you can choose to share a positive insight with someone you trust — only if it feels right.
-          </InfoCard>
-        </div>
-        <div className="grid gap-5 lg:grid-cols-3">
-          {resources.map((resource) => (
-            <InfoCard icon={HeartHandshake} title={resource.title} key={resource.title}>
-              {resource.text}
-            </InfoCard>
-          ))}
-        </div>
-      </section>
-      )}
-
-      {activeHomeSection === 'articles' && (
-      <section id="articles" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
-        <SectionHeader
-          eyebrow="Original Articles"
-          title="Articles for a gentler journaling practice."
-          text="These guides and short reflections help visitors begin private journaling with more clarity and curiosity."
-        />
-        <div className="grid gap-5 md:grid-cols-2">
-          {wellnessArticles.map((article, index) => (
-            article.href ? (
-              <a href={article.href} className="customizable-card rounded-3xl border border-amber-200/50 bg-white/80 p-6 shadow-lift backdrop-blur transition hover:-translate-y-1 hover:bg-white/95 text-left block" key={article.title}>
-                <div className="mb-4 flex items-center justify-between gap-4">
-                  <span className="rounded-full bg-sage-900 px-3 py-1 text-xs font-extrabold uppercase tracking-widest text-white">{article.read.split('•')[0]}</span>
-                  <span className="text-sm font-bold text-sage-600">{article.read.split('•')[1] || ''}</span>
-                </div>
-                <h3 className="text-2xl font-extrabold leading-tight text-ink">{article.title}</h3>
-                <p className="mt-4 leading-8 text-sage-800">{article.body}</p>
-                <div className="mt-6 flex items-center gap-2 text-sm font-bold text-sage-900">
-                  Read full article &rarr;
-                </div>
-              </a>
-            ) : (
-              <article className="customizable-card rounded-3xl border border-amber-200/50 bg-white/80 p-6 shadow-lift backdrop-blur transition hover:-translate-y-1 hover:bg-white/95" key={article.title}>
-                <div className="mb-4 flex items-center justify-between gap-4">
-                  <span className="rounded-full bg-sage-100 px-3 py-1 text-xs font-extrabold uppercase tracking-widest text-sage-800">Note</span>
-                  <span className="text-sm font-bold text-sage-600">{article.read}</span>
-                </div>
-                <h3 className="text-2xl font-extrabold leading-tight text-ink">{article.title}</h3>
-                <p className="mt-4 leading-8 text-sage-800">{article.body}</p>
-              </article>
-            )
-          ))}
-        </div>
-        <div className="mt-10 text-center">
-          <a href="/blog.html" className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white/70 px-6 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white backdrop-blur">
-            Visit the full Blog & Wellness Library &rarr;
-          </a>
-        </div>
-      </section>
-      )}
-
-      {activeHomeSection === 'faq' && (
-      <section id="faq" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
-        <SectionHeader
-          eyebrow="Journal FAQ"
-          title="Common questions about using a private online diary and mood journal."
-          text="This FAQ answers the things people usually want to know before they begin journaling here."
-        />
-        <div className="grid gap-4 lg:grid-cols-2">
-          {seoFaqs.map((item) => (
-            <article className="rounded-3xl border border-[#e8dfd5] bg-white/80 p-6 shadow-lift backdrop-blur" key={item.question}>
-              <h3 className="text-xl font-extrabold text-ink">{item.question}</h3>
-              <p className="mt-3 leading-7 text-sage-800">{item.answer}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-      )}
-
-      {activeHomeSection === 'tips' && (
-      <section id="tips" className="mx-auto grid max-w-[1280px] gap-8 px-5 py-14 sm:px-7 xl:px-10 lg:grid-cols-12">
-        <div className="rounded-3xl border border-amber-200/50 bg-gradient-to-br from-sand-100 to-sage-100 p-8 shadow-soft lg:col-span-5 lg:p-10">
-          <Newspaper className="mb-7 text-sage-700" size={36} />
-          <p className="text-sm font-bold uppercase tracking-widest text-sage-700">Journaling tips</p>
-          <h2 className="mt-3 font-display text-5xl font-bold leading-tight text-sage-950">A softer way to start writing.</h2>
-          <p className="mt-5 leading-8 text-sage-800">Think of journaling as a conversation with yourself. The goal is not to be profound; it is to be present.</p>
-        </div>
-        <div className="grid gap-4 lg:col-span-7">
-          {tips.map((tip, index) => (
-            <div className="flex items-start gap-4 rounded-3xl border border-amber-200/50 bg-white/75 p-5 shadow-lift backdrop-blur" key={tip}>
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-sage-700 font-bold text-white">{index + 1}</div>
-              <p className="pt-2 text-lg font-semibold leading-7 text-sage-900">{tip}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-      )}
-
-      {activeHomeSection === 'privacy' && (
-      <section id="privacy" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
-        <SectionHeader
-          eyebrow="Privacy Policy"
-          title="Your reflections belong to you."
-        />
-        <div className="grid gap-5 md:grid-cols-2">
-          <InfoCard icon={Shield} title="What is stored">
-            Journal entries are saved to your Google-linked cloud account when you sign in. If you use the site without signing in, entries, mood choices, custom emotion labels/images, and your optional PIN stay in this browser using local storage.
-          </InfoCard>
-          <InfoCard icon={Lock} title="What visitors can see">
-            Other people who open the website do not see your entries. Their browser creates a separate journal space, and signed-in entries are separated by Google account.
-          </InfoCard>
-          <InfoCard icon={ShieldCheck} title="Google sign-in">
-            Google sign-in is used so your journal can follow you across devices. Your email is used to identify your account and sync your entries.
-          </InfoCard>
-          <InfoCard icon={FileText} title="Advertising and Google AdSense">
-            This site may use Google AdSense to show ads. Google and its partners may use cookies or similar technologies to serve and measure ads based on visits to this and other websites. Visitors can manage ad personalization through Google Ads Settings.
-          </InfoCard>
-          <InfoCard icon={Mail} title="Contact for privacy questions">
-            For privacy questions, feedback, or requests, contact the site owner at tze.ng@bytedance.com.
-          </InfoCard>
-        </div>
-      </section>
-      )}
-
-      {activeHomeSection === 'terms' && (
-      <section id="terms" className="mx-auto grid max-w-[1280px] gap-8 px-5 py-14 sm:px-7 xl:px-10 lg:grid-cols-12">
-        <div className="lg:col-span-5">
-          <div className="sticky top-28 rounded-3xl border border-amber-200/50 bg-white/75 p-8 shadow-soft backdrop-blur">
-            <Scale className="mb-7 text-sage-700" size={36} />
-            <p className="text-sm font-bold uppercase tracking-widest text-sage-600">Helpful notes</p>
-            <h2 className="mt-3 font-display text-5xl font-bold leading-tight text-sage-950">A simple space for personal writing.</h2>
-          </div>
-        </div>
-        <div className="space-y-5 lg:col-span-7">
-          <InfoCard icon={HeartHandshake} title="For personal reflection">
-            Lofi Memory is made for private journaling, positivity, and everyday self-understanding. Use it as a space to notice your thoughts and what matters to you.
-          </InfoCard>
-          <InfoCard icon={Sunrise} title="Choose your own pace">
-            There is no perfect streak and no pressure to write a lot. A tiny note, a good thing, or one honest sentence is enough.
-          </InfoCard>
-          <InfoCard icon={PenLine} title="Write what feels useful">
-            You can use prompts, skip prompts, write a long entry, or keep it short. The journal is here to help you understand your current state and what you want next.
-          </InfoCard>
-          <InfoCard icon={Shield} title="Content ownership">
-            Your writing remains yours. Signed-in entries are stored under your Google-linked account, while signed-out entries stay in your browser storage.
-          </InfoCard>
-          <InfoCard icon={FileText} title="Advertising disclosure">
-            The site may show third-party ads to support free access. Ad providers may set cookies or use similar technologies according to their own policies.
-          </InfoCard>
-          <InfoCard icon={Mail} title="Questions about these terms">
-            Contact tze.ng@bytedance.com if you have questions about the site, privacy, or these terms.
-          </InfoCard>
-        </div>
-      </section>
-      )}
-
-      {activeHomeSection === 'contact' && (
-      <>
-      <section id="contact" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
-        <div className="overflow-hidden rounded-3xl border border-amber-200/50 bg-sage-900 text-white shadow-soft">
-          <div className="grid lg:grid-cols-2">
-            <div className="p-8 lg:p-10">
-              <Mail className="mb-7 text-sage-100" size={36} />
-              <p className="text-sm font-bold uppercase tracking-widest text-sage-200">Contact</p>
-              <h2 className="mt-3 font-display text-5xl font-bold leading-tight">Questions, feedback, or partnership ideas?</h2>
-              <p className="mt-5 leading-8 text-sage-100">Send questions, feedback, collaboration ideas, or privacy requests to the site owner. This helps visitors, advertisers, and review teams understand who runs the site.</p>
-            </div>
-            <div className="bg-white/10 p-8 lg:p-10">
-              <div className="grid gap-4">
-                <div className="rounded-3xl bg-white/95 p-6 text-ink shadow-lift">
-                  <p className="text-sm font-bold uppercase tracking-widest text-sage-600">Site owner email</p>
-                  <a className="mt-3 block break-words text-2xl font-extrabold text-sage-900 underline decoration-sage-300 underline-offset-4" href="mailto:tze.ng@bytedance.com">
-                    tze.ng@bytedance.com
-                  </a>
-                </div>
-                <div className="rounded-3xl border border-white/15 bg-white/8 p-6 text-white shadow-inner backdrop-blur">
-                  <p className="text-sm font-bold uppercase tracking-widest text-sage-100">A gentle place to begin</p>
-                  <h3 className="mt-3 text-2xl font-extrabold leading-tight text-white">Made for people who want somewhere calm to start a diary.</h3>
-                  <p className="mt-3 leading-7 text-sage-50/90">Lofi Memory is for people who want a softer first step into diary writing — whether you are starting for the first time, starting again, or simply trying to understand your days more clearly.</p>
-                  <div className="mt-4 grid gap-3 text-sm leading-7 text-sage-50/90">
-                    <div className="rounded-2xl border border-white/10 bg-white/10 px-4 py-3">Diary writing can support wellbeing by helping you process emotions instead of carrying everything in your head.</div>
-                    <div className="rounded-2xl border border-white/10 bg-white/10 px-4 py-3">It can improve mental clarity, help you notice patterns in your moods, and create a steadier routine during stressful periods.</div>
-                    <div className="rounded-2xl border border-white/10 bg-white/10 px-4 py-3">Over time, even short entries can strengthen self-awareness, gratitude, and a calmer relationship with your inner life.</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-8">
-        <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[2.2rem] border border-[#8b5e3c]/25 p-8 text-center shadow-soft backdrop-blur">
-          <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
-          <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
-          <div className="relative z-10">
-            <p className="text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft">Support this project</p>
-            <h2 className="mt-3 text-2xl font-extrabold text-white lofi-sharp-text">Help keep Lofi Memory free and peaceful</h2>
-            <p className="mx-auto mt-3 max-w-2xl leading-7 text-white/95 lofi-sharp-text-soft">This space may be supported by gentle, non-intrusive advertising after approval. Ads will stay outside the private writing area so journaling remains calm.</p>
-          </div>
-        </div>
-      </section>
-      </>
-      )}
-
-      {activeHomeSection === 'seo-studio' && showAdminTools && (
-      <section id="seo-studio" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
-        <SectionHeader
-          eyebrow="Admin-only AI SEO Studio"
-          title="Review and draft SEO improvements without changing the public experience."
-          text="This panel is only visible when the master email is signed in. It lets you run an AI SEO review from inside the website, keep the API key in your own browser, and work on ideas without exposing admin tools to normal visitors."
-        />
-        <div className="grid gap-6 xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur-xl">
-            <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
-            <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
-            <div className="relative z-10 flex items-start justify-between gap-4">
-              <div>
-                <p className="text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft">Master access</p>
-                <h3 className="mt-2 text-2xl font-extrabold text-white lofi-sharp-text">Signed in as {user?.email}</h3>
-                <p className="mt-3 leading-7 text-white/95 lofi-sharp-text-soft">Normal visitors never see this section. The public journaling flow stays exactly the same unless you later choose to apply changes manually.</p>
-              </div>
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/20 text-white shadow-sm backdrop-blur-md">
-                <ShieldCheck size={20} />
-              </div>
-            </div>
-
-            <div className="relative z-10 mt-6 rounded-[1.5rem] border border-white/20 bg-black/20 p-4 shadow-sm backdrop-blur-md">
-              <p className="text-sm font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Preview mode</p>
-              <div className="mt-3 flex overflow-hidden rounded-full border border-white/30 bg-white/10 p-1">
-                <button
-                  className={`flex-1 rounded-full px-4 py-2.5 text-sm font-black transition backdrop-blur-md lofi-sharp-chip ${adminViewMode === 'master' ? 'bg-white/30 text-white shadow-sm' : 'text-white/90 hover:bg-white/10'}`}
-                  onClick={() => setAdminViewMode('master')}
-                  type="button"
-                >
-                  Master view
-                </button>
-                <button
-                  className={`flex-1 rounded-full px-4 py-2.5 text-sm font-black transition backdrop-blur-md lofi-sharp-chip ${adminViewMode === 'user' ? 'bg-white/30 text-white shadow-sm' : 'text-white/90 hover:bg-white/10'}`}
-                  onClick={() => setAdminViewMode('user')}
-                  type="button"
-                >
-                  User view
-                </button>
-              </div>
-              <p className="mt-3 text-sm leading-7 text-white/95 lofi-sharp-text-soft">Switch to user view any time to hide admin tools and preview the calmer public experience while staying signed in.</p>
-            </div>
-
-            <div className="relative z-10 mt-6 grid gap-3 text-sm leading-7 text-white/95 lofi-sharp-text-soft">
-              <div className="rounded-2xl border border-white/20 bg-black/20 p-4 backdrop-blur-md shadow-sm">
-                <p className="font-extrabold text-white lofi-sharp-text">What this first version can do</p>
-                <p className="mt-2">Run an AI SEO review of the current diary site, suggest safer homepage and guide-page improvements, and draft ideas you can later implement without disrupting users.</p>
-              </div>
-              <div className="rounded-2xl border border-white/20 bg-black/20 p-4 backdrop-blur-md shadow-sm">
-                <p className="font-extrabold text-white lofi-sharp-text">What it does not auto-publish yet</p>
-                <p className="mt-2">This version does not silently rewrite the live site on its own. It gives you admin-only guidance and drafts first, which is safer for SEO and much better for preserving tone.</p>
-              </div>
-            </div>
-
-            <div className="relative z-10 mt-6 rounded-[2.2rem] border border-white/20 bg-white/20 p-5 text-white shadow-sm backdrop-blur-md">
-              <p className="text-[11px] font-black uppercase tracking-[0.24em] text-white/95 lofi-sharp-text-soft">Suggested routine</p>
-              <div className="mt-4 grid gap-3 text-sm leading-7 text-white/95 lofi-sharp-text-soft">
-                <div>1. Run a fresh AI review when you want new SEO ideas.</div>
-                <div>2. Pick only a few high-impact suggestions at a time.</div>
-                <div>3. Keep the writing experience calm and avoid constant churn.</div>
-              </div>
-              <p className="mt-4 text-xs font-black uppercase tracking-[0.18em] text-white/95 lofi-sharp-text-soft">Master email: {MASTER_ADMIN_EMAIL}</p>
-            </div>
-          </div>
-
-          <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-[#8b5e3c]/25 p-6 shadow-soft backdrop-blur-xl">
-            <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
-            <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/35 to-black/15" />
-            <div className="relative z-10 flex flex-wrap items-start justify-between gap-4">
-              <div>
-                <p className="text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft">Run AI review</p>
-                <h3 className="mt-2 text-2xl font-extrabold text-white lofi-sharp-text">SEO drafts that stay inside your admin view</h3>
-              </div>
-              <div className="flex flex-wrap items-center justify-end gap-2">
-                {seoStudioModelUsed && <span className="rounded-full border border-white/20 bg-black/20 px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-white shadow-sm backdrop-blur-md">Model · {seoStudioModelUsed}</span>}
-                {seoStudioLastRun && <span className="rounded-full border border-white/20 bg-white/20 px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-white shadow-sm backdrop-blur-md">Last run · {seoStudioLastRun}</span>}
-              </div>
-            </div>
-
-            <div className="relative z-10 mt-6 grid gap-4">
-              <label className="grid gap-2 text-sm font-bold text-white lofi-sharp-text">
-                Gemini API key
-                <div className="flex gap-2">
-                  <input
-                    className="w-full rounded-2xl border border-white/20 bg-black/20 px-4 py-3 text-sm font-semibold text-white outline-none backdrop-blur-md transition placeholder:text-white/50 focus:border-white/40 focus:ring-4 focus:ring-white/10"
-                    onChange={(event) => setSeoStudioApiKey(event.target.value)}
-                    placeholder="Paste your Gemini API key"
-                    type={showSeoStudioKey ? 'text' : 'password'}
-                    value={seoStudioApiKey}
-                  />
-                  <button className="rounded-2xl border border-white/20 bg-black/20 px-4 text-white shadow-sm backdrop-blur-md transition hover:bg-black/40" onClick={() => setShowSeoStudioKey(!showSeoStudioKey)} type="button">
-                    {showSeoStudioKey ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </button>
-                </div>
-                <span className="text-xs font-semibold text-white/95 lofi-sharp-text-soft">Stored only in this browser for the master email view. Use a browser-restricted key if possible.</span>
-              </label>
-
-              <label className="grid gap-2 text-sm font-bold text-white lofi-sharp-text">
-                What should the AI focus on?
-                <textarea
-                  className="min-h-[128px] rounded-2xl border border-white/20 bg-black/20 px-4 py-3 text-sm leading-7 text-white outline-none backdrop-blur-md transition placeholder:text-white/50 focus:border-white/40 focus:ring-4 focus:ring-white/10"
-                  onChange={(event) => setSeoStudioPrompt(event.target.value)}
-                  placeholder="Ask for homepage suggestions, new guide ideas, schema improvements, or calmer SEO fixes."
-                  value={seoStudioPrompt}
-                />
-              </label>
-
-              <div className="flex flex-wrap gap-3">
-                <button className="inline-flex items-center gap-2 rounded-full bg-white/20 px-5 py-3 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/30 disabled:cursor-not-allowed disabled:opacity-60" disabled={seoStudioLoading} onClick={runSeoStudioReview} type="button">
-                  <Sparkles size={16} /> {seoStudioLoading ? 'Running review...' : 'Run AI SEO review'}
-                </button>
-                <button className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/20 px-5 py-3 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:border-white/50 hover:bg-black/40 disabled:cursor-not-allowed disabled:opacity-50" disabled={!seoStudioReport.trim()} onClick={copySeoStudioReport} type="button">
-                  <FileText size={16} /> {seoStudioCopied ? 'Copied' : 'Copy report'}
-                </button>
-                <button className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/20 px-5 py-3 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:border-white/50 hover:bg-black/40" onClick={clearSeoStudioReport} type="button">
-                  Clear
-                </button>
-              </div>
-
-              {seoStudioError && (
-                <div className="rounded-2xl border border-red-300/50 bg-red-900/40 px-4 py-3 text-sm font-semibold leading-7 text-red-100 backdrop-blur-md shadow-sm">
-                  {seoStudioError}
-                </div>
-              )}
-
-              <div className="rounded-[2.2rem] border border-white/20 bg-black/20 p-4 shadow-sm backdrop-blur-md">
-                <div className="flex items-center justify-between gap-3">
-                  <p className="text-sm font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">AI report</p>
-                  <span className="text-xs font-bold uppercase tracking-[0.18em] text-white/90 lofi-sharp-text-soft">Admin draft only</span>
-                </div>
-                <div className="mt-4 max-h-[28rem] overflow-auto rounded-[1.4rem] bg-black/30 border border-white/20 p-4 shadow-inner lofi-scrollbar">
-                  {seoStudioReport ? (
-                    <pre className="whitespace-pre-wrap text-sm leading-7 text-white/95 lofi-sharp-text-soft">{seoStudioReport}</pre>
-                  ) : (
-                    <p className="text-sm leading-7 text-white/90 lofi-sharp-text-soft">Run the AI SEO review to generate a fresh draft. It will use the current Lofi Memory positioning, homepage framing, guide-page cluster, and privacy-first diary context.</p>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      )}
-
-      <footer className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 pb-10 pt-6">
-        <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-white/20 p-8 text-center text-sm leading-7 shadow-soft">
-          <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
-          <div className="absolute inset-0 bg-gradient-to-br from-black/65 via-black/25 to-black/5" />
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.15),transparent_25rem)]" />
-          <div className="relative z-10">
-            <div className="mb-4 flex flex-wrap justify-center gap-x-8 gap-y-3 font-black uppercase tracking-[0.15em] text-white/95 lofi-sharp-chip">
-              <a className="transition hover:text-white" href="#home" onClick={() => openHomeSection('home')}>Home</a>
-              <button className="transition hover:text-white" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
-              <a className="transition hover:text-white" href="#about" onClick={() => openHomeSection('about')}>About</a>
-              <a className="transition hover:text-white" href="/blog.html">Blog</a>
-              <a className="transition hover:text-white" href="/contact.html">Contact</a>
-              <a className="transition hover:text-white" href="/privacy.html">Privacy</a>
-              <a className="transition hover:text-white" href="/terms.html">Terms</a>
-              <a className="transition hover:text-white" href="#diary" onClick={() => navigateToTab('write')}>Diary & Journal</a>
-              <a className="transition hover:text-white" href="/private-journaling-hub.html">Journaling Hub</a>
-            </div>
-            <div className="mb-5 flex flex-wrap justify-center gap-x-6 gap-y-2 text-[11px] font-black uppercase tracking-[0.18em] text-white/85 lofi-sharp-text-soft">
-              <a className="transition hover:text-white" href="/">Home</a>
-              <a className="transition hover:text-white" href="/blog.html">Blog</a>
-              <a className="transition hover:text-white" href="/about.html">About</a>
-              <a className="transition hover:text-white" href="/contact.html">Contact</a>
-              <a className="transition hover:text-white" href="/privacy.html">Privacy</a>
-              <a className="transition hover:text-white" href="/terms.html">Terms</a>
-              <a className="transition hover:text-white" href="/editorial-policy.html">Editorial policy</a>
-              <a className="transition hover:text-white" href="/advertising-policy.html">Advertising policy</a>
-              <a className="transition hover:text-white" href="/content-quality-policy.html">Content quality</a>
-              <a className="transition hover:text-white" href="/disclaimer.html">Disclaimer</a>
-              <a className="transition hover:text-white" href="/cookie-policy.html">Cookie policy</a>
-              <a className="transition hover:text-white" href="/sitemap.html">Sitemap</a>
-            </div>
-            <p className="font-bold text-white lofi-sharp-text-soft">Lofi Memory is a calm browser space for students and gentle routines: lofi music, relaxing games, private journaling, notes, reminders, and family-friendly study breaks in one tab.</p>
-            <p className="mt-3 text-xs font-semibold leading-6 text-white/85 lofi-sharp-text-soft">Original product pages and core support pages stay indexable. Lower-value or overlapping utility pages are reduced for search and advertising review quality.</p>
-          </div>
-        </div>
-      </footer>
-      </>
-      )}
+{activeTab === 'home' && (
+          <LazyTabPanel label="Loading home section...">
+            <HomeDesignPanel
+          MASTER_ADMIN_EMAIL={MASTER_ADMIN_EMAIL}
+          activeHomeSection={activeHomeSection}
+          activeQuoteFont={activeQuoteFont}
+          activeQuoteSize={activeQuoteSize}
+          adminViewMode={adminViewMode}
+          clearSeoStudioReport={clearSeoStudioReport}
+          copySeoStudioReport={copySeoStudioReport}
+          navigateToTab={navigateToTab}
+          openHomeSection={openHomeSection}
+          quoteIndex={quoteIndex}
+          quoteLibrary={quoteLibrary}
+          quoteStyle={quoteStyle}
+          resources={resources}
+          runSeoStudioReview={runSeoStudioReview}
+          seoFaqs={seoFaqs}
+          seoGuideGroups={seoGuideGroups}
+          seoLandingBlocks={seoLandingBlocks}
+          seoPopularSearches={seoPopularSearches}
+          seoStudioApiKey={seoStudioApiKey}
+          seoStudioCopied={seoStudioCopied}
+          seoStudioError={seoStudioError}
+          seoStudioLastRun={seoStudioLastRun}
+          seoStudioLoading={seoStudioLoading}
+          seoStudioModelUsed={seoStudioModelUsed}
+          seoStudioPrompt={seoStudioPrompt}
+          seoStudioReport={seoStudioReport}
+          setAdminViewMode={setAdminViewMode}
+          setCustomizerOpen={setCustomizerOpen}
+          setQuoteIndex={setQuoteIndex}
+          setSeoStudioApiKey={setSeoStudioApiKey}
+          setSeoStudioPrompt={setSeoStudioPrompt}
+          setShowSeoStudioKey={setShowSeoStudioKey}
+          showAdminTools={showAdminTools}
+          showMinimalHomeOverview={showMinimalHomeOverview}
+          showSeoStudioKey={showSeoStudioKey}
+          tips={tips}
+          user={user}
+          wellnessArticles={wellnessArticles}
+            />
+          </LazyTabPanel>
+        )}
 
       
       <style>{`
@@ -8034,3 +5693,4 @@ function App() {
 }
 
 export default App;
+// rebuilt refactor pass

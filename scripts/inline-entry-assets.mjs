@@ -64,15 +64,6 @@ html = html.replace(/<link\s+rel="stylesheet"\s+crossorigin\s+href="\.\/(assets\
   return `<style data-inline-asset="${assetPath}">\n${css}\n</style>`;
 });
 
-html = html.replace(/<script\s+type="module"\s+crossorigin\s+src="\.\/(assets\/[^"]+\.js)"><\/script>/g, (_match, assetPath) => {
-  const jsPath = path.join(distDir, assetPath);
-  const js = inlineReferencedImages(fs.readFileSync(jsPath, 'utf8'))
-    .replace(/<\/script/gi, '<\\/script')
-    .replace(/<!--/g, '<\\!--');
-  inlined += 1;
-  return `<script type="module" data-inline-asset="${assetPath}">\n${js}\n</script>`;
-});
-
 html = inlineReferencedImages(html);
 
 fs.writeFileSync(indexPath, html);
