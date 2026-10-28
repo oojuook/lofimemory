@@ -1,6 +1,19 @@
 User-agent: Mediapartners-Google
 Allow: /
 
+User-agent: AdsBot-Google
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+Allow: /lofi-memory.html
+Allow: /free-cozy-focus-journal-app.html
+Allow: /relax-focus-journal.html
+Allow: /minimalist-diary-app.html
+Allow: /questions-about-journaling-games-music.html
+Allow: /private-journaling-hub.html
+Allow: /lofi-study-room-focus-tree-timer.html
+
 User-agent: *
 Allow: /
 Host: lofimemory.vercel.app

@@ -26,6 +26,16 @@ const coreIndexedPages = [
   'free-cozy-focus-journal-app.html'
 ];
 
+const highPriorityLandingPages = new Set([
+  'lofi-memory.html',
+  'free-cozy-focus-journal-app.html',
+  'relax-focus-journal.html',
+  'minimalist-diary-app.html',
+  'questions-about-journaling-games-music.html',
+  'private-journaling-hub.html',
+  'lofi-study-room-focus-tree-timer.html'
+]);
+
 const approvedArticlePages = [
   'article-benefits-of-private-online-diary.html',
   'article-brain-dumping-sleep.html',
@@ -101,21 +111,27 @@ const alwaysIgnored = new Set([
   'googled1931b3f15730e0b.html'
 ]);
 
-function getLastMod(fileName) {
-  if (fileName === 'index.html') return new Date().toISOString();
-  return '2026-10-19T00:00:00.000Z';
+async function getLastMod(fileName) {
+  try {
+    const stats = await fs.stat(path.join(publicDir, fileName));
+    return stats.mtime.toISOString();
+  } catch {
+    if (fileName === 'index.html') return new Date().toISOString();
+    return '2026-10-19T00:00:00.000Z';
+  }
 }
 
 function getPriority(fileName) {
   if (fileName === 'index.html') return '1.0';
   if (fileName === 'blog.html') return '0.92';
+  if (highPriorityLandingPages.has(fileName)) return '0.9';
   if (approvedArticlePages.includes(fileName)) return '0.86';
   if (['about.html', 'contact.html', 'privacy.html', 'terms.html'].includes(fileName)) return '0.84';
   return '0.72';
 }
 
 function getChangeFreq(fileName) {
-  if (fileName === 'index.html' || fileName === 'blog.html') return 'weekly';
+  if (fileName === 'index.html' || fileName === 'blog.html' || highPriorityLandingPages.has(fileName)) return 'weekly';
   return 'monthly';
 }
 
@@ -124,12 +140,15 @@ async function main() {
   const htmlFiles = new Set(entries.filter((entry) => entry.isFile() && entry.name.endsWith('.html')).map((entry) => entry.name));
   const pages = [...coreIndexedPages, ...approvedArticlePages].filter((fileName, index, list) => (fileName === 'index.html' || htmlFiles.has(fileName)) && !alwaysIgnored.has(fileName) && list.indexOf(fileName) === index);
 
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages
-    .map((fileName) => {
+  const pageEntries = await Promise.all(
+    pages.map(async (fileName) => {
       const loc = fileName === 'index.html' ? `${baseUrl}/` : `${baseUrl}/${fileName}`;
-      return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${getLastMod(fileName)}</lastmod>\n    <changefreq>${getChangeFreq(fileName)}</changefreq>\n    <priority>${getPriority(fileName)}</priority>\n  </url>`;
+      const lastmod = await getLastMod(fileName);
+      return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>${getChangeFreq(fileName)}</changefreq>\n    <priority>${getPriority(fileName)}</priority>\n  </url>`;
     })
-    .join('\n')}\n</urlset>\n`;
+  );
+
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pageEntries.join('\n')}\n</urlset>\n`;
 
   await fs.writeFile(sitemapPath, sitemap, 'utf8');
   console.log(`[generate-sitemap] Wrote ${pages.length} URLs to ${sitemapPath}`);
