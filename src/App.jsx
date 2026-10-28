@@ -4710,9 +4710,9 @@ function App() {
 
               <div className="mt-5 grid grid-cols-2 gap-2 text-xs text-[#22362e] sm:mt-6 sm:grid-cols-4 sm:text-sm">
                 <div className="rounded-full border border-[#dbc7b1] bg-[#fffaf2]/92 px-3 py-1.5 text-center font-bold shadow-sm backdrop-blur">100% browser</div>
-                <div className="rounded-full border border-[#dbc7b1] bg-[#fffaf2]/92 px-3 py-1.5 text-center font-bold shadow-sm backdrop-blur">Free to open</div>
+                <div className="rounded-full border border-[#dbc7b1] bg-[#fffaf2]/92 px-3 py-1.5 text-center font-bold shadow-sm backdrop-blur">Private online diary</div>
+                <div className="rounded-full border border-[#dbc7b1] bg-[#fffaf2]/92 px-3 py-1.5 text-center font-bold shadow-sm backdrop-blur">Focus Tree timer</div>
                 <div className="rounded-full border border-[#dbc7b1] bg-[#fffaf2]/92 px-3 py-1.5 text-center font-bold shadow-sm backdrop-blur">Lofi music included</div>
-                <div className="rounded-full border border-[#dbc7b1] bg-[#fffaf2]/92 px-3 py-1.5 text-center font-bold shadow-sm backdrop-blur">Private writing room</div>
               </div>
               <div className="mt-7 flex flex-wrap items-center justify-center gap-2 sm:mt-8 sm:gap-3">
                 <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full bg-white px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-[#4f3f32] shadow-[0_12px_28px_rgba(0,0,0,0.16)] transition hover:-translate-y-1 hover:bg-[#fff9f0]" onClick={() => navigateToTab('write')} type="button">
