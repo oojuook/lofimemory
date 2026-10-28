@@ -1827,7 +1827,7 @@ function App() {
   const isPhoneInterface = interfaceMode === 'phone';
   const isPcInterface = interfaceMode === 'pc';
 
-    const selectUnwindGame = (gameId) => {
+    const selectUnwindGame = (gameId) => { 
 
       setActiveTransitionGameId(gameId);
 
@@ -5240,6 +5240,7 @@ function App() {
           selectedGameInterfaceRef={selectedGameInterfaceRef}
           selectedUnwindGame={selectedUnwindGame}
           selectedUnwindGameConfig={selectedUnwindGameConfig}
+          selectUnwindGame={selectUnwindGame}
           setGameVisualTheme={setGameVisualTheme}
           setSelectedGameDifficulty={setSelectedGameDifficulty}
           toggleFullscreen={toggleFullscreen}

@@ -14,6 +14,7 @@ export default function UnwindTab(props) {
     selectedGameInterfaceRef,
     selectedUnwindGame,
     selectedUnwindGameConfig,
+    selectUnwindGame,
     setGameVisualTheme,
     setSelectedGameDifficulty,
     toggleFullscreen,
