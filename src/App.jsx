@@ -83,6 +83,18 @@ import {
   Zap,
   Flame,
 } from 'lucide-react';
+import WriteTab from './components/WriteTab';
+import NotesTab from './components/NotesTab';
+import MemoriesTab from './components/MemoriesTab';
+import BreatheTab from './components/BreatheTab';
+import InsightsTab from './components/InsightsTab';
+import UnwindTab from './components/UnwindTab';
+import HomeDesignPanel from './components/HomeDesignPanel';
+import ThemeStudio from './components/ThemeStudio';
+import PrivacyGate from './components/PrivacyGate';
+import PinSettingsDialog from './components/PinSettingsDialog';
+import GameSplash from './components/GameSplash';
+import { auth, db, getMessagingIfSupported, googleProvider } from './firebase';
 // Lazy load large game components to reduce initial bundle size
 const ZenGame = lazy(() => import('./ZenGame'));
 const StreamSurfer = lazy(() => import('./StreamSurfer'));
@@ -101,18 +113,6 @@ const QuietSnake = lazy(() => import('./QuietSnake'));
 const Solitaire = lazy(() => import('./Solitaire'));
 const LofiJigsaw = lazy(() => import('./LofiJigsaw'));
 const FocusTreeRoom = lazy(() => import('./FocusTreeRoom'));
-const WriteTab = lazy(() => import('./components/WriteTab'));
-const NotesTab = lazy(() => import('./components/NotesTab'));
-const MemoriesTab = lazy(() => import('./components/MemoriesTab'));
-const BreatheTab = lazy(() => import('./components/BreatheTab'));
-const InsightsTab = lazy(() => import('./components/InsightsTab'));
-const UnwindTab = lazy(() => import('./components/UnwindTab'));
-const HomeDesignPanel = lazy(() => import('./components/HomeDesignPanel'));
-const ThemeStudio = lazy(() => import('./components/ThemeStudio'));
-const PrivacyGate = lazy(() => import('./components/PrivacyGate'));
-const PinSettingsDialog = lazy(() => import('./components/PinSettingsDialog'));
-const GameSplash = lazy(() => import('./components/GameSplash'));
-import { auth, db, getMessagingIfSupported, googleProvider } from './firebase';
 import { StatCard, WeatherGlyph } from './components/SmallComponents.jsx';
 
 const STORAGE_KEY = 'quiet-harbor-journal-v1';

@@ -294,7 +294,7 @@ export default function WriteTab(props) {
             <div>
               <p className="text-[11px] font-black uppercase tracking-[0.22em] text-sage-600">Returning ritual</p>
               <h3 className="mt-2 text-2xl font-extrabold tracking-tight text-ink">{returnRitual.title}</h3>
-              <p className="mt-2 max-w-xl text-sm font-semibold leading-6 text-sage-700">{returnRitual.copy}</p>
+              <p className="mt-2 max-w-xl text-sm font-semibold leading-6 text-sage-700">{returnRitual.text}</p>
             </div>
             <WeatherGlyph mood={selectedMoodOption} />
           </div>
@@ -312,7 +312,7 @@ export default function WriteTab(props) {
           <div className="mt-5 flex flex-wrap gap-3 text-sm font-semibold text-sage-800">
             <span className="rounded-full bg-sage-100 px-4 py-2">{completedQuestCount}/{journalQuest.length} ritual steps today</span>
             <span className="rounded-full bg-sage-100 px-4 py-2">{unlockedAchievementCount} badges unlocked</span>
-            <span className="rounded-full bg-sage-100 px-4 py-2">Level {rewardLevel}</span>
+            <span className="rounded-full bg-sage-100 px-4 py-2">{rewardLevel.emoji} {rewardLevel.title}</span>
           </div>
         </div>
         <div className="space-y-4">
