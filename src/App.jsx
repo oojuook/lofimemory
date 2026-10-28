@@ -1381,8 +1381,60 @@ function CozyPanelFallback({ label = 'Loading cozy space...' }) {
   );
 }
 
-function LazyTabPanel({ children, label }) {
-  return <Suspense fallback={<CozyPanelFallback label={label} />}>{children}</Suspense>;
+class CozyPanelErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+    this.handleRetry = this.handleRetry.bind(this);
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error('Cozy panel render failed', error, errorInfo);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.resetKey !== this.props.resetKey && this.state.hasError) {
+      this.setState({ hasError: false });
+    }
+  }
+
+  handleRetry() {
+    this.setState({ hasError: false });
+  }
+
+  render() {
+    if (this.state.hasError) {
+      const { title = 'This cozy space had trouble opening.', description = 'Please try again. If it still feels blank, hop to another tab and come back once more.' } = this.props;
+      return (
+        <div className="flex min-h-[260px] items-center justify-center rounded-[2rem] border border-[#e8dfd5] bg-white/80 px-6 py-10 shadow-sm backdrop-blur">
+          <div className="max-w-lg rounded-[2rem] border border-[#dbc7b1] bg-[#fffaf2] p-6 text-center shadow-sm">
+            <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-600">Panel recovery</p>
+            <h3 className="mt-3 text-2xl font-extrabold tracking-tight text-ink">{title}</h3>
+            <p className="mt-3 text-sm font-semibold leading-6 text-sage-700">{description}</p>
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+              <button className="rounded-full bg-sage-900 px-5 py-3 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-800" onClick={this.handleRetry} type="button">
+                Try this panel again
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+function LazyTabPanel({ children, label, resetKey, title, description }) {
+  return (
+    <CozyPanelErrorBoundary description={description} resetKey={resetKey} title={title}>
+      <Suspense fallback={<CozyPanelFallback label={label} />}>{children}</Suspense>
+    </CozyPanelErrorBoundary>
+  );
 }
 
 function App() {
@@ -5019,7 +5071,12 @@ function App() {
       ) : null}
 
 {customizerOpen && (
-        <Suspense fallback={<CozyPanelFallback label="Opening design studio..." />}>
+        <CozyPanelErrorBoundary
+          resetKey={`panel-design-${customizerOpen}`}
+          title="The design studio had trouble opening."
+          description="Try the panel again. Your current cozy setup is still safe."
+        >
+          <Suspense fallback={<CozyPanelFallback label="Opening design studio..." />}>
               <ThemeStudio
                 customColor={customColor}
                 customWeatherEmoji={customWeatherEmoji}
@@ -5050,7 +5107,8 @@ function App() {
                 selectedTheme={selectedTheme}
                 wallpaperImage={wallpaperImage}
               />
-        </Suspense>
+          </Suspense>
+        </CozyPanelErrorBoundary>
       )}
 
 {pinSettingsOpen && (
@@ -5095,10 +5153,14 @@ function App() {
           </div>
         </div>
 
-{activeTab === 'write' && (
-          <LazyTabPanel label="Opening your quiet page...">
+        {activeTab === 'write' && (
+          <LazyTabPanel
+            label="Opening your quiet page..."
+            resetKey={`panel-${activeTab}`}
+            title="Your diary needs one more breath."
+            description="The writing space ran into a loading hiccup. Try this panel again, or switch tabs once and come back."
+          >
             <WriteTab
-          achievementBadges={achievementBadges}
           activeJournalFont={activeJournalFont}
           activeJournalSize={activeJournalSize}
           activePrompt={activePrompt}
@@ -5133,7 +5195,6 @@ function App() {
           saveEntry={saveEntry}
           saveReward={saveReward}
           selectedMood={selectedMood}
-          selectedMoodGuide={selectedMoodGuide}
           selectedMoodOption={selectedMoodOption}
           setActivePrompt={setActivePrompt}
           setBody={setBody}
@@ -5156,8 +5217,11 @@ function App() {
           </LazyTabPanel>
         )}
 
-{activeTab === 'unwind' && (
-          <LazyTabPanel label="Loading the game room...">
+        {activeTab === 'unwind' && (
+
+          <LazyTabPanel label="Loading the game room..." resetKey={`panel-${activeTab}`}>
+
+
             <UnwindTab
           difficultyOptions={difficultyOptions}
           gameVisualTheme={gameVisualTheme}
@@ -5178,7 +5242,12 @@ function App() {
         )}
 
         {activeTab === 'focus' && (
-          <Suspense fallback={
+          <CozyPanelErrorBoundary
+            resetKey={`panel-${activeTab}`}
+            title="The Focus Tree needs one more try."
+            description="Try this panel again. If it still feels stuck, switch tabs once and come back."
+          >
+            <Suspense fallback={
             <div className="flex min-h-[320px] items-center justify-center text-[#6f5948]">
               <div className="text-center">
                 <TreePine className="mx-auto mb-3 h-7 w-7 animate-pulse text-[#8e7159]" />
@@ -5188,10 +5257,11 @@ function App() {
           }>
             <FocusTreeRoom />
           </Suspense>
+          </CozyPanelErrorBoundary>
         )}
 
-{activeTab === 'breathe' && (
-          <LazyTabPanel label="Loading the music room...">
+        {activeTab === 'breathe' && (
+          <LazyTabPanel label="Loading the music room..." resetKey={`panel-${activeTab}`}>
             <BreatheTab
           activeBreatheRoom={activeBreatheRoom}
           applyBreatheRoom={applyBreatheRoom}
@@ -5208,8 +5278,8 @@ function App() {
           </LazyTabPanel>
         )}
 
-{activeTab === 'notes' && (
-          <LazyTabPanel label="Loading notes...">
+        {activeTab === 'notes' && (
+          <LazyTabPanel label="Loading notes..." resetKey={`panel-${activeTab}`}>
             <NotesTab
           addPlannerTodo={addPlannerTodo}
           cancelEditingPlannerTodo={cancelEditingPlannerTodo}
@@ -5274,8 +5344,8 @@ function App() {
           </LazyTabPanel>
         )}
 
-{activeTab === 'insights' && (
-          <LazyTabPanel label="Loading insights...">
+        {activeTab === 'insights' && (
+          <LazyTabPanel label="Loading insights..." resetKey={`panel-${activeTab}`}>
             <InsightsTab
           achievementBadges={achievementBadges}
           entries={entries}
@@ -5292,8 +5362,8 @@ function App() {
           </LazyTabPanel>
         )}
 
-{activeTab === 'memories' && (
-          <LazyTabPanel label="Loading memories...">
+        {activeTab === 'memories' && (
+          <LazyTabPanel label="Loading memories..." resetKey={`panel-${activeTab}`}>
             <MemoriesTab
           archiveEntries={archiveEntries}
           calendarDays={calendarDays}
@@ -5355,7 +5425,12 @@ function App() {
       </section>
 
 {activeTab === 'home' && (
-          <LazyTabPanel label="Loading home section...">
+          <LazyTabPanel
+            label="Loading home section..."
+            resetKey={`panel-${activeTab}-${activeHomeSection}`}
+            title="The home panel paused for a moment."
+            description="Try this panel again. Your diary, notes, and focus spaces are still there."
+          >
             <HomeDesignPanel
           MASTER_ADMIN_EMAIL={MASTER_ADMIN_EMAIL}
           activeHomeSection={activeHomeSection}

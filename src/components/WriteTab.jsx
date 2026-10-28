@@ -6,7 +6,6 @@ import { WeatherGlyph } from './SmallComponents.jsx';
 
 export default function WriteTab(props) {
   const {
-    achievementBadges,
     activeJournalFont,
     activeJournalSize,
     activePrompt,
@@ -16,7 +15,6 @@ export default function WriteTab(props) {
     companionIsUploadedMedia,
     completedQuestCount,
     draftWordCount,
-    entries,
     entriesToNextReward,
     entryBodyRef,
     entryTypeMeta,
@@ -42,7 +40,6 @@ export default function WriteTab(props) {
     saveEntry,
     saveReward,
     selectedMood,
-    selectedMoodGuide,
     selectedMoodOption,
     setActivePrompt,
     setBody,
