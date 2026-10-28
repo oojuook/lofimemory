@@ -4692,8 +4692,8 @@ function App() {
               <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/15 px-3 py-1.5 text-[11px] sm:mb-7 sm:px-4 sm:py-2 sm:text-sm font-bold text-white shadow-sm backdrop-blur-md lofi-sharp-text-soft">
                 <Headphones size={15} /> Relax · focus · journal · minimal writing mode
               </div>
-              <h1 className="lofi-sharp-text max-w-3xl font-display text-3xl font-bold leading-[1.05] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.25rem]">One cozy, free browser tab to relax, focus, journal, and write without clutter.</h1>
-              <p className="lofi-sharp-text-soft mt-4 max-w-2xl text-sm font-semibold leading-7 text-white/95 sm:mt-5 sm:text-[1.05rem] sm:leading-8">Designed for students, overthinkers, and cozy-study users who want one relaxing browser tab: listen to soft music, focus with the Focus Tree, open a private diary, switch into distraction-free minimal writing mode, track a mood, and take small no-download game breaks without opening noisy feeds.</p>
+              <h1 className="lofi-sharp-text max-w-3xl font-display text-3xl font-bold leading-[1.05] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.25rem]">The soft browser space to relax, focus, journal, and write thoughts.</h1>
+              <p className="lofi-sharp-text-soft mt-4 max-w-2xl text-sm font-semibold leading-7 text-white/95 sm:mt-5 sm:text-[1.05rem] sm:leading-8">A distraction-free cozy study room in one free tab: listen to lofi music, grow a Focus Tree, write in a private diary, track your mood, and take calm no-download game resets.</p>
 
               <div className="lofi-now-playing mt-6 sm:mt-7 flex flex-col gap-4 rounded-[1.8rem] sm:rounded-[2.2rem] border border-white/22 bg-[#213128]/55 p-3.5 sm:p-4 shadow-sm backdrop-blur-md sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-3 sm:gap-4">
@@ -4716,10 +4716,10 @@ function App() {
               </div>
               <div className="mt-7 flex flex-wrap items-center justify-center gap-2 sm:mt-8 sm:gap-3">
                 <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full bg-white px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-[#4f3f32] shadow-[0_12px_28px_rgba(0,0,0,0.16)] transition hover:-translate-y-1 hover:bg-[#fff9f0]" onClick={() => navigateToTab('write')} type="button">
-                  <FileText size={16} /> Open journal and write
+                  <FileText size={16} /> Open private diary
                 </button>
                 <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/45 bg-[#4f3f32] px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-[#3f3026]" onClick={() => navigateToTab('focus')} type="button">
-                  <TreePine size={16} /> Grow Focus Tree
+                  <TreePine size={16} /> Start Focus Tree
                 </button>
                 <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/45 bg-[#4f3f32] px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-[#3f3026]" onClick={() => setIsRadioPlaying(true)} type="button">
                   <Headphones size={16} /> Start music
