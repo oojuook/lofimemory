@@ -1437,6 +1437,10 @@ function LazyTabPanel({ children, label, resetKey, title, description }) {
   );
 }
 
+function isSandboxPreviewHost(hostname = '') {
+  return hostname.includes('aime-site.tiktok-row.net');
+}
+
 function App() {
   const initialActiveTab = getInitialActiveTab();
   const initialCalendarDate = getInitialSelectedCalendarDate();
@@ -2090,6 +2094,10 @@ function App() {
   useEffect(() => {
     if (typeof window === 'undefined' || !('serviceWorker' in navigator)) {
       setWebPushStatus('This browser does not support service workers for richer push handling.');
+      return undefined;
+    }
+    if (isSandboxPreviewHost(window.location.hostname)) {
+      setWebPushStatus('Preview mode skips service worker setup, so richer push delivery stays off here.');
       return undefined;
     }
     let cancelled = false;
@@ -4682,10 +4690,10 @@ function App() {
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.20),transparent_20rem)]" />
             <div className="relative z-10">
               <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/15 px-3 py-1.5 text-[11px] sm:mb-7 sm:px-4 sm:py-2 sm:text-sm font-bold text-white shadow-sm backdrop-blur-md lofi-sharp-text-soft">
-                <Headphones size={15} /> Relax · focus · journal · write your thoughts
+                <Headphones size={15} /> Relax · focus · journal · minimal writing mode
               </div>
-              <h1 className="lofi-sharp-text max-w-3xl font-display text-3xl font-bold leading-[1.05] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.25rem]">One cozy, free browser tab to relax, focus, journal, and clear your mind.</h1>
-              <p className="lofi-sharp-text-soft mt-4 max-w-2xl text-sm font-semibold leading-7 text-white/95 sm:mt-5 sm:text-[1.05rem] sm:leading-8">Designed for students, overthinkers, and cozy-study users who want one relaxing browser tab: listen to soft music, focus with the Focus Tree, write a private thought, track a mood, and take small no-download game breaks without opening noisy feeds.</p>
+              <h1 className="lofi-sharp-text max-w-3xl font-display text-3xl font-bold leading-[1.05] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.25rem]">One cozy, free browser tab to relax, focus, journal, and write without clutter.</h1>
+              <p className="lofi-sharp-text-soft mt-4 max-w-2xl text-sm font-semibold leading-7 text-white/95 sm:mt-5 sm:text-[1.05rem] sm:leading-8">Designed for students, overthinkers, and cozy-study users who want one relaxing browser tab: listen to soft music, focus with the Focus Tree, open a private diary, switch into distraction-free minimal writing mode, track a mood, and take small no-download game breaks without opening noisy feeds.</p>
 
               <div className="lofi-now-playing mt-6 sm:mt-7 flex flex-col gap-4 rounded-[1.8rem] sm:rounded-[2.2rem] border border-white/22 bg-[#213128]/55 p-3.5 sm:p-4 shadow-sm backdrop-blur-md sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-3 sm:gap-4">
