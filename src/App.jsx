@@ -593,8 +593,13 @@ const seoPopularSearches = [
   { label: 'HTML sitemap', href: '/sitemap.html' },
   { label: 'About Lofi Memory', href: '/about.html' },
   { label: 'Contact us', href: '/contact.html' },
+  { label: 'Editorial Policy', href: '/editorial-policy.html' },
+  { label: 'Content Quality', href: '/content-quality-policy.html' },
+  { label: 'Advertising Policy', href: '/advertising-policy.html' },
   { label: 'Privacy policy', href: '/privacy.html' },
   { label: 'Terms of service', href: '/terms.html' },
+  { label: 'Cookie Policy', href: '/cookie-policy.html' },
+  { label: 'Disclaimer', href: '/disclaimer.html' },
   { label: 'Benefits of a private online diary', href: '/article-benefits-of-private-online-diary.html' },
   { label: 'How to start a journaling habit', href: '/article-how-to-start-journaling-habit.html' },
   { label: 'Protect privacy when journaling online', href: '/article-protect-privacy-journaling-online.html' },
@@ -5604,7 +5609,7 @@ function App() {
         <div className="pointer-events-none fixed bottom-24 right-3 z-40 flex justify-end sm:bottom-6 sm:right-6">
           <div className="pointer-events-auto w-[min(22rem,calc(100vw-1.5rem))] rounded-[1.4rem] border border-amber-200/50/90 bg-white/94 p-4 shadow-soft backdrop-blur-xl">
             <p className="text-sm font-medium leading-relaxed text-sage-800">
-              We use cookies and browser storage to keep Lofi Memory smooth and support ads. <span className="font-extrabold text-sage-900">We do not have access to your private diary entries; they are stored securely for you alone.</span> By staying here, you agree to our <a href="/privacy.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Privacy Policy</a>, <a href="/terms.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Terms</a>, and <a href="/cookie-policy.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Cookie Policy</a>.
+              We use cookies and browser storage to keep Lofi Memory smooth and support advertising. <span className="font-extrabold text-sage-900">We do not have access to your private diary entries; they are stored securely for you alone.</span> Content is for general reflection only and is not medical, therapy, or crisis support. By staying here, you agree to our <a href="/privacy.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Privacy Policy</a>, <a href="/terms.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Terms</a>, <a href="/cookie-policy.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Cookie Policy</a>, and <a href="/advertising-policy.html" className="font-bold text-sage-900 underline decoration-sage-300 hover:decoration-sage-500">Advertising Policy</a>.
             </p>
             <div className="mt-3 flex justify-end">
               <button
