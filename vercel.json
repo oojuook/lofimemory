@@ -32,12 +32,17 @@
     },
     {
       "source": "/lofi-memory",
-      "destination": "/lofi-memory.html",
+      "destination": "/",
       "permanent": true
     },
     {
       "source": "/lofi-memory/",
-      "destination": "/lofi-memory.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/lofi-memory.html",
+      "destination": "/",
       "permanent": true
     },
     {

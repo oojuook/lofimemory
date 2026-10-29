@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, '..');
 const distDir = path.join(projectRoot, 'dist');
-const indexPath = path.join(distDir, 'index.html');
+const indexPath = path.join(distDir, 'app.html');
 
 const mimeTypes = {
   '.png': 'image/png',
@@ -77,4 +77,4 @@ html = html.replace(/<script\s+type="module"\s+crossorigin\s+src="\.\/(assets\/[
 html = inlineReferencedImages(html);
 
 fs.writeFileSync(indexPath, html);
-console.log(`[inline-entry-assets] Inlined ${inlined} entry asset(s) and ${inlinedImages} optimized image asset(s) into dist/index.html`);
+console.log(`[inline-entry-assets] Inlined ${inlined} entry asset(s) and ${inlinedImages} optimized image asset(s) into dist/app.html`);

@@ -19,7 +19,7 @@ const coreIndexedPages = new Set([
   'advertising-policy.html',
   'content-quality-policy.html',
   'sitemap.html',
-  'lofi-memory.html',
+  'app.html',
   'relax-focus-journal.html',
   'free-cozy-focus-journal-app.html'
 ]);

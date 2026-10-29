@@ -7,5 +7,11 @@ export default defineConfig({
   build: {
     assetsInlineLimit: 4096, // Only inline very small assets (4kb)
     chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      input: {
+        main: 'index.html',
+        app: 'app.html'
+      }
+    }
   }
 });

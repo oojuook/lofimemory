@@ -21,13 +21,13 @@ const coreIndexedPages = [
   'advertising-policy.html',
   'content-quality-policy.html',
   'sitemap.html',
-  'lofi-memory.html',
+  'app.html',
   'relax-focus-journal.html',
   'free-cozy-focus-journal-app.html'
 ];
 
 const highPriorityLandingPages = new Set([
-  'lofi-memory.html',
+  'app.html',
   'free-cozy-focus-journal-app.html',
   'relax-focus-journal.html',
   'minimalist-diary-app.html',
@@ -138,7 +138,7 @@ function getChangeFreq(fileName) {
 async function main() {
   const entries = await fs.readdir(publicDir, { withFileTypes: true });
   const htmlFiles = new Set(entries.filter((entry) => entry.isFile() && entry.name.endsWith('.html')).map((entry) => entry.name));
-  const pages = [...coreIndexedPages, ...approvedArticlePages].filter((fileName, index, list) => (fileName === 'index.html' || htmlFiles.has(fileName)) && !alwaysIgnored.has(fileName) && list.indexOf(fileName) === index);
+  const pages = [...coreIndexedPages, ...approvedArticlePages].filter((fileName, index, list) => (fileName === 'index.html' || fileName === 'app.html' || htmlFiles.has(fileName)) && !alwaysIgnored.has(fileName) && list.indexOf(fileName) === index);
 
   const pageEntries = await Promise.all(
     pages.map(async (fileName) => {
