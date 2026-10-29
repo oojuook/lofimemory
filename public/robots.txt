@@ -9,7 +9,7 @@ Allow: /ads.txt
 User-agent: Googlebot
 Allow: /
 Allow: /ads.txt
-Allow: /lofi-memory.html
+Allow: /app.html
 Allow: /free-cozy-focus-journal-app.html
 Allow: /relax-focus-journal.html
 Allow: /minimalist-diary-app.html
