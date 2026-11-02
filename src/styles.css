@@ -1291,6 +1291,64 @@ input::placeholder {
   opacity: 1;
 }
 
+/* Desktop Nav Polish */
+.desktop-nav-item {
+  position: relative;
+  transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  overflow: hidden;
+}
+
+.desktop-nav-item:hover {
+  transform: translateY(-1.5px);
+  background-color: rgba(255, 255, 255, 0.16) !important;
+}
+
+.desktop-nav-item-active {
+  transform: translateY(0);
+}
+
+.desktop-nav-active-glow {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 4px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.85);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.desktop-nav-item-active .desktop-nav-active-glow {
+  opacity: 1;
+  bottom: -1px;
+  width: 32px;
+}
+
+.desktop-nav-btn-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.12) 0%, transparent 75%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.desktop-nav-item:hover .desktop-nav-btn-glow {
+  opacity: 1;
+}
+
+.lofi-logo-shell {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.lofi-logo-shell:hover {
+  transform: scale(1.04) rotate(-1.5deg);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+}
+
 @keyframes gameSplashTitleSlide {
   from { transform: translateY(12px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }

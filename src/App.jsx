@@ -4543,7 +4543,7 @@ function App() {
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
           <div className="relative z-10 flex flex-col gap-2.5 lg:gap-3 xl:flex-row xl:items-center xl:justify-between">
             <a className="flex items-center gap-2.5 sm:gap-3.5" href="#home" onClick={() => openHomeSection('home')}>
-              <div className="flex h-11 w-11 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-[1rem] sm:rounded-[1.35rem] border border-white/30 bg-[#4f3f32] p-1 sm:p-1.5 text-sm sm:text-base font-black text-white shadow-sm backdrop-blur-md overflow-hidden">
+              <div className="lofi-logo-shell flex h-11 w-11 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-[1rem] sm:rounded-[1.35rem] border border-white/30 bg-[#4f3f32] p-1 sm:p-1.5 text-sm sm:text-base font-black text-white shadow-sm backdrop-blur-md overflow-hidden">
                 LM
               </div>
               <div>
@@ -4561,16 +4561,21 @@ function App() {
                 { id: 'notes', label: 'Notes' },
                 { id: 'breathe', label: 'Music' },
                 { id: 'memories', label: 'Dates' }
-              ].map((tab) => (
+              ].map((tab) => {
+                const isActive = activeTab === tab.id;
+                return (
                 <button
                   key={`desktop-nav-${tab.id}`}
-                  className={`rounded-full px-3.5 py-2 text-sm font-extrabold transition lofi-sharp-chip ${activeTab === tab.id ? 'bg-white text-[#4a3a2d] shadow-sm' : 'bg-white/8 text-white/95 hover:bg-white/16'}`}
+                  className={`desktop-nav-item rounded-full px-4 py-2 text-sm font-extrabold transition lofi-sharp-chip ${isActive ? 'desktop-nav-item-active bg-white text-[#4a3a2d] shadow-sm' : 'bg-white/8 text-white/95'}`}
                   onClick={() => navigateToTab(tab.id)}
                   type="button"
                 >
+                  <div className="desktop-nav-btn-glow" />
                   {tab.label}
+                  <div className="desktop-nav-active-glow" />
                 </button>
-              ))}
+                );
+              })}
             </div>
             <div className={`site-nav-actions flex w-full flex-wrap items-center gap-2 lg:justify-end xl:w-auto xl:max-w-[34rem] xl:flex-none ${isPcInterface ? 'xl:flex-nowrap' : ''}`}>
               {user ? (
