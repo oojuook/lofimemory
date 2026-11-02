@@ -1377,11 +1377,29 @@ function clampCompanionPosition(size, x, y, containerWidth, containerHeight, isV
 
 function CozyPanelFallback({ label = 'Loading cozy space...' }) {
   return (
-    <div className="flex min-h-[220px] items-center justify-center rounded-[2rem] border border-[#e8dfd5] bg-white/75 px-6 py-10 text-[#6f5948] shadow-sm backdrop-blur">
-      <div className="inline-flex items-center gap-3 rounded-full border border-amber-200/50 bg-[#fffaf2] px-5 py-3 text-sm font-extrabold shadow-sm">
+    <div className="cozy-panel-fallback flex min-h-[240px] flex-col justify-center rounded-[2rem] border border-[#e8dfd5] bg-white/78 px-5 py-8 text-[#6f5948] shadow-sm backdrop-blur sm:px-6 sm:py-10">
+      <div className="cozy-panel-fallback-pill inline-flex w-fit items-center gap-3 rounded-full border border-amber-200/60 bg-[#fffaf2] px-5 py-3 text-sm font-extrabold shadow-sm">
         <Leaf className="h-5 w-5 animate-pulse text-[#8e7159]" />
         {label}
       </div>
+      <div className="mt-6 grid gap-3 sm:grid-cols-3">
+        <div className="cozy-panel-skeleton rounded-[1.5rem] border border-white/70 bg-white/70 p-4 shadow-sm">
+          <div className="cozy-panel-skeleton-line h-3 w-24 rounded-full" />
+          <div className="cozy-panel-skeleton-line mt-4 h-10 w-full rounded-[1rem]" />
+          <div className="cozy-panel-skeleton-line mt-3 h-3 w-3/4 rounded-full" />
+        </div>
+        <div className="cozy-panel-skeleton rounded-[1.5rem] border border-white/70 bg-white/70 p-4 shadow-sm">
+          <div className="cozy-panel-skeleton-line h-3 w-20 rounded-full" />
+          <div className="cozy-panel-skeleton-line mt-4 h-16 w-full rounded-[1.2rem]" />
+          <div className="cozy-panel-skeleton-line mt-3 h-3 w-2/3 rounded-full" />
+        </div>
+        <div className="cozy-panel-skeleton rounded-[1.5rem] border border-white/70 bg-white/70 p-4 shadow-sm">
+          <div className="cozy-panel-skeleton-line h-3 w-16 rounded-full" />
+          <div className="cozy-panel-skeleton-line mt-4 h-12 w-full rounded-[1rem]" />
+          <div className="cozy-panel-skeleton-line mt-3 h-3 w-4/5 rounded-full" />
+        </div>
+      </div>
+      <p className="mt-5 text-xs font-semibold uppercase tracking-[0.18em] text-[#9b816b]">Preparing a softer space for you…</p>
     </div>
   );
 }
@@ -1437,7 +1455,7 @@ class CozyPanelErrorBoundary extends React.Component {
 function LazyTabPanel({ children, label, resetKey, title, description }) {
   return (
     <CozyPanelErrorBoundary description={description} resetKey={resetKey} title={title}>
-      <div className="tab-panel-enter">
+      <div className="tab-panel-shell tab-panel-enter">
         <Suspense fallback={<CozyPanelFallback label={label} />}>{children}</Suspense>
       </div>
     </CozyPanelErrorBoundary>

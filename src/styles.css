@@ -979,8 +979,14 @@ input::placeholder {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lofi-equalizer span {
+  .lofi-equalizer span,
+  .tab-panel-enter,
+  .cozy-panel-skeleton::after,
+  .mobile-nav-item,
+  .desktop-nav-item,
+  .lofi-logo-shell {
     animation: none;
+    transition: none;
   }
 }
 
@@ -1242,8 +1248,64 @@ input::placeholder {
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes panelShimmer {
+  0% { background-position: 120% 0; }
+  100% { background-position: -20% 0; }
+}
+
+.tab-panel-shell {
+  position: relative;
+}
+
+.tab-panel-shell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 2rem;
+  background: radial-gradient(circle at top, rgba(255,255,255,0.14), transparent 55%);
+  opacity: 0.65;
+  pointer-events: none;
+}
+
 .tab-panel-enter {
   animation: panelSlideUp 480ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.cozy-panel-fallback {
+  position: relative;
+  overflow: hidden;
+}
+
+.cozy-panel-fallback::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.3), transparent 55%);
+  pointer-events: none;
+}
+
+.cozy-panel-fallback-pill {
+  position: relative;
+  z-index: 1;
+}
+
+.cozy-panel-skeleton {
+  position: relative;
+  overflow: hidden;
+}
+
+.cozy-panel-skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.55) 40%, transparent 80%);
+  background-size: 200% 100%;
+  animation: panelShimmer 1.7s linear infinite;
+  pointer-events: none;
+}
+
+.cozy-panel-skeleton-line {
+  background: linear-gradient(90deg, rgba(236,225,212,0.92), rgba(248,242,234,0.98), rgba(236,225,212,0.92));
 }
 
 /* Mobile Nav Polish */
