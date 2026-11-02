@@ -1503,6 +1503,7 @@ function App() {
   const [selectedGameDifficulty, setSelectedGameDifficulty] = useState('medium');
   const selectedGameInterfaceRef = useRef(null);
   const shouldAutoScrollToGameRef = useRef(false);
+  const gameTransitionTimerRef = useRef(null);
   const [isRadioPlaying, setIsRadioPlaying] = useState(true);
   const [radioVolume, setRadioVolume] = useState(35);
   const [selectedBreatheRoom, setSelectedBreatheRoom] = useState('lofi');
@@ -1832,30 +1833,25 @@ function App() {
   const isPhoneInterface = interfaceMode === 'phone';
   const isPcInterface = interfaceMode === 'pc';
 
-    const selectUnwindGame = (gameId) => { 
+    const selectUnwindGame = (gameId) => {
+      if (gameTransitionTimerRef.current) {
+        window.clearTimeout(gameTransitionTimerRef.current);
+      }
 
+      setShowEntryTransition(false);
+      setEntryTransitionClosing(false);
+      setActiveTab('unwind');
       setActiveTransitionGameId(gameId);
-
       setIsGameTransitioning(true);
+      setSelectedUnwindGame(gameId);
+      setUnwindViewMode('detail');
+      shouldAutoScrollToGameRef.current = true;
+      window.scrollTo({ top: 0, behavior: 'instant' });
 
-      
-
-      window.setTimeout(() => {
-
-        setSelectedUnwindGame(gameId);
-
-        setUnwindViewMode('detail');
-
+      gameTransitionTimerRef.current = window.setTimeout(() => {
         setIsGameTransitioning(false);
-
-        shouldAutoScrollToGameRef.current = true;
-
-        // Scroll immediately to make reveal smooth
-
-        window.scrollTo({ top: 0, behavior: 'instant' });
-
-      }, 1400);
-
+        gameTransitionTimerRef.current = null;
+      }, 700);
     };
 
   
@@ -1876,6 +1872,14 @@ function App() {
       });
     }, 80);
   };
+
+  useEffect(() => {
+    return () => {
+      if (gameTransitionTimerRef.current) {
+        window.clearTimeout(gameTransitionTimerRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (!shouldAutoScrollToGameRef.current || activeTab !== 'unwind' || unwindViewMode !== 'detail') {
