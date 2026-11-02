@@ -5193,7 +5193,7 @@ function App() {
         </Suspense>
       )}
 
-      <section id="journal" ref={activeTabPanelRef} className="relative z-10 mx-auto -mt-1 max-w-[1280px] px-5 py-9 pb-28 sm:px-7 lg:-mt-4 lg:pb-10 xl:px-10">
+      <section id="journal" className="relative z-10 mx-auto -mt-1 max-w-[1280px] px-5 py-9 pb-28 sm:px-7 lg:-mt-4 lg:pb-10 xl:px-10">
         <div className="lofi-picture-border lofi-border-watercolor mb-6 overflow-hidden rounded-[3rem] border border-white/85 bg-gradient-to-r from-white/88 via-sage-50/78 to-sand-50/75 p-3 shadow-soft backdrop-blur xl:p-4">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-2xl">
@@ -5224,6 +5224,7 @@ function App() {
           </div>
         </div>
 
+        <div ref={activeTabPanelRef} className="scroll-mt-24 sm:scroll-mt-32">
         {activeTab === 'write' && (
           <LazyTabPanel
             label="Opening your quiet page..."
@@ -5494,6 +5495,7 @@ function App() {
             />
           </LazyTabPanel>
         )}
+        </div>
       </section>
 
 {activeTab === 'home' && (
