@@ -1502,6 +1502,8 @@ function App() {
   ];
   const [selectedGameDifficulty, setSelectedGameDifficulty] = useState('medium');
   const selectedGameInterfaceRef = useRef(null);
+  const activeTabPanelRef = useRef(null);
+  const shouldAutoScrollToTabRef = useRef(false);
   const shouldAutoScrollToGameRef = useRef(false);
   const gameTransitionTimerRef = useRef(null);
   const [isRadioPlaying, setIsRadioPlaying] = useState(true);
@@ -1846,7 +1848,8 @@ function App() {
       setSelectedUnwindGame(gameId);
       setUnwindViewMode('detail');
       shouldAutoScrollToGameRef.current = true;
-      window.scrollTo({ top: 0, behavior: 'instant' });
+      shouldAutoScrollToTabRef.current = false;
+      window.scrollTo({ top: 0, behavior: 'auto' });
 
       gameTransitionTimerRef.current = window.setTimeout(() => {
         setIsGameTransitioning(false);
@@ -1880,6 +1883,22 @@ function App() {
       }
     };
   }, []);
+
+  useEffect(() => {
+    if (!shouldAutoScrollToTabRef.current || activeTab === 'home' || activeTab === 'design') {
+      return undefined;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      activeTabPanelRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+      shouldAutoScrollToTabRef.current = false;
+    }, 60);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [activeTab]);
 
   useEffect(() => {
     if (!shouldAutoScrollToGameRef.current || activeTab !== 'unwind' || unwindViewMode !== 'detail') {
@@ -2026,9 +2045,11 @@ function App() {
     setShowEntryTransition(false);
     setEntryTransitionClosing(false);
     if (tabId === 'design') {
+      shouldAutoScrollToTabRef.current = false;
       setCustomizerOpen(true);
       return;
     }
+    shouldAutoScrollToTabRef.current = tabId !== 'home';
     setActiveTab(tabId);
     if (tabId === 'home') {
       setActiveHomeSection('overview');
@@ -2036,7 +2057,7 @@ function App() {
     if (tabId === 'unwind') {
       setUnwindViewMode('grid');
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: tabId === 'home' ? 'smooth' : 'auto' });
   }
 
   useEffect(() => {
@@ -2061,6 +2082,7 @@ function App() {
 
   function openHomeSection(sectionId = 'overview') {
     const nextSection = homeSectionMap[sectionId] || 'overview';
+    shouldAutoScrollToTabRef.current = false;
     setActiveTab('home');
     setActiveHomeSection(nextSection);
     setShowEntryTransition(false);
@@ -5139,7 +5161,7 @@ function App() {
         </Suspense>
       )}
 
-      <section id="journal" className="relative z-10 mx-auto -mt-1 max-w-[1280px] px-5 py-9 pb-28 sm:px-7 lg:-mt-4 lg:pb-10 xl:px-10">
+      <section id="journal" ref={activeTabPanelRef} className="relative z-10 mx-auto -mt-1 max-w-[1280px] px-5 py-9 pb-28 sm:px-7 lg:-mt-4 lg:pb-10 xl:px-10">
         <div className="lofi-picture-border lofi-border-watercolor mb-6 overflow-hidden rounded-[3rem] border border-white/85 bg-gradient-to-r from-white/88 via-sage-50/78 to-sand-50/75 p-3 shadow-soft backdrop-blur xl:p-4">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-2xl">

@@ -22,6 +22,16 @@ export default function UnwindTab(props) {
     unwindViewMode
   } = props;
 
+  const safeUnwindGames = Array.isArray(unwindGames) ? unwindGames : [];
+  const safeDifficultyOptions = Array.isArray(difficultyOptions) ? difficultyOptions : [];
+  const safeSelectedDifficultyConfig = selectedDifficultyConfig || safeDifficultyOptions[0] || { label: 'Balanced', detail: 'Default setting' };
+  const safeSelectedUnwindGameConfig = selectedUnwindGameConfig || safeUnwindGames.find((game) => game.id === selectedUnwindGame) || {
+    title: 'Games',
+    description: 'Pick a calm browser game to begin.',
+    playingSpace: 'max-w-[980px]',
+    component: null
+  };
+
   return (
       <div id="game-library" className="mx-auto max-w-[1280px] px-2 py-5 sm:px-4 sm:py-8 lg:px-6 lg:py-14 fade-in">
         {unwindViewMode === 'detail' && (
@@ -43,8 +53,8 @@ export default function UnwindTab(props) {
                 <div className={`flex flex-col gap-4 ${isFullscreen ? 'lg:flex-row lg:items-start lg:justify-between' : 'xl:flex-row xl:items-center xl:justify-between'}`}>
                   <div className="min-w-0">
                     <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${gameVisualTheme === 'lofi' ? 'text-amber-800/80' : 'text-sage-600'}`}>Now playing</p>
-                    <h1 className={`mt-2 font-display font-bold tracking-tight ${isFullscreen ? 'text-3xl sm:text-4xl' : 'text-4xl'} ${gameVisualTheme === 'lofi' ? 'text-[#3d3025]' : 'text-sage-950'}`}>{selectedUnwindGameConfig.title}</h1>
-                    <p className={`mt-2 max-w-2xl text-sm leading-7 ${isFullscreen ? 'hidden sm:block' : ''} ${gameVisualTheme === 'lofi' ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>{selectedUnwindGameConfig.description}</p>
+                    <h1 className={`mt-2 font-display font-bold tracking-tight ${isFullscreen ? 'text-3xl sm:text-4xl' : 'text-4xl'} ${gameVisualTheme === 'lofi' ? 'text-[#3d3025]' : 'text-sage-950'}`}>{safeSelectedUnwindGameConfig.title}</h1>
+                    <p className={`mt-2 max-w-2xl text-sm leading-7 ${isFullscreen ? 'hidden sm:block' : ''} ${gameVisualTheme === 'lofi' ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>{safeSelectedUnwindGameConfig.description}</p>
                   </div>
                   <div className={`flex w-full flex-col gap-2 ${isFullscreen ? 'lg:max-w-[36rem] lg:items-end' : 'xl:max-w-[32rem] xl:items-end'}`}>
                     <div className={`flex flex-wrap gap-2 ${isFullscreen ? 'lg:justify-end' : 'xl:justify-end'}`}>
@@ -74,7 +84,7 @@ export default function UnwindTab(props) {
                     </div>
                     <p className={`text-[11px] font-extrabold uppercase tracking-[0.2em] ${gameVisualTheme === 'lofi' ? 'text-amber-800/80' : 'text-sage-600'}`}>Difficulty in-game</p>
                     <div className={`flex flex-wrap gap-2 ${isFullscreen ? 'lg:justify-end' : 'xl:justify-end'}`}>
-                      {difficultyOptions.map((difficulty) => (
+                      {safeDifficultyOptions.map((difficulty) => (
                         <button
                           key={difficulty.id}
                           className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${selectedGameDifficulty === difficulty.id ? (gameVisualTheme === 'lofi' ? 'bg-[#4a3a2d] text-white shadow-sm' : 'bg-sage-900 text-white shadow-sm') : `border bg-white hover:bg-sage-50 ${gameVisualTheme === 'lofi' ? 'border-amber-200 text-[#4a3a2d]' : 'border-amber-200/50 text-sage-800'}`}`}
@@ -86,12 +96,12 @@ export default function UnwindTab(props) {
                         </button>
                       ))}
                     </div>
-                    <p className={`text-xs font-semibold ${gameVisualTheme === 'lofi' ? 'text-[#6e5a4a]' : 'text-sage-600'}`}>Current setting: {selectedDifficultyConfig.label} — {selectedDifficultyConfig.detail}</p>
+                    <p className={`text-xs font-semibold ${gameVisualTheme === 'lofi' ? 'text-[#6e5a4a]' : 'text-sage-600'}`}>Current setting: {safeSelectedDifficultyConfig.label} — {safeSelectedDifficultyConfig.detail}</p>
                   </div>
                 </div>
               </div>
               )}
-              <div className={`relative z-10 mx-auto w-full ${isFullscreen ? 'flex min-h-0 flex-1 max-w-none overflow-auto' : `mt-5 ${selectedUnwindGameConfig.playingSpace || 'max-w-[980px]'}`}`}>
+              <div className={`relative z-10 mx-auto w-full ${isFullscreen ? 'flex min-h-0 flex-1 max-w-none overflow-auto' : `mt-5 ${safeSelectedUnwindGameConfig.playingSpace || 'max-w-[980px]'}`}`}>
                 <React.Suspense fallback={
                   <div className="flex min-h-[320px] items-center justify-center rounded-[2rem] border border-[#c4b8a7]/40 bg-white/80 text-[#6f5948] backdrop-blur">
                     <div className="text-center">
@@ -100,7 +110,7 @@ export default function UnwindTab(props) {
                     </div>
                   </div>
                 }>
-                  {selectedUnwindGameConfig.component}
+                  {safeSelectedUnwindGameConfig.component}
                 </React.Suspense>
               </div>
             </div>
@@ -128,7 +138,7 @@ export default function UnwindTab(props) {
             )}
           </div>
           <div className="mb-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-            {unwindGames.map((game) => {
+            {safeUnwindGames.map((game) => {
               const isSelected = selectedUnwindGame === game.id;
               return (
                 <button
