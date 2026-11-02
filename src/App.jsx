@@ -4651,22 +4651,29 @@ function App() {
               { id: 'notes', label: 'Notes', icon: FileText },
               { id: 'breathe', label: 'Music', icon: Wind },
               { id: 'memories', label: 'Archive', icon: CalendarDays }
-            ].map((tab) => (
+            ].map((tab) => {
+              const isActive = activeTab === tab.id;
+              return (
               <button
                 key={tab.id}
-                className={`flex shrink-0 flex-col items-center gap-1 rounded-full px-2.5 py-2 transition-all duration-300 ${activeTab === tab.id ? 'bg-white/20 text-white shadow-inner scale-105' : 'text-white/70 hover:text-white'}`}
+                className={`mobile-nav-item flex shrink-0 flex-col items-center gap-1 rounded-full px-2.5 py-2 transition-all duration-300 ${isActive ? 'mobile-nav-item-active bg-white/20 text-white shadow-inner scale-105' : 'text-white/70 hover:text-white'}`}
                 onClick={() => navigateToTab(tab.id)}
               >
+                <div className="mobile-nav-glow" />
                 <tab.icon size={18} />
                 <span className="text-[9px] font-black uppercase tracking-wider">{tab.label}</span>
+                <div className="mobile-nav-active-indicator" />
               </button>
-            ))}
+              );
+            })}
             <button
-              className={`flex shrink-0 flex-col items-center gap-1 rounded-full px-2.5 py-2 transition-all duration-300 ${activeTab === 'design' ? 'bg-white/20 text-white shadow-inner scale-105' : 'text-white/70 hover:text-white'}`}
+              className={`mobile-nav-item flex shrink-0 flex-col items-center gap-1 rounded-full px-2.5 py-2 transition-all duration-300 ${activeTab === 'design' ? 'mobile-nav-item-active bg-white/20 text-white shadow-inner scale-105' : 'text-white/70 hover:text-white'}`}
               onClick={() => navigateToTab('design')}
             >
+              <div className="mobile-nav-glow" />
               <Palette size={18} />
               <span className="text-[9px] font-black uppercase tracking-wider">Design</span>
+              <div className="mobile-nav-active-indicator" />
             </button>
           </div>
         </div>
