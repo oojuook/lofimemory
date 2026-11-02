@@ -1437,7 +1437,9 @@ class CozyPanelErrorBoundary extends React.Component {
 function LazyTabPanel({ children, label, resetKey, title, description }) {
   return (
     <CozyPanelErrorBoundary description={description} resetKey={resetKey} title={title}>
-      <Suspense fallback={<CozyPanelFallback label={label} />}>{children}</Suspense>
+      <div className="tab-panel-enter">
+        <Suspense fallback={<CozyPanelFallback label={label} />}>{children}</Suspense>
+      </div>
     </CozyPanelErrorBoundary>
   );
 }
@@ -1895,7 +1897,7 @@ function App() {
         block: 'start'
       });
       shouldAutoScrollToTabRef.current = false;
-    }, 60);
+    }, 40);
 
     return () => window.clearTimeout(timeoutId);
   }, [activeTab]);
@@ -2053,11 +2055,11 @@ function App() {
     setActiveTab(tabId);
     if (tabId === 'home') {
       setActiveHomeSection('overview');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     if (tabId === 'unwind') {
       setUnwindViewMode('grid');
     }
-    window.scrollTo({ top: 0, behavior: tabId === 'home' ? 'smooth' : 'auto' });
   }
 
   useEffect(() => {
