@@ -254,13 +254,13 @@ export default function WriteTab(props) {
           {journalNudge}
         </div>
         <div className="flex flex-wrap gap-2">
-          <button className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/20" onClick={() => setActivePrompt(activePrompt || moodStarterPrompts[selectedMood] || prompts[0])} type="button">
+          <button className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/20 active:scale-95" onClick={() => setActivePrompt(activePrompt || moodStarterPrompts[selectedMood] || prompts[0])} type="button">
             <Sparkles size={15} /> {activePrompt ? 'Keep this prompt' : 'Use a gentle prompt'}
           </button>
-          <button className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/20" onClick={addStarterLine} type="button">
+          <button className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/20 active:scale-95" onClick={addStarterLine} type="button">
             <Feather size={15} /> Add a starter line
           </button>
-          <button className="inline-flex items-center gap-2 rounded-full border border-[#ffd7b5] bg-white px-5 py-3 text-sm font-black text-[#3d3025] shadow-lift transition hover:-translate-y-1 hover:bg-[#fffaf0]" type="submit">
+          <button className="inline-flex items-center gap-2 rounded-full border border-[#ffd7b5] bg-white px-5 py-3 text-sm font-black text-[#3d3025] shadow-lift transition-all duration-300 hover:-translate-y-1 hover:bg-[#fffaf0] hover:shadow-lg active:scale-95" type="submit">
             <Plus size={18} /> Save this page
           </button>
         </div>
@@ -320,13 +320,18 @@ export default function WriteTab(props) {
                 <p className="text-xl font-extrabold text-sage-950">{latestEntry.title || 'Untitled page'}</p>
                 <p className="mt-2 text-sm font-semibold leading-6 text-sage-700">{latestEntry.plainSnippet || 'You saved something soft today. You can always return to it.'}</p>
                 <div className="mt-4 flex flex-wrap gap-2">
-                  <button className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50" onClick={() => navigateToTab('memories')} type="button">
+                  <button className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-sage-50 hover:shadow-md active:scale-95" onClick={() => navigateToTab('memories')} type="button">
                     <BookOpen size={15} /> Visit your memories
                   </button>
                 </div>
               </div>
             ) : (
-              <p className="mt-3 text-sm font-semibold leading-6 text-sage-700">No saved pages yet. Even one sentence today is enough to begin softly.</p>
+              <div className="mt-3 rounded-[1.2rem] border border-[#e8dfd5] bg-white/60 p-4 shadow-sm backdrop-blur-sm">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-sage-100 text-sage-700">
+                  <Feather size={18} />
+                </div>
+                <p className="mt-3 text-sm font-semibold leading-6 text-sage-800">No saved pages yet. Even one sentence today is enough to begin softly.</p>
+              </div>
             )}
           </div>
           <div className="lofi-picture-border lofi-border-soft relative overflow-hidden rounded-[2.4rem] border border-[#8b5e3c]/20 bg-[#fff8ee] p-5 shadow-soft sm:p-6">

@@ -49,16 +49,16 @@ export default function UnwindTab(props) {
                 </>
               )}
               {!isFullscreen && (
-              <div className={`relative z-10 rounded-[1.7rem] border p-4 shadow-sm ${gameVisualTheme === 'lofi' ? 'border-amber-200/40 bg-white/60' : 'border-[#e8dfd5] bg-sage-50/55'}`}>
+              <div className={`relative z-10 rounded-[1.7rem] border p-4 shadow-sm transition-all duration-700 ${gameVisualTheme === 'lofi' ? 'border-amber-200/40 bg-white/60' : 'border-[#e8dfd5] bg-sage-50/55'}`}>
                 <div className={`flex flex-col gap-4 ${isFullscreen ? 'lg:flex-row lg:items-start lg:justify-between' : 'xl:flex-row xl:items-center xl:justify-between'}`}>
-                  <div className="min-w-0">
-                    <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] ${gameVisualTheme === 'lofi' ? 'text-amber-800/80' : 'text-sage-600'}`}>Now playing</p>
-                    <h1 className={`mt-2 font-display font-bold tracking-tight ${isFullscreen ? 'text-3xl sm:text-4xl' : 'text-4xl'} ${gameVisualTheme === 'lofi' ? 'text-[#3d3025]' : 'text-sage-950'}`}>{safeSelectedUnwindGameConfig.title}</h1>
-                    <p className={`mt-2 max-w-2xl text-sm leading-7 ${isFullscreen ? 'hidden sm:block' : ''} ${gameVisualTheme === 'lofi' ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>{safeSelectedUnwindGameConfig.description}</p>
+                  <div className="min-w-0 transition-opacity duration-500 delay-150">
+                    <p className={`text-[11px] font-extrabold uppercase tracking-[0.22em] transition-colors duration-500 ${gameVisualTheme === 'lofi' ? 'text-amber-800/80' : 'text-sage-600'}`}>Now playing</p>
+                    <h1 className={`mt-2 font-display font-bold tracking-tight transition-colors duration-500 ${isFullscreen ? 'text-3xl sm:text-4xl' : 'text-4xl'} ${gameVisualTheme === 'lofi' ? 'text-[#3d3025]' : 'text-sage-950'}`}>{safeSelectedUnwindGameConfig.title}</h1>
+                    <p className={`mt-2 max-w-2xl text-sm leading-7 transition-colors duration-500 ${isFullscreen ? 'hidden sm:block' : ''} ${gameVisualTheme === 'lofi' ? 'text-[#6e5a4a]' : 'text-sage-700'}`}>{safeSelectedUnwindGameConfig.description}</p>
                   </div>
                   <div className={`flex w-full flex-col gap-2 ${isFullscreen ? 'lg:max-w-[36rem] lg:items-end' : 'xl:max-w-[32rem] xl:items-end'}`}>
                     <div className={`flex flex-wrap gap-2 ${isFullscreen ? 'lg:justify-end' : 'xl:justify-end'}`}>
-                      <div className={`flex h-11 items-center gap-1 rounded-2xl border bg-white p-1 shadow-sm ${gameVisualTheme === 'lofi' ? 'border-amber-200' : 'border-amber-200/50'}`}>
+                      <div className={`flex h-11 items-center gap-1 rounded-2xl border bg-white p-1 shadow-sm transition-all duration-300 hover:shadow-md ${gameVisualTheme === 'lofi' ? 'border-amber-200' : 'border-amber-200/50'}`}>
                         {[
                           { id: 'original', label: 'Original', icon: Sparkles },
                           { id: 'lofi', label: 'Lofi', icon: Moon }
@@ -66,41 +66,41 @@ export default function UnwindTab(props) {
                           <button
                             key={t.id}
                             onClick={() => setGameVisualTheme(t.id)}
-                            className={`flex items-center gap-2 rounded-xl px-3 py-1.5 text-xs font-black uppercase tracking-widest transition ${gameVisualTheme === t.id ? (t.id === 'lofi' ? 'bg-[#4a3a2d] text-white shadow-sm' : 'bg-sage-900 text-white shadow-sm') : 'text-sage-500 hover:bg-sage-50'}`}
+                            className={`flex items-center gap-2 rounded-xl px-3 py-1.5 text-xs font-black uppercase tracking-widest transition-all duration-300 active:scale-95 ${gameVisualTheme === t.id ? (t.id === 'lofi' ? 'bg-[#4a3a2d] text-white shadow-sm' : 'bg-sage-900 text-white shadow-sm') : 'text-sage-500 hover:bg-sage-50'}`}
                             type="button"
                           >
                             <t.icon size={13} /> {t.label}
                           </button>
                         ))}
                       </div>
-                      <button onClick={toggleFullscreen} className={`flex h-11 items-center gap-2 rounded-2xl border bg-white px-5 text-sm font-bold shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50 ${gameVisualTheme === 'lofi' ? 'border-amber-200 text-[#4a3a2d]' : 'border-amber-200/50 text-sage-700'}`} type="button">
-                        {isFullscreen ? <ArrowUp size={16} className="rotate-180" /> : <ArrowUp size={16} />}
+                      <button onClick={toggleFullscreen} className={`flex h-11 items-center gap-2 rounded-2xl border bg-white px-5 text-sm font-bold shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-sage-50 hover:shadow-md active:scale-95 ${gameVisualTheme === 'lofi' ? 'border-amber-200 text-[#4a3a2d]' : 'border-amber-200/50 text-sage-700'}`} type="button">
+                        {isFullscreen ? <ArrowUp size={16} className="rotate-180 transition-transform duration-300" /> : <ArrowUp size={16} className="transition-transform duration-300" />}
                         {isFullscreen ? 'Exit full' : 'Full screen'}
                       </button>
-                      <button onClick={returnToGameLibrary} className={`flex h-11 items-center gap-2 rounded-2xl border bg-white px-5 text-sm font-bold shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50 ${gameVisualTheme === 'lofi' ? 'border-amber-200 text-[#4a3a2d]' : 'border-amber-200/50 text-sage-700'}`} type="button">
-                        <Gamepad2 size={16} />
+                      <button onClick={returnToGameLibrary} className={`flex h-11 items-center gap-2 rounded-2xl border bg-white px-5 text-sm font-bold shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-sage-50 hover:shadow-md active:scale-95 ${gameVisualTheme === 'lofi' ? 'border-amber-200 text-[#4a3a2d]' : 'border-amber-200/50 text-sage-700'}`} type="button">
+                        <Gamepad2 size={16} className="transition-transform duration-300 group-hover:scale-110" />
                         Back to games
                       </button>
                     </div>
-                    <p className={`text-[11px] font-extrabold uppercase tracking-[0.2em] ${gameVisualTheme === 'lofi' ? 'text-amber-800/80' : 'text-sage-600'}`}>Difficulty in-game</p>
+                    <p className={`mt-1 text-[11px] font-extrabold uppercase tracking-[0.2em] transition-colors duration-500 ${gameVisualTheme === 'lofi' ? 'text-amber-800/80' : 'text-sage-600'}`}>Difficulty in-game</p>
                     <div className={`flex flex-wrap gap-2 ${isFullscreen ? 'lg:justify-end' : 'xl:justify-end'}`}>
                       {safeDifficultyOptions.map((difficulty) => (
                         <button
                           key={difficulty.id}
-                          className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${selectedGameDifficulty === difficulty.id ? (gameVisualTheme === 'lofi' ? 'bg-[#4a3a2d] text-white shadow-sm' : 'bg-sage-900 text-white shadow-sm') : `border bg-white hover:bg-sage-50 ${gameVisualTheme === 'lofi' ? 'border-amber-200 text-[#4a3a2d]' : 'border-amber-200/50 text-sage-800'}`}`}
+                          className={`rounded-full px-4 py-2 text-sm font-extrabold transition-all duration-300 active:scale-95 hover:shadow-md ${selectedGameDifficulty === difficulty.id ? (gameVisualTheme === 'lofi' ? 'bg-[#4a3a2d] text-white shadow-sm' : 'bg-sage-900 text-white shadow-sm hover:-translate-y-0.5') : `border bg-white hover:-translate-y-0.5 hover:bg-sage-50 ${gameVisualTheme === 'lofi' ? 'border-amber-200 text-[#4a3a2d]' : 'border-amber-200/50 text-sage-800'}`}`}
                           onClick={() => setSelectedGameDifficulty(difficulty.id)}
                           type="button"
                         >
                           {difficulty.label}
-                          <span className={`ml-2 text-[10px] uppercase tracking-[0.18em] ${selectedGameDifficulty === difficulty.id ? 'text-white/90' : (gameVisualTheme === 'lofi' ? 'text-amber-800/70' : 'text-sage-500')}`}>{difficulty.detail}</span>
+                          <span className={`ml-2 text-[10px] uppercase tracking-[0.18em] transition-colors duration-300 ${selectedGameDifficulty === difficulty.id ? 'text-white/90' : (gameVisualTheme === 'lofi' ? 'text-amber-800/70' : 'text-sage-500')}`}>{difficulty.detail}</span>
                         </button>
                       ))}
                     </div>
-                    <p className={`text-xs font-semibold ${gameVisualTheme === 'lofi' ? 'text-[#6e5a4a]' : 'text-sage-600'}`}>Current setting: {safeSelectedDifficultyConfig.label} — {safeSelectedDifficultyConfig.detail}</p>
                   </div>
                 </div>
               </div>
               )}
+
               <div className={`relative z-10 mx-auto w-full ${isFullscreen ? 'flex min-h-0 flex-1 max-w-none overflow-auto' : `mt-5 ${safeSelectedUnwindGameConfig.playingSpace || 'max-w-[980px]'}`}`}>
                 <React.Suspense fallback={
                   <div className="flex min-h-[320px] items-center justify-center rounded-[2rem] border border-[#c4b8a7]/40 bg-white/80 text-[#6f5948] backdrop-blur">
