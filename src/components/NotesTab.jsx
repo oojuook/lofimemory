@@ -302,11 +302,17 @@ export default function NotesTab(props) {
                 </div>
               );
             }) : (
-              <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[1.4rem] border border-[#8b5e3c]/25 p-5 shadow-sm backdrop-blur-xl">
-                <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-60" aria-hidden="true" />
-                <div className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/25 to-black/15" />
-                <div className="relative z-10 text-sm font-semibold leading-6 text-white lofi-sharp-text">
-                  No tasks match this view yet. Try another filter or add a new task with a priority, due date, or recurring rhythm.
+              <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[1.4rem] border border-[#8b5e3c]/25 p-6 sm:p-8 shadow-sm backdrop-blur-xl transition-all duration-500">
+                <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-[0.25]" aria-hidden="true" />
+                <div className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/35 to-black/15" />
+                <div className="relative z-10 flex flex-col items-center justify-center text-center">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-[1.2rem] bg-white/10 text-white/80 shadow-sm backdrop-blur-md border border-white/20">
+                    <FileText size={22} />
+                  </div>
+                  <h3 className="mt-4 text-xl font-bold tracking-tight text-white lofi-sharp-text">No notes here right now.</h3>
+                  <p className="mt-2 text-sm font-semibold leading-6 text-white/85 max-w-sm lofi-sharp-text-soft">
+                    You can switch filters or use the bar above to add a new task, reminder, or thought you want to keep track of.
+                  </p>
                 </div>
               </div>
             )}

@@ -312,7 +312,20 @@ export default function MemoriesTab(props) {
           </div>
         </div>
         <div className="relative z-10 flex-1 space-y-4 overflow-y-auto pr-0 min-h-[24rem] sm:min-h-[32rem] sm:pr-2 xl:min-h-0 lofi-scrollbar">
-          {!archiveEntries.length && <p className="rounded-3xl border border-white/20 bg-black/20 p-5 font-semibold leading-7 text-white backdrop-blur-md shadow-sm">No {memoriesCategoryFilter === 'all' ? '' : memoriesCategoryFilter} entries yet. Start with one sentence if that is all you have today.</p>}
+          {!archiveEntries.length && (
+            <div className="lofi-picture-border lofi-border-memory relative mt-4 overflow-hidden rounded-[1.4rem] border border-[#8b5e3c]/25 p-6 sm:p-8 shadow-sm backdrop-blur-md transition-all duration-500">
+              <div className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/35 to-black/15" />
+              <div className="relative z-10 flex flex-col items-center justify-center text-center">
+                <div className="flex h-14 w-14 items-center justify-center rounded-[1.2rem] bg-white/10 text-white/80 shadow-sm backdrop-blur-md border border-white/20">
+                  <CalendarDays size={22} />
+                </div>
+                <h3 className="mt-4 text-xl font-bold tracking-tight text-white lofi-sharp-text">No saved entries match this view.</h3>
+                <p className="mt-2 text-sm font-semibold leading-6 text-white/85 max-w-sm lofi-sharp-text-soft">
+                  Change the filter above, or go back to the Diary to capture a new moment.
+                </p>
+              </div>
+            </div>
+          )}
           {archiveEntries.map((entry) => {
             const effectiveMoodLabel = { 'Grounded': 'Happy', 'Soft': 'Calm', 'Okay': 'Neutral', 'Heavy': 'Sad', 'Stormy': 'Anxious' }[entry.mood] || entry.mood;
             const mood = weatherOptions.find((item) => item.label === effectiveMoodLabel) || weatherOptions.find(m => m.label === entry.mood) || moods[2];
