@@ -208,7 +208,7 @@ export default function HomeDesignPanel(props) {
       text="These guides and short reflections help visitors begin private journaling with more clarity and curiosity."
     />
     <div className="grid gap-5 md:grid-cols-2">
-      {wellnessArticles.map((article, index) => (
+      {wellnessArticles.map((article) => (
         article.href ? (
           <a href={article.href} className="customizable-card rounded-3xl border border-amber-200/50 bg-white/80 p-6 shadow-lift backdrop-blur transition md:hover:-translate-y-1 hover:bg-white/95 text-left block" key={article.title}>
             <div className="mb-4 flex items-center justify-between gap-4">

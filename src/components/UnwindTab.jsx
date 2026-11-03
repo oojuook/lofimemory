@@ -10,7 +10,6 @@ export default function UnwindTab(props) {
     getTapActionProps,
     isFullscreen,
     returnToGameLibrary,
-    selectedDifficultyConfig,
     selectedGameDifficulty,
     selectedGameInterfaceRef,
     selectedUnwindGame,
@@ -25,7 +24,6 @@ export default function UnwindTab(props) {
 
   const safeUnwindGames = Array.isArray(unwindGames) ? unwindGames : [];
   const safeDifficultyOptions = Array.isArray(difficultyOptions) ? difficultyOptions : [];
-  const safeSelectedDifficultyConfig = selectedDifficultyConfig || safeDifficultyOptions[0] || { label: 'Balanced', detail: 'Default setting' };
   const safeSelectedUnwindGameConfig = selectedUnwindGameConfig || safeUnwindGames.find((game) => game.id === selectedUnwindGame) || {
     title: 'Games',
     description: 'Pick a calm browser game to begin.',

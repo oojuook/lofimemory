@@ -2,10 +2,8 @@ import React, { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useStat
 import radioVinylIcon from './assets/optimized/lofi-radio-vinyl.webp';
 import minesweeperIconImage from './assets/optimized/minesweeper-icon.webp';
 import solitaireIconImage from './assets/optimized/solitaire-icon.webp';
-import solitairePreviewImage from './assets/optimized/solitaire-preview.webp';
 import sudokuIconImage from './assets/optimized/sudoku-icon.webp';
 import wordleIconImage from './assets/optimized/wordle-icon.webp';
-import dinoDashPreviewImage from './assets/optimized/dino-dash-preview.webp';
 import dinoDashIconImage from './assets/optimized/dino-dash-icon.webp';
 import rainWallpaperImage from './assets/optimized/rain-wallpaper.webp';
 import fireWallpaperImage from './assets/optimized/fire-wallpaper.webp';
@@ -13,7 +11,6 @@ import lofiRoomWallpaperImage from './assets/optimized/lofi-room-wallpaper.webp'
 import maplestoryThemeWallpaperImage from './assets/optimized/maplestory-theme-wallpaper.webp';
 import hogwartsMusicRoomImage from './assets/optimized/hogwarts-music-room.webp';
 import lofiMemoryHeaderImage from './assets/optimized/lofi-memory-header.webp';
-import lotusMatchPreviewImage from './assets/optimized/lotus-match-preview.webp';
 import gamesSectionPreviewImage from './assets/optimized/games-section-preview.webp';
 import diarySectionPreviewImage from './assets/optimized/diary-section-preview.webp';
 import notesSectionPreviewImage from './assets/optimized/notes-section-preview.webp';
@@ -48,26 +45,20 @@ import {
   CloudRain,
   CloudSun,
   Compass,
-  Feather,
-  Eye,
-  EyeOff,
   FileText,
   Gamepad2,
   Grid2x2,
   Heart,
   HeartHandshake,
   ImagePlus,
-  Layers,
   Leaf,
   Lock,
   Mail,
   Map,
   Keyboard,
-  Moon,
   Newspaper,
   Palette,
   PenLine,
-  Plus,
   Puzzle,
   Quote,
   Scale,
@@ -75,12 +66,10 @@ import {
   ShieldCheck,
   Sparkles,
   Sunrise,
-  Trash2,
   TreePine,
   Type,
   Waves,
   Wind,
-  Zap,
   Flame,
 } from 'lucide-react';
 import WriteTab from './components/WriteTab';
@@ -649,62 +638,6 @@ const designStyles = [
   { id: 'playful', name: 'Playful Calm', description: 'Bubbly shapes with a lighter mood.', radius: '2.25rem', texture: 'radial-gradient(circle at 15% 20%, rgba(255,255,255,0.55), transparent 28%)' }
 ];
 
-const quoteCardColors = [
-  { name: 'Forest', value: '#45643b' },
-  { name: 'Lavender', value: '#6f5c99' },
-  { name: 'Ocean', value: '#2f7585' },
-  { name: 'Clay', value: '#9a6847' },
-  { name: 'Rose', value: '#9b5f6b' },
-  { name: 'Charcoal', value: '#2f3a37' }
-];
-
-const journalAtmospherePresets = [
-  {
-    id: 'quiet-morning',
-    name: 'Quiet Morning',
-    note: 'Warm light, elegant words, and a steady pace.',
-    themeId: 'sunrise',
-    designId: 'soft',
-    quoteBg: '#9a6847',
-    journalFontId: 'serif',
-    quoteFontId: 'serif',
-    companionAnimation: 'float'
-  },
-  {
-    id: 'rainy-window',
-    name: 'Rainy Window',
-    note: 'Cool tones for slower thoughts and softer check-ins.',
-    themeId: 'ocean',
-    designId: 'editorial',
-    quoteBg: '#2f7585',
-    journalFontId: 'serif',
-    quoteFontId: 'sans',
-    companionAnimation: 'wave'
-  },
-  {
-    id: 'soft-night',
-    name: 'Soft Night',
-    note: 'A gentle evening mood for deeper reflection.',
-    themeId: 'lavender',
-    designId: 'editorial',
-    quoteBg: '#6f5c99',
-    journalFontId: 'sans',
-    quoteFontId: 'serif',
-    companionAnimation: 'breathe'
-  },
-  {
-    id: 'golden-dusk',
-    name: 'Golden Dusk',
-    note: 'Cozy warmth when you want the page to feel personal.',
-    themeId: 'rose',
-    designId: 'playful',
-    quoteBg: '#9b5f6b',
-    journalFontId: 'hand',
-    quoteFontId: 'hand',
-    companionAnimation: 'bounce'
-  }
-];
-
 const breatheRoomOptions = [
   {
     id: 'rain',
@@ -909,20 +842,6 @@ function WordleImageIcon(props) {
 function DinoDashImageIcon(props) {
   return <ImageGameIcon {...props} alt="Dino Dash icon" src={dinoDashIconImage} />;
 }
-
-function DinosaurIcon({ size = 18 }) {
-  return (
-    <span aria-hidden="true" className="relative inline-block" style={{ width: size + 10, height: size + 6 }}>
-      <span className="absolute left-[0.42em] top-[0.16em] h-[0.62em] w-[0.72em] rounded-[0.12em] bg-current" />
-      <span className="absolute left-[0.9em] top-[0.02em] h-[0.18em] w-[0.18em] rounded-full bg-white" />
-      <span className="absolute left-[0.08em] top-[0.7em] h-[0.52em] w-[1.05em] rounded-[0.18em] bg-current" />
-      <span className="absolute left-0 top-[0.82em] h-[0.18em] w-[0.5em] -rotate-12 rounded-full bg-current" />
-      <span className="absolute left-[0.42em] top-[1.15em] h-[0.46em] w-[0.16em] rounded-full bg-current" />
-      <span className="absolute left-[0.78em] top-[1.15em] h-[0.38em] w-[0.16em] rounded-full bg-current" />
-    </span>
-  );
-}
-
 
 function getForecastVisuals(forecast) {
   const weatherCode = typeof forecast === 'object' ? forecast?.weatherCode : forecast;
@@ -1419,12 +1338,6 @@ class CozyPanelErrorBoundary extends React.Component {
     console.error('Cozy panel render failed', error, errorInfo);
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.resetKey !== this.props.resetKey && this.state.hasError) {
-      this.setState({ hasError: false });
-    }
-  }
-
   handleRetry() {
     this.setState({ hasError: false });
   }
@@ -1454,7 +1367,7 @@ class CozyPanelErrorBoundary extends React.Component {
 
 function LazyTabPanel({ children, label, resetKey, title, description }) {
   return (
-    <CozyPanelErrorBoundary description={description} resetKey={resetKey} title={title}>
+    <CozyPanelErrorBoundary key={resetKey} description={description} title={title}>
       <div className="tab-panel-shell tab-panel-enter">
         <Suspense fallback={<CozyPanelFallback label={label} />}>{children}</Suspense>
       </div>
@@ -1537,12 +1450,9 @@ function App() {
   const [radioNeedsInteraction, setRadioNeedsInteraction] = useState(false);
   const [radioStatusMessage, setRadioStatusMessage] = useState('Auto-starting lofi radio');
   const [plannerNoteSearch, setPlannerNoteSearch] = useState('');
-  const [customQuotes, setCustomQuotes] = useState(getInitialCustomQuotes);
-  const [customQuoteDraft, setCustomQuoteDraft] = useState('');
+  const [customQuotes] = useState(getInitialCustomQuotes);
   const [quoteStyle, setQuoteStyle] = useState(getInitialQuoteStyle);
   const [journalStyle, setJournalStyle] = useState(getInitialJournalStyle);
-  const [petHappiness, setPetHappiness] = useState(60);
-  const [petTreats, setPetTreats] = useState(0);
   const [petMood, setPetMood] = useState('walking');
   const [importantDates, setImportantDates] = useState(getInitialImportantDates);
   const [importanceModalOpen, setImportanceModalOpen] = useState(false);
@@ -1559,11 +1469,11 @@ function App() {
     if (typeof window === 'undefined') return 'Push setup not started.';
     return localStorage.getItem(WEB_PUSH_STATUS_STORAGE_KEY) || 'Push setup not started.';
   });
-  const [webPushTokenReady, setWebPushTokenReady] = useState(false);
+  const [, setWebPushTokenReady] = useState(false);
   const [serviceWorkerReady, setServiceWorkerReady] = useState(false);
-  const [petPosition, setPetPosition] = useState({ x: 20, y: 40 });
+  const [, setPetPosition] = useState({ x: 20, y: 40 });
   const [petDirection, setPetDirection] = useState(1);
-  const [petBubble, setPetBubble] = useState('');
+  const [, setPetBubble] = useState('');
   const [selectedEntry, setSelectedEntry] = useState(null);
   const [calendarMonth, setCalendarMonth] = useState(() => initialCalendarDate.slice(0, 7));
   const [selectedCalendarDate, setSelectedCalendarDate] = useState(initialCalendarDate);
@@ -1655,20 +1565,6 @@ function App() {
     { id: 'easy', label: 'Easy', detail: 'Slow and forgiving' },
     { id: 'medium', label: 'Medium', detail: 'Balanced chill' },
     { id: 'hard', label: 'Hard', detail: 'Sharper focus' }
-  ];
-  const chillResearchHighlights = [
-    {
-      title: 'What people like to play to unwind',
-      text: 'Puzzle, memory, and low-pressure endless games are some of the most common comfort picks when people want to relax without a huge learning curve.'
-    },
-    {
-      title: 'What helps people slow down',
-      text: 'Music, deep breathing, short walks, journaling, and simple repeatable games all show up again and again as go-to stress relievers.'
-    },
-    {
-      title: 'What Lofi Memory is leaning into',
-      text: 'Cozy logic, soft movement, quick resets, and calm transitions between playing, breathing, planning, and writing.'
-    }
   ];
   const unwindGames = [
     {
@@ -1852,7 +1748,6 @@ function App() {
   ];
   const selectedUnwindGameConfig = unwindGames.find((game) => game.id === selectedUnwindGame) || unwindGames[0];
   const transitioningGameConfig = unwindGames.find((game) => game.id === activeTransitionGameId) || null;
-  const selectedDifficultyConfig = difficultyOptions.find((difficulty) => difficulty.id === selectedGameDifficulty) || difficultyOptions[1];
   const isPhoneInterface = interfaceMode === 'phone';
   const isPcInterface = interfaceMode === 'pc';
 
@@ -2065,7 +1960,6 @@ function App() {
   const activeJournalSize = journalSizeOptions.find((size) => size.id === journalStyle.sizeId)?.value || journalSizeOptions[1].value;
   const companionIsVideo = String(companion.character || '').startsWith('data:video');
   const companionIsUploadedMedia = String(companion.character || '').startsWith('data:') || String(companion.character || '').startsWith('http');
-  const { width: companionFrameWidth, height: companionFrameHeight } = getCompanionFrameDimensions(companion.size, companionIsVideo, companionIsUploadedMedia);
   const themeStyle = {
     '--accent': selectedTheme === 'custom' ? customColor : activeTheme.accent,
     '--accent-soft': selectedTheme === 'custom' ? '#f4f1ec' : activeTheme.soft,
@@ -2588,7 +2482,7 @@ function App() {
 
   useEffect(() => {
     return enableCompanionResize(companionMediaRef);
-  }, [companionSelected, companion.size, companion.x, companion.y, companionIsVideo, companionIsUploadedMedia]);
+  }, [enableCompanionResize]);
 
   useEffect(() => {
     const media = companionMediaRef.current;
@@ -2743,8 +2637,6 @@ function App() {
   const selectedDateDiaryEntries = selectedDateEntries.filter((entry) => (entry.entryType || 'diary') === 'diary');
   const selectedDateJournalEntries = selectedDateEntries.filter((entry) => (entry.entryType || 'diary') === 'journal');
   const archiveEntries = useMemo(() => entries.filter((entry) => memoriesCategoryFilter === 'all' || (entry.entryType || 'diary') === memoriesCategoryFilter), [entries, memoriesCategoryFilter]);
-  const archiveDiaryEntries = archiveEntries.filter((entry) => (entry.entryType || 'diary') === 'diary');
-  const archiveJournalEntries = archiveEntries.filter((entry) => (entry.entryType || 'diary') === 'journal');
   const selectedImportantDate = importantDates[selectedCalendarDate] || null;
   const selectedCalendarForecast = calendarForecastByDate[selectedCalendarDate] || null;
   const selectedCalendarForecastVisuals = getForecastVisuals(selectedCalendarForecast);
@@ -2834,11 +2726,8 @@ function App() {
     .sort((a, b) => a.date.getTime() - b.date.getTime()), [importantDates]);
   const upcomingReminderPreview = upcomingImportantDates.slice(0, 4);
   const upcomingReminderCount = upcomingImportantDates.length;
-  const nextUpcomingReminder = upcomingImportantDates[0] || null;
   const plannerStorageLabel = user ? (plannerCloudReady ? 'Synced with your account' : 'Syncing notes to your account') : 'Auto-saved on this device';
   const reminderStorageLabel = user ? (importantDatesCloudReady ? 'Synced with your account' : 'Syncing reminders to your account') : 'Stored on this device';
-  const reminderDeliveryLabel = webPushTokenReady ? 'True push connected' : serviceWorkerReady ? 'Push-ready worker' : 'Browser alerts only';
-  const reminderBehaviorLabel = webPushTokenReady ? 'Can target closed-browser messages' : serviceWorkerReady ? 'Tap opens the saved date' : 'Best while the journal stays open';
 
   const rewardLevel = useMemo(() => {
     if (entries.length >= 30) return { title: 'Moon Keeper', emoji: '🌙', next: 'Your quiet archive is glowing.' };
@@ -2930,7 +2819,7 @@ function App() {
             orbClass: 'bg-[#f8d7b8]/16'
           };
 
-  const scheduleRadioDialFeedbackHide = (delay = 850) => {
+  const scheduleRadioDialFeedbackHide = useCallback((delay = 850) => {
     if (radioDialFeedbackTimeoutRef.current) {
       clearTimeout(radioDialFeedbackTimeoutRef.current);
     }
@@ -2945,23 +2834,22 @@ function App() {
       setShowRadioDialFeedback(false);
       radioDialFeedbackTimeoutRef.current = null;
     }, delay);
-  };
+  }, []);
 
-  const revealRadioDialFeedback = (delay = 850) => {
+  const revealRadioDialFeedback = useCallback((delay = 850) => {
     setShowRadioDialFeedback(true);
     scheduleRadioDialFeedbackHide(delay);
-  };
+  }, [scheduleRadioDialFeedbackHide]);
 
-  const getShortestAngleDistance = (from, to) => {
-    const diff = Math.abs(from - to) % 360;
-    return diff > 180 ? 360 - diff : diff;
-  };
-
-  const updateRadioVolumeFromPointer = (event) => {
+  const updateRadioVolumeFromPointer = useCallback((event) => {
     const dial = radioDialRef.current;
     if (!dial) return;
 
     const rect = dial.getBoundingClientRect();
+    const getShortestAngleDistance = (from, to) => {
+      const diff = Math.abs(from - to) % 360;
+      return diff > 180 ? 360 - diff : diff;
+    };
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
     const dx = event.clientX - centerX;
@@ -2978,7 +2866,7 @@ function App() {
     const distanceToStart = getShortestAngleDistance(normalizedAngle, RADIO_DIAL_START);
     const distanceToEnd = getShortestAngleDistance(normalizedAngle, RADIO_DIAL_END);
     setRadioVolume(distanceToStart <= distanceToEnd ? 0 : 100);
-  };
+  }, [RADIO_DIAL_END, RADIO_DIAL_START, RADIO_DIAL_SWEEP]);
 
   const handleRadioDialThumbPointerDown = (event) => {
     event.preventDefault();
@@ -3023,7 +2911,7 @@ function App() {
       window.removeEventListener('pointerup', stopDragging);
       window.removeEventListener('pointercancel', stopDragging);
     };
-  }, [isRadioDialDragging]);
+  }, [isRadioDialDragging, revealRadioDialFeedback, updateRadioVolumeFromPointer]);
 
   useEffect(() => {
     if (!isRadioPlaying) {
@@ -4073,7 +3961,7 @@ function App() {
     };
   }
 
-  function enableCompanionResize(mediaRef) {
+  const enableCompanionResize = useCallback((mediaRef) => {
     const media = mediaRef.current;
     if (!media) return () => {};
 
@@ -4269,7 +4157,7 @@ function App() {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
     };
-  }
+  }, [companion.size, companion.x, companion.y, companionIsUploadedMedia, companionIsVideo, companionSelected]);
 
   function addCustomWeather() {
     const cleanName = customWeatherName.trim();
@@ -4287,51 +4175,6 @@ function App() {
     setCustomWeatherName('');
     setCustomWeatherEmoji('🌙');
     setCustomWeatherImage('');
-  }
-
-  function handlePetSceneMove(event) {
-    if (petMood === 'snack' || petMood === 'happy') return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    const x = ((event.clientX - rect.left) / rect.width) * 100;
-    const y = ((event.clientY - rect.top) / rect.height) * 100;
-    const distance = Math.hypot(x - petPosition.x, y - petPosition.y);
-    if (distance < 18) {
-      petTheDog();
-    }
-  }
-
-  function petTheDog() {
-    setPetHappiness((current) => Math.min(100, current + 10));
-    setPetMood('happy');
-    setPetBubble('prrr');
-    window.setTimeout(() => {
-      setPetMood('walking');
-      setPetBubble('');
-    }, 1300);
-  }
-
-  function feedTheDog() {
-    setPetHappiness((current) => Math.min(100, current + 18));
-    setPetTreats((current) => current + 1);
-    setPetMood('snack');
-    setPetBubble('nom nom');
-    window.setTimeout(() => {
-      setPetMood('walking');
-      setPetBubble('');
-    }, 1500);
-  }
-
-  function addCustomQuote() {
-    const quote = customQuoteDraft.trim();
-    if (!quote) return;
-    setCustomQuotes([...customQuotes, quote]);
-    setQuoteIndex(quotes.length + customQuotes.length);
-    setCustomQuoteDraft('');
-  }
-
-  function deleteCustomQuote(quoteToDelete) {
-    setCustomQuotes(customQuotes.filter((quote) => quote !== quoteToDelete));
-    setQuoteIndex(0);
   }
 
   function openImportantDateEditor(dateKey = selectedCalendarDate) {
@@ -4410,20 +4253,6 @@ function App() {
       entryBodyRef.current.focus();
     }
     setBody(nextHtml);
-  }
-
-  function startWritingFromInvitation(invitation) {
-    const starter = `<p><strong>${invitation.opener}</strong></p><p><br></p>`;
-    if (!title.trim()) setTitle(invitation.title);
-    setSelectedMood(invitation.mood);
-    setBody(starter);
-    navigateToTab('write');
-    window.setTimeout(() => {
-      if (entryBodyRef.current) {
-        entryBodyRef.current.innerHTML = starter;
-        entryBodyRef.current.focus();
-      }
-    }, 50);
   }
 
   function deleteCustomWeather(label) {
@@ -5201,7 +5030,7 @@ function App() {
 
 {customizerOpen && (
         <CozyPanelErrorBoundary
-          resetKey={`panel-design-${customizerOpen}`}
+          key={`panel-design-${customizerOpen}`}
           title="The design studio had trouble opening."
           description="Try the panel again. Your current cozy setup is still safe."
         >
@@ -5359,7 +5188,6 @@ function App() {
           getTapActionProps={getTapActionProps}
           isFullscreen={isFullscreen}
           returnToGameLibrary={returnToGameLibrary}
-          selectedDifficultyConfig={selectedDifficultyConfig}
           selectedGameDifficulty={selectedGameDifficulty}
           selectedGameInterfaceRef={selectedGameInterfaceRef}
           selectedUnwindGame={selectedUnwindGame}
@@ -5376,7 +5204,7 @@ function App() {
 
         {activeTab === 'focus' && (
           <CozyPanelErrorBoundary
-            resetKey={`panel-${activeTab}`}
+            key={`panel-${activeTab}`}
             title="The Focus Tree needs one more try."
             description="Try this panel again. If it still feels stuck, switch tabs once and come back."
           >
