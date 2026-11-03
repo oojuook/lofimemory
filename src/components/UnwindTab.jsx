@@ -7,6 +7,7 @@ export default function UnwindTab(props) {
   const {
     difficultyOptions,
     gameVisualTheme,
+    getTapActionProps,
     isFullscreen,
     returnToGameLibrary,
     selectedDifficultyConfig,
@@ -146,7 +147,7 @@ export default function UnwindTab(props) {
                   className={`group relative flex flex-col overflow-hidden rounded-[2.7rem] border p-1 text-left transition-all duration-500 md:hover:-translate-y-1.5 ${
                     isSelected ? 'border-amber-200 bg-white ring-4 ring-amber-100 ring-offset-4 ring-offset-[#fff7ec]' : 'border-white/70 bg-white/44 md:hover:bg-white/66'
                   }`}
-                  onClick={() => selectUnwindGame(game.id)}
+                  {...(getTapActionProps ? getTapActionProps(`unwind-game-${game.id}`, () => selectUnwindGame(game.id)) : { onClick: () => selectUnwindGame(game.id) })}
                   type="button"
                 >
                   <div className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-[2.45rem] bg-gradient-to-br shadow-inner">

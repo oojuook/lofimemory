@@ -9,6 +9,7 @@ export default function InsightsTab(props) {
     entries,
     entriesToNextReward,
     navigateToTab,
+    getTapActionProps,
     returnRitual,
     rewardLevel,
     unlockedAchievementCount,
@@ -86,7 +87,7 @@ export default function InsightsTab(props) {
             <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft sm:text-sm sm:tracking-widest">{returnRitual.eyebrow}</p>
             <p className="mt-2 text-2xl font-extrabold leading-tight text-white lofi-sharp-text">{returnRitual.title}</p>
             <p className="mt-3 text-sm font-semibold leading-7 text-white lofi-sharp-text">{returnRitual.text}</p>
-            <button className="mt-5 inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2.5 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition md:hover:-translate-y-0.5 hover:bg-white/30" onClick={() => navigateToTab('write')} type="button">
+            <button className="mt-5 inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2.5 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition md:hover:-translate-y-0.5 hover:bg-white/30" {...(getTapActionProps ? getTapActionProps('insights-tab-write', () => navigateToTab('write')) : { onClick: () => navigateToTab('write') })} type="button">
               <PenLine size={16} /> Return to writing
             </button>
           </div>

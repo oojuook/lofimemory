@@ -29,6 +29,7 @@ export default function NotesTab(props) {
     isPlannerTodoOverdue,
     movePlannerTodo,
     navigateToTab,
+    getTapActionProps,
     openPlannerTodoCount,
     overduePlannerTodoCount,
     plannerBoard,
@@ -364,10 +365,10 @@ export default function NotesTab(props) {
               <p>Move back to writing when you want reflection instead of admin.</p>
             </div>
             <div className="mt-5 flex flex-wrap gap-2">
-              <button className="inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition md:hover:-translate-y-0.5 hover:bg-white/30" onClick={() => navigateToTab('write')} type="button">
+              <button className="inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition md:hover:-translate-y-0.5 hover:bg-white/30" {...(getTapActionProps ? getTapActionProps('notes-tab-write', () => navigateToTab('write')) : { onClick: () => navigateToTab('write') })} type="button">
                 <PenLine size={15} /> Go back to writing
               </button>
-              <button className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/20 px-4 py-2 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition md:hover:-translate-y-0.5 hover:bg-black/30" onClick={() => navigateToTab('insights')} type="button">
+              <button className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/20 px-4 py-2 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition md:hover:-translate-y-0.5 hover:bg-black/30" {...(getTapActionProps ? getTapActionProps('notes-tab-insights', () => navigateToTab('insights')) : { onClick: () => navigateToTab('insights') })} type="button">
                 <CalendarDays size={15} /> Open calendar
               </button>
             </div>

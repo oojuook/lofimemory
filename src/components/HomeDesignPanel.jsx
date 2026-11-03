@@ -13,6 +13,7 @@ export default function HomeDesignPanel(props) {
     clearSeoStudioReport,
     copySeoStudioReport,
     navigateToTab,
+    getTapActionProps,
     openHomeSection,
     quoteIndex,
     quoteLibrary,
@@ -526,14 +527,14 @@ export default function HomeDesignPanel(props) {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.15),transparent_25rem)]" />
       <div className="relative z-10">
         <div className="mb-4 flex flex-wrap justify-center gap-x-8 gap-y-3 font-black uppercase tracking-[0.15em] text-white/95 lofi-sharp-chip">
-          <a className="transition hover:text-white" href="#home" onClick={() => openHomeSection('home')}>Home</a>
+          <a className="transition hover:text-white" href="#home" {...(getTapActionProps ? getTapActionProps('design-home-link', () => openHomeSection('home'), { preventDefault: true }) : { onClick: () => openHomeSection('home') })}>Home</a>
           <button className="transition hover:text-white" onClick={() => setCustomizerOpen(true)} type="button">Design</button>
-          <a className="transition hover:text-white" href="#about" onClick={() => openHomeSection('about')}>About</a>
+          <a className="transition hover:text-white" href="#about" {...(getTapActionProps ? getTapActionProps('design-about-link', () => openHomeSection('about'), { preventDefault: true }) : { onClick: () => openHomeSection('about') })}>About</a>
           <a className="transition hover:text-white" href="/blog.html">Blog</a>
           <a className="transition hover:text-white" href="/contact.html">Contact</a>
           <a className="transition hover:text-white" href="/privacy.html">Privacy</a>
           <a className="transition hover:text-white" href="/terms.html">Terms</a>
-          <a className="transition hover:text-white" href="#diary" onClick={() => navigateToTab('write')}>Diary & Journal</a>
+          <a className="transition hover:text-white" href="#diary" {...(getTapActionProps ? getTapActionProps('design-diary-link', () => navigateToTab('write'), { preventDefault: true }) : { onClick: () => navigateToTab('write') })}>Diary & Journal</a>
           <a className="transition hover:text-white" href="/private-journaling-hub.html">Journaling Hub</a>
         </div>
         <div className="mb-5 flex flex-wrap justify-center gap-x-6 gap-y-2 text-[11px] font-black uppercase tracking-[0.18em] text-white/85 lofi-sharp-text-soft">

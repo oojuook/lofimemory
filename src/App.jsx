@@ -1523,6 +1523,7 @@ function App() {
   const [selectedGameDifficulty, setSelectedGameDifficulty] = useState('medium');
   const selectedGameInterfaceRef = useRef(null);
   const activeTabPanelRef = useRef(null);
+  const tapSafeActionRef = useRef({ key: '', at: 0 });
   const shouldAutoScrollToTabRef = useRef(false);
   const shouldAutoScrollToGameRef = useRef(false);
   const gameTransitionTimerRef = useRef(null);
@@ -1855,8 +1856,59 @@ function App() {
   const isPhoneInterface = interfaceMode === 'phone';
   const isPcInterface = interfaceMode === 'pc';
 
+  const runTapSafeAction = useCallback((actionKey, action) => {
+    const now = Date.now();
+    if (tapSafeActionRef.current.key === actionKey && now - tapSafeActionRef.current.at < 450) {
+      return;
+    }
+    tapSafeActionRef.current = { key: actionKey, at: now };
+    action();
+  }, []);
+
+  const getTapActionProps = useCallback((actionKey, action, options = {}) => {
+    const { preventDefault = false } = options;
+    return {
+      onClick: (event) => {
+        if (preventDefault) event.preventDefault();
+        runTapSafeAction(actionKey, action);
+      },
+      onPointerUp: (event) => {
+        if (event.pointerType === 'mouse') return;
+        if (preventDefault) event.preventDefault();
+        runTapSafeAction(actionKey, action);
+      }
+    };
+  }, [runTapSafeAction]);
+
   useEffect(() => {
-    import('./Solitaire');
+    const preloadInteractiveSpaces = () => {
+      import('./FocusTreeRoom');
+      import('./Solitaire');
+      import('./MindSweeper');
+      import('./ZenGame');
+      import('./StreamSurfer');
+      import('./LotusMatch');
+      import('./QuietTiles');
+      import('./QuietTetris');
+      import('./QuietSlide');
+      import('./QuietWords');
+      import('./TypingSpeedTest');
+      import('./QuietClues');
+      import('./QuietWordle');
+      import('./QuietSudoku');
+      import('./QuietSnake');
+      import('./LofiJigsaw');
+      import('./DinosaurDash');
+    };
+
+    if (typeof window === 'undefined') return undefined;
+    if ('requestIdleCallback' in window) {
+      const idleId = window.requestIdleCallback(preloadInteractiveSpaces, { timeout: 1200 });
+      return () => window.cancelIdleCallback(idleId);
+    }
+
+    const timeoutId = window.setTimeout(preloadInteractiveSpaces, 250);
+    return () => window.clearTimeout(timeoutId);
   }, []);
 
   const selectUnwindGame = (gameId) => {
@@ -4564,7 +4616,7 @@ function App() {
           <div className="absolute inset-0 bg-gradient-to-br from-black/68 via-black/38 to-black/18" />
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.15),transparent_25rem)]" />
           <div className="relative z-10 flex flex-col gap-2.5 lg:gap-3 xl:flex-row xl:items-center xl:justify-between">
-            <a className="flex items-center gap-2.5 sm:gap-3.5" href="#home" onClick={() => openHomeSection('home')}>
+            <a className="flex items-center gap-2.5 sm:gap-3.5" href="#home" {...getTapActionProps('logo-home', () => openHomeSection('home'), { preventDefault: true })}>
               <div className="lofi-logo-shell flex h-11 w-11 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-[1rem] sm:rounded-[1.35rem] border border-white/30 bg-[#4f3f32] p-1 sm:p-1.5 text-sm sm:text-base font-black text-white shadow-sm backdrop-blur-md overflow-hidden">
                 LM
               </div>
@@ -4589,7 +4641,7 @@ function App() {
                 <button
                   key={`desktop-nav-${tab.id}`}
                   className={`desktop-nav-item rounded-full px-4 py-2 text-sm font-extrabold transition lofi-sharp-chip ${isActive ? 'desktop-nav-item-active bg-white text-[#4a3a2d] shadow-sm' : 'bg-white/8 text-white/95'}`}
-                  onClick={() => navigateToTab(tab.id)}
+                  {...getTapActionProps(`desktop-nav-${tab.id}`, () => navigateToTab(tab.id))}
                   type="button"
                 >
                   <div className="desktop-nav-btn-glow" />
@@ -4647,7 +4699,7 @@ function App() {
                   </div>
                 )}
                 {showAdminTools && (
-                  <button className="rounded-full border border-white/40 bg-white px-3.5 py-2 text-sm font-bold text-[#4a3a2d] transition md:hover:-translate-y-0.5 hover:bg-[#fff9f0]" onClick={() => openHomeSection('seo-studio')} type="button">
+                  <button className="rounded-full border border-white/40 bg-white px-3.5 py-2 text-sm font-bold text-[#4a3a2d] transition md:hover:-translate-y-0.5 hover:bg-[#fff9f0]" {...getTapActionProps('seo-studio', () => openHomeSection('seo-studio'))} type="button">
                     SEO studio
                   </button>
                 )}
@@ -4684,7 +4736,7 @@ function App() {
               <button
                 key={tab.id}
                 className={`mobile-nav-item flex shrink-0 flex-col items-center gap-1 rounded-full px-2.5 py-2 transition-all duration-300 ${isActive ? 'mobile-nav-item-active bg-white/20 text-white shadow-inner scale-105' : 'text-white/70 hover:text-white'}`}
-                onClick={() => navigateToTab(tab.id)}
+                {...getTapActionProps(`mobile-nav-${tab.id}`, () => navigateToTab(tab.id))}
                 type="button"
               >
                 <div className="mobile-nav-glow" />
@@ -4696,7 +4748,7 @@ function App() {
             })}
             <button
               className={`mobile-nav-item flex shrink-0 flex-col items-center gap-1 rounded-full px-2.5 py-2 transition-all duration-300 ${activeTab === 'design' ? 'mobile-nav-item-active bg-white/20 text-white shadow-inner scale-105' : 'text-white/70 hover:text-white'}`}
-              onClick={() => navigateToTab('design')}
+              {...getTapActionProps('mobile-nav-design', () => navigateToTab('design'))}
               type="button"
             >
               <div className="mobile-nav-glow" />
@@ -4726,7 +4778,7 @@ function App() {
                 <button
                   key={card.id}
                   className="group relative flex min-h-[11.25rem] w-full flex-col justify-end overflow-hidden rounded-[1rem] border border-white/55 bg-white/50 p-0.5 text-left shadow-sm transition duration-300 md:hover:-translate-y-0.5 hover:bg-white/70 hover:shadow-[0_10px_24px_rgba(79,62,48,0.07)] sm:min-h-[12.75rem] sm:rounded-[1.2rem] xl:min-h-[13.25rem]"
-                  onClick={card.onClick}
+                  {...getTapActionProps(`home-entry-${card.id}`, card.onClick)}
                   type="button"
                 >
                   <img src={card.preview} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 md:group-hover:scale-105" aria-hidden="true" />
@@ -4784,16 +4836,16 @@ function App() {
                 <div className="rounded-full border border-[#dbc7b1] bg-[#fffaf2]/92 px-3 py-1.5 text-center font-bold shadow-sm backdrop-blur">Lofi music included</div>
               </div>
               <div className="mt-7 flex flex-wrap items-center justify-center gap-2 sm:mt-8 sm:gap-3">
-                <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full bg-white px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-[#4f3f32] shadow-[0_12px_28px_rgba(0,0,0,0.16)] transition md:hover:-translate-y-1 hover:bg-[#fff9f0]" onClick={() => navigateToTab('write')} type="button">
+                <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full bg-white px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-[#4f3f32] shadow-[0_12px_28px_rgba(0,0,0,0.16)] transition md:hover:-translate-y-1 hover:bg-[#fff9f0]" {...getTapActionProps('hero-open-diary', () => navigateToTab('write'))} type="button">
                   <FileText size={16} /> Open private diary
                 </button>
-                <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/45 bg-[#4f3f32] px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition md:hover:-translate-y-1 hover:bg-[#3f3026]" onClick={() => navigateToTab('focus')} type="button">
+                <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/45 bg-[#4f3f32] px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition md:hover:-translate-y-1 hover:bg-[#3f3026]" {...getTapActionProps('hero-focus', () => navigateToTab('focus'))} type="button">
                   <TreePine size={16} /> Start Focus Tree
                 </button>
                 <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/45 bg-[#4f3f32] px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition md:hover:-translate-y-1 hover:bg-[#3f3026]" onClick={() => setIsRadioPlaying(true)} type="button">
                   <Headphones size={16} /> Start music
                 </button>
-                <a className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/45 bg-[#4f3f32] px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition md:hover:-translate-y-1 hover:bg-[#3f3026]" href="#unwind" onClick={() => navigateToTab('unwind')}>
+                <a className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/45 bg-[#4f3f32] px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition md:hover:-translate-y-1 hover:bg-[#3f3026]" href="#unwind" {...getTapActionProps('hero-unwind', () => navigateToTab('unwind'), { preventDefault: true })}>
                   <Leaf size={16} /> Calm games
                 </a>
               </div>
@@ -4813,7 +4865,7 @@ function App() {
 
               <div className="mt-7 grid gap-3 lg:grid-cols-3">
                 {hangoutInvitations.map((invitation) => (
-                  <button key={invitation.title} className="group lofi-glass rounded-[1.55rem] border p-4 text-left shadow-sm transition md:hover:-translate-y-1 hover:border-[#d9c7b3] hover:shadow-[0_14px_30px_rgba(146,126,106,0.08)]" onClick={() => navigateToTab(invitation.tab)} type="button">
+                  <button key={invitation.title} className="group lofi-glass rounded-[1.55rem] border p-4 text-left shadow-sm transition md:hover:-translate-y-1 hover:border-[#d9c7b3] hover:shadow-[0_14px_30px_rgba(146,126,106,0.08)]" {...getTapActionProps(`invitation-${invitation.tab}`, () => navigateToTab(invitation.tab))} type="button">
                     <div className="flex items-start justify-between gap-3">
                       <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#9a806a]">{invitation.eyebrow}</p>
                       <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-[#efe4d8] text-[#7b6552]">
@@ -4874,7 +4926,7 @@ function App() {
                         <span className="mt-2 block text-sm leading-6 text-sage-700">Start the soft radio and let the page settle into a calmer room for relaxing, focus, or writing.</span>
                       </div>
                     </button>
-                    <button className="group flex w-full items-start gap-4 rounded-[1.5rem] border border-amber-200/50 bg-white/96 px-5 py-4 text-left shadow-sm transition md:hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50 hover:shadow-lift" onClick={() => navigateToTab('notes')} type="button">
+                    <button className="group flex w-full items-start gap-4 rounded-[1.5rem] border border-amber-200/50 bg-white/96 px-5 py-4 text-left shadow-sm transition md:hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50 hover:shadow-lift" {...getTapActionProps('music-quick-notes', () => navigateToTab('notes'))} type="button">
                       <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-teal-100 text-teal-700 shadow-sm transition md:group-hover:scale-105">
                         <FileText size={18} />
                       </div>
@@ -4884,7 +4936,7 @@ function App() {
                         <span className="mt-2 block text-sm leading-6 text-sage-700">Keep errands, reminders, and important bits close in a calmer, easier-to-scan space.</span>
                       </div>
                     </button>
-                    <button className="group flex w-full items-start gap-4 rounded-[1.5rem] border border-amber-200/50 bg-white/96 px-5 py-4 text-left shadow-sm transition md:hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50 hover:shadow-lift" onClick={() => navigateToTab('write')} type="button">
+                    <button className="group flex w-full items-start gap-4 rounded-[1.5rem] border border-amber-200/50 bg-white/96 px-5 py-4 text-left shadow-sm transition md:hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50 hover:shadow-lift" {...getTapActionProps('music-quick-write', () => navigateToTab('write'))} type="button">
                       <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-sage-100 text-sage-800 shadow-sm transition md:group-hover:scale-105">
                         <PenLine size={18} />
                       </div>
@@ -4949,7 +5001,7 @@ function App() {
                 { id: 'memories', label: 'Memories', detail: 'Return to saved moments', icon: BookOpen, tone: 'bg-sand-100 text-sand-600' },
                 { id: 'design', label: 'Design', detail: 'Customize your space', icon: Palette, tone: 'bg-rose-100 text-rose-700' }
               ].map((tab) => (
-                <button key={tab.id} className="group flex items-center gap-3 rounded-2xl border border-[#e8dfd5] bg-white/92 px-4 py-3 text-left shadow-sm transition md:hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-white hover:shadow-lift" onClick={() => navigateToTab(tab.id)} type="button">
+                <button key={tab.id} className="group flex items-center gap-3 rounded-2xl border border-[#e8dfd5] bg-white/92 px-4 py-3 text-left shadow-sm transition md:hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-white hover:shadow-lift" {...getTapActionProps(`overview-grid-${tab.id}`, () => navigateToTab(tab.id))} type="button">
                   <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl shadow-sm transition md:group-hover:scale-105 ${tab.tone}`}>
                     <tab.icon size={18} />
                   </div>
@@ -4995,7 +5047,7 @@ function App() {
                 <p className="mt-3 text-sm leading-7 text-white/95 lofi-sharp-text-soft">You can leave one small honest note today and return tomorrow. The page will still be here when you are ready.</p>
                 <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
                   <p className="text-sm font-semibold tracking-[0.08em] text-white/95 lofi-sharp-chip">{streak > 0 ? `${streak} day${streak === 1 ? '' : 's'} of rhythm` : 'Begin with one gentle page'}</p>
-                  <a className="inline-flex items-center rounded-full bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.14em] text-sage-900 shadow-sm transition md:hover:-translate-y-0.5 hover:bg-sage-50" href="#journal" onClick={() => navigateToTab('write')}>
+                  <a className="inline-flex items-center rounded-full bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.14em] text-sage-900 shadow-sm transition md:hover:-translate-y-0.5 hover:bg-sage-50" href="#journal" {...getTapActionProps('quiet-reminder-write', () => navigateToTab('write'), { preventDefault: true })}>
                     Write now
                   </a>
                 </div>
@@ -5016,7 +5068,7 @@ function App() {
                   <h2 className="font-display text-4xl font-bold leading-tight text-ink lg:text-5xl">{homeSections.find((s) => s.id === activeHomeSection)?.label || 'Overview'}</h2>
                   <p className="mt-4 max-w-2xl text-lg leading-relaxed text-sage-800">{activeHomeSection === 'overview' ? (latestEntry ? `Your last page is still here. ${rewardLevel.next}` : 'Come here to relax, hang out in a chill corner, and start with a game first when you want the easiest, softest reset.') : 'Browse gently. The layout stays simple so each section feels easier to read.'}</p>
                 </div>
-                <a className="inline-flex shrink-0 items-center gap-2 rounded-full bg-sage-900 px-6 py-4 text-sm font-extrabold text-white shadow-lift transition md:hover:-translate-y-1 hover:bg-sage-800" href="#unwind" onClick={() => navigateToTab('unwind')}>
+                <a className="inline-flex shrink-0 items-center gap-2 rounded-full bg-sage-900 px-6 py-4 text-sm font-extrabold text-white shadow-lift transition md:hover:-translate-y-1 hover:bg-sage-800" href="#unwind" {...getTapActionProps('overview-play-game', () => navigateToTab('unwind'), { preventDefault: true })}>
                   <Leaf size={18} /> Play a chill game
                 </a>
               </div>
@@ -5026,7 +5078,7 @@ function App() {
                   <button
                     key={section.id}
                     className={`rounded-[1.4rem] px-4 py-4 text-left transition ${activeHomeSection === section.id ? 'bg-white text-sage-950 shadow-sm ring-1 ring-sage-100' : 'text-sage-700 hover:bg-white/75 hover:text-sage-950'}`}
-                    onClick={() => openHomeSection(section.id)}
+                    {...getTapActionProps(`home-section-${section.id}`, () => openHomeSection(section.id))}
                     type="button"
                   >
                     <div className="flex items-center gap-2 text-sm font-extrabold"><section.icon size={16} /> {section.label}</div>
@@ -5080,7 +5132,7 @@ function App() {
                       <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-sage-600">Popular calm searches</p>
                       <h3 className="mt-2 text-xl font-extrabold text-ink">Quick links for lofi music, chill vibes, relaxing routines, and cozy games.</h3>
                     </div>
-                    <button className="text-sm font-extrabold text-sage-800 underline decoration-sage-300 underline-offset-4" onClick={() => openHomeSection('guides')} type="button">View all guide collections</button>
+                    <button className="text-sm font-extrabold text-sage-800 underline decoration-sage-300 underline-offset-4" {...getTapActionProps('guides-link', () => openHomeSection('guides'))} type="button">View all guide collections</button>
                   </div>
                   <div className="mt-4 flex flex-wrap gap-2.5">
                     {(showAllSearches ? seoPopularSearches : seoPopularSearches.slice(0, 12)).map((item) => (
@@ -5128,15 +5180,15 @@ function App() {
               </div>
 
               <div className="grid gap-2 border-t border-[#e8dfd5] pt-5">
-                <button className="flex items-center justify-between rounded-2xl bg-white/80 px-5 py-4 text-sm font-extrabold text-sage-800 shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" onClick={() => navigateToTab('notes')} type="button">
+                <button className="flex items-center justify-between rounded-2xl bg-white/80 px-5 py-4 text-sm font-extrabold text-sage-800 shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" {...getTapActionProps('resource-notes', () => navigateToTab('notes'))} type="button">
                   <span className="inline-flex items-center gap-2"><FileText size={16} /> Notes</span>
                   <span className="opacity-50">{openPlannerTodoCount}</span>
                 </button>
-                <button className="flex items-center justify-between rounded-2xl bg-white/80 px-5 py-4 text-sm font-extrabold text-sage-800 shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" onClick={() => navigateToTab('memories')} type="button">
+                <button className="flex items-center justify-between rounded-2xl bg-white/80 px-5 py-4 text-sm font-extrabold text-sage-800 shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" {...getTapActionProps('resource-memories', () => navigateToTab('memories'))} type="button">
                   <span className="inline-flex items-center gap-2"><BookOpen size={16} /> Memories</span>
                   <span className="opacity-50">{entries.length}</span>
                 </button>
-                <button className="flex items-center justify-between rounded-2xl bg-white/80 px-5 py-4 text-sm font-extrabold text-sage-800 shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" onClick={() => navigateToTab('insights')} type="button">
+                <button className="flex items-center justify-between rounded-2xl bg-white/80 px-5 py-4 text-sm font-extrabold text-sage-800 shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" {...getTapActionProps('resource-insights', () => navigateToTab('insights'))} type="button">
                   <span className="inline-flex items-center gap-2"><CalendarDays size={16} /> Insights</span>
                   <span className="opacity-50">{weeklyCheckIns}/{weeklyGoal}</span>
                 </button>
@@ -5219,7 +5271,7 @@ function App() {
                 <button
                   key={tab.id}
                   className={`rounded-[1.2rem] px-4 py-3 text-left transition ${activeTab === tab.id ? 'bg-white text-sage-950 shadow-sm ring-1 ring-white' : 'text-sage-500 hover:bg-white/75 hover:text-sage-800'}`}
-                  onClick={() => navigateToTab(tab.id)}
+                  {...getTapActionProps(`tab-chip-${tab.id}`, () => navigateToTab(tab.id))}
                   type="button"
                 >
                   <div className="flex items-center gap-2 text-sm font-extrabold"><tab.icon size={15} /> {tab.label}</div>
@@ -5252,6 +5304,7 @@ function App() {
           entryBodyRef={entryBodyRef}
           entryTypeMeta={entryTypeMeta}
           formatDate={formatDate}
+          getTapActionProps={getTapActionProps}
           handleEntryImageUpload={handleEntryImageUpload}
           importantDateCount={importantDateCount}
           insertQuickEmoji={insertQuickEmoji}
@@ -5303,6 +5356,7 @@ function App() {
             <UnwindTab
           difficultyOptions={difficultyOptions}
           gameVisualTheme={gameVisualTheme}
+          getTapActionProps={getTapActionProps}
           isFullscreen={isFullscreen}
           returnToGameLibrary={returnToGameLibrary}
           selectedDifficultyConfig={selectedDifficultyConfig}
@@ -5384,6 +5438,7 @@ function App() {
           isPlannerTodoOverdue={isPlannerTodoOverdue}
           movePlannerTodo={movePlannerTodo}
           navigateToTab={navigateToTab}
+          getTapActionProps={getTapActionProps}
           openPlannerTodoCount={openPlannerTodoCount}
           overduePlannerTodoCount={overduePlannerTodoCount}
           plannerBoard={plannerBoard}
@@ -5430,6 +5485,7 @@ function App() {
           entries={entries}
           entriesToNextReward={entriesToNextReward}
           navigateToTab={navigateToTab}
+          getTapActionProps={getTapActionProps}
           returnRitual={returnRitual}
           rewardLevel={rewardLevel}
           unlockedAchievementCount={unlockedAchievementCount}
@@ -5520,6 +5576,7 @@ function App() {
           clearSeoStudioReport={clearSeoStudioReport}
           copySeoStudioReport={copySeoStudioReport}
           navigateToTab={navigateToTab}
+          getTapActionProps={getTapActionProps}
           openHomeSection={openHomeSection}
           quoteIndex={quoteIndex}
           quoteLibrary={quoteLibrary}

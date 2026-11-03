@@ -19,6 +19,7 @@ export default function WriteTab(props) {
     entryBodyRef,
     entryTypeMeta,
     formatDate,
+    getTapActionProps,
     handleEntryImageUpload,
     importantDateCount,
     insertQuickEmoji,
@@ -320,7 +321,7 @@ export default function WriteTab(props) {
                 <p className="text-xl font-extrabold text-sage-950">{latestEntry.title || 'Untitled page'}</p>
                 <p className="mt-2 text-sm font-semibold leading-6 text-sage-700">{latestEntry.plainSnippet || 'You saved something soft today. You can always return to it.'}</p>
                 <div className="mt-4 flex flex-wrap gap-2">
-                  <button className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition-all duration-300 md:hover:-translate-y-0.5 hover:bg-sage-50 hover:shadow-md active:scale-95" onClick={() => navigateToTab('memories')} type="button">
+                  <button className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition-all duration-300 md:hover:-translate-y-0.5 hover:bg-sage-50 hover:shadow-md active:scale-95" {...(getTapActionProps ? getTapActionProps('write-tab-memories', () => navigateToTab('memories')) : { onClick: () => navigateToTab('memories') })} type="button">
                     <BookOpen size={15} /> Visit your memories
                   </button>
                 </div>
