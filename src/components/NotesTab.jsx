@@ -118,7 +118,7 @@ export default function NotesTab(props) {
               {plannerQuickTemplates.map((template) => (
                 <button
                   key={template}
-                  className="rounded-full border border-[#e8dfd5] bg-white px-3 py-2 text-xs font-extrabold text-sage-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-100"
+                  className="rounded-full border border-[#e8dfd5] bg-white px-3 py-2 text-xs font-extrabold text-sage-700 shadow-sm transition md:hover:-translate-y-0.5 hover:bg-sage-100"
                   onClick={() => setPlannerBoard((current) => ({ ...current, text: current.text.trim() ? `${current.text.trim()}\n\n${template}` : template }))}
                   type="button"
                 >
@@ -198,7 +198,7 @@ export default function NotesTab(props) {
               <option value="weekly">Weekly</option>
               <option value="monthly">Monthly</option>
             </select>
-            <button className="inline-flex items-center justify-center rounded-[1.15rem] bg-white/20 px-4 py-3 text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/30 sm:col-span-2" type="submit">
+            <button className="inline-flex items-center justify-center rounded-[1.15rem] bg-white/20 px-4 py-3 text-white shadow-sm backdrop-blur-md transition md:hover:-translate-y-0.5 hover:bg-white/30 sm:col-span-2" type="submit">
               <Plus size={18} />
             </button>
           </form>
@@ -333,7 +333,7 @@ export default function NotesTab(props) {
           </div>
           <div className="relative z-10 mt-4 space-y-3">
             {upcomingReminderPreview.length ? upcomingReminderPreview.map((item) => (
-              <button className="w-full rounded-[1.4rem] border border-white/20 bg-black/20 px-4 py-3 text-left transition backdrop-blur-md hover:-translate-y-0.5 hover:bg-black/40 hover:shadow-sm" key={item.dateKey} onClick={() => { setSelectedCalendarDate(item.dateKey); navigateToTab('memories'); }} type="button">
+              <button className="w-full rounded-[1.4rem] border border-white/20 bg-black/20 px-4 py-3 text-left transition backdrop-blur-md md:hover:-translate-y-0.5 hover:bg-black/40 hover:shadow-sm" key={item.dateKey} onClick={() => { setSelectedCalendarDate(item.dateKey); navigateToTab('memories'); }} type="button">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-bold leading-6 text-white lofi-sharp-text">{item.note}</p>
@@ -364,10 +364,10 @@ export default function NotesTab(props) {
               <p>Move back to writing when you want reflection instead of admin.</p>
             </div>
             <div className="mt-5 flex flex-wrap gap-2">
-              <button className="inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/30" onClick={() => navigateToTab('write')} type="button">
+              <button className="inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition md:hover:-translate-y-0.5 hover:bg-white/30" onClick={() => navigateToTab('write')} type="button">
                 <PenLine size={15} /> Go back to writing
               </button>
-              <button className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/20 px-4 py-2 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-black/30" onClick={() => navigateToTab('insights')} type="button">
+              <button className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/20 px-4 py-2 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition md:hover:-translate-y-0.5 hover:bg-black/30" onClick={() => navigateToTab('insights')} type="button">
                 <CalendarDays size={15} /> Open calendar
               </button>
             </div>

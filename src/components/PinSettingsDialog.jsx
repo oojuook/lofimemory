@@ -57,7 +57,7 @@ export default function PinSettingsDialog({ isOpen, onClose, onChangePin, onRemo
             <h3 className="mt-2 text-3xl font-extrabold text-ink">Manage your lock PIN</h3>
             <p className="mt-3 max-w-xl leading-7 text-sage-700">Change the current PIN for this browser or remove the lock completely if you no longer want the journal gated. Keep the PIN written down somewhere safe because there is no recovery flow yet.</p>
           </div>
-          <button className="rounded-full border border-amber-200/50 bg-white px-4 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50" onClick={onClose} type="button">
+          <button className="rounded-full border border-amber-200/50 bg-white px-4 py-2 text-sm font-bold text-sage-800 shadow-sm transition md:hover:-translate-y-0.5 hover:bg-sage-50" onClick={onClose} type="button">
             Done
           </button>
         </div>
@@ -111,10 +111,10 @@ export default function PinSettingsDialog({ isOpen, onClose, onChangePin, onRemo
           {success && <p className="text-sm font-semibold text-sage-700">{success}</p>}
 
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <button className="rounded-2xl bg-ink px-5 py-3 font-bold text-white shadow-lift transition hover:-translate-y-0.5 hover:bg-sage-800" type="submit">
+            <button className="rounded-2xl bg-ink px-5 py-3 font-bold text-white shadow-lift transition md:hover:-translate-y-0.5 hover:bg-sage-800" type="submit">
               Update PIN
             </button>
-            <button className="inline-flex items-center justify-center gap-2 rounded-2xl bg-rose-50 px-5 py-3 font-bold text-rose-700 transition hover:-translate-y-0.5 hover:bg-rose-100" onClick={handleRemovePin} type="button">
+            <button className="inline-flex items-center justify-center gap-2 rounded-2xl bg-rose-50 px-5 py-3 font-bold text-rose-700 transition md:hover:-translate-y-0.5 hover:bg-rose-100" onClick={handleRemovePin} type="button">
               <Trash2 size={18} /> Remove lock
             </button>
           </div>

@@ -71,7 +71,7 @@ export default function PrivacyGate({ hasPin, onUnlock, onCreatePin }) {
               </button>
             </div>
             {error && <p className="mt-3 text-sm font-semibold text-rose-600">{error}</p>}
-            <button className="mt-6 w-full rounded-2xl bg-ink px-5 py-4 font-bold text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800" type="submit">
+            <button className="mt-6 w-full rounded-2xl bg-ink px-5 py-4 font-bold text-white shadow-lift transition md:hover:-translate-y-1 hover:bg-sage-800" type="submit">
               {hasPin ? 'Unlock journal' : 'Begin gently'}
             </button>
           </form>

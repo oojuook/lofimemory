@@ -109,7 +109,7 @@ export default function MemoriesTab(props) {
                 const isToday = day?.dateKey === todayISO();
                 return day ? (
                   <button
-                    className={`relative flex h-11 items-center justify-center rounded-xl border text-xs font-extrabold backdrop-blur-md transition hover:-translate-y-0.5 sm:h-12 sm:text-sm ${isSelected ? 'border-white/60 bg-white/40 text-white lofi-sharp-chip shadow-sm' : isToday ? 'border-white/40 bg-white/20 text-white lofi-sharp-chip' : 'border-white/20 bg-black/20 text-white lofi-sharp-chip hover:bg-black/40'}`}
+                    className={`relative flex h-11 items-center justify-center rounded-xl border text-xs font-extrabold backdrop-blur-md transition md:hover:-translate-y-0.5 sm:h-12 sm:text-sm ${isSelected ? 'border-white/60 bg-white/40 text-white lofi-sharp-chip shadow-sm' : isToday ? 'border-white/40 bg-white/20 text-white lofi-sharp-chip' : 'border-white/20 bg-black/20 text-white lofi-sharp-chip hover:bg-black/40'}`}
                     key={day.dateKey}
                     onClick={() => {
                       setSelectedCalendarDate(day.dateKey);
@@ -245,7 +245,7 @@ export default function MemoriesTab(props) {
                   <div className="space-y-3">
                     <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Diary entries on this day</p>
                     {selectedDateDiaryEntries.map((entry) => (
-                      <button className="w-full rounded-2xl border border-white/20 bg-black/20 p-3 text-left backdrop-blur-md shadow-sm transition hover:-translate-y-0.5 hover:bg-black/40 hover:shadow-md" key={entry.id} onClick={() => setSelectedEntry(entry)} type="button">
+                      <button className="w-full rounded-2xl border border-white/20 bg-black/20 p-3 text-left backdrop-blur-md shadow-sm transition md:hover:-translate-y-0.5 hover:bg-black/40 hover:shadow-md" key={entry.id} onClick={() => setSelectedEntry(entry)} type="button">
                         <div className="flex items-center gap-2">
                           <span className="rounded-full border border-white/20 bg-white/10 px-2 py-0.5 text-[9px] font-black uppercase tracking-widest text-white/90 lofi-sharp-text-soft">Diary</span>
                           <p className="font-extrabold text-white lofi-sharp-text">{entry.title}</p>
@@ -259,7 +259,7 @@ export default function MemoriesTab(props) {
                   <div className="space-y-3">
                     <p className="text-xs font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">Journal reflections on this day</p>
                     {selectedDateJournalEntries.map((entry) => (
-                      <button className="w-full rounded-2xl border border-white/20 bg-black/20 p-3 text-left backdrop-blur-md shadow-sm transition hover:-translate-y-0.5 hover:bg-black/40 hover:shadow-md" key={entry.id} onClick={() => setSelectedEntry(entry)} type="button">
+                      <button className="w-full rounded-2xl border border-white/20 bg-black/20 p-3 text-left backdrop-blur-md shadow-sm transition md:hover:-translate-y-0.5 hover:bg-black/40 hover:shadow-md" key={entry.id} onClick={() => setSelectedEntry(entry)} type="button">
                         <div className="flex items-center gap-2">
                           <span className="rounded-full border border-white/20 bg-white/10 px-2 py-0.5 text-[9px] font-black uppercase tracking-widest text-white/90 lofi-sharp-text-soft">Journal</span>
                           <p className="font-extrabold text-white lofi-sharp-text">{entry.title}</p>
@@ -331,7 +331,7 @@ export default function MemoriesTab(props) {
             const mood = weatherOptions.find((item) => item.label === effectiveMoodLabel) || weatherOptions.find(m => m.label === entry.mood) || moods[2];
             return (
               <article
-                className="group w-full cursor-pointer rounded-3xl border border-white/20 bg-black/20 p-4 shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-black/30 hover:shadow-md sm:p-5"
+                className="group w-full cursor-pointer rounded-3xl border border-white/20 bg-black/20 p-4 shadow-sm backdrop-blur-md transition md:hover:-translate-y-1 hover:bg-black/30 hover:shadow-md sm:p-5"
                 key={entry.id}
                 onClick={() => setSelectedEntry(entry)}
               >

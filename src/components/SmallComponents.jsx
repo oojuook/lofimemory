@@ -2,7 +2,7 @@ import React from 'react';
 
 export function StatCard({ icon: Icon, label, value, tone }) {
   return (
-    <div className="group lofi-glass rounded-[2.2rem] border border-[#e8dfd5] bg-gradient-to-br from-white/95 to-white/75 p-5 text-center shadow-lift backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-soft">
+    <div className="group lofi-glass rounded-[2.2rem] border border-[#e8dfd5] bg-gradient-to-br from-white/95 to-white/75 p-5 text-center shadow-lift backdrop-blur transition duration-300 md:hover:-translate-y-1 hover:shadow-soft">
       <div className="flex flex-col items-center gap-3">
         <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl shadow-sm ${tone}`}>
           <Icon size={21} />
@@ -33,7 +33,7 @@ export function SectionHeader({ eyebrow, title, text }) {
 
 export function InfoCard({ icon: Icon, title, children }) {
   return (
-    <article className="customizable-card rounded-3xl border border-amber-200/50 bg-white/75 p-6 shadow-lift backdrop-blur transition hover:-translate-y-1 hover:bg-white/90">
+    <article className="customizable-card rounded-3xl border border-amber-200/50 bg-white/75 p-6 shadow-lift backdrop-blur transition md:hover:-translate-y-1 hover:bg-white/90">
       <div className="theme-icon mb-5 flex h-12 w-12 items-center justify-center rounded-3xl bg-sage-100 text-sage-800">
         <Icon size={22} />
       </div>

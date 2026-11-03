@@ -36,16 +36,16 @@ export default function BreatheTab(props) {
               <button
                 key={option.id}
                 onClick={() => applyBreatheRoom(option.id)}
-                className={`group relative flex flex-col overflow-hidden rounded-[2.5rem] border p-1 transition-all duration-500 hover:-translate-y-1.5 ${
+                className={`group relative flex flex-col overflow-hidden rounded-[2.5rem] border p-1 transition-all duration-500 md:hover:-translate-y-1.5 ${
                   isSelected ? `bg-white ${option.ringTone} ring-4 ring-offset-4 ring-offset-sage-50` : 'border-white/60 bg-white/40 hover:bg-white/60'
                 }`}
               >
                 <div className={`relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-[3rem] bg-gradient-to-br ${option.gradient} shadow-inner`}>
-                   {option.wallpaper ? <img src={option.wallpaper} alt={`${option.title} wallpaper`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" style={{ objectPosition: option.imagePosition || 'center' }} /> : null}
+                   {option.wallpaper ? <img src={option.wallpaper} alt={`${option.title} wallpaper`} className="absolute inset-0 h-full w-full object-cover transition duration-700 md:group-hover:scale-105" style={{ objectPosition: option.imagePosition || 'center' }} /> : null}
                    <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-white/10" />
                    <div className="absolute inset-0 opacity-20 transition-opacity group-hover:opacity-30" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)', backgroundSize: '16px 16px', color: 'white' }} />
                    {option.showDecoration === false ? null : (
-                     <div className={`relative z-10 flex flex-col items-center gap-4 transition-transform duration-700 ${isSelected ? 'scale-110' : 'scale-100 group-hover:scale-105'}`}>
+                     <div className={`relative z-10 flex flex-col items-center gap-4 transition-transform duration-700 ${isSelected ? 'scale-110' : 'scale-100 md:group-hover:scale-105'}`}>
                        <span className="text-4xl drop-shadow">{option.decoration}</span>
                      </div>
                    )}
@@ -102,14 +102,14 @@ export default function BreatheTab(props) {
                   <div className="font-display text-7xl font-extrabold tabular-nums tracking-tighter text-sage-800">
                     {formatTime(focusTimer)}
                   </div>
-                  <button onClick={() => setFocusActive(false)} className="mt-6 rounded-full border border-amber-200/50 bg-white px-8 py-3 text-sm font-bold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50">
+                  <button onClick={() => setFocusActive(false)} className="mt-6 rounded-full border border-amber-200/50 bg-white px-8 py-3 text-sm font-bold text-sage-800 shadow-sm transition md:hover:-translate-y-0.5 hover:bg-sage-50">
                     Pause timer
                   </button>
                 </div>
               ) : (
                 <div className="flex flex-wrap justify-center gap-4">
                   {[5, 10, 15].map((mins) => (
-                    <button key={mins} onClick={() => startFocusSession(mins)} className="flex h-16 w-32 items-center justify-center rounded-2xl bg-sage-900 text-lg font-bold text-white shadow-sm transition hover:-translate-y-1 hover:bg-sage-800">
+                    <button key={mins} onClick={() => startFocusSession(mins)} className="flex h-16 w-32 items-center justify-center rounded-2xl bg-sage-900 text-lg font-bold text-white shadow-sm transition md:hover:-translate-y-1 hover:bg-sage-800">
                       {mins}m
                     </button>
                   ))}

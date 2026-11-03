@@ -84,10 +84,10 @@ export default function WriteTab(props) {
               <span className="text-sm font-semibold text-sage-600">{entryTypeMeta[writingCategory].shortLabel} · {selectedMood}</span>
             </div>
             <div className="flex items-center gap-2">
-              <button className="inline-flex items-center gap-2 rounded-full border border-[#dbc7b1] bg-white px-4 py-2 text-sm font-extrabold text-[#4f3f32] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#fffaf2]" onClick={saveEntry} type="submit">
+              <button className="inline-flex items-center gap-2 rounded-full border border-[#dbc7b1] bg-white px-4 py-2 text-sm font-extrabold text-[#4f3f32] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-[#fffaf2]" onClick={saveEntry} type="submit">
                 <Plus size={15} /> Save page
               </button>
-              <button className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#dbc7b1] bg-white text-[#4f3f32] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#fffaf2]" onClick={() => setMinimalMode(false)} type="button" aria-label="Exit minimal mode" title="Exit minimal mode">
+              <button className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#dbc7b1] bg-white text-[#4f3f32] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-[#fffaf2]" onClick={() => setMinimalMode(false)} type="button" aria-label="Exit minimal mode" title="Exit minimal mode">
                 <Minimize2 size={17} />
               </button>
             </div>
@@ -110,11 +110,11 @@ export default function WriteTab(props) {
                 data-placeholder="Start with one true sentence. Everything else can wait."
               />
               <div className="mt-8 flex flex-wrap items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-sage-500">
-                <button className="rounded-full border border-[#dbc7b1] bg-white px-3 py-2 text-[#4f3f32] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#fffaf2]" onClick={() => toggleBoldText(entryBodyRef, setBody)} type="button">Bold</button>
-                <button className="rounded-full border border-[#dbc7b1] bg-white px-3 py-2 text-[#4f3f32] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#fffaf2]" onClick={() => toggleUnderlineText(entryBodyRef, setBody)} type="button">Underline</button>
-                <button className="rounded-full border border-[#dbc7b1] bg-white px-3 py-2 text-[#4f3f32] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#fffaf2]" onClick={() => toggleBulletList(entryBodyRef, setBody)} type="button">List</button>
+                <button className="rounded-full border border-[#dbc7b1] bg-white px-3 py-2 text-[#4f3f32] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-[#fffaf2]" onClick={() => toggleBoldText(entryBodyRef, setBody)} type="button">Bold</button>
+                <button className="rounded-full border border-[#dbc7b1] bg-white px-3 py-2 text-[#4f3f32] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-[#fffaf2]" onClick={() => toggleUnderlineText(entryBodyRef, setBody)} type="button">Underline</button>
+                <button className="rounded-full border border-[#dbc7b1] bg-white px-3 py-2 text-[#4f3f32] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-[#fffaf2]" onClick={() => toggleBulletList(entryBodyRef, setBody)} type="button">List</button>
                 {quickEmojis.slice(0, 5).map((emoji) => (
-                  <button key={emoji} className="rounded-full border border-[#dbc7b1] bg-white px-3 py-2 text-base shadow-sm transition hover:-translate-y-0.5 hover:bg-[#fffaf2]" onClick={() => insertQuickEmoji(emoji)} type="button">{emoji}</button>
+                  <button key={emoji} className="rounded-full border border-[#dbc7b1] bg-white px-3 py-2 text-base shadow-sm transition md:hover:-translate-y-0.5 hover:bg-[#fffaf2]" onClick={() => insertQuickEmoji(emoji)} type="button">{emoji}</button>
                 ))}
                 <span className="ml-2">{draftWordCount === 0 ? 'slow is still writing' : `${draftWordCount} words so far`}</span>
               </div>
@@ -141,7 +141,7 @@ export default function WriteTab(props) {
               <button
                 type="button"
                 onClick={() => setMinimalMode(true)}
-                className="inline-flex items-center gap-2 self-start rounded-full border border-white/25 bg-white/12 px-4 py-2 text-sm font-bold text-white lofi-sharp-chip shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/22"
+                className="inline-flex items-center gap-2 self-start rounded-full border border-white/25 bg-white/12 px-4 py-2 text-sm font-bold text-white lofi-sharp-chip shadow-sm backdrop-blur-md transition md:hover:-translate-y-0.5 hover:bg-white/22"
                 title="Open minimal writing mode"
               >
                 <Minimize2 size={15} /> Minimal mode
@@ -213,19 +213,19 @@ export default function WriteTab(props) {
               </div>
             </div>
             <div className="flex flex-wrap items-center gap-2 xl:max-w-[22rem] xl:justify-end">
-              <button className="rounded-full border border-white/30 bg-white/15 px-3.5 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25" onClick={() => toggleBoldText(entryBodyRef, setBody)} title="Bold selected text" type="button">Bold</button>
-              <button className="rounded-full border border-white/30 bg-white/15 px-3.5 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25" onClick={() => toggleUnderlineText(entryBodyRef, setBody)} title="Underline selected text" type="button">Underline</button>
-              <button className="rounded-full border border-white/30 bg-white/15 px-3.5 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25" onClick={() => toggleBulletList(entryBodyRef, setBody)} title="Bullet points" type="button">List</button>
+              <button className="rounded-full border border-white/30 bg-white/15 px-3.5 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition md:hover:-translate-y-0.5 hover:bg-white/25" onClick={() => toggleBoldText(entryBodyRef, setBody)} title="Bold selected text" type="button">Bold</button>
+              <button className="rounded-full border border-white/30 bg-white/15 px-3.5 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition md:hover:-translate-y-0.5 hover:bg-white/25" onClick={() => toggleUnderlineText(entryBodyRef, setBody)} title="Underline selected text" type="button">Underline</button>
+              <button className="rounded-full border border-white/30 bg-white/15 px-3.5 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition md:hover:-translate-y-0.5 hover:bg-white/25" onClick={() => toggleBulletList(entryBodyRef, setBody)} title="Bullet points" type="button">List</button>
               {quickEmojis.slice(0, 4).map((emoji) => (
-                <button key={emoji} className="rounded-full border border-white/30 bg-white/15 px-3 py-1.5 text-base shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25" onClick={() => insertQuickEmoji(emoji)} type="button">
+                <button key={emoji} className="rounded-full border border-white/30 bg-white/15 px-3 py-1.5 text-base shadow-sm backdrop-blur-md transition md:hover:-translate-y-0.5 hover:bg-white/25" onClick={() => insertQuickEmoji(emoji)} type="button">
                   {emoji}
                 </button>
               ))}
-              <label className="flex cursor-pointer items-center gap-2 rounded-full border border-white/30 bg-white/15 px-3.5 py-2 text-sm font-black text-white shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/25">
+              <label className="flex cursor-pointer items-center gap-2 rounded-full border border-white/30 bg-white/15 px-3.5 py-2 text-sm font-black text-white shadow-sm backdrop-blur-md transition md:hover:-translate-y-0.5 hover:bg-white/25">
                 <ImagePlus size={14} /> Photo
                 <input accept="image/*" className="hidden" onChange={handleEntryImageUpload} type="file" />
               </label>
-              <button className="rounded-full border border-white/30 bg-white px-4 py-2 text-sm font-black text-[#3d3025] shadow-sm transition hover:-translate-y-0.5 hover:bg-white/90" type="submit">Save page</button>
+              <button className="rounded-full border border-white/30 bg-white px-4 py-2 text-sm font-black text-[#3d3025] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white/90" type="submit">Save page</button>
             </div>
           </div>
         </div>
@@ -254,13 +254,13 @@ export default function WriteTab(props) {
           {journalNudge}
         </div>
         <div className="flex flex-wrap gap-2">
-          <button className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/20 active:scale-95" onClick={() => setActivePrompt(activePrompt || moodStarterPrompts[selectedMood] || prompts[0])} type="button">
+          <button className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition-all duration-300 md:hover:-translate-y-0.5 hover:bg-white/20 active:scale-95" onClick={() => setActivePrompt(activePrompt || moodStarterPrompts[selectedMood] || prompts[0])} type="button">
             <Sparkles size={15} /> {activePrompt ? 'Keep this prompt' : 'Use a gentle prompt'}
           </button>
-          <button className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/20 active:scale-95" onClick={addStarterLine} type="button">
+          <button className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-bold text-white shadow-sm backdrop-blur-md transition-all duration-300 md:hover:-translate-y-0.5 hover:bg-white/20 active:scale-95" onClick={addStarterLine} type="button">
             <Feather size={15} /> Add a starter line
           </button>
-          <button className="inline-flex items-center gap-2 rounded-full border border-[#ffd7b5] bg-white px-5 py-3 text-sm font-black text-[#3d3025] shadow-lift transition-all duration-300 hover:-translate-y-1 hover:bg-[#fffaf0] hover:shadow-lg active:scale-95" type="submit">
+          <button className="inline-flex items-center gap-2 rounded-full border border-[#ffd7b5] bg-white px-5 py-3 text-sm font-black text-[#3d3025] shadow-lift transition-all duration-300 md:hover:-translate-y-1 hover:bg-[#fffaf0] hover:shadow-lg active:scale-95" type="submit">
             <Plus size={18} /> Save this page
           </button>
         </div>
@@ -320,7 +320,7 @@ export default function WriteTab(props) {
                 <p className="text-xl font-extrabold text-sage-950">{latestEntry.title || 'Untitled page'}</p>
                 <p className="mt-2 text-sm font-semibold leading-6 text-sage-700">{latestEntry.plainSnippet || 'You saved something soft today. You can always return to it.'}</p>
                 <div className="mt-4 flex flex-wrap gap-2">
-                  <button className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-sage-50 hover:shadow-md active:scale-95" onClick={() => navigateToTab('memories')} type="button">
+                  <button className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white px-4 py-2 text-sm font-extrabold text-sage-900 shadow-sm transition-all duration-300 md:hover:-translate-y-0.5 hover:bg-sage-50 hover:shadow-md active:scale-95" onClick={() => navigateToTab('memories')} type="button">
                     <BookOpen size={15} /> Visit your memories
                   </button>
                 </div>

@@ -79,7 +79,7 @@ export default function GamePreview({ gameId }) {
     return (
       <div className={shellClass}>
         <div className="relative h-20 overflow-hidden rounded-[1rem] bg-rose-100">
-          <img src={lotusMatchPreviewImage} alt="Lotus Match preview" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+          <img src={lotusMatchPreviewImage} alt="Lotus Match preview" className="h-full w-full object-cover transition duration-700 md:group-hover:scale-105" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-transparent to-black/10" />
           <div className="absolute bottom-2 left-2 flex gap-1.5">
             {['A♠', 'K♥', 'Q♦'].map((card) => (

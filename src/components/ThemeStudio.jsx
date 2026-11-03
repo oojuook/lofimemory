@@ -133,14 +133,14 @@ export default function ThemeStudio({
           </div>
           <div className="space-y-7 bg-[#2b231d] p-7 lg:col-span-8 lg:p-10">
             <div className="hidden lg:flex lg:justify-end">
-              <button className="rounded-full border border-white/25 bg-white/10 px-6 py-2.5 text-sm font-extrabold text-white lofi-sharp-chip shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/20" onClick={onClose} type="button">Done</button>
+              <button className="rounded-full border border-white/25 bg-white/10 px-6 py-2.5 text-sm font-extrabold text-white lofi-sharp-chip shadow-sm backdrop-blur-md transition md:hover:-translate-y-0.5 hover:bg-white/20" onClick={onClose} type="button">Done</button>
             </div>
             <div>
               <div className="mb-4 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-white/95 lofi-sharp-text-soft"><Palette size={16} /> Design</div>
               <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-5">
                 {colorThemes.map((theme) => (
                   <button
-                    className={`custom-option group rounded-3xl border p-4 text-left shadow-sm backdrop-blur-md transition hover:-translate-y-1 ${selectedTheme === theme.id ? 'is-selected border-white/60 bg-white/30 shadow-[0_0_24px_rgba(255,255,255,0.25)]' : 'border-white/20 bg-white/10 hover:bg-white/20'}`}
+                    className={`custom-option group rounded-3xl border p-4 text-left shadow-sm backdrop-blur-md transition md:hover:-translate-y-1 ${selectedTheme === theme.id ? 'is-selected border-white/60 bg-white/30 shadow-[0_0_24px_rgba(255,255,255,0.25)]' : 'border-white/20 bg-white/10 hover:bg-white/20'}`}
                     key={theme.id}
                     onClick={() => {
                       onThemeChange(theme.id);
@@ -201,7 +201,7 @@ export default function ThemeStudio({
               <div className="grid gap-3 lg:col-span-2">
                 {designStyles.map((style) => (
                   <button
-                    className={`custom-option flex items-center justify-between rounded-3xl border p-4 text-left shadow-sm backdrop-blur-md transition hover:-translate-y-1 ${selectedDesign === style.id ? 'is-selected border-white/60 bg-white/30 shadow-[0_0_24px_rgba(255,255,255,0.25)]' : 'border-white/20 bg-white/10 hover:bg-white/20'}`}
+                    className={`custom-option flex items-center justify-between rounded-3xl border p-4 text-left shadow-sm backdrop-blur-md transition md:hover:-translate-y-1 ${selectedDesign === style.id ? 'is-selected border-white/60 bg-white/30 shadow-[0_0_24px_rgba(255,255,255,0.25)]' : 'border-white/20 bg-white/10 hover:bg-white/20'}`}
                     key={style.id}
                     onClick={() => {
                       onDesignChange(style.id);
@@ -246,7 +246,7 @@ export default function ThemeStudio({
                   const isPresetActive = selectedTheme === preset.themeId && selectedDesign === preset.designId && journalStyle.fontId === preset.journalFontId && quoteStyle.fontId === preset.quoteFontId;
                   return (
                     <button
-                      className={`flex flex-col rounded-[1.4rem] border p-4 text-left shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:shadow-md ${isPresetActive ? 'border-white/60 bg-white/30 shadow-[0_0_24px_rgba(255,255,255,0.25)]' : 'border-white/20 bg-white/10 hover:bg-white/20'}`}
+                      className={`flex flex-col rounded-[1.4rem] border p-4 text-left shadow-sm backdrop-blur-md transition md:hover:-translate-y-1 hover:shadow-md ${isPresetActive ? 'border-white/60 bg-white/30 shadow-[0_0_24px_rgba(255,255,255,0.25)]' : 'border-white/20 bg-white/10 hover:bg-white/20'}`}
                       key={preset.id}
                       onClick={() => onAtmosphereApply(preset)}
                       type="button"
@@ -264,7 +264,7 @@ export default function ThemeStudio({
               <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6">
                 {quoteCardColors.map((color) => (
                   <button
-                    className={`custom-option rounded-2xl border p-3 text-left shadow-sm backdrop-blur-sm transition hover:-translate-y-1 ${quoteBg.toLowerCase() === color.value.toLowerCase() ? 'is-selected border-white/60 bg-white/30 shadow-[0_0_24px_rgba(255,255,255,0.25)]' : 'border-white/20 bg-white/10 hover:bg-white/20'}`}
+                    className={`custom-option rounded-2xl border p-3 text-left shadow-sm backdrop-blur-sm transition md:hover:-translate-y-1 ${quoteBg.toLowerCase() === color.value.toLowerCase() ? 'is-selected border-white/60 bg-white/30 shadow-[0_0_24px_rgba(255,255,255,0.25)]' : 'border-white/20 bg-white/10 hover:bg-white/20'}`}
                     key={color.value}
                     onClick={() => {
                       onQuoteBgChange(color.value);
@@ -303,7 +303,7 @@ export default function ThemeStudio({
                   <ImagePlus size={18} /> Upload image
                   <input accept="image/*" className="hidden" onChange={onCustomWeatherImageUpload} type="file" />
                 </label>
-                <button className="rounded-2xl border border-white/20 bg-white/20 px-4 py-3 font-bold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/30" onClick={onAddCustomWeather} type="button">
+                <button className="rounded-2xl border border-white/20 bg-white/20 px-4 py-3 font-bold text-white shadow-sm backdrop-blur-md transition md:hover:-translate-y-1 hover:bg-white/30" onClick={onAddCustomWeather} type="button">
                   Add emotion
                 </button>
               </div>

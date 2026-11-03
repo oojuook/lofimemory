@@ -30,7 +30,7 @@ export default function MoodChart({ entries, weatherOptions }) {
           return (
             <div className="flex min-w-0 flex-1 flex-col items-center gap-2 sm:gap-3" key={entry.id}>
               <div className="flex h-32 w-full items-end justify-center overflow-hidden rounded-2xl bg-white/50 p-1 shadow-inner backdrop-blur-sm sm:h-52 sm:p-1.5">
-                <div className={`w-full rounded-xl ${mood.color || ''} ${heightClass} shadow-md transition-all hover:scale-105 hover:shadow-lg`} style={mood.color ? undefined : { background: mood.hex || '#739f62' }} />
+                <div className={`w-full rounded-xl ${mood.color || ''} ${heightClass} shadow-md transition-all md:hover:scale-105 hover:shadow-lg`} style={mood.color ? undefined : { background: mood.hex || '#739f62' }} />
               </div>
               <WeatherGlyph mood={mood} size="text-base sm:text-xl" />
               <div className="flex flex-col items-center gap-0.5 text-center">

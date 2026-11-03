@@ -1439,7 +1439,7 @@ class CozyPanelErrorBoundary extends React.Component {
             <h3 className="mt-3 text-2xl font-extrabold tracking-tight text-ink">{title}</h3>
             <p className="mt-3 text-sm font-semibold leading-6 text-sage-700">{description}</p>
             <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
-              <button className="rounded-full bg-sage-900 px-5 py-3 text-sm font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-800" onClick={this.handleRetry} type="button">
+              <button className="rounded-full bg-sage-900 px-5 py-3 text-sm font-extrabold text-white shadow-sm transition md:hover:-translate-y-0.5 hover:bg-sage-800" onClick={this.handleRetry} type="button">
                 Try this panel again
               </button>
             </div>
@@ -4608,7 +4608,7 @@ function App() {
                   </div>
                 </div>
               ) : (
-                <button className="header-account-pill flex min-w-[148px] sm:min-w-[196px] flex-1 items-center justify-between gap-2 sm:gap-3 rounded-full border border-white/35 bg-white/20 px-3 py-2 sm:px-4 sm:py-2.5 text-left shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/28 xl:flex-none" onClick={signInWithGoogle} disabled={authLoading} type="button">
+                <button className="header-account-pill flex min-w-[148px] sm:min-w-[196px] flex-1 items-center justify-between gap-2 sm:gap-3 rounded-full border border-white/35 bg-white/20 px-3 py-2 sm:px-4 sm:py-2.5 text-left shadow-sm backdrop-blur-md transition md:hover:-translate-y-0.5 hover:bg-white/28 xl:flex-none" onClick={signInWithGoogle} disabled={authLoading} type="button">
                   <div>
                     <p className="text-xs sm:text-sm font-extrabold text-white lofi-sharp-text">{authLoading ? '...' : isPhoneInterface ? 'Sign in to sync' : 'Sign in'}</p>
                     {isPhoneInterface ? null : <p className="lofi-sharp-text-soft text-[9px] sm:text-[11px] font-bold uppercase tracking-[0.16em] text-white/90">Cloud sync</p>}
@@ -4620,7 +4620,7 @@ function App() {
               )}
               <div className="header-quick-actions flex flex-wrap items-center gap-1.5 sm:gap-2 rounded-full border border-white/20 bg-black/20 p-1 sm:p-1.5 shadow-sm backdrop-blur-md xl:flex-nowrap">
                 {user && (
-                  <button className="rounded-full border border-white/30 bg-white/10 px-3 py-1.5 sm:px-3.5 sm:py-2 text-[11px] sm:text-sm font-bold text-white lofi-sharp-chip transition hover:-translate-y-0.5 hover:bg-white/20" onClick={handleSignOut} type="button">
+                  <button className="rounded-full border border-white/30 bg-white/10 px-3 py-1.5 sm:px-3.5 sm:py-2 text-[11px] sm:text-sm font-bold text-white lofi-sharp-chip transition md:hover:-translate-y-0.5 hover:bg-white/20" onClick={handleSignOut} type="button">
                     Sign out
                   </button>
                 )}
@@ -4643,14 +4643,14 @@ function App() {
                   </div>
                 )}
                 {showAdminTools && (
-                  <button className="rounded-full border border-white/40 bg-white px-3.5 py-2 text-sm font-bold text-[#4a3a2d] transition hover:-translate-y-0.5 hover:bg-[#fff9f0]" onClick={() => openHomeSection('seo-studio')} type="button">
+                  <button className="rounded-full border border-white/40 bg-white px-3.5 py-2 text-sm font-bold text-[#4a3a2d] transition md:hover:-translate-y-0.5 hover:bg-[#fff9f0]" onClick={() => openHomeSection('seo-studio')} type="button">
                     SEO studio
                   </button>
                 )}
-                <button className={`inline-flex items-center justify-center gap-1.5 rounded-full border px-3 py-1.5 sm:px-3.5 sm:py-2 text-[11px] sm:text-sm font-bold lofi-sharp-chip transition hover:-translate-y-0.5 ${comfortMode ? 'border-white bg-white text-[#4a3a2d]' : 'border-white/30 bg-white/10 text-white hover:bg-white/20'}`} onClick={() => setComfortMode(!comfortMode)} type="button">
+                <button className={`inline-flex items-center justify-center gap-1.5 rounded-full border px-3 py-1.5 sm:px-3.5 sm:py-2 text-[11px] sm:text-sm font-bold lofi-sharp-chip transition md:hover:-translate-y-0.5 ${comfortMode ? 'border-white bg-white text-[#4a3a2d]' : 'border-white/30 bg-white/10 text-white hover:bg-white/20'}`} onClick={() => setComfortMode(!comfortMode)} type="button">
                   <Cloud size={isPhoneInterface ? 13 : 14} /> {isPhoneInterface ? 'Soft' : 'Comfort'}
                 </button>
-                <button className="inline-flex items-center justify-center gap-1.5 rounded-full border border-white/30 bg-white/10 px-3 py-1.5 sm:px-3.5 sm:py-2 text-[11px] sm:text-sm font-bold text-white lofi-sharp-chip transition hover:-translate-y-0.5 hover:bg-white/20" onClick={() => (hasPin ? setPinSettingsOpen(true) : setLocked(true))} type="button">
+                <button className="inline-flex items-center justify-center gap-1.5 rounded-full border border-white/30 bg-white/10 px-3 py-1.5 sm:px-3.5 sm:py-2 text-[11px] sm:text-sm font-bold text-white lofi-sharp-chip transition md:hover:-translate-y-0.5 hover:bg-white/20" onClick={() => (hasPin ? setPinSettingsOpen(true) : setLocked(true))} type="button">
                   <Lock size={isPhoneInterface ? 13 : 14} /> {isPhoneInterface ? 'Private' : hasPin ? 'Privacy' : 'Lock'}
                 </button>
               </div>
@@ -4681,6 +4681,7 @@ function App() {
                 key={tab.id}
                 className={`mobile-nav-item flex shrink-0 flex-col items-center gap-1 rounded-full px-2.5 py-2 transition-all duration-300 ${isActive ? 'mobile-nav-item-active bg-white/20 text-white shadow-inner scale-105' : 'text-white/70 hover:text-white'}`}
                 onClick={() => navigateToTab(tab.id)}
+                type="button"
               >
                 <div className="mobile-nav-glow" />
                 <tab.icon size={18} />
@@ -4692,6 +4693,7 @@ function App() {
             <button
               className={`mobile-nav-item flex shrink-0 flex-col items-center gap-1 rounded-full px-2.5 py-2 transition-all duration-300 ${activeTab === 'design' ? 'mobile-nav-item-active bg-white/20 text-white shadow-inner scale-105' : 'text-white/70 hover:text-white'}`}
               onClick={() => navigateToTab('design')}
+              type="button"
             >
               <div className="mobile-nav-glow" />
               <Palette size={18} />
@@ -4719,11 +4721,11 @@ function App() {
               {homeEntryCards.map((card) => (
                 <button
                   key={card.id}
-                  className="group relative flex min-h-[11.25rem] w-full flex-col justify-end overflow-hidden rounded-[1rem] border border-white/55 bg-white/50 p-0.5 text-left shadow-sm transition duration-300 hover:-translate-y-0.5 hover:bg-white/70 hover:shadow-[0_10px_24px_rgba(79,62,48,0.07)] sm:min-h-[12.75rem] sm:rounded-[1.2rem] xl:min-h-[13.25rem]"
+                  className="group relative flex min-h-[11.25rem] w-full flex-col justify-end overflow-hidden rounded-[1rem] border border-white/55 bg-white/50 p-0.5 text-left shadow-sm transition duration-300 md:hover:-translate-y-0.5 hover:bg-white/70 hover:shadow-[0_10px_24px_rgba(79,62,48,0.07)] sm:min-h-[12.75rem] sm:rounded-[1.2rem] xl:min-h-[13.25rem]"
                   onClick={card.onClick}
                   type="button"
                 >
-                  <img src={card.preview} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" aria-hidden="true" />
+                  <img src={card.preview} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 md:group-hover:scale-105" aria-hidden="true" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/68 via-black/18 to-white/10" />
                   <div className="relative z-10 m-1.5 rounded-[0.95rem] border border-white/30 bg-[#fff8f1]/94 p-3.5 shadow-sm backdrop-blur-md sm:m-2 sm:rounded-[1.1rem] sm:p-4">
                     <div className="flex items-start justify-between gap-3">
@@ -4778,16 +4780,16 @@ function App() {
                 <div className="rounded-full border border-[#dbc7b1] bg-[#fffaf2]/92 px-3 py-1.5 text-center font-bold shadow-sm backdrop-blur">Lofi music included</div>
               </div>
               <div className="mt-7 flex flex-wrap items-center justify-center gap-2 sm:mt-8 sm:gap-3">
-                <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full bg-white px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-[#4f3f32] shadow-[0_12px_28px_rgba(0,0,0,0.16)] transition hover:-translate-y-1 hover:bg-[#fff9f0]" onClick={() => navigateToTab('write')} type="button">
+                <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full bg-white px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-[#4f3f32] shadow-[0_12px_28px_rgba(0,0,0,0.16)] transition md:hover:-translate-y-1 hover:bg-[#fff9f0]" onClick={() => navigateToTab('write')} type="button">
                   <FileText size={16} /> Open private diary
                 </button>
-                <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/45 bg-[#4f3f32] px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-[#3f3026]" onClick={() => navigateToTab('focus')} type="button">
+                <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/45 bg-[#4f3f32] px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition md:hover:-translate-y-1 hover:bg-[#3f3026]" onClick={() => navigateToTab('focus')} type="button">
                   <TreePine size={16} /> Start Focus Tree
                 </button>
-                <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/45 bg-[#4f3f32] px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-[#3f3026]" onClick={() => setIsRadioPlaying(true)} type="button">
+                <button className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/45 bg-[#4f3f32] px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition md:hover:-translate-y-1 hover:bg-[#3f3026]" onClick={() => setIsRadioPlaying(true)} type="button">
                   <Headphones size={16} /> Start music
                 </button>
-                <a className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/45 bg-[#4f3f32] px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-[#3f3026]" href="#unwind" onClick={() => navigateToTab('unwind')}>
+                <a className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-white/45 bg-[#4f3f32] px-4 py-2.5 sm:px-5 sm:py-3 text-[13px] sm:text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition md:hover:-translate-y-1 hover:bg-[#3f3026]" href="#unwind" onClick={() => navigateToTab('unwind')}>
                   <Leaf size={16} /> Calm games
                 </a>
               </div>
@@ -4807,7 +4809,7 @@ function App() {
 
               <div className="mt-7 grid gap-3 lg:grid-cols-3">
                 {hangoutInvitations.map((invitation) => (
-                  <button key={invitation.title} className="group lofi-glass rounded-[1.55rem] border p-4 text-left shadow-sm transition hover:-translate-y-1 hover:border-[#d9c7b3] hover:shadow-[0_14px_30px_rgba(146,126,106,0.08)]" onClick={() => navigateToTab(invitation.tab)} type="button">
+                  <button key={invitation.title} className="group lofi-glass rounded-[1.55rem] border p-4 text-left shadow-sm transition md:hover:-translate-y-1 hover:border-[#d9c7b3] hover:shadow-[0_14px_30px_rgba(146,126,106,0.08)]" onClick={() => navigateToTab(invitation.tab)} type="button">
                     <div className="flex items-start justify-between gap-3">
                       <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#9a806a]">{invitation.eyebrow}</p>
                       <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-[#efe4d8] text-[#7b6552]">
@@ -4831,17 +4833,17 @@ function App() {
 
               <div className="mt-8 flex flex-wrap items-center gap-x-2.5 gap-y-3 rounded-[1.2rem] border border-white/30 bg-[#1f2f29]/80 p-3.5 text-xs shadow-sm backdrop-blur-md sm:p-4">
                 <span className="rounded-full bg-white px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.2em] text-[#284a3a] shadow-sm">Original articles</span>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/stop-scrolling-and-start-studying.html">Stop scrolling and study</a>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/lofi-study-room-focus-tree-timer.html">Lofi room & tree</a>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/blog.html">Blog hub</a>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/private-journaling-hub.html">Journal hub</a>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/journaling-games-long-tail-seo.html">100 answers</a>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/how-does-journaling-help-mental-wellbeing.html">mental wellbeing journaling</a>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/student-focus-kit.html">Student Kit</a>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-psychology-of-journaling.html">Psychology</a>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-protect-privacy-journaling-online.html">Privacy guide</a>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-how-to-start-journaling-habit.html">Writing habit</a>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition hover:-translate-y-0.5 hover:bg-white" href="/article-benefits-of-private-online-diary.html">Benefits</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/stop-scrolling-and-start-studying.html">Stop scrolling and study</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/lofi-study-room-focus-tree-timer.html">Lofi room & tree</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/blog.html">Blog hub</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/private-journaling-hub.html">Journal hub</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/journaling-games-long-tail-seo.html">100 answers</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/how-does-journaling-help-mental-wellbeing.html">mental wellbeing journaling</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/student-focus-kit.html">Student Kit</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/article-psychology-of-journaling.html">Psychology</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/article-protect-privacy-journaling-online.html">Privacy guide</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/article-how-to-start-journaling-habit.html">Writing habit</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/article-benefits-of-private-online-diary.html">Benefits</a>
               </div>
 
               <div className="mt-8 grid gap-4 grid-cols-2 md:grid-cols-3 xl:grid-cols-3">
@@ -4858,8 +4860,8 @@ function App() {
                     <p className="mt-3 max-w-2xl text-sm leading-7 text-sage-800">Lofi Memory is meant to feel like a calm browser hangout. You can let the lofi stream roll, play a chill game, keep your to-do list nearby, breathe for a minute, or write something down whenever you feel like it.</p>
                   </div>
                   <div className="mt-6 space-y-3.5">
-                    <button className="group flex w-full items-start gap-4 rounded-[1.5rem] border border-amber-200/50 bg-white/96 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50 hover:shadow-lift" onClick={() => setIsRadioPlaying(true)} type="button">
-                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700 shadow-sm transition group-hover:scale-105">
+                    <button className="group flex w-full items-start gap-4 rounded-[1.5rem] border border-amber-200/50 bg-white/96 px-5 py-4 text-left shadow-sm transition md:hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50 hover:shadow-lift" onClick={() => setIsRadioPlaying(true)} type="button">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700 shadow-sm transition md:group-hover:scale-105">
                         <Headphones size={18} />
                       </div>
                       <div className="min-w-0 flex-1">
@@ -4868,8 +4870,8 @@ function App() {
                         <span className="mt-2 block text-sm leading-6 text-sage-700">Start the soft radio and let the page settle into a calmer room for relaxing, focus, or writing.</span>
                       </div>
                     </button>
-                    <button className="group flex w-full items-start gap-4 rounded-[1.5rem] border border-amber-200/50 bg-white/96 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50 hover:shadow-lift" onClick={() => navigateToTab('notes')} type="button">
-                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-teal-100 text-teal-700 shadow-sm transition group-hover:scale-105">
+                    <button className="group flex w-full items-start gap-4 rounded-[1.5rem] border border-amber-200/50 bg-white/96 px-5 py-4 text-left shadow-sm transition md:hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50 hover:shadow-lift" onClick={() => navigateToTab('notes')} type="button">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-teal-100 text-teal-700 shadow-sm transition md:group-hover:scale-105">
                         <FileText size={18} />
                       </div>
                       <div className="min-w-0 flex-1">
@@ -4878,8 +4880,8 @@ function App() {
                         <span className="mt-2 block text-sm leading-6 text-sage-700">Keep errands, reminders, and important bits close in a calmer, easier-to-scan space.</span>
                       </div>
                     </button>
-                    <button className="group flex w-full items-start gap-4 rounded-[1.5rem] border border-amber-200/50 bg-white/96 px-5 py-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50 hover:shadow-lift" onClick={() => navigateToTab('write')} type="button">
-                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-sage-100 text-sage-800 shadow-sm transition group-hover:scale-105">
+                    <button className="group flex w-full items-start gap-4 rounded-[1.5rem] border border-amber-200/50 bg-white/96 px-5 py-4 text-left shadow-sm transition md:hover:-translate-y-0.5 hover:border-sage-300 hover:bg-sage-50 hover:shadow-lift" onClick={() => navigateToTab('write')} type="button">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-sage-100 text-sage-800 shadow-sm transition md:group-hover:scale-105">
                         <PenLine size={18} />
                       </div>
                       <div className="min-w-0 flex-1">
@@ -4943,8 +4945,8 @@ function App() {
                 { id: 'memories', label: 'Memories', detail: 'Return to saved moments', icon: BookOpen, tone: 'bg-sand-100 text-sand-600' },
                 { id: 'design', label: 'Design', detail: 'Customize your space', icon: Palette, tone: 'bg-rose-100 text-rose-700' }
               ].map((tab) => (
-                <button key={tab.id} className="group flex items-center gap-3 rounded-2xl border border-[#e8dfd5] bg-white/92 px-4 py-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-white hover:shadow-lift" onClick={() => navigateToTab(tab.id)} type="button">
-                  <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl shadow-sm transition group-hover:scale-105 ${tab.tone}`}>
+                <button key={tab.id} className="group flex items-center gap-3 rounded-2xl border border-[#e8dfd5] bg-white/92 px-4 py-3 text-left shadow-sm transition md:hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-white hover:shadow-lift" onClick={() => navigateToTab(tab.id)} type="button">
+                  <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl shadow-sm transition md:group-hover:scale-105 ${tab.tone}`}>
                     <tab.icon size={18} />
                   </div>
                   <div>
@@ -4979,7 +4981,7 @@ function App() {
           <div className="quote-card quote-card-premium quote-card-compact flex flex-col rounded-3xl border border-amber-200/50 p-6 shadow-soft lg:p-7">
             <Quote className="mb-6 opacity-80" size={30} />
             <p className="quote-main-text font-bold leading-tight" style={{ fontFamily: activeQuoteFont, fontSize: Math.max(activeQuoteSize - 4, 28), color: quoteStyle.textColor, lineHeight: 1.4 }}>“{quoteLibrary[quoteIndex % quoteLibrary.length]}”</p>
-            <button className="quote-button mt-6 rounded-full bg-white px-5 py-3 text-sm font-extrabold shadow-lift transition hover:-translate-y-1 hover:bg-sage-50" onClick={() => setQuoteIndex((quoteIndex + 1) % quoteLibrary.length)}>
+            <button className="quote-button mt-6 rounded-full bg-white px-5 py-3 text-sm font-extrabold shadow-lift transition md:hover:-translate-y-1 hover:bg-sage-50" onClick={() => setQuoteIndex((quoteIndex + 1) % quoteLibrary.length)}>
               Another calming quote
             </button>
 
@@ -4989,7 +4991,7 @@ function App() {
                 <p className="mt-3 text-sm leading-7 text-white/95 lofi-sharp-text-soft">You can leave one small honest note today and return tomorrow. The page will still be here when you are ready.</p>
                 <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
                   <p className="text-sm font-semibold tracking-[0.08em] text-white/95 lofi-sharp-chip">{streak > 0 ? `${streak} day${streak === 1 ? '' : 's'} of rhythm` : 'Begin with one gentle page'}</p>
-                  <a className="inline-flex items-center rounded-full bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.14em] text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50" href="#journal" onClick={() => navigateToTab('write')}>
+                  <a className="inline-flex items-center rounded-full bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.14em] text-sage-900 shadow-sm transition md:hover:-translate-y-0.5 hover:bg-sage-50" href="#journal" onClick={() => navigateToTab('write')}>
                     Write now
                   </a>
                 </div>
@@ -5010,7 +5012,7 @@ function App() {
                   <h2 className="font-display text-4xl font-bold leading-tight text-ink lg:text-5xl">{homeSections.find((s) => s.id === activeHomeSection)?.label || 'Overview'}</h2>
                   <p className="mt-4 max-w-2xl text-lg leading-relaxed text-sage-800">{activeHomeSection === 'overview' ? (latestEntry ? `Your last page is still here. ${rewardLevel.next}` : 'Come here to relax, hang out in a chill corner, and start with a game first when you want the easiest, softest reset.') : 'Browse gently. The layout stays simple so each section feels easier to read.'}</p>
                 </div>
-                <a className="inline-flex shrink-0 items-center gap-2 rounded-full bg-sage-900 px-6 py-4 text-sm font-extrabold text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800" href="#unwind" onClick={() => navigateToTab('unwind')}>
+                <a className="inline-flex shrink-0 items-center gap-2 rounded-full bg-sage-900 px-6 py-4 text-sm font-extrabold text-white shadow-lift transition md:hover:-translate-y-1 hover:bg-sage-800" href="#unwind" onClick={() => navigateToTab('unwind')}>
                   <Leaf size={18} /> Play a chill game
                 </a>
               </div>
@@ -5060,7 +5062,7 @@ function App() {
                       { label: 'Plan important things', detail: 'Keep tasks, recurring habits, and notes away from diary entries.', action: () => navigateToTab('notes'), icon: FileText },
                       { label: 'Read guides', detail: 'Find calm game, prompt, privacy, and habit guides grouped by need.', action: () => openHomeSection('guides'), icon: Compass }
                     ].map((item) => (
-                      <button key={item.label} className="group rounded-[1.5rem] border border-white/85 bg-white/90 p-4 text-left shadow-sm transition hover:-translate-y-1 hover:border-amber-200/50 hover:bg-white hover:shadow-lift" onClick={item.action} type="button">
+                      <button key={item.label} className="group rounded-[1.5rem] border border-white/85 bg-white/90 p-4 text-left shadow-sm transition md:hover:-translate-y-1 hover:border-amber-200/50 hover:bg-white hover:shadow-lift" onClick={item.action} type="button">
                         <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-sage-100 text-sage-800 transition group-hover:bg-sage-900 group-hover:text-white"><item.icon size={17} /></div>
                         <h4 className="mt-3 text-base font-extrabold text-ink">{item.label}</h4>
                         <p className="mt-2 text-sm leading-6 text-sage-700">{item.detail}</p>
@@ -5078,7 +5080,7 @@ function App() {
                   </div>
                   <div className="mt-4 flex flex-wrap gap-2.5">
                     {(showAllSearches ? seoPopularSearches : seoPopularSearches.slice(0, 12)).map((item) => (
-                      <a className="rounded-full border border-amber-200/50 bg-sage-50/70 px-4 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href={item.href} key={item.href}>{item.label}</a>
+                      <a className="rounded-full border border-amber-200/50 bg-sage-50/70 px-4 py-2 text-sm font-bold text-sage-800 transition md:hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href={item.href} key={item.href}>{item.label}</a>
                     ))}
                     {!showAllSearches && seoPopularSearches.length > 12 && (
                       <button 
@@ -5122,15 +5124,15 @@ function App() {
               </div>
 
               <div className="grid gap-2 border-t border-[#e8dfd5] pt-5">
-                <button className="flex items-center justify-between rounded-2xl bg-white/80 px-5 py-4 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-white" onClick={() => navigateToTab('notes')} type="button">
+                <button className="flex items-center justify-between rounded-2xl bg-white/80 px-5 py-4 text-sm font-extrabold text-sage-800 shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" onClick={() => navigateToTab('notes')} type="button">
                   <span className="inline-flex items-center gap-2"><FileText size={16} /> Notes</span>
                   <span className="opacity-50">{openPlannerTodoCount}</span>
                 </button>
-                <button className="flex items-center justify-between rounded-2xl bg-white/80 px-5 py-4 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-white" onClick={() => navigateToTab('memories')} type="button">
+                <button className="flex items-center justify-between rounded-2xl bg-white/80 px-5 py-4 text-sm font-extrabold text-sage-800 shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" onClick={() => navigateToTab('memories')} type="button">
                   <span className="inline-flex items-center gap-2"><BookOpen size={16} /> Memories</span>
                   <span className="opacity-50">{entries.length}</span>
                 </button>
-                <button className="flex items-center justify-between rounded-2xl bg-white/80 px-5 py-4 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-white" onClick={() => navigateToTab('insights')} type="button">
+                <button className="flex items-center justify-between rounded-2xl bg-white/80 px-5 py-4 text-sm font-extrabold text-sage-800 shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" onClick={() => navigateToTab('insights')} type="button">
                   <span className="inline-flex items-center gap-2"><CalendarDays size={16} /> Insights</span>
                   <span className="opacity-50">{weeklyCheckIns}/{weeklyGoal}</span>
                 </button>
@@ -5572,7 +5574,7 @@ function App() {
             aria-valuemax={100}
             aria-valuemin={0}
             aria-valuenow={radioVolume}
-            className={`absolute inset-0 rounded-full p-[3px] transition duration-300 ${isRadioDialDragging ? 'scale-[1.03]' : ''} ${isRadioDialFeedbackVisible ? 'pointer-events-auto opacity-100 scale-100 shadow-soft' : 'pointer-events-none opacity-0 scale-90'} group-hover:pointer-events-auto group-hover:opacity-100 group-hover:scale-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-focus-within:scale-100`}
+            className={`absolute inset-0 rounded-full p-[3px] transition duration-300 ${isRadioDialDragging ? 'scale-[1.03]' : ''} ${isRadioDialFeedbackVisible ? 'pointer-events-auto opacity-100 scale-100 shadow-soft' : 'pointer-events-none opacity-0 scale-90'} group-hover:pointer-events-auto group-hover:opacity-100 md:group-hover:scale-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-focus-within:scale-100`}
             onKeyDown={(event) => {
               if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
                 event.preventDefault();
@@ -5625,7 +5627,7 @@ function App() {
                 } catch {}
               }
             }}
-            className={`absolute inset-[0.74rem] z-20 flex items-center justify-center overflow-hidden rounded-full transition duration-300 hover:-translate-y-1 ${
+            className={`absolute inset-[0.74rem] z-20 flex items-center justify-center overflow-hidden rounded-full transition duration-300 md:hover:-translate-y-1 ${
               isRadioPlaying
                 ? 'bg-sage-200/90 ring-1 ring-white/60 shadow-[0_8px_22px_rgba(72,111,66,0.18)] hover:bg-sage-200'
                 : 'bg-sage-100/90 shadow-[0_8px_18px_rgba(72,111,66,0.12)] hover:bg-sage-100'
@@ -5677,7 +5679,7 @@ function App() {
                   localStorage.setItem('quiet-journal-cookie-consent', 'true');
                   setCookieConsentAccepted(true);
                 }}
-                className="shrink-0 rounded-full bg-sage-900 px-5 py-2.5 text-sm font-extrabold text-white shadow-lift transition hover:-translate-y-0.5 hover:bg-sage-800"
+                className="shrink-0 rounded-full bg-sage-900 px-5 py-2.5 text-sm font-extrabold text-white shadow-lift transition md:hover:-translate-y-0.5 hover:bg-sage-800"
               >
                 Got it
               </button>
@@ -5685,46 +5687,6 @@ function App() {
           </div>
         </div>
       )}
-
-      <div className="fixed inset-x-3 bottom-3 z-30 mx-auto max-w-lg rounded-[1.7rem] border lofi-glass p-1.5 shadow-soft backdrop-blur-xl lg:hidden">
-        <div className="grid grid-cols-8 gap-1">
-        {[
-          { id: 'unwind', label: 'Games', icon: Gamepad2 },
-          { id: 'focus', label: 'Focus', icon: Leaf },
-          { id: 'home', label: 'Chill', icon: Headphones },
-          { id: 'write', label: 'Diary', icon: PenLine },
-          { id: 'notes', label: 'Notes', icon: FileText },
-          { id: 'breathe', label: 'Music', icon: Wind },
-          { id: 'memories', label: 'Memory', icon: CalendarDays },
-          { id: 'design', label: 'Design', icon: Palette }
-        ].map((tab) => {
-          const isActive = activeTab === tab.id;
-          const isWrite = tab.id === 'write';
-          return (
-          <button
-            key={tab.id}
-            className={`flex min-w-0 flex-col items-center gap-1.5 rounded-[1.2rem] px-1 py-2 transition ${isActive ? 'bg-white text-sage-950 shadow-sm ring-1 ring-sage-100' : isWrite ? 'text-sage-900' : 'text-sage-600 hover:bg-white/70 hover:text-sage-800'}`}
-            onClick={() => {
-              if (tab.id === 'design') {
-                setCustomizerOpen(true);
-              } else if (tab.id === 'home') {
-                openHomeSection('home');
-              } else {
-                navigateToTab(tab.id);
-              }
-            }}
-            type="button"
-          >
-            <div className={`flex h-8 w-8 items-center justify-center rounded-2xl transition ${isActive ? 'bg-sage-900 text-white shadow-sm' : isWrite ? 'bg-sage-900 text-white shadow-sm' : 'bg-sage-50 text-sage-700'}`}>
-              <tab.icon size={16} />
-            </div>
-            <span className="text-[10px] font-bold uppercase tracking-[0.1em]">{tab.label}</span>
-            <span className={`h-1 w-5 rounded-full transition ${isActive ? 'bg-sage-700 opacity-100' : 'opacity-0'}`}></span>
-          </button>
-          );
-        })}
-        </div>
-      </div>
 
       {Boolean(selectedEntry) && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/45 p-4 backdrop-blur-sm" onClick={() => { if (!isEditingEntry) setSelectedEntry(null); }}>
@@ -5784,11 +5746,11 @@ function App() {
                   <button className="rounded-full bg-white px-3.5 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:bg-sage-50" onClick={() => toggleUnderlineText(editBodyRef, setEditBody)} title="Underline selected text" type="button">Underline</button>
                   <button className="rounded-full bg-white px-3.5 py-2 text-sm font-bold text-sage-800 shadow-sm transition hover:bg-sage-50" onClick={() => toggleBulletList(editBodyRef, setEditBody)} title="Bullet points" type="button">List</button>
                   {quickEmojis.slice(0, 6).map((emoji) => (
-                    <button key={emoji} className="rounded-full bg-white px-2.5 py-1 text-base shadow-sm transition hover:-translate-y-0.5 hover:bg-sage-50" onClick={() => insertEditQuickEmoji(emoji)} type="button">
+                    <button key={emoji} className="rounded-full bg-white px-2.5 py-1 text-base shadow-sm transition md:hover:-translate-y-0.5 hover:bg-sage-50" onClick={() => insertEditQuickEmoji(emoji)} type="button">
                       {emoji}
                     </button>
                   ))}
-                  <label className="ml-auto flex cursor-pointer items-center gap-2 rounded-full bg-sage-800 px-3.5 py-2 text-xs font-extrabold text-white shadow-lift transition hover:-translate-y-0.5 hover:bg-sage-700">
+                  <label className="ml-auto flex cursor-pointer items-center gap-2 rounded-full bg-sage-800 px-3.5 py-2 text-xs font-extrabold text-white shadow-lift transition md:hover:-translate-y-0.5 hover:bg-sage-700">
                     <ImagePlus size={14} /> Photo
                     <input accept="image/*" className="hidden" onChange={handleEditEntryImageUpload} type="file" />
                   </label>
@@ -5817,7 +5779,7 @@ function App() {
       )}
 
       <button
-        className={`fixed z-40 flex h-12 w-12 items-center justify-center rounded-full bg-sage-900 text-white shadow-lift transition hover:-translate-y-1 hover:bg-sage-800 ${isPhoneInterface ? (cookieConsentAccepted ? 'bottom-[7.25rem] right-4' : 'bottom-[13rem] right-4') : (cookieConsentAccepted ? 'bottom-6 right-6' : 'bottom-6 left-6')}`}
+        className={`fixed z-40 flex h-12 w-12 items-center justify-center rounded-full bg-sage-900 text-white shadow-lift transition md:hover:-translate-y-1 hover:bg-sage-800 ${isPhoneInterface ? (cookieConsentAccepted ? 'bottom-[7.25rem] right-4' : 'bottom-[13rem] right-4') : (cookieConsentAccepted ? 'bottom-6 right-6' : 'bottom-6 left-6')}`}
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         type="button"
         aria-label="Back to top"

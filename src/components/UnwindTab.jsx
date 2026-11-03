@@ -37,7 +37,7 @@ export default function UnwindTab(props) {
         {unwindViewMode === 'detail' && (
           <div className={`game-detail-reveal ${isFullscreen ? 'mb-0 scroll-mt-0' : 'mb-16 scroll-mt-24'}`}>
             {!isFullscreen && (
-              <button className="mb-5 inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white/88 px-4 py-2 text-sm font-extrabold text-sage-800 shadow-sm transition hover:-translate-x-0.5 hover:bg-white" onClick={returnToGameLibrary} type="button">
+              <button className="mb-5 inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white/88 px-4 py-2 text-sm font-extrabold text-sage-800 shadow-sm transition md:hover:-translate-x-0.5 hover:bg-white" onClick={returnToGameLibrary} type="button">
                 <span aria-hidden="true">←</span> Back to games
               </button>
             )}
@@ -73,12 +73,12 @@ export default function UnwindTab(props) {
                           </button>
                         ))}
                       </div>
-                      <button onClick={toggleFullscreen} className={`flex h-11 items-center gap-2 rounded-2xl border bg-white px-5 text-sm font-bold shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-sage-50 hover:shadow-md active:scale-95 ${gameVisualTheme === 'lofi' ? 'border-amber-200 text-[#4a3a2d]' : 'border-amber-200/50 text-sage-700'}`} type="button">
+                      <button onClick={toggleFullscreen} className={`flex h-11 items-center gap-2 rounded-2xl border bg-white px-5 text-sm font-bold shadow-sm transition-all duration-300 md:hover:-translate-y-0.5 hover:bg-sage-50 hover:shadow-md active:scale-95 ${gameVisualTheme === 'lofi' ? 'border-amber-200 text-[#4a3a2d]' : 'border-amber-200/50 text-sage-700'}`} type="button">
                         {isFullscreen ? <ArrowUp size={16} className="rotate-180 transition-transform duration-300" /> : <ArrowUp size={16} className="transition-transform duration-300" />}
                         {isFullscreen ? 'Exit full' : 'Full screen'}
                       </button>
-                      <button onClick={returnToGameLibrary} className={`flex h-11 items-center gap-2 rounded-2xl border bg-white px-5 text-sm font-bold shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-sage-50 hover:shadow-md active:scale-95 ${gameVisualTheme === 'lofi' ? 'border-amber-200 text-[#4a3a2d]' : 'border-amber-200/50 text-sage-700'}`} type="button">
-                        <Gamepad2 size={16} className="transition-transform duration-300 group-hover:scale-110" />
+                      <button onClick={returnToGameLibrary} className={`flex h-11 items-center gap-2 rounded-2xl border bg-white px-5 text-sm font-bold shadow-sm transition-all duration-300 md:hover:-translate-y-0.5 hover:bg-sage-50 hover:shadow-md active:scale-95 ${gameVisualTheme === 'lofi' ? 'border-amber-200 text-[#4a3a2d]' : 'border-amber-200/50 text-sage-700'}`} type="button">
+                        <Gamepad2 size={16} className="transition-transform duration-300 md:group-hover:scale-110" />
                         Back to games
                       </button>
                     </div>
@@ -87,7 +87,7 @@ export default function UnwindTab(props) {
                       {safeDifficultyOptions.map((difficulty) => (
                         <button
                           key={difficulty.id}
-                          className={`rounded-full px-4 py-2 text-sm font-extrabold transition-all duration-300 active:scale-95 hover:shadow-md ${selectedGameDifficulty === difficulty.id ? (gameVisualTheme === 'lofi' ? 'bg-[#4a3a2d] text-white shadow-sm' : 'bg-sage-900 text-white shadow-sm hover:-translate-y-0.5') : `border bg-white hover:-translate-y-0.5 hover:bg-sage-50 ${gameVisualTheme === 'lofi' ? 'border-amber-200 text-[#4a3a2d]' : 'border-amber-200/50 text-sage-800'}`}`}
+                          className={`rounded-full px-4 py-2 text-sm font-extrabold transition-all duration-300 active:scale-95 hover:shadow-md ${selectedGameDifficulty === difficulty.id ? (gameVisualTheme === 'lofi' ? 'bg-[#4a3a2d] text-white shadow-sm' : 'bg-sage-900 text-white shadow-sm md:hover:-translate-y-0.5') : `border bg-white md:hover:-translate-y-0.5 hover:bg-sage-50 ${gameVisualTheme === 'lofi' ? 'border-amber-200 text-[#4a3a2d]' : 'border-amber-200/50 text-sage-800'}`}`}
                           onClick={() => setSelectedGameDifficulty(difficulty.id)}
                           type="button"
                         >
@@ -143,14 +143,14 @@ export default function UnwindTab(props) {
               return (
                 <button
                   key={game.id}
-                  className={`group relative flex flex-col overflow-hidden rounded-[2.7rem] border p-1 text-left transition-all duration-500 hover:-translate-y-1.5 ${
+                  className={`group relative flex flex-col overflow-hidden rounded-[2.7rem] border p-1 text-left transition-all duration-500 md:hover:-translate-y-1.5 ${
                     isSelected ? 'border-amber-200 bg-white ring-4 ring-amber-100 ring-offset-4 ring-offset-[#fff7ec]' : 'border-white/70 bg-white/44 hover:bg-white/66'
                   }`}
                   onClick={() => selectUnwindGame(game.id)}
                   type="button"
                 >
                   <div className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-[2.45rem] bg-gradient-to-br shadow-inner">
-                    <img src={game.preview} alt={`${game.title} preview`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+                    <img src={game.preview} alt={`${game.title} preview`} className="absolute inset-0 h-full w-full object-cover transition duration-700 md:group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/44 via-black/8 to-white/8" />
                     {isSelected ? (
                       <span className="absolute bottom-4 right-4 rounded-full bg-white/88 px-3 py-1 text-[10px] font-black uppercase tracking-widest text-[#6e543c] shadow-sm backdrop-blur-sm">Active</span>

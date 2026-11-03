@@ -52,7 +52,7 @@ export default function HomeDesignPanel(props) {
     <div className="quote-card quote-card-premium rounded-3xl border border-amber-200/50 p-8 shadow-soft">
       <Quote className="mb-8 opacity-80" size={34} />
       <p className="quote-main-text font-bold leading-tight" style={{ fontFamily: activeQuoteFont, fontSize: activeQuoteSize, color: quoteStyle.textColor, lineHeight: 1.45 }}>“{quoteLibrary[quoteIndex % quoteLibrary.length]}”</p>
-      <button className="quote-button mt-8 rounded-full bg-white px-5 py-3 text-sm font-extrabold shadow-lift transition hover:-translate-y-1 hover:bg-sage-50" onClick={() => setQuoteIndex((quoteIndex + 1) % quoteLibrary.length)}>
+      <button className="quote-button mt-8 rounded-full bg-white px-5 py-3 text-sm font-extrabold shadow-lift transition md:hover:-translate-y-1 hover:bg-sage-50" onClick={() => setQuoteIndex((quoteIndex + 1) % quoteLibrary.length)}>
         Another calming quote
       </button>
     </div>
@@ -106,13 +106,13 @@ export default function HomeDesignPanel(props) {
       </div>
       <div className="mt-4 flex flex-wrap gap-2.5">
         {seoPopularSearches.map((item) => (
-          <a className="rounded-full border border-amber-200/50 bg-sage-50/70 px-4 py-2 text-sm font-bold text-sage-800 transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href={item.href} key={item.href}>{item.label}</a>
+          <a className="rounded-full border border-amber-200/50 bg-sage-50/70 px-4 py-2 text-sm font-bold text-sage-800 transition md:hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white" href={item.href} key={item.href}>{item.label}</a>
         ))}
       </div>
     </div>
     <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
       {seoLandingBlocks.slice(0, 8).map((item) => (
-        <article className="customizable-card rounded-3xl border border-amber-200/50 bg-white/80 p-6 shadow-lift backdrop-blur transition hover:-translate-y-1 hover:bg-white/95" key={item.title}>
+        <article className="customizable-card rounded-3xl border border-amber-200/50 bg-white/80 p-6 shadow-lift backdrop-blur transition md:hover:-translate-y-1 hover:bg-white/95" key={item.title}>
           <div className="rounded-full bg-sage-100 px-3 py-1 text-xs font-extrabold uppercase tracking-widest text-sage-800">Reader guide</div>
           <h3 className="mt-4 text-2xl font-extrabold leading-tight text-ink">{item.title}</h3>
           <p className="mt-4 leading-8 text-sage-800">{item.text}</p>
@@ -127,7 +127,7 @@ export default function HomeDesignPanel(props) {
           <h3 className="mt-3 text-3xl font-extrabold text-ink">Read the page that matches the calmer routine you want right now.</h3>
           <p className="mt-3 max-w-3xl leading-8 text-sage-800">Whether you want better privacy, a simpler writing habit, a calmer evening routine, or a small puzzle break before journaling, these pages give visitors something useful to read before they begin.</p>
         </div>
-        <a className="inline-flex items-center justify-center rounded-full bg-sage-900 px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-sage-800" href="/blog.html">
+        <a className="inline-flex items-center justify-center rounded-full bg-sage-900 px-5 py-3 text-sm font-bold text-white transition md:hover:-translate-y-0.5 hover:bg-sage-800" href="/blog.html">
           Browse guides
         </a>
       </div>
@@ -139,7 +139,7 @@ export default function HomeDesignPanel(props) {
             <p className="mt-3 text-sm leading-7 text-sage-800">{group.description}</p>
             <div className="mt-5 grid gap-2">
               {group.links.map((page) => (
-                <a className="group flex items-start justify-between gap-3 rounded-2xl border border-[#e8dfd5] bg-white/82 px-4 py-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-white" href={page.href} key={page.href}>
+                <a className="group flex items-start justify-between gap-3 rounded-2xl border border-[#e8dfd5] bg-white/82 px-4 py-3 text-left shadow-sm transition md:hover:-translate-y-0.5 hover:border-amber-200/50 hover:bg-white" href={page.href} key={page.href}>
                   <span>
                     <span className="block text-sm font-extrabold text-sage-950 group-hover:text-sage-800">{page.title}</span>
                     <span className="mt-1 block text-xs font-semibold leading-5 text-sage-600">{page.text}</span>
@@ -157,8 +157,8 @@ export default function HomeDesignPanel(props) {
           <h4 className="mt-3 text-2xl font-extrabold leading-tight text-ink">A stable place for future recommendations, without interrupting the journal.</h4>
           <p className="mt-3 max-w-2xl leading-8 text-sage-800">This area sits outside the main writing flow, so future recommendations can live here without covering prompts, shifting the editor, or making the journaling experience feel crowded on mobile or desktop.</p>
           <div className="mt-5 flex flex-wrap gap-3">
-            <a className="inline-flex items-center justify-center rounded-full bg-sage-900 px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-sage-800" href="/article-benefits-of-private-online-diary.html">Open private diary guide</a>
-            <a className="inline-flex items-center justify-center rounded-full border border-amber-200/50 bg-white px-5 py-3 text-sm font-bold text-sage-900 transition hover:-translate-y-0.5 hover:border-sage-300" href="/article-journaling-prompts-self-discovery.html">Browse prompts</a>
+            <a className="inline-flex items-center justify-center rounded-full bg-sage-900 px-5 py-3 text-sm font-bold text-white transition md:hover:-translate-y-0.5 hover:bg-sage-800" href="/article-benefits-of-private-online-diary.html">Open private diary guide</a>
+            <a className="inline-flex items-center justify-center rounded-full border border-amber-200/50 bg-white px-5 py-3 text-sm font-bold text-sage-900 transition md:hover:-translate-y-0.5 hover:border-sage-300" href="/article-journaling-prompts-self-discovery.html">Browse prompts</a>
           </div>
         </div>
         <div className="rounded-3xl border border-[#e8dfd5]/80 bg-white/85 p-6 shadow-lift backdrop-blur">
@@ -209,7 +209,7 @@ export default function HomeDesignPanel(props) {
     <div className="grid gap-5 md:grid-cols-2">
       {wellnessArticles.map((article, index) => (
         article.href ? (
-          <a href={article.href} className="customizable-card rounded-3xl border border-amber-200/50 bg-white/80 p-6 shadow-lift backdrop-blur transition hover:-translate-y-1 hover:bg-white/95 text-left block" key={article.title}>
+          <a href={article.href} className="customizable-card rounded-3xl border border-amber-200/50 bg-white/80 p-6 shadow-lift backdrop-blur transition md:hover:-translate-y-1 hover:bg-white/95 text-left block" key={article.title}>
             <div className="mb-4 flex items-center justify-between gap-4">
               <span className="rounded-full bg-sage-900 px-3 py-1 text-xs font-extrabold uppercase tracking-widest text-white">{article.read.split('•')[0]}</span>
               <span className="text-sm font-bold text-sage-600">{article.read.split('•')[1] || ''}</span>
@@ -221,7 +221,7 @@ export default function HomeDesignPanel(props) {
             </div>
           </a>
         ) : (
-          <article className="customizable-card rounded-3xl border border-amber-200/50 bg-white/80 p-6 shadow-lift backdrop-blur transition hover:-translate-y-1 hover:bg-white/95" key={article.title}>
+          <article className="customizable-card rounded-3xl border border-amber-200/50 bg-white/80 p-6 shadow-lift backdrop-blur transition md:hover:-translate-y-1 hover:bg-white/95" key={article.title}>
             <div className="mb-4 flex items-center justify-between gap-4">
               <span className="rounded-full bg-sage-100 px-3 py-1 text-xs font-extrabold uppercase tracking-widest text-sage-800">Note</span>
               <span className="text-sm font-bold text-sage-600">{article.read}</span>
@@ -233,7 +233,7 @@ export default function HomeDesignPanel(props) {
       ))}
     </div>
     <div className="mt-10 text-center">
-      <a href="/blog.html" className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white/70 px-6 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white backdrop-blur">
+      <a href="/blog.html" className="inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white/70 px-6 py-3 text-sm font-extrabold text-sage-900 shadow-sm transition md:hover:-translate-y-0.5 hover:border-sage-300 hover:bg-white backdrop-blur">
         Visit the full Blog & Wellness Library &rarr;
       </a>
     </div>
@@ -485,13 +485,13 @@ export default function HomeDesignPanel(props) {
             />
           </label>
            <div className="flex flex-wrap gap-3">
-            <button className="inline-flex items-center gap-2 rounded-full bg-white/20 px-5 py-3 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/30 disabled:cursor-not-allowed disabled:opacity-60" disabled={seoStudioLoading} onClick={runSeoStudioReview} type="button">
+            <button className="inline-flex items-center gap-2 rounded-full bg-white/20 px-5 py-3 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition md:hover:-translate-y-1 hover:bg-white/30 disabled:cursor-not-allowed disabled:opacity-60" disabled={seoStudioLoading} onClick={runSeoStudioReview} type="button">
               <Sparkles size={16} /> {seoStudioLoading ? 'Running review...' : 'Run AI SEO review'}
             </button>
-            <button className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/20 px-5 py-3 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:border-white/50 hover:bg-black/40 disabled:cursor-not-allowed disabled:opacity-50" disabled={!seoStudioReport.trim()} onClick={copySeoStudioReport} type="button">
+            <button className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/20 px-5 py-3 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition md:hover:-translate-y-1 hover:border-white/50 hover:bg-black/40 disabled:cursor-not-allowed disabled:opacity-50" disabled={!seoStudioReport.trim()} onClick={copySeoStudioReport} type="button">
               <FileText size={16} /> {seoStudioCopied ? 'Copied' : 'Copy report'}
             </button>
-            <button className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/20 px-5 py-3 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:border-white/50 hover:bg-black/40" onClick={clearSeoStudioReport} type="button">
+            <button className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/20 px-5 py-3 text-sm font-extrabold text-white shadow-sm backdrop-blur-md transition md:hover:-translate-y-1 hover:border-white/50 hover:bg-black/40" onClick={clearSeoStudioReport} type="button">
               Clear
             </button>
           </div>
