@@ -385,7 +385,7 @@ export default function HomeDesignPanel(props) {
           </>
           )}
     
-          {activeHomeSection === 'seo-studio' && showAdminTools && (
+          {(activeHomeSection === 'seo-studio' && showAdminTools) ? (
           <section id="seo-studio" className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 py-14">
     <SectionHeader
       eyebrow="Admin-only AI SEO Studio"
@@ -455,8 +455,8 @@ export default function HomeDesignPanel(props) {
             <h3 className="mt-2 text-2xl font-extrabold text-white lofi-sharp-text">SEO drafts that stay inside your admin view</h3>
           </div>
           <div className="flex flex-wrap items-center justify-end gap-2">
-            {seoStudioModelUsed && <span className="rounded-full border border-white/20 bg-black/20 px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-white shadow-sm backdrop-blur-md">Model · {seoStudioModelUsed}</span>}
-            {seoStudioLastRun && <span className="rounded-full border border-white/20 bg-white/20 px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-white shadow-sm backdrop-blur-md">Last run · {seoStudioLastRun}</span>}
+            {seoStudioModelUsed ? <span className="rounded-full border border-white/20 bg-black/20 px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-white shadow-sm backdrop-blur-md">Model · {seoStudioModelUsed}</span> : null}
+            {seoStudioLastRun ? <span className="rounded-full border border-white/20 bg-white/20 px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-white shadow-sm backdrop-blur-md">Last run · {seoStudioLastRun}</span> : null}
           </div>
         </div>
          <div className="relative z-10 mt-6 grid gap-4">
@@ -496,11 +496,11 @@ export default function HomeDesignPanel(props) {
               Clear
             </button>
           </div>
-           {seoStudioError && (
+           {seoStudioError ? (
             <div className="rounded-2xl border border-red-300/50 bg-red-900/40 px-4 py-3 text-sm font-semibold leading-7 text-red-100 backdrop-blur-md shadow-sm">
               {seoStudioError}
             </div>
-          )}
+          ) : null}
            <div className="rounded-[2.2rem] border border-white/20 bg-black/20 p-4 shadow-sm backdrop-blur-md">
             <div className="flex items-center justify-between gap-3">
               <p className="text-sm font-black uppercase tracking-[0.22em] text-white/95 lofi-sharp-text-soft">AI report</p>
@@ -518,7 +518,7 @@ export default function HomeDesignPanel(props) {
       </div>
     </div>
           </section>
-          )}
+          ) : null}
     
           <footer className="mx-auto max-w-[1280px] px-5 sm:px-7 xl:px-10 pb-10 pt-6">
     <div className="lofi-picture-border lofi-border-memory relative overflow-hidden rounded-[3rem] border border-white/20 p-8 text-center text-sm leading-7 shadow-soft">

@@ -4392,14 +4392,14 @@ function App() {
 
   return (
     <main data-interface-mode={interfaceMode} data-device-type={interfaceMode} className={`personalized-site lofi-vibe interface-${interfaceMode} ${isPhoneInterface ? 'phone-interface pb-28' : 'pc-interface pb-10 lg:pb-0'} ${wallpaperImage ? 'wallpaper-active' : ''} design-${selectedDesign} ${comfortMode ? 'comfort-mode' : ''} isolate min-h-screen overflow-hidden bg-sand-50 text-ink`} style={themeStyle}>
-      {isGameTransitioning && (
+      {isGameTransitioning ? (
         <Suspense fallback={null}>
           <GameSplash game={transitioningGameConfig} />
         </Suspense>
-      )}
+      ) : null}
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[#fffaf2]">
         <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-[0.35] blur-[1px] transition-opacity duration-1000" aria-hidden="true" />
-        {wallpaperImage && <div className="lofi-user-wallpaper absolute inset-0 z-10" style={{ backgroundImage: `url(${wallpaperImage})` }} />}
+        {wallpaperImage ? <div className="lofi-user-wallpaper absolute inset-0 z-10" style={{ backgroundImage: `url(${wallpaperImage})` }} /> : null}
         <div className="lofi-ambient-grid absolute inset-0 z-20 opacity-30" />
         <div className="absolute left-[-2rem] top-0 z-30 h-[28rem] w-[28rem] rounded-full bg-[#efe4d7]/60 blur-3xl" />
         <div className="absolute right-[-3rem] top-44 z-30 h-[26rem] w-[26rem] rounded-full bg-[#f8efe5]/70 blur-3xl" />
@@ -4409,7 +4409,7 @@ function App() {
       </div>
 
 
-      {showEntryTransition && (
+      {showEntryTransition ? (
         <div className={`fixed inset-0 z-40 overflow-hidden transition-opacity duration-[520ms] ease-out ${entryTransitionClosing ? 'opacity-0' : 'opacity-100'}`}>
           <img src={entryTransitionWallpaper} alt="" className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(19,14,10,0.26)_0%,rgba(28,20,15,0.48)_38%,rgba(40,29,22,0.72)_100%)]" />
@@ -4451,7 +4451,7 @@ function App() {
             </div>
           </div>
         </div>
-      )}
+      ) : null}
 
       <div className={`transition-opacity duration-300 ${showEntryTransition ? 'pointer-events-none select-none opacity-0' : 'opacity-100'}`}>
       <nav className="sticky top-0 z-20 px-3 pt-3 sm:px-5 sm:pt-5 xl:px-10">
@@ -4519,12 +4519,12 @@ function App() {
                 </button>
               )}
               <div className="header-quick-actions flex flex-wrap items-center gap-1.5 sm:gap-2 rounded-full border border-white/20 bg-black/20 p-1 sm:p-1.5 shadow-sm backdrop-blur-md xl:flex-nowrap">
-                {user && (
+                {user ? (
                   <button className="rounded-full border border-white/30 bg-white/10 px-3 py-1.5 sm:px-3.5 sm:py-2 text-[11px] sm:text-sm font-bold text-white lofi-sharp-chip transition md:hover:-translate-y-0.5 hover:bg-white/20" onClick={handleSignOut} type="button">
                     Sign out
                   </button>
-                )}
-                {isMasterAdmin && (
+                ) : null}
+                {isMasterAdmin ? (
                   <div className="flex overflow-hidden rounded-full border border-white/25 bg-white/10 p-1">
                     <button
                       className={`rounded-full px-3.5 py-2 text-sm font-extrabold transition lofi-sharp-chip ${adminViewMode === 'master' ? 'bg-white text-[#4a3a2d] shadow-sm' : 'text-white/90 hover:bg-white/10'}`}
@@ -4541,12 +4541,12 @@ function App() {
                       User
                     </button>
                   </div>
-                )}
-                {showAdminTools && (
+                ) : null}
+                {showAdminTools ? (
                   <button className="rounded-full border border-white/40 bg-white px-3.5 py-2 text-sm font-bold text-[#4a3a2d] transition md:hover:-translate-y-0.5 hover:bg-[#fff9f0]" {...getTapActionProps('seo-studio', () => openHomeSection('seo-studio'))} type="button">
                     SEO studio
                   </button>
-                )}
+                ) : null}
                 <button className={`inline-flex items-center justify-center gap-1.5 rounded-full border px-3 py-1.5 sm:px-3.5 sm:py-2 text-[11px] sm:text-sm font-bold lofi-sharp-chip transition md:hover:-translate-y-0.5 ${comfortMode ? 'border-white bg-white text-[#4a3a2d]' : 'border-white/30 bg-white/10 text-white hover:bg-white/20'}`} onClick={() => setComfortMode(!comfortMode)} type="button">
                   <Cloud size={isPhoneInterface ? 13 : 14} /> {isPhoneInterface ? 'Soft' : 'Comfort'}
                 </button>
@@ -5043,7 +5043,7 @@ function App() {
       </section>
       ) : null}
 
-{customizerOpen && (
+{customizerOpen ? (
         <CozyPanelErrorBoundary
           key={`panel-design-${customizerOpen}`}
           title="The design studio had trouble opening."
@@ -5082,9 +5082,9 @@ function App() {
               />
           </Suspense>
         </CozyPanelErrorBoundary>
-      )}
+      ) : null}
 
-{pinSettingsOpen && (
+{pinSettingsOpen ? (
         <Suspense fallback={null}>
               <PinSettingsDialog
                 isOpen={pinSettingsOpen}
@@ -5093,7 +5093,7 @@ function App() {
                 onRemovePin={removePin}
               />
         </Suspense>
-      )}
+      ) : null}
 
       <section id="journal" className="relative z-10 mx-auto -mt-1 max-w-[1280px] px-5 py-9 pb-28 sm:px-7 lg:-mt-4 lg:pb-10 xl:px-10">
         <div className="lofi-picture-border lofi-border-watercolor mb-6 overflow-hidden rounded-[3rem] border border-white/85 bg-gradient-to-r from-white/88 via-sage-50/78 to-sand-50/75 p-3 shadow-soft backdrop-blur xl:p-4">
@@ -5539,12 +5539,12 @@ function App() {
             title={radioNeedsInteraction ? 'Tap once for sound' : radioStatusMessage}
             type="button"
           >
-            {isRadioPlaying && (
+            {isRadioPlaying ? (
               <span
                 className="pointer-events-none absolute inset-0 rounded-full"
                 style={{ animation: 'lofiGlowPulse 2.4s ease-in-out infinite', background: 'radial-gradient(circle, rgba(139, 181, 124, 0.34) 0%, rgba(139, 181, 124, 0.16) 42%, rgba(139, 181, 124, 0) 72%)' }}
               />
-            )}
+            ) : null}
             <span
               className="relative flex h-full w-full items-center justify-center rounded-full"
               style={{ animation: isRadioPlaying ? 'lofiVinylSpin 6.8s linear infinite' : 'none' }}
@@ -5560,11 +5560,11 @@ function App() {
               </span>
             </span>
           </button>
-          {radioNeedsInteraction && (
+          {radioNeedsInteraction ? (
             <div className="pointer-events-none absolute -top-14 left-1/2 w-max max-w-[11.5rem] -translate-x-1/2 rounded-2xl border border-[#d9c7b3] bg-[#fffaf0] px-3.5 py-2.5 text-center text-[11px] font-extrabold uppercase tracking-[0.14em] text-[#22362e] shadow-[0_12px_26px_rgba(72,55,40,0.16)] backdrop-blur-xl">
               Turn on sound
             </div>
-          )}
+          ) : null}
           <div className={`pointer-events-none absolute -bottom-2 left-1/2 -translate-x-1/2 rounded-full border border-white/75 bg-white/88 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-sage-600 shadow-sm backdrop-blur-xl transition duration-300 ${isRadioDialFeedbackVisible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'}`}>
             {radioVolume}%
           </div>

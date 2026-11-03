@@ -71,11 +71,11 @@ export default function WriteTab(props) {
 
   return (
     <>
-      {saveReward && (
+      {saveReward ? (
         <div className="fixed top-12 left-1/2 z-[9999] w-max max-w-[90vw] -translate-x-1/2 rounded-full border border-sage-800/20 bg-sage-900 px-6 py-4 text-center text-sm font-extrabold text-white shadow-2xl transition-all" role="alert" aria-live="assertive">
           {saveReward}
         </div>
-      )}
+      ) : null}
 
       {minimalMode ? (
         <div className="fixed inset-0 z-[80] flex flex-col bg-[#fbf7f0]">
@@ -267,7 +267,7 @@ export default function WriteTab(props) {
         </div>
       </div>
 
-      {activePrompt && (
+      {activePrompt ? (
         <div className="mt-5 rounded-[1.6rem] border border-[#ffd7b5] bg-[#fff9f2] p-4 shadow-sm sm:p-5">
           <div className="flex items-start justify-between gap-3">
             <div>
@@ -279,7 +279,7 @@ export default function WriteTab(props) {
             </button>
           </div>
         </div>
-      )}
+      ) : null}
       </div>
     </form>
       )}
@@ -298,7 +298,7 @@ export default function WriteTab(props) {
           </div>
           <div className="mt-5 grid gap-3 sm:grid-cols-3">
             {journalQuest.map((step, index) => (
-              <div className="rounded-[1.2rem] border border-sage-200 bg-white/85 p-4" key={`quest-${step.label}-${index}`}>
+              <div className="rounded-[1.2rem] border border-sage-200 bg-white/85 p-4" key={`quest-${step.label}-${step.copy}`}>
                 <div className="flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.22em] text-sage-600">
                   <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-sage-100 text-sage-800">{index + 1}</span>
                   {step.label}
