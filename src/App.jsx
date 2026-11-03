@@ -999,6 +999,24 @@ function getSavedPin() {
   }
 }
 
+function getStoredString(key, fallback = '') {
+  try {
+    if (typeof window === 'undefined') return fallback;
+    return localStorage.getItem(key) || fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function getStoredBoolean(key, fallback = false) {
+  try {
+    if (typeof window === 'undefined') return fallback;
+    return localStorage.getItem(key) === 'true';
+  } catch {
+    return fallback;
+  }
+}
+
 function getInitialCustomWeathers() {
   try {
     const saved = localStorage.getItem(CUSTOM_WEATHER_STORAGE_KEY);
@@ -1465,10 +1483,7 @@ function App() {
     return window.Notification.permission;
   });
   const [notificationStatusMessage, setNotificationStatusMessage] = useState('');
-  const [webPushStatus, setWebPushStatus] = useState(() => {
-    if (typeof window === 'undefined') return 'Push setup not started.';
-    return localStorage.getItem(WEB_PUSH_STATUS_STORAGE_KEY) || 'Push setup not started.';
-  });
+  const [webPushStatus, setWebPushStatus] = useState(() => getStoredString(WEB_PUSH_STATUS_STORAGE_KEY, 'Push setup not started.'));
   const [, setWebPushTokenReady] = useState(false);
   const [serviceWorkerReady, setServiceWorkerReady] = useState(false);
   const [, setPetPosition] = useState({ x: 20, y: 40 });
@@ -1495,14 +1510,14 @@ function App() {
   const [locked, setLocked] = useState(Boolean(getSavedPin()));
   const [pinSettingsOpen, setPinSettingsOpen] = useState(false);
   const [quoteIndex, setQuoteIndex] = useState(() => new Date().getDate() % quotes.length);
-  const [selectedTheme, setSelectedTheme] = useState(() => localStorage.getItem(THEME_STORAGE_KEY) || 'sage');
-  const [selectedDesign, setSelectedDesign] = useState(() => localStorage.getItem(DESIGN_STORAGE_KEY) || 'editorial');
-  const [customColor, setCustomColor] = useState(() => localStorage.getItem(CUSTOM_COLOR_STORAGE_KEY) || '#587f49');
-  const [customCdImage, setCustomCdImage] = useState(() => localStorage.getItem(CUSTOM_CD_IMAGE_STORAGE_KEY) || '');
-  const [quoteBg, setQuoteBg] = useState(() => localStorage.getItem(QUOTE_BG_STORAGE_KEY) || '#45643b');
-  const [wallpaperImage, setWallpaperImage] = useState(() => localStorage.getItem(WALLPAPER_STORAGE_KEY) || '');
+  const [selectedTheme, setSelectedTheme] = useState(() => getStoredString(THEME_STORAGE_KEY, 'sage'));
+  const [selectedDesign, setSelectedDesign] = useState(() => getStoredString(DESIGN_STORAGE_KEY, 'editorial'));
+  const [customColor, setCustomColor] = useState(() => getStoredString(CUSTOM_COLOR_STORAGE_KEY, '#587f49'));
+  const [customCdImage, setCustomCdImage] = useState(() => getStoredString(CUSTOM_CD_IMAGE_STORAGE_KEY, ''));
+  const [quoteBg, setQuoteBg] = useState(() => getStoredString(QUOTE_BG_STORAGE_KEY, '#45643b'));
+  const [wallpaperImage, setWallpaperImage] = useState(() => getStoredString(WALLPAPER_STORAGE_KEY, ''));
   const [customizerOpen, setCustomizerOpen] = useState(false);
-  const [comfortMode, setComfortMode] = useState(() => localStorage.getItem(COMFORT_MODE_STORAGE_KEY) === 'true');
+  const [comfortMode, setComfortMode] = useState(() => getStoredBoolean(COMFORT_MODE_STORAGE_KEY, false));
   const [companion, setCompanion] = useState(getInitialCompanion);
   const [companionSelected, setCompanionSelected] = useState(false);
   const [user, setUser] = useState(null);
@@ -1510,16 +1525,16 @@ function App() {
   const [cloudStatus, setCloudStatus] = useState('Local mode');
   const [plannerCloudReady, setPlannerCloudReady] = useState(false);
   const [importantDatesCloudReady, setImportantDatesCloudReady] = useState(false);
-  const [seoStudioApiKey, setSeoStudioApiKey] = useState(() => localStorage.getItem(SEO_STUDIO_API_KEY_STORAGE_KEY) || '');
-  const [seoStudioPrompt, setSeoStudioPrompt] = useState(() => localStorage.getItem(SEO_STUDIO_PROMPT_STORAGE_KEY) || DEFAULT_SEO_STUDIO_PROMPT);
-  const [seoStudioReport, setSeoStudioReport] = useState(() => localStorage.getItem(SEO_STUDIO_REPORT_STORAGE_KEY) || '');
-  const [seoStudioLastRun, setSeoStudioLastRun] = useState(() => localStorage.getItem(SEO_STUDIO_LAST_RUN_STORAGE_KEY) || '');
+  const [seoStudioApiKey, setSeoStudioApiKey] = useState(() => getStoredString(SEO_STUDIO_API_KEY_STORAGE_KEY, ''));
+  const [seoStudioPrompt, setSeoStudioPrompt] = useState(() => getStoredString(SEO_STUDIO_PROMPT_STORAGE_KEY, DEFAULT_SEO_STUDIO_PROMPT));
+  const [seoStudioReport, setSeoStudioReport] = useState(() => getStoredString(SEO_STUDIO_REPORT_STORAGE_KEY, ''));
+  const [seoStudioLastRun, setSeoStudioLastRun] = useState(() => getStoredString(SEO_STUDIO_LAST_RUN_STORAGE_KEY, ''));
   const [seoStudioLoading, setSeoStudioLoading] = useState(false);
   const [seoStudioError, setSeoStudioError] = useState('');
   const [seoStudioCopied, setSeoStudioCopied] = useState(false);
-  const [cookieConsentAccepted, setCookieConsentAccepted] = useState(() => localStorage.getItem('quiet-journal-cookie-consent') === 'true');
+  const [cookieConsentAccepted, setCookieConsentAccepted] = useState(() => getStoredBoolean('quiet-journal-cookie-consent', false));
   const [showSeoStudioKey, setShowSeoStudioKey] = useState(false);
-  const [adminViewMode, setAdminViewMode] = useState(() => localStorage.getItem(ADMIN_VIEW_MODE_STORAGE_KEY) || 'master');
+  const [adminViewMode, setAdminViewMode] = useState(() => getStoredString(ADMIN_VIEW_MODE_STORAGE_KEY, 'master'));
   const [seoStudioModelUsed, setSeoStudioModelUsed] = useState('');
   const [showAllSearches, setShowAllSearches] = useState(false);
   const [interfaceMode, setInterfaceMode] = useState('pc');
@@ -2479,10 +2494,6 @@ function App() {
     }, 60000);
     return () => window.clearInterval(interval);
   }, [importantDates]);
-
-  useEffect(() => {
-    return enableCompanionResize(companionMediaRef);
-  }, [enableCompanionResize]);
 
   useEffect(() => {
     const media = companionMediaRef.current;
@@ -3737,61 +3748,7 @@ function App() {
   }
 
   function renderJournalContent(content) {
-    const safeHtml = sanitizeJournalHtml(content);
-    if (!safeHtml) {
-      return <div className="prose-journal" />;
-    }
-
-    if (typeof document === 'undefined') {
-      return <div className="prose-journal">{getPlainTextFromHtml(safeHtml)}</div>;
-    }
-
-    const template = document.createElement('template');
-    template.innerHTML = safeHtml;
-    let keyIndex = 0;
-
-    const renderNode = (node) => {
-      if (node.nodeType === Node.TEXT_NODE) {
-        return node.textContent || '';
-      }
-
-      if (node.nodeType !== Node.ELEMENT_NODE) {
-        return null;
-      }
-
-      const key = `journal-node-${keyIndex++}`;
-      const tag = node.tagName.toUpperCase();
-      const childNodes = Array.from(node.childNodes)
-        .map((child) => renderNode(child))
-        .filter((child) => child !== null);
-
-      switch (tag) {
-        case 'P':
-          return <p key={key}>{childNodes.length ? childNodes : <br />}</p>;
-        case 'BR':
-          return <br key={key} />;
-        case 'STRONG':
-        case 'B':
-          return <strong key={key}>{childNodes}</strong>;
-        case 'U':
-          return <u key={key}>{childNodes}</u>;
-        case 'UL':
-          return <ul key={key}>{childNodes}</ul>;
-        case 'OL':
-          return <ol key={key}>{childNodes}</ol>;
-        case 'LI':
-          return <li key={key}>{childNodes}</li>;
-        case 'IMG': {
-          const src = node.getAttribute('src') || '';
-          if (!src) return null;
-          return <img key={key} alt={node.getAttribute('alt') || 'Journal photo'} className="journal-inline-img" draggable={false} src={src} />;
-        }
-        default:
-          return <React.Fragment key={key}>{childNodes}</React.Fragment>;
-      }
-    };
-
-    return <div className="prose-journal">{Array.from(template.content.childNodes).map((child) => renderNode(child))}</div>;
+    return <div className="prose-journal" dangerouslySetInnerHTML={{ __html: sanitizeJournalHtml(content) }} />;
   }
 
   function enableImageResize(editorRef, updateBody) {
@@ -4213,6 +4170,10 @@ function App() {
     };
   }, [companion.size, companion.x, companion.y, companionIsUploadedMedia, companionIsVideo, companionSelected]);
 
+  useEffect(() => {
+    return enableCompanionResize(companionMediaRef);
+  }, [enableCompanionResize]);
+
   function addCustomWeather() {
     const cleanName = customWeatherName.trim();
     if (!cleanName) return;
@@ -4431,14 +4392,14 @@ function App() {
 
   return (
     <main data-interface-mode={interfaceMode} data-device-type={interfaceMode} className={`personalized-site lofi-vibe interface-${interfaceMode} ${isPhoneInterface ? 'phone-interface pb-28' : 'pc-interface pb-10 lg:pb-0'} ${wallpaperImage ? 'wallpaper-active' : ''} design-${selectedDesign} ${comfortMode ? 'comfort-mode' : ''} isolate min-h-screen overflow-hidden bg-sand-50 text-ink`} style={themeStyle}>
-      {isGameTransitioning ? (
+      {isGameTransitioning && (
         <Suspense fallback={null}>
           <GameSplash game={transitioningGameConfig} />
         </Suspense>
-      ) : null}
+      )}
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[#fffaf2]">
         <img src={lofiMemoryHeaderImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-[0.35] blur-[1px] transition-opacity duration-1000" aria-hidden="true" />
-        {wallpaperImage ? <div className="lofi-user-wallpaper absolute inset-0 z-10" style={{ backgroundImage: `url(${wallpaperImage})` }} /> : null}
+        {wallpaperImage && <div className="lofi-user-wallpaper absolute inset-0 z-10" style={{ backgroundImage: `url(${wallpaperImage})` }} />}
         <div className="lofi-ambient-grid absolute inset-0 z-20 opacity-30" />
         <div className="absolute left-[-2rem] top-0 z-30 h-[28rem] w-[28rem] rounded-full bg-[#efe4d7]/60 blur-3xl" />
         <div className="absolute right-[-3rem] top-44 z-30 h-[26rem] w-[26rem] rounded-full bg-[#f8efe5]/70 blur-3xl" />
