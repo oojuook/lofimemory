@@ -144,7 +144,7 @@ export default function UnwindTab(props) {
                 <button
                   key={game.id}
                   className={`group relative flex flex-col overflow-hidden rounded-[2.7rem] border p-1 text-left transition-all duration-500 md:hover:-translate-y-1.5 ${
-                    isSelected ? 'border-amber-200 bg-white ring-4 ring-amber-100 ring-offset-4 ring-offset-[#fff7ec]' : 'border-white/70 bg-white/44 hover:bg-white/66'
+                    isSelected ? 'border-amber-200 bg-white ring-4 ring-amber-100 ring-offset-4 ring-offset-[#fff7ec]' : 'border-white/70 bg-white/44 md:hover:bg-white/66'
                   }`}
                   onClick={() => selectUnwindGame(game.id)}
                   type="button"

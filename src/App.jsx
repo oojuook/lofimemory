@@ -1855,7 +1855,11 @@ function App() {
   const isPhoneInterface = interfaceMode === 'phone';
   const isPcInterface = interfaceMode === 'pc';
 
-    const selectUnwindGame = (gameId) => {
+  useEffect(() => {
+    import('./Solitaire');
+  }, []);
+
+  const selectUnwindGame = (gameId) => {
       if (gameTransitionTimerRef.current) {
         window.clearTimeout(gameTransitionTimerRef.current);
       }
