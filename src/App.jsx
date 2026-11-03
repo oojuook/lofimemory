@@ -1286,6 +1286,83 @@ function getPlainTextFromHtml(html = '') {
   return (tempDiv.textContent || tempDiv.innerText || '').replace(/\s+/g, ' ').trim();
 }
 
+const JOURNAL_IMAGE_STYLE = {
+  maxWidth: '100%',
+  height: 'auto',
+  display: 'block',
+  margin: '1rem auto',
+  borderRadius: '1rem',
+  position: 'relative',
+  transform: 'translate(0px, 0px)'
+};
+
+function renderSanitizedJournalNodes(html = '') {
+  const safeHtml = sanitizeJournalHtml(html);
+  if (!safeHtml) return null;
+
+  if (typeof document === 'undefined') {
+    return getPlainTextFromHtml(safeHtml);
+  }
+
+  const template = document.createElement('template');
+  template.innerHTML = safeHtml;
+  let keyIndex = 0;
+
+  const renderNode = (node) => {
+    if (node.nodeType === 3) {
+      return node.textContent || '';
+    }
+
+    if (node.nodeType !== 1) {
+      return null;
+    }
+
+    const key = `journal-node-${keyIndex++}`;
+    const tag = node.tagName.toUpperCase();
+    const childNodes = Array.from(node.childNodes)
+      .map((child) => renderNode(child))
+      .filter((child) => child !== null);
+
+    switch (tag) {
+      case 'P':
+        return <p key={key}>{node.childNodes.length ? childNodes : <br />}</p>;
+      case 'BR':
+        return <br key={key} />;
+      case 'STRONG':
+      case 'B':
+        return <strong key={key}>{childNodes}</strong>;
+      case 'U':
+        return <u key={key}>{childNodes}</u>;
+      case 'UL':
+        return <ul key={key}>{childNodes}</ul>;
+      case 'OL':
+        return <ol key={key}>{childNodes}</ol>;
+      case 'LI':
+        return <li key={key}>{childNodes}</li>;
+      case 'IMG': {
+        const src = node.getAttribute('src') || '';
+        if (!src) return null;
+        return (
+          <img
+            key={key}
+            alt={node.getAttribute('alt') || 'Journal photo'}
+            className="journal-inline-img"
+            draggable={false}
+            src={src}
+            style={JOURNAL_IMAGE_STYLE}
+          />
+        );
+      }
+      default:
+        return <React.Fragment key={key}>{childNodes}</React.Fragment>;
+    }
+  };
+
+  return Array.from(template.content.childNodes)
+    .map((child) => renderNode(child))
+    .filter((child) => child !== null);
+}
+
 function getCompanionFrameDimensions(size, isVideo, isUploadedMedia) {
   if (!isUploadedMedia) {
     return { width: size, height: size };
@@ -3748,7 +3825,7 @@ function App() {
   }
 
   function renderJournalContent(content) {
-    return <div className="prose-journal" dangerouslySetInnerHTML={{ __html: sanitizeJournalHtml(content) }} />;
+    return <div className="prose-journal">{renderSanitizedJournalNodes(content)}</div>;
   }
 
   function enableImageResize(editorRef, updateBody) {
