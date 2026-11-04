@@ -68,6 +68,7 @@ html = html.replace(/<script\s+type="module"\s+crossorigin\s+src="\.\/(assets\/[
   const jsPath = path.join(distDir, assetPath);
   const js = inlineReferencedImages(fs.readFileSync(jsPath, 'utf8'))
     .replace(/import\((['"`])\.\/([^'"`]+)\1\)/g, 'import($1/assets/$2$1)')
+    .replace(/import\((['"`])\/assets\/([^'"`]+)\1\)/g, 'import($1./assets/$2$1)')
     .replace(/<\/script/gi, '<\\/script')
     .replace(/<!--/g, '<\\!--');
   inlined += 1;

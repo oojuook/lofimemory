@@ -79,7 +79,7 @@ import BreatheTab from './components/BreatheTab';
 import InsightsTab from './components/InsightsTab';
 import UnwindTab from './components/UnwindTab';
 import HomeDesignPanel from './components/HomeDesignPanel';
-import ThemeStudio from './components/ThemeStudio';
+const ThemeStudio = lazy(() => import('./components/ThemeStudio'));
 import PrivacyGate from './components/PrivacyGate';
 import PinSettingsDialog from './components/PinSettingsDialog';
 import GameSplash from './components/GameSplash';
@@ -1886,6 +1886,7 @@ function App() {
       import('./QuietSnake');
       import('./LofiJigsaw');
       import('./DinosaurDash');
+      import('./components/ThemeStudio');
     };
 
     if (typeof window === 'undefined') return undefined;
