@@ -1609,6 +1609,7 @@ function App() {
   const [seoStudioError, setSeoStudioError] = useState('');
   const [seoStudioCopied, setSeoStudioCopied] = useState(false);
   const [cookieConsentAccepted, setCookieConsentAccepted] = useState(() => getStoredBoolean('quiet-journal-cookie-consent', false));
+  const [showBackToTop, setShowBackToTop] = useState(false);
   const [showSeoStudioKey, setShowSeoStudioKey] = useState(false);
   const [adminViewMode, setAdminViewMode] = useState(() => getStoredString(ADMIN_VIEW_MODE_STORAGE_KEY, 'master'));
   const [seoStudioModelUsed, setSeoStudioModelUsed] = useState('');
@@ -1865,6 +1866,17 @@ function App() {
       }
     };
   }, [runTapSafeAction]);
+
+  useEffect(() => {
+    const updateBackToTopVisibility = () => {
+      if (typeof window === 'undefined') return;
+      setShowBackToTop(window.scrollY > 480);
+    };
+
+    updateBackToTopVisibility();
+    window.addEventListener('scroll', updateBackToTopVisibility, { passive: true });
+    return () => window.removeEventListener('scroll', updateBackToTopVisibility);
+  }, []);
 
   useEffect(() => {
     const preloadInteractiveSpaces = () => {
@@ -4539,7 +4551,7 @@ function App() {
                 )}
               </div>
             </a>
-            <div className="hidden flex-wrap items-center gap-2 rounded-full border border-white/20 bg-black/20 p-1.5 shadow-sm backdrop-blur-md lg:flex">
+            <div className="hidden items-center gap-1.5 rounded-full border border-white/20 bg-black/20 p-1 shadow-sm backdrop-blur-md lg:flex xl:gap-2 xl:p-1.5">
               {[
                 { id: 'unwind', label: 'Games' },
                 { id: 'focus', label: 'Focus' },
@@ -4552,7 +4564,7 @@ function App() {
                 return (
                 <button
                   key={`desktop-nav-${tab.id}`}
-                  className={`desktop-nav-item rounded-full px-4 py-2 text-sm font-extrabold transition lofi-sharp-chip ${isActive ? 'desktop-nav-item-active bg-white text-[#4a3a2d] shadow-sm' : 'bg-white/8 text-white/95'}`}
+                  className={`desktop-nav-item rounded-full px-3 py-1.5 text-sm font-extrabold transition active:scale-95 lofi-sharp-chip xl:px-4 xl:py-2 ${isActive ? 'desktop-nav-item-active bg-white text-[#4a3a2d] shadow-sm' : 'bg-white/18 text-white shadow-sm hover:bg-white/25'}`}
                   {...getTapActionProps(`desktop-nav-${tab.id}`, () => navigateToTab(tab.id))}
                   type="button"
                 >
@@ -4568,9 +4580,9 @@ function App() {
                 <div className="header-account-pill flex min-w-[160px] sm:min-w-[210px] flex-1 items-center justify-between gap-2 sm:gap-3 rounded-full border border-white/25 bg-white/15 px-3 py-2 sm:px-4 sm:py-2.5 shadow-sm backdrop-blur-md xl:flex-none">
                   <div className="min-w-0">
                     <p className="truncate text-sm font-extrabold text-white lofi-sharp-text">{user.displayName || user.email}</p>
-                    {isPhoneInterface ? null : <p className="lofi-sharp-text-soft text-[11px] font-bold uppercase tracking-[0.18em] text-white/90">{cloudStatus}</p>}
+                    {isPhoneInterface ? null : <p className="lofi-sharp-text-soft text-[9px] sm:text-[11px] font-bold uppercase tracking-[0.18em] text-white">{cloudStatus}</p>}
                   </div>
-                  <div className={`flex shrink-0 items-center justify-center rounded-2xl shadow-sm ${isPhoneInterface ? 'h-8 w-auto gap-1.5 px-2.5 bg-white/18 text-white' : 'h-9 w-9 bg-white/20 text-white'}`}>
+                  <div className={`flex shrink-0 items-center justify-center rounded-2xl shadow-sm ${isPhoneInterface ? 'h-8 w-auto gap-1.5 px-2.5 bg-white/18 text-white' : 'h-9 w-9 bg-white text-[#4a3a2d]'}`}>
                     <ShieldCheck size={15} />
                     {isPhoneInterface ? <span className="text-[10px] font-black uppercase tracking-[0.16em]">Sync</span> : null}
                   </div>
@@ -4579,7 +4591,7 @@ function App() {
                 <button className="header-account-pill flex min-w-[148px] sm:min-w-[196px] flex-1 items-center justify-between gap-2 sm:gap-3 rounded-full border border-white/35 bg-white/20 px-3 py-2 sm:px-4 sm:py-2.5 text-left shadow-sm backdrop-blur-md transition md:hover:-translate-y-0.5 hover:bg-white/28 xl:flex-none" onClick={signInWithGoogle} disabled={authLoading} type="button">
                   <div>
                     <p className="text-xs sm:text-sm font-extrabold text-white lofi-sharp-text">{authLoading ? '...' : isPhoneInterface ? 'Sign in to sync' : 'Sign in'}</p>
-                    {isPhoneInterface ? null : <p className="lofi-sharp-text-soft text-[9px] sm:text-[11px] font-bold uppercase tracking-[0.16em] text-white/90">Cloud sync</p>}
+                    {isPhoneInterface ? null : <p className="lofi-sharp-text-soft text-[9px] sm:text-[11px] font-bold uppercase tracking-[0.16em] text-white">Cloud sync</p>}
                   </div>
                   <div className={`flex shrink-0 items-center justify-center rounded-xl sm:rounded-2xl shadow-sm ${isPhoneInterface ? 'h-8 w-8 bg-white/18 text-white' : 'h-7 w-7 sm:h-9 sm:w-9 bg-white text-[#4a3a2d]'}`}>
                     <ShieldCheck size={14} />
@@ -5536,6 +5548,16 @@ function App() {
       `}</style>
 
       {/* Floating Lofi Radio Player */}
+      {showBackToTop ? (
+        <button
+          aria-label="Scroll back to top"
+          className={`fixed z-40 flex h-11 w-11 items-center justify-center rounded-full border border-white/35 bg-[#f7f0e3]/95 text-[#4a3a2d] shadow-lg backdrop-blur-md transition ${isPhoneInterface ? (cookieConsentAccepted ? 'bottom-[7.25rem] right-4' : 'bottom-[13rem] right-4') : (cookieConsentAccepted ? 'bottom-12 right-4 sm:right-5 lg:bottom-16 xl:right-[max(1rem,calc((100vw-1280px)/2-4.25rem))]' : 'bottom-32 right-4 sm:bottom-28 sm:right-5 lg:bottom-32 xl:right-[max(1rem,calc((100vw-1280px)/2-4.25rem))]')}`}
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          type="button"
+        >
+          <ArrowUp size={18} />
+        </button>
+      ) : null}
       <div className={`fixed z-50 ${isPhoneInterface ? (cookieConsentAccepted ? 'bottom-[7.25rem] left-4' : 'bottom-[13rem] left-4') : (cookieConsentAccepted ? 'bottom-12 left-4 sm:left-5 lg:bottom-16 xl:left-[max(1rem,calc((100vw-1280px)/2-4.25rem))]' : 'bottom-32 left-4 sm:bottom-28 sm:left-5 lg:bottom-32 xl:left-[max(1rem,calc((100vw-1280px)/2-4.25rem))]')}`}>
 
         <div ref={radioPlayerContainerRef} className="pointer-events-none absolute h-1 w-1 opacity-0" aria-hidden="true" />

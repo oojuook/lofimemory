@@ -32,6 +32,13 @@ html {
   border-radius: 8px;
 }
 
+button {
+  transition: transform 0.12s ease, background-color 0.15s ease, opacity 0.15s ease;
+}
+button:active {
+  transform: scale(0.96);
+}
+
 body {
   margin: 0;
   min-width: 320px;
