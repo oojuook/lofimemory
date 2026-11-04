@@ -35,7 +35,6 @@ import gameSnakePreview from './assets/optimized/game-snake-preview.webp';
 import gameDinoPreview from './assets/optimized/game-dino-preview.webp';
 import { onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
 import { collection, deleteDoc, doc, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore';
-import { getToken, onMessage } from 'firebase/messaging';
 import {
   Headphones,
   ArrowUp,
@@ -83,7 +82,7 @@ const ThemeStudio = lazy(() => import('./components/ThemeStudio'));
 import PrivacyGate from './components/PrivacyGate';
 import PinSettingsDialog from './components/PinSettingsDialog';
 import GameSplash from './components/GameSplash';
-import { auth, db, getMessagingIfSupported, googleProvider } from './firebase';
+import { auth, db, googleProvider, getMessagingToken, onMessagingMessage } from './firebase';
 // Lazy load large game components to reduce initial bundle size
 const ZenGame = lazy(() => import('./ZenGame'));
 const StreamSurfer = lazy(() => import('./StreamSurfer'));
@@ -2226,12 +2225,7 @@ function App() {
     let unsubscribe = () => {};
 
     const connectForegroundPush = async () => {
-      const messaging = await getMessagingIfSupported();
-      if (!messaging) {
-        setWebPushStatus('Notifications are allowed, but this browser does not support Firebase web messaging.');
-        return;
-      }
-      unsubscribe = onMessage(messaging, (payload) => {
+      unsubscribe = await onMessagingMessage((payload) => {
         const reminderPayload = payload?.data || {};
         const notificationTitle = payload?.notification?.title || reminderPayload.title || 'Lofi Memory reminder';
         const notificationBody = payload?.notification?.body || reminderPayload.body || 'You have an important reminder waiting.';
@@ -2244,6 +2238,10 @@ function App() {
           time: reminderPayload.time || ''
         });
       });
+      if (typeof unsubscribe !== 'function') {
+        setWebPushStatus('Notifications are allowed, but this browser does not support Firebase web messaging.');
+        unsubscribe = () => {};
+      }
     };
 
     void connectForegroundPush();
@@ -2261,16 +2259,8 @@ function App() {
 
     const registerWebPushToken = async () => {
       try {
-        const messaging = await getMessagingIfSupported();
-        if (!messaging) {
-          if (!cancelled) {
-            setWebPushTokenReady(false);
-            setWebPushStatus('Notifications are allowed, but Firebase web messaging is not supported in this browser.');
-          }
-          return;
-        }
         const registration = await navigator.serviceWorker.ready;
-        const token = await getToken(messaging, { serviceWorkerRegistration: registration });
+        const token = await getMessagingToken({ serviceWorkerRegistration: registration });
         if (!token) {
           if (!cancelled) {
             setWebPushTokenReady(false);
