@@ -5647,10 +5647,12 @@ function App() {
             </p>
             <div className="mt-3 flex justify-end">
               <button
+                aria-label="Accept cookie and privacy notice"
                 onClick={() => {
                   localStorage.setItem('quiet-journal-cookie-consent', 'true');
                   setCookieConsentAccepted(true);
                 }}
+                type="button"
                 className="shrink-0 rounded-full bg-sage-900 px-5 py-2.5 text-sm font-extrabold text-white shadow-lift transition md:hover:-translate-y-0.5 hover:bg-sage-800"
               >
                 Got it
