@@ -14,6 +14,8 @@ const adsenseScriptPattern = /\s*<script[^>]*pagead2\.googlesyndication\.com\/pa
 const keywordsMetaPattern = /\s*<meta\s+name=["']keywords["'][^>]*>\s*/gi;
 const reviewModeDisclosureOld = '<p style="margin:6px 0;"><strong>Advertising Disclosure:</strong> Lofi Memory may display advertisements (including Google AdSense) to support free access to the site. We prioritize editorial independence and a calm user experience. See our <a href="/advertising-policy.html">Advertising Policy</a> for details.</p>';
 const reviewModeDisclosureNew = '<p style="margin:6px 0;"><strong>Site review mode:</strong> Advertising is currently disabled while Lofi Memory is being reviewed for approval. If ads are enabled later, they will remain secondary to content and follow the <a href="/advertising-policy.html">Advertising Policy</a>.</p>';
+const reviewCookieNoticeOld = 'We use cookies and browser storage to keep Lofi Memory smooth and support ads. By staying here, you agree to our <a href="/privacy.html">Privacy Policy</a>, <a href="/terms.html">Terms</a>, and <a href="/cookie-policy.html">Cookie Policy</a>.';
+const reviewCookieNoticeNew = 'We use cookies and browser storage to keep Lofi Memory smooth while the site is under review. By continuing, you agree to our <a href="/privacy.html">Privacy Policy</a>, <a href="/terms.html">Terms</a>, and <a href="/cookie-policy.html">Cookie Policy</a>.';
 
 function shouldKeepFile(fileName) {
   return indexedPages.has(fileName) || alwaysKept.has(fileName);
@@ -47,6 +49,12 @@ async function main() {
       html = html.replace(adsenseScriptPattern, '\n');
       html = html.replace(keywordsMetaPattern, '\n');
       html = html.replaceAll(reviewModeDisclosureOld, reviewModeDisclosureNew);
+      html = html.replaceAll(reviewCookieNoticeOld, reviewCookieNoticeNew);
+      html = html.replaceAll('Last reviewed: October 2026.', 'Last reviewed: November 2026.');
+      html = html.replaceAll('Last reviewed: October 2026', 'Last reviewed: November 2026');
+      html = html.replaceAll('Last updated: October 2026', 'Last updated: November 2026');
+      html = html.replaceAll('For questions related to ads shown on the site, include the ad details, page URL, approximate time, and your country or region if relevant.', 'For questions about future advertising or monetization on the site, include the page URL, approximate time, and your country or region if relevant.');
+      html = html.replaceAll('Lofi Memory may show third-party advertising and link to external services such as Google, Firebase, YouTube, or advertiser websites.', 'Lofi Memory may show third-party advertising after approval and link to external services such as Google, Firebase, YouTube, or advertiser websites.');
       html = upsertRobotsMeta(html, shouldIndex(fileName));
       await fs.writeFile(filePath, html, 'utf8');
     })

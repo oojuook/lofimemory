@@ -2,7 +2,7 @@
   if (typeof window === 'undefined') return;
   if (localStorage.getItem('quiet-journal-cookie-consent') === 'true') return;
 
-  var style = document.createElement('style');
+  const style = document.createElement('style');
   style.innerHTML = `
     .cookie-banner {
       position: fixed;
@@ -50,9 +50,9 @@
   `;
   document.head.appendChild(style);
 
-  var banner = document.createElement('div');
+  const banner = document.createElement('div');
   banner.className = 'cookie-banner';
-  banner.innerHTML = '<p>We use cookies and browser storage to keep Lofi Memory smooth and support ads. By staying here, you agree to our <a href="/privacy.html">Privacy Policy</a>, <a href="/terms.html">Terms</a>, and <a href="/cookie-policy.html">Cookie Policy</a>.</p>' +
+  banner.innerHTML = '<p>We use cookies and browser storage to keep Lofi Memory smooth while the site is under review. By continuing, you agree to our <a href="/privacy.html">Privacy Policy</a>, <a href="/terms.html">Terms</a>, and <a href="/cookie-policy.html">Cookie Policy</a>.</p>' +
     '<button id="accept-cookies">Accept</button>';
   
   // Wait for body to exist
