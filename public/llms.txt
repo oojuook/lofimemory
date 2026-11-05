@@ -1,13 +1,11 @@
 # Lofi Memory
 
-Lofi Memory is a cozy browser space to relax, focus, journal, and write down your thoughts with lofi music, mood tracking, notes, reminders, Focus Tree sessions, and calm browser games.
+Lofi Memory is a calm browser space for journaling, focus, gentle breaks, notes, reminders, and reflective reading.
 
 ## Primary pages
 - Home: https://lofimemory.vercel.app/
+- App: https://lofimemory.vercel.app/app.html
 - Blog: https://lofimemory.vercel.app/blog.html
-- Free cozy focus journal app: https://lofimemory.vercel.app/free-cozy-focus-journal-app.html
-- What is Lofi Memory?: https://lofimemory.vercel.app/lofi-memory.html
-- Relax, focus, journal, and write thoughts: https://lofimemory.vercel.app/relax-focus-journal.html
 - About: https://lofimemory.vercel.app/about.html
 - Contact: https://lofimemory.vercel.app/contact.html
 - Privacy policy: https://lofimemory.vercel.app/privacy.html
@@ -19,59 +17,17 @@ Lofi Memory is a cozy browser space to relax, focus, journal, and write down you
 - Content quality policy: https://lofimemory.vercel.app/content-quality-policy.html
 - HTML sitemap: https://lofimemory.vercel.app/sitemap.html
 
-## Original articles
-- 100 journaling and cozy game questions answered: https://lofimemory.vercel.app/journaling-games-long-tail-seo.html
-- Journaling, games, music, and lofi questions answered: https://lofimemory.vercel.app/questions-about-journaling-games-music.html
-- How does journaling help mental health?: https://lofimemory.vercel.app/how-does-journaling-help-mental-health.html
-- How does journaling help with thinking?: https://lofimemory.vercel.app/how-does-journaling-help-with-thinking.html
-- How journaling makes you better: https://lofimemory.vercel.app/how-journaling-makes-you-better.html
-- Journaling pros and cons: https://lofimemory.vercel.app/journaling-pros-and-cons.html
-- Difference between journal and diary: https://lofimemory.vercel.app/difference-between-journal-and-diary.html
-- How journaling helps you understand yourself: https://lofimemory.vercel.app/how-journaling-helps-you-understand-yourself.html
-- How often should you journal?: https://lofimemory.vercel.app/how-often-should-you-journal.html
-- Best time to journal: https://lofimemory.vercel.app/best-time-to-journal.html
-- Paper or online journal: https://lofimemory.vercel.app/journal-on-paper-or-online.html
-- What should I write in my journal?: https://lofimemory.vercel.app/what-should-i-write-in-my-journal.html
-- How long should a study break be?: https://lofimemory.vercel.app/how-long-should-a-study-break-be.html
-- Why do relaxing games help focus?: https://lofimemory.vercel.app/why-do-relaxing-games-help-focus.html
-- Journaling for students who overthink: https://lofimemory.vercel.app/journaling-for-students-who-overthink.html
-- How journaling helps with overthinking: https://lofimemory.vercel.app/how-journaling-helps-with-overthinking.html
-- How journaling helps clear your head: https://lofimemory.vercel.app/how-journaling-helps-clear-your-head.html
-- How journaling helps students focus: https://lofimemory.vercel.app/how-journaling-helps-students-focus.html
-- How to journal before studying: https://lofimemory.vercel.app/how-to-journal-before-studying.html
-- What to write when you feel overwhelmed: https://lofimemory.vercel.app/what-to-write-when-you-feel-overwhelmed.html
-- Is online journaling safe?: https://lofimemory.vercel.app/is-online-journaling-safe.html
-- How to journal when you do not know what to write: https://lofimemory.vercel.app/how-to-journal-when-you-dont-know-what-to-write.html
-- How journaling improves your thoughts: https://lofimemory.vercel.app/how-journaling-improves-your-thoughts.html
-- Benefits of writing down your thoughts: https://lofimemory.vercel.app/benefits-of-writing-down-your-thoughts.html
-- How journaling helps decision making: https://lofimemory.vercel.app/how-journaling-helps-decision-making.html
-- Daily journal prompts for students: https://lofimemory.vercel.app/daily-journal-prompts-for-students.html
-- Journaling to stop procrastinating: https://lofimemory.vercel.app/journaling-to-stop-procrastinating.html
-- Games to play when your brain is tired: https://lofimemory.vercel.app/games-to-play-when-your-brain-is-tired.html
-- No-download games for study breaks: https://lofimemory.vercel.app/no-download-games-for-study-breaks.html
-- Browser games for short breaks: https://lofimemory.vercel.app/browser-games-for-short-breaks.html
-- Games to play when bored but not distracted: https://lofimemory.vercel.app/games-to-play-when-bored-but-not-distracted.html
-- Games that help you relax after studying: https://lofimemory.vercel.app/games-that-help-you-relax-after-studying.html
-- Quick games to reset your brain: https://lofimemory.vercel.app/quick-games-to-reset-your-brain.html
-- Calming games before journaling: https://lofimemory.vercel.app/calming-games-before-journaling.html
-- Relaxing puzzle games for overthinking: https://lofimemory.vercel.app/relaxing-puzzle-games-for-overthinking.html
-- Study break games that do not waste time: https://lofimemory.vercel.app/study-break-games-that-dont-waste-time.html
-- Relaxing games with lofi music and journaling: https://lofimemory.vercel.app/relaxing-games-with-lofi-music-and-journaling.html
-- Private Journaling Hub: https://lofimemory.vercel.app/private-journaling-hub.html
-- Benefits of a private online diary: https://lofimemory.vercel.app/article-benefits-of-private-online-diary.html
-- Brain dumping before sleep: https://lofimemory.vercel.app/article-brain-dumping-sleep.html
-- Daily word puzzles and relaxing breaks: https://lofimemory.vercel.app/article-daily-word-puzzles-relax.html
-- Digital journaling and distractions: https://lofimemory.vercel.app/article-digital-journal-distractions.html
+## Selected original articles
+- The psychology of journaling: https://lofimemory.vercel.app/article-psychology-of-journaling.html
+- How to protect your privacy when journaling online: https://lofimemory.vercel.app/article-protect-privacy-journaling-online.html
 - How to start a journaling habit: https://lofimemory.vercel.app/article-how-to-start-journaling-habit.html
 - Journaling prompts for self-discovery: https://lofimemory.vercel.app/article-journaling-prompts-self-discovery.html
-- Memory games before writing: https://lofimemory.vercel.app/article-memory-games-cognitive-relief.html
-- Privacy when journaling online: https://lofimemory.vercel.app/article-protect-privacy-journaling-online.html
-- Psychology of journaling: https://lofimemory.vercel.app/article-psychology-of-journaling.html
 - Calm study break routine for students: https://lofimemory.vercel.app/article-study-break-routine-students.html
-- Stop scrolling and start studying: https://lofimemory.vercel.app/stop-scrolling-and-start-studying.html
-- Student Focus Kit: https://lofimemory.vercel.app/student-focus-kit.html
-- Lofi study room with Focus Tree timer: https://lofimemory.vercel.app/lofi-study-room-focus-tree-timer.html
-- Word guessing games for busy minds: https://lofimemory.vercel.app/article-word-guessing-games-busy-mind.html
+- Memory games before writing: https://lofimemory.vercel.app/article-memory-games-cognitive-relief.html
+- How journaling helps clear your head: https://lofimemory.vercel.app/how-journaling-helps-clear-your-head.html
+- Difference between journal and diary: https://lofimemory.vercel.app/difference-between-journal-and-diary.html
+- Is online journaling safe?: https://lofimemory.vercel.app/is-online-journaling-safe.html
+- How long should a study break be?: https://lofimemory.vercel.app/how-long-should-a-study-break-be.html
 
 ## Discovery
 - XML sitemap: https://lofimemory.vercel.app/sitemap.xml

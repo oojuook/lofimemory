@@ -320,21 +320,21 @@ const tips = [
 ];
 
 const wellnessArticles = [
-  { title: 'Why daily word puzzles make relaxing breaks easier', read: 'Article • 4 min read', body: 'See why daily word puzzles feel so satisfying during short breaks and how a calm five-letter word game can fit naturally into a relaxing online routine.', href: '/article-daily-word-puzzles-relax.html' },
-  { title: 'Why word guessing games feel good when your mind is busy', read: 'Article • 4 min read', body: 'Understand why guess-the-word games feel grounding when your mind is overloaded and how a calm word puzzle round can become a simple reset.', href: '/article-word-guessing-games-busy-mind.html' },
+  { title: 'Why daily word puzzles make relaxing breaks easier', read: 'Article • 4 min read', body: 'See why daily word puzzles feel so satisfying during short breaks and how a calm five-letter word game can fit naturally into a relaxing online routine.', href: '/article-memory-games-cognitive-relief.html' },
+  { title: 'Why word guessing games feel good when your mind is busy', read: 'Article • 4 min read', body: 'Understand why guess-the-word games feel grounding when your mind is overloaded and how a calm word puzzle round can become a simple reset.', href: '/article-memory-games-cognitive-relief.html' },
   { title: 'How gentle memory games provide cognitive relief before writing', read: 'Article • 4 min read', body: 'Understand why playing a simple memory match game can help organize your thoughts and anchor your attention before journaling.', href: '/article-memory-games-cognitive-relief.html' },
-  { title: 'How a digital journal can reduce distractions', read: 'Article • 4 min read', body: 'Explore why the right online setup can feel simpler, not noisier, when your goal is focusing on your thoughts.', href: '/article-digital-journal-distractions.html' },
+  { title: 'How a digital journal can reduce distractions', read: 'Article • 4 min read', body: 'Explore why the right online setup can feel simpler, not noisier, when your goal is focusing on your thoughts.', href: '/how-journaling-helps-clear-your-head.html' },
   {
     title: 'Why brain dumping at night helps you sleep',
     read: 'Article • 4 min read',
     body: 'Discover how emptying your mind into a private journal before bed reduces mental clutter and supports a calmer evening routine.',
-    href: '/article-brain-dumping-sleep.html'
+    href: '/how-journaling-helps-clear-your-head.html'
   },
   {
     title: 'How to keep a digital journal without getting distracted',
     read: 'Article • 4 min read',
     body: 'Practical tips for maintaining focus while journaling online, choosing the right tools, and creating a calm digital space.',
-    href: '/article-digital-journal-distractions.html'
+    href: '/how-journaling-helps-clear-your-head.html'
   },
   {
     title: 'The psychology behind writing your feelings down',
@@ -358,7 +358,7 @@ const wellnessArticles = [
     title: 'The unexpected benefits of a private online diary',
     read: 'Article • 6 min read',
     body: 'For centuries, people have kept written records of their lives. Today, transitioning that practice to a private online diary offers flexibility and organization.',
-    href: '/article-benefits-of-private-online-diary.html'
+    href: '/is-online-journaling-safe.html'
   },
   {
     title: 'Journaling prompts for deep self-discovery',
@@ -410,7 +410,7 @@ const wellnessArticles = [
     title: 'Private online diary vs a paper journal',
     read: 'Comparison',
     body: 'A private online diary is easier to revisit, search, and keep close through daily life, while a paper journal can feel tactile and slower. The better choice is the one you will genuinely return to. For many people, privacy controls, mood tracking, and easier access make a digital diary feel more sustainable.',
-    href: '/article-benefits-of-private-online-diary.html'
+    href: '/is-online-journaling-safe.html'
   },
   {
     title: 'How to keep a diary privately online',
@@ -424,7 +424,7 @@ const seoLandingBlocks = [
   {
     title: 'Digital calm and focus',
     text: 'Learn how a digital journal can reduce distractions and create a simpler, quieter online space for your thoughts.',
-    href: '/article-digital-journal-distractions.html'
+    href: '/how-journaling-helps-clear-your-head.html'
   },
   {
     title: 'Privacy when journaling online',
@@ -444,7 +444,7 @@ const seoLandingBlocks = [
   {
     title: 'Evening reflection routine',
     text: 'See how a short pre-sleep writing habit can reduce mental clutter and support a calmer evening routine.',
-    href: '/article-brain-dumping-sleep.html'
+    href: '/how-journaling-helps-clear-your-head.html'
   },
   {
     title: 'Read the Lofi Memory blog',
@@ -464,22 +464,22 @@ const seoLandingBlocks = [
   {
     title: 'Free cozy focus journal app',
     text: 'A clearer landing page for search visitors: focus sessions, lofi music, private writing, notes, reminders, mood tracking, and calm games in one free browser tab.',
-    href: '/free-cozy-focus-journal-app.html'
+    href: '/about.html'
   },
   {
     title: 'What is Lofi Memory?',
     text: 'Read the product definition: Lofi Memory is a cozy browser space to relax, focus, journal, write down your thoughts, listen to lofi music, and take calm game breaks.',
-    href: '/lofi-memory.html'
+    href: '/'
   },
   {
     title: 'Relax, focus, journal, and write thoughts',
     text: 'See how Lofi Memory combines relaxation, focus support, private thought capture, lofi music, notes, reminders, and calm games in one space.',
-    href: '/relax-focus-journal.html'
+    href: '/app.html'
   },
   {
     title: 'Benefits of online diaries',
     text: 'Explore when a browser-based diary can feel more flexible and organized than scattered digital notes.',
-    href: '/article-benefits-of-private-online-diary.html'
+    href: '/is-online-journaling-safe.html'
   }
 ];
 
@@ -544,18 +544,18 @@ const seoGuidePages = [
   { label: 'Helpful read', title: 'How to protect your privacy when journaling online', text: 'A practical read on trust, storage expectations, and what to look for before you write online.', href: '/article-protect-privacy-journaling-online.html' },
   { label: 'Helpful read', title: 'The psychology of journaling', text: 'Understand why writing can reduce mental noise and make thoughts easier to process.', href: '/article-psychology-of-journaling.html' },
   { label: 'Helpful read', title: 'How to start a journaling habit', text: 'Learn how to build a writing routine that feels realistic enough to keep through busy weeks.', href: '/article-how-to-start-journaling-habit.html' },
-  { label: 'Helpful read', title: 'Benefits of a private online diary', text: 'See when a browser-based diary can feel more flexible, organized, and sustainable than scattered notes.', href: '/article-benefits-of-private-online-diary.html' },
-  { label: 'Helpful read', title: 'Brain dumping before sleep', text: 'See how a short writing habit can reduce bedtime mental clutter and support calmer evenings.', href: '/article-brain-dumping-sleep.html' },
-  { label: 'Helpful read', title: 'How a digital journal can reduce distractions', text: 'Explore why the right online setup can feel simpler, not noisier, when your goal is focus.', href: '/article-digital-journal-distractions.html' },
+  { label: 'Helpful read', title: 'Benefits of a private online diary', text: 'See when a browser-based diary can feel more flexible, organized, and sustainable than scattered notes.', href: '/is-online-journaling-safe.html' },
+  { label: 'Helpful read', title: 'Brain dumping before sleep', text: 'See how a short writing habit can reduce bedtime mental clutter and support calmer evenings.', href: '/how-journaling-helps-clear-your-head.html' },
+  { label: 'Helpful read', title: 'How a digital journal can reduce distractions', text: 'Explore why the right online setup can feel simpler, not noisier, when your goal is focus.', href: '/how-journaling-helps-clear-your-head.html' },
   { label: 'Helpful read', title: 'Journaling prompts for self-discovery', text: 'Use gentler prompts that help you begin without turning the page into a performance.', href: '/article-journaling-prompts-self-discovery.html' },
   { label: 'Helpful read', title: 'Memory games before writing', text: 'Read why a short puzzle break can help your attention settle before reflection.', href: '/article-memory-games-cognitive-relief.html' },
-  { label: 'Helpful read', title: 'Daily word puzzles for relaxing breaks', text: 'See why familiar word loops can feel grounding when you want a tidy reset.', href: '/article-daily-word-puzzles-relax.html' },
+  { label: 'Helpful read', title: 'Daily word puzzles for relaxing breaks', text: 'See why familiar word loops can feel grounding when you want a tidy reset.', href: '/article-memory-games-cognitive-relief.html' },
   { label: 'Helpful read', title: 'Aesthetic study break routine for students', text: 'Use lofi music, the Focus Tree room, private journaling, and tiny game resets as one calm study loop.', href: '/article-study-break-routine-students.html' },
-  { label: 'Painkiller guide', title: 'Stop scrolling and start studying', text: 'A practical guide for students who lose study time to scrolling and need a calmer focus anchor.', href: '/stop-scrolling-and-start-studying.html' },
-  { label: 'Study guide', title: 'Lofi study room with a Focus Tree timer for students', text: 'A practical guide for students who want lofi music, a visible-page Focus Tree timer, private journaling, notes, and calm breaks in one room.', href: '/lofi-study-room-focus-tree-timer.html' },
-  { label: 'Answer hub', title: '100 journaling and cozy game questions answered', text: 'Direct answers for overthinking, study stress, private journaling, tired brains, and calm game breaks in one readable guide.', href: '/journaling-games-long-tail-seo.html' },
-  { label: 'ICP kit', title: 'Student Focus Kit', text: 'Open a student-facing kit with Focus Tree positioning, cozy study loops, and practical ways to share the room with classmates.', href: '/student-focus-kit.html' },
-  { label: 'Helpful read', title: 'Word guessing games when your mind is busy', text: 'Learn how small pattern-recognition wins can provide relief without demanding too much energy.', href: '/article-word-guessing-games-busy-mind.html' }
+  { label: 'Painkiller guide', title: 'Stop scrolling and start studying', text: 'A practical guide for students who lose study time to scrolling and need a calmer focus anchor.', href: '/article-study-break-routine-students.html' },
+  { label: 'Study guide', title: 'Lofi study room with a Focus Tree timer for students', text: 'A practical guide for students who want lofi music, a visible-page Focus Tree timer, private journaling, notes, and calm breaks in one room.', href: '/article-study-break-routine-students.html' },
+  { label: 'Answer hub', title: '100 journaling and cozy game questions answered', text: 'Direct answers for overthinking, study stress, private journaling, tired brains, and calm game breaks in one readable guide.', href: '/blog.html' },
+  { label: 'ICP kit', title: 'Student Focus Kit', text: 'Open a student-facing kit with Focus Tree positioning, cozy study loops, and practical ways to share the room with classmates.', href: '/article-study-break-routine-students.html' },
+  { label: 'Helpful read', title: 'Word guessing games when your mind is busy', text: 'Learn how small pattern-recognition wins can provide relief without demanding too much energy.', href: '/article-memory-games-cognitive-relief.html' }
 ];
 
 const seoGuideGroups = [
@@ -588,16 +588,16 @@ const seoPopularSearches = [
   { label: 'Terms of service', href: '/terms.html' },
   { label: 'Cookie Policy', href: '/cookie-policy.html' },
   { label: 'Disclaimer', href: '/disclaimer.html' },
-  { label: 'Benefits of a private online diary', href: '/article-benefits-of-private-online-diary.html' },
+  { label: 'Benefits of a private online diary', href: '/is-online-journaling-safe.html' },
   { label: 'How to start a journaling habit', href: '/article-how-to-start-journaling-habit.html' },
   { label: 'Protect privacy when journaling online', href: '/article-protect-privacy-journaling-online.html' },
   { label: 'Why journaling helps', href: '/article-psychology-of-journaling.html' },
   { label: 'Memory games before writing', href: '/article-memory-games-cognitive-relief.html' },
-  { label: 'Brain dumping before sleep', href: '/article-brain-dumping-sleep.html' },
+  { label: 'Brain dumping before sleep', href: '/how-journaling-helps-clear-your-head.html' },
   { label: 'Journaling prompts for self-discovery', href: '/article-journaling-prompts-self-discovery.html' },
-  { label: 'Word guessing games', href: '/article-word-guessing-games-busy-mind.html' },
+  { label: 'Word guessing games', href: '/article-memory-games-cognitive-relief.html' },
   { label: 'Aesthetic study break routine', href: '/article-study-break-routine-students.html' },
-  { label: 'Daily word puzzles', href: '/article-daily-word-puzzles-relax.html' }
+  { label: 'Daily word puzzles', href: '/article-memory-games-cognitive-relief.html' }
 ];
 
 const seoKeywordClusters = [
@@ -2710,7 +2710,7 @@ function App() {
     'Hero title: Lofi Memory — A relaxing place to play games and listen to music.',
     'Hero summary: Lofi Memory helps visitors listen to lofi music, play relaxing games like Solitaire and cozy block stacking, keep a private online diary, and enjoy a peaceful music room.',
     'Hero support line: The main objective is a calm lofi website for listening to music, relaxing, playing cozy games, and clearing your mind.',
-    'Current guide paths: /blog.html, /sitemap.html, /about.html, /contact.html, /article-benefits-of-private-online-diary.html, /article-brain-dumping-sleep.html, /article-daily-word-puzzles-relax.html, /article-digital-journal-distractions.html, /article-how-to-start-journaling-habit.html, /article-journaling-prompts-self-discovery.html, /article-memory-games-cognitive-relief.html, /article-protect-privacy-journaling-online.html, /article-psychology-of-journaling.html, /article-word-guessing-games-busy-mind.html.',
+    'Current guide paths: /blog.html, /sitemap.html, /about.html, /contact.html, /article-how-to-start-journaling-habit.html, /article-journaling-prompts-self-discovery.html, /article-memory-games-cognitive-relief.html, /article-protect-privacy-journaling-online.html, /article-psychology-of-journaling.html, /article-study-break-routine-students.html, /how-journaling-helps-clear-your-head.html, /difference-between-journal-and-diary.html, /is-online-journaling-safe.html, /how-long-should-a-study-break-be.html.',
     'Write view framing: A page for your diary. Write today\'s diary page in your own words.',
     'Privacy cues: optional PIN lock, local-first journaling, Google sign-in for sync, entries saved privately per user.',
     `Live product signals: ${entries.length} total entries in this session, ${streak} day streak, average mood ${averageMood}, cloud status ${cloudStatus}.`,
@@ -4813,17 +4813,17 @@ function App() {
 
               <div className="mt-8 flex flex-wrap items-center gap-x-2.5 gap-y-3 rounded-[1.2rem] border border-white/30 bg-[#1f2f29]/80 p-3.5 text-xs shadow-sm backdrop-blur-md sm:p-4">
                 <span className="rounded-full bg-white px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.2em] text-[#284a3a] shadow-sm">Original articles</span>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/stop-scrolling-and-start-studying.html">Stop scrolling and study</a>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/lofi-study-room-focus-tree-timer.html">Lofi room & tree</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/article-study-break-routine-students.html">Stop scrolling and study</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/article-study-break-routine-students.html">Lofi room & tree</a>
                 <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/blog.html">Blog hub</a>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/private-journaling-hub.html">Journal hub</a>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/journaling-games-long-tail-seo.html">100 answers</a>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/how-does-journaling-help-mental-wellbeing.html">mental wellbeing journaling</a>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/student-focus-kit.html">Student Kit</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/article-protect-privacy-journaling-online.html">Privacy guide</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/blog.html">Blog answers</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/article-psychology-of-journaling.html">mental wellbeing journaling</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/article-study-break-routine-students.html">Student Kit</a>
                 <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/article-psychology-of-journaling.html">Psychology</a>
                 <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/article-protect-privacy-journaling-online.html">Privacy guide</a>
                 <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/article-how-to-start-journaling-habit.html">Writing habit</a>
-                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/article-benefits-of-private-online-diary.html">Benefits</a>
+                <a className="rounded-full border border-white/65 bg-[#fffaf0] px-2.5 py-1 text-[11px] font-bold text-[#22362e] shadow-sm transition md:hover:-translate-y-0.5 hover:bg-white" href="/is-online-journaling-safe.html">Benefits</a>
               </div>
 
               <div className="mt-8 grid gap-4 grid-cols-2 md:grid-cols-3 xl:grid-cols-3">

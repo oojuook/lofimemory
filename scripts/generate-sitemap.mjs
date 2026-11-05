@@ -1,6 +1,7 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { approvalFocusedArticles, alwaysKeptFiles, coreIndexedPages } from './approval-pages.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -8,9 +9,9 @@ const publicDir = path.resolve(__dirname, '../public');
 const sitemapPath = path.join(publicDir, 'sitemap.xml');
 const baseUrl = 'https://lofimemory.vercel.app';
 
-const coreIndexedPages = [
-  'index.html',
-  'blog.html',
+const rootHtmlPages = new Set(['index.html', 'app.html']);
+const highPriorityPages = new Set(['index.html', 'app.html', 'blog.html']);
+const trustPages = new Set([
   'about.html',
   'contact.html',
   'privacy.html',
@@ -20,141 +21,79 @@ const coreIndexedPages = [
   'editorial-policy.html',
   'advertising-policy.html',
   'content-quality-policy.html',
-  'sitemap.html',
-  'app.html',
-  'relax-focus-journal.html',
-  'free-cozy-focus-journal-app.html'
-];
-
-const highPriorityLandingPages = new Set([
-  'app.html',
-  'free-cozy-focus-journal-app.html',
-  'relax-focus-journal.html',
-  'minimalist-diary-app.html',
-  'questions-about-journaling-games-music.html',
-  'private-journaling-hub.html',
-  'lofi-study-room-focus-tree-timer.html'
+  'sitemap.html'
 ]);
+const articlePages = new Set(approvalFocusedArticles);
+const ignoredPages = new Set(alwaysKeptFiles);
 
-const approvedArticlePages = [
-  'article-benefits-of-private-online-diary.html',
-  'article-brain-dumping-sleep.html',
-  'article-daily-word-puzzles-relax.html',
-  'article-digital-journal-distractions.html',
-  'article-how-to-start-journaling-habit.html',
-  'article-journaling-prompts-self-discovery.html',
-  'article-memory-games-cognitive-relief.html',
-  'article-protect-privacy-journaling-online.html',
-  'article-psychology-of-journaling.html',
-  'article-study-break-routine-students.html',
-  'student-focus-kit.html',
-  'private-journaling-hub.html',
-  'lofi-study-room-focus-tree-timer.html',
-  'stop-scrolling-and-start-studying.html',
-  'journaling-games-long-tail-seo.html',
-  'questions-about-journaling-games-music.html',
-  'how-does-journaling-help-with-thinking.html',
-  'how-does-journaling-help-mental-health.html',
-  'how-journaling-makes-you-better.html',
-  'journaling-pros-and-cons.html',
-  'journaling-for-students-who-overthink.html',
-  'how-journaling-helps-with-overthinking.html',
-  'how-journaling-helps-clear-your-head.html',
-  'how-journaling-helps-students-focus.html',
-  'how-to-journal-before-studying.html',
-  'what-to-write-when-you-feel-overwhelmed.html',
-  'is-online-journaling-safe.html',
-  'how-to-journal-when-you-dont-know-what-to-write.html',
-  'how-journaling-improves-your-thoughts.html',
-  'benefits-of-writing-down-your-thoughts.html',
-  'how-journaling-helps-decision-making.html',
-  'daily-journal-prompts-for-students.html',
-  'journaling-to-stop-procrastinating.html',
-  'games-to-play-when-your-brain-is-tired.html',
-  'no-download-games-for-study-breaks.html',
-  'browser-games-for-short-breaks.html',
-  'games-to-play-when-bored-but-not-distracted.html',
-  'games-that-help-you-relax-after-studying.html',
-  'quick-games-to-reset-your-brain.html',
-  'calming-games-before-journaling.html',
-  'relaxing-puzzle-games-for-overthinking.html',
-  'study-break-games-that-dont-waste-time.html',
-  'relaxing-games-with-lofi-music-and-journaling.html',
-  'article-word-guessing-games-busy-mind.html',
-  'difference-between-journal-and-diary.html',
-  'how-journaling-helps-you-understand-yourself.html',
-  'how-often-should-you-journal.html',
-  'best-time-to-journal.html',
-  'journal-on-paper-or-online.html',
-  'what-should-i-write-in-my-journal.html',
-  'how-long-should-a-study-break-be.html',
-  'why-do-relaxing-games-help-focus.html',
-  'journal-app-for-anxiety.html',
-  'minimalist-diary-app.html',
-  'aesthetic-journal-app.html',
-  'aesthetic-online-journal.html',
-  'aesthetic-student-diary.html',
-  'aesthetic-study-breaks.html',
-  'calm-diary-app.html',
-  'cozy-journal-app.html',
-  'daily-journal-app.html',
-  'daily-journaling-app.html',
-  'digital-diary-app.html',
-  'calm-website.html',
-  'chill-website-for-study-breaks.html',
-  'cozy-website-for-music-games-journaling.html'
-];
-
-const alwaysIgnored = new Set([
-  '404.html',
-  'google5226abd8d86c0ece.html',
-  'googled1931b3f15730e0b.html'
-]);
+function toAbsoluteUrl(fileName) {
+  if (fileName === 'index.html') return `${baseUrl}/`;
+  return `${baseUrl}/${fileName}`;
+}
 
 async function getLastMod(fileName) {
+  const filePath = path.join(publicDir, fileName);
   try {
-    const stats = await fs.stat(path.join(publicDir, fileName));
-    return stats.mtime.toISOString();
+    const stats = await fs.stat(filePath);
+    return stats.mtime.toISOString().split('T')[0];
   } catch {
-    if (fileName === 'index.html') return new Date().toISOString();
-    return '2026-10-19T00:00:00.000Z';
+    return new Date().toISOString().split('T')[0];
   }
 }
 
 function getPriority(fileName) {
   if (fileName === 'index.html') return '1.0';
-  if (fileName === 'blog.html') return '0.92';
-  if (highPriorityLandingPages.has(fileName)) return '0.9';
-  if (approvedArticlePages.includes(fileName)) return '0.86';
-  if (['about.html', 'contact.html', 'privacy.html', 'terms.html'].includes(fileName)) return '0.84';
+  if (highPriorityPages.has(fileName)) return '0.94';
+  if (trustPages.has(fileName)) return '0.82';
+  if (articlePages.has(fileName)) return '0.78';
   return '0.72';
 }
 
 function getChangeFreq(fileName) {
-  if (fileName === 'index.html' || fileName === 'blog.html' || highPriorityLandingPages.has(fileName)) return 'weekly';
-  return 'monthly';
+  if (highPriorityPages.has(fileName)) return 'weekly';
+  if (articlePages.has(fileName)) return 'monthly';
+  return 'yearly';
 }
 
 async function main() {
   const entries = await fs.readdir(publicDir, { withFileTypes: true });
-  const htmlFiles = new Set(entries.filter((entry) => entry.isFile() && entry.name.endsWith('.html')).map((entry) => entry.name));
-  const pages = [...coreIndexedPages, ...approvedArticlePages].filter((fileName, index, list) => (fileName === 'index.html' || fileName === 'app.html' || htmlFiles.has(fileName)) && !alwaysIgnored.has(fileName) && list.indexOf(fileName) === index);
+  const publicHtmlFiles = new Set(entries.filter((entry) => entry.isFile() && entry.name.endsWith('.html')).map((entry) => entry.name));
+
+  const pages = [...new Set([...coreIndexedPages, ...approvalFocusedArticles])].filter((fileName) => {
+    if (ignoredPages.has(fileName)) return false;
+    return rootHtmlPages.has(fileName) || publicHtmlFiles.has(fileName);
+  });
 
   const pageEntries = await Promise.all(
-    pages.map(async (fileName) => {
-      const loc = fileName === 'index.html' ? `${baseUrl}/` : `${baseUrl}/${fileName}`;
-      const lastmod = await getLastMod(fileName);
-      return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>${getChangeFreq(fileName)}</changefreq>\n    <priority>${getPriority(fileName)}</priority>\n  </url>`;
-    })
+    pages.map(async (fileName) => ({
+      fileName,
+      loc: toAbsoluteUrl(fileName),
+      lastmod: await getLastMod(fileName),
+      changefreq: getChangeFreq(fileName),
+      priority: getPriority(fileName)
+    }))
   );
 
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pageEntries.join('\n')}\n</urlset>\n`;
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${pageEntries
+  .map(
+    (page) => `  <url>
+    <loc>${page.loc}</loc>
+    <lastmod>${page.lastmod}</lastmod>
+    <changefreq>${page.changefreq}</changefreq>
+    <priority>${page.priority}</priority>
+  </url>`
+  )
+  .join('\n')}
+</urlset>
+`;
 
-  await fs.writeFile(sitemapPath, sitemap, 'utf8');
-  console.log(`[generate-sitemap] Wrote ${pages.length} URLs to ${sitemapPath}`);
+  await fs.writeFile(sitemapPath, xml, 'utf8');
+  console.log(`[generate-sitemap] Wrote ${pageEntries.length} URLs to ${sitemapPath}`);
 }
 
 main().catch((error) => {
-  console.error('[generate-sitemap] Failed to generate sitemap.', error);
+  console.error('[generate-sitemap] Failed to build sitemap', error);
   process.exitCode = 1;
 });

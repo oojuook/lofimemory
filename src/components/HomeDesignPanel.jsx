@@ -158,7 +158,7 @@ export default function HomeDesignPanel(props) {
           <h4 className="mt-3 text-2xl font-extrabold leading-tight text-ink">A stable place for future recommendations, without interrupting the journal.</h4>
           <p className="mt-3 max-w-2xl leading-8 text-sage-800">This area sits outside the main writing flow, so future recommendations can live here without covering prompts, shifting the editor, or making the journaling experience feel crowded on mobile or desktop.</p>
           <div className="mt-5 flex flex-wrap gap-3">
-            <a className="inline-flex items-center justify-center rounded-full bg-sage-900 px-5 py-3 text-sm font-bold text-white transition md:hover:-translate-y-0.5 hover:bg-sage-800" href="/article-benefits-of-private-online-diary.html">Open private diary guide</a>
+            <a className="inline-flex items-center justify-center rounded-full bg-sage-900 px-5 py-3 text-sm font-bold text-white transition md:hover:-translate-y-0.5 hover:bg-sage-800" href="/is-online-journaling-safe.html">Open private diary guide</a>
             <a className="inline-flex items-center justify-center rounded-full border border-amber-200/50 bg-white px-5 py-3 text-sm font-bold text-sage-900 transition md:hover:-translate-y-0.5 hover:border-sage-300" href="/article-journaling-prompts-self-discovery.html">Browse prompts</a>
           </div>
         </div>
@@ -535,7 +535,7 @@ export default function HomeDesignPanel(props) {
           <a className="transition hover:text-white" href="/privacy.html">Privacy</a>
           <a className="transition hover:text-white" href="/terms.html">Terms</a>
           <a className="transition hover:text-white" href="#diary" {...(getTapActionProps ? getTapActionProps('design-diary-link', () => navigateToTab('write'), { preventDefault: true }) : { onClick: () => navigateToTab('write') })}>Diary & Journal</a>
-          <a className="transition hover:text-white" href="/private-journaling-hub.html">Journaling Hub</a>
+          <a className="transition hover:text-white" href="/article-protect-privacy-journaling-online.html">Privacy guide</a>
         </div>
         <div className="mb-5 flex flex-wrap justify-center gap-x-6 gap-y-2 text-[11px] font-black uppercase tracking-[0.18em] text-white/85 lofi-sharp-text-soft">
           <a className="transition hover:text-white" href="/">Home</a>
